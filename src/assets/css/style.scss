@@ -27,31 +27,30 @@
   color: $color-purple;
 }
 
-.logo-icon {
+.sidebar-header > .logo-icon {
   display: none;
 }
-body.sidebar-folded .sidebar-header > * {
+.sidebar-folded .sidebar-header > * {
   display: none;
 }
-body.sidebar-folded .logo-icon {
+.sidebar-folded .sidebar-header > .logo-icon {
   display: block;
 }
-.sidebar:hover .sidebar-header > * {
+.sidebar-folded .sidebar:hover .sidebar-header > * {
   display: block;
 }
-.sidebar:hover .logo-icon {
+.sidebar-folded .sidebar:hover .sidebar-header > .logo-icon {
   display: none;
 }
-.sidebar-folded .sidebar .logo-icon,
-.sidebar-folded .sidebar .logo {
+.sidebar-header > * {
   transition: none;
 }
 
 /* Fade effect */
-.sidebar-folded .sidebar .logo {
+.sidebar-folded .sidebar-header > .logo {
   opacity: 0;
 }
-.sidebar-folded .sidebar:hover .logo {
+.sidebar-folded .sidebar:hover .sidebar-header > .logo {
   opacity: 1;
   animation: fadein 1s;
   -moz-animation: fadein 1s; /* Firefox */
