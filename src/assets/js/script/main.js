@@ -15,19 +15,210 @@ require('./util.js')
 */
 
 app.ready(function () {
+  var lang = 'pt_br'
+
+  var i18n = function (label) {
+    if (label.hasOwnProperty(lang)) {
+      return label[lang]
+    } else {
+      // en_us as default
+      return label.en_us
+    }
+  }
+
+  var dictionary = {
+    'home': i18n({
+      'en_us': 'Home',
+      'pt_br': 'Início'
+    }),
+    'resources': i18n({
+      'en_us': 'Resources',
+      'pt_br': 'Recursos'
+    }),
+    'channels': i18n({
+      'en_us': 'Sales channels',
+      'pt_br': 'Canais de venda'
+    }),
+    'go_to_store': i18n({
+      'en_us': 'Go to store',
+      'pt_br': 'Ir à loja'
+    }),
+    'themes': i18n({
+      'en_us': 'Themes',
+      'pt_br': 'Temas'
+    }),
+    'settings': i18n({
+      'en_us': 'Settings',
+      'pt_br': 'Configurações'
+    })
+  }
+
   var resources = {
-    'applications': {
+    'products': {
       'label': {
-        'en_us': 'Apps'
+        'en_us': 'Products',
+        'pt_br': 'Produtos'
       },
-      'icon': 'puzzle-piece'
+      'icon': 'tags'
+    },
+    'orders': {
+      'label': {
+        'en_us': 'Orders',
+        'pt_br': 'Pedidos'
+      },
+      'icon': 'rocket'
+    },
+    'brands': {
+      'label': {
+        'en_us': 'Brands',
+        'pt_br': 'Marcas'
+      },
+      'icon': 'trademark'
+    },
+    'categories': {
+      'label': {
+        'en_us': 'Categories',
+        'pt_br': 'Categorias'
+      },
+      'icon': 'bookmark'
+    },
+    'collections': {
+      'label': {
+        'en_us': 'Collections',
+        'pt_br': 'Coleções'
+      },
+      'icon': 'th-large'
+    },
+    'grids': {
+      'label': {
+        'en_us': 'Grids',
+        'pt_br': 'Grades'
+      },
+      'icon': 'filter'
+    },
+    'customers': {
+      'label': {
+        'en_us': 'Customers',
+        'pt_br': 'Clentes'
+      },
+      'icon': 'users'
+    },
+    'carts': {
+      'label': {
+        'en_us': 'Carts',
+        'pt_br': 'Carrinhos'
+      },
+      'icon': 'shopping-cart'
     },
     'authentications': {
       'label': {
         'en_us': 'Users',
         'pt_br': 'Usuários'
       },
-      'icon': 'users'
+      'icon': 'id-card'
     }
   }
+
+  var renderMenu = function () {
+    // render resources on menu
+    var resourcesList = ''
+    for (var resource in resources) {
+      if (resources.hasOwnProperty(resource)) {
+        resourcesList += '<li class="menu-item">' +
+                           '<a class="menu-link" href="#/resources/' + resource + '">' +
+                             '<span class="icon fa fa-' + resources[resource].icon + '"></span>' +
+                             '<span class="title">' + i18n(resources[resource].label) + '</span>' +
+                           '</a>' +
+                         '</li>'
+      }
+    }
+
+    var channelsList = ''
+    for (var i = 0; i < 1; i++) {
+      var url = '#/channels/channel_id'
+
+      // sales channels on menu
+      channelsList += '<li class="menu-item">' +
+                        '<a class="menu-link" href="javascript:;">' +
+                          '<span class="icon fa fa-shopping-bag"></span>' +
+                          '<span class="title">Channel name</span>' +
+                          '<span class="arrow"></span>' +
+                        '</a>' +
+                        '<ul class="menu-submenu">' +
+                          '<li class="menu-item">' +
+                            '<a class="menu-link" href="https://google.com" target="_blank">' +
+                              '<span class="icon fa fa-eye"></span>' +
+                              '<span class="title">' + dictionary.go_to_store + '</span>' +
+                            '</a>' +
+                          '</li>' +
+                          '<li class="menu-item">' +
+                            '<a class="menu-link" href="' + url + '/themes">' +
+                              '<span class="icon fa fa-paint-brush"></span>' +
+                              '<span class="title">' + dictionary.themes + '</span>' +
+                            '</a>' +
+                          '</li>' +
+                          '<li class="menu-item">' +
+                            '<a class="menu-link" href="' + url + '/settings">' +
+                              '<span class="icon fa fa-wrench"></span>' +
+                              '<span class="title">' + dictionary.settings + '</span>' +
+                            '</a>' +
+                          '</li>' +
+                        '</ul>' +
+                      '</li>'
+    }
+
+    var el = '<li class="menu-item">' +
+               '<a class="menu-link" href="#/">' +
+                 '<span class="icon fa fa-home"></span>' +
+                 '<span class="title">' + dictionary.home + '</span>' +
+               '</a>' +
+             '</li>' +
+
+             '<li class="menu-item">' +
+               '<a class="menu-link" href="javascript:;">' +
+                 '<span class="icon fa fa-database"></span>' +
+                 '<span class="title">' + dictionary.resources + '</span>' +
+                 '<span class="arrow"></span>' +
+               '</a>' +
+               '<ul class="menu-submenu">' +
+                 resourcesList +
+               '</ul>' +
+             '</li>' +
+
+             // apps will be rendered after
+             '<li class="menu-item">' +
+               '<a class="menu-link" href="javascript:;">' +
+                 '<span class="icon fa fa-puzzle-piece"></span>' +
+                 '<span class="title">Apps</span>' +
+                 '<span class="arrow"></span>' +
+               '</a>' +
+               '<ul class="menu-submenu" id="apps">' +
+               '</ul>' +
+             '</li>' +
+
+             '<li class="menu-item">' +
+                '<a class="menu-link" href="#/settings">' +
+                  '<span class="icon fa fa-cogs"></span>' +
+                  '<span class="title">' + dictionary.settings + '</span>' +
+                '</a>' +
+             '</li>' +
+
+             '<li class="menu-category">' + dictionary.channels + '</li>' +
+             channelsList
+
+    $('#sidebar').append(el)
+  }
+  renderMenu()
+
+  var renderApps = function () {
+    // render applications on menu
+    var el = '<li class="menu-item">' +
+               '<a class="menu-link" href="#/apps/x">' +
+                 '<span class="dot"></span>' +
+                 '<span class="title">App name</span>' +
+               '</a>' +
+             '</li>'
+    $('#apps').append(el)
+  }
+  renderApps()
 })
