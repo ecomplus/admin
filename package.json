@@ -12,7 +12,8 @@
       "XDomainRequest",
       "$",
       "app",
-      "sidebar"
+      "sidebar",
+      "login"
     ]
   },
   "devDependencies": {
