@@ -125,7 +125,7 @@ app.ready(function () {
     for (var resource in resources) {
       if (resources.hasOwnProperty(resource)) {
         resourcesList += '<li class="menu-item">' +
-                           '<a class="menu-link" href="#/resources/' + resource + '">' +
+                           '<a class="menu-link" href="/#/resources/' + resource + '">' +
                              '<span class="icon fa fa-' + resources[resource].icon + '"></span>' +
                              '<span class="title">' + i18n(resources[resource].label) + '</span>' +
                            '</a>' +
@@ -135,7 +135,7 @@ app.ready(function () {
 
     var channelsList = ''
     for (var i = 0; i < 1; i++) {
-      var url = '#/channels/channel_id'
+      var url = '/#/channels/channel_id'
 
       // sales channels on menu
       channelsList += '<li class="menu-item">' +
@@ -168,7 +168,7 @@ app.ready(function () {
     }
 
     var el = '<li class="menu-item">' +
-               '<a class="menu-link" href="#/">' +
+               '<a class="menu-link" href="/#/">' +
                  '<span class="icon fa fa-home"></span>' +
                  '<span class="title">' + dictionary.home + '</span>' +
                '</a>' +
@@ -197,7 +197,7 @@ app.ready(function () {
              '</li>' +
 
              '<li class="menu-item">' +
-                '<a class="menu-link" href="#/settings">' +
+                '<a class="menu-link" href="/#/settings">' +
                   '<span class="icon fa fa-cogs"></span>' +
                   '<span class="title">' + dictionary.settings + '</span>' +
                 '</a>' +
@@ -207,13 +207,19 @@ app.ready(function () {
              channelsList
 
     $('#sidebar').append(el)
+
+    if ($('.sidebar-toggler').is(':visible')) {
+      // mobile
+      // unfold sidebar by default
+      sidebar.unfold()
+    }
   }
   renderMenu()
 
   var renderApps = function () {
     // render applications on menu
     var el = '<li class="menu-item">' +
-               '<a class="menu-link" href="#/apps/x">' +
+               '<a class="menu-link" href="/#/apps/x">' +
                  '<span class="dot"></span>' +
                  '<span class="title">App name</span>' +
                '</a>' +
