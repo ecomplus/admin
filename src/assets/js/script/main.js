@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 
-require('./config');
-require('./util.js');
+require('./config')
+require('./util.js')
 
 /*
 |--------------------------------------------------------------------------
@@ -14,8 +14,7 @@ require('./util.js');
 |
 */
 
-app.ready(function() {
-
+app.ready(function () {
   var resources = {
     'applications': {
       'label': {
@@ -31,5 +30,4 @@ app.ready(function() {
       'icon': 'users'
     }
   }
-
-});
+})
