@@ -1,3 +1,9 @@
+# Template
+gruntfile.js
+src/assets/css/app.css
+src/assets/css/app.css.map
+src/assets/js/app.js
+
 # Logs
 logs
 *.log
@@ -56,4 +62,3 @@ typings/
 
 # dotenv environment variables file
 .env
-

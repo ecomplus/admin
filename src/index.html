@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive admin dashboard and web application ui kit. ">
+    <meta name="keywords" content="blank, starter">
+
+    <title>Blank page &mdash; TheAdmin</title>
+
+    <!-- Styles -->
+    <link href="assets/css/core.min.css" rel="stylesheet">
+    <link href="assets/css/app.min.css" rel="stylesheet">
+    <link href="assets/css/style.min.css" rel="stylesheet">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+    <link rel="icon" href="assets/img/favicon.png">
+  </head>
+
+  <body class="sidebar-folded" data-provide="pace">
+    <!-- Preloader
+    <div class="preloader">
+      <div class="spinner-dots">
+        <span class="dot1"></span>
+        <span class="dot2"></span>
+        <span class="dot3"></span>
+      </div>
+    </div>
+    -->
+
+    <!-- Sidebar -->
+    <aside class="sidebar sidebar-expand-lg">
+      <header class="sidebar-header">
+        <a class="logo-icon" href="../index.html"><img src="assets/img/logo-icon-light.png" alt="logo icon"></a>
+        <span class="logo">
+          <a href="../index.html"><img src="assets/img/logo-light.png" alt="logo"></a>
+        </span>
+        <span class="sidebar-toggle-fold"></span>
+      </header>
+
+      <nav class="sidebar-navigation" id="menu">
+        <ul class="menu">
+
+          <li class="menu-item active">
+            <a class="menu-link" href="../dashboard/general.html">
+              <span class="icon fa fa-home"></span>
+              <span class="title">Dashboard</span>
+            </a>
+          </li>
+
+          <li class="menu-item">
+            <a class="menu-link" href="#">
+              <span class="icon fa fa-user"></span>
+              <span class="title">Users</span>
+              <span class="arrow"></span>
+            </a>
+
+            <ul class="menu-submenu">
+              <li class="menu-item">
+                <a class="menu-link" href="#">
+                  <span class="icon ti-view-grid"></span>
+                  <span class="title">Grid</span>
+                </a>
+              </li>
+
+              <li class="menu-item">
+                <a class="menu-link" href="#">
+                  <span class="dot"></span>
+                  <span class="title">Moderators</span>
+                </a>
+              </li>
+
+              <li class="menu-item">
+                <a class="menu-link" href="#">
+                  <span class="dot"></span>
+                  <span class="title">Customers</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+
+          <li class="menu-category">Category 2</li>
+
+
+          <li class="menu-item">
+            <a class="menu-link" href="#">
+              <span class="icon ti-layout"></span>
+              <span class="title">Layout</span>
+              <span class="arrow"></span>
+            </a>
+
+            <ul class="menu-submenu">
+              <li class="menu-item">
+                <a class="menu-link" href="#">
+                  <span class="dot"></span>
+                  <span class="title">Sidebar</span>
+                </a>
+              </li>
+
+              <li class="menu-item">
+                <a class="menu-link" href="#">
+                  <span class="dot"></span>
+                  <span class="title">Header</span>
+                </a>
+              </li>
+
+              <li class="menu-item">
+                <a class="menu-link" href="#">
+                  <span class="dot"></span>
+                  <span class="title">Footer</span>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+      </nav>
+
+    </aside>
+    <!-- END Sidebar -->
+
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
+
+        <a class="topbar-btn" href="#" title="" data-provide="tooltip" data-placement="bottom" data-original-title="Previous page"><i class="ti-arrow-left"></i></a>
+
+        <a class="topbar-btn fs-20" href="#" title="" data-provide="fullscreen tooltip" data-placement="bottom" data-original-title="Fullscreen">
+          <i class="ion-android-expand fullscreen-default"></i>
+          <i class="ion-android-contract fullscreen-active"></i>
+        </a>
+
+        <!-- App laucher
+        <div class="dropdown d-none d-md-block">
+          <span class="topbar-btn" data-toggle="dropdown"><i class="ti-layout-grid3-alt fs-16"></i></span>
+          <div class="dropdown-menu dropdown-grid">
+            <a class="dropdown-item" href="#">
+              <span data-i8-icon="compact_camera"></span>
+              <span class="title">Camera</span>
+            </a>
+            <a class="dropdown-item" href="#">
+              <span data-i8-icon="stack_of_photos"></span>
+              <span class="title">Gallery</span>
+            </a>
+            <a class="dropdown-item" href="#">
+              <span data-i8-icon="folder"></span>
+              <span class="title">Files</span>
+            </a>
+            <a class="dropdown-item" href="#">
+              <span data-i8-icon="start"></span>
+              <span class="title">Video</span>
+            </a>
+            <a class="dropdown-item" href="#">
+              <span data-i8-icon="music"></span>
+              <span class="title">Music</span>
+            </a>
+            <a class="dropdown-item" href="#">
+              <span data-i8-icon="news"></span>
+              <span class="title">News</span>
+            </a>
+            <a class="dropdown-item" href="#">
+              <span data-i8-icon="contacts"></span>
+              <span class="title">Contacts</span>
+            </a>
+            <a class="dropdown-item" href="#">
+              <span data-i8-icon="download"></span>
+              <span class="title">Download</span>
+            </a>
+            <a class="dropdown-item" href="#">
+              <span data-i8-icon="settings"></span>
+              <span class="title">Settings</span>
+            </a>
+          </div>
+        </div>
+        END App laucher -->
+
+        <div class="topbar-divider"></div>
+
+        <form class="lookup lookup-circle" target="index.html">
+          <input type="text" name="s" placeholder="Search" class="w-100">
+        </form>
+      </div>
+
+      <div class="topbar-right">
+        <a class="topbar-btn" href="#qv-global" data-toggle="quickview"><i class="ti-align-right"></i></a>
+
+        <div class="topbar-divider"></div>
+
+        <ul class="topbar-btns">
+          <li class="dropdown">
+            <span class="topbar-btn btn-avatar" data-toggle="dropdown">
+              <img class="avatar" src="../assets/img/avatar/default.jpg" alt="...">
+            </span>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" href="../page/profile.html"><i class="ti-user"></i> Profile</a>
+              <a class="dropdown-item" href="../page-app/mailbox.html">
+                <div class="flexbox">
+                  <i class="ti-email"></i>
+                  <span class="flex-grow">Inbox</span>
+                  <span class="badge badge-pill badge-info">5</span>
+                </div>
+              </a>
+              <a class="dropdown-item" href="#"><i class="ti-settings"></i> Settings</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="../page-extra/user-lock-1.html"><i class="ti-lock"></i> Lock</a>
+              <a class="dropdown-item" href="../page-extra/user-login-3.html"><i class="ti-power-off"></i> Logout</a>
+            </div>
+          </li>
+
+          <!-- Notifications -->
+          <li class="dropdown d-none d-md-block">
+            <span class="topbar-btn has-new" data-toggle="dropdown"><i class="ti-bell"></i></span>
+            <div class="dropdown-menu dropdown-menu-right">
+
+              <div class="media-list media-list-hover media-list-divided media-list-xs">
+                <a class="media media-new" href="#">
+                  <span class="avatar bg-success"><i class="ti-user"></i></span>
+                  <div class="media-body">
+                    <p>New user registered</p>
+                    <time datetime="2017-07-14 20:00">Just now</time>
+                  </div>
+                </a>
+
+                <a class="media" href="#">
+                  <span class="avatar bg-info"><i class="ti-shopping-cart"></i></span>
+                  <div class="media-body">
+                    <p>New order received</p>
+                    <time datetime="2017-07-14 20:00">2 min ago</time>
+                  </div>
+                </a>
+
+                <a class="media" href="#">
+                  <span class="avatar bg-warning"><i class="ti-face-sad"></i></span>
+                  <div class="media-body">
+                    <p>Refund request from <b>Ashlyn Culotta</b></p>
+                    <time datetime="2017-07-14 20:00">24 min ago</time>
+                  </div>
+                </a>
+
+                <a class="media" href="#">
+                  <span class="avatar bg-primary"><i class="ti-money"></i></span>
+                  <div class="media-body">
+                    <p>New payment has made through PayPal</p>
+                    <time datetime="2017-07-14 20:00">53 min ago</time>
+                  </div>
+                </a>
+              </div>
+
+              <div class="dropdown-footer">
+                <div class="left">
+                  <a href="#">Read all notifications</a>
+                </div>
+
+                <div class="right">
+                  <a href="#" data-provide="tooltip" title="Mark all as read"><i class="fa fa-circle-o"></i></a>
+                  <a href="#" data-provide="tooltip" title="Update"><i class="fa fa-repeat"></i></a>
+                  <a href="#" data-provide="tooltip" title="Settings"><i class="fa fa-gear"></i></a>
+                </div>
+              </div>
+
+            </div>
+          </li>
+          <!-- END Notifications -->
+        </ul>
+
+        <!-- Change language
+        <div class="dropdown">
+          <span class="topbar-btn fs-13" data-toggle="dropdown">
+            <img class="mr-10" src="../assets/img/flag/Brazil.png" height="14"><strong>PT</strong>
+          </span>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item active" href="#">
+              <img class="mr-10" src="../assets/img/flag/United-States-of-America.png" height="15">
+              English
+            </a>
+            <a class="dropdown-item" href="#">
+              <img class="mr-10" src="../assets/img/flag/Brazil.png" height="15">
+              Português
+            </a>
+          </div>
+        </div>
+        END Change language -->
+      </div>
+    </header>
+    <!-- END Topbar -->
+
+    <!-- Main container -->
+    <main class="main-container scrollable">
+
+      <div class="dock-list">
+        <!-- Basic setup -->
+        <div id="dock-chat" class="dock reveal minimize">
+          <header class="dock-header">
+            <div class="dock-title">
+              <span><i class="fa fa-commenting-o"></i></span>
+              <span>Mony</span>
+            </div>
+
+            <div class="dock-actions">
+              <span data-dock="minimize"></span>
+            </div>
+          </header>
+
+          <div class="dock-body" data-provide="emoji" id="mony">
+            <div class="media media-chat">
+              <div class="media-body">
+                <p>Hi</p>
+                <p>How are you ...???</p>
+                <p>What are you doing tomorrow?<br>Would you like to get out of the town for a while?</p>
+                <p class="meta"><time datetime="2017">23:58</time></p>
+              </div>
+            </div>
+
+            <div class="media media-meta-day">Today</div>
+
+            <div class="media media-chat media-chat-reverse">
+              <div class="media-body">
+                <p>Hiii, I'm good.</p>
+                <p>How are you doing?</p>
+                <p>Long time no see!</p>
+                <p class="meta"><time datetime="2017">00:06</time></p>
+              </div>
+            </div>
+
+            <div class="media media-chat">
+              <div class="media-body">
+                <p>Yeah</p>
+                <p>We were out of country for a vacation. We visited several beautiful countries and made a lot of memmories. :stuck_out_tongue_winking_eye: :stuck_out_tongue_winking_eye:</p>
+                <p class="meta"><time datetime="2017">00:07</time></p>
+              </div>
+            </div>
+
+            <div class="media media-chat media-chat-reverse">
+              <div class="media-body">
+                <p>That's awesome!</p>
+                <p>You should tell me everything with all small details. I'm so curious to hear your stories.</p>
+                <p>Did you take pictures?</p>
+                <p class="meta"><time datetime="2017">00:09</time></p>
+              </div>
+            </div>
+
+            <div class="media media-chat">
+              <div class="media-body">
+                <p>We took a loooot. Here is some of them, I'll show you the rest once we meet.</p>
+                <p class="row gap-1" data-provide="photoswipe">
+                  <a class="col-4 d-inline-block" href="#"><img src="../assets/img/gallery/thumb-sm/8.jpg" alt="..."></a>
+                  <a class="col-4 d-inline-block" href="#"><img src="../assets/img/gallery/thumb-sm/11.jpg" alt="..."></a>
+                  <a class="col-4 d-inline-block" href="#"><img src="../assets/img/gallery/thumb-sm/7.jpg" alt="..."></a>
+                </p>
+                <p class="meta"><time datetime="2017">00:10</time></p>
+              </div>
+            </div>
+
+            <div class="media media-chat media-chat-reverse">
+              <div class="media-body">
+                <p>These places are fantastic. Wish I could join you guys :disappointed: :disappointed:</p>
+                <p class="meta"><time datetime="2017">00:10</time></p>
+              </div>
+            </div>
+
+            <div class="media media-chat">
+              <div class="media-body">
+                <p>You can actually. We are planning our next vacation for new year holidays :wink:</p>
+                <p class="meta"><time datetime="2017">00:12</time></p>
+              </div>
+            </div>
+
+            <div class="media media-chat media-chat-reverse">
+              <div class="media-body">
+                <p>Are you serious?!! :heart_eyes:</p>
+                <p class="meta"><time datetime="2017">00:12</time></p>
+              </div>
+            </div>
+          </div>
+
+          <footer class="publisher pl-12" id="mony-publish">
+            <input class="publisher-input" placeholder="Write something">
+            <div class="flex-bottom gap-items">
+              <!--
+              <span class="publisher-btn file-group">
+                <i class="fa fa-paperclip file-browser"></i>
+                <input type="file">
+              </span>
+              <a class="publisher-btn" href="#"><i class="fa fa-smile-o"></i></a>
+              -->
+              <a class="publisher-btn" href="#"><i class="fa fa-paper-plane"></i></a>
+            </div>
+          </footer>
+        </div>
+      </div>
+
+      <div class="card card-body" id="search-results">
+        <div class="row gap-y">
+          <div class="col-md-6 col-lg-3">
+            <h6 class="fs-10 text-uppercase letter-spacing-3 p-20">
+              <span class="ti-layout text-muted pr-1"></span>
+              <span>Layout</span>
+              <span class="pl-10 text-muted">(3)</span>
+            </h6>
+
+            <div class="media-list media-list-divided media-list-hover">
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Sidebar</h6>
+                  <p class="fs-12 text-truncate">Main navigation area for your web application</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Topbar</h6>
+                  <p class="fs-12 text-truncate">A place for most used actions or information</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Footer</h6>
+                  <p class="fs-12 text-truncate">Copyright and some general links</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3">
+            <h6 class="fs-10 text-uppercase letter-spacing-3 p-20">
+              <span class="ti-align-left text-muted pr-1"></span>
+              <span>Content</span>
+              <span class="pl-10 text-muted">(2)</span>
+            </h6>
+            <div class="media-list media-list-divided media-list-hover">
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Icons</h6>
+                  <p class="fs-12 text-truncate">The best icon sets available in the web</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Typography</h6>
+                  <p class="fs-12 text-truncate">Simple and easily customized typography for headings, body text, lists, and more.</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3">
+            <h6 class="fs-10 text-uppercase letter-spacing-3 p-20">
+              <span class="ti-check-box text-muted pr-1"></span>
+              <span>UI Kit</span>
+              <span class="pl-10 text-muted">(5)</span>
+            </h6>
+            <div class="media-list media-list-divided media-list-hover">
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Buttons</h6>
+                  <p class="fs-12 text-truncate">Call to actions, floating action buttons, toolbar and more.</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Dialogs</h6>
+                  <p class="fs-12 text-truncate">Modal, lightbox, sweet alert, and docks.</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Notification</h6>
+                  <p class="fs-12 text-truncate">Alert, tooltip, popover, toast, callout, push notification and more.</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Dropdown</h6>
+                  <p class="fs-12 text-truncate">Toggleable, contextual overlays for displaying lists of links and more.</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Misc</h6>
+                  <p class="fs-12 text-truncate">Breadcrumbs, pagination, pager, context menu, sortable and more.</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3">
+            <h6 class="fs-10 text-uppercase letter-spacing-3 p-20">
+              <span class="ti-files text-muted pr-1"></span>
+              <span>Pages</span>
+              <span class="pl-10 text-muted">(4)</span>
+            </h6>
+            <div class="media-list media-list-divided media-list-hover">
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Gallery</h6>
+                  <p class="fs-12 text-truncate">Different type of photo gallery; shuffle, masonry, justified.</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Invoice</h6>
+                  <p class="fs-12 text-truncate">Display a receipt to your customers.</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Maps</h6>
+                  <p class="fs-12 text-truncate">Different type of google maps and mapael.</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Users</h6>
+                  <p class="fs-12 text-truncate">View every user of your application.</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <header class="header pt-3">
+        <div class="header-bar no-border">
+          <h1><strong>Page</strong> title</h1>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Layout</a></li>
+            <li class="breadcrumb-item active">Page headers</li>
+          </ol>
+        </div>
+
+        <div class="header-action">
+          <nav class="nav">
+            <a class="nav-link active" href="header.html">Basic</a>
+            <a class="nav-link" href="header-advanced.html">Advanced</a>
+          </nav>
+        </div>
+      </header>
+
+      <div class="main-content">
+        <div class="card">
+          <h4 class="card-title">Card title</h4>
+
+          <div class="card-body">
+          </div>
+        </div>
+      </div><!--/.main-content -->
+
+
+      <!-- Footer -->
+      <footer class="site-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <p>Copyright © 2017 <a href="http://thetheme.io/theadmin">TheAdmin</a>. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+      <!-- END Footer -->
+
+    </main>
+    <!-- END Main container -->
+
+    <!-- Global quickview -->
+    <div id="qv-global" class="quickview" data-url="assets/data/quickview-global.html">
+      <div class="spinner-linear">
+        <div class="line"></div>
+      </div>
+    </div>
+    <!-- END Global quickview -->
+
+    <!-- Scripts -->
+    <script src="assets/js/core.min.js"></script>
+    <script src="assets/js/app.min.js"></script>
+    <script src="assets/js/script.min.js"></script>
+
+  </body>
+</html>
