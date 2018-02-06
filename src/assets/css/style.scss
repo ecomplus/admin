@@ -27,6 +27,70 @@
   color: $color-purple;
 }
 
+.logo-icon {
+  display: none;
+}
+body.sidebar-folded .sidebar-header > * {
+  display: none;
+}
+body.sidebar-folded .logo-icon {
+  display: block;
+}
+.sidebar:hover .sidebar-header > * {
+  display: block;
+}
+.sidebar:hover .logo-icon {
+  display: none;
+}
+.sidebar-folded .sidebar .logo-icon,
+.sidebar-folded .sidebar .logo {
+  transition: none;
+}
+
+/* Fade effect */
+.sidebar-folded .sidebar .logo {
+  opacity: 0;
+}
+.sidebar-folded .sidebar:hover .logo {
+  opacity: 1;
+  animation: fadein 1s;
+  -moz-animation: fadein 1s; /* Firefox */
+  -webkit-animation: fadein 1s; /* Safari and Chrome */
+  -o-animation: fadein 1s; /* Opera */
+}
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadein { /* Firefox */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadein { /* Safari and Chrome */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadein { /* Opera */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .btn-avatar {
   width: 65px;
   height: 65px;

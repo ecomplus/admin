@@ -11,7 +11,8 @@
       "XMLHttpRequest",
       "XDomainRequest",
       "$",
-      "app"
+      "app",
+      "sidebar"
     ]
   },
   "devDependencies": {
