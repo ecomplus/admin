@@ -1,4 +1,31 @@
+@import 'scss/_variables.scss';
 @import 'fonts.css';
+
+.sidebar-navigation > .menu > .menu-item:hover {
+  background-color: $color-pink;
+}
+.sidebar-navigation .menu-submenu > .menu-item:hover {
+  background-color: $color-purple;
+}
+.sidebar .menu-submenu .menu-item:hover > .menu-link .dot::after {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.header-action .nav-link.active,
+.header-action .nav-link:hover {
+  border-bottom-color: $color-green;
+}
+.topbar-btn:hover,
+.topbar .dropdown.show .topbar-btn {
+  border-top-color: $color-green;
+}
+.spinner-linear .line {
+  background-color: $color-green;
+}
+.dock-header .dock-title i {
+  color: $color-purple;
+}
 
 .btn-avatar {
   width: 65px;
