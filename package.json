@@ -10,7 +10,8 @@
     "globals": [
       "XMLHttpRequest",
       "XDomainRequest",
-      "$"
+      "$",
+      "app"
     ]
   },
   "devDependencies": {
