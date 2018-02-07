@@ -23,9 +23,6 @@
 .spinner-linear .line {
   background-color: $color-green;
 }
-.dock-header .dock-title i {
-  color: $color-purple;
-}
 
 .sidebar-header > .logo-icon {
   display: none;
@@ -97,6 +94,18 @@
 .btn-avatar {
   width: 65px;
   height: 65px;
+  position: relative;
+}
+.btn-avatar .badge {
+  border: 2px solid #fff;
+  z-index: 2;
+  display: none;
+  position: absolute;
+  top: 13px;
+  left: 13px;
+}
+.btn-avatar.has-new .badge {
+  display: block;
 }
 
 #search-results {
