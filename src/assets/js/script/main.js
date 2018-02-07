@@ -26,7 +26,10 @@ app.ready(function () {
     }
   }
 
+  $('.i18n > *[data-lang="' + lang + '"]').show()
+
   var dictionary = {
+    // menu
     'home': i18n({
       'en_us': 'Home',
       'pt_br': 'Início'
@@ -54,8 +57,9 @@ app.ready(function () {
   }
 
   if (typeof login === 'boolean' && login === true) {
-    console.log('login')
+    // treat login form
   } else {
+    // panel app
     var resources = {
       'products': {
         'label': {
@@ -136,40 +140,6 @@ app.ready(function () {
         }
       }
 
-      var channelsList = ''
-      for (var i = 0; i < 1; i++) {
-        var url = '/#/channels/channel_id'
-
-        // sales channels on menu
-        channelsList += '<li class="menu-item">' +
-                          '<a class="menu-link" href="javascript:;">' +
-                            '<span class="icon fa fa-shopping-bag"></span>' +
-                            '<span class="title">Channel name</span>' +
-                            '<span class="arrow"></span>' +
-                          '</a>' +
-                          '<ul class="menu-submenu">' +
-                            '<li class="menu-item">' +
-                              '<a class="menu-link" href="https://google.com" target="_blank">' +
-                                '<span class="icon fa fa-eye"></span>' +
-                                '<span class="title">' + dictionary.go_to_store + '</span>' +
-                              '</a>' +
-                            '</li>' +
-                            '<li class="menu-item">' +
-                              '<a class="menu-link" href="' + url + '/themes">' +
-                                '<span class="icon fa fa-paint-brush"></span>' +
-                                '<span class="title">' + dictionary.themes + '</span>' +
-                              '</a>' +
-                            '</li>' +
-                            '<li class="menu-item">' +
-                              '<a class="menu-link" href="' + url + '/settings">' +
-                                '<span class="icon fa fa-wrench"></span>' +
-                                '<span class="title">' + dictionary.settings + '</span>' +
-                              '</a>' +
-                            '</li>' +
-                          '</ul>' +
-                        '</li>'
-      }
-
       var el = '<li class="menu-item">' +
                  '<a class="menu-link" href="/#/">' +
                    '<span class="icon fa fa-home"></span>' +
@@ -206,8 +176,9 @@ app.ready(function () {
                   '</a>' +
                '</li>' +
 
+               // channels will be rendered after
                '<li class="menu-category">' + dictionary.channels + '</li>' +
-               channelsList
+               '<span id="channels"></span>'
 
       $('#sidebar').append(el)
 
@@ -220,6 +191,10 @@ app.ready(function () {
     renderMenu()
 
     var renderApps = function () {
+      var menu = $('#apps')
+      // reset
+      menu.html('')
+
       // render applications on menu
       var el = '<li class="menu-item">' +
                  '<a class="menu-link" href="/#/apps/x">' +
@@ -227,8 +202,49 @@ app.ready(function () {
                    '<span class="title">App name</span>' +
                  '</a>' +
                '</li>'
-      $('#apps').append(el)
+      menu.append(el)
     }
     renderApps()
+
+    var renderChannels = function () {
+      var menu = $('#channels')
+      // reset
+      menu.html('')
+
+      for (var i = 0; i < 1; i++) {
+        var url = '/#/channels/channel_id'
+
+        // sales channels on menu
+        var el = '<li class="menu-item">' +
+                   '<a class="menu-link" href="javascript:;">' +
+                     '<span class="icon fa fa-shopping-bag"></span>' +
+                     '<span class="title">Channel name</span>' +
+                     '<span class="arrow"></span>' +
+                   '</a>' +
+                   '<ul class="menu-submenu">' +
+                     '<li class="menu-item">' +
+                       '<a class="menu-link" href="https://google.com" target="_blank">' +
+                         '<span class="icon fa fa-eye"></span>' +
+                         '<span class="title">' + dictionary.go_to_store + '</span>' +
+                       '</a>' +
+                     '</li>' +
+                     '<li class="menu-item">' +
+                       '<a class="menu-link" href="' + url + '/themes">' +
+                         '<span class="icon fa fa-paint-brush"></span>' +
+                         '<span class="title">' + dictionary.themes + '</span>' +
+                       '</a>' +
+                     '</li>' +
+                     '<li class="menu-item">' +
+                       '<a class="menu-link" href="' + url + '/settings">' +
+                         '<span class="icon fa fa-wrench"></span>' +
+                         '<span class="title">' + dictionary.settings + '</span>' +
+                       '</a>' +
+                     '</li>' +
+                   '</ul>' +
+                 '</li>'
+        menu.append(el)
+      }
+    }
+    renderChannels()
   }
 })
