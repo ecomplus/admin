@@ -133,6 +133,13 @@ main.scrollable > .main-content {
 }
 
 @media (max-width: 500px) {
+  .topbar-btn {
+    padding: 0 10px;
+  }
+  .topbar-divider {
+    display: none;
+  }
+
   .breadcrumb {
     display: none;
   }
