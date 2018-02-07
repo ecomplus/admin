@@ -143,6 +143,12 @@ main.scrollable > .main-content {
   margin-right: 10px;
 }
 
+// large search bar
+.topbar .topbar-left,
+.topbar .lookup {
+  width: 100%;
+}
+
 @media (max-width: 500px) {
   .topbar-btn {
     padding: 0 4px;
