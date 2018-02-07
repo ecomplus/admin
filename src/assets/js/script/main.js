@@ -159,16 +159,16 @@ app.ready(function () {
                '</li>' +
 
                '<li class="menu-item">' +
-                 '<a class="menu-link" href="javascript:;">' +
+                 '<a class="menu-link" href="/#/apps">' +
                    '<span class="icon fa fa-puzzle-piece"></span>' +
                    '<span class="title">Apps</span>' +
                  '</a>' +
                '</li>' +
                '<li class="menu-item">' +
-                  '<a class="menu-link" href="/#/settings">' +
-                    '<span class="icon fa fa-cogs"></span>' +
-                    '<span class="title">' + dictionary.settings + '</span>' +
-                  '</a>' +
+                 '<a class="menu-link" href="/#/settings">' +
+                   '<span class="icon fa fa-cogs"></span>' +
+                   '<span class="title">' + dictionary.settings + '</span>' +
+                 '</a>' +
                '</li>' +
 
                // channels will be rendered after
@@ -226,4 +226,9 @@ app.ready(function () {
     }
     renderChannels()
   }
+
+  // SPA
+  $(window).on('hashchange', function () {
+    console.log(window.location.hash)
+  })
 })
