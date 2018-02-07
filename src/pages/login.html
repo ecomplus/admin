@@ -57,28 +57,41 @@
             </div>
           </div>
 
-          <h4>Login</h4>
-          <p><small>Sign into your account</small></p>
-          <br>
-
-          <form class="form-type-material">
+          <form class="form-type-material" id="login-form">
             <div class="form-group">
-              <input type="text" class="form-control" id="username">
-              <label for="username">Username</label>
+              <input type="text" class="form-control" id="store-id">
+              <label for="store-id" class="i18n">
+                <span data-lang="en_us">Store ID</span>
+                <span data-lang="pt_br">ID da loja</span>
+              </label>
             </div>
-
+            <div class="form-group">
+              <input type="text" class="form-control" id="email">
+              <label for="email" class="i18n">
+                <span data-lang="en_us">Email</span>
+                <span data-lang="pt_br">E-mail</span>
+              </label>
+            </div>
             <div class="form-group">
               <input type="password" class="form-control" id="password">
-              <label for="password">Password</label>
+              <label for="password" class="i18n">
+                <span data-lang="en_us">Password</span>
+                <span data-lang="pt_br">Senha</span>
+              </label>
             </div>
 
             <div class="form-group flexbox">
               <div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" checked>
-                <label class="custom-control-label">Remember me</label>
+                <label class="custom-control-label i18n">
+                  <span data-lang="en_us">Remember me</span>
+                  <span data-lang="pt_br">Lembre-me</span>
+                </label>
               </div>
-
-              <a class="text-muted hover-primary fs-13" href="#">Forgot password?</a>
+              <a class="text-muted hover-primary fs-13 i18n" href="#">
+                <span data-lang="en_us">Forgot password?</span>
+                <span data-lang="pt_br">Esqueceu sua senha?</span>
+              </a>
             </div>
 
             <div class="form-group">
@@ -88,7 +101,16 @@
 
           <hr class="w-30px">
 
-          <p class="text-center text-muted fs-13 mt-20">Don't have an account? <a class="text-primary fw-500" href="#">Sign up</a></p>
+          <p class="text-center text-muted fs-13 mt-20 i18n">
+            <span data-lang="en_us">
+              Don't have an account?
+              <a class="fw-500" href="https://www.e-com.plus/">Sign up</a>
+            </span>
+            <span data-lang="pt_br">
+              Não possui uma conta?
+              <a class="fw-500" href="https://www.e-com.plus/">Cadastre-se</a>
+            </span>
+          </p>
         </div>
       </div>
     </div>
