@@ -135,6 +135,10 @@ main.scrollable > .main-content {
   opacity: 1;
 }
 
+.quickview {
+  z-index: 1002;
+}
+
 // fix icon alignment
 .topbar-btn.sidebar-toggler {
   padding-top: 4px;
