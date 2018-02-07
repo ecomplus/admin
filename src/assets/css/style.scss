@@ -152,6 +152,10 @@ main.scrollable > .main-content {
 .topbar .lookup {
   width: 100%;
 }
+.topbar .lookup-circle input:focus {
+  background-color: rgba($color-purple, .1);
+  color: $color-purple;
+}
 
 @media (max-width: 500px) {
   .topbar-btn {
