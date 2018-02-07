@@ -132,9 +132,15 @@ main.scrollable > .main-content {
   opacity: 1;
 }
 
+// fix icon alignment
+.topbar-btn.sidebar-toggler > i {
+  margin-top: 2px;
+}
+
 @media (max-width: 500px) {
   .topbar-btn {
-    padding: 0 10px;
+    padding: 0 6px;
+    min-width: 36px;
   }
   .topbar-divider {
     display: none;
