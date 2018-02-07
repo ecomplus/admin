@@ -158,17 +158,12 @@ app.ready(function () {
                  '</ul>' +
                '</li>' +
 
-               // apps will be rendered after
                '<li class="menu-item">' +
                  '<a class="menu-link" href="javascript:;">' +
                    '<span class="icon fa fa-puzzle-piece"></span>' +
                    '<span class="title">Apps</span>' +
-                   '<span class="arrow"></span>' +
                  '</a>' +
-                 '<ul class="menu-submenu" id="apps">' +
-                 '</ul>' +
                '</li>' +
-
                '<li class="menu-item">' +
                   '<a class="menu-link" href="/#/settings">' +
                     '<span class="icon fa fa-cogs"></span>' +
@@ -189,22 +184,6 @@ app.ready(function () {
       }
     }
     renderMenu()
-
-    var renderApps = function () {
-      var menu = $('#apps')
-      // reset
-      menu.html('')
-
-      // render applications on menu
-      var el = '<li class="menu-item">' +
-                 '<a class="menu-link" href="/#/apps/x">' +
-                   '<span class="dot"></span>' +
-                   '<span class="title">App name</span>' +
-                 '</a>' +
-               '</li>'
-      menu.append(el)
-    }
-    renderApps()
 
     var renderChannels = function () {
       var menu = $('#channels')
