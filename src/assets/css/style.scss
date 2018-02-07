@@ -128,6 +128,9 @@ main.scrollable > .main-content {
 #dock-chat {
   max-width: 75%;
 }
+.dock-header-inverse .dock-actions > * {
+  opacity: 1;
+}
 
 @media (max-width: 500px) {
   .breadcrumb {
