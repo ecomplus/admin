@@ -126,3 +126,9 @@ main.scrollable > .main-content {
   width: 100%;
   z-index: 101;
 }
+
+@media (max-width: 500px) {
+  .breadcrumb {
+    display: none;
+  }
+}
