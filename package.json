@@ -13,7 +13,8 @@
       "$",
       "app",
       "sidebar",
-      "login"
+      "login",
+      "Image"
     ]
   },
   "devDependencies": {
