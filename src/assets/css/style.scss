@@ -1,6 +1,11 @@
 @import 'scss/_variables.scss';
 @import 'fonts.css';
 
+// full image background
+#full-bg {
+  background-color: $color-purple;
+}
+
 .sidebar-navigation > .menu > .menu-item:hover {
   background-color: $color-pink;
 }
