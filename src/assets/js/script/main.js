@@ -57,6 +57,44 @@ app.ready(function () {
   }
 
   if (typeof login === 'boolean' && login === true) {
+    var dynamicBg = function (selector) {
+      // change background image
+      var images
+      var setImages = function () {
+        images = [
+          '../assets/img/bg/coffee.jpg',
+          '../assets/img/bg/notebook.jpg',
+          '../assets/img/bg/numbers.jpg',
+          '../assets/img/bg/pens.jpg',
+          '../assets/img/bg/table.jpg',
+          '../assets/img/bg/writer.jpg'
+        ]
+      }
+      setImages()
+
+      var changeBg = function () {
+        // load image first
+        var newImg = new Image()
+        newImg.onload = function () {
+          var img = this
+          $(selector).fadeOut(1000, function () {
+            $(this).css('background-image', 'url(' + img.src + ')').fadeIn()
+          })
+        }
+
+        // select random image from array
+        var el = Math.floor((Math.random() * (images.length - 1)))
+        newImg.src = images[el]
+        images.splice(el, 1)
+        if (images.length === 0) {
+          setImages()
+        }
+      }
+      changeBg()
+      setInterval(changeBg, 9000)
+    }
+    dynamicBg('#full-bg')
+
     // treat login form
   } else {
     // panel app
