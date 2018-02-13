@@ -125,7 +125,9 @@ app.ready(function () {
     }
   }
 
-  $('.i18n > *[data-lang="' + lang + '"]').show()
+  $('.i18n > *[data-lang="' + lang + '"]').show(400, function () {
+    $('.after-i18n').fadeIn()
+  })
 
   var dictionary = {
     // menu
