@@ -94,7 +94,11 @@ app.config({
 
 app.ready(function () {
   var el
-  var lang = 'pt_br'
+  var lang = localStorage.getItem('lang')
+  if (!lang) {
+    // default language
+    lang = 'pt_br'
+  }
 
   // set up the languages dropdown menu
   el = $('#langs-menu [data-lang="' + lang + '"]')
@@ -105,6 +109,12 @@ app.ready(function () {
     .find('img').attr('src', el.find('img').attr('src'))
     // set language initials
     .next().text(lang.split('_')[0].toUpperCase())
+
+  // change language onclick
+  $('#langs-menu > a').click(function () {
+    localStorage.setItem('lang', $(this).data('lang'))
+    location.reload()
+  })
 
   var i18n = function (label) {
     if (label.hasOwnProperty(lang)) {
