@@ -15,7 +15,9 @@
       "sidebar",
       "login",
       "Image",
-      "localStorage"
+      "localStorage",
+      "window",
+      "location"
     ]
   },
   "devDependencies": {
