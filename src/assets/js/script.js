@@ -93,7 +93,18 @@ app.config({
 */
 
 app.ready(function () {
+  var el
   var lang = 'pt_br'
+
+  // set up the languages dropdown menu
+  el = $('#langs-menu [data-lang="' + lang + '"]')
+  // $('#langs-menu > a').removeClass('active')
+  el.addClass('active')
+  $('#current-lang')
+    // copy img src
+    .find('img').attr('src', el.find('img').attr('src'))
+    // set language initials
+    .next().text(lang.split('_')[0].toUpperCase())
 
   var i18n = function (label) {
     if (label.hasOwnProperty(lang)) {
