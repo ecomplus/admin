@@ -16,6 +16,7 @@
       "login",
       "Image",
       "localStorage",
+      "sessionStorage",
       "window",
       "location",
       "md5"
