@@ -374,17 +374,6 @@
             <div class="media-list media-list-divided media-list-hover">
               <div class="media">
                 <div class="media-body">
-                  <p><strong>Sticky Topbar</strong></p>
-                  <p>Topbar is allways visible</p>
-                </div>
-                <label class="switch">
-                  <input type="checkbox" checked onchange="topbar.toggleFix()">
-                  <span class="switch-indicator"></span>
-                </label>
-              </div>
-
-              <div class="media">
-                <div class="media-body">
                   <p class="i18n">
                     <strong data-lang="en_us">Sidebar open</strong>
                     <strong data-lang="pt_br">Menu lateral aberto</strong>
@@ -408,11 +397,28 @@
                   </p>
                   <p class="i18n">
                     <span data-lang="en_us">White background</span>
-                    <span data-lang="pt_br">Plano de fundo branco</span>
+                    <span data-lang="pt_br">Fundo branco</span>
                   </p>
                 </div>
                 <label class="switch">
                   <input type="checkbox" onchange="$('.sidebar').toggleClass('sidebar-light')">
+                  <span class="switch-indicator"></span>
+                </label>
+              </div>
+
+              <div class="media">
+                <div class="media-body">
+                  <p class="i18n">
+                    <strong data-lang="en_us">Unfixed top bar</strong>
+                    <strong data-lang="pt_br">Barra superior não fixa</strong>
+                  </p>
+                  <p class="i18n">
+                    <span data-lang="en_us">Will not always be visible</span>
+                    <span data-lang="pt_br">Não estará sempre visível</span>
+                  </p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" onchange="topbar.toggleFix()">
                   <span class="switch-indicator"></span>
                 </label>
               </div>
