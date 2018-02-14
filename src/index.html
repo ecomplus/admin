@@ -373,11 +373,34 @@
             <div class="media-list media-list-divided media-list-hover">
               <div class="media">
                 <div class="media-body">
-                  <p><strong>Sticky Topbar</strong></p>
-                  <p>Topbar is allways visible</p>
+                  <p class="i18n">
+                    <strong data-lang="en_us">Sidebar open</strong>
+                    <strong data-lang="pt_br">Menu lateral aberto</strong>
+                  </p>
+                  <p class="i18n">
+                    <span data-lang="en_us">Displays icons and titles</span>
+                    <span data-lang="pt_br">Mostra ícones e títulos</span>
+                  </p>
                 </div>
                 <label class="switch">
-                  <input type="checkbox" checked onchange="topbar.toggleFix()">
+                  <input type="checkbox" onchange="sidebar.toggleFold()">
+                  <span class="switch-indicator"></span>
+                </label>
+              </div>
+
+              <div class="media">
+                <div class="media-body">
+                  <p class="i18n">
+                    <strong data-lang="en_us">Light sidebar</strong>
+                    <strong data-lang="pt_br">Menu lateral claro</strong>
+                  </p>
+                  <p class="i18n">
+                    <span data-lang="en_us">White background</span>
+                    <span data-lang="pt_br">Plano de fundo branco</span>
+                  </p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" onchange="$('.sidebar').toggleClass('sidebar-light')">
                   <span class="switch-indicator"></span>
                 </label>
               </div>
