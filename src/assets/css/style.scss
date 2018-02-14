@@ -156,6 +156,7 @@
   margin-top: 1px;
 }
 
+// prevent window width change
 /*
 main.scrollable {
   max-height: 100vh;
@@ -168,7 +169,6 @@ main.scrollable > .main-content {
 }
 */
 body {
-  // prevent window width change
   overflow-y: scroll;
 }
 
