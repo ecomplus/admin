@@ -346,9 +346,19 @@ app.ready(function () {
         routesHistory.push(route)
       }
 
+      // remove route dynamic params
+      var paths = route.split('/')
+      var uri = 'routes'
+      for (var i = 0; i < paths.length; i++) {
+        if (i % 2 === 0) {
+          uri += '/' + paths[i]
+        }
+      }
+      uri += '.html'
+
       $('#router > .loading').show()
       // load HTML content
-      $('#route-content').load('routes/' + route + '.html', function (responseText, textStatus, jqXHR) {
+      $('#route-content').load(uri, function (responseText, textStatus, jqXHR) {
         switch (textStatus) {
           case 'success':
           case 'notmodified':
