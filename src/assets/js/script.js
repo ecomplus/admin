@@ -217,12 +217,12 @@ app.ready(function () {
         form.addClass('ajax')
 
         $.ajax({
-          url: 'https://api.e-com.plus/v1/_login.json',
+          url: 'https://api.e-com.plus/v1/_login.json?username',
           method: 'POST',
           dataType: 'json',
           headers: {
             // random store ID
-            'X-Store-ID': 100
+            'X-Store-ID': 1
           },
           data: JSON.stringify({
             'username': username,
