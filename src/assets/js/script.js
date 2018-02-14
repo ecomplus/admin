@@ -336,6 +336,8 @@ app.ready(function () {
 
     // SPA
     var router = function (route) {
+      console.log('Go to route => ' + route)
+
       // load HTML content
       $('#router').load('routes/' + route + '.html', function (responseText, textStatus, jqXHR) {
         switch (textStatus) {
@@ -355,8 +357,8 @@ app.ready(function () {
     }
 
     $(window).on('hashchange', function () {
-      // cut prefix #/
       // eg.: #/any
+      // cut prefix #/
       var route = window.location.hash.slice(2)
       if (route === '') {
         // default index
