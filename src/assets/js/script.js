@@ -160,7 +160,9 @@ app.ready(function () {
   var apiError = function (json) {
     // handle API error response
     if (typeof json.user_message === 'object' && json.user_message !== null) {
-      app.toast(json.user_message[lang])
+      app.toast(json.user_message[lang], {
+        duration: 7000
+      })
     }
   }
 
