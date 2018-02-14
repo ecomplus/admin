@@ -6,6 +6,12 @@
   background-color: $color-orange;
 }
 
+// checkbox switch
+.switch input:checked ~ .switch-indicator {
+  background: rgba($color-primary, .25);
+}
+
+// sidebar menu
 .sidebar-navigation > .menu .menu-item:hover {
   background-color: $color-pink;
 }

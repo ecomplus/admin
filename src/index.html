@@ -370,6 +370,19 @@
       <div class="quickview-body">
         <div class="tab-content">
           <div class="tab-pane fade" id="qv-tab-settings">
+            <div class="media-list media-list-divided media-list-hover">
+              <div class="media">
+                <div class="media-body">
+                  <p><strong>Sticky Topbar</strong></p>
+                  <p>Topbar is allways visible</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" checked onchange="topbar.toggleFix()">
+                  <span class="switch-indicator"></span>
+                </label>
+              </div>
+            </div>
+
             <div class="dropdown p-20">
               <span class="btn fs-13" data-toggle="dropdown" id="current-lang">
                 <img class="mr-10" height="14"><strong></strong>
