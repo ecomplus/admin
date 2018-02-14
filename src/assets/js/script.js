@@ -234,12 +234,10 @@ app.ready(function () {
         // call ajax
         form.addClass('ajax')
 
-        var authFail = function (jqXHR, textStatus) {
+        var authFail = function (jqXHR, textStatus, err) {
           if (jqXHR.status !== 403) {
             // unexpected status
-            console.error(jqXHR)
-            console.error(jqXHR.status)
-            console.error(textStatus)
+            console.error(err)
           }
 
           apiError(jqXHR.responseJSON)
