@@ -207,7 +207,7 @@ app.ready(function () {
             sessionStorage.setItem('auth.expires', json.expires)
 
             // redirect to dashboard
-            window.location = '/#/'
+            window.location = '/'
           })
           .fail(authFail)
         })
@@ -232,6 +232,18 @@ app.ready(function () {
     // hide for security
     sessionStorage.removeItem('auth.my_id')
     sessionStorage.removeItem('auth.access_token')
+
+    window.onbeforeunload = function (e) {
+      // show promp before page redirect
+      var dialogText = 'Are you sure you want to leave?'
+      e.returnValue = dialogText
+      return dialogText
+    }
+
+    // SPA
+    $(window).on('hashchange', function () {
+      console.log(window.location.hash)
+    })
 
     var resources = {
       'products': {
@@ -401,10 +413,13 @@ app.ready(function () {
 
     // show rendered application
     $('#dashboard').fadeIn()
-  }
 
-  // SPA
-  $(window).on('hashchange', function () {
-    console.log(window.location.hash)
-  })
+    // home
+    if (window.location.hash === '#/') {
+      // force event
+      $(window).trigger('hashchange')
+    } else {
+      window.location = '/#/'
+    }
+  }
 })
