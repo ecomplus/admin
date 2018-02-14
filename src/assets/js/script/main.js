@@ -258,7 +258,17 @@ app.ready(function () {
 
     // SPA
     $(window).on('hashchange', function () {
-      console.log(window.location.hash)
+      // cut prefix #/
+      // eg.: #/any
+      var route = window.location.hash.slice(2)
+      if (route === '') {
+        // default index
+        // go home
+        window.location = '/#/home'
+        return
+      }
+
+      console.log(route)
     })
 
     var resources = {
@@ -429,12 +439,7 @@ app.ready(function () {
     // show rendered application
     $('#dashboard').fadeIn()
 
-    // home
-    if (window.location.hash === '#/') {
-      // force event
-      $(window).trigger('hashchange')
-    } else {
-      window.location = '/#/'
-    }
+    // force routing
+    $(window).trigger('hashchange')
   }
 })
