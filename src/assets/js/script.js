@@ -286,7 +286,7 @@ app.ready(function () {
             sessionStorage.setItem('auth.access_token', json.access_token)
             sessionStorage.setItem('auth.expires', json.expires)
 
-            // redirect to app
+            // redirect to dashboard
             window.location = '/#/'
           })
           .fail(authFail)
@@ -295,7 +295,24 @@ app.ready(function () {
       }
     })
   } else {
-    // panel app
+    // dashboard app
+    var storeId = localStorage.getItem('store_id')
+    var myId, accessToken
+    if (storeId > 0) {
+      myId = sessionStorage.getItem('auth.my_id')
+      accessToken = sessionStorage.getItem('auth.access_token')
+    }
+    if (!myId || !accessToken) {
+      // redirect to login
+      window.location = '/pages/login.html'
+      // force stop
+      return
+    }
+    console.log('Hello #' + myId)
+    // hide for security
+    sessionStorage.removeItem('auth.my_id')
+    sessionStorage.removeItem('auth.access_token')
+
     var resources = {
       'products': {
         'label': {
@@ -461,6 +478,9 @@ app.ready(function () {
       }
     }
     renderChannels()
+
+    // show rendered application
+    $('#dashboard').fadeIn()
   }
 
   // SPA
