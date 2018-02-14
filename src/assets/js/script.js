@@ -338,8 +338,9 @@ app.ready(function () {
     var router = function (route) {
       console.log('Go to route => ' + route)
 
+      $('#router > .loading').show()
       // load HTML content
-      $('#router').load('routes/' + route + '.html', function (responseText, textStatus, jqXHR) {
+      $('#route-content').load('routes/' + route + '.html', function (responseText, textStatus, jqXHR) {
         switch (textStatus) {
           case 'success':
           case 'notmodified':
@@ -353,6 +354,8 @@ app.ready(function () {
               router('404')
             }
         }
+        // ajax done
+        $('#router > .loading').hide()
       })
     }
 
