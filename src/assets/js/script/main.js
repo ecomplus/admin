@@ -76,16 +76,34 @@ app.ready(function () {
     'settings': i18n({
       'en_us': 'Settings',
       'pt_br': 'Configurações'
+    }),
+    'unknown_error': i18n({
+      'en_us': 'Unknown error, please try again',
+      'pt_br': 'Erro desconhecido, por favor tente novamente'
     })
   }
 
   var apiError = function (json) {
     // handle API error response
-    if (typeof json.user_message === 'object' && json.user_message !== null) {
-      app.toast(json.user_message[lang], {
-        duration: 7000
-      })
+    let msg
+    if (typeof json === 'object' && json !== null) {
+      if (json.hasOwnProperty('user_message')) {
+        msg = json.user_message[lang]
+      } else if (json.hasOwnProperty('message')) {
+        msg = json.message
+      }
     }
+    if (msg !== undefined) {
+      // valid JSON error
+      console.log('API Error Code: ' + json.error_code)
+    } else {
+      msg = dictionary.unknown_error
+    }
+
+    // notification
+    app.toast(msg, {
+      duration: 7000
+    })
   }
 
   if (typeof login === 'boolean' && login === true) {
@@ -156,15 +174,13 @@ app.ready(function () {
           console.log(data)
         })
         .fail(function (jqXHR, textStatus) {
-          if (jqXHR.status === 403) {
-            // Forbidden
-            apiError(jqXHR.responseJSON)
-          } else {
+          if (jqXHR.status !== 403) {
             // unexpected status
             console.error(jqXHR)
             console.error(jqXHR.status)
             console.error(textStatus)
           }
+          apiError(jqXHR.responseJSON)
         })
         .always(function () {
           form.removeClass('ajax')
