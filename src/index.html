@@ -76,7 +76,7 @@
     <!-- END Topbar -->
 
     <!-- Main container -->
-    <main class="main-container scrollable">
+    <main class="main-container">
 
       <div class="card card-body" id="search-results">
         <div class="row gap-y">
@@ -234,6 +234,7 @@
         </div>
       </div><!--/.main-content -->
 
+      <div id="router"></div><!-- jQuery load -->
 
       <!-- Footer -->
       <footer class="site-footer">
@@ -371,6 +372,17 @@
         <div class="tab-content">
           <div class="tab-pane fade" id="qv-tab-settings">
             <div class="media-list media-list-divided media-list-hover">
+              <div class="media">
+                <div class="media-body">
+                  <p><strong>Sticky Topbar</strong></p>
+                  <p>Topbar is allways visible</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" checked onchange="topbar.toggleFix()">
+                  <span class="switch-indicator"></span>
+                </label>
+              </div>
+
               <div class="media">
                 <div class="media-body">
                   <p class="i18n">

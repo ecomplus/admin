@@ -156,6 +156,7 @@
   margin-top: 1px;
 }
 
+/*
 main.scrollable {
   max-height: 100vh;
 }
@@ -164,6 +165,11 @@ main.scrollable > .ps-scrollbar-y-rail {
 }
 main.scrollable > .main-content {
   padding-bottom: 60px;
+}
+*/
+body {
+  // prevent window width change
+  overflow-y: scroll;
 }
 
 .dock-list {
