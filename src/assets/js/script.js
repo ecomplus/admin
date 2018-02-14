@@ -93,6 +93,19 @@ app.config({
 */
 
 app.ready(function () {
+  var session = {}
+  var reload = function () {
+    // handle page reload
+    // keep session
+    for (var prop in session) {
+      if (session.hasOwnProperty(prop)) {
+        sessionStorage.setItem(prop, session[prop])
+      }
+    }
+    // all done, reload browser tab
+    location.reload()
+  }
+
   var el
   var lang = localStorage.getItem('lang')
   if (!lang || !/^[a-z]{2}(_[a-z]{2})?$/.test(lang)) {
@@ -113,7 +126,7 @@ app.ready(function () {
   // change language onclick
   $('#langs-menu > a').click(function () {
     localStorage.setItem('lang', $(this).data('lang'))
-    location.reload()
+    reload()
   })
 
   var i18n = function (label) {
@@ -258,7 +271,7 @@ app.ready(function () {
           })
         })
         .done(function (json) {
-          // logged
+          console.log('Logged')
           // keep store ID
           var storeId = json.store_id
           localStorage.setItem('store_id', storeId)
@@ -280,9 +293,9 @@ app.ready(function () {
             // authenticated
             // store authentication on browser session
             // loss data when browser tab is closed
-            sessionStorage.setItem('auth.my_id', json.my_id)
-            sessionStorage.setItem('auth.access_token', json.access_token)
-            sessionStorage.setItem('auth.expires', json.expires)
+            sessionStorage.setItem('my_id', json.my_id)
+            sessionStorage.setItem('access_token', json.access_token)
+            sessionStorage.setItem('expires', json.expires)
 
             // redirect to dashboard
             window.location = '/'
@@ -295,21 +308,22 @@ app.ready(function () {
   } else {
     // dashboard app
     var storeId = localStorage.getItem('store_id')
-    var myId, accessToken
+    session.my_id = session.access_token = null
+    // try to start authentication session
     if (storeId > 0) {
-      myId = sessionStorage.getItem('auth.my_id')
-      accessToken = sessionStorage.getItem('auth.access_token')
+      session.my_id = sessionStorage.getItem('my_id')
+      session.access_token = sessionStorage.getItem('access_token')
     }
-    if (!myId || !accessToken) {
+    if (!session.my_id || !session.access_token) {
       // redirect to login
       window.location = '/pages/login.html'
       // force stop
       return
     }
-    console.log('Hello #' + myId)
+    console.log('Hello #' + session.my_id)
     // hide for security
-    sessionStorage.removeItem('auth.my_id')
-    sessionStorage.removeItem('auth.access_token')
+    sessionStorage.removeItem('my_id')
+    sessionStorage.removeItem('access_token')
 
     window.onbeforeunload = function (e) {
       // show promp before page redirect
