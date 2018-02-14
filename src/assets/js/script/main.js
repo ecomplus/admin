@@ -261,7 +261,8 @@ app.ready(function () {
     })
 
     // SPA
-    var router = function (route) {
+    var routesHistory = []
+    var router = function (route, internal) {
       console.log('Go to route => ' + route)
 
       $('#router > .loading').show()
@@ -277,12 +278,17 @@ app.ready(function () {
             // error
             if (jqXHR.status === 404) {
               // not found
-              router('404')
+              // internal rewrite
+              router('404', true)
             }
         }
         // ajax done
         $('#router > .loading').hide()
       })
+
+      if (!internal) {
+        routesHistory.push(route)
+      }
     }
 
     $(window).on('hashchange', function () {
