@@ -157,6 +157,13 @@ app.ready(function () {
     })
   }
 
+  var apiError = function (json) {
+    // handle API error response
+    if (typeof json.user_message === 'object' && json.user_message !== null) {
+      app.toast(json.user_message[lang])
+    }
+  }
+
   if (typeof login === 'boolean' && login === true) {
     var dynamicBg = function (selector) {
       // change background image
@@ -197,6 +204,49 @@ app.ready(function () {
     dynamicBg('#full-bg')
 
     // treat login form
+    $('#login-form').submit(function () {
+      if (!$(this).hasClass('ajax')) {
+        var username = $('#username').val()
+        // get pass md5 hash
+        var password = md5($('#password').val())
+
+        var form = $(this)
+        // call ajax
+        form.addClass('ajax')
+
+        $.ajax({
+          url: 'https://api.e-com.plus/v1/_login.json',
+          method: 'POST',
+          dataType: 'json',
+          headers: {
+            // random store ID
+            'X-Store-ID': 100
+          },
+          data: JSON.stringify({
+            'username': username,
+            'pass_md5_hash': password
+          })
+        })
+        .done(function (data) {
+          // logged
+          console.log(data)
+        })
+        .fail(function (jqXHR, textStatus) {
+          if (jqXHR.status === 403) {
+            // Forbidden
+            apiError(jqXHR.responseJSON)
+          } else {
+            // unexpected status
+            console.error(jqXHR)
+            console.error(jqXHR.status)
+            console.error(textStatus)
+          }
+        })
+        .always(function () {
+          form.removeClass('ajax')
+        })
+      }
+    })
   } else {
     // panel app
     var resources = {
