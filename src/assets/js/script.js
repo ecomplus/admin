@@ -140,9 +140,13 @@ app.ready(function () {
     }
   }
 
-  $('.i18n > *[data-lang="' + lang + '"]').show(400, function () {
-    $('.after-i18n').fadeIn()
-  })
+  // render language texts
+  $('head').append('<style type="text/css">' +
+    '.i18n > [data-lang="' + lang + '"]{' +
+      'display: inline;' +
+    '}' +
+  '</style>')
+  $('.after-i18n').fadeIn()
 
   var dictionary = {
     // menu
