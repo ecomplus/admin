@@ -341,7 +341,10 @@ app.ready(function () {
     // SPA
     var routesHistory = []
     var router = function (route, internal) {
-      console.log('Go to route => ' + route)
+      if (!internal) {
+        console.log('Go to route => ' + route)
+        routesHistory.push(route)
+      }
 
       $('#router > .loading').show()
       // load HTML content
@@ -363,10 +366,6 @@ app.ready(function () {
         // ajax done
         $('#router > .loading').hide()
       })
-
-      if (!internal) {
-        routesHistory.push(route)
-      }
     }
 
     $(window).on('hashchange', function () {
@@ -380,6 +379,17 @@ app.ready(function () {
         return
       }
       router(route)
+    })
+
+    $('#previous-route').click(function () {
+      var index = routesHistory.length - 2
+      if (index >= 0) {
+        // go to last visited route
+        window.location = '/#/' + routesHistory[index]
+        // fix routes history pointer
+        routesHistory.pop()
+        routesHistory.pop()
+      }
     })
 
     var resources = {
