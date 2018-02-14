@@ -85,7 +85,7 @@ app.ready(function () {
 
   var apiError = function (json) {
     // handle API error response
-    let msg
+    var msg
     if (typeof json === 'object' && json !== null) {
       if (json.hasOwnProperty('user_message')) {
         msg = json.user_message[lang]
