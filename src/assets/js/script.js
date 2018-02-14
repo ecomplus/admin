@@ -170,10 +170,6 @@ app.ready(function () {
       'en_us': 'Settings',
       'pt_br': 'Configurações'
     }),
-    'notifications': i18n({
-      'en_us': 'Notifications',
-      'pt_br': 'Notificações'
-    }),
     'unknown_error': i18n({
       'en_us': 'Unknown error, please try again',
       'pt_br': 'Erro desconhecido, por favor tente novamente'
@@ -508,10 +504,6 @@ app.ready(function () {
       }
     }
     renderChannels()
-
-    // global quickview
-    $('#qv-nav-settings').text(dictionary.settings)
-    $('#qv-nav-notifications').text(dictionary.notifications)
 
     // show rendered application
     $('#dashboard').fadeIn()
