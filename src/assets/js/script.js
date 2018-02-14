@@ -95,7 +95,7 @@ app.config({
 app.ready(function () {
   var el
   var lang = localStorage.getItem('lang')
-  if (!lang) {
+  if (!lang || !/^[a-z]{2}(_[a-z]{2})?$/.test(lang)) {
     // default language
     lang = 'pt_br'
   }
@@ -234,6 +234,18 @@ app.ready(function () {
         // call ajax
         form.addClass('ajax')
 
+        var authFail = function (jqXHR, textStatus) {
+          if (jqXHR.status !== 403) {
+            // unexpected status
+            console.error(jqXHR)
+            console.error(jqXHR.status)
+            console.error(textStatus)
+          }
+
+          apiError(jqXHR.responseJSON)
+          form.removeClass('ajax')
+        }
+
         $.ajax({
           url: 'https://api.e-com.plus/v1/_login.json?username',
           method: 'POST',
@@ -247,22 +259,39 @@ app.ready(function () {
             'pass_md5_hash': password
           })
         })
-        .done(function (data) {
+        .done(function (json) {
           // logged
-          console.log(data)
+          // keep store ID
+          var storeId = json.store_id
+          localStorage.setItem('store_id', storeId)
+
+          // authenticate
+          $.ajax({
+            url: 'https://api.e-com.plus/v1/_authenticate.json',
+            method: 'POST',
+            dataType: 'json',
+            headers: {
+              'X-Store-ID': storeId
+            },
+            data: JSON.stringify({
+              '_id': json._id,
+              'api_key': json.api_key
+            })
+          })
+          .done(function (json) {
+            // authenticated
+            // store authentication on browser session
+            // loss data when browser tab is closed
+            sessionStorage.setItem('auth.my_id', json.my_id)
+            sessionStorage.setItem('auth.access_token', json.access_token)
+            sessionStorage.setItem('auth.expires', json.expires)
+
+            // redirect to app
+            window.location = '/#/'
+          })
+          .fail(authFail)
         })
-        .fail(function (jqXHR, textStatus) {
-          if (jqXHR.status !== 403) {
-            // unexpected status
-            console.error(jqXHR)
-            console.error(jqXHR.status)
-            console.error(textStatus)
-          }
-          apiError(jqXHR.responseJSON)
-        })
-        .always(function () {
-          form.removeClass('ajax')
-        })
+        .fail(authFail)
       }
     })
   } else {
