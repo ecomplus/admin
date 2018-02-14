@@ -387,11 +387,14 @@ app.ready(function () {
 
     var renderChannels = function () {
       var menu = $('#sidebar')
+      // reset
+      menu.find('.li-channel').remove()
+
       for (var i = 0; i < 1; i++) {
         var url = '/#/channels/channel_id'
 
         // sales channels on menu
-        var el = '<li class="menu-item">' +
+        var el = '<li class="menu-item li-channel">' +
                    '<a class="menu-link" href="javascript:;">' +
                      '<span class="icon fa fa-shopping-bag"></span>' +
                      '<span class="title">Channel name</span>' +
