@@ -382,13 +382,12 @@ app.ready(function () {
     })
 
     $('#previous-route').click(function () {
-      var index = routesHistory.length - 2
-      if (index >= 0) {
-        // go to last visited route
-        window.location = '/#/' + routesHistory[index]
+      if (routesHistory.length - 2 >= 0) {
         // fix routes history pointer
         routesHistory.pop()
-        routesHistory.pop()
+        var route = routesHistory.pop()
+        // go to last visited route
+        window.location = '/#/' + route
       }
     })
 
