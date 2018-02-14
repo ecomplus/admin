@@ -1,6 +1,11 @@
 @import 'scss/_variables.scss';
 @import 'fonts.css';
 
+// notification
+.toast {
+  background-color: $color-orange;
+}
+
 .sidebar-navigation > .menu .menu-item:hover {
   background-color: $color-pink;
 }
@@ -87,11 +92,13 @@
   }
 }
 
+// language variations
 .i18n > *,
 .after-i18n {
   display: none;
 }
 
+// ajax utility classes
 .ajax-form {
   position: relative;
 }
