@@ -257,6 +257,25 @@ app.ready(function () {
     })
 
     // SPA
+    var router = function (route) {
+      // load HTML content
+      $('#router').load('routes/' + route + '.html', function (responseText, textStatus, jqXHR) {
+        switch (textStatus) {
+          case 'success':
+          case 'notmodified':
+            // successful response
+            break
+
+          default:
+            // error
+            if (jqXHR.status === 404) {
+              // not found
+              router('404')
+            }
+        }
+      })
+    }
+
     $(window).on('hashchange', function () {
       // cut prefix #/
       // eg.: #/any
@@ -267,8 +286,7 @@ app.ready(function () {
         window.location = '/#/home'
         return
       }
-
-      console.log(route)
+      router(route)
     })
 
     var resources = {
