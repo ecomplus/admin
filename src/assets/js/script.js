@@ -451,8 +451,7 @@ app.ready(function () {
                '</li>' +
 
                // channels will be rendered after
-               '<li class="menu-category">' + dictionary.channels + '</li>' +
-               '<span id="channels"></span>'
+               '<li class="menu-category">' + dictionary.channels + '</li>'
 
       $('#sidebar').append(el)
 
@@ -465,10 +464,7 @@ app.ready(function () {
     renderMenu()
 
     var renderChannels = function () {
-      var menu = $('#channels')
-      // reset
-      menu.html('')
-
+      var menu = $('#sidebar')
       for (var i = 0; i < 1; i++) {
         var url = '/#/channels/channel_id'
 

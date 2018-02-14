@@ -12,15 +12,25 @@
 }
 
 // sidebar menu
-.sidebar-navigation > .menu .menu-item:hover {
-  background-color: $color-pink;
+.sidebar:not(.sidebar-light) .sidebar-navigation {
+  background-color: darken($sidebar-header-bg, 5.5%);
 }
-.sidebar-navigation .menu-submenu > .menu-item:hover {
-  background-color: $color-purple;
+.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item > .menu-link {
+  color: rgba($white, .75);
 }
-.sidebar .menu-submenu .menu-item:hover > .menu-link .dot::after {
-  background-color: #fff;
-  border-color: #fff;
+.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item:hover > .menu-link {
+  color: $white;
+  background-color: darken($sidebar-header-bg, 7.4%);
+}
+.sidebar:not(.sidebar-light) .sidebar-navigation .menu-submenu {
+  background-color: darken($sidebar-header-bg, 8.1%);
+}
+.sidebar:not(.sidebar-light) .menu-submenu .menu-link {
+  opacity: 1;
+  color: rgba($white, .55);
+}
+.sidebar:not(.sidebar-light) .menu-submenu .menu-item:hover > .menu-link {
+  color: $white;
 }
 
 .header-action .nav-link.active,
@@ -128,7 +138,7 @@
   position: relative;
 }
 .btn-avatar .badge {
-  border: 2px solid #fff;
+  border: 2px solid $white;
   z-index: 2;
   display: none;
   position: absolute;
