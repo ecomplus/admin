@@ -102,6 +102,8 @@ app.ready(function () {
         sessionStorage.setItem(prop, session[prop])
       }
     }
+    // skip confirmation promp
+    $(window).off('beforeunload')
     // all done, reload browser tab
     location.reload()
   }
@@ -325,12 +327,12 @@ app.ready(function () {
     sessionStorage.removeItem('my_id')
     sessionStorage.removeItem('access_token')
 
-    window.onbeforeunload = function (e) {
+    $(window).on('beforeunload', function (e) {
       // show promp before page redirect
       var dialogText = 'Are you sure you want to leave?'
       e.returnValue = dialogText
       return dialogText
-    }
+    })
 
     // SPA
     $(window).on('hashchange', function () {
