@@ -17,7 +17,8 @@
       "Image",
       "localStorage",
       "window",
-      "location"
+      "location",
+      "md5"
     ]
   },
   "devDependencies": {
