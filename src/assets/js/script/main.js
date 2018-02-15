@@ -24,7 +24,7 @@ app.ready(function () {
         sessionStorage.setItem(prop, session[prop])
       }
     }
-    // skip confirmation promp
+    // skip confirmation prompt
     $(window).off('beforeunload')
     // all done, reload browser tab
     location.reload()
@@ -524,5 +524,22 @@ app.ready(function () {
 
     // force routing
     $(window).trigger('hashchange')
+
+    // global quickview
+    $('.qv-close').click(function () {
+      quickview.close($(this).closest('.quickview'))
+    })
+
+    // logout buttons
+    $('.logout').click(function () {
+      // open confirmation modal
+      $('#modal-logout').modal('show')
+    })
+    $('#logout').click(function () {
+      // skip confirmation promp
+      $(window).off('beforeunload')
+      // just redirect to lose session and logout
+      window.location = '/'
+    })
   }
 })

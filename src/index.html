@@ -543,14 +543,14 @@
       </div>
 
       <footer class="quickview-footer flex-row-reverse">
-        <button class="btn btn-sm btn-info btn-label">
+        <a class="btn btn-sm btn-info btn-label text-white qv-close" href="/#/profile">
           <label><i class="ti-user"></i></label>
           <span class="i18n">
             <span data-lang="en_us">Profile</span>
             <span data-lang="pt_br">Perfil</span>
           </span>
-        </button>
-        <button class="btn btn-sm btn-secondary btn-label">
+        </a>
+        <button class="btn btn-sm btn-secondary btn-label qv-close logout">
           <label><i class="ti-power-off"></i></label>
           <span class="i18n">
             <span data-lang="en_us">Logout</span>
@@ -560,6 +560,43 @@
       </footer>
     </div>
     <!-- END Global quickview -->
+
+    <!-- Modal -->
+    <div class="modal modal-center fade" id="modal-logout" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title i18n">
+              <span data-lang="en_us">Going out...</span>
+              <span data-lang="pt_br">Saindo...</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="i18n">
+              <span data-lang="en_us">Are you sure you want to leave?</span>
+              <span data-lang="pt_br">Você tem certeza de deseja sair?</span>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Stay logged</span>
+                <span data-lang="pt_br">Continuar logado</span>
+              </span>
+            </button>
+            <button class="btn btn-bold btn-pure btn-danger" id="logout">
+              <span class="i18n">
+                <span data-lang="en_us">Logout</span>
+                <span data-lang="pt_br">Sair</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Scripts -->
     <script src="../assets/js/core.min.js"></script>

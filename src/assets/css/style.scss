@@ -179,10 +179,19 @@ main.scrollable > .main-content {
 }
 */
 body {
-  overflow-y: scroll;
+  overflow-y: scroll !important;
+}
+// fix modal window width bugs
+.modal-open,
+.modal-open .modal {
+  padding-right: 0 !important;
+}
+.modal-open .topbar {
+  padding-right: 18px;
 }
 
-.dock-list {
+.dock-list,
+.modal-open .dock-list {
   z-index: 1001;
 }
 #dock-chat {
