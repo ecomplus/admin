@@ -141,6 +141,10 @@
   display: none;
   z-index: 3;
 }
+#router,
+#router-content {
+  flex: 1 0 auto;
+}
 
 .btn-avatar {
   width: 65px;
