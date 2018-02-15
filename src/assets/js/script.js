@@ -613,6 +613,7 @@ app.ready(function () {
       // open confirmation modal
       $('#modal-logout').modal('show')
     })
+
     $('#logout').click(function () {
       // skip confirmation promp
       $(window).off('beforeunload')
