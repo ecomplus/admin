@@ -6,4 +6,9 @@
 
 var resourceSlug = window.routeParams[0]
 var resource = window.apiResources[resourceSlug]
-console.log(resource)
+var lang = window.lang
+
+$('#resource-name').text(resource.label[lang])
+
+// display content
+$('#route-content > *').fadeIn()
