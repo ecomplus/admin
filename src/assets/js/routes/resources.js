@@ -22,13 +22,27 @@ var Route = function () {
   var i18n = window.i18n
 
   var action = window.routeParams[1]
-  if (!action) {
+  if (action === undefined) {
     action = 'list'
   } else {
     switch (action) {
       case 'create':
+        if (window.routeParams.length > 2) {
+          // should not have resource ID, and no other parameter
+          window.e404()
+          return
+        }
+        break
+
       case 'edit':
-        // continue
+        if (window.routeParams.length === 3) {
+          var resourceId = window.routeParams[2]
+          console.log(resourceId)
+        } else {
+          // edit requires ID of resource
+          window.e404()
+          return
+        }
         break
 
       default:
@@ -36,21 +50,6 @@ var Route = function () {
         window.e404()
         return
     }
-  }
-
-  if (action === 'edit') {
-    if (window.routeParams.length === 3) {
-      var resourceId = window.routeParams[2]
-      console.log(resourceId)
-    } else {
-      // edit requires ID of resource
-      window.e404()
-      return
-    }
-  } else if (window.routeParams.length >= 3) {
-    // should not have resource ID, and no other parameter
-    window.e404()
-    return
   }
 
   var dictionary = {
