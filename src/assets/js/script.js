@@ -304,7 +304,14 @@ app.ready(function () {
             sessionStorage.setItem('expires', json.expires)
 
             // redirect to dashboard
-            window.location = '/'
+            var goTo = sessionStorage.getItem('go_to')
+            if (goTo) {
+              sessionStorage.removeItem('go_to')
+            } else {
+              // redirect to index
+              goTo = '/'
+            }
+            window.location = goTo
           })
           .fail(authFail)
         })
@@ -322,6 +329,7 @@ app.ready(function () {
     }
     if (!session.my_id || !session.access_token) {
       // redirect to login
+      sessionStorage.setItem('go_to', window.location.href)
       window.location = '/pages/login.html'
       // force stop
       return
@@ -339,11 +347,11 @@ app.ready(function () {
     })
 
     // SPA
-    var routesHistory = []
+    window.routesHistory = []
     var router = function (route, internal) {
       if (!internal) {
         console.log('Go to route => ' + route)
-        routesHistory.push(route)
+        window.routesHistory.push(route)
       }
 
       // remove route dynamic params
@@ -392,10 +400,10 @@ app.ready(function () {
     })
 
     $('#previous-route').click(function () {
-      if (routesHistory.length - 2 >= 0) {
+      if (window.routesHistory.length - 2 >= 0) {
         // fix routes history pointer
-        routesHistory.pop()
-        var route = routesHistory.pop()
+        window.routesHistory.pop()
+        var route = window.routesHistory.pop()
         // go to last visited route
         window.location = '/#/' + route
       }

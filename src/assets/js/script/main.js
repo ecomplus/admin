@@ -226,7 +226,14 @@ app.ready(function () {
             sessionStorage.setItem('expires', json.expires)
 
             // redirect to dashboard
-            window.location = '/'
+            var goTo = sessionStorage.getItem('go_to')
+            if (goTo) {
+              sessionStorage.removeItem('go_to')
+            } else {
+              // redirect to index
+              goTo = '/'
+            }
+            window.location = goTo
           })
           .fail(authFail)
         })
@@ -244,6 +251,7 @@ app.ready(function () {
     }
     if (!session.my_id || !session.access_token) {
       // redirect to login
+      sessionStorage.setItem('go_to', window.location.href)
       window.location = '/pages/login.html'
       // force stop
       return
