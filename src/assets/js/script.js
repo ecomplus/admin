@@ -392,7 +392,7 @@ app.ready(function () {
       for (var i = 1; i < paths.length; i++) {
         // URI param
         window.routeParams.push(paths[i])
-      }2
+      }
 
       $('#router > .loading').show()
       // load HTML content
