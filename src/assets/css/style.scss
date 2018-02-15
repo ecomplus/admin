@@ -32,6 +32,9 @@
 .sidebar:not(.sidebar-light) .menu-submenu .menu-item:hover > .menu-link {
   color: $white;
 }
+.sidebar:not(.sidebar-light) .ps-container > .ps-scrollbar-y-rail > .ps-scrollbar-y {
+  background-color: rgba($white, .35);
+}
 
 .header-action .nav-link.active,
 .header-action .nav-link:hover {
