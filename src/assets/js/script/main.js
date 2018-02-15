@@ -261,11 +261,11 @@ app.ready(function () {
     })
 
     // SPA
-    var routesHistory = []
+    window.routesHistory = []
     var router = function (route, internal) {
       if (!internal) {
         console.log('Go to route => ' + route)
-        routesHistory.push(route)
+        window.routesHistory.push(route)
       }
 
       // remove route dynamic params
@@ -314,10 +314,10 @@ app.ready(function () {
     })
 
     $('#previous-route').click(function () {
-      if (routesHistory.length - 2 >= 0) {
+      if (window.routesHistory.length - 2 >= 0) {
         // fix routes history pointer
-        routesHistory.pop()
-        var route = routesHistory.pop()
+        window.routesHistory.pop()
+        var route = window.routesHistory.pop()
         // go to last visited route
         window.location = '/#/' + route
       }
