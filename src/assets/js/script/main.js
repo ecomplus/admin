@@ -330,12 +330,17 @@ app.ready(function () {
             if (jqXHR.status === 404) {
               // not found
               // internal rewrite
-              router('404', true)
+              window.e404()
             }
         }
         // ajax done
         $('#router > .loading').hide()
       })
+    }
+
+    // global 404 error function
+    window.e404 = function () {
+      router('404', true)
     }
 
     $(window).on('hashchange', function () {
