@@ -40,6 +40,7 @@ app.ready(function () {
     // default language
     lang = 'pt_br'
   }
+  window.lang = lang
 
   // set up the languages dropdown menu
   el = $('#langs-menu [data-lang="' + lang + '"]')

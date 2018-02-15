@@ -4,4 +4,6 @@
 
 'use strict'
 
-alert('test')
+var resourceSlug = window.routeParams[0]
+var resource = window.apiResources[resourceSlug]
+console.log(resource)
