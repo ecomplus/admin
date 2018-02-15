@@ -148,6 +148,9 @@
 #router-content {
   flex: 1 0 auto;
 }
+#router-content > * {
+  display: none;
+}
 
 .btn-avatar {
   width: 65px;
