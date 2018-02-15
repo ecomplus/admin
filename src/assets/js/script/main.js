@@ -170,6 +170,13 @@ app.ready(function () {
       $('#username').val(username)
     }
 
+    // fix problem with label above the preset values
+    $('#username, #password').change(function () {
+      if ($(this).val() !== '') {
+        $(this).parent().addClass('do-float')
+      }
+    }).trigger('change')
+
     // treat login form
     $('#login-form').submit(function () {
       if (!$(this).hasClass('ajax')) {
