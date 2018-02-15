@@ -300,11 +300,15 @@ app.ready(function () {
       }
 
       // remove route dynamic params
+      window.routeParams = []
       var paths = route.split('/')
       var uri = 'routes'
       for (var i = 0; i < paths.length; i++) {
         if (i % 2 === 0) {
           uri += '/' + paths[i]
+        } else {
+          // URI param
+          window.routeParams.push(paths[i])
         }
       }
       uri += '.html'
@@ -354,7 +358,7 @@ app.ready(function () {
       }
     })
 
-    var resources = {
+    window.apiResources = {
       'products': {
         'label': {
           'en_us': 'Products',
@@ -423,12 +427,13 @@ app.ready(function () {
     var renderMenu = function () {
       // render resources on menu
       var resourcesList = ''
-      for (var resource in resources) {
-        if (resources.hasOwnProperty(resource)) {
+      for (var slug in window.apiResources) {
+        if (window.apiResources.hasOwnProperty(slug)) {
+          var resource = window.apiResources[slug]
           resourcesList += '<li class="menu-item">' +
-                             '<a class="menu-link" href="/#/resources/' + resource + '">' +
-                               '<span class="icon fa fa-' + resources[resource].icon + '"></span>' +
-                               '<span class="title">' + i18n(resources[resource].label) + '</span>' +
+                             '<a class="menu-link" href="/#/resources/' + slug + '">' +
+                               '<span class="icon fa fa-' + resource.icon + '"></span>' +
+                               '<span class="title">' + i18n(resource.label) + '</span>' +
                              '</a>' +
                            '</li>'
         }
