@@ -1,8 +1,14 @@
 <header class="header pt-3">
   <div class="header-bar no-border">
-    <h1><strong>Page</strong> title</h1>
+    <h1 id="resource-name">
+      <strong>Page</strong> title
+    </h1>
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
+      <li class="breadcrumb-item">
+        <a href="#">
+          <i class="fa fa-home"></i> Home
+        </a>
+      </li>
       <li class="breadcrumb-item"><a href="#">Layout</a></li>
       <li class="breadcrumb-item active">Page headers</li>
     </ol>
@@ -10,8 +16,12 @@
 
   <div class="header-action">
     <nav class="nav">
-      <a class="nav-link active" href="header.html">Basic</a>
-      <a class="nav-link" href="header-advanced.html">Advanced</a>
+      <a class="nav-link active" href="#" id="display-normal">
+        Normal
+      </a>
+      <a class="nav-link" href="#" id="display-json">
+        JSON
+      </a>
     </nav>
   </div>
 </header>
@@ -24,3 +34,5 @@
     </div>
   </div>
 </div>
+
+<script src="../assets/js/script/routes/resources.min.js"></script>
