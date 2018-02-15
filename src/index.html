@@ -358,7 +358,7 @@
     </div>
 
     <!-- Global quickview -->
-    <div id="qv-global" class="quickview backdrop-light" data-url="../assets/data/quickview-global.html">
+    <div id="qv-global" class="quickview backdrop-light">
       <ul class="quickview-header nav nav-tabs nav-justified nav-tabs-info">
         <li class="nav-item">
           <a class="nav-link i18n" data-toggle="tab" href="#qv-tab-settings">
@@ -430,7 +430,7 @@
               </div>
             </div>
 
-            <div class="dropdown p-20">
+            <div class="dropdown p-20 bt-2">
               <span class="btn fs-13" data-toggle="dropdown" id="current-lang">
                 <img class="mr-10" height="14"><strong></strong>
               </span>
@@ -448,39 +448,16 @@
           </div>
 
           <div class="tab-pane fade active show" id="qv-tab-notifications">
+            <div class="bg-lightest py-10 px-20 text-right fs-14 bb-2">
+              <a href="#" class="text-lighter mr-10">
+                <i class="fa fa-trash"></i>
+              </a>
+              <a href="#" class="text-lighter">
+                <i class="fa fa-repeat"></i>
+              </a>
+            </div>
+
             <div class="media-list media-list-hover media-list-divided">
-              <a class="media media-new" href="#">
-                <span class="avatar bg-success"><i class="ti-user"></i></span>
-                <div class="media-body">
-                  <p>New user registered</p>
-                  <time datetime="2017-07-14 20:00">Just now</time>
-                </div>
-              </a>
-
-              <a class="media media-new" href="#">
-                <span class="avatar bg-info"><i class="ti-shopping-cart"></i></span>
-                <div class="media-body">
-                  <p>New order received</p>
-                  <time datetime="2017-07-14 20:00">2 min ago</time>
-                </div>
-              </a>
-
-              <a class="media media-new" href="#">
-                <span class="avatar bg-warning"><i class="ti-face-sad"></i></span>
-                <div class="media-body">
-                  <p>Refund request from <b>Ashlyn Culotta</b></p>
-                  <time datetime="2017-07-14 20:00">24 min ago</time>
-                </div>
-              </a>
-
-              <a class="media media-new" href="#">
-                <span class="avatar bg-primary"><i class="ti-money"></i></span>
-                <div class="media-body">
-                  <p>New payment has made through PayPal</p>
-                  <time datetime="2017-07-14 20:00">53 min ago</time>
-                </div>
-              </a>
-
               <a class="media" href="#">
                 <span class="avatar bg-danger"><i class="ti-package"></i></span>
                 <div class="media-body">
@@ -564,6 +541,23 @@
           </div>
         </div>
       </div>
+
+      <footer class="quickview-footer flex-row-reverse">
+        <button class="btn btn-sm btn-info btn-label">
+          <label><i class="ti-user"></i></label>
+          <span class="i18n">
+            <span data-lang="en_us">Profile</span>
+            <span data-lang="pt_br">Perfil</span>
+          </span>
+        </button>
+        <button class="btn btn-sm btn-secondary btn-label">
+          <label><i class="ti-power-off"></i></label>
+          <span class="i18n">
+            <span data-lang="en_us">Logout</span>
+            <span data-lang="pt_br">Sair</span>
+          </span>
+        </button>
+      </footer>
     </div>
     <!-- END Global quickview -->
 
