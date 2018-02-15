@@ -19,6 +19,7 @@
       "localStorage",
       "sessionStorage",
       "window",
+      "alert",
       "location",
       "md5"
     ]
