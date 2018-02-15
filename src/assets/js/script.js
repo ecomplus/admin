@@ -391,7 +391,9 @@ app.ready(function () {
       var uri = 'routes/' + paths[0] + '.html'
       for (var i = 1; i < paths.length; i++) {
         // URI param
-        window.routeParams.push(paths[i])
+        if (paths[i] !== '') {
+          window.routeParams.push(paths[i])
+        }
       }
 
       $('#router > .loading').show()
