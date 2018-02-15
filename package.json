@@ -13,6 +13,7 @@
       "$",
       "app",
       "sidebar",
+      "quickview",
       "login",
       "Image",
       "localStorage",
