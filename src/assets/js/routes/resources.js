@@ -48,7 +48,7 @@ var Route = function () {
       return
     }
   } else if (window.routeParams.length >= 3) {
-    // should not have resource ID, and no others parameters
+    // should not have resource ID, and no other parameter
     window.e404()
     return
   }
