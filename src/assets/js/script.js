@@ -383,19 +383,16 @@ app.ready(function () {
         window.routesHistory.push(route)
       }
 
-      // remove route dynamic params
+      // reset route parameters
       window.routeParams = []
       var paths = route.split('/')
-      var uri = 'routes'
-      for (var i = 0; i < paths.length; i++) {
-        if (i % 2 === 0) {
-          uri += '/' + paths[i]
-        } else {
-          // URI param
-          window.routeParams.push(paths[i])
-        }
-      }
-      uri += '.html'
+      // final route HTML file URI
+      // only the first path
+      var uri = 'routes/' + paths[0] + '.html'
+      for (var i = 1; i < paths.length; i++) {
+        // URI param
+        window.routeParams.push(paths[i])
+      }2
 
       $('#router > .loading').show()
       // load HTML content
