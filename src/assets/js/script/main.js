@@ -164,12 +164,26 @@ app.ready(function () {
     }
     dynamicBg('#full-bg')
 
+    // 'remember' username
+    var username = localStorage.getItem('username')
+    if (username) {
+      $('#username').val(username)
+    }
+
     // treat login form
     $('#login-form').submit(function () {
       if (!$(this).hasClass('ajax')) {
         var username = $('#username').val()
         // get pass md5 hash
         var password = md5($('#password').val())
+
+        if ($('#remember').is(':checked')) {
+          // keep the username for next logins
+          localStorage.setItem('username', username)
+        } else {
+          // remove local stored username, if exists
+          localStorage.removeItem('username')
+        }
 
         var form = $(this)
         // call ajax
@@ -224,6 +238,7 @@ app.ready(function () {
             sessionStorage.setItem('my_id', json.my_id)
             sessionStorage.setItem('access_token', json.access_token)
             sessionStorage.setItem('expires', json.expires)
+            sessionStorage.setItem('username', username)
 
             // redirect to dashboard
             var goTo = sessionStorage.getItem('go_to')
@@ -249,6 +264,7 @@ app.ready(function () {
       session.my_id = sessionStorage.getItem('my_id')
       session.access_token = sessionStorage.getItem('access_token')
     }
+
     if (!session.my_id || !session.access_token) {
       // redirect to login
       sessionStorage.setItem('go_to', window.location.href)
