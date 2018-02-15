@@ -144,6 +144,7 @@ app.ready(function () {
       return label.en_us
     }
   }
+  window.i18n = i18n
 
   // render language texts
   $('head').append('<style type="text/css">' +
