@@ -6,7 +6,17 @@
 
 var Route = function () {
   var slug = window.routeParams[0]
+  if (slug === undefined) {
+    // first URI param is required
+    window.e404()
+    return
+  }
   var resource = window.apiResources[slug]
+  if (resource === undefined) {
+    // invalid resource slug
+    window.e404()
+    return
+  }
 
   var lang = window.lang
   var i18n = window.i18n
@@ -18,7 +28,6 @@ var Route = function () {
     switch (action) {
       case 'create':
       case 'edit':
-      case 'delete':
         // continue
         break
 
@@ -27,6 +36,21 @@ var Route = function () {
         window.e404()
         return
     }
+  }
+
+  if (action === 'edit') {
+    if (window.routeParams.length === 3) {
+      var resourceId = window.routeParams[2]
+      console.log(resourceId)
+    } else {
+      // edit requires ID of resource
+      window.e404()
+      return
+    }
+  } else if (window.routeParams.length >= 3) {
+    // should not have resource ID, and no others parameters
+    window.e404()
+    return
   }
 
   var dictionary = {
@@ -42,10 +66,6 @@ var Route = function () {
     'edit': i18n({
       'en_us': 'Edit',
       'pt_br': 'Editar'
-    }),
-    'delete': i18n({
-      'en_us': 'Delete',
-      'pt_br': 'Deletar'
     })
   }
 
