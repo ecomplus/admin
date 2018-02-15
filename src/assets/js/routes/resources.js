@@ -9,6 +9,7 @@ var Route = function () {
   var resource = window.apiResources[slug]
 
   var lang = window.lang
+  var i18n = window.i18n
 
   var action = window.routeParams[1]
   if (!action) {
@@ -16,11 +17,14 @@ var Route = function () {
   }
 
   var dictionary = {
-    list: {
-    }
+    // resource actions
+    'list': i18n({
+      'en_us': 'List',
+      'pt_br': 'Listar'
+    })
   }
 
-  $('#resource-name').html('<strong>' + resource.label[lang] + '</strong>: Lista')
+  $('#resource-name').html('<strong>' + resource.label[lang] + '</strong> · ' + dictionary[action])
 
   // display content
   $('#route-content > *').fadeIn()
