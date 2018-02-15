@@ -23,6 +23,8 @@ var Route = function () {
 
   var action = window.routeParams[1]
   if (action === undefined) {
+    // resource root URI
+    // default action
     action = 'list'
   } else {
     switch (action) {
