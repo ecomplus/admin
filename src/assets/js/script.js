@@ -346,6 +346,13 @@ app.ready(function () {
         .fail(authFail)
       }
     })
+
+    // submit login form on ENTER click
+    $(document).keypress(function (e) {
+      if (e.which === 13) {
+        $('#login-form').submit()
+      }
+    })
   } else {
     // dashboard app
     var storeId = localStorage.getItem('store_id')
