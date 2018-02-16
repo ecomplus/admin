@@ -130,8 +130,12 @@
   background: rgba(255, 255, 255, 0.7);
 }
 .ajax > .ajax-overlay {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-justify-content: center;
   justify-content: center;
+  -webkit-align-items: center;
   align-items: center;
 }
 
@@ -146,6 +150,8 @@
 }
 #router,
 #route-content {
+  -webkit-flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
   flex: 1 0 auto;
 }
 #route-content > * {
