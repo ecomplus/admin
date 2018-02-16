@@ -336,13 +336,15 @@ app.ready(function () {
 
     var changeTab = function () {
       // remove classes from the previous tab
-      $('#route-content > .app-current-tab').removeClass('app-current-tab')
-      $('#app-nav-tabs .active').removeClass('active')
+      $('#route-content > .app-current-tab').fadeOut(400, function () {
+        $(this).removeClass('app-current-tab')
+        $('#app-nav-tabs .active').removeClass('active')
 
-      // active this tab
-      $(this).addClass('active')
-      currentTab = parseInt($(this).attr('data-tab'), 10)
-      $('#app-tab-' + currentTab).addClass('app-current-tab')
+        // active this tab
+        $(this).addClass('active')
+        currentTab = parseInt($(this).attr('data-tab'), 10)
+        $('#app-tab-' + currentTab).hide().addClass('app-current-tab').fadeIn()
+      })
     }
 
     $('#new-tab').click(function () {
