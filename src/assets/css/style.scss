@@ -233,6 +233,11 @@ body {
   color: $color-purple;
 }
 
+// JSON code editor
+#code-editor {
+  height: 500px;
+}
+
 @media (max-width: 500px) {
   .topbar-btn {
     padding: 0 4px;
