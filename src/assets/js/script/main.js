@@ -414,7 +414,7 @@ app.ready(function () {
     // global function to run after Route rendering
     window.routeReady = function () {
       // display content
-      $('#app-tab-' + currentTab).fadeIn()
+      $('#app-tab-' + currentTab + ' > *').fadeIn()
     }
 
     // global 404 error function
