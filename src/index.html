@@ -207,33 +207,48 @@
       </div>
 
       <!-- Nav tabs -->
-      <div class="scrollable" id="app-tabs">
-        <ul class="nav nav-tabs m-0 bg-white px-30 pt-10" id="app-nav-tabs">
-          <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#home-basic">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#profile-basic">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#messages-basic">Messages</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#settings-basic">Settings</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#home-basic">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#profile-basic">Profile</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#messages-basic">Messages</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#settings-basic">Settings</a>
-          </li>
-        </ul>
+      <div id="app-tabs">
+        <a href="#" id="new-tab">
+          <i class="ti-plus"></i>
+        </a>
+        <a href="#" id="close-current-tab">
+          <i class="ti-close"></i>
+        </a>
+
+        <div class="scrollable">
+          <ul class="nav nav-tabs m-0" id="app-nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#home-basic">
+                Home
+              </a>
+              <i class="ti-close close-tab"></i>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#profile-basic">
+                Profile
+              </a>
+              <i class="ti-close close-tab"></i>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#messages-basic">Messages</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#settings-basic">Settings</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#home-basic">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#profile-basic">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#messages-basic">Messages</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#settings-basic">Settings</a>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div id="router">
