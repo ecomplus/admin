@@ -344,7 +344,7 @@ app.ready(function () {
 
         // active this tab
         link.addClass('active')
-        currentTab = parseInt($(this).attr('data-tab'), 10)
+        currentTab = parseInt(link.attr('data-tab'), 10)
         $('#app-tab-' + currentTab).hide().addClass('app-current-tab').fadeIn()
       })
     }
