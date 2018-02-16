@@ -276,6 +276,7 @@ main.scrollable > .main-content {
 */
 body {
   overflow-y: scroll !important;
+  overflow-x: hidden !important;
 }
 // fix modal window width bugs
 .modal-open,
