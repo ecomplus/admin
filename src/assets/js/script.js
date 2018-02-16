@@ -498,7 +498,13 @@ app.ready(function () {
     // global function to run after Route rendering
     window.routeReady = function () {
       // display content
-      $('#app-tab-' + currentTab + ' > *').fadeIn()
+      var elContent = $('#app-tab-' + currentTab + ' > *')
+      if (elContent.length) {
+        elContent.fadeIn()
+      } else {
+        // route content cannot be empty
+        $('#app-tab-' + currentTab).append('div')
+      }
     }
 
     // global 404 error function
