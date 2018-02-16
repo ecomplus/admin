@@ -413,18 +413,26 @@ app.ready(function () {
     }
 
     var changeTab = function () {
-      var link = $(this)
+      currentTab = parseInt($(this).attr('data-tab'), 10)
+      var showTab = function () {
+        $('#app-tab-' + currentTab).hide().addClass('app-current-tab').fadeIn()
+      }
 
       // remove classes from the previous tab
-      $('#route-content > .app-current-tab').fadeOut(400, function () {
-        $(this).removeClass('app-current-tab')
-        $('#app-nav-tabs .active').removeClass('active')
+      var previousTab = $('#route-content > .app-current-tab')
+      if (previousTab.length) {
+        previousTab.fadeOut(200, function () {
+          $(this).removeClass('app-current-tab')
+          showTab()
+        })
+      } else {
+        // first tab
+        showTab()
+      }
+      $('#app-nav-tabs .active').removeClass('active')
 
-        // active this tab
-        link.addClass('active')
-        currentTab = parseInt(link.attr('data-tab'), 10)
-        $('#app-tab-' + currentTab).hide().addClass('app-current-tab').fadeIn()
-      })
+      // active this tab nav item
+      $(this).addClass('active')
     }
 
     $('#new-tab').click(function () {
