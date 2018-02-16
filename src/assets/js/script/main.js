@@ -337,15 +337,21 @@ app.ready(function () {
     var changeTab = function () {
       currentTab = parseInt($(this).attr('data-tab'), 10)
       var showTab = function () {
-        $('#app-tab-' + currentTab).hide().addClass('app-current-tab').fadeIn()
+        // hide content, then show tab
+        var elTab = $('#app-tab-' + currentTab)
+        var elContent = elTab.children()
+        elContent.hide()
+        elTab.addClass('app-current-tab')
+        // now route content appears
+        elContent.fadeIn(100)
       }
 
       // remove classes from the previous tab
       var previousTab = $('#route-content > .app-current-tab')
       if (previousTab.length) {
         $('#app-nav-tabs .active').removeClass('active')
-        previousTab.fadeOut(200, function () {
-          $(this).removeClass('app-current-tab')
+        previousTab.children().fadeOut(200, function () {
+          previousTab.removeClass('app-current-tab')
           showTab()
         })
       } else {
