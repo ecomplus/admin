@@ -421,6 +421,7 @@ app.ready(function () {
       // remove classes from the previous tab
       var previousTab = $('#route-content > .app-current-tab')
       if (previousTab.length) {
+        $('#app-nav-tabs .active').removeClass('active')
         previousTab.fadeOut(200, function () {
           $(this).removeClass('app-current-tab')
           showTab()
@@ -429,7 +430,6 @@ app.ready(function () {
         // first tab
         showTab()
       }
-      $('#app-nav-tabs .active').removeClass('active')
 
       // active this tab nav item
       $(this).addClass('active')
@@ -492,7 +492,7 @@ app.ready(function () {
     // global function to run after Route rendering
     window.routeReady = function () {
       // display content
-      $('#route-content > .app-current-tab > *').fadeIn()
+      $('#app-tab-' + currentTab).fadeIn()
     }
 
     // global 404 error function
