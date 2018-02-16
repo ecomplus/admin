@@ -479,7 +479,7 @@ app.ready(function () {
             }
         }
         // ajax done
-        $('#router > .loading').hide()
+        $('#router > .loading').fadeOut()
       })
     }
 
