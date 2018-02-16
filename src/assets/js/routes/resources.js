@@ -93,7 +93,6 @@ var Route = function () {
   editor.setTheme('ace/theme/dawn')
   editor.session.setMode('ace/mode/json')
 
-  // display content
-  $('#route-content > *').fadeIn()
+  window.routeReady()
 }
 Route()

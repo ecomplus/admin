@@ -383,11 +383,69 @@ app.ready(function () {
     })
 
     // SPA
+    // work with multiple tabs
+    // each tab with a route
+    var appTabs = {}
+    var currentTab = null
+    var currentRoute
     window.routesHistory = []
+
+    var newTab = function (callback) {
+      if (currentTab && typeof window.Route === 'function') {
+        // freeze route
+        // store current tab content
+        localStorage.setItem('tab.' + currentTab, $('#route-content').html())
+      }
+
+      // random unique tab ID
+      var id = Date.now()
+      currentTab = id
+      // unset
+      window.Route = null
+      appTabs[currentTab] = {
+        'hash': window.location.hash
+      }
+      // add tab to route content element
+      $('#route-content').append('<div id="app-tab-' + id + '"></div>')
+
+      // update tabs nav HTML
+      $('#new-nav-item').clone().removeAttr('id').prependTo('#app-nav-tabs').toggle('slide')
+        .children('a').attr('data-tab', id).click(changeTab).click()
+
+      if (typeof callback === 'function') {
+        // usual to start routing
+        callback()
+      }
+    }
+
+    var changeTab = function () {
+      // remove classes from the previous tab
+      $('#route-content > .app-current-tab').removeClass('app-current-tab')
+      $('#app-nav-tabs .active').removeClass('active')
+
+      // active this tab
+      $(this).addClass('active')
+      currentTab = parseInt($(this).attr('data-tab'), 10)
+      $('#app-tab-' + currentTab).addClass('app-current-tab')
+    }
+
+    $('#new-tab').click(function () {
+      newTab(function () {
+        // new tab route
+        if (currentRoute === 'new') {
+          // force routing
+          $(window).trigger('hashchange')
+        } else {
+          window.location = '/#/new'
+        }
+      })
+    })
+
     var router = function (route, internal) {
       if (!internal) {
         console.log('Go to route => ' + route)
         window.routesHistory.push(route)
+        currentRoute = route
       }
 
       // reset route parameters
@@ -405,7 +463,7 @@ app.ready(function () {
 
       $('#router > .loading').show()
       // load HTML content
-      $('#route-content').load(uri, function (responseText, textStatus, jqXHR) {
+      $('#app-tab-' + currentTab).load(uri, function (responseText, textStatus, jqXHR) {
         switch (textStatus) {
           case 'success':
           case 'notmodified':
@@ -423,6 +481,12 @@ app.ready(function () {
         // ajax done
         $('#router > .loading').hide()
       })
+    }
+
+    // global function to run after Route rendering
+    window.routeReady = function () {
+      // display content
+      $('#route-content > .app-current-tab > *').fadeIn()
     }
 
     // global 404 error function
@@ -622,8 +686,11 @@ app.ready(function () {
     // show rendered application
     $('#dashboard').fadeIn()
 
-    // force routing
-    $(window).trigger('hashchange')
+    // first tab
+    newTab(function () {
+      // force routing
+      $(window).trigger('hashchange')
+    })
 
     // global quickview
     $('.qv-close').click(function () {

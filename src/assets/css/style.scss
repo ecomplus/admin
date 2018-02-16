@@ -166,6 +166,7 @@
   flex-wrap: nowrap;
 }
 #app-tabs .nav {
+  min-height: 53px;
   border-bottom: none;
 }
 #app-tabs .nav-link {
@@ -181,6 +182,8 @@
 }
 #app-tabs .nav-item {
   position: relative;
+  // show with jQuery
+  display: none;
 }
 #app-tabs .nav-item > .close-tab {
   cursor: pointer;
@@ -228,14 +231,17 @@ a#close-current-tab {
   display: none;
   z-index: 3;
 }
+#route-content > *,
+#route-content > .app-current-tab > * {
+  display: none;
+}
 #router,
-#route-content {
+#route-content,
+#route-content > .app-current-tab {
+  display: block;
   -webkit-flex: 1 0 auto;
   -ms-flex: 1 0 auto;
   flex: 1 0 auto;
-}
-#route-content > * {
-  display: none;
 }
 
 .btn-avatar {
