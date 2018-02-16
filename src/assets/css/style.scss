@@ -133,10 +133,28 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-pack: center;
   -webkit-justify-content: center;
   justify-content: center;
+  -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
+}
+
+// horizontal scroll on app nav tabs
+#app-tabs.scrollable {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+#app-tabs.scrollable > .ps-scrollbar-x-rail {
+  top: 2px !important;
+}
+#app-tabs.scrollable > .nav {
+  -ms-flex-wrap: nowrap;
+  -webkit-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  min-width: 100%;
 }
 
 // SPA, ajax router
