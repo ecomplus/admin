@@ -142,19 +142,81 @@
 }
 
 // horizontal scroll on app nav tabs
-#app-tabs.scrollable {
+#app-tabs {
+  position: relative;
+  padding: 0 75px;
+  background-color: $white;
+  box-shadow: 3px 0 5px rgba($black, .05);
+  z-index: 3;
+}
+#app-tabs > .scrollable {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
-#app-tabs.scrollable > .ps-scrollbar-x-rail {
+#app-tabs > .scrollable > .ps-scrollbar-x-rail {
   top: 2px !important;
 }
-#app-tabs.scrollable > .nav {
+#app-tabs > .scrollable > .ps-scrollbar-y-rail {
+  display: none !important;
+}
+#app-tabs > .scrollable > .nav {
   -ms-flex-wrap: nowrap;
   -webkit-flex-wrap: nowrap;
   flex-wrap: nowrap;
-  min-width: 100%;
+}
+#app-tabs .nav {
+  border-bottom: none;
+}
+#app-tabs .nav-link {
+  border-bottom: none;
+  border-top: 1px solid transparent;
+}
+#app-tabs .nav-link:hover {
+  border-top-color: lighten($color-purple, 35%);
+}
+#app-tabs .nav-link.active {
+  background-color: rgba($color-pale-purple, .2);
+  border-top-color: lighten($color-purple, 20%);
+}
+#app-tabs .nav-item {
+  position: relative;
+}
+#app-tabs .nav-item > .close-tab {
+  cursor: pointer;
+  position: absolute;
+  font-size: 10px;
+  right: 6px;
+  top: 6px;
+  opacity: 0;
+  transition: 0.2s linear;
+}
+#app-tabs .nav-item:hover > .close-tab {
+  opacity: .35;
+}
+#app-tabs .nav-item > .close-tab:hover {
+  opacity: .85;
+}
+#app-tabs > a {
+  position: absolute;
+  top: 0;
+  padding: 16px 15px 0 15px;
+  height: 100%;
+  font-size: 20px;
+  text-align: center;
+  z-index: 1;
+  background: $white;
+}
+a#new-tab {
+  left: 20px;
+  color: $color-purple;
+}
+a#close-current-tab {
+  right: 20px;
+  color: $color-text-disable;
+}
+#app-tabs > a:hover {
+  color: lighten($color-purple, 20%);
 }
 
 // SPA, ajax router
@@ -252,8 +314,11 @@ body {
 .topbar .lookup {
   width: 100%;
 }
+.lookup-circle input {
+  background-color: rgba($color-pale-purple, .3);
+}
 .topbar .lookup-circle input:focus {
-  background-color: rgba($color-purple, .1);
+  background-color: rgba($color-pale-purple, .6);
   color: $color-purple;
 }
 
@@ -263,6 +328,9 @@ body {
 }
 
 @media (max-width: 500px) {
+  .topbar {
+    padding-right: 6px;
+  }
   .topbar-btn {
     padding: 0 4px;
     min-width: 34px;
