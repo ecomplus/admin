@@ -12,10 +12,10 @@
 
   <div class="header-action">
     <nav class="nav">
-      <a class="nav-link active" href="#" id="display-normal">
+      <a class="nav-link active" data-toggle="tab" href="#tab-normal">
         Normal
       </a>
-      <a class="nav-link" href="#" id="display-json">
+      <a class="nav-link" data-toggle="tab" href="#tab-json">
         JSON
       </a>
     </nav>
@@ -23,10 +23,23 @@
 </header>
 
 <div class="main-content">
-  <div class="card">
-    <h4 class="card-title">Card title</h4>
+  <div class="tab-content">
+    <div class="tab-pane fade active show" id="tab-normal">
+      <div class="card">
+        <h4 class="card-title">Card title</h4>
 
-    <div class="card-body">
+        <div class="card-body">
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade" id="tab-json">
+      <div class="card">
+        <h4 class="card-title">JSON</h4>
+
+        <div class="card-body">
+        </div>
+      </div>
     </div>
   </div>
 
