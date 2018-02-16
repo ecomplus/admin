@@ -475,11 +475,16 @@ app.ready(function () {
 
       $('#router > .loading').show()
       // load HTML content
-      $('#app-tab-' + currentTab).load(uri, function (responseText, textStatus, jqXHR) {
+      var elTab = $('#app-tab-' + currentTab)
+      elTab.load(uri, function (responseText, textStatus, jqXHR) {
         switch (textStatus) {
           case 'success':
           case 'notmodified':
             // successful response
+            if (elTab.children().length === 0) {
+              // route content cannot be empty
+              elTab.html('<br>')
+            }
             break
 
           default:
@@ -488,6 +493,9 @@ app.ready(function () {
               // not found
               // internal rewrite
               window.e404()
+            } else {
+              // @TODO
+              console.log(jqXHR.status)
             }
         }
         // ajax done
@@ -498,13 +506,7 @@ app.ready(function () {
     // global function to run after Route rendering
     window.routeReady = function () {
       // display content
-      var elContent = $('#app-tab-' + currentTab + ' > *')
-      if (elContent.length) {
-        elContent.fadeIn()
-      } else {
-        // route content cannot be empty
-        $('#app-tab-' + currentTab).append('div')
-      }
+      $('#app-tab-' + currentTab + ' > *').fadeIn()
     }
 
     // global 404 error function
