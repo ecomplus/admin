@@ -21,7 +21,8 @@
       "window",
       "alert",
       "location",
-      "md5"
+      "md5",
+      "ace"
     ]
   },
   "devDependencies": {

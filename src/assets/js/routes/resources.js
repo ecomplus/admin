@@ -88,6 +88,11 @@ var Route = function () {
              '</li>'
   $('#breadcrumbs').append(html)
 
+  // set up JSON code editor
+  var editor = ace.edit('code-editor')
+  editor.setTheme('ace/theme/dawn')
+  editor.session.setMode('ace/mode/json')
+
   // display content
   $('#route-content > *').fadeIn()
 }
