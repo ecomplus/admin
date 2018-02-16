@@ -313,12 +313,6 @@ app.ready(function () {
     window.routesHistory = []
 
     var newTab = function (callback) {
-      if (currentTab && typeof window.Route === 'function') {
-        // freeze route
-        // store current tab content
-        localStorage.setItem('tab.' + currentTab, $('#route-content').html())
-      }
-
       // random unique tab ID
       var id = Date.now()
       currentTab = id
