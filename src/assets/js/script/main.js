@@ -322,6 +322,7 @@ app.ready(function () {
         // random unique tab ID
         var id = Date.now()
         currentTab = id
+        appTabs[currentTab] = {}
         // add tab to route content element
         $('#route-content').append('<div id="app-tab-' + id + '"></div>')
 
@@ -348,14 +349,16 @@ app.ready(function () {
           elContent.fadeIn(100)
 
           var hash = appTabs[currentTab].hash
-          if (hash === '') {
-            // index
-            hash = '#/'
-          }
-          if (hash !== window.location.hash) {
-            // fix URL hash without routing again
-            ignoreRoute = true
-            window.location = '/' + appTabs[currentTab].hash
+          if (hash !== undefined) {
+            if (hash === '') {
+              // index
+              hash = '#/'
+            }
+            if (hash !== window.location.hash) {
+              // fix URL hash without routing again
+              ignoreRoute = true
+              window.location = '/' + hash
+            }
           }
         }
 
@@ -500,7 +503,6 @@ app.ready(function () {
           ignoreRoute = true
           // still on current route
           window.location = '/#/' + routesHistory[routesHistory.length - 1]
-          return
         }
       } else {
         // next will not be ignored
@@ -508,10 +510,8 @@ app.ready(function () {
       }
 
       if (currentTab !== null) {
-        // update stored tab hash
-        appTabs[currentTab] = {
-          'hash': window.location.hash
-        }
+        // update current tab hash
+        appTabs[currentTab].hash = window.location.hash
       }
     }
     $(window).on('hashchange', hashChange)
@@ -692,14 +692,17 @@ app.ready(function () {
     }
     renderChannels()
 
+    // show rendered application
+    $('#dashboard').fadeIn()
+
+    // first check for URL rewrites only
+    ignoreRoute = true
+    hashChange()
     // create first tab
     newTab(function () {
       // force routing
       hashChange()
     })
-
-    // show rendered application
-    $('#dashboard').fadeIn()
 
     // global quickview
     $('.qv-close').click(function () {
