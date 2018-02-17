@@ -351,6 +351,10 @@ app.ready(function () {
           elTab.addClass('app-current-tab')
           // now route content appears
           elContent.fadeIn(100)
+
+          // fix URL hash without routing again
+          ignoreRoute = true
+          window.location = '/' + appTabs[currentTab].hash
         }
 
         // remove classes from the previous tab
