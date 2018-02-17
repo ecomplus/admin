@@ -310,8 +310,6 @@ app.ready(function () {
     var appTabs = {}
     var currentTab = null
     var currentRoute
-    var routesHistory = []
-    window.routesHistory = routesHistory
     // control routing queue
     var routeInProgress = false
     var ignoreRoute = false
@@ -322,7 +320,9 @@ app.ready(function () {
         // random unique tab ID
         var id = Date.now()
         currentTab = id
-        appTabs[currentTab] = {}
+        appTabs[currentTab] = {
+          'routesHistory': []
+        }
         // add tab to route content element
         $('#route-content').append('<div id="app-tab-' + id + '"></div>')
 
@@ -399,7 +399,10 @@ app.ready(function () {
           return
         }
         console.log('Go to route => ' + route)
-        routesHistory.push(route)
+        if (currentTab !== null) {
+          // add route to history
+          appTabs[currentTab].routesHistory.push(route)
+        }
         currentRoute = route
       }
       routeInProgress = true
@@ -500,9 +503,15 @@ app.ready(function () {
           router(route)
         } else {
           // routing currenty in progress
-          ignoreRoute = true
-          // still on current route
-          window.location = '/#/' + routesHistory[routesHistory.length - 1]
+          if (currentTab !== null) {
+            var routesHistory = appTabs[currentTab].routesHistory
+            if (routesHistory.length > 0) {
+              // still on current route
+              ignoreRoute = true
+              window.location = '/#/' + routesHistory[routesHistory.length - 1]
+              return
+            }
+          }
         }
       } else {
         // next will not be ignored
@@ -517,12 +526,15 @@ app.ready(function () {
     $(window).on('hashchange', hashChange)
 
     $('#previous-route').click(function () {
-      if (routesHistory.length - 2 >= 0) {
-        // fix routes history pointer
-        routesHistory.pop()
-        var route = routesHistory.pop()
-        // go to last visited route
-        window.location = '/#/' + route
+      if (currentTab !== null) {
+        var routesHistory = appTabs[currentTab].routesHistory
+        if (routesHistory.length - 2 >= 0) {
+          // fix routes history pointer
+          routesHistory.pop()
+          var route = routesHistory.pop()
+          // go to last visited route
+          window.location = '/#/' + route
+        }
       }
     })
 
