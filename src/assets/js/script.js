@@ -773,9 +773,6 @@ app.ready(function () {
     // show rendered application
     $('#dashboard').fadeIn()
 
-    // first check for URL rewrites only
-    ignoreRoute = true
-    hashChange()
     // create first tab
     newTab(function () {
       // force routing
