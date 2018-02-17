@@ -476,7 +476,7 @@ app.ready(function () {
           // routing in progress
           return
         }
-        console.log('Go to route => ' + route)
+        // console.log('Go to route => ' + route)
         if (currentTab !== null) {
           // add route to history
           appTabs[currentTab].routesHistory.push(route)
