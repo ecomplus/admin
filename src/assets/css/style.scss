@@ -229,7 +229,7 @@ a#close-current-tab {
 #router > .loading {
   position: absolute;
   display: none;
-  z-index: 3;
+  z-index: 4;
 }
 #route-content > *,
 #route-content > .app-current-tab > * {
