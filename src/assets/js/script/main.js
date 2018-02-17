@@ -321,12 +321,10 @@ app.ready(function () {
       if (routeInProgress !== true) {
         // random unique tab ID
         var id = Date.now()
-        currentTab = id
-        // unset
-        window.Route = null
-        appTabs[currentTab] = {
+        appTabs[id] = {
           'hash': window.location.hash
         }
+        currentTab = id
         // add tab to route content element
         $('#route-content').append('<div id="app-tab-' + id + '"></div>')
 
@@ -352,9 +350,16 @@ app.ready(function () {
           // now route content appears
           elContent.fadeIn(100)
 
-          // fix URL hash without routing again
-          ignoreRoute = true
-          window.location = '/' + appTabs[currentTab].hash
+          var hash = appTabs[currentTab].hash
+          if (hash === '') {
+            // index
+            hash = '#/'
+          }
+          if (hash !== window.location.hash) {
+            // fix URL hash without routing again
+            ignoreRoute = true
+            window.location = '/' + appTabs[currentTab].hash
+          }
         }
 
         // remove classes from the previous tab
@@ -380,7 +385,7 @@ app.ready(function () {
         // new tab route
         if (currentRoute === 'new') {
           // force routing
-          $(window).trigger('hashchange')
+          hashChange()
         } else {
           window.location = '/#/new'
         }
@@ -477,18 +482,21 @@ app.ready(function () {
       router('404', true)
     }
 
-    $(window).on('hashchange', function () {
+    var hashChange = function () {
+      // eg.: #/any
+      // cut prefix #/
+      var route = window.location.hash.slice(2)
+      // handle URL rewrites
+      if (route === '') {
+        // default index
+        // go home
+        window.location = '/#/home'
+        return
+      }
+
+      // route
       if (!ignoreRoute) {
-        // eg.: #/any
-        // cut prefix #/
         if (routeInProgress !== true) {
-          var route = window.location.hash.slice(2)
-          if (route === '') {
-            // default index
-            // go home
-            window.location = '/#/home'
-            return
-          }
           router(route)
         } else {
           // routing currenty in progress
@@ -500,7 +508,8 @@ app.ready(function () {
         // next will not be ignored
         ignoreRoute = false
       }
-    })
+    }
+    $(window).on('hashchange', hashChange)
 
     $('#previous-route').click(function () {
       if (routesHistory.length - 2 >= 0) {
@@ -681,10 +690,13 @@ app.ready(function () {
     // show rendered application
     $('#dashboard').fadeIn()
 
-    // first tab
+    // first check for URL rewrites only
+    ignoreRoute = true
+    hashChange()
+    // create first tab
     newTab(function () {
       // force routing
-      $(window).trigger('hashchange')
+      hashChange()
     })
 
     // global quickview
