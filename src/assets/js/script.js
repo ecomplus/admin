@@ -388,7 +388,8 @@ app.ready(function () {
     var appTabs = {}
     var currentTab = null
     var currentRoute
-    window.routesHistory = []
+    var routesHistory = []
+    window.routesHistory = routesHistory
 
     var newTab = function (callback) {
       // random unique tab ID
@@ -453,12 +454,21 @@ app.ready(function () {
       })
     })
 
+    // control routing queue
+    var routeInProgress = false
+    var ignoreRoute = false
+
     var router = function (route, internal) {
       if (!internal) {
+        if (routeInProgress === true) {
+          // routing in progress
+          return
+        }
         console.log('Go to route => ' + route)
-        window.routesHistory.push(route)
+        routesHistory.push(route)
         currentRoute = route
       }
+      routeInProgress = true
 
       // reset route parameters
       window.routeParams = []
@@ -485,7 +495,8 @@ app.ready(function () {
             // successful response
             if (elTab.children().length === 0) {
               // route content cannot be empty
-              elTab.html('<br>')
+              elTab.html('<div></div>')
+              window.routeReady()
             }
             break
 
@@ -500,13 +511,14 @@ app.ready(function () {
               console.log(jqXHR.status)
             }
         }
-        // ajax done
-        $('#router > .loading').fadeOut()
       })
     }
 
     // global function to run after Route rendering
     window.routeReady = function () {
+      // ajax routing done
+      routeInProgress = false
+      $('#router > .loading').fadeOut()
       // display content
       window.$tab.children().fadeIn()
     }
@@ -517,23 +529,35 @@ app.ready(function () {
     }
 
     $(window).on('hashchange', function () {
-      // eg.: #/any
-      // cut prefix #/
-      var route = window.location.hash.slice(2)
-      if (route === '') {
-        // default index
-        // go home
-        window.location = '/#/home'
-        return
+      if (!ignoreRoute) {
+        // eg.: #/any
+        // cut prefix #/
+        if (routeInProgress !== true) {
+          var route = window.location.hash.slice(2)
+          if (route === '') {
+            // default index
+            // go home
+            window.location = '/#/home'
+            return
+          }
+          router(route)
+        } else {
+          // routing currenty in progress
+          ignoreRoute = true
+          // still on current route
+          window.location = '/#/' + routesHistory[routesHistory.length - 1]
+        }
+      } else {
+        // next will not be ignored
+        ignoreRoute = false
       }
-      router(route)
     })
 
     $('#previous-route').click(function () {
-      if (window.routesHistory.length - 2 >= 0) {
+      if (routesHistory.length - 2 >= 0) {
         // fix routes history pointer
-        window.routesHistory.pop()
-        var route = window.routesHistory.pop()
+        routesHistory.pop()
+        var route = routesHistory.pop()
         // go to last visited route
         window.location = '/#/' + route
       }
