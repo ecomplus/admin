@@ -312,23 +312,28 @@ app.ready(function () {
     var currentRoute
     var routesHistory = []
     window.routesHistory = routesHistory
+    // control routing queue
+    var routeInProgress = false
+    var ignoreRoute = false
+    var routeReadyTimeout
 
     var newTab = function (callback) {
-      // random unique tab ID
-      var id = Date.now()
-      currentTab = id
-      // unset
-      window.Route = null
-      appTabs[currentTab] = {
-        'hash': window.location.hash
+      if (routeInProgress !== true) {
+        // random unique tab ID
+        var id = Date.now()
+        currentTab = id
+        // unset
+        window.Route = null
+        appTabs[currentTab] = {
+          'hash': window.location.hash
+        }
+        // add tab to route content element
+        $('#route-content').append('<div id="app-tab-' + id + '"></div>')
+
+        // update tabs nav HTML
+        $('#new-nav-item').clone().removeAttr('id').prependTo('#app-nav-tabs').toggle('slide')
+          .children('a').attr('data-tab', id).click(changeTab).click()
       }
-      // add tab to route content element
-      $('#route-content').append('<div id="app-tab-' + id + '"></div>')
-
-      // update tabs nav HTML
-      $('#new-nav-item').clone().removeAttr('id').prependTo('#app-nav-tabs').toggle('slide')
-        .children('a').attr('data-tab', id).click(changeTab).click()
-
       if (typeof callback === 'function') {
         // usual to start routing
         callback()
@@ -336,32 +341,34 @@ app.ready(function () {
     }
 
     var changeTab = function () {
-      currentTab = parseInt($(this).attr('data-tab'), 10)
-      var showTab = function () {
-        // hide content, then show tab
-        var elTab = $('#app-tab-' + currentTab)
-        var elContent = elTab.children()
-        elContent.hide()
-        elTab.addClass('app-current-tab')
-        // now route content appears
-        elContent.fadeIn(100)
-      }
+      if (routeInProgress !== true) {
+        currentTab = parseInt($(this).attr('data-tab'), 10)
+        var showTab = function () {
+          // hide content, then show tab
+          var elTab = $('#app-tab-' + currentTab)
+          var elContent = elTab.children()
+          elContent.hide()
+          elTab.addClass('app-current-tab')
+          // now route content appears
+          elContent.fadeIn(100)
+        }
 
-      // remove classes from the previous tab
-      var previousTab = $('#route-content > .app-current-tab')
-      if (previousTab.length) {
-        $('#app-nav-tabs .active').removeClass('active')
-        previousTab.children().fadeOut(200, function () {
-          previousTab.removeClass('app-current-tab')
+        // remove classes from the previous tab
+        var previousTab = $('#route-content > .app-current-tab')
+        if (previousTab.length) {
+          $('#app-nav-tabs .active').removeClass('active')
+          previousTab.children().fadeOut(200, function () {
+            previousTab.removeClass('app-current-tab')
+            showTab()
+          })
+        } else {
+          // first tab
           showTab()
-        })
-      } else {
-        // first tab
-        showTab()
-      }
+        }
 
-      // active this tab nav item
-      $(this).addClass('active')
+        // active this tab nav item
+        $(this).addClass('active')
+      }
     }
 
     $('#new-tab').click(function () {
@@ -375,11 +382,6 @@ app.ready(function () {
         }
       })
     })
-
-    // control routing queue
-    var routeInProgress = false
-    var ignoreRoute = false
-    var routeReadyTimeout
 
     var router = function (route, internal) {
       if (!internal) {
