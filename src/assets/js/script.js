@@ -399,9 +399,6 @@ app.ready(function () {
       if (routeInProgress !== true) {
         // random unique tab ID
         var id = Date.now()
-        appTabs[id] = {
-          'hash': window.location.hash
-        }
         currentTab = id
         // add tab to route content element
         $('#route-content').append('<div id="app-tab-' + id + '"></div>')
@@ -581,10 +578,18 @@ app.ready(function () {
           ignoreRoute = true
           // still on current route
           window.location = '/#/' + routesHistory[routesHistory.length - 1]
+          return
         }
       } else {
         // next will not be ignored
         ignoreRoute = false
+      }
+
+      if (currentTab !== null) {
+        // update stored tab hash
+        appTabs[currentTab] = {
+          'hash': window.location.hash
+        }
       }
     }
     $(window).on('hashchange', hashChange)
@@ -765,17 +770,14 @@ app.ready(function () {
     }
     renderChannels()
 
-    // show rendered application
-    $('#dashboard').fadeIn()
-
-    // first check for URL rewrites only
-    ignoreRoute = true
-    hashChange()
     // create first tab
     newTab(function () {
       // force routing
       hashChange()
     })
+
+    // show rendered application
+    $('#dashboard').fadeIn()
 
     // global quickview
     $('.qv-close').click(function () {
