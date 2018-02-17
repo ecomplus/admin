@@ -398,6 +398,8 @@ app.ready(function () {
       $('#router > .loading').show()
       // load HTML content
       var elTab = $('#app-tab-' + currentTab)
+      // global to identify tab on route scripts
+      window.$tab = elTab
       elTab.load(uri, function (responseText, textStatus, jqXHR) {
         switch (textStatus) {
           case 'success':
@@ -428,7 +430,7 @@ app.ready(function () {
     // global function to run after Route rendering
     window.routeReady = function () {
       // display content
-      $('#app-tab-' + currentTab + ' > *').fadeIn()
+      window.$tab.children().fadeIn()
     }
 
     // global 404 error function
