@@ -379,6 +379,7 @@ app.ready(function () {
     // control routing queue
     var routeInProgress = false
     var ignoreRoute = false
+    var routeReadyTimeout
 
     var router = function (route, internal) {
       if (!internal) {
@@ -406,32 +407,49 @@ app.ready(function () {
       }
 
       $('#router > .loading').show()
-      // load HTML content
       var elTab = $('#app-tab-' + currentTab)
       // global to identify tab on route scripts
       window.$tab = elTab
-      elTab.load(uri, function (responseText, textStatus, jqXHR) {
-        switch (textStatus) {
-          case 'success':
-          case 'notmodified':
-            // successful response
-            if (elTab.children().length === 0) {
-              // route content cannot be empty
-              elTab.html('<div></div>')
-              window.routeReady()
-            }
-            break
 
-          default:
-            // error
-            if (jqXHR.status === 404) {
-              // not found
-              // internal rewrite
-              window.e404()
-            } else {
-              // @TODO
-              console.log(jqXHR.status)
-            }
+      // load HTML content
+      $.ajax({
+        url: uri,
+        dataType: 'html',
+        // timeout in 5s
+        timeout: 5000
+      })
+      .done(function (html) {
+        // successful response
+        if (!internal) {
+          // have to force routeReady call after 10s
+          routeReadyTimeout = setTimeout(function () {
+            router('408', true)
+          }, 10000)
+        }
+        // put HTML content
+        elTab.html(html)
+      })
+      .fail(function (jqXHR, textStatus, err) {
+        if (jqXHR.status === 404) {
+          // not found
+          // internal rewrite
+          window.e404()
+        } else {
+          // do internal route to error page
+          var eNum
+          switch (textStatus) {
+            case 'abort':
+              eNum = '400'
+              break
+            case 'timeout':
+              eNum = '504'
+              break
+            default:
+              // unexpected status
+              console.error(err)
+              eNum = '500'
+          }
+          router(eNum, true)
         }
       })
     }
@@ -440,8 +458,11 @@ app.ready(function () {
     window.routeReady = function () {
       // ajax routing done
       routeInProgress = false
-      $('#router > .loading').fadeOut()
+      // drop timeout trigger
+      clearTimeout(routeReadyTimeout)
+      routeReadyTimeout = null
       // display content
+      $('#router > .loading').fadeOut()
       window.$tab.children().fadeIn()
     }
 
