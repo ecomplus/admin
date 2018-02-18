@@ -327,8 +327,12 @@ app.ready(function () {
         $('#route-content').append('<div id="app-tab-' + id + '"></div>')
 
         // update tabs nav HTML
-        $('#new-nav-item').clone().removeAttr('id').prependTo('#app-nav-tabs').toggle('slide')
-          .children('a').attr('data-tab', id).click(changeTab).click()
+        var navItem = $('#new-nav-item').clone().attr('id', 'app-nav-' + id)
+        navItem.prependTo('#app-nav-tabs').toggle('slide')
+        navItem.children('a').attr('data-tab', id).click(changeTab).click()
+        navItem.children('.close-tab').click(function () {
+          closeTab(id)
+        })
       }
       if (typeof callback === 'function') {
         // usual to start routing
@@ -390,6 +394,36 @@ app.ready(function () {
           window.location = '/#/new'
         }
       })
+    })
+
+    var closeTab = function (tabId) {
+      if (routeInProgress !== true) {
+        // remove from tabs object
+        delete appTabs[tabId]
+
+        if (tabId === currentTab) {
+          // have to change the current tab
+          var tabs = Object.keys(appTabs)
+          if (tabs.length === 0) {
+            // create new tab
+            $('#new-tab').click()
+          } else {
+            // change tab
+            // click on any nav item link
+            $('#app-nav-' + tabs[0] + ' > a').click()
+          }
+        }
+
+        // remove from HTML dom
+        $('#app-tab-' + tabId).remove()
+        $('#app-nav-' + tabId).toggle('slide', function () {
+          $(this).remove()
+        })
+      }
+    }
+
+    $('#close-current-tab').click(function () {
+      closeTab(currentTab)
     })
 
     var router = function (route, internal) {
