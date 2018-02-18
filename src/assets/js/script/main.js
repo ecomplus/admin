@@ -455,20 +455,20 @@ app.ready(function () {
       }
 
       $('#router > .loading').show()
-      var elTab = $('#app-tab-' + currentTab)
-      // global to identify tab on route scripts
-      window.tabId = currentTab
-      window.elTab = elTab
-
       // load HTML content
       $.ajax({
         url: uri,
         dataType: 'html',
-        // timeout in 5s
-        timeout: 5000
+        // timeout in 10s
+        timeout: 10000
       })
       .done(function (html) {
         // successful response
+        var elTab = $('#app-tab-' + currentTab)
+        // global to identify tab on route scripts
+        window.tabId = currentTab
+        window.elTab = elTab
+
         if (!internal) {
           // have to force routeReady call after 10s
           routeReadyTimeout = setTimeout(function () {
