@@ -387,7 +387,6 @@ app.ready(function () {
     // each tab with a route
     var appTabs = {}
     var currentTab = null
-    var currentRoute
     // control routing queue
     var routeInProgress = false
     var ignoreRoute = false
@@ -465,7 +464,7 @@ app.ready(function () {
     $('#new-tab').click(function () {
       newTab(function () {
         // new tab route
-        if (currentRoute === 'new') {
+        if (window.location.hash === '#/new') {
           // force routing
           hashChange()
         } else {
@@ -510,12 +509,11 @@ app.ready(function () {
           // routing in progress
           return
         }
-        // console.log('Go to route => ' + route)
+        console.log('Go to route => ' + route)
         if (currentTab !== null) {
           // add route to history
           appTabs[currentTab].routesHistory.push(route)
         }
-        currentRoute = route
       }
       routeInProgress = true
 
