@@ -423,7 +423,8 @@ app.ready(function () {
       $('#router > .loading').show()
       var elTab = $('#app-tab-' + currentTab)
       // global to identify tab on route scripts
-      window.$tab = elTab
+      window.tabId = currentTab
+      window.elTab = elTab
 
       // load HTML content
       $.ajax({
@@ -477,7 +478,7 @@ app.ready(function () {
       routeReadyTimeout = null
       // display content
       $('#router > .loading').fadeOut()
-      window.$tab.children().fadeIn()
+      window.elTab.children().fadeIn()
     }
 
     // global 404 error function

@@ -5,6 +5,18 @@
 'use strict'
 
 var Route = function () {
+  // current tab ID
+  var tabId = window.tabId
+  // jQuery element object
+  var elTab = window.elTab
+  // prefix tab ID on content elements IDs
+  elTab.find('[data-id]').each(function () {
+    $(this).attr('id', tabId + '-' + $(this).data('id'))
+  })
+  elTab.find('[data-id-href]').each(function () {
+    $(this).attr('href', '#' + tabId + '-' + $(this).data('id-href'))
+  })
+
   var slug = window.routeParams[0]
   if (slug === undefined) {
     // first URI param is required
@@ -75,7 +87,7 @@ var Route = function () {
 
   // render H1
   html = '<strong>' + resource.label[lang] + '</strong> · ' + dictionary[action]
-  $('#resource-name').html(html)
+  $('#' + tabId + '-resource-name').html(html)
 
   // render breadcrumb links
   html = '<li class="breadcrumb-item">' +
@@ -86,10 +98,10 @@ var Route = function () {
              '<li class="breadcrumb-item active">' +
                dictionary[action] +
              '</li>'
-  $('#breadcrumbs').append(html)
+  $('#' + tabId + '-breadcrumbs').append(html)
 
   // set up JSON code editor
-  var editor = ace.edit('code-editor')
+  var editor = ace.edit(tabId + '-code-editor')
   editor.setTheme('ace/theme/dawn')
   editor.session.setMode('ace/mode/json')
 

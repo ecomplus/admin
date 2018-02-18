@@ -1,7 +1,7 @@
 <header class="header pt-3">
   <div class="header-bar no-border">
-    <h1 id="resource-name"></h1>
-    <ol class="breadcrumb" id="breadcrumbs">
+    <h1 data-id="resource-name"></h1>
+    <ol class="breadcrumb" data-id="breadcrumbs">
       <li class="breadcrumb-item">
         <a href="/#/">
           <i class="fa fa-home"></i> Home
@@ -12,10 +12,10 @@
 
   <div class="header-action">
     <nav class="nav">
-      <a class="nav-link active" data-toggle="tab" href="#tab-normal">
+      <a class="nav-link active" data-toggle="tab" data-id-href="tab-normal">
         Normal
       </a>
-      <a class="nav-link" data-toggle="tab" href="#tab-json">
+      <a class="nav-link" data-toggle="tab" data-id-href="tab-json">
         JSON
       </a>
     </nav>
@@ -24,7 +24,7 @@
 
 <div class="main-content">
   <div class="tab-content">
-    <div class="tab-pane fade active show" id="tab-normal">
+    <div class="tab-pane fade active show" data-id="tab-normal">
       <div class="card">
         <h4 class="card-title">Card title</h4>
 
@@ -33,10 +33,10 @@
       </div>
     </div>
 
-    <div class="tab-pane fade" id="tab-json">
+    <div class="tab-pane fade" data-id="tab-json">
       <div class="card">
         <div class="card-body">
-          <div id="code-editor"></div>
+          <div data-id="code-editor" class="ace-editor"></div>
         </div>
       </div>
     </div>
