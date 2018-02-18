@@ -519,9 +519,10 @@ app.ready(function () {
     }
 
     var hashChange = function () {
+      var hash = window.location.hash
       // eg.: #/any
       // cut prefix #/
-      var route = window.location.hash.slice(2)
+      var route = hash.slice(2)
       // handle URL rewrites
       if (route === '') {
         // default index
@@ -532,6 +533,18 @@ app.ready(function () {
 
       // route
       if (!ignoreRoute) {
+        if (hash !== '#/new') {
+          // check if a tab have this route
+          for (var tabId in appTabs) {
+            if (appTabs.hasOwnProperty(tabId) && appTabs[tabId].hash === hash) {
+              // do not permit multiple tabs with same route
+              // change to this tab
+              $('#app-nav-' + tabId + ' > a').click()
+              return
+            }
+          }
+        }
+
         if (routeInProgress !== true) {
           router(route)
         } else {
@@ -553,7 +566,7 @@ app.ready(function () {
 
       if (currentTab !== null) {
         // update current tab hash
-        appTabs[currentTab].hash = window.location.hash
+        appTabs[currentTab].hash = hash
       }
     }
     $(window).on('hashchange', hashChange)
