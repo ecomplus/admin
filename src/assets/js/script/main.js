@@ -805,7 +805,7 @@ app.ready(function () {
     }
 
     $(document).mousedown(function (e) {
-      if (e.which === 2) {
+      if (e.ctrlKey || e.which === 2) {
         targetBlank = true
       }
       // to allow the browser to know that we handled it
@@ -819,12 +819,44 @@ app.ready(function () {
 
         // click with target blank
         // if is changing route, prevent default event and open new tab
-        var t = e.target
-        if (t !== undefined && t.parentElement && typeof t.parentElement.href === 'string') {
-          var uriParts = t.parentElement.href.split(window.location.origin + '/#')
-          if (uriParts.length === 2) {
+        var t, el
+        t = e.target
+        while (t && el === undefined) {
+          switch (t.nodeName) {
+            case 'A':
+              el = t
+              break
+            case 'DIV':
+            case 'P':
+            case 'BUTTON':
+            case 'BODY':
+              // stop searching link
+              t = false
+              break
+            default:
+              // try next parent element
+              t = t.parentElement
+          }
+        }
+        if (el === undefined || typeof el.href !== 'string') {
+          // not a valid link
+          // we handled it
+          return true
+        }
+
+        switch (el.href) {
+          case 'javascript:;':
+          case '#':
+            // no link URL
             e.preventDefault()
-            var hash = '#' + uriParts[1]
+            return true
+        }
+        var uriParts = el.href.split(window.location.origin + '/#')
+        if (uriParts.length === 2) {
+          e.preventDefault()
+          var hash = '#' + uriParts[1]
+          if (hash !== '#') {
+            // same of javascript:;
             handleTargetBlank(hash)
           }
         }
