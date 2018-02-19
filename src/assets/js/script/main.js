@@ -518,9 +518,7 @@ app.ready(function () {
       window.elTab.children().fadeIn()
       if (tabTitle !== undefined) {
         // change tab nav title
-        $('#app-nav-' + window.tabId).toggle('slide', function () {
-          $(this).text(tabTitle).toggle('slide')
-        })
+        $('#app-nav-' + window.tabId + ' > a').text(tabTitle)
       }
     }
 
