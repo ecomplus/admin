@@ -908,5 +908,10 @@ app.ready(function () {
       // focus on document
       $(this).blur()
     })
+
+    $(document).bind('keydown', 'q', function () {
+      // open or close global quickview
+      $('.topbar img.avatar').click()
+    })
   }
 })
