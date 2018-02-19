@@ -518,6 +518,21 @@ app.ready(function () {
       router('404', true)
     }
 
+    var checkTabsRoutes = function (hash) {
+      if (hash !== '#/new') {
+        // check if a tab have this route
+        for (var tabId in appTabs) {
+          if (appTabs.hasOwnProperty(tabId) && appTabs[tabId].hash === hash) {
+            // do not permit multiple tabs with same route
+            // change to this tab
+            $('#app-nav-' + tabId + ' > a').click()
+            return false
+          }
+        }
+      }
+      return true
+    }
+
     var hashChange = function () {
       var hash = window.location.hash
       // eg.: #/any
@@ -533,16 +548,9 @@ app.ready(function () {
 
       // route
       if (!ignoreRoute) {
-        if (hash !== '#/new') {
-          // check if a tab have this route
-          for (var tabId in appTabs) {
-            if (appTabs.hasOwnProperty(tabId) && appTabs[tabId].hash === hash) {
-              // do not permit multiple tabs with same route
-              // change to this tab
-              $('#app-nav-' + tabId + ' > a').click()
-              return
-            }
-          }
+        // check if a tab already have this route
+        if (!checkTabsRoutes(hash)) {
+          return
         }
 
         if (routeInProgress !== true) {
@@ -775,6 +783,52 @@ app.ready(function () {
       $(window).off('beforeunload')
       // just redirect to lose session and logout
       window.location = '/'
+    })
+
+    // open new tab on target blank click
+    var targetBlank = false
+
+    var handleTargetBlank = function (hash) {
+      // check if a tab already have this route
+      if (!checkTabsRoutes(hash)) {
+        return
+      }
+
+      newTab(function () {
+        if (window.location.hash === hash) {
+          // force routing
+          hashChange()
+        } else {
+          window.location = '/' + hash
+        }
+      })
+    }
+
+    $(document).mousedown(function (e) {
+      if (e.which === 2) {
+        targetBlank = true
+      }
+      // to allow the browser to know that we handled it
+      return true
+    })
+
+    $(document).click(function (e) {
+      if (targetBlank === true) {
+        // prevent loop
+        targetBlank = false
+
+        // click with target blank
+        // if is changing route, prevent default event and open new tab
+        var t = e.target
+        if (t !== undefined && t.parentElement && typeof t.parentElement.href === 'string') {
+          var uriParts = t.parentElement.href.split(window.location.origin + '/#')
+          if (uriParts.length === 2) {
+            e.preventDefault()
+            var hash = '#' + uriParts[1]
+            handleTargetBlank(hash)
+          }
+        }
+      }
     })
   }
 })
