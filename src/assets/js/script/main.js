@@ -314,7 +314,7 @@ app.ready(function () {
     var ignoreRoute = false
     var routeReadyTimeout
 
-    var newTab = function (callback) {
+    var newTab = function (callback, toHashNew) {
       if (routeInProgress !== true) {
         // random unique tab ID
         var id = Date.now()
@@ -332,6 +332,16 @@ app.ready(function () {
         navItem.children('.close-tab').click(function () {
           closeTab(id)
         })
+
+        if (toHashNew) {
+          // new tab route
+          if (window.location.hash === '#/new') {
+            // force routing
+            hashChange()
+          } else {
+            window.location = '/#/new'
+          }
+        }
       }
       if (typeof callback === 'function') {
         // usual to start routing
@@ -384,15 +394,8 @@ app.ready(function () {
     }
 
     $('#new-tab').click(function () {
-      newTab(function () {
-        // new tab route
-        if (window.location.hash === '#/new') {
-          // force routing
-          hashChange()
-        } else {
-          window.location = '/#/new'
-        }
-      })
+      // toHashNew = true
+      newTab(null, true)
     })
 
     var closeTab = function (tabId) {
@@ -405,7 +408,8 @@ app.ready(function () {
           var tabs = Object.keys(appTabs)
           if (tabs.length === 0) {
             // create new tab
-            $('#new-tab').click()
+            // toHashNew = true
+            newTab(null, true)
           } else {
             // change tab
             // click on any nav item link
@@ -502,15 +506,22 @@ app.ready(function () {
     }
 
     // global function to run after Route rendering
-    window.routeReady = function () {
+    window.routeReady = function (tabTitle) {
       // ajax routing done
       routeInProgress = false
       // drop timeout trigger
       clearTimeout(routeReadyTimeout)
       routeReadyTimeout = null
+
       // display content
       $('#router > .loading').fadeOut()
       window.elTab.children().fadeIn()
+      if (tabTitle !== undefined) {
+        // change tab nav title
+        $('#app-nav-' + window.tabId).toggle('slide', function () {
+          $(this).text(tabTitle).toggle('slide')
+        })
+      }
     }
 
     // global 404 error function
