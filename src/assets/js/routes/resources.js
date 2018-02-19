@@ -33,39 +33,6 @@ var Route = function () {
   var lang = window.lang
   var i18n = window.i18n
 
-  var action = window.routeParams[1]
-  if (action === undefined) {
-    // resource root URI
-    // default action
-    action = 'list'
-  } else {
-    switch (action) {
-      case 'create':
-        if (window.routeParams.length > 2) {
-          // should not have resource ID, and no other parameter
-          window.e404()
-          return
-        }
-        break
-
-      case 'edit':
-        if (window.routeParams.length === 3) {
-          var resourceId = window.routeParams[2]
-          console.log(resourceId)
-        } else {
-          // edit requires ID of resource
-          window.e404()
-          return
-        }
-        break
-
-      default:
-        // invalid action
-        window.e404()
-        return
-    }
-  }
-
   var dictionary = {
     // resource actions
     'list': i18n({
@@ -80,6 +47,43 @@ var Route = function () {
       'en_us': 'Edit',
       'pt_br': 'Editar'
     })
+  }
+
+  var action = window.routeParams[1]
+  var tabTitle
+  if (action === undefined) {
+    // resource root URI
+    // default action
+    action = 'list'
+    tabTitle = resource.label[lang]
+  } else {
+    switch (action) {
+      case 'create':
+        if (window.routeParams.length > 2) {
+          // should not have resource ID, and no other parameter
+          window.e404()
+          return
+        }
+        tabTitle = resource.label[lang] + ' · ' + dictionary[action]
+        break
+
+      case 'edit':
+        if (window.routeParams.length === 3) {
+          var resourceId = window.routeParams[2]
+          // console.log(resourceId)
+          tabTitle = resource.label[lang] + ' · ' + resourceId
+        } else {
+          // edit requires ID of resource
+          window.e404()
+          return
+        }
+        break
+
+      default:
+        // invalid action
+        window.e404()
+        return
+    }
   }
 
   // initial rendering
@@ -105,6 +109,6 @@ var Route = function () {
   editor.setTheme('ace/theme/dawn')
   editor.session.setMode('ace/mode/json')
 
-  window.routeReady()
+  window.routeReady(tabTitle)
 }
 Route()
