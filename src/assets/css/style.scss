@@ -313,8 +313,11 @@ body {
   opacity: 1;
 }
 
-.quickview {
+.app-backdrop.backdrop-quickview {
   z-index: 1002;
+}
+.quickview {
+  z-index: 1003;
 }
 
 // fix icon alignment
