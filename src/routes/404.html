@@ -15,6 +15,15 @@
   </div>
 
   <script type="text/javascript">
-    window.routeReady()
+    var lang = window.lang
+    var title
+    switch (lang) {
+      case 'pt_br':
+        title = 'Não encontrado'
+        break
+      default:
+        title = 'Not found'
+    }
+    window.routeReady(title)
   </script>
 </div>
