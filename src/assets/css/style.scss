@@ -149,18 +149,27 @@
   box-shadow: 3px 0 5px rgba($black, .05);
   z-index: 3;
 }
-#app-tabs > .scrollable {
+#app-nav-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-pack: flex-end;
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+  -ms-flex-wrap: nowrap;
+  -webkit-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
-#app-tabs > .scrollable > .ps-scrollbar-x-rail {
+#app-nav-container > .scrollable > .ps-scrollbar-x-rail {
   top: 2px !important;
 }
-#app-tabs > .scrollable > .ps-scrollbar-y-rail {
+#app-nav-container > .scrollable > .ps-scrollbar-y-rail {
   display: none !important;
 }
-#app-tabs > .scrollable > .nav {
+#app-nav-container > .scrollable > .nav {
   -ms-flex-wrap: nowrap;
   -webkit-flex-wrap: nowrap;
   flex-wrap: nowrap;

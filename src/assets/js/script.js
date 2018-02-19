@@ -487,7 +487,7 @@ app.ready(function () {
           } else {
             // change tab
             // click on any nav item link
-            $('#app-nav-' + tabs[0] + ' > a').click()
+            $('#app-nav-' + tabs[tabs.length - 1] + ' > a').click()
           }
         }
 
