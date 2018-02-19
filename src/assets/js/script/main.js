@@ -913,5 +913,10 @@ app.ready(function () {
       // open or close global quickview
       $('.topbar img.avatar').click()
     })
+
+    $(document).bind('keydown', 'm', function () {
+      // open or close Mony
+      dock.toggleMinimize('#dock-chat')
+    })
   }
 })
