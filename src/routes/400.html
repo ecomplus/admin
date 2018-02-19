@@ -4,8 +4,8 @@
       <h1 class="text-secondary lh-1 fs-200">400</h1>
       <hr class="w-30px mx-auto mb-30 mt-0">
       <h3 class="text-uppercase i18n">
-        <span data-lang="en_us">Page not found</span>
-        <span data-lang="pt_br">Página não encontrada</span>
+        <span data-lang="en_us">Bad request</span>
+        <span data-lang="pt_br">Erro na requisição</span>
       </h3>
       <p class="lead i18n">
         <span data-lang="en_us">Seems you're looking for something that doesn't exist.</span>
@@ -15,6 +15,15 @@
   </div>
 
   <script type="text/javascript">
-    window.routeReady()
+    var lang = window.lang
+    var title
+    switch (lang) {
+      case 'pt_br':
+        title = 'Erro na requisição'
+        break
+      default:
+        title = 'Bad request'
+    }
+    window.routeReady(title)
   </script>
 </div>
