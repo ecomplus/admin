@@ -514,12 +514,12 @@ app.ready(function () {
       routeReadyTimeout = null
 
       // display content
-      $('#router > .loading').fadeOut()
-      window.elTab.children().fadeIn()
       if (tabTitle !== undefined) {
         // change tab nav title
         $('#app-nav-' + window.tabId + ' > a').text(tabTitle)
       }
+      $('#router > .loading').fadeOut()
+      window.elTab.children().fadeIn()
     }
 
     // global 404 error function
