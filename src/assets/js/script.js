@@ -949,5 +949,42 @@ app.ready(function () {
         }
       }
     })
+
+    /* default app shortcuts */
+
+    $(document).bind('keydown', 't', function () {
+      // shortcut to #new-tab click
+      newTab(null, true)
+    })
+
+    $(document).bind('keydown', 'w', function () {
+      // shortcut to #close-current-tab click
+      closeTab(currentTab)
+    })
+
+    $(document).bind('keydown', 'right', function () {
+      // change tab
+      var li = $('#app-nav-' + currentTab).next()
+      if (li.attr('id') !== 'new-nav-item') {
+        li.children('a').click()
+      }
+    })
+
+    $(document).bind('keydown', 'left', function () {
+      // change tab
+      $('#app-nav-' + currentTab).prev().children('a').click()
+    })
+
+    $(document).bind('keydown', 's', function (e) {
+      // prevent write on input
+      e.preventDefault()
+      // topbar search input
+      $('#app-search').focus()
+    })
+
+    $('#app-search').bind('keydown', 'esc', function () {
+      // focus on document
+      $(this).blur()
+    })
   }
 })
