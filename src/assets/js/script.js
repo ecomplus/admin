@@ -496,12 +496,17 @@ app.ready(function () {
       ajax.done(function (json) {
         // successful response
         if (typeof callback === 'function') {
-          callback(JSON.parse(json))
+          callback(null, json)
         }
       })
 
       ajax.fail(function (jqXHR, textStatus, err) {
-        apiError(jqXHR.responseJSON)
+        var json = jqXHR.responseJSON
+        // error response
+        if (typeof callback === 'function') {
+          callback(err, json)
+        }
+        apiError(json)
         if (jqXHR.status >= 500) {
           console.log('API request with internal error response:')
           console.log(jqXHR)
