@@ -497,6 +497,8 @@ app.ready(function () {
         // successful response
         if (typeof callback === 'function') {
           callback(null, json)
+        } else {
+          console.log(json)
         }
       })
 
