@@ -186,6 +186,11 @@ app.ready(function () {
     })
   }
 
+  var hideToastr = function () {
+    // implement function to hide app toast manually
+    $('div.toast.reveal').removeClass('reveal')
+  }
+
   var apiError = function (json) {
     // handle API error response
     var msg
@@ -264,6 +269,8 @@ app.ready(function () {
     // treat login form
     $('#login-form').submit(function () {
       if (!$(this).hasClass('ajax')) {
+        // reset notification toast
+        hideToastr()
         var username = $('#username').val()
         // get pass md5 hash
         var password = md5($('#password').val())
@@ -379,6 +386,8 @@ app.ready(function () {
     var confirmRequest = {}
 
     window.callApi = function (endpoint, method, callback, bodyObject, id) {
+      // reset notification toast
+      hideToastr()
       var apiHost = 'https://api.e-com.plus/v1/'
       // API endpoint full URL
       var uri
