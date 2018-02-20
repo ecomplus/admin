@@ -33,64 +33,39 @@ var Route = function () {
   var lang = window.lang
   var i18n = window.i18n
 
-  var dictionary = {
-    // resource actions
-    'list': i18n({
-      'en_us': 'List',
-      'pt_br': 'Listar'
-    }),
-    'create': i18n({
-      'en_us': 'Create',
-      'pt_br': 'Criar'
-    }),
-    'edit': i18n({
-      'en_us': 'Edit',
-      'pt_br': 'Editar'
-    })
-  }
-
-  var action = window.routeParams[1]
-  var tabTitle
-  if (action === undefined) {
+  var tabLabel, tabTitle
+  var resourceId = window.routeParams[1]
+  var creating
+  if (resourceId === undefined) {
     // resource root URI
     // default action
-    action = 'list'
+    tabLabel = i18n({
+      'en_us': 'List',
+      'pt_br': 'Listar'
+    })
     tabTitle = resource.label[lang]
   } else {
-    switch (action) {
-      case 'create':
-        if (window.routeParams.length > 2) {
-          // should not have resource ID, and no other parameter
-          window.e404()
-          return
-        }
-        tabTitle = resource.label[lang] + ' · ' + dictionary[action]
-        break
-
-      case 'edit':
-        if (window.routeParams.length === 3) {
-          var resourceId = window.routeParams[2]
-          // console.log(resourceId)
-          tabTitle = resource.label[lang] + ' · ' + resourceId
-        } else {
-          // edit requires ID of resource
-          window.e404()
-          return
-        }
-        break
-
-      default:
-        // invalid action
-        window.e404()
-        return
+    if (resourceId === 'new') {
+      // create
+      tabLabel = i18n({
+        'en_us': 'Create',
+        'pt_br': 'Criar'
+      })
+      // unset ID
+      resourceId = undefined
+      creating = true
+    } else {
+      // specific resource by ID
+      tabLabel = resourceId
     }
+    tabTitle = resource.label[lang] + ' · ' + tabLabel
   }
 
   // initial rendering
   var html
 
   // render H1
-  html = '<strong>' + resource.label[lang] + '</strong> · ' + dictionary[action]
+  html = '<strong>' + resource.label[lang] + '</strong> · ' + tabLabel
   $('#' + tabId + '-resource-name').html(html)
 
   // render breadcrumb links
@@ -100,7 +75,7 @@ var Route = function () {
                '</a>' +
              '</li>' +
              '<li class="breadcrumb-item active">' +
-               dictionary[action] +
+               tabLabel +
              '</li>'
   $('#' + tabId + '-breadcrumbs').append(html)
 
@@ -109,10 +84,21 @@ var Route = function () {
   editor.setTheme('ace/theme/dawn')
   editor.session.setMode('ace/mode/json')
 
-  window.callApi(slug, 'GET', function () {
-
-  })
-
   window.routeReady(tabTitle)
+
+  if (creating !== true) {
+    var endpoint
+    if (resourceId === undefined) {
+      endpoint = slug + '.json'
+    } else {
+      // specific resource document
+      endpoint = slug + '/' + resourceId + '.json'
+    }
+    window.callApi(endpoint, 'GET', function (err, json) {
+      if (!err) {
+        editor.session.setValue(JSON.stringify(json, null, 4))
+      }
+    })
+  }
 }
 Route()
