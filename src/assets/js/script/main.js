@@ -297,9 +297,100 @@ app.ready(function () {
     sessionStorage.removeItem('my_id')
     sessionStorage.removeItem('access_token')
 
-    window.apiCall = function (endpoint, method, callback, bodyObject) {
+    // confirm some requests with modal
+    var confirmRequest = {}
+
+    window.callApi = function (endpoint, method, callback, bodyObject, id) {
+      var apiHost = 'https://api.e-com.plus/v1/'
+      // API endpoint full URL
+      var uri
+      if (id === undefined) {
+        uri = apiHost + endpoint
+
+        var askConfirmation = function (msg) {
+          // random unique request ID
+          var id = Date.now()
+          confirmRequest[id] = {
+            'endpoint': endpoint,
+            'method': method,
+            'callback': callback,
+            'bodyObject': bodyObject,
+            'confirmed': false
+          }
+          // expose request
+          var reqText = method + ' ' + uri
+          if (bodyObject) {
+            reqText += '\n' + JSON.stringify(bodyObject, null, 2)
+          }
+
+          // open confirmation modal
+          var modal = $('#modal-confirm-request')
+          modal.find('#confirm-api-request').data('request-id', id)
+          modal.find('.modal-body > p').text(msg).next('pre').children('code').text(reqText)
+          modal.modal('show')
+        }
+
+        // request not confirmed
+        switch (method) {
+          case 'GET':
+          case 'POST':
+          case 'PATCH':
+          case 'PUT':
+            // continue
+            break
+          case 'DELETE':
+            askConfirmation(i18n({
+              'en_us': 'You are going to delete a resource permanently, are you sure?',
+              'pt_br': 'Você vai excluir um recurso permanentemente, tem certeza?'
+            }))
+            return
+          default:
+            // invalid method
+            app.toast(i18n({
+              'en_us': 'Invalid request method',
+              'pt_br': 'Método de requisição inválido'
+            }))
+            return
+        }
+
+        if (typeof endpoint === 'string' && endpoint !== '') {
+          if (/^\$update\.json/.test(endpoint)) {
+            askConfirmation(i18n({
+              'en_us': 'You are going to do a bulk update, are you sure?',
+              'pt_br': 'Você vai fazer uma atualização em massa, tem certeza?'
+            }))
+            return
+          }
+        } else {
+          // invalid endpoint argument
+          app.toast(i18n({
+            'en_us': 'Invalid request endpoint',
+            'pt_br': 'O endpoint da requisição é inválido'
+          }))
+          return
+        }
+      } else {
+        if (!confirmRequest.hasOwnProperty(id) || confirmRequest[id].confirmed !== true) {
+          // something is wrong
+          app.toast(i18n({
+            'en_us': 'You should not do that',
+            'pt_br': 'Você não deveria fazer isto'
+          }))
+          return false
+        }
+
+        // request confirmed
+        // reset params
+        endpoint = confirmRequest[id].endpoint
+        method = confirmRequest[id].method
+        callback = confirmRequest[id].callback
+        bodyObject = confirmRequest[id].bodyObject
+        // set URL
+        uri = apiHost + endpoint
+      }
+
       var options = {
-        url: 'https://api.e-com.plus/v1/' + endpoint,
+        url: uri,
         method: method,
         dataType: 'json',
         headers: {
@@ -330,6 +421,15 @@ app.ready(function () {
         }
       })
     }
+
+    $('#confirm-api-request').click(function () {
+      var reqId = $(this).data('request-id')
+      if (reqId && confirmRequest.hasOwnProperty(reqId)) {
+        confirmRequest[reqId].confirmed = true
+        // call API after confirmation
+        window.callApi(null, null, null, null, reqId)
+      }
+    })
 
     $(window).on('beforeunload', function (e) {
       // show promp before page redirect
