@@ -109,6 +109,10 @@ var Route = function () {
   editor.setTheme('ace/theme/dawn')
   editor.session.setMode('ace/mode/json')
 
+  window.callApi(slug, 'GET', function () {
+
+  })
+
   window.routeReady(tabTitle)
 }
 Route()
