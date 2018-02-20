@@ -297,6 +297,40 @@ app.ready(function () {
     sessionStorage.removeItem('my_id')
     sessionStorage.removeItem('access_token')
 
+    window.apiCall = function (endpoint, method, callback, bodyObject) {
+      var options = {
+        url: 'https://api.e-com.plus/v1/' + endpoint,
+        method: method,
+        dataType: 'json',
+        headers: {
+          'X-Store-ID': storeId,
+          'X-My-ID': session.my_id,
+          'X-Access-Token': session.access_token
+        }
+      }
+      if (bodyObject) {
+        options.data = JSON.stringify(bodyObject)
+      }
+
+      // call AJAX request
+      var ajax = $.ajax(options)
+
+      ajax.done(function (json) {
+        // successful response
+        if (typeof callback === 'function') {
+          callback(JSON.parse(json))
+        }
+      })
+
+      ajax.fail(function (jqXHR, textStatus, err) {
+        apiError(jqXHR.responseJSON)
+        if (jqXHR.status >= 500) {
+          console.log('API request with internal error response:')
+          console.log(jqXHR)
+        }
+      })
+    }
+
     $(window).on('beforeunload', function (e) {
       // show promp before page redirect
       var dialogText = 'Are you sure you want to leave?'
