@@ -1024,49 +1024,133 @@ app.ready(function () {
 
     /* default app shortcuts */
 
-    $(document).bind('keydown', 't', function () {
-      // shortcut to #new-tab click
-      newTab(null, true)
-    })
+    // save keys pressed simultaneously
+    var keysPressed = {}
+    var keysLoop = {}
 
-    $(document).bind('keydown', 'w', function () {
-      // shortcut to #close-current-tab click
-      closeTab(currentTab)
-    })
+    var runShortcut = function (e) {
+      // Ref.: https://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
+      // count current pressed keys
+      switch (Object.keys(keysPressed).length) {
+        case 1:
+          // check single key shortcuts
+          switch (e.keyCode) {
+            case 37:
+              // left
+              // change tab
+              $('#app-nav-' + currentTab).prev().children('a').click()
+              break
+            case 39:
+              // right
+              // change tab
+              var li = $('#app-nav-' + currentTab).next()
+              if (li.attr('id') !== 'new-nav-item') {
+                li.children('a').click()
+              }
+              break
+            case 84:
+              // t
+              // shortcut to #new-tab click
+              newTab(null, true)
+              break
+            case 87:
+              // w
+              // shortcut to #close-current-tab click
+              closeTab(currentTab)
+              break
+            case 83:
+              // s
+              // focus on topbar search input
+              // prevent write on input
+              e.preventDefault()
+              $('#app-search').focus()
+              break
+            case 81:
+              // q
+              // open or close global quickview
+              $('.topbar img.avatar').click()
+              break
+            case 77:
+              // m
+              // open or close Mony
+              dock.toggleMinimize('#dock-chat')
+              break
+          }
+          break
 
-    $(document).bind('keydown', 'right', function () {
-      // change tab
-      var li = $('#app-nav-' + currentTab).next()
-      if (li.attr('id') !== 'new-nav-item') {
-        li.children('a').click()
+        /* multiple keys shortcuts */
+
+        case 2:
+          // second key
+          if (keysPressed[71] === 0) {
+            // g
+            // try navigation shortcuts
+            switch (e.keyCode) {
+              case 80:
+                // p
+                // go to products
+                window.location = '/#/resources/products'
+                break
+              case 79:
+                // o
+                // go to orders
+                window.location = '/#/resources/orders'
+                break
+            }
+          }
+          break
+
+        case 3:
+          // third key
+          if (keysPressed[66] === 0 && keysPressed[89] === 1 && keysPressed[69] === 2) {
+            // bye
+            // force logout
+            $('#logout').click()
+          }
+          break
       }
-    })
+    }
 
-    $(document).bind('keydown', 'left', function () {
-      // change tab
-      $('#app-nav-' + currentTab).prev().children('a').click()
-    })
+    $(document).keydown(function (e) {
+      // console.log(e.target.nodeName)
+      if (e.target.nodeName !== 'BODY') {
+        if (e.keyCode === 27) {
+          // esc
+          // focus on document
+          $(e.target).blur()
+          return
+        } else {
+          // focus is not on body
+          return true
+        }
+      }
 
-    $(document).bind('keydown', 's', function (e) {
-      // prevent write on input
-      e.preventDefault()
-      // topbar search input
-      $('#app-search').focus()
-    })
+      if (keysLoop[e.keyCode] !== true) {
+        if (keysPressed[e.keyCode] !== undefined) {
+          runShortcut(e)
+          keysLoop[e.keyCode] = true
+        } else {
+          // store key
+          keysPressed[e.keyCode] = Object.keys(keysPressed).length
+        }
+      } else {
+        return true
+      }
+    }).keyup(function (e) {
+      if (e.target.nodeName !== 'BODY') {
+        // focus is not on body
+        return true
+      }
 
-    $('#app-search').bind('keydown', 'esc', function () {
-      // focus on document
-      $(this).blur()
-    })
-
-    $(document).bind('keydown', 'q', function () {
-      // open or close global quickview
-      $('.topbar img.avatar').click()
-    })
-
-    $(document).bind('keydown', 'm', function () {
-      // open or close Mony
-      dock.toggleMinimize('#dock-chat')
+      if (keysLoop[e.keyCode] !== true) {
+        if (keysPressed[e.keyCode] !== undefined) {
+          runShortcut(e)
+        }
+      } else {
+        delete keysLoop[e.keyCode]
+      }
+      // remove this key
+      delete keysPressed[e.keyCode]
     })
   }
 })
