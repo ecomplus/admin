@@ -90,6 +90,8 @@ var Route = function () {
     var endpoint
     if (resourceId === undefined) {
       endpoint = slug + '.json'
+      // disable edition
+      editor.setReadOnly(true)
     } else {
       // specific resource document
       endpoint = slug + '/' + resourceId + '.json'
