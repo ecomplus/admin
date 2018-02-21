@@ -1160,20 +1160,80 @@ app.ready(function () {
 
         case 2:
           // second key
-          if (keysPressed[71] === 0) {
-            // g
-            // try navigation shortcuts
+          var resourceKey = function () {
             switch (e.keyCode) {
               case 80:
                 // p
                 // go to products
-                window.location = '/#/resources/products'
-                break
+                return '/#/resources/products'
               case 79:
                 // o
                 // go to orders
-                window.location = '/#/resources/orders'
+                return '/#/resources/orders'
+              case 73:
+                // i
+                // go to categories
+                return '/#/resources/categories'
+              case 85:
+                // u
+                // go to customers
+                return '/#/resources/customers'
+              case 89:
+                // y
+                // go to brands
+                return '/#/resources/brands'
+              case 84:
+                // t
+                // go to carts
+                return '/#/resources/carts'
+              case 82:
+                // r
+                // go to grids
+                return '/#/resources/grids'
+              case 69:
+                // e
+                // go to collections
+                return '/#/resources/collections'
+              case 87:
+                // w
+                // go to authentications
+                return '/#/resources/authentications'
+            }
+          }
+
+          // try navigation shortcuts
+          var uri
+          if (keysPressed[71] === 0) {
+            // g
+            // go to
+            switch (e.keyCode) {
+              case 72:
+                // h
+                // go to home
+                window.location = '/#/'
                 break
+              case 83:
+                // s
+                // go to settings
+                window.location = '/#/settings'
+                break
+              case 65:
+                // a
+                // go to apps
+                window.location = '/#/apps'
+                break
+              default:
+                uri = resourceKey()
+                if (uri) {
+                  window.location = uri
+                }
+            }
+          } else if (keysPressed[65] === 0) {
+            // a
+            // add
+            uri = resourceKey()
+            if (uri) {
+              window.location = uri + '/new'
             }
           }
           break
