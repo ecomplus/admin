@@ -1212,5 +1212,59 @@ app.ready(function () {
       // remove this key
       delete keysPressed[e.keyCode]
     })
+
+    /* Mony start */
+    var init = function () {
+      var storeid, storeName, name, email, userID
+      var id = session.my_id
+      var token = session.access_token
+
+      // clear chat
+      $('#mony > .media.media-chat').remove()
+
+      window.callApi('stores/me.json', 'GET', function (err, response) {
+        if (err) {
+          console.log(err)
+        }
+        storeid = response.store_id
+        storeName = response.name
+        console.log(storeid, storeName)
+      })
+      window.callApi('authentications/me.json', 'GET', function (err, response) {
+        if (err) {
+          console.log(err)
+        }
+        name = response.name
+        email = response.email
+        userID = response._id
+        Mony(storeid, storeName, name, email, userID, token, id)
+      })
+    }
+    var Mony = function (storeid, storeName, name, email, userID, token, id) {
+      window.Mony.init(storeid, storeName, null, name, null, email, userID, null, token, id)
+
+      $('input.publisher-input').keypress(function (e) {
+        if (e.which === 13) {
+          $('#mony').append(
+          '<div class="media media-chat">' +
+              '<div class="media-body">' +
+                '<p>' + $('input.publisher-input').val() + '</p>' +
+                '<p class="meta"><time datetime="2017">23:58</time></p>' +
+              '</div>' +
+            '</div>')
+          window.Mony.sendMessage($('input.publisher-input').val(), function (response) {
+            $('#mony').append(
+            '<div class="media media-chat">' +
+                '<div class="media-body">' +
+                  '<p>' + response + '</p>' +
+                  '<p class="meta"><time datetime="2017">23:58</time></p>' +
+                '</div>' +
+              '</div>')
+          })
+        }
+      })
+    }
+    init()
+    /* Mony end */
   }
 })
