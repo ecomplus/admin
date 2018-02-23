@@ -331,14 +331,10 @@ window.Mony = (function () {
             })
             .done(function (response) {
               /* endpoint = '' */
-              if (callback) {
-                for (var z = 0; z < response.topics.length; z++) {
-                  console.log(response.topics[z].id)
-                  // link
-                  responseCallback('Acesse o link: ' + 'https://community.e-com.plus/t/' + response.topics[z].id)
-                }
-              } else {
-                console.log(response)
+              for (var z = 0; z < response.topics.length; z++) {
+                console.log(response.topics[z].id)
+                // link
+                responseCallback('Olha talvez esses posts da comunidade possa te ajudar: ' + 'https://community.e-com.plus/t/' + response.topics[z].id)
               }
             })
           }
