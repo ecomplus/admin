@@ -332,11 +332,10 @@ window.Mony = (function () {
             .done(function (response) {
               /* endpoint = '' */
               if (callback) {
-                for (var key6 in response.posts) {
-                  if (response.posts.hasOwnProperty(key6)) {
-                    // link
-                    responseCallback('Acesse o link: ' + 'https://community.e-com.plus/t/' + response.topics[key6].id)
-                  }
+                for (var z = 0; z < response.topics.length; z++) {
+                  console.log(response)
+                  // link
+                  responseCallback('Acesse o link: ' + 'https://community.e-com.plus/t/' + response.topics[z].id)
                 }
               } else {
                 console.log(response)
