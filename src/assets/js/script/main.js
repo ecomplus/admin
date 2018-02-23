@@ -1214,11 +1214,8 @@ app.ready(function () {
     })
 
     /* Mony start */
-    var init = function () {
-      var storeid, storeName, name, email, userID
-      var id = session.my_id
-      var token = session.access_token
-
+    var callStore = function () {
+      var storeid, storeName
       // clear chat
       $('#mony > .media.media-chat').remove()
 
@@ -1228,8 +1225,13 @@ app.ready(function () {
         }
         storeid = response.store_id
         storeName = response.name
-        console.log(storeid, storeName)
+        callAuthentication(storeid, storeName)
       })
+    }
+    var callAuthentication = function (storeid, storeName) {
+      var name, email, userID
+      var id = session.my_id
+      var token = session.access_token
       window.callApi('authentications/me.json', 'GET', function (err, response) {
         if (err) {
           console.log(err)
@@ -1237,10 +1239,11 @@ app.ready(function () {
         name = response.name
         email = response.email
         userID = response._id
-        Mony(storeid, storeName, name, email, userID, token, id)
+        MonyBot(storeid, storeName, name, email, userID, token, id)
       })
     }
-    var Mony = function (storeid, storeName, name, email, userID, token, id) {
+
+    var MonyBot = function (storeid, storeName, name, email, userID, token, id) {
       var credentials = false
       window.Mony.init(storeid, storeName, null, name, null, email, userID, null, token, id, function (response) {
         $('#mony').append(
@@ -1272,7 +1275,7 @@ app.ready(function () {
         }
       })
     }
-    init()
+    callStore()
     /* Mony end */
   }
 })
