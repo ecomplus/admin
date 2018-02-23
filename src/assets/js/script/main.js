@@ -1241,26 +1241,34 @@ app.ready(function () {
       })
     }
     var Mony = function (storeid, storeName, name, email, userID, token, id) {
-      window.Mony.init(storeid, storeName, null, name, null, email, userID, null, token, id)
+      var credentials = false
+      window.Mony.init(storeid, storeName, null, name, null, email, userID, null, token, id, function (response) {
+        $('#mony').append(
+        '<div class="media media-chat">' +
+            '<div class="media-body">' +
+              '<p>' + response + '</p>' +
+              '<p class="meta"><time datetime="2017">23:58</time></p>' +
+            '</div>' +
+          '</div>')
+
+        if (credentials === false) {
+          $('#mony > .media.media-chat').remove()
+          credentials = true
+        }
+      })
 
       $('input.publisher-input').keypress(function (e) {
         if (e.which === 13) {
           $('#mony').append(
-          '<div class="media media-chat">' +
+          '<div class=" media media-chat media-chat-reverse">' +
               '<div class="media-body">' +
                 '<p>' + $('input.publisher-input').val() + '</p>' +
                 '<p class="meta"><time datetime="2017">23:58</time></p>' +
               '</div>' +
             '</div>')
-          window.Mony.sendMessage($('input.publisher-input').val(), function (response) {
-            $('#mony').append(
-            '<div class="media media-chat">' +
-                '<div class="media-body">' +
-                  '<p>' + response + '</p>' +
-                  '<p class="meta"><time datetime="2017">23:58</time></p>' +
-                '</div>' +
-              '</div>')
-          })
+
+          window.Mony.sendMessage($('input.publisher-input').val())
+          $('input.publisher-input').val('')
         }
       })
     }
