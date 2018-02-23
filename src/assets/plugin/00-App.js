@@ -81,19 +81,21 @@ window.Mony = (function () {
             endpoint = serverResponse.result.parameters.resource + '/schema.json'
             method = 'GET'
            // get schema resource
-            sendApi(endpoint, method, body, function (response) {
-              schema = response
-              // verify the type of the property
-              for (var key in schema.data.properties) {
-                if (schema.data.required[count] === key) {
-                  if (schema.data.properties[key].type !== 'object') {
-                    promise = client.textRequest('Basico: ' + schema.data.required[count])
-                    sendDialogFlow(promise)
-                  } else {
-                    action = {
-                      'link': 'pagina de criação do resource'
+            sendApi(endpoint, method, body, function (err, response) {
+              if (!err) {
+                schema = response
+                // verify the type of the property
+                for (var key in schema.properties) {
+                  if (schema.required[count] === key) {
+                    if (schema.properties[key].type !== 'object') {
+                      promise = client.textRequest('Basico: ' + schema.required[count])
+                      sendDialogFlow(promise)
+                    } else {
+                      action = {
+                        'link': 'pagina de criação do resource'
+                      }
+                      actionCallback(action)
                     }
-                    actionCallback(action)
                   }
                 }
               }
@@ -106,13 +108,13 @@ window.Mony = (function () {
             type = typeof serverResponse.result.parameters.value
             property = false
             // verify the type of the property
-            for (var key in schema.data.properties) {
+            for (var key in schema.properties) {
               if (key === serverResponse.result.parameters.property) {
                 property = true
-                if (schema.data.properties[key].type === 'number') {
-                  schema.data.required[count] = parseInt(serverResponse.result.parameters.value)
+                if (schema.properties[key].type === 'number') {
+                  schema.required[count] = parseInt(serverResponse.result.parameters.value)
                 } else if (type === schema.data.properties[key].type) {
-                  schema.data.required[count] = serverResponse.result.parameters.value
+                  schema.required[count] = serverResponse.result.parameters.value
                 }
               }
             }
@@ -121,11 +123,11 @@ window.Mony = (function () {
             }
             count++
            // more required elements to add
-            if (count < schema.data.required.length) {
-              for (var key2 in schema.data.properties) {
-                if (schema.data.required[count] === key2) {
-                  if (schema.data.properties[key].type !== 'object') {
-                    promise = client.textRequest('Basico: ' + schema.data.required[count])
+            if (count < schema.required.length) {
+              for (var key2 in schema.properties) {
+                if (schema.required[count] === key2) {
+                  if (schema.properties[key].type !== 'object') {
+                    promise = client.textRequest('Basico: ' + schema.required[count])
                     sendDialogFlow(promise)
                   }
                 }
@@ -141,10 +143,12 @@ window.Mony = (function () {
           case 'resource - post - extra - no':
             endpoint = serverResponse.result.parameters.resource + '.json'
             method = 'POST'
-            sendApi(endpoint, method, body, function (response) {
-              var msg = 'O' + serverResponse.result.parameters.resource +
-                'foi criado, seu id é: ' + response.data._id
-              responseCallback(msg)
+            sendApi(endpoint, method, body, function (err, response) {
+              if (!err) {
+                var msg = 'O' + serverResponse.result.parameters.resource +
+                  'foi criado, seu id é: ' + response.data._id
+                responseCallback(msg)
+              }
             })
             break
 
@@ -156,9 +160,9 @@ window.Mony = (function () {
               if (key3 === serverResponse.result.parameters.property) {
                 property = true
                 // if the value of the property is number, parse the response value of dialogflow
-                if (schema.data.properties[key].type === 'number') {
+                if (schema.properties[key].type === 'number') {
                   body[serverResponse.result.parameters.property] = parseInt(serverResponse.result.parameters.value)
-                } else if (type === schema.data.properties[key].type) {
+                } else if (type === schema.properties[key].type) {
                   body[serverResponse.result.parameters.property] = serverResponse.result.parameters.value
                 }
               }
@@ -175,8 +179,10 @@ window.Mony = (function () {
             endpoint = serverResponse.result.parameters.resource + '/schema.json'
             method = 'GET'
            // get schema resource
-            sendApi(endpoint, method, body, function (response) {
-              schema = response
+            sendApi(endpoint, method, body, function (err, response) {
+              if (!err) {
+                schema = response
+              }
             })
             break
 
@@ -184,12 +190,12 @@ window.Mony = (function () {
           case 'edit - id - property - value':
             type = typeof serverResponse.result.parameters.value
             property = false
-            for (var key4 in schema.data.properties) {
+            for (var key4 in schema.properties) {
               if (key4 === serverResponse.result.parameters.property) {
                 property = true
-                if (schema.data.properties[key].type === 'number') {
+                if (schema.properties[key].type === 'number') {
                   body[serverResponse.result.parameters.property] = parseInt(serverResponse.result.parameters.value)
-                } else if (type === schema.data.properties[key].type) {
+                } else if (type === schema.properties[key].type) {
                   body[serverResponse.result.parameters.property] = serverResponse.result.parameters.value
                 }
               }
@@ -279,13 +285,15 @@ window.Mony = (function () {
 
           default:
             // response from dialogflow
-            if (serverResponse.result.fulfillment.messages.length > 1) {
-              for (var i = 0; i < serverResponse.result.fulfillment.messages.length; i++) {
-                responseCallback(serverResponse.result.fulfillment.messages[i].speech)
-              }
-            } else {
-              responseCallback(serverResponse.result.fulfillment.speech)
-            }
+            responseCallback(serverResponse.result.fulfillment.speech)
+            // if (serverResponse.result.fulfillment.messages.length > 1) {
+            //   for (var i = 0; i < serverResponse.result.fulfillment.messages.length; i++) {
+            //     callback(serverResponse.result.fulfillment.messages[i].speech)
+            //   }
+            // } else {
+            //   /* callback */
+            //   callback(serverResponse.result.fulfillment.speech)
+            // }
         }
       } else {
         // none intent was triggered
