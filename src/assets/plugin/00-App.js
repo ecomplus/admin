@@ -333,7 +333,7 @@ window.Mony = (function () {
               /* endpoint = '' */
               if (callback) {
                 for (var z = 0; z < response.topics.length; z++) {
-                  console.log(response)
+                  console.log(response.topics[z].id)
                   // link
                   responseCallback('Acesse o link: ' + 'https://community.e-com.plus/t/' + response.topics[z].id)
                 }
