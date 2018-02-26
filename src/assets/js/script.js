@@ -1328,23 +1328,57 @@ app.ready(function () {
         '<div class="media media-chat">' +
             '<div class="media-body">' +
               '<p>' + response + '</p>' +
-              '<p class="meta"><time datetime="2017">23:58</time></p>' +
             '</div>' +
           '</div>')
 
         if (credentials === false) {
           $('#mony > .media.media-chat').remove()
           credentials = true
+          var date = new Date()
+          var hours = date.getHours()
+          var firstName = name.split(' ')
+          if (hours < 13) {
+            $('#mony').append(
+            '<div class="media media-chat">' +
+                '<div class="media-body">' +
+                  '<p> Bom dia ' + firstName[0] + '</p>' +
+                  '<p> Em que posso te ajudar ?</p>' +
+                '</div>' +
+              '</div>')
+          } else if (hours >= 13 || hours < 18) {
+            $('#mony').append(
+            '<div class="media media-chat">' +
+                '<div class="media-body">' +
+                  '<p> Boa tarde ' + firstName[0] + '</p>' +
+                '</div>' +
+              '</div>')
+          } else if (hours >= 18) {
+            $('#mony').append(
+            '<div class="media media-chat">' +
+                '<div class="media-body">' +
+                  '<p> Boa noite ' + firstName[0] + '</p>' +
+                '</div>' +
+              '</div>')
+          }
         }
       })
-
-      $('input.publisher-input').keypress(function (e) {
-        if (e.which === 13) {
+      $('.flex-bottom gap-items').click(function () {
+        if ($('input.publisher-input').val() !== '') {
           $('#mony').append(
           '<div class=" media media-chat media-chat-reverse">' +
               '<div class="media-body">' +
                 '<p>' + $('input.publisher-input').val() + '</p>' +
-                '<p class="meta"><time datetime="2017">23:58</time></p>' +
+              '</div>' +
+            '</div>')
+        }
+      })
+
+      $('input.publisher-input').keypress(function (e) {
+        if (e.which === 13 && $('input.publisher-input').val() !== '') {
+          $('#mony').append(
+          '<div class=" media media-chat media-chat-reverse">' +
+              '<div class="media-body">' +
+                '<p>' + $('input.publisher-input').val() + '</p>' +
               '</div>' +
             '</div>')
 
