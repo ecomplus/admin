@@ -1294,9 +1294,6 @@ app.ready(function () {
     /* Mony start */
     var callStore = function () {
       var storeid, storeName
-      // clear chat
-      $('#mony > .media.media-chat').remove()
-
       window.callApi('stores/me.json', 'GET', function (err, response) {
         if (err) {
           console.log(err)
@@ -1337,6 +1334,7 @@ app.ready(function () {
           var date = new Date()
           var hours = date.getHours()
           var firstName = name.split(' ')
+          // greetings
           if (hours < 13) {
             $('#mony').append(
             '<div class="media media-chat">' +
@@ -1362,7 +1360,9 @@ app.ready(function () {
           }
         }
       })
-      $('.flex-bottom gap-items').click(function () {
+
+      // button click
+      $('.publisher-btn').click(function () {
         if ($('input.publisher-input').val() !== '') {
           $('#mony').append(
           '<div class=" media media-chat media-chat-reverse">' +
@@ -1370,9 +1370,13 @@ app.ready(function () {
                 '<p>' + $('input.publisher-input').val() + '</p>' +
               '</div>' +
             '</div>')
+
+          window.Mony.sendMessage($('input.publisher-input').val())
+          $('input.publisher-input').val('')
         }
       })
 
+      // keyboard enter
       $('input.publisher-input').keypress(function (e) {
         if (e.which === 13 && $('input.publisher-input').val() !== '') {
           $('#mony').append(
