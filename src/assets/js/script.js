@@ -1321,6 +1321,7 @@ app.ready(function () {
     var MonyBot = function (storeid, storeName, name, email, userID, token, id) {
       var credentials = false
       window.Mony.init(storeid, storeName, null, name, null, email, userID, null, token, id, function (response) {
+        // response callback
         $('#mony').append(
         '<div class="media media-chat">' +
             '<div class="media-body">' +
