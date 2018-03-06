@@ -283,7 +283,9 @@ window.Mony = (function () {
 
           default:
             // response from dialogflow
-            responseCallback(serverResponse.result.fulfillment.speech)
+            var str1 = serverResponse.result.fulfillment.speech
+            var dialogResponse = str1.replace(/(https?:[\S]+)/g, '<a href="$1">$1></a>')
+            responseCallback(dialogResponse)
             // if (serverResponse.result.fulfillment.messages.length > 1) {
             //   for (var i = 0; i < serverResponse.result.fulfillment.messages.length; i++) {
             //     callback(serverResponse.result.fulfillment.messages[i].speech)
