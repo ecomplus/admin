@@ -1266,11 +1266,12 @@ app.ready(function () {
                   '<p> Em que posso te ajudar ?</p>' +
                 '</div>' +
               '</div>')
-          } else if (hours >= 13 || hours < 18) {
+          } else if (hours >= 13 && hours < 18) {
             $('#mony').append(
             '<div class="media media-chat">' +
                 '<div class="media-body">' +
                   '<p> Boa tarde ' + firstName[0] + '</p>' +
+                  '<p> Em que posso te ajudar ?</p>' +
                 '</div>' +
               '</div>')
           } else if (hours >= 18) {
@@ -1278,6 +1279,7 @@ app.ready(function () {
             '<div class="media media-chat">' +
                 '<div class="media-body">' +
                   '<p> Boa noite ' + firstName[0] + '</p>' +
+                  '<p> Em que posso te ajudar ?</p>' +
                 '</div>' +
               '</div>')
           }
