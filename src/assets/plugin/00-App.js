@@ -48,11 +48,13 @@ window.Mony = (function () {
   var size = 0
   // variable to verify if the keyword alreay exists
   var bool = false
+  var disc = false
 
   var sendDialogFlow = function (promise, callback) {
     promise.then(handleResponse).catch(handleError)
 
     function handleResponse (serverResponse) {
+      console.log(serverResponse)
       // intent name
       var intent = serverResponse.result.metadata.intentName
       if (intent) {
@@ -79,7 +81,7 @@ window.Mony = (function () {
           case 'resource - post':
             endpoint = serverResponse.result.parameters.resource + '/schema.json'
             method = 'GET'
-           // get schema resource
+            // get schema resource
             sendApi(endpoint, method, body, function (err, response) {
               if (!err) {
                 schema = response
@@ -103,7 +105,7 @@ window.Mony = (function () {
 
           // add required properties to body
           case 'resource - post - basico - value':
-           // add required element to body
+            // add required element to body
             type = typeof serverResponse.result.parameters.value
             property = false
             // verify the type of the property
@@ -121,7 +123,7 @@ window.Mony = (function () {
               console.log('Não existe esta propriedade para este recurso')
             }
             count++
-           // more required elements to add
+            // more required elements to add
             if (count < schema.required.length) {
               for (var key2 in schema.properties) {
                 if (schema.required[count] === key2) {
@@ -179,7 +181,7 @@ window.Mony = (function () {
           case 'resource - edit':
             endpoint = serverResponse.result.parameters.resource + '/schema.json'
             method = 'GET'
-           // get schema resource
+            // get schema resource
             sendApi(endpoint, method, body, function (err, response) {
               if (!err) {
                 schema = response
@@ -252,32 +254,44 @@ window.Mony = (function () {
 
           // discuss
           case 'keywords':
+            console.log('2')
             // url to search
-            url += serverResponse.result.parameters.keyword + '&q='
+            if (serverResponse.result.parameters.keyword) {
+              url += serverResponse.result.parameters.keyword + '&q='
+              disc = true
+            }
+
             if (size > 0) {
               size--
               promise = client.textRequest('keyword: ' + keywords[size])
               sendDialogFlow(promise)
-            } else {
+            } else if (disc === true) {
               url = url.slice(0, -3)
               console.log(url)
-
+              bool = false
+              size = 0
+              disc = false
               /* global $ */
               $.ajax({
                 method: 'GET',
                 url: url,
                 dataType: 'json'
               })
-              .done(function (response) {
+                .done(function (response) {
                 /* endpoint = '' */
-                var str = 'Olha talvez esses posts da comunidade possa te ajudar: '
-                for (var z = 0; z < response.topics.length; z++) {
-                  console.log(response.topics[z].id)
-                  // link
-                  str += '<a href="https://community.e-com.plus/t/' + response.topics[z].id + '"> https://community.e-com.plus/t/' + response.topics[z].id + ' </a>'
-                  responseCallback(str)
-                }
-              })
+                  var str = 'Olha talvez esses posts da comunidade possa te ajudar: '
+                  for (var z = 0; z < response.topics.length; z++) {
+                    console.log(response.topics[z].id)
+                    // link
+                    str += '<a href="https://community.e-com.plus/t/' + response.topics[z].id + '"> https://community.e-com.plus/t/' + response.topics[z].id + ' </a>'
+                    responseCallback(str)
+                  }
+                })
+            } else {
+              bool = false
+              size = 0
+              disc = false
+              responseCallback('Não entendi, poderia perguntar de outra forma ?')
             }
             break
 
@@ -296,6 +310,8 @@ window.Mony = (function () {
             // }
         }
       } else {
+        console.log('1')
+        console.log(bool)
         // none intent was triggered
         // verify if keywords already exits
         if (bool === false) {
@@ -317,27 +333,34 @@ window.Mony = (function () {
             size--
             promise = client.textRequest('keyword: ' + keywords[size])
             sendDialogFlow(promise)
-          } else {
+          } else if (disc === true) {
             // remove the last 3 varters '&q='
             url = url.slice(0, -3)
             console.log(url)
-
+            bool = false
+            size = 0
+            disc = false
             /* global $ */
             $.ajax({
               method: 'GET',
               url: url,
               dataType: 'json'
             })
-            .done(function (response) {
-              /* endpoint = '' */
-              var str = 'Olha talvez esses posts da comunidade possa te ajudar: '
-              for (var z = 0; z < response.topics.length; z++) {
-                console.log(response.topics[z].id)
-                // link
-                str += '<a href="https://community.e-com.plus/t/' + response.topics[z].id + '"> https://community.e-com.plus/t/' + response.topics[z].id + ' </a>'
-                responseCallback(str)
-              }
-            })
+              .done(function (response) {
+                /* endpoint = '' */
+                var str = 'Olha talvez esses posts da comunidade possa te ajudar: '
+                for (var z = 0; z < response.topics.length; z++) {
+                  console.log(response.topics[z].id)
+                  // link
+                  str += '<a href="https://community.e-com.plus/t/' + response.topics[z].id + '"> https://community.e-com.plus/t/' + response.topics[z].id + ' </a>'
+                  responseCallback(str)
+                }
+              })
+          } else {
+            bool = false
+            size = 0
+            disc = false
+            responseCallback('Não entendi, poderia perguntar de outra forma ?')
           }
         }
       }
