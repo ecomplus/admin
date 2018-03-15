@@ -10,6 +10,20 @@ app.config({
 
   /*
   |--------------------------------------------------------------------------
+  | Autoload
+  |--------------------------------------------------------------------------
+  |
+  | By default, the app will load all the required plugins from /assets/vendor/
+  | directory. If you need to disable this functionality, simply change the
+  | following variable to false. In that case, you need to take care of loading
+  | the required CSS and JS files into your page.
+  |
+  */
+
+  autoload: true,
+
+  /*
+  |--------------------------------------------------------------------------
   | Provide
   |--------------------------------------------------------------------------
   |
@@ -38,7 +52,7 @@ app.config({
   |
   */
 
-  googleApiKey: 'AIzaSyDRBLFOTTh2NFM93HpUA4ZrA99yKnCAsto',
+  googleApiKey: '',
 
   /*
   |--------------------------------------------------------------------------
@@ -77,6 +91,20 @@ app.config({
   */
 
   saveState: false,
+
+  /*
+  |--------------------------------------------------------------------------
+  | Cache Bust String
+  |--------------------------------------------------------------------------
+  |
+  | Adds a cache-busting string to the end of a script URL. We automatically
+  | add a question mark (?) before the string. Possible values are: '1.2.3',
+  | 'v1.2.3', or '123456789'
+  |
+  */
+
+  cacheBust: '',
+
 
 
 });
@@ -1290,5 +1318,59 @@ app.ready(function () {
       // remove this key
       delete keysPressed[e.keyCode]
     })
+
+    /* Mony start */
+    var init = function () {
+      var storeid, storeName, name, email, userID
+      var id = session.my_id
+      var token = session.access_token
+
+      // clear chat
+      $('#mony > .media.media-chat').remove()
+
+      window.callApi('stores/me.json', 'GET', function (err, response) {
+        if (err) {
+          console.log(err)
+        }
+        storeid = response.store_id
+        storeName = response.name
+        console.log(storeid, storeName)
+      })
+      window.callApi('authentications/me.json', 'GET', function (err, response) {
+        if (err) {
+          console.log(err)
+        }
+        name = response.name
+        email = response.email
+        userID = response._id
+        Mony(storeid, storeName, name, email, userID, token, id)
+      })
+    }
+    var Mony = function (storeid, storeName, name, email, userID, token, id) {
+      window.Mony.init(storeid, storeName, null, name, null, email, userID, null, token, id)
+
+      $('input.publisher-input').keypress(function (e) {
+        if (e.which === 13) {
+          $('#mony').append(
+          '<div class="media media-chat">' +
+              '<div class="media-body">' +
+                '<p>' + $('input.publisher-input').val() + '</p>' +
+                '<p class="meta"><time datetime="2017">23:58</time></p>' +
+              '</div>' +
+            '</div>')
+          window.Mony.sendMessage($('input.publisher-input').val(), function (response) {
+            $('#mony').append(
+            '<div class="media media-chat">' +
+                '<div class="media-body">' +
+                  '<p>' + response + '</p>' +
+                  '<p class="meta"><time datetime="2017">23:58</time></p>' +
+                '</div>' +
+              '</div>')
+          })
+        }
+      })
+    }
+    init()
+    /* Mony end */
   }
 })
