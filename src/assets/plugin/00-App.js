@@ -43,21 +43,24 @@ window.Mony = (function () {
   var count
   var schema, action
   // array of keywords
-  var keywords
+  var keywords, keywords2, z
   // number of keywords
   var size = 0
   // variable to verify if the keyword alreay exists
   var bool = false
+  var disc = false
 
   var sendDialogFlow = function (promise, callback) {
     promise.then(handleResponse).catch(handleError)
 
     function handleResponse (serverResponse) {
-      // intent name
       console.log(serverResponse)
+      // intent name
       var intent = serverResponse.result.metadata.intentName
       if (intent) {
         switch (intent) {
+          case 'initialize':
+            break
           // RESOURCE
           case 'general':
             count = 0
@@ -80,20 +83,22 @@ window.Mony = (function () {
           case 'resource - post':
             endpoint = serverResponse.result.parameters.resource + '/schema.json'
             method = 'GET'
-           // get schema resource
-            sendApi(endpoint, method, body, function (response) {
-              schema = response
-              // verify the type of the property
-              for (var key in schema.data.properties) {
-                if (schema.data.required[count] === key) {
-                  if (schema.data.properties[key].type !== 'object') {
-                    promise = client.textRequest('Basico: ' + schema.data.required[count])
-                    sendDialogFlow(promise)
-                  } else {
-                    action = {
-                      'link': 'pagina de criação do resource'
+            // get schema resource
+            sendApi(endpoint, method, body, function (err, response) {
+              if (!err) {
+                schema = response
+                // verify the type of the property
+                for (var key in schema.properties) {
+                  if (schema.required[count] === key) {
+                    if (schema.properties[key].type !== 'object') {
+                      promise = client.textRequest('Basico: ' + schema.required[count])
+                      sendDialogFlow(promise)
+                    } else {
+                      action = {
+                        'link': 'pagina de criação do resource'
+                      }
+                      actionCallback(action)
                     }
-                    actionCallback(action)
                   }
                 }
               }
@@ -102,17 +107,17 @@ window.Mony = (function () {
 
           // add required properties to body
           case 'resource - post - basico - value':
-           // add required element to body
+            // add required element to body
             type = typeof serverResponse.result.parameters.value
             property = false
             // verify the type of the property
-            for (var key in schema.data.properties) {
+            for (var key in schema.properties) {
               if (key === serverResponse.result.parameters.property) {
                 property = true
-                if (schema.data.properties[key].type === 'number') {
-                  schema.data.required[count] = parseInt(serverResponse.result.parameters.value)
-                } else if (type === schema.data.properties[key].type) {
-                  schema.data.required[count] = serverResponse.result.parameters.value
+                if (schema.properties[key].type === 'number') {
+                  body[schema.required[count]] = parseInt(serverResponse.result.parameters.value)
+                } else if (type === schema.properties[key].type) {
+                  body[schema.required[count]] = serverResponse.result.parameters.value
                 }
               }
             }
@@ -120,12 +125,12 @@ window.Mony = (function () {
               console.log('Não existe esta propriedade para este recurso')
             }
             count++
-           // more required elements to add
-            if (count < schema.data.required.length) {
-              for (var key2 in schema.data.properties) {
-                if (schema.data.required[count] === key2) {
-                  if (schema.data.properties[key].type !== 'object') {
-                    promise = client.textRequest('Basico: ' + schema.data.required[count])
+            // more required elements to add
+            if (count < schema.required.length) {
+              for (var key2 in schema.properties) {
+                if (schema.required[count] === key2) {
+                  if (schema.properties[key2].type !== 'object') {
+                    promise = client.textRequest('Basico: ' + schema.required[count])
                     sendDialogFlow(promise)
                   }
                 }
@@ -141,10 +146,14 @@ window.Mony = (function () {
           case 'resource - post - extra - no':
             endpoint = serverResponse.result.parameters.resource + '.json'
             method = 'POST'
-            sendApi(endpoint, method, body, function (response) {
-              var msg = 'O' + serverResponse.result.parameters.resource +
-                'foi criado, seu id é: ' + response.data._id
-              responseCallback(msg)
+            console.log(body)
+            sendApi(endpoint, method, body, function (err, response) {
+              console.log(response)
+              if (!err) {
+                var msg = 'O' + serverResponse.result.parameters.resource +
+                  'foi criado, seu id é: ' + response._id
+                responseCallback(msg)
+              }
             })
             break
 
@@ -156,9 +165,9 @@ window.Mony = (function () {
               if (key3 === serverResponse.result.parameters.property) {
                 property = true
                 // if the value of the property is number, parse the response value of dialogflow
-                if (schema.data.properties[key].type === 'number') {
+                if (schema.properties[key3].type === 'number') {
                   body[serverResponse.result.parameters.property] = parseInt(serverResponse.result.parameters.value)
-                } else if (type === schema.data.properties[key].type) {
+                } else if (type === schema.properties[key3].type) {
                   body[serverResponse.result.parameters.property] = serverResponse.result.parameters.value
                 }
               }
@@ -174,9 +183,11 @@ window.Mony = (function () {
           case 'resource - edit':
             endpoint = serverResponse.result.parameters.resource + '/schema.json'
             method = 'GET'
-           // get schema resource
-            sendApi(endpoint, method, body, function (response) {
-              schema = response
+            // get schema resource
+            sendApi(endpoint, method, body, function (err, response) {
+              if (!err) {
+                schema = response
+              }
             })
             break
 
@@ -184,12 +195,12 @@ window.Mony = (function () {
           case 'edit - id - property - value':
             type = typeof serverResponse.result.parameters.value
             property = false
-            for (var key4 in schema.data.properties) {
+            for (var key4 in schema.properties) {
               if (key4 === serverResponse.result.parameters.property) {
                 property = true
-                if (schema.data.properties[key].type === 'number') {
+                if (schema.properties[key4].type === 'number') {
                   body[serverResponse.result.parameters.property] = parseInt(serverResponse.result.parameters.value)
-                } else if (type === schema.data.properties[key].type) {
+                } else if (type === schema.properties[key4].type) {
                   body[serverResponse.result.parameters.property] = serverResponse.result.parameters.value
                 }
               }
@@ -243,48 +254,180 @@ window.Mony = (function () {
             sendDialogFlow(promise)
             break
 
+          case 'keywords.question':
+            url = 'https://community.e-com.plus/search.json?'
+            for (var key5 in serverResponse.result.parameters) {
+              if (serverResponse.result.parameters.hasOwnProperty(key5) && serverResponse.result.parameters[key5] !== '') {
+                url += 'q=' + serverResponse.result.parameters[key5] + '&'
+              }
+            }
+            url = url.slice(0, -1)
+            $.ajax({
+              method: 'GET',
+              url: url,
+              dataType: 'json'
+            })
+              .done(function (response) {
+                /* endpoint = '' */
+                var str = ''
+                if (response.topics.length > 0) {
+                  if (response.topics.length === 1) {
+                    str += 'Olha talvez esse post da comunidade possa te ajudar: '
+                  } else {
+                    str += 'Olha talvez esses posts da comunidade possam te ajudar: '
+                  }
+                  for (var z = 0; z < response.topics.length; z++) {
+                    console.log(response.topics[z].id)
+                    // link
+                    str += '<a href="https://community.e-com.plus/t/' + response.topics[z].id + '"> https://community.e-com.plus/t/' + response.topics[z].id + ' </a>'
+                  }
+                  responseCallback(str)
+                } else {
+                  responseCallback('Não entendi, poderia perguntar de outra forma ?')
+                }
+              })
+            break
+
           // discuss
           case 'keywords':
             // url to search
-            url += serverResponse.result.parameters.keyword + '&q='
+            if (serverResponse.result.parameters.keyword) {
+              url += serverResponse.result.parameters.keyword + '&q='
+              disc = true
+            }
+
             if (size > 0) {
               size--
               promise = client.textRequest('keyword: ' + keywords[size])
               sendDialogFlow(promise)
-            } else {
+            } else if (disc === true) {
               url = url.slice(0, -3)
               console.log(url)
-
+              bool = false
+              size = 0
+              disc = false
               /* global $ */
               $.ajax({
                 method: 'GET',
                 url: url,
                 dataType: 'json'
               })
-              .then(function (response) {
+                .done(function (response) {
                 /* endpoint = '' */
-                if (callback) {
-                  for (var key in response.posts) {
-                    if (response.posts.hasOwnProperty(key)) {
-                      // link
-                      responseCallback('https://community.e-com.plus/t/' + response.posts[key].id)
+                  var str = ''
+                  if (response.topics.length > 0) {
+                    if (response.topics.length === 1) {
+                      str += 'Olha talvez esse post da comunidade possa te ajudar: '
+                    } else {
+                      str += 'Olha talvez esses posts da comunidade possam te ajudar: '
                     }
+                    for (var z = 0; z < response.topics.length; z++) {
+                      console.log(response.topics[z].id)
+                      // link
+                      str += '<a href="https://community.e-com.plus/t/' + response.topics[z].id + '"> https://community.e-com.plus/t/' + response.topics[z].id + ' </a>'
+                    }
+                    responseCallback(str)
+                  } else {
+                    responseCallback('Não entendi, poderia perguntar de outra forma ?')
                   }
-                } else {
-                  console.log(response)
+                })
+            } else if (disc === false) {
+              // NONE KEYWORDS TRIGGERED ON DIALOGFLOW, SEND A GET ON COMMUNITY WITH THE KERWORDS
+              url = 'https://community.e-com.plus/search.json?'
+              for (z = 0; z < keywords.length; z++) {
+                if (keywords[z] !== '' && keywords[z] !== ' ' && keywords[z] !== '?' && keywords[z].length > 4) {
+                  url += keywords[z] + '&q='
                 }
+              }
+              // remove the last 3 varters '&q='
+              url = url.slice(0, -3)
+              $.ajax({
+                method: 'GET',
+                url: url,
+                dataType: 'json'
               })
+                .done(function (response) {
+                /* endpoint = '' */
+                  var str = ''
+                  if (response.topics.length > 0) {
+                    if (response.topics.length === 1) {
+                      str += 'Olha talvez esse post da comunidade possa te ajudar: '
+                    } else {
+                      str += 'Olha talvez esses posts da comunidade possam te ajudar: '
+                    }
+                    for (var z = 0; z < response.topics.length; z++) {
+                      console.log(response.topics[z].id)
+                      // link
+                      str += '<a href="https://community.e-com.plus/t/' + response.topics[z].id + '"> https://community.e-com.plus/t/' + response.topics[z].id + ' </a>'
+                    }
+                    responseCallback(str)
+                  } else {
+                    responseCallback('Não entendi, poderia perguntar de outra forma ?')
+                  }
+                })
+            } else {
+              bool = false
+              size = 0
+              disc = false
+              responseCallback('Não entendi, poderia perguntar de outra forma ?')
             }
             break
 
           default:
             // response from dialogflow
-            if (serverResponse.result.fulfillment.messages.length > 1) {
-              for (var i = 0; i < serverResponse.result.fulfillment.messages.length; i++) {
-                responseCallback(serverResponse.result.fulfillment.messages[i].speech)
+            if (serverResponse.result.metadata.intentName !== 'initialize') {
+              var str1 = ''
+              var dialogResponse = ''
+              responseCallback('')
+              if (serverResponse.result.fulfillment.messages.length > 1) {
+                for (var i = 0; i < serverResponse.result.fulfillment.messages.length; i++) {
+                  dialogResponse = ''
+                  str1 = ''
+                  str1 += serverResponse.result.fulfillment.messages[i].speech
+                  dialogResponse += str1.replace(/(https?:[\S]+)/g, '<a href="$1">$1></a>')
+                  responseCallback(dialogResponse)
+                }
+              } else {
+                /* response from dialogflow */
+                if (serverResponse.result.fulfillment.speech !== '') {
+                  responseCallback(serverResponse.result.fulfillment.smpeech)
+                } else {
+                  /* none response from dialogflow, go to community */
+                  var str2 = serverResponse.result.resolvedQuery
+                  keywords2 = str2.split(' ')
+                  url = 'https://community.e-com.plus/search.json?q='
+                  for (z = 0; z < keywords2.length; z++) {
+                    if (keywords2[z] !== '' || keywords2[z] !== ' ' || keywords2[z] !== '?' || keywords2[z].length > 4) {
+                      url += keywords2[z] + '&q='
+                    }
+                  }
+                  url = url.slice(0, -3)
+                  $.ajax({
+                    method: 'GET',
+                    url: url,
+                    dataType: 'json'
+                  })
+                    .done(function (response) {
+                    /* endpoint = '' */
+                      var str = ''
+                      if (response.topics.length > 0) {
+                        if (response.topics.length === 1) {
+                          str += 'Olha talvez esse post da comunidade possa te ajudar: '
+                        } else {
+                          str += 'Olha talvez esses posts da comunidade possam te ajudar: '
+                        }
+                        for (var z = 0; z < response.topics.length; z++) {
+                          console.log(response.topics[z].id)
+                          // link
+                          str += '<a href="https://community.e-com.plus/t/' + response.topics[z].id + '"> https://community.e-com.plus/t/' + response.topics[z].id + ' </a>'
+                        }
+                        responseCallback(str)
+                      } else {
+                        responseCallback('Não entendi, poderia perguntar de outra forma ?')
+                      }
+                    })
+                }
               }
-            } else {
-              responseCallback(serverResponse.result.fulfillment.speech)
             }
         }
       } else {
@@ -309,30 +452,34 @@ window.Mony = (function () {
             size--
             promise = client.textRequest('keyword: ' + keywords[size])
             sendDialogFlow(promise)
-          } else {
+          } else if (disc === true) {
             // remove the last 3 varters '&q='
             url = url.slice(0, -3)
             console.log(url)
-
+            bool = false
+            size = 0
+            disc = false
             /* global $ */
             $.ajax({
               method: 'GET',
               url: url,
               dataType: 'json'
             })
-            .done(function (response) {
-              /* endpoint = '' */
-              if (callback) {
-                for (var key in response.posts) {
-                  if (response.posts.hasOwnProperty(key)) {
-                    // link
-                    responseCallback('https://community.e-com.plus/t/' + response.posts[key].id)
-                  }
+              .done(function (response) {
+                /* endpoint = '' */
+                var str = 'Olha talvez esses posts da comunidade possa te ajudar: '
+                for (var z = 0; z < response.topics.length; z++) {
+                  console.log(response.topics[z].id)
+                  // link
+                  str += '<a href="https://community.e-com.plus/t/' + response.topics[z].id + '"> https://community.e-com.plus/t/' + response.topics[z].id + ' </a>'
                 }
-              } else {
-                console.log(response)
-              }
-            })
+                responseCallback(str)
+              })
+          } else {
+            bool = false
+            size = 0
+            disc = false
+            responseCallback('Não entendi, poderia perguntar de outra forma ?')
           }
         }
       }
@@ -358,6 +505,7 @@ window.Mony = (function () {
         'X-Store-ID': storeID
       }
     }
+    console.log(config.headers)
     if (typeof body === 'object') {
       config.data = JSON.stringify(body)
     }
@@ -391,6 +539,7 @@ window.Mony = (function () {
   var errorHandling = function (callback, errMsg, responseBody) {
     if (typeof callback === 'function') {
       var err = new Error(errMsg)
+      console.log(responseBody)
       if (responseBody === undefined) {
         // body null when error occurs before send API request
         callback(err, null)
