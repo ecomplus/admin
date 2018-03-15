@@ -1214,22 +1214,21 @@ app.ready(function () {
     })
 
     /* Mony start */
-    var init = function () {
-      var storeid, storeName, name, email, userID
-      var id = session.my_id
-      var token = session.access_token
-
-      // clear chat
-      $('#mony > .media.media-chat').remove()
-
+    var callStore = function () {
+      var storeid, storeName
       window.callApi('stores/me.json', 'GET', function (err, response) {
         if (err) {
           console.log(err)
         }
         storeid = response.store_id
         storeName = response.name
-        console.log(storeid, storeName)
+        callAuthentication(storeid, storeName)
       })
+    }
+    var callAuthentication = function (storeid, storeName) {
+      var name, email, userID
+      var id = session.my_id
+      var token = session.access_token
       window.callApi('authentications/me.json', 'GET', function (err, response) {
         if (err) {
           console.log(err)
@@ -1237,34 +1236,87 @@ app.ready(function () {
         name = response.name
         email = response.email
         userID = response._id
-        Mony(storeid, storeName, name, email, userID, token, id)
+        MonyBot(storeid, storeName, name, email, userID, token, id)
       })
     }
-    var Mony = function (storeid, storeName, name, email, userID, token, id) {
-      window.Mony.init(storeid, storeName, null, name, null, email, userID, null, token, id)
 
-      $('input.publisher-input').keypress(function (e) {
-        if (e.which === 13) {
-          $('#mony').append(
-          '<div class="media media-chat">' +
-              '<div class="media-body">' +
-                '<p>' + $('input.publisher-input').val() + '</p>' +
-                '<p class="meta"><time datetime="2017">23:58</time></p>' +
-              '</div>' +
-            '</div>')
-          window.Mony.sendMessage($('input.publisher-input').val(), function (response) {
+    var MonyBot = function (storeid, storeName, name, email, userID, token, id) {
+      var credentials = false
+      window.Mony.init(storeid, storeName, null, name, null, email, userID, null, token, id, function (response) {
+        // response callback
+        $('#mony').append(
+        '<div class="media media-chat">' +
+            '<div class="media-body">' +
+              '<p>' + response + '</p>' +
+            '</div>' +
+          '</div>')
+
+        if (credentials === false) {
+          $('#mony > .media.media-chat').remove()
+          credentials = true
+          var date = new Date()
+          var hours = date.getHours()
+          var firstName = name.split(' ')
+          // greetings
+          if (hours < 13) {
             $('#mony').append(
             '<div class="media media-chat">' +
                 '<div class="media-body">' +
-                  '<p>' + response + '</p>' +
-                  '<p class="meta"><time datetime="2017">23:58</time></p>' +
+                  '<p> Bom dia ' + firstName[0] + '</p>' +
+                  '<p> Em que posso te ajudar ?</p>' +
                 '</div>' +
               '</div>')
-          })
+          } else if (hours >= 13 && hours < 18) {
+            $('#mony').append(
+            '<div class="media media-chat">' +
+                '<div class="media-body">' +
+                  '<p> Boa tarde ' + firstName[0] + '</p>' +
+                  '<p> Em que posso te ajudar ?</p>' +
+                '</div>' +
+              '</div>')
+          } else if (hours >= 18) {
+            $('#mony').append(
+            '<div class="media media-chat">' +
+                '<div class="media-body">' +
+                  '<p> Boa noite ' + firstName[0] + '</p>' +
+                  '<p> Em que posso te ajudar ?</p>' +
+                '</div>' +
+              '</div>')
+          }
+        }
+      })
+
+      // button click
+      $('.publisher-btn').click(function () {
+        if ($('input.publisher-input').val() !== '') {
+          $('#mony').append(
+          '<div class=" media media-chat media-chat-reverse">' +
+              '<div class="media-body">' +
+                '<p>' + $('input.publisher-input').val() + '</p>' +
+              '</div>' +
+            '</div>')
+
+          window.Mony.sendMessage($('input.publisher-input').val())
+          $('input.publisher-input').val('')
+        }
+      })
+
+      // keyboard enter
+      $('input.publisher-input').keypress(function (e) {
+        if (e.which === 13 && $('input.publisher-input').val() !== '') {
+          $('#mony').append(
+          '<div class=" media media-chat media-chat-reverse">' +
+              '<div class="media-body">' +
+                '<p>' + $('input.publisher-input').val() + '</p>' +
+              '</div>' +
+            '</div>')
+
+          window.Mony.sendMessage($('input.publisher-input').val())
+          $('input.publisher-input').val('')
         }
       })
     }
-    init()
+    callStore()
     /* Mony end */
   }
 })
