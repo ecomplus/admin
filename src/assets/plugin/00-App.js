@@ -60,6 +60,7 @@ window.Mony = (function () {
         switch (intent) {
           case 'iniatialize':
           // dont send init to discuss
+            responseCallback('')
             break
           // RESOURCE
           case 'general':

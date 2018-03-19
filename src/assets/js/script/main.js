@@ -1250,7 +1250,7 @@ app.ready(function () {
               '<p>' + response + '</p>' +
             '</div>' +
           '</div>')
-
+        $('#mony').scrollTop($(document).height());
         if (credentials === false) {
           $('#mony > .media.media-chat').remove()
           credentials = true
