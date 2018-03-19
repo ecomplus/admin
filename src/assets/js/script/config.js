@@ -3,6 +3,20 @@ app.config({
 
   /*
   |--------------------------------------------------------------------------
+  | Autoload
+  |--------------------------------------------------------------------------
+  |
+  | By default, the app will load all the required plugins from /assets/vendor/
+  | directory. If you need to disable this functionality, simply change the
+  | following variable to false. In that case, you need to take care of loading
+  | the required CSS and JS files into your page.
+  |
+  */
+
+  autoload: true,
+
+  /*
+  |--------------------------------------------------------------------------
   | Provide
   |--------------------------------------------------------------------------
   |
@@ -31,7 +45,7 @@ app.config({
   |
   */
 
-  googleApiKey: 'AIzaSyDRBLFOTTh2NFM93HpUA4ZrA99yKnCAsto',
+  googleApiKey: '',
 
   /*
   |--------------------------------------------------------------------------
@@ -70,6 +84,20 @@ app.config({
   */
 
   saveState: false,
+
+  /*
+  |--------------------------------------------------------------------------
+  | Cache Bust String
+  |--------------------------------------------------------------------------
+  |
+  | Adds a cache-busting string to the end of a script URL. We automatically
+  | add a question mark (?) before the string. Possible values are: '1.2.3',
+  | 'v1.2.3', or '123456789'
+  |
+  */
+
+  cacheBust: '',
+
 
 
 });
