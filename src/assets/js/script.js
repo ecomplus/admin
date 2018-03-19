@@ -1351,12 +1351,12 @@ app.ready(function () {
       window.Mony.init(storeid, storeName, null, name, null, email, userID, null, token, id, function (response) {
         // response callback
         $('#mony').append(
-        '<div class="media media-chat">' +
+          '<div class="media media-chat">' +
             '<div class="media-body">' +
               '<p>' + response + '</p>' +
             '</div>' +
           '</div>')
-
+        $('#mony').scrollTop($(document).height())
         if (credentials === false) {
           $('#mony > .media.media-chat').remove()
           credentials = true
@@ -1366,7 +1366,7 @@ app.ready(function () {
           // greetings
           if (hours < 13) {
             $('#mony').append(
-            '<div class="media media-chat">' +
+              '<div class="media media-chat">' +
                 '<div class="media-body">' +
                   '<p> Bom dia ' + firstName[0] + '</p>' +
                   '<p> Em que posso te ajudar ?</p>' +
@@ -1374,7 +1374,7 @@ app.ready(function () {
               '</div>')
           } else if (hours >= 13 && hours < 18) {
             $('#mony').append(
-            '<div class="media media-chat">' +
+              '<div class="media media-chat">' +
                 '<div class="media-body">' +
                   '<p> Boa tarde ' + firstName[0] + '</p>' +
                   '<p> Em que posso te ajudar ?</p>' +
@@ -1382,7 +1382,7 @@ app.ready(function () {
               '</div>')
           } else if (hours >= 18) {
             $('#mony').append(
-            '<div class="media media-chat">' +
+              '<div class="media media-chat">' +
                 '<div class="media-body">' +
                   '<p> Boa noite ' + firstName[0] + '</p>' +
                   '<p> Em que posso te ajudar ?</p>' +
@@ -1396,7 +1396,7 @@ app.ready(function () {
       $('.publisher-btn').click(function () {
         if ($('input.publisher-input').val() !== '') {
           $('#mony').append(
-          '<div class=" media media-chat media-chat-reverse">' +
+            '<div class=" media media-chat media-chat-reverse">' +
               '<div class="media-body">' +
                 '<p>' + $('input.publisher-input').val() + '</p>' +
               '</div>' +
@@ -1404,11 +1404,13 @@ app.ready(function () {
 
           window.Mony.sendMessage($('input.publisher-input').val())
           $('input.publisher-input').val('')
+          $('#mony').scrollTop($(document).height())
         }
       })
 
       // keyboard enter
       $('input.publisher-input').keypress(function (e) {
+        $('#mony').scrollTop($(document).height())
         if (e.which === 13 && $('input.publisher-input').val() !== '') {
           $('#mony').append(
           '<div class=" media media-chat media-chat-reverse">' +
@@ -1419,6 +1421,7 @@ app.ready(function () {
 
           window.Mony.sendMessage($('input.publisher-input').val())
           $('input.publisher-input').val('')
+          $('#mony').scrollTop($(document).height())
         }
       })
     }
