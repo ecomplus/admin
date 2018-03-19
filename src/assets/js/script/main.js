@@ -1250,7 +1250,6 @@ app.ready(function () {
               '<p>' + response + '</p>' +
             '</div>' +
           '</div>')
-        $('#mony').scrollTop($(document).height());
         if (credentials === false) {
           $('#mony > .media.media-chat').remove()
           credentials = true
@@ -1288,6 +1287,7 @@ app.ready(function () {
 
       // button click
       $('.publisher-btn').click(function () {
+        $('#mony').scrollTop($(document).height())
         if ($('input.publisher-input').val() !== '') {
           $('#mony').append(
           '<div class=" media media-chat media-chat-reverse">' +
@@ -1303,6 +1303,7 @@ app.ready(function () {
 
       // keyboard enter
       $('input.publisher-input').keypress(function (e) {
+        $('#mony').scrollTop($(document).height())
         if (e.which === 13 && $('input.publisher-input').val() !== '') {
           $('#mony').append(
           '<div class=" media media-chat media-chat-reverse">' +
