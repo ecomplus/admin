@@ -60,7 +60,7 @@ window.Mony = (function () {
         switch (intent) {
           case 'iniatialize':
           // dont send init to discuss
-            responseCallback('')
+            responseCallback('teste')
             break
           // RESOURCE
           case 'general':
@@ -316,7 +316,7 @@ window.Mony = (function () {
                 .done(function (response) {
                 /* endpoint = '' */
                   var str = ''
-                  if (response.topics.length > 0) {
+                  if (response.topics && response.topics.length > 0) {
                     if (response.topics.length === 1) {
                       str += 'Olha talvez esse post da comunidade possa lhe ajudar: '
                     } else {
@@ -390,7 +390,7 @@ window.Mony = (function () {
             } else {
               /* response from dialogflow */
               if (serverResponse.result.fulfillment.speech !== '') {
-                responseCallback(serverResponse.result.fulfillment.smpeech)
+                responseCallback(serverResponse.result.fulfillment.speech)
               } else {
                 /* none response from dialogflow, go to community */
                 var str2 = serverResponse.result.resolvedQuery
