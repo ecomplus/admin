@@ -1332,14 +1332,15 @@ app.ready(function () {
       })
     }
     var callAuthentication = function (storeid, storeName) {
-      var name, email, userID
+      var name, email, userID, str
       var id = session.my_id
       var token = session.access_token
       window.callApi('authentications/me.json', 'GET', function (err, response) {
         if (err) {
           console.log(err)
         }
-        name = response.name
+        str = response.name.split(' ')
+        name = str[0]
         email = response.email
         userID = response._id
         MonyBot(storeid, storeName, name, email, userID, token, id)
@@ -1362,13 +1363,12 @@ app.ready(function () {
           credentials = true
           var date = new Date()
           var hours = date.getHours()
-          var firstName = name.split(' ')
           // greetings
           if (hours < 13) {
             $('#mony').append(
               '<div class="media media-chat">' +
                 '<div class="media-body">' +
-                  '<p> Bom dia ' + firstName[0] + '</p>' +
+                  '<p> Bom dia ' + name + '</p>' +
                   '<p> Em que posso te ajudar ?</p>' +
                 '</div>' +
               '</div>')
@@ -1376,7 +1376,7 @@ app.ready(function () {
             $('#mony').append(
               '<div class="media media-chat">' +
                 '<div class="media-body">' +
-                  '<p> Boa tarde ' + firstName[0] + '</p>' +
+                  '<p> Boa tarde ' + name + '</p>' +
                   '<p> Em que posso te ajudar ?</p>' +
                 '</div>' +
               '</div>')
@@ -1384,7 +1384,7 @@ app.ready(function () {
             $('#mony').append(
               '<div class="media media-chat">' +
                 '<div class="media-body">' +
-                  '<p> Boa noite ' + firstName[0] + '</p>' +
+                  '<p> Boa noite ' + name + '</p>' +
                   '<p> Em que posso te ajudar ?</p>' +
                 '</div>' +
               '</div>')
@@ -1413,7 +1413,7 @@ app.ready(function () {
         $('#mony').scrollTop($(document).height())
         if (e.which === 13 && $('input.publisher-input').val() !== '') {
           $('#mony').append(
-          '<div class=" media media-chat media-chat-reverse">' +
+            '<div class=" media media-chat media-chat-reverse">' +
               '<div class="media-body">' +
                 '<p>' + $('input.publisher-input').val() + '</p>' +
               '</div>' +
