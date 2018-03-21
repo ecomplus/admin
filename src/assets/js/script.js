@@ -144,7 +144,7 @@ app.config({
         } else if (hours >= 18) {
           msg = 'Boa noite'
         }
-        msg += name + ', em que posso te ajudar ?'
+        msg += ' ' + name + ', em que posso te ajudar ?'
         writeMsg(msg)
       }
     }
@@ -1440,6 +1440,7 @@ app.ready(function () {
       })
 
       // setup Mony chatbot
+      // see util.js
       window.startMony(Store, User, session)
     }
   }

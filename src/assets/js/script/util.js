@@ -32,7 +32,7 @@
         } else if (hours >= 18) {
           msg = 'Boa noite'
         }
-        msg += name + ', em que posso te ajudar ?'
+        msg += ' ' + name + ', em que posso te ajudar ?'
         writeMsg(msg)
       }
     }
