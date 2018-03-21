@@ -2,9 +2,9 @@
  * Copyright 2018 E-Com Club
  */
 
-'use strict'
+(function () {
+  'use strict'
 
-var Route = function () {
   // current tab ID
   var tabId = window.tabId
   // jQuery element object
@@ -35,7 +35,7 @@ var Route = function () {
 
   var tabLabel, tabTitle
   var resourceId = window.routeParams[1]
-  var creating
+  var creating, listing
   if (resourceId === undefined) {
     // resource root URI
     // default action
@@ -44,6 +44,7 @@ var Route = function () {
       'pt_br': 'Listar'
     })
     tabTitle = resource.label[lang]
+    listing = true
   } else {
     if (resourceId === 'new') {
       // create
@@ -84,6 +85,7 @@ var Route = function () {
   editor.setTheme('ace/theme/dawn')
   editor.session.setMode('ace/mode/json')
 
+  // show content and unlock screen
   window.routeReady(tabTitle)
 
   if (creating !== true) {
@@ -102,5 +104,15 @@ var Route = function () {
       }
     })
   }
-}
-Route()
+
+  // HTML card content
+  var contentUri
+  if (listing === true) {
+    // custom list
+    contentUri = 'routes/resources/' + slug + '.html'
+  } else {
+    // form to create and edit
+    contentUri = 'routes/resources/form/' + slug + '.html'
+  }
+  window.loadContent(contentUri, $('#' + tabId + '-tab-normal'))
+}())

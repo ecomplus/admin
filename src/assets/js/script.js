@@ -641,6 +641,27 @@ app.ready(function () {
     // global
     window.callApi = callApi
 
+    // general function to load HTML content
+    window.loadContent = function (uri, el) {
+      $.ajax({
+        url: uri,
+        dataType: 'html',
+        // timeout in 6s
+        timeout: 6000
+      })
+      .done(function (html) {
+        // successful response
+        // put HTML content
+        el.html(html)
+      })
+      .fail(function (jqXHR, textStatus, err) {
+        app.toast(i18n({
+          'en_us': jqXHR.status + ' error, cannot load HTML content',
+          'pt_br': 'Erro ' + jqXHR.status + ', não foi possível carregar o conteúdo HTML'
+        }))
+      })
+    }
+
     $('#confirm-api-request').click(function () {
       var reqId = $(this).data('request-id')
       if (reqId && confirmRequest.hasOwnProperty(reqId)) {
