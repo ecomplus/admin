@@ -458,6 +458,10 @@ app.ready(function () {
 
     // general function to load HTML content
     window.loadContent = function (uri, el) {
+      // show loading spinner
+      var parent = el.closest('.ajax-form')
+      parent.addClass('ajax')
+
       $.ajax({
         url: uri,
         dataType: 'html',
@@ -474,6 +478,9 @@ app.ready(function () {
           'en_us': jqXHR.status + ' error, cannot load HTML content',
           'pt_br': 'Erro ' + jqXHR.status + ', não foi possível carregar o conteúdo HTML'
         }))
+      })
+      .always(function () {
+        parent.removeClass('ajax')
       })
     }
 
