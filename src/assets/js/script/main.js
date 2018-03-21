@@ -1255,6 +1255,7 @@ app.ready(function () {
       })
 
       // setup Mony chatbot
+      // see util.js
       window.startMony(Store, User, session)
     }
   }
