@@ -34,6 +34,22 @@ app.ready(function () {
     location.reload()
   }
 
+  var fatalError = function (err) {
+    if (err) {
+      // debug only
+      console.error(err)
+    }
+    // send message then reload page to restart app
+    alert(i18n({
+      'en_us': 'Fatal error, restarting in 3 seconds',
+      'pt_br': 'Erro fatal, reiniciando em 3 segundos'
+    }))
+    // restart after delay
+    setTimeout(function () {
+      reload()
+    }, 3000)
+  }
+
   var el
   var lang = localStorage.getItem('lang')
   if (!lang || !/^[a-z]{2}(_[a-z]{2})?$/.test(lang)) {
@@ -307,7 +323,7 @@ app.ready(function () {
     // confirm some requests with modal
     var confirmRequest = {}
 
-    window.callApi = function (endpoint, method, callback, bodyObject, id) {
+    var callApi = function (endpoint, method, callback, bodyObject, id) {
       // reset notification toast
       hideToastr()
       var apiHost = 'https://api.e-com.plus/v1/'
@@ -437,13 +453,15 @@ app.ready(function () {
         }
       })
     }
+    // global
+    window.callApi = callApi
 
     $('#confirm-api-request').click(function () {
       var reqId = $(this).data('request-id')
       if (reqId && confirmRequest.hasOwnProperty(reqId)) {
         confirmRequest[reqId].confirmed = true
         // call API after confirmation
-        window.callApi(null, null, null, null, reqId)
+        callApi(null, null, null, null, reqId)
       }
     })
 
@@ -917,409 +935,327 @@ app.ready(function () {
     }
     renderChannels()
 
-    // show rendered application
-    $('#dashboard').fadeIn()
+    // store and user JSON body
+    var Store, User
 
-    // create first tab
-    newTab(function () {
-      // force routing
-      hashChange()
-    })
-
-    // global quickview
-    $('.qv-close').click(function () {
-      quickview.close($(this).closest('.quickview'))
-    })
-
-    // logout buttons
-    $('.logout').click(function () {
-      // open confirmation modal
-      $('#modal-logout').modal('show')
-    })
-
-    $('#logout').click(function () {
-      // skip confirmation promp
-      $(window).off('beforeunload')
-      // just redirect to lose session and logout
-      window.location = '/'
-    })
-
-    // open new tab on target blank click
-    var targetBlank = false
-
-    var handleTargetBlank = function (hash) {
-      // check if a tab already have this route
-      if (!checkTabsRoutes(hash)) {
-        return
+    // get store object
+    callApi('stores/me.json', 'GET', function (err, body) {
+      if (err) {
+        fatalError(err)
+      } else {
+        Store = body
+        // get authentication object
+        callApi('authentications/me.json', 'GET', function (err, body) {
+          if (err) {
+            fatalError(err)
+          } else {
+            User = body
+            // ready to start dashboard
+            Start()
+          }
+        })
       }
+    })
 
+    var Start = function () {
+      // show rendered application
+      $('#dashboard').fadeIn()
+
+      // create first tab
       newTab(function () {
-        if (window.location.hash === hash) {
-          // force routing
-          hashChange()
-        } else {
-          window.location = '/' + hash
-        }
+        // force routing
+        hashChange()
       })
-    }
 
-    $(document).mousedown(function (e) {
-      if (e.ctrlKey || e.which === 2) {
-        targetBlank = true
+      // global quickview
+      $('.qv-close').click(function () {
+        quickview.close($(this).closest('.quickview'))
+      })
+
+      // logout buttons
+      $('.logout').click(function () {
+        // open confirmation modal
+        $('#modal-logout').modal('show')
+      })
+
+      $('#logout').click(function () {
+        // skip confirmation promp
+        $(window).off('beforeunload')
+        // just redirect to lose session and logout
+        window.location = '/'
+      })
+
+      // open new tab on target blank click
+      var targetBlank = false
+
+      var handleTargetBlank = function (hash) {
+        // check if a tab already have this route
+        if (!checkTabsRoutes(hash)) {
+          return
+        }
+
+        newTab(function () {
+          if (window.location.hash === hash) {
+            // force routing
+            hashChange()
+          } else {
+            window.location = '/' + hash
+          }
+        })
       }
-      // to allow the browser to know that we handled it
-      return true
-    })
 
-    $(document).click(function (e) {
-      if (targetBlank === true) {
-        // prevent loop
-        targetBlank = false
-
-        // click with target blank
-        // if is changing route, prevent default event and open new tab
-        var t, el
-        t = e.target
-        while (t && el === undefined) {
-          switch (t.nodeName) {
-            case 'A':
-              el = t
-              break
-            case 'DIV':
-            case 'P':
-            case 'BUTTON':
-            case 'BODY':
-              // stop searching link
-              t = false
-              break
-            default:
-              // try next parent element
-              t = t.parentElement
-          }
+      $(document).mousedown(function (e) {
+        if (e.ctrlKey || e.which === 2) {
+          targetBlank = true
         }
-        if (el === undefined || typeof el.href !== 'string') {
-          // not a valid link
-          // we handled it
-          return true
-        }
+        // to allow the browser to know that we handled it
+        return true
+      })
 
-        switch (el.href) {
-          case 'javascript:;':
-          case '#':
-            // no link URL
-            e.preventDefault()
-            return true
-        }
-        var uriParts = el.href.split(window.location.origin + '/#')
-        if (uriParts.length === 2) {
-          e.preventDefault()
-          var hash = '#' + uriParts[1]
-          if (hash !== '#') {
-            // same of javascript:;
-            handleTargetBlank(hash)
-          }
-        }
-      }
-    })
+      $(document).click(function (e) {
+        if (targetBlank === true) {
+          // prevent loop
+          targetBlank = false
 
-    /* default app shortcuts */
-
-    // save keys pressed simultaneously
-    var keysPressed = {}
-    var keysLoop = {}
-
-    var runShortcut = function (e) {
-      // Ref.: https://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
-      // count current pressed keys
-      switch (Object.keys(keysPressed).length) {
-        case 1:
-          // check single key shortcuts
-          switch (e.keyCode) {
-            case 37:
-              // left
-              // change tab
-              $('#app-nav-' + currentTab).prev().children('a').click()
-              break
-            case 39:
-              // right
-              // change tab
-              var li = $('#app-nav-' + currentTab).next()
-              if (li.attr('id') !== 'new-nav-item') {
-                li.children('a').click()
-              }
-              break
-            case 84:
-              // t
-              // shortcut to #new-tab click
-              newTab(null, true)
-              break
-            case 87:
-              // w
-              // shortcut to #close-current-tab click
-              closeTab(currentTab)
-              break
-            case 83:
-              // s
-              // focus on topbar search input
-              // prevent write on input
-              e.preventDefault()
-              $('#app-search').focus()
-              break
-            case 81:
-              // q
-              // open or close global quickview
-              $('.topbar img.avatar').click()
-              break
-            case 77:
-              // m
-              // open or close Mony
-              dock.toggleMinimize('#dock-chat')
-              break
-          }
-          break
-
-        /* multiple keys shortcuts */
-
-        case 2:
-          // second key
-          var resourceKey = function () {
-            switch (e.keyCode) {
-              case 80:
-                // p
-                // go to products
-                return '/#/resources/products'
-              case 79:
-                // o
-                // go to orders
-                return '/#/resources/orders'
-              case 73:
-                // i
-                // go to categories
-                return '/#/resources/categories'
-              case 85:
-                // u
-                // go to customers
-                return '/#/resources/customers'
-              case 89:
-                // y
-                // go to brands
-                return '/#/resources/brands'
-              case 84:
-                // t
-                // go to carts
-                return '/#/resources/carts'
-              case 82:
-                // r
-                // go to grids
-                return '/#/resources/grids'
-              case 69:
-                // e
-                // go to collections
-                return '/#/resources/collections'
-              case 87:
-                // w
-                // go to authentications
-                return '/#/resources/authentications'
+          // click with target blank
+          // if is changing route, prevent default event and open new tab
+          var t, el
+          t = e.target
+          while (t && el === undefined) {
+            switch (t.nodeName) {
+              case 'A':
+                el = t
+                break
+              case 'DIV':
+              case 'P':
+              case 'BUTTON':
+              case 'BODY':
+                // stop searching link
+                t = false
+                break
+              default:
+                // try next parent element
+                t = t.parentElement
             }
           }
+          if (el === undefined || typeof el.href !== 'string') {
+            // not a valid link
+            // we handled it
+            return true
+          }
 
-          // try navigation shortcuts
-          var uri
-          if (keysPressed[71] === 0) {
-            // g
-            // go to
+          switch (el.href) {
+            case 'javascript:;':
+            case '#':
+              // no link URL
+              e.preventDefault()
+              return true
+          }
+          var uriParts = el.href.split(window.location.origin + '/#')
+          if (uriParts.length === 2) {
+            e.preventDefault()
+            var hash = '#' + uriParts[1]
+            if (hash !== '#') {
+              // same of javascript:;
+              handleTargetBlank(hash)
+            }
+          }
+        }
+      })
+
+      /* default app shortcuts */
+
+      // save keys pressed simultaneously
+      var keysPressed = {}
+      var keysLoop = {}
+
+      var runShortcut = function (e) {
+        // Ref.: https://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
+        // count current pressed keys
+        switch (Object.keys(keysPressed).length) {
+          case 1:
+            // check single key shortcuts
             switch (e.keyCode) {
-              case 72:
-                // h
-                // go to home
-                window.location = '/#/'
+              case 37:
+                // left
+                // change tab
+                $('#app-nav-' + currentTab).prev().children('a').click()
+                break
+              case 39:
+                // right
+                // change tab
+                var li = $('#app-nav-' + currentTab).next()
+                if (li.attr('id') !== 'new-nav-item') {
+                  li.children('a').click()
+                }
+                break
+              case 84:
+                // t
+                // shortcut to #new-tab click
+                newTab(null, true)
+                break
+              case 87:
+                // w
+                // shortcut to #close-current-tab click
+                closeTab(currentTab)
                 break
               case 83:
                 // s
-                // go to settings
-                window.location = '/#/settings'
+                // focus on topbar search input
+                // prevent write on input
+                e.preventDefault()
+                $('#app-search').focus()
                 break
-              case 65:
-                // a
-                // go to apps
-                window.location = '/#/apps'
+              case 81:
+                // q
+                // open or close global quickview
+                $('.topbar img.avatar').click()
                 break
-              default:
-                uri = resourceKey()
-                if (uri) {
-                  window.location = uri
-                }
+              case 77:
+                // m
+                // open or close Mony
+                dock.toggleMinimize('#dock-chat')
+                break
             }
-          } else if (keysPressed[65] === 0) {
-            // a
-            // add
-            uri = resourceKey()
-            if (uri) {
-              window.location = uri + '/new'
-            }
-          }
-          break
+            break
 
-        case 3:
-          // third key
-          if (keysPressed[66] === 0 && keysPressed[89] === 1 && keysPressed[69] === 2) {
-            // bye
-            // force logout
-            $('#logout').click()
-          }
-          break
+          /* multiple keys shortcuts */
+
+          case 2:
+            // second key
+            var resourceKey = function () {
+              switch (e.keyCode) {
+                case 80:
+                  // p
+                  // go to products
+                  return '/#/resources/products'
+                case 79:
+                  // o
+                  // go to orders
+                  return '/#/resources/orders'
+                case 73:
+                  // i
+                  // go to categories
+                  return '/#/resources/categories'
+                case 85:
+                  // u
+                  // go to customers
+                  return '/#/resources/customers'
+                case 89:
+                  // y
+                  // go to brands
+                  return '/#/resources/brands'
+                case 84:
+                  // t
+                  // go to carts
+                  return '/#/resources/carts'
+                case 82:
+                  // r
+                  // go to grids
+                  return '/#/resources/grids'
+                case 69:
+                  // e
+                  // go to collections
+                  return '/#/resources/collections'
+                case 87:
+                  // w
+                  // go to authentications
+                  return '/#/resources/authentications'
+              }
+            }
+
+            // try navigation shortcuts
+            var uri
+            if (keysPressed[71] === 0) {
+              // g
+              // go to
+              switch (e.keyCode) {
+                case 72:
+                  // h
+                  // go to home
+                  window.location = '/#/'
+                  break
+                case 83:
+                  // s
+                  // go to settings
+                  window.location = '/#/settings'
+                  break
+                case 65:
+                  // a
+                  // go to apps
+                  window.location = '/#/apps'
+                  break
+                default:
+                  uri = resourceKey()
+                  if (uri) {
+                    window.location = uri
+                  }
+              }
+            } else if (keysPressed[65] === 0) {
+              // a
+              // add
+              uri = resourceKey()
+              if (uri) {
+                window.location = uri + '/new'
+              }
+            }
+            break
+
+          case 3:
+            // third key
+            if (keysPressed[66] === 0 && keysPressed[89] === 1 && keysPressed[69] === 2) {
+              // bye
+              // force logout
+              $('#logout').click()
+            }
+            break
+        }
       }
-    }
 
-    $(document).keydown(function (e) {
-      // console.log(e.target.nodeName)
-      if (e.target.nodeName !== 'BODY') {
-        if (e.keyCode === 27) {
-          // esc
-          // focus on document
-          $(e.target).blur()
-          return
+      $(document).keydown(function (e) {
+        // console.log(e.target.nodeName)
+        if (e.target.nodeName !== 'BODY') {
+          if (e.keyCode === 27) {
+            // esc
+            // focus on document
+            $(e.target).blur()
+            return
+          } else {
+            // focus is not on body
+            return true
+          }
+        }
+
+        if (keysLoop[e.keyCode] !== true) {
+          if (keysPressed[e.keyCode] !== undefined) {
+            runShortcut(e)
+            keysLoop[e.keyCode] = true
+          } else {
+            // store key
+            keysPressed[e.keyCode] = Object.keys(keysPressed).length
+          }
         } else {
+          return true
+        }
+      }).keyup(function (e) {
+        if (e.target.nodeName !== 'BODY') {
           // focus is not on body
           return true
         }
-      }
 
-      if (keysLoop[e.keyCode] !== true) {
-        if (keysPressed[e.keyCode] !== undefined) {
-          runShortcut(e)
-          keysLoop[e.keyCode] = true
-        } else {
-          // store key
-          keysPressed[e.keyCode] = Object.keys(keysPressed).length
-        }
-      } else {
-        return true
-      }
-    }).keyup(function (e) {
-      if (e.target.nodeName !== 'BODY') {
-        // focus is not on body
-        return true
-      }
-
-      if (keysLoop[e.keyCode] !== true) {
-        if (keysPressed[e.keyCode] !== undefined) {
-          runShortcut(e)
-        }
-      } else {
-        delete keysLoop[e.keyCode]
-      }
-      // remove this key
-      delete keysPressed[e.keyCode]
-    })
-
-    /* Mony start */
-    var callStore = function () {
-      var storeid, storeName
-      window.callApi('stores/me.json', 'GET', function (err, response) {
-        if (err) {
-          console.log(err)
-        }
-        storeid = response.store_id
-        storeName = response.name
-        callAuthentication(storeid, storeName)
-      })
-    }
-    var callAuthentication = function (storeid, storeName) {
-      var name, email, userID, str
-      var id = session.my_id
-      var token = session.access_token
-      window.callApi('authentications/me.json', 'GET', function (err, response) {
-        if (err) {
-          console.log(err)
-        }
-        str = response.name.split(' ')
-        name = str[0]
-        email = response.email
-        userID = response._id
-        MonyBot(storeid, storeName, name, email, userID, token, id)
-      })
-    }
-
-    var MonyBot = function (storeid, storeName, name, email, userID, token, id) {
-      var credentials = false
-      window.Mony.init(storeid, storeName, null, name, null, email, userID, null, token, id, function (response) {
-        // response callback
-        $('#mony').append(
-          '<div class="media media-chat">' +
-            '<div class="media-body">' +
-              '<p>' + response + '</p>' +
-            '</div>' +
-          '</div>')
-        $('#mony').scrollTop($(document).height())
-        if (credentials === false) {
-          $('#mony > .media.media-chat').remove()
-          credentials = true
-          var date = new Date()
-          var hours = date.getHours()
-          // greetings
-          if (hours < 13) {
-            $('#mony').append(
-              '<div class="media media-chat">' +
-                '<div class="media-body">' +
-                  '<p> Bom dia ' + name + '</p>' +
-                  '<p> Em que posso te ajudar ?</p>' +
-                '</div>' +
-              '</div>')
-          } else if (hours >= 13 && hours < 18) {
-            $('#mony').append(
-              '<div class="media media-chat">' +
-                '<div class="media-body">' +
-                  '<p> Boa tarde ' + name + '</p>' +
-                  '<p> Em que posso te ajudar ?</p>' +
-                '</div>' +
-              '</div>')
-          } else if (hours >= 18) {
-            $('#mony').append(
-              '<div class="media media-chat">' +
-                '<div class="media-body">' +
-                  '<p> Boa noite ' + name + '</p>' +
-                  '<p> Em que posso te ajudar ?</p>' +
-                '</div>' +
-              '</div>')
+        if (keysLoop[e.keyCode] !== true) {
+          if (keysPressed[e.keyCode] !== undefined) {
+            runShortcut(e)
           }
+        } else {
+          delete keysLoop[e.keyCode]
         }
+        // remove this key
+        delete keysPressed[e.keyCode]
       })
 
-      // button click
-      $('.publisher-btn').click(function () {
-        if ($('input.publisher-input').val() !== '') {
-          $('#mony').append(
-            '<div class=" media media-chat media-chat-reverse">' +
-              '<div class="media-body">' +
-                '<p>' + $('input.publisher-input').val() + '</p>' +
-              '</div>' +
-            '</div>')
-
-          window.Mony.sendMessage($('input.publisher-input').val())
-          $('input.publisher-input').val('')
-          $('#mony').scrollTop($(document).height())
-        }
-      })
-
-      // keyboard enter
-      $('input.publisher-input').keypress(function (e) {
-        $('#mony').scrollTop($(document).height())
-        if (e.which === 13 && $('input.publisher-input').val() !== '') {
-          $('#mony').append(
-            '<div class=" media media-chat media-chat-reverse">' +
-              '<div class="media-body">' +
-                '<p>' + $('input.publisher-input').val() + '</p>' +
-              '</div>' +
-            '</div>')
-
-          window.Mony.sendMessage($('input.publisher-input').val())
-          $('input.publisher-input').val('')
-          $('#mony').scrollTop($(document).height())
-        }
-      })
+      // setup Mony chatbot
+      window.startMony(Store, User, session)
     }
-    callStore()
-    /* Mony end */
   }
 })
