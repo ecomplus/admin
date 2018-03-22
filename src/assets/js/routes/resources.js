@@ -81,6 +81,19 @@
   // show content and unlock screen
   window.routeReady(tabTitle)
 
+  var loadContent = function () {
+    // HTML card content
+    var contentUri
+    if (listing === true) {
+      // custom list
+      contentUri = 'routes/resources/list.html'
+    } else {
+      // form to create and edit
+      contentUri = 'routes/resources/form/' + slug + '.html'
+    }
+    window.loadContent(contentUri, $('#' + tabId + '-tab-normal'))
+  }
+
   if (creating !== true) {
     var endpoint
     if (resourceId === undefined) {
@@ -93,19 +106,15 @@
     }
     window.callApi(endpoint, 'GET', function (err, json) {
       if (!err) {
+        // Ace
         editor.session.setValue(JSON.stringify(json, null, 4))
+
+        // pass JSON data
+        window.tabData[tabId] = json
+        loadContent()
       }
     })
-  }
-
-  // HTML card content
-  var contentUri
-  if (listing === true) {
-    // custom list
-    contentUri = 'routes/resources/list.html'
   } else {
-    // form to create and edit
-    contentUri = 'routes/resources/form/' + slug + '.html'
+    loadContent()
   }
-  window.loadContent(contentUri, $('#' + tabId + '-tab-normal'))
 }())

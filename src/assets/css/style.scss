@@ -350,6 +350,14 @@ body {
   height: 500px;
 }
 
+// jsGrid tables
+.data-list,
+.data-list > * {
+  width: 100% !important;
+  height: auto !important;
+  overflow: hidden !important;
+}
+
 @media (max-width: 500px) {
   .topbar {
     padding-right: 6px;

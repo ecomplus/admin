@@ -628,6 +628,8 @@ app.ready(function () {
     }
     // global
     window.callApi = callApi
+    // store data when necessary
+    window.tabData = {}
 
     // general function to load HTML content
     window.loadContent = function (uri, el) {
