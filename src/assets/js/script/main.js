@@ -701,6 +701,23 @@ app.ready(function () {
       })
     }
 
+    // general function to render DOM elements IDs based on current tab ID
+    window.renderContentIds = function (el) {
+      // current tab ID
+      var tabId = window.tabId
+      // jQuery element object
+      if (!el) {
+        el = window.elTab
+      }
+      // prefix tab ID on content elements IDs
+      el.find('[data-id]').each(function () {
+        $(this).attr('id', tabId + '-' + $(this).data('id'))
+      })
+      el.find('[data-id-href]').each(function () {
+        $(this).attr('href', '#' + tabId + '-' + $(this).data('id-href'))
+      })
+    }
+
     // global function to run after Route rendering
     window.routeReady = function (tabTitle) {
       // ajax routing done

@@ -7,15 +7,8 @@
 
   // current tab ID
   var tabId = window.tabId
-  // jQuery element object
-  var elTab = window.elTab
   // prefix tab ID on content elements IDs
-  elTab.find('[data-id]').each(function () {
-    $(this).attr('id', tabId + '-' + $(this).data('id'))
-  })
-  elTab.find('[data-id-href]').each(function () {
-    $(this).attr('href', '#' + tabId + '-' + $(this).data('id-href'))
-  })
+  window.renderContentIds()
 
   var slug = window.routeParams[0]
   if (slug === undefined) {

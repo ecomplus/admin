@@ -1,7 +1,21 @@
 <div class="card">
-  <h4 class="card-title"><strong>Basic</strong></h4>
   <div class="card-body">
-    <div id="jsgrid-basic" data-provide="jsgrid"></div>
+    <div class="mb-10 text-right">
+      <button class="btn btn-label btn-success" data-id="new-resource">
+        <label>
+          <i class="ti-plus"></i>
+        </label>
+        <span class="i18n">
+          <span data-lang="en_us">Create</span>
+          <span data-lang="pt_br">Criar</span>
+        </span>
+      </button>
     </div>
+
+    <div data-id="resource-list"></div>
+
+    <script>
+      $.getScript('../assets/js/routes/resources/list.min.js')
+    </script>
   </div>
 </div>
