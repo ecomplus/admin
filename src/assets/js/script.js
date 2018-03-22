@@ -5,9 +5,7 @@
 'use strict'
 
 
-
 app.config({
-
   /*
   |--------------------------------------------------------------------------
   | Autoload
@@ -19,7 +17,6 @@ app.config({
   | the required CSS and JS files into your page.
   |
   */
-
   autoload: true,
 
   /*
@@ -33,8 +30,7 @@ app.config({
   | https://thetheme.io/theadmin/help/article-dependency-injection.html#provider-list
   |
   */
-
-  provide: [],
+  provide: [ 'jsgrid' ],
 
   /*
   |--------------------------------------------------------------------------
@@ -51,7 +47,6 @@ app.config({
   | https://developers.google.com/maps/documentation/javascript/get-api-key
   |
   */
-
   googleApiKey: '',
 
   /*
@@ -63,7 +58,6 @@ app.config({
   | this option. Your key would be a value like: UA-XXXXXXXX-Y
   |
   */
-
   googleAnalyticsId: '',
 
   /*
@@ -75,7 +69,6 @@ app.config({
   | moves smoothly on scroll.
   |
   */
-
   smoothScroll: false,
 
   /*
@@ -89,7 +82,6 @@ app.config({
   | Supported states: Topbar fix, Sidebar fold
   |
   */
-
   saveState: false,
 
   /*
@@ -102,12 +94,8 @@ app.config({
   | 'v1.2.3', or '123456789'
   |
   */
-
-  cacheBust: '',
-
-
-
-});
+  cacheBust: ''
+})
 
 
 (function () {

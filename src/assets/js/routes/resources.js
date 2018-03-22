@@ -109,7 +109,7 @@
   var contentUri
   if (listing === true) {
     // custom list
-    contentUri = 'routes/resources/' + slug + '.html'
+    contentUri = 'routes/resources/list.html'
   } else {
     // form to create and edit
     contentUri = 'routes/resources/form/' + slug + '.html'
