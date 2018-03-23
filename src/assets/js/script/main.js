@@ -802,8 +802,6 @@ app.ready(function () {
           tabObj.saveAction = false
           // discard save function
           tabObj.saveCallback = null
-          // hide action (save) bar
-          $('#topbar-action').fadeOut()
         }
       } else {
         // next will not be ignored
@@ -813,6 +811,13 @@ app.ready(function () {
       if (tabObj) {
         // update current tab hash
         tabObj.hash = hash
+        if (watchingSave) {
+          if (!tabObj.saveAction) {
+            unwatchSave()
+          }
+        } else if (tabObj.saveAction) {
+          watchSave()
+        }
       }
     }
     $(window).on('hashchange', hashChange)
@@ -831,6 +836,7 @@ app.ready(function () {
     }
 
     $('.previous-route').click(function () {
+      var path = '/#/'
       if (currentTab !== null) {
         var routesHistory = appTabs[currentTab].routesHistory
         if (routesHistory.length - 2 >= 0) {
@@ -838,9 +844,10 @@ app.ready(function () {
           routesHistory.pop()
           var route = routesHistory.pop()
           // go to last visited route
-          window.location = '/#/' + route
+          path += route
         }
       }
+      window.location = path
     })
 
     $('#ignore-unsaved').click(function () {
@@ -864,14 +871,25 @@ app.ready(function () {
     }
     $('#action-save').click(saveAction)
 
+    // current action topbar status
+    var watchingSave = false
+    var watchSave = function () {
+      // show action (save) topbar
+      $('#topbar-action').fadeIn()
+      watchingSave = true
+    }
+    var unwatchSave = function () {
+      // hide action (save) topbar
+      $('#topbar-action').fadeOut()
+      watchingSave = false
+    }
+
     window.setSaveAction = function (elForm, callback) {
       var tabObj = appTabs[currentTab]
       if (tabObj) {
         tabObj.saveAction = true
         tabObj.saveCallback = callback
-
-        // show action (save) topbar
-        $('#topbar-action').fadeIn()
+        watchSave()
 
         if (elForm) {
           // disable save button while there are nothing to save
