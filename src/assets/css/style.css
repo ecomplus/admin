@@ -383,10 +383,6 @@ body {
   margin-right: 10px;
 }
 
-.topbar .btn {
-  border-radius: 0;
-}
-
 #topbar-search .topbar-left,
 #topbar-search .lookup {
   width: 100%;
