@@ -522,7 +522,8 @@ app.ready(function () {
         var id = Date.now()
         currentTab = id
         appTabs[currentTab] = {
-          'routesHistory': []
+          'routesHistory': [],
+          'saveAction': false
         }
         // add tab to route content element
         $('#route-content').append('<div id="app-tab-' + id + '"></div>')
@@ -798,15 +799,16 @@ app.ready(function () {
         ignoreRoute = false
       }
 
+      var tabObj = appTabs[currentTab]
       if (currentTab !== null) {
         // update current tab hash
-        appTabs[currentTab].hash = hash
+        tabObj.hash = hash
       }
-      if (watchingSave) {
+      if (tabObj.saveAction) {
         // leaving form page
-        watchingSave = false
+        tabObj.saveAction = false
         // discard save function
-        saveCallback = null
+        tabObj.saveCallback = null
         // hide action (save) bar
         $('#topbar-action').fadeOut()
       }
@@ -850,11 +852,10 @@ app.ready(function () {
 
     // form pages
     // main save action
-    var watchingSave = false
-    var saveCallback
     var saveAction = function () {
-      if (typeof saveCallback === 'function') {
-        saveCallback()
+      var tabObj = appTabs[currentTab]
+      if (typeof tabObj.saveCallback === 'function') {
+        tabObj.saveCallback()
       }
       // saved
       window.unsavedChanges = false
@@ -862,8 +863,9 @@ app.ready(function () {
     $('#action-save').click(saveAction)
 
     window.setSaveAction = function (elForm, callback) {
-      watchingSave = true
-      saveCallback = callback
+      var tabObj = appTabs[currentTab]
+      tabObj.saveAction = true
+      tabObj.saveCallback = callback
       // show action (save) topbar
       $('#topbar-action').fadeIn()
 
