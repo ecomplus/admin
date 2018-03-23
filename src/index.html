@@ -51,7 +51,7 @@
       <div class="topbar-left">
         <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
 
-        <a class="topbar-btn" href="#" data-placement="bottom" id="previous-route">
+        <a class="topbar-btn previous-route" href="#" data-placement="bottom">
           <i class="ti-arrow-left"></i>
         </a>
         <a class="topbar-btn" href="#" data-placement="bottom" data-provide="fullscreen">
@@ -78,7 +78,7 @@
 
       <div class="topbar-right">
         <div>
-          <button class="btn btn-sm btn-secondary i18n" id="action-cancel">
+          <button class="btn btn-sm btn-secondary i18n previous-route">
             <span data-lang="en_us">Cancel</span>
             <span data-lang="pt_br">Cancelar</span>
           </button>
@@ -531,7 +531,7 @@
           <div class="modal-body">
             <p class="i18n">
               <span data-lang="en_us">Are you sure you want to leave?</span>
-              <span data-lang="pt_br">Você tem certeza de deseja sair?</span>
+              <span data-lang="pt_br">Você tem certeza que deseja sair?</span>
             </p>
           </div>
           <div class="modal-footer">
@@ -545,6 +545,48 @@
               <span class="i18n">
                 <span data-lang="en_us">Logout</span>
                 <span data-lang="pt_br">Sair</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal-center fade" id="modal-unsaved" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title i18n">
+              <span data-lang="en_us">Unsaved changes</span>
+              <span data-lang="pt_br">Alterações não salvas</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="i18n">
+              <span data-lang="en_us">
+                Leaving this page, you are going to lose unsaved changes.
+                Are you sure you want to quit and discard changes?
+              </span>
+              <span data-lang="pt_br">
+                Ao sair desta página, você perderá as alterações não salvas.
+                Tem certeza que deseja sair e descartar as alterações?
+              </span>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Continue on page</span>
+                <span data-lang="pt_br">Continuar na página</span>
+              </span>
+            </button>
+            <button class="btn btn-bold btn-pure btn-danger" id="ignore-unsaved">
+              <span class="i18n">
+                <span data-lang="en_us">Discard changes</span>
+                <span data-lang="pt_br">Descartar alterações</span>
               </span>
             </button>
           </div>
@@ -585,6 +627,7 @@
         </div>
       </div>
     </div>
+    <!-- END Modal -->
 
     <!-- Scripts -->
     <script src="../assets/js/core.min.js"></script>

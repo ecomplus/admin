@@ -464,7 +464,6 @@ app.ready(function () {
       el.hide()
       var parent = el.closest('.ajax-content')
       parent.addClass('ajax')
-      console.log(parent)
 
       $.ajax({
         url: uri,
@@ -514,7 +513,8 @@ app.ready(function () {
     // control routing queue
     var routeInProgress = false
     var ignoreRoute = false
-    var routeReadyTimeout
+    window.unsavedChanges = false
+    var waitingRoute, routeReadyTimeout
 
     var newTab = function (callback, toHashNew) {
       if (routeInProgress !== true) {
@@ -781,20 +781,18 @@ app.ready(function () {
           return
         }
 
-        if (routeInProgress !== true) {
-          router(route)
-        } else {
+        if (routeInProgress === true && keepRoute()) {
           // routing currenty in progress
-          if (currentTab !== null) {
-            var routesHistory = appTabs[currentTab].routesHistory
-            if (routesHistory.length > 0) {
-              // still on current route
-              ignoreRoute = true
-              window.location = '/#/' + routesHistory[routesHistory.length - 1]
-              return
-            }
-          }
+          return
+        } else if (window.unsavedChanges === true && keepRoute()) {
+          // have unsaved changes
+          $('#modal-unsaved').modal('show')
+          // do not route, wait for confirmation
+          waitingRoute = route
+          return
         }
+
+        router(route)
       } else {
         // next will not be ignored
         ignoreRoute = false
@@ -804,10 +802,31 @@ app.ready(function () {
         // update current tab hash
         appTabs[currentTab].hash = hash
       }
+      if (watchingSave) {
+        // leaving form page
+        watchingSave = false
+        // discard save function
+        saveCallback = null
+        // hide action (save) bar
+        $('#topbar-action').fadeOut()
+      }
     }
     $(window).on('hashchange', hashChange)
 
-    $('#previous-route').click(function () {
+    var keepRoute = function () {
+      if (currentTab !== null) {
+        var routesHistory = appTabs[currentTab].routesHistory
+        if (routesHistory.length > 0) {
+          // still on current route
+          ignoreRoute = true
+          window.location = '/#/' + routesHistory[routesHistory.length - 1]
+          return true
+        }
+      }
+      return false
+    }
+
+    $('.previous-route').click(function () {
       if (currentTab !== null) {
         var routesHistory = appTabs[currentTab].routesHistory
         if (routesHistory.length - 2 >= 0) {
@@ -819,6 +838,50 @@ app.ready(function () {
         }
       }
     })
+
+    $('#ignore-unsaved').click(function () {
+      // discard unsaved changes
+      window.unsavedChanges = false
+      if (waitingRoute) {
+        // go to previous requested route
+        window.location = '/#/' + waitingRoute
+      }
+    })
+
+    // form pages
+    // main save action
+    var watchingSave = false
+    var saveCallback
+    var saveAction = function () {
+      if (typeof saveCallback === 'function') {
+        saveCallback()
+      }
+      // saved
+      window.unsavedChanges = false
+    }
+    $('#action-save').click(saveAction)
+
+    window.setSaveAction = function (elForm, callback) {
+      watchingSave = true
+      saveCallback = callback
+      // show action (save) topbar
+      $('#topbar-action').fadeIn()
+
+      if (elForm) {
+        // disable save button while there are nothing to save
+        $('#action-save').attr('disabled', true)
+
+        // watch form submit and input changes
+        elForm.submit(saveAction).find('input').change(function () {
+          // new unsaved changes
+          if (window.unsavedChanges !== true) {
+            window.unsavedChanges = true
+            // enable save button again
+            $('#action-save').removeAttr('disabled')
+          }
+        })
+      }
+    }
 
     window.apiResources = {
       'products': {

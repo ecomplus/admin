@@ -139,7 +139,8 @@
   display: none;
 }
 
-.ajax-form {
+.ajax-form,
+.ajax-content {
   position: relative;
 }
 
@@ -162,6 +163,16 @@
   -ms-flex-align: center;
   -webkit-align-items: center;
   align-items: center;
+}
+
+.ajax-content > .spinner-linear {
+  display: none;
+  position: absolute;
+  z-index: 2;
+}
+
+.ajax > .spinner-linear {
+  display: block;
 }
 
 #app-tabs {
@@ -372,6 +383,10 @@ body {
   margin-right: 10px;
 }
 
+.topbar .btn {
+  border-radius: 0;
+}
+
 #topbar-search .topbar-left,
 #topbar-search .lookup {
   width: 100%;
@@ -386,10 +401,14 @@ body {
   color: #37003c;
 }
 
+#topbar-action {
+  display: none;
+}
+
 #topbar-action h4 {
   margin-bottom: 0;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.75);
   white-space: nowrap;
 }
 
