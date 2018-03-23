@@ -948,6 +948,8 @@ app.ready(function () {
         return
       }
 
+      // work with current tab object
+      var tabObj = appTabs[currentTab]
       // route
       if (!ignoreRoute) {
         // check if a tab already have this route
@@ -967,23 +969,23 @@ app.ready(function () {
         }
 
         router(route)
+        // unset save action
+        if (tabObj && tabObj.saveAction) {
+          // leaving form page
+          tabObj.saveAction = false
+          // discard save function
+          tabObj.saveCallback = null
+          // hide action (save) bar
+          $('#topbar-action').fadeOut()
+        }
       } else {
         // next will not be ignored
         ignoreRoute = false
       }
 
-      var tabObj = appTabs[currentTab]
-      if (currentTab !== null) {
+      if (tabObj) {
         // update current tab hash
         tabObj.hash = hash
-      }
-      if (tabObj.saveAction) {
-        // leaving form page
-        tabObj.saveAction = false
-        // discard save function
-        tabObj.saveCallback = null
-        // hide action (save) bar
-        $('#topbar-action').fadeOut()
       }
     }
     $(window).on('hashchange', hashChange)
@@ -1027,7 +1029,7 @@ app.ready(function () {
     // main save action
     var saveAction = function () {
       var tabObj = appTabs[currentTab]
-      if (typeof tabObj.saveCallback === 'function') {
+      if (tabObj && typeof tabObj.saveCallback === 'function') {
         tabObj.saveCallback()
       }
       // saved
@@ -1037,24 +1039,27 @@ app.ready(function () {
 
     window.setSaveAction = function (elForm, callback) {
       var tabObj = appTabs[currentTab]
-      tabObj.saveAction = true
-      tabObj.saveCallback = callback
-      // show action (save) topbar
-      $('#topbar-action').fadeIn()
+      if (tabObj) {
+        tabObj.saveAction = true
+        tabObj.saveCallback = callback
 
-      if (elForm) {
-        // disable save button while there are nothing to save
-        $('#action-save').attr('disabled', true)
+        // show action (save) topbar
+        $('#topbar-action').fadeIn()
 
-        // watch form submit and input changes
-        elForm.submit(saveAction).find('input').change(function () {
-          // new unsaved changes
-          if (window.unsavedChanges !== true) {
-            window.unsavedChanges = true
-            // enable save button again
-            $('#action-save').removeAttr('disabled')
-          }
-        })
+        if (elForm) {
+          // disable save button while there are nothing to save
+          $('#action-save').attr('disabled', true)
+
+          // watch form submit and input changes
+          elForm.submit(saveAction).find('input').change(function () {
+            // new unsaved changes
+            if (window.unsavedChanges !== true) {
+              window.unsavedChanges = true
+              // enable save button again
+              $('#action-save').removeAttr('disabled')
+            }
+          })
+        }
       }
     }
 
