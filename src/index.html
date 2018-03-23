@@ -47,19 +47,17 @@
     <!-- END Sidebar -->
 
     <!-- Topbar -->
-    <header class="topbar">
+    <header class="topbar" id="topbar-search">
       <div class="topbar-left">
         <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
 
         <a class="topbar-btn" href="#" data-placement="bottom" id="previous-route">
           <i class="ti-arrow-left"></i>
         </a>
-
         <a class="topbar-btn" href="#" data-placement="bottom" data-provide="fullscreen">
           <i class="ti-fullscreen fullscreen-default"></i>
           <i class="ti-layout-width-default fullscreen-active"></i>
         </a>
-
         <form class="lookup lookup-circle" target="index.html">
           <input type="text" name="s" id="app-search" placeholder="Search" class="w-100">
         </form>
@@ -70,6 +68,30 @@
           <span class="badge badge-warning badge-xl badge-dot"></span>
           <img class="avatar" src="../assets/img/avatar/default.jpg">
         </a>
+      </div>
+    </header>
+
+    <header class="topbar topbar-inverse bg-purple" id="topbar-action">
+      <div class="topbar-left">
+        <h4 id="action-title"></h4>
+      </div>
+
+      <div class="topbar-right">
+        <div>
+          <button class="btn btn-sm btn-secondary i18n" id="action-cancel">
+            <span data-lang="en_us">Cancel</span>
+            <span data-lang="pt_br">Cancelar</span>
+          </button>
+          <button class="btn btn-sm btn-label btn-primary" id="action-save">
+            <label>
+              <i class="ti-check"></i>
+            </label>
+            <span class="i18n">
+              <span data-lang="en_us">Save</span>
+              <span data-lang="pt_br">Salvar</span>
+            </span>
+          </button>
+        </div>
       </div>
     </header>
     <!-- END Topbar -->

@@ -461,8 +461,10 @@ app.ready(function () {
     // general function to load HTML content
     window.loadContent = function (uri, el) {
       // show loading spinner
-      var parent = el.closest('.ajax-form')
+      el.hide()
+      var parent = el.closest('.ajax-content')
       parent.addClass('ajax')
+      console.log(parent)
 
       $.ajax({
         url: uri,
@@ -473,7 +475,7 @@ app.ready(function () {
       .done(function (html) {
         // successful response
         // put HTML content
-        el.html(html)
+        el.html(html).fadeIn()
       })
       .fail(function (jqXHR, textStatus, err) {
         app.toast(i18n({
@@ -482,7 +484,9 @@ app.ready(function () {
         }))
       })
       .always(function () {
-        parent.removeClass('ajax')
+        setTimeout(function () {
+          parent.removeClass('ajax')
+        }, 400)
       })
     }
 
