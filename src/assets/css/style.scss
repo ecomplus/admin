@@ -341,6 +341,9 @@ body {
   font-size: 33px;
   margin-right: 10px;
 }
+.topbar .btn {
+  border-radius: 0;
+}
 
 // large search bar
 #topbar-search .topbar-left,
