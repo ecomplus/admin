@@ -865,19 +865,37 @@ app.ready(function () {
       var tabObj = appTabs[currentTab]
       if (tabObj && typeof tabObj.saveCallback === 'function') {
         tabObj.saveCallback()
+        updateTopbarTitle()
       }
       // saved
       window.unsavedChanges = false
     }
     $('#action-save').click(saveAction)
 
+    var updateTopbarTitle = function () {
+      if (window.elTab) {
+        var elTitle = window.elTab.find('input.action-title')
+        if (elTitle.length) {
+          // write title on topbar
+          $('#action-title').text(elTitle.val())
+          return true
+        }
+      }
+    }
+
     // current action topbar status
     var watchingSave = false
+
     var watchSave = function () {
+      if (updateTopbarTitle() !== true) {
+        // clear title on topbar
+        $('#action-title').text('')
+      }
       // show action (save) topbar
       $('#topbar-action').fadeIn()
       watchingSave = true
     }
+
     var unwatchSave = function () {
       // hide action (save) topbar
       $('#topbar-action').fadeOut()
