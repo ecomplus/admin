@@ -1,12 +1,370 @@
-<div class="card">
-  <h4 class="card-title i18n">
-    <span data-lang="en_us"><strong>Product</strong> info</span>
-    <span data-lang="pt_br">Informações do <strong>produto</strong></span>
-  </h4>
-  <div class="card-body">
+<div class="row">
+
+          <!--
+          |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
+          | Basic controls
+          |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
+          !-->
+          <div class="col-12 col-md-8">
+            <div class="card">
+              <h4 class="card-title i18n">
+                <span data-lang="en_us"><strong>Product</strong> info</span>
+                <span data-lang="pt_br">Informações do <strong>produto</strong></span>
+              </h4>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="form-group">
+                      <label class="i18n" for="input-normal">
+                        <span data-lang="en_us">Product name</span>
+                        <span data-lang="pt_br">Nome do produto</span>
+                      </label>
+                      <input type="text" class="form-control action-title" data-property="name" id="input-normal">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="col-md-12">
+                    <textarea class="i18n" data-provide="summernote" data-min-height="150" data-property="body_html" note-btn-group.note-fontname="0">
+                      <span data-lang="en_us">Product description</span>
+                      <span data-lang="pt_br">Descrição do produto</span>
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <h4 class="card-title i18n">
+                <span data-lang="en_us">Images</span>
+                <span data-lang="pt_br">Imagens</span>
+              </h4>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <script>
+                    $("div#myId").dropzone({ url: "/file/post" });
+                    var myDropzone = new Dropzone("div#myId", { url: "/file/post"});
+                    </script>
+                    <div data-url="path/to/file-uploader.php" data-param-name="images" data-max-filesize="5" data-init="window.dropzoneInit" class="dropzone dz-clickable">
+                      <div class="dz-default dz-message i18n">
+                        <span data-lang="en_us">Drop files here to upload</span>
+                        <span data-lang="pt_br">Selecione ou arraste arquivos para o upload</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <h4 class="card-title i18n">
+                <span data-lang="en_us">Inventory</span>
+                <span data-lang="pt_br">Estoque</span>
+              </h4>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <label>SKU</label>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" data-property="sku" aria-label="Text input with dropdown button" data-property="sku">
+                        </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label>GTIN</label>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" aria-label="Text input with dropdown button" data-property="gtin">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label>MPN</label>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" aria-label="Text input with dropdown button" data-property="mpn">
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <label class="i18n">
+                        <span data-lang="en_us">Track inventory</span>
+                        <span data-lang="pt_br">Controle de estoque</span>
+                    </label>
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <label class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" data-property="manage_stock">
+                          <span class="custom-control-indicator"></span>
+                        </label>
+                      </span>
+                      <input type="text" class="form-control" aria-label="Text input with checkbox" data-property="quantity">
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <label class="i18n">
+                        <span data-lang="en_us">Brands</span>
+                        <span data-lang="pt_br">Marcas</span>
+                    </label>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" aria-label="Text input with dropdown button" data-property="brands">
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="i18n">
+                        <span data-lang="en_us">Categories</span>
+                        <span data-lang="pt_br">Categorias</span>
+                    </label>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" aria-label="Text input with dropdown button" data-property="categories">
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <h4 class="card-title i18n">
+                <span data-lang="en_us">Variants</span>
+                <span data-lang="pt_br">Variações</span>
+              </h4>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="form-group col-md-3">
+
+                        <label class="i18n" for="input-normal">
+                          <span data-lang="en_us">Grids</span>
+                          <span data-lang="pt_br">Grids</span>
+                        </label>
+                        <input type="text" class="form-control" id="input-normal" data-property="grid">
+                      </div>
+                      <div class="form-group col-md-9">
+                        <label class="i18n" for="input-normal">
+                          <span data-lang="en_us">Values</span>
+                          <span data-lang="pt_br">Valores</span>
+                        </label>
+                        <input type="text" class="form-control" id="input-normal" data-property="specifications">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-md-3">
+                        <input type="text" class="form-control" id="input-normal">
+                      </div>
+                      <div class="form-group col-md-9">
+                        <input type="text" class="form-control" id="input-normal">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-md-4">
+                        <button class="btn btn-float btn-sm btn-primary"><i class="ti-plus"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                          <label class="i18n" for="input-normal">
+                            <span data-lang="en_us">Variant</span>
+                            <span data-lang="pt_br">Variação</span>
+                          </label>
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label class="i18n" for="input-normal">
+                            <span data-lang="en_us">Price</span>
+                            <span data-lang="pt_br">Preço</span>
+                          </label>
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label class="i18n" for="input-normal">
+                            <span data-lang="en_us">SKU</span>
+                            <span data-lang="pt_br">SKU</span>
+                          </label>
+                        </div>
+                        <div class="form-group col-md-2">
+                          <label class="i18n" for="input-normal">
+                            <span data-lang="en_us">Inventory</span>
+                            <span data-lang="pt_br">Estoque</span>
+                          </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input">
+                                <span class="custom-control-indicator"></span>
+                              </label>
+                            </span>
+                            <input type="text" class="form-control" aria-label="Text input with checkbox">
+                          </div>
+                        </div>
+                        <div class="form-group col-md-2">
+                          <input type="text" class="form-control" id="input-normal">
+                        </div>
+                        <div class="form-group col-md-2">
+                          <input type="text" class="form-control" id="input-normal">
+                        </div>
+                        <div class="form-group col-md-2">
+                          <input type="text" class="form-control" id="input-normal">
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+<div class="col-12 col-md-4">
+  <div class="card">
+    <h4 class="card-title i18n">
+      <span data-lang="en_us">Pricification</span>
+      <span data-lang="pt_br">Precificação</span>
+    </h4>
+    <div class="row card-body">
+      <div class="col-md-12">
+          <label class="i18n">
+            <span data-lang="en_us">Sale price</span>
+            <span data-lang="pt_br">Preço de venda</span>
+          </label>
+          <div class="form-group">
+            <input type="text" class="form-control" data-property="base_price">
+          </div>
+          <label class="i18n">
+            <span data-lang="en_us">Promo price</span>
+            <span data-lang="pt_br">Promoção</span>
+          </label>
+          <div class="form-group">
+            <input type="text" class="form-control" data-property="price">
+          </div>
+          </div>
+    </div>
   </div>
+
+  <div class="card">
+    <h4 class="card-title i18n">
+      <span data-lang="en_us">Shipping</span>
+      <span data-lang="pt_br">Frete</span>
+    </h4>
+    <div class="card-body">
+      <div class="col-md-12">
+          <label class="i18n">
+            <span data-lang="en_us">Weight</span>
+            <span data-lang="pt_br">Peso</span>
+          </label>
+          <div class="form-group">
+            <div class="input-group">
+                      <input type="text" class="form-control" aria-label="Text input with dropdown button" data-property="weight">
+                      <div class="input-group-btn">
+                        <button type="button" class="btn btn-light dropdown-toggle i18n" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span data-lang="en_us">unit</span>
+                          <span data-lang="pt_br">unidade</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a class="dropdown-item" href="#">mg</a>
+                          <a class="dropdown-item" href="#">g</a>
+                          <a class="dropdown-item" href="#">kg</a>
+                          <a class="dropdown-item" href="#">lb</a>
+                          <a class="dropdown-item" href="#">oz</a>
+                        </div>
+                      </div>
+                    </div>
+          </div>
+          <label class="i18n">
+            <span data-lang="en_us">Height</span>
+            <span data-lang="pt_br">Altura</span>
+          </label>
+          <div class="form-group">
+            <div class="input-group">
+                      <input type="text" class="form-control" aria-label="Text input with dropdown button" data-property="height">
+                      <div class="input-group-btn">
+                        <button type="button" class="btn btn-light dropdown-toggle unit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <span data-lang="en_us">unit</span>
+                          <span data-lang="pt_br">unidade</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a class="dropdown-item" href="#">mm</a>
+                          <a class="dropdown-item" href="#">cm</a>
+                          <a class="dropdown-item" href="#">m</a>
+                          <a class="dropdown-item" href="#">ft</a>
+                          <a class="dropdown-item" href="#">in</a>
+                          <a class="dropdown-item" href="#">yd</a>
+                          <a class="dropdown-item" href="#">mi</a>
+
+                        </div>
+                      </div>
+                    </div>
+          </div>
+          <label class="i18n">
+            <span data-lang="en_us">Length</span>
+            <span data-lang="pt_br">Comprimento</span>
+          </label>
+          <div class="form-group">
+            <div class="input-group">
+                      <input type="text" class="form-control" aria-label="Text input with dropdown button" data-property="length">
+                    </div>
+          </div>
+          <label class="i18n">
+            <span data-lang="en_us">Width</span>
+            <span data-lang="pt_br">Largura</span>
+          </label>
+          <div class="form-group">
+            <div class="input-group">
+              <input type="text" class="form-control" aria-label="Text input with dropdown button" data-property="width">
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  <div class="card">
+    <h4 class="card-title i18n">
+      <span data-lang="en_us">Product search engine listing</span>
+      <span data-lang="pt_br">Informações para motores de busca</span>
+    </h4>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label class="i18n" for="input-normal">
+              <span data-lang="en_us">Slug</span>
+              <span data-lang="pt_br">Slug (fim da URL)</span>
+            </label>
+            <input type="text" class="form-control" id="input-normal" data-property="slug">
+          </div>
+          <div class="form-group">
+            <label class="i18n" for="input-normal">
+              <span data-lang="en_us">Tags (internal search)</span>
+              <span data-lang="pt_br">Tags (buscas internas)</span>
+            </label>
+            <input type="text" class="form-control" id="input-normal" data-property="keywords">
+          </div>
+          <div class="form-group">
+            <label class="i18n" for="input-normal">Title tag</label>
+            <input type="text" class="form-control" id="input-normal" data-property="meta_title">
+          </div>
+        </div>
+        <hr>
+        <div class="col-md-12">
+            <label class="form-group">Meta description Tag</label>
+            <textarea class="form-control" id="textarea" rows="6" data-property="meta_description"></textarea>
+          </textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
   <script>
     $.getScript('../assets/js/routes/resources/form/products.min.js')
   </script>
-</div>
