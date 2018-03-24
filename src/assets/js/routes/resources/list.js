@@ -10,7 +10,6 @@
   var elContainer = $('#' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
-  window.setSaveAction()
 
   // create button
   $('#' + tabId + '-create').click(function () {
