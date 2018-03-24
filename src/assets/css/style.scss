@@ -365,6 +365,9 @@ body {
   color: rgba($white, .75);
   white-space: nowrap;
 }
+#topbar-action .topbar-left {
+  height: 100%;
+}
 #topbar-action .topbar-right {
   position: absolute;
   right: 0;
