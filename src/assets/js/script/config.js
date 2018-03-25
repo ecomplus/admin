@@ -23,7 +23,7 @@ app.config({
   | https://thetheme.io/theadmin/help/article-dependency-injection.html#provider-list
   |
   */
-  provide: [ 'jsgrid' ],
+  provide: [ 'jsgrid', 'summernote', 'dropzone' ],
 
   /*
   |--------------------------------------------------------------------------
