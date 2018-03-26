@@ -1,7 +1,11 @@
 <form action="javascript:;" data-id="product-form">
   <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-6">
       <div class="card">
+        <h4 class="card-title i18n">
+          <span data-lang="en_us">Inventory</span>
+          <span data-lang="pt_br">Inventário</span>
+        </h4>
         <div class="card-body">
           <div class="form-group">
             <label class="i18n require" for="name">
@@ -10,38 +14,7 @@
             </label>
             <input type="text" class="form-control action-title" name="name" required />
           </div>
-          <div class="form-group">
-            <label class="i18n" for="body_html">
-              <span data-lang="en_us">Description</span>
-              <span data-lang="pt_br">Descrição</span>
-            </label>
-            <textarea data-id="html-editor" name="body_html">
-            </textarea>
-          </div>
-        </div>
-      </div>
 
-      <div class="card">
-        <h4 class="card-title i18n">
-          <span data-lang="en_us">Images</span>
-          <span data-lang="pt_br">Imagens</span>
-        </h4>
-        <div class="card-body">
-          <div class="dropzone dz-clickable">
-            <div class="dz-default dz-message i18n">
-              <span data-lang="en_us">Drop here or select files to upload</span>
-              <span data-lang="pt_br">Selecione ou arraste arquivos para o upload</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <h4 class="card-title i18n">
-          <span data-lang="en_us">Inventory</span>
-          <span data-lang="pt_br">Inventário</span>
-        </h4>
-        <div class="card-body">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
@@ -89,6 +62,7 @@
               </div>
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
@@ -110,6 +84,84 @@
                   <small data-lang="en_us" class="form-text">Manufacturer code</small>
                   <small data-lang="pt_br" class="form-text">Código do fabricante</small>
                 </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4 class="card-title i18n">
+          <span data-lang="en_us">Pricing</span>
+          <span data-lang="pt_br">Precificação</span>
+        </h4>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group" for="price">
+                <label class="i18n">
+                  <span data-lang="en_us">Sale price</span>
+                  <span data-lang="pt_br">Preço de venda</span>
+                </label>
+                <input type="text" class="form-control" name="price" />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="i18n" for="base_price">
+                  <span data-lang="en_us">Compare at price</span>
+                  <span data-lang="pt_br">Compare ao preço</span>
+                </label>
+                <input type="text" class="form-control" name="base_price" />
+                <span class="i18n">
+                  <small data-lang="en_us" class="form-text">Base price</small>
+                  <small data-lang="pt_br" class="form-text">Preço base</small>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4 class="card-title i18n">
+          <span data-lang="en_us">Organization</span>
+          <span data-lang="pt_br">Organização</span>
+        </h4>
+        <div class="card-body">
+          <div class="form-group">
+            <label for="keywords">Keywords</label>
+            <select multiple name="keywords">
+            </select>
+            <span class="i18n">
+              <small data-lang="en_us" class="form-text">
+                Tags related with product for internal search
+              </small>
+              <small data-lang="pt_br" class="form-text">
+                Tags relacionadas ao produto para pesquisa interna
+              </small>
+            </span>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Brands</span>
+                  <span data-lang="pt_br">Marcas</span>
+                </label>
+                <select multiple data-id="brands">
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Categories</span>
+                  <span data-lang="pt_br">Categorias</span>
+                </label>
+                <select multiple data-id="categories">
+                </select>
               </div>
             </div>
           </div>
@@ -210,39 +262,32 @@
                   </div>
                 </div>
               </div>
-            </div>
+  </div>
 
-  <div class="col-md-5">
+  <div class="col-md-6">
     <div class="card">
       <h4 class="card-title i18n">
-        <span data-lang="en_us">Pricification</span>
-        <span data-lang="pt_br">Precificação</span>
+        <span data-lang="en_us">Images</span>
+        <span data-lang="pt_br">Imagens</span>
       </h4>
       <div class="card-body">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="form-group" for="price">
-              <label class="i18n">
-                <span data-lang="en_us">Sale price</span>
-                <span data-lang="pt_br">Preço de venda</span>
-              </label>
-              <input type="text" class="form-control" name="price" />
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="i18n" for="base_price">
-                <span data-lang="en_us">Compare at price</span>
-                <span data-lang="pt_br">Compare ao preço</span>
-              </label>
-              <input type="text" class="form-control" name="base_price" />
-              <span class="i18n">
-                <small data-lang="en_us" class="form-text">Base price</small>
-                <small data-lang="pt_br" class="form-text">Preço base</small>
-              </span>
-            </div>
+        <div class="dropzone dz-clickable">
+          <div class="dz-default dz-message i18n">
+            <span data-lang="en_us">Drop here or select files to upload</span>
+            <span data-lang="pt_br">Selecione ou arraste arquivos para o upload</span>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h4 class="card-title i18n">
+        <span data-lang="en_us">Description</span>
+        <span data-lang="pt_br">Descrição</span>
+      </h4>
+      <div class="card-body">
+        <textarea data-id="html-editor" name="body_html">
+        </textarea>
       </div>
     </div>
 
@@ -252,29 +297,28 @@
         <span data-lang="pt_br">Frete</span>
       </h4>
       <div class="card-body">
-        <div class="col-md-12">
-          <label class="i18n">
-            <span data-lang="en_us">Weight</span>
-            <span data-lang="pt_br">Peso</span>
-          </label>
+        <div class="row">
+          <div class="col-md-6">
             <div class="form-group">
+              <label class="i18n" for="weight.value">
+                <span data-lang="en_us">Weight</span>
+                <span data-lang="pt_br">Peso</span>
+              </label>
               <div class="input-group">
-                        <input type="text" class="form-control" aria-label="Text input with dropdown button" name="weight">
-                        <div class="input-group-btn">
-                          <button type="button" class="btn btn-light dropdown-toggle i18n" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span data-lang="en_us">unit</span>
-                            <span data-lang="pt_br">unidade</span>
-                          </button>
-                          <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">mg</a>
-                            <a class="dropdown-item" href="#">g</a>
-                            <a class="dropdown-item" href="#">kg</a>
-                            <a class="dropdown-item" href="#">lb</a>
-                            <a class="dropdown-item" href="#">oz</a>
-                          </div>
-                        </div>
-                      </div>
+                <input type="text" class="form-control" name="weight.value" />
+                <div class="input-group-append w-70px">
+                  <select data-provide="selectpicker" name="weight.unit">
+                    <option value="mg">mg</option>
+                    <option value="g" selected >g</option>
+                    <option value="kg">kg</option>
+                    <option value="lb">lb</option>
+                    <option value="oz">oz</option>
+                  </select>
+                </div>
+              </div>
             </div>
+          </div>
+        </div>
             <label class="i18n">
               <span data-lang="en_us">Height</span>
               <span data-lang="pt_br">Altura</span>
@@ -318,13 +362,11 @@
                 <input type="text" class="form-control" aria-label="Text input with dropdown button" name="width">
               </div>
             </div>
-          </div>
       </div>
     </div>
     <div class="card">
-      <h4 class="card-title i18n">
-        <span data-lang="en_us">Product search engine listing</span>
-        <span data-lang="pt_br">Informações para motores de busca</span>
+      <h4 class="card-title">
+        SEO
       </h4>
       <div class="card-body">
         <div class="row">
