@@ -18,7 +18,8 @@
       writeMsg(response)
 
       if (credentials === false) {
-        $('#mony > .media.media-chat').remove()
+        // reset
+        $('#mony').html('')
         credentials = true
         var date = new Date()
         var hours = date.getHours()
@@ -32,32 +33,34 @@
         } else if (hours >= 18) {
           msg = 'Boa noite'
         }
-        msg += ' ' + name + ', em que posso te ajudar ?'
+        msg += ' ' + name + ', em que posso te ajudar?'
         writeMsg(msg)
       }
     }
 
     var writeMsg = function (msg, reverse) {
-      var classes
-      if (reverse) {
-        classes = 'media media-chat media-chat-reverse'
-      } else {
-        classes = 'media media-chat'
+      if (msg && msg !== '') {
+        var classes
+        if (reverse) {
+          classes = 'media media-chat media-chat-reverse'
+        } else {
+          classes = 'media media-chat'
+        }
+        // mount chat message HTML block
+        var html = '<div class="' + classes + '">' +
+                     '<div class="media-body">' +
+                       '<p>' + msg + '</p>' +
+                     '</div>' +
+                   '</div>'
+        $('#mony').append(html).scrollTop(9999)
       }
-      // mount chat message HTML block
-      var html = '<div class="' + classes + '">' +
-                   '<div class="media-body">' +
-                     '<p>' + msg + '</p>' +
-                   '</div>' +
-                 '</div>'
-      $('#mony').append(html).scrollTop(9999)
     }
 
     // https://github.com/ecomclub/mony
     window.Mony.init(storeId, storeName, null, name, null, email, userId, null, token, userId, callback)
 
     var sendQuestion = function () {
-      var el = $('#mony .publisher-input')
+      var el = $('#dock-chat .publisher-input')
       var text = el.val()
       if (text !== '') {
         writeMsg(text, true)
@@ -69,9 +72,9 @@
     }
 
     // button click
-    $('#mony .publisher-btn').click(sendQuestion)
+    $('#dock-chat .publisher-btn').click(sendQuestion)
     // keyboard enter
-    $('#mony .publisher-input').keypress(function (e) {
+    $('#dock-chat .publisher-input').keypress(function (e) {
       if (e.which === 13) {
         sendQuestion()
       }
