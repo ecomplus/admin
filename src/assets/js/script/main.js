@@ -522,6 +522,7 @@ app.ready(function () {
         var id = Date.now()
         currentTab = id
         appTabs[currentTab] = {
+          'tabTitle': null,
           'routesHistory': [],
           'saveAction': false
         }
@@ -563,6 +564,8 @@ app.ready(function () {
           elTab.addClass('app-current-tab')
           // now route content appears
           elContent.fadeIn(100)
+          // update browser tab title
+          changeBrowserTabTitle(appTabs[currentTab].tabTitle)
 
           var hash = appTabs[currentTab].hash
           if (hash !== undefined) {
@@ -740,6 +743,18 @@ app.ready(function () {
       }
       $('#router > .loading').fadeOut()
       window.elTab.children().fadeIn()
+      // save title for further tab changes
+      appTabs[currentTab].tabTitle = tabTitle
+      changeBrowserTabTitle(tabTitle)
+    }
+
+    var changeBrowserTabTitle = function (title) {
+      if (!title) {
+        // default
+        title = 'Dashboard'
+      }
+      // update document title
+      document.title = title + ' · E-Com Plus'
     }
 
     // global 404 error function
