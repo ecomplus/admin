@@ -18,8 +18,7 @@
       writeMsg(response)
 
       if (credentials === false) {
-        // reset
-        $('#mony').html('')
+        $('#mony > .media.media-chat').remove()
         credentials = true
         var date = new Date()
         var hours = date.getHours()
@@ -33,27 +32,25 @@
         } else if (hours >= 18) {
           msg = 'Boa noite'
         }
-        msg += ' ' + name + ', em que posso te ajudar?'
+        msg += ' ' + name + ', em que posso te ajudar ?'
         writeMsg(msg)
       }
     }
 
     var writeMsg = function (msg, reverse) {
-      if (msg && msg !== '') {
-        var classes
-        if (reverse) {
-          classes = 'media media-chat media-chat-reverse'
-        } else {
-          classes = 'media media-chat'
-        }
-        // mount chat message HTML block
-        var html = '<div class="' + classes + '">' +
-                     '<div class="media-body">' +
-                       '<p>' + msg + '</p>' +
-                     '</div>' +
-                   '</div>'
-        $('#mony').append(html).scrollTop(9999)
+      var classes
+      if (reverse) {
+        classes = 'media media-chat media-chat-reverse'
+      } else {
+        classes = 'media media-chat'
       }
+      // mount chat message HTML block
+      var html = '<div class="' + classes + '">' +
+                   '<div class="media-body">' +
+                     '<p>' + msg + '</p>' +
+                   '</div>' +
+                 '</div>'
+      $('#mony').append(html).scrollTop(9999)
     }
 
     // https://github.com/ecomclub/mony
