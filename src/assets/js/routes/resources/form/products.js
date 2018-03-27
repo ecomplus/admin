@@ -14,4 +14,7 @@
 
   $('#' + tabId + '-html-editor').summernote()
   $('select[multiple]').tagsinput('items')
+  $('select:not([multiple])').selectpicker({
+    'style': 'btn-light'
+  })
 }())
