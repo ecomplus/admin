@@ -316,6 +316,19 @@ body {
   padding-right: 18px;
 }
 
+// card control links
+.card-btn-slide:not(:empty) {
+  font-family: $font-body;
+  transform: unset;
+  color: $color-primary;
+}
+.card-btn-slide:not(:empty).rotate-180 {
+  opacity: .3;
+}
+.card-btn-slide:not(:empty)::before {
+  display: none;
+}
+
 .dock-list,
 .modal-open .dock-list {
   z-index: 1001;
@@ -375,6 +388,9 @@ body {
   height: 100%;
   padding: 0 20px 0 80px;
   background: linear-gradient(to right, rgba($color-purple, .1), $color-purple 20%);
+}
+#topbar-action .btn {
+  margin-right: 12px;
 }
 
 // JSON code editor

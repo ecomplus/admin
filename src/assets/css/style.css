@@ -355,6 +355,16 @@ body {
   padding-right: 18px;
 }
 
+.card-btn-slide:not(:empty) {
+  font-family: "Fira Sans", sans-serif;
+  transform: unset;
+  color: #ff015b;
+}
+
+.card-btn-slide:not(:empty)::before {
+  display: none;
+}
+
 .dock-list,
 .modal-open .dock-list {
   z-index: 1001;
@@ -419,6 +429,10 @@ body {
   height: 100%;
   padding: 0 20px 0 80px;
   background: linear-gradient(to right, rgba(55, 0, 60, 0.1), #37003c 20%);
+}
+
+#topbar-action .btn {
+  margin-right: 12px;
 }
 
 .ace-editor {
