@@ -361,6 +361,10 @@ body {
   color: #ff015b;
 }
 
+.card-btn-slide:not(:empty).rotate-180 {
+  opacity: .3;
+}
+
 .card-btn-slide:not(:empty)::before {
   display: none;
 }
