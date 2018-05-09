@@ -94,6 +94,15 @@
     window.loadContent(contentUri, $('#' + tabId + '-tab-normal'))
   }
 
+  var commit = function (json) {
+    // pass JSON data
+    window.tabData[tabId] = json
+    // reset Ace editor content
+    editor.session.setValue(JSON.stringify(json, null, 4))
+  }
+  // use globally
+  window.tabCommit[tabId] = commit
+
   if (creating !== true) {
     var endpoint
     if (resourceId === undefined) {
@@ -104,14 +113,12 @@
       // specific resource document
       endpoint = slug + '/' + resourceId + '.json'
     }
+
     window.callApi(endpoint, 'GET', function (err, json) {
       if (!err) {
-        // Ace
-        editor.session.setValue(JSON.stringify(json, null, 4))
-
-        // pass JSON data
-        window.tabData[tabId] = json
         loadContent()
+        // set tab JSON data
+        commit(json)
       }
     })
   } else {
