@@ -456,7 +456,9 @@ app.ready(function () {
     // global
     window.callApi = callApi
     // store data when necessary
-    window.tabData = {}
+    // commit changes on tab data globally
+    // improve reactivity
+    window.tabData = window.tabCommit = {}
 
     // general function to load HTML content
     window.loadContent = function (uri, el) {
