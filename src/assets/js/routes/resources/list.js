@@ -11,14 +11,15 @@
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
 
-  // create button
-  $('#' + tabId + '-create').click(function () {
-    // go to 'new' route
-    window.location = '/' + window.location.hash + '/new'
-  })
-
   // resource list data
   var list = window.tabData[tabId].result
+  // delete checkbox element HTML
+  var elCheckbox = '<div class="custom-controls-stacked">' +
+                     '<div class="custom-control custom-checkbox">' +
+                       '<input type="checkbox" class="custom-control-input" />' +
+                       '<label class="custom-control-label"> </label>' +
+                     '</div>' +
+                   '</div>'
 
   // setup jsGrid
   $('#' + tabId + '-resource-list').jsGrid({
@@ -49,20 +50,12 @@
     },
 
     fields: [{
-      /*
-      headerTemplate: function () {
-        var el = $('<button>').attr('type', 'button').addClass('btn btn-xs btn-danger')
-        el.html('Deletar')
-        el.on('click', function () {
-          deleteSelectedItems()
-        })
-        return el
-      },
-      */
+      headerTemplate: function () { return $(elCheckbox) },
       itemTemplate: function (_, item) {
-        var el = $('<input>').attr('type', 'checkbox')
-        el.prop('checked', $.inArray(item, selectedItems) > -1)
-        el.on('change', function () {
+        var el = $(elCheckbox)
+        var input = el.find('input')
+        input.prop('checked', $.inArray(item, selectedItems) > -1)
+        input.on('change', function () {
           $(this).is(':checked') ? selectItem(item) : unselectItem(item)
         })
         return el
@@ -101,4 +94,13 @@
     $grid.jsGrid('loadData')
     selectedItems = []
   }
+
+  // create button
+  $('#' + tabId + '-create').click(function () {
+    // go to 'new' route
+    window.location = '/' + window.location.hash + '/new'
+  })
+
+  // delete button
+  $('#' + tabId + '-delete').click(deleteSelectedItems)
 }())
