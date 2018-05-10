@@ -405,6 +405,12 @@ body {
   height: auto !important;
   overflow: hidden !important;
 }
+.data-list-delete {
+  width: 10px !important;
+  text-align: center;
+  padding-left: 0;
+  padding-right: 0;
+}
 
 @media (max-width: 500px) {
   .topbar {
