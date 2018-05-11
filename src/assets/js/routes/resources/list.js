@@ -13,6 +13,14 @@
 
   // resource list data
   var list = window.tabData[tabId].result
+  // var commit = window.tabCommit[tabId]
+
+  // create button
+  $('#' + tabId + '-create').click(function () {
+    // go to 'new' route
+    window.location = '/' + window.location.hash + '/new'
+  })
+
   // delete checkbox element HTML
   var elCheckbox = '<div class="custom-controls-stacked">' +
                      '<div class="custom-control custom-checkbox">' +
@@ -22,25 +30,54 @@
                    '</div>'
 
   // setup jsGrid
-  $('#' + tabId + '-resource-list').jsGrid({
+  var $grid = $('#' + tabId + '-resource-list')
+  $grid.jsGrid({
+    // http://js-grid.com/docs/
     autoload: true,
-    paging: true,
-    pageLoading: true,
-    pageButtonCount: 7,
-    pagerFormat: '{first} {prev} {pages} {next} {last} {pageIndex} / {pageCount}',
-    pagePrevText: '<',
-    pageNextText: '>',
-    pageFirstText: '<<',
-    pageLastText: '>>',
     filtering: true,
     sorting: true,
     confirmDeleting: false,
+    pageLoading: true,
+
+    // treat click on row
+    // select item or redirect to document edit page
     rowClick: function (args) {
-      var id = args.item._id
-      console.log(id)
+      var event = args.event.originalEvent || args.event
+      if (event) {
+        // check clicked element
+        var elClicked = event.target
+        if (elClicked) {
+          switch (elClicked.nodeName) {
+            case 'TD':
+              // check if is the first cell (delete)
+              for (var i = 0; i < elClicked.classList.length; i++) {
+                if (elClicked.classList[i] === 'data-list-delete') {
+                  // click on checkbox
+                  $(elClicked).find('label').click()
+                  return
+                }
+              }
+              break
+
+            case 'LABEL':
+            case 'INPUT':
+            case 'DIV':
+            case 'SELECT':
+              // skip
+              return
+          }
+        }
+      }
+
+      // clicked on item row
+      // go to 'edit' route with resource ID
+      window.location = '/' + window.location.hash + '/' + args.item._id
     },
 
     controller: {
+      // load data from API
+      // resource list
+      // work with pagination and filtering
       loadData: function (filter) {
         return {
           data: list,
@@ -75,6 +112,7 @@
     }]
   })
 
+  // select items from list to delete and edit
   var selectedItems = []
 
   var selectItem = function (item) {
@@ -87,20 +125,14 @@
     })
   }
 
-  var deleteSelectedItems = function () {
-    if (!selectedItems.length) return
-    var $grid = $('#jsgrid-delete')
-    $grid.jsGrid('option', 'pageIndex', 1)
-    $grid.jsGrid('loadData')
-    selectedItems = []
-  }
-
-  // create button
-  $('#' + tabId + '-create').click(function () {
-    // go to 'new' route
-    window.location = '/' + window.location.hash + '/new'
-  })
-
   // delete button
-  $('#' + tabId + '-delete').click(deleteSelectedItems)
+  $('#' + tabId + '-delete').click(function () {
+    if (selectedItems.length) {
+      console.log(selectedItems)
+      // call API to delete documents
+      $grid.jsGrid('loadData')
+      // reset
+      selectedItems = []
+    }
+  })
 }())
