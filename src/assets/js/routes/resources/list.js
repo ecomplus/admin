@@ -51,7 +51,7 @@
             case 'TD':
               // check if is the first cell (delete)
               for (var i = 0; i < elClicked.classList.length; i++) {
-                if (elClicked.classList[i] === 'data-list-delete') {
+                if (elClicked.classList[i] === 'data-list-check') {
                   // click on checkbox
                   $(elClicked).find('label').click()
                   return
@@ -87,20 +87,33 @@
     },
 
     fields: [{
-      headerTemplate: function () { return $(elCheckbox) },
-      itemTemplate: function (_, item) {
+      // first cell
+      // checkbox to trigger row selection
+      // bulk edition and deletion
+      align: 'center',
+      css: 'data-list-check',
+      filtering: false,
+      sorting: false,
+
+      // checkbox to select all
+      headerTemplate: function () {
         var el = $(elCheckbox)
-        var input = el.find('input')
-        input.prop('checked', $.inArray(item, selectedItems) > -1)
-        input.on('change', function () {
-          $(this).is(':checked') ? selectItem(item) : unselectItem(item)
+        el.find('input').on('change', function () {
+          var selector = $(this).is(':checked') ? ':not(:checked)' : ':checked'
+          $('.data-list-check input' + selector).next().click()
         })
         return el
       },
-      align: 'center',
-      css: 'data-list-delete',
-      filtering: false,
-      sorting: false
+
+      // checkbox to select current row item
+      itemTemplate: function (_, item) {
+        var el = $(elCheckbox)
+        var id = item._id
+        el.find('input').on('change', function () {
+          $(this).is(':checked') ? selectItem(id) : unselectItem(id)
+        })
+        return el
+      }
     }, {
       name: '_id',
       title: 'ID',
@@ -115,13 +128,13 @@
   // select items from list to delete and edit
   var selectedItems = []
 
-  var selectItem = function (item) {
-    selectedItems.push(item)
+  var selectItem = function (id) {
+    selectedItems.push(id)
   }
 
-  var unselectItem = function (item) {
+  var unselectItem = function (id) {
     selectedItems = $.grep(selectedItems, function (i) {
-      return i !== item
+      return i !== id
     })
   }
 
