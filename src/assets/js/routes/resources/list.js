@@ -30,7 +30,7 @@
                    '</div>'
 
   // setup jsGrid
-  var $grid = $('#' + tabId + '-resource-list')
+  var $grid = $('#' + tabId + '-resource-table')
   $grid.jsGrid({
     // http://js-grid.com/docs/
     autoload: true,
@@ -38,6 +38,7 @@
     sorting: true,
     confirmDeleting: false,
     pageLoading: true,
+    pageSize: 1000,
 
     // treat click on row
     // select item or redirect to document edit page
@@ -94,9 +95,10 @@
       css: 'data-list-check',
       filtering: false,
       sorting: false,
+      title: '#',
 
       // checkbox to select all
-      headerTemplate: function () {
+      filterTemplate: function () {
         var el = $(elCheckbox)
         el.find('input').on('change', function () {
           var selector = $(this).is(':checked') ? ':not(:checked)' : ':checked'
