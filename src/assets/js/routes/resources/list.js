@@ -95,10 +95,9 @@
       css: 'data-list-check',
       filtering: false,
       sorting: false,
-      title: '#',
 
       // checkbox to select all
-      filterTemplate: function () {
+      headerTemplate: function () {
         var el = $(elCheckbox)
         el.find('input').on('change', function () {
           var selector = $(this).is(':checked') ? ':not(:checked)' : ':checked'
