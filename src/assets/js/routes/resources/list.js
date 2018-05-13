@@ -30,7 +30,7 @@
                    '</div>'
 
   // setup jsGrid
-  var $grid = $('#' + tabId + '-resource-table')
+  var $grid = $('#' + tabId + '-resource-list')
   $grid.jsGrid({
     // http://js-grid.com/docs/
     autoload: true,

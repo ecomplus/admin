@@ -398,7 +398,7 @@ body {
   height: 500px;
 }
 
-/* jsGrid tables
+// jsGrid tables
 .data-list,
 .data-list > * {
   width: 100% !important;
@@ -415,14 +415,6 @@ body {
   width: 24px;
   display: block;
   margin: 3px auto -3px auto;
-}
-*/
-// resources list
-.data-list {
-  width: 100%;
-  max-height: 1000px;
-  overflow: hidden;
-  border-left: $card-internal-border;
 }
 
 @media (max-width: 500px) {
