@@ -398,11 +398,10 @@ body {
   height: 500px;
 }
 
-// jsGrid tables
-.data-list {
-  width: 100% !important;
-}
+// resources list
+.data-list,
 .data-list > * {
+  width: 100% !important;
   height: auto !important;
   overflow: hidden !important;
 }
@@ -465,6 +464,35 @@ body {
 }
 .data-list-check .custom-controls-stacked .custom-control {
   margin-bottom: 0;
+}
+
+// overwrite jsGrid defaults
+.jsgrid-pager {
+  font-size: 18px;
+  margin-top: 10px;
+}
+.jsgrid-pager > span {
+  padding: 0;
+}
+.jsgrid-pager a {
+  color: $color-primary;
+}
+.jsgrid-pager a,
+.jsgrid-pager-current-page {
+  padding: 15px 10px !important;
+}
+.jsgrid-pager-current-page {
+  font-weight: 300;
+  color: $color-text;
+}
+.jsgrid-pager-nav-inactive-button {
+  display: inline;
+}
+.jsgrid-pager-nav-inactive-button a {
+  color: $color-text-disable;
+}
+.jsgrid-pager:not(.jsgrid-pager-nav-inactive-button) a:hover {
+  color: $color-purple;
 }
 
 @media (max-width: 500px) {
