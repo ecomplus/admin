@@ -103,11 +103,27 @@
     // reset Ace editor content
     editor.session.setValue(JSON.stringify(json, null, 4))
   }
-  // use globally
-  window.tabCommit[tabId] = commit
 
   if (creating !== true) {
     var endpoint
+    var load = function (callback, params) {
+      var uri = endpoint
+      if (params) {
+        uri += '?' + params
+      }
+      window.callApi(uri, 'GET', function (err, json) {
+        if (!err) {
+          // set tab JSON data
+          commit(json)
+        }
+        if (typeof callback === 'function') {
+          callback(null, json)
+        }
+      })
+    }
+    // load JSON data globally
+    window.tabLoad[tabId] = load
+
     if (resourceId === undefined) {
       endpoint = slug + '.json'
       // disable edition
@@ -116,14 +132,8 @@
       // specific resource document
       endpoint = slug + '/' + resourceId + '.json'
     }
-
-    window.callApi(endpoint, 'GET', function (err, json) {
-      if (!err) {
-        loadContent()
-        // set tab JSON data
-        commit(json)
-      }
-    })
+    // preload data, then load HTML content
+    load(loadContent)
   } else {
     loadContent()
   }
