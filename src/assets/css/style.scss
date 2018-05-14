@@ -449,7 +449,11 @@ body {
   cursor: pointer;
   font-size: 18px;
   margin: 7px 7px 0 0;
-  color: $color-purple;
+  color: $color-text-secondary;
+  transition: 0.2s linear;
+}
+.data-list-control i:hover {
+  color: $color-primary;
 }
 .data-list tr > .data-list-control i:last-child {
   margin-right: 0;
