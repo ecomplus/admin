@@ -84,17 +84,20 @@
   // show content and unlock screen
   window.routeReady(tabTitle)
 
-  var loadContent = function () {
-    // HTML card content
-    var contentUri
-    if (listing === true) {
-      // custom list
-      contentUri = 'routes/resources/list.html'
-    } else {
-      // form to create and edit
-      contentUri = 'routes/resources/form/' + slug + '.html'
+  var loadContent = function (err) {
+    // check err if callback
+    if (!err) {
+      // HTML card content
+      var contentUri
+      if (listing === true) {
+        // custom list
+        contentUri = 'routes/resources/list.html'
+      } else {
+        // form to create and edit
+        contentUri = 'routes/resources/form/' + slug + '.html'
+      }
+      window.loadContent(contentUri, $('#' + tabId + '-tab-normal'))
     }
-    window.loadContent(contentUri, $('#' + tabId + '-tab-normal'))
   }
 
   var commit = function (json) {
