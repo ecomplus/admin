@@ -430,10 +430,29 @@ body {
   overflow: hidden;
   list-style: none;
 }
-.data-list tr > .data-list-check {
+.data-list td {
+  font-family: "Lucida Console", Monaco, monospace;
+}
+.data-list tr > .data-list-check,
+.data-list tr > .data-list-control {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
+}
+.data-list tr > .data-list-control {
+  width: 90px !important;
+}
+.data-list-control-buttons {
+  text-align: center;
+}
+.data-list-control i {
+  cursor: pointer;
+  font-size: 18px;
+  margin: 7px 7px 0 0;
+  color: $color-purple;
+}
+.data-list tr > .data-list-control i:last-child {
+  margin-right: 0;
 }
 .data-list-check .custom-controls-stacked {
   width: 18px;

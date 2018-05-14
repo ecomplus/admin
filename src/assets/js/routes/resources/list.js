@@ -31,6 +31,11 @@
 
   // setup jsGrid
   var $grid = $('#' + tabId + '-resource-list')
+  // current grid row
+  var row = 0
+  // offset for pagination
+  var offset = 0
+
   $grid.jsGrid({
     // http://js-grid.com/docs/
     autoload: true,
@@ -123,6 +128,43 @@
       name: 'sku',
       title: 'SKU',
       type: 'text'
+    }, {
+      // last cell
+      // control filters
+      css: 'data-list-control',
+      filtering: false,
+      sorting: false,
+      title: '#',
+
+      // filter buttons
+      filterTemplate: function () {
+        var el = $('<div />', {
+          class: 'data-list-control-buttons',
+          html: [
+            $('<i />', {
+              class: 'fa fa-search',
+              click: function () {
+                // reload data with current filters
+                $grid.jsGrid('loadData')
+              }
+            }),
+            $('<i />', {
+              class: 'fa fa-filter',
+              click: function () {
+                // clear filters and reload
+                $grid.jsGrid('clearFilter')
+              }
+            })
+          ]
+        })
+        return el
+      },
+
+      // count grid rows
+      itemTemplate: function () {
+        row++
+        return '#' + (offset + row)
+      }
     }]
   })
 

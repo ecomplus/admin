@@ -49,9 +49,12 @@
       resourceId = undefined
       creating = true
     } else {
-      // specific resource by ID
-      tabLabel = resourceId
+      tabLabel = i18n({
+        'en_us': 'Edit',
+        'pt_br': 'Editar'
+      })
     }
+    // tab title with resource name and action
     tabTitle = resource.label[lang] + ' · ' + tabLabel
   }
 
