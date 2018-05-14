@@ -93,8 +93,12 @@
       // resource list
       // work with pagination and filtering
       loadData: function (filter) {
+        // reset current row
+        row = 0
+        // fix pagination offset
+        offset = (filter.pageIndex - 1) * limit
         return {
-          data: list,
+          data: list.slice(offset, offset + limit),
           itemsCount: list.length
         }
       }
