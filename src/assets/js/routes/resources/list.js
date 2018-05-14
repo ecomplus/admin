@@ -31,7 +31,9 @@
   var $grid = $('#' + tabId + '-resource-list')
   // current grid row
   var row = 0
-  // offset for pagination
+  // offset and limit
+  // control pagination
+  var limit = 100
   var offset = 0
 
   $grid.jsGrid({
@@ -43,7 +45,7 @@
     // pagination
     paging: true,
     pageLoading: true,
-    pageSize: 1,
+    pageSize: limit,
     pageButtonCount: 7,
     pagerFormat: '{first} {prev} {pages} {next} {last}',
     pagePrevText: '<',
