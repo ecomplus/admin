@@ -429,9 +429,6 @@ body {
   overflow: hidden;
   list-style: none;
 }
-.data-list td {
-  font-family: "Lucida Console", Monaco, monospace;
-}
 .data-list tr > .data-list-check,
 .data-list tr > .data-list-control {
   -webkit-box-flex: 0;
@@ -466,35 +463,6 @@ body {
   margin-bottom: 0;
 }
 
-// overwrite jsGrid defaults
-.jsgrid-pager {
-  font-size: 18px;
-  margin-top: 10px;
-}
-.jsgrid-pager > span {
-  padding: 0;
-}
-.jsgrid-pager a {
-  color: $color-primary;
-}
-.jsgrid-pager a,
-.jsgrid-pager-current-page {
-  padding: 15px 10px !important;
-}
-.jsgrid-pager-current-page {
-  font-weight: 300;
-  color: $color-text;
-}
-.jsgrid-pager-nav-inactive-button {
-  display: inline;
-}
-.jsgrid-pager-nav-inactive-button a {
-  color: $color-text-disable;
-}
-.jsgrid-pager:not(.jsgrid-pager-nav-inactive-button) a:hover {
-  color: $color-purple;
-}
-
 @media (max-width: 500px) {
   .topbar {
     padding-right: 6px;
@@ -505,8 +473,7 @@ body {
   }
 
   .topbar-divider,
-  .breadcrumb,
-  .jsgrid-pager-page {
+  .breadcrumb {
     display: none;
   }
 }

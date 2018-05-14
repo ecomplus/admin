@@ -127,8 +127,11 @@
     // load JSON data globally
     window.tabLoad[tabId] = load
 
+    var params
     if (resourceId === undefined) {
       endpoint = slug + '.json'
+      // default query string for results limit only
+      params = 'limit=60'
       // disable edition
       editor.setReadOnly(true)
     } else {
@@ -136,7 +139,7 @@
       endpoint = slug + '/' + resourceId + '.json'
     }
     // preload data, then load HTML content
-    load(loadContent)
+    load(loadContent, params)
   } else {
     loadContent()
   }

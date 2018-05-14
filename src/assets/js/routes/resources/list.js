@@ -51,9 +51,9 @@
       // checkbox to select all
       headerTemplate: function () {
         var el = $(elCheckbox)
-        el.find('input').on('change', function () {
+        el.find('input').attr('id', tabId + '-check-all').on('change', function () {
           var selector = $(this).is(':checked') ? ':not(:checked)' : ':checked'
-          $('.data-list-check input' + selector).next().click()
+          $grid.find('.data-list-check input' + selector).next().click()
         })
         return el
       },
@@ -67,13 +67,6 @@
         })
         return el
       }
-    }, {
-      // resource ID
-      // same field for all resources
-      name: '_id',
-      title: 'ID',
-      filtering: false,
-      sorting: false
     }]
 
     // setup resource specific fields
@@ -142,16 +135,7 @@
       filtering: true,
       sorting: true,
       confirmDeleting: false,
-      // pagination
-      paging: true,
       pageLoading: true,
-      pageSize: limit,
-      pageButtonCount: 7,
-      pagerFormat: '{first} {prev} {pages} {next} {last}',
-      pagePrevText: '<',
-      pageNextText: '>',
-      pageFirstText: '<<',
-      pageLastText: '>>',
 
       // treat click on row
       // select item or redirect to document edit page
@@ -228,7 +212,11 @@
         $grid.jsGrid('loadData')
         // reset
         selectedItems = []
+        // unckeck if checked
+        $('#' + tabId + '-check-all:checked').next().click()
       }
     })
+  } else {
+    // no resource objects
   }
 }())
