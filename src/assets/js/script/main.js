@@ -56,6 +56,10 @@ app.ready(function () {
     // default language
     lang = 'pt_br'
   }
+  // set plugins locale
+  if (lang === 'pt_br') {
+    jsGrid.locale('pt-br')
+  }
   window.lang = lang
 
   // set up the languages dropdown menu
@@ -453,6 +457,7 @@ app.ready(function () {
         }
       })
     }
+
     // global
     window.callApi = callApi
     // store data when necessary

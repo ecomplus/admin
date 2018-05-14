@@ -11,10 +11,6 @@
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
 
-  // resource list data
-  var list = window.tabData[tabId].result
-  // var commit = window.tabCommit[tabId]
-
   // create button
   $('#' + tabId + '-create').click(function () {
     // go to 'new' route
@@ -29,6 +25,8 @@
                      '</div>' +
                    '</div>'
 
+  // resource list data
+  var list = window.tabData[tabId].result
   // setup jsGrid
   var $grid = $('#' + tabId + '-resource-list')
   // current grid row
@@ -42,8 +40,10 @@
     filtering: true,
     sorting: true,
     confirmDeleting: false,
+    // pagination
     pageLoading: true,
-    pageSize: 1000,
+    pageSize: 100,
+    pageButtonCount: 7,
 
     // treat click on row
     // select item or redirect to document edit page
@@ -123,7 +123,7 @@
     }, {
       name: '_id',
       title: 'ID',
-      type: 'text'
+      filtering: false
     }, {
       name: 'sku',
       title: 'SKU',

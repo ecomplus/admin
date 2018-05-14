@@ -23,7 +23,8 @@
       "alert",
       "location",
       "md5",
-      "ace"
+      "ace",
+      "jsGrid"
     ]
   },
   "devDependencies": {
