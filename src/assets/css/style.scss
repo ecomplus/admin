@@ -503,11 +503,10 @@ body {
     padding: 0 4px;
     min-width: 34px;
   }
-  .topbar-divider {
-    display: none;
-  }
 
-  .breadcrumb {
+  .topbar-divider,
+  .breadcrumb,
+  .jsgrid-pager-page {
     display: none;
   }
 }
