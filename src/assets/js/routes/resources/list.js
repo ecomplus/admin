@@ -41,9 +41,15 @@
     sorting: true,
     confirmDeleting: false,
     // pagination
+    paging: true,
     pageLoading: true,
-    pageSize: 100,
+    pageSize: 1,
     pageButtonCount: 7,
+    pagerFormat: '{first} {prev} {pages} {next} {last}',
+    pagePrevText: '<',
+    pageNextText: '>',
+    pageFirstText: '<<',
+    pageLastText: '>>',
 
     // treat click on row
     // select item or redirect to document edit page
