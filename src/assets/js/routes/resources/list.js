@@ -35,8 +35,14 @@
     var row = 0
     // offset and limit
     // control pagination
-    var limit = 100
     var offset = 0
+    var limit
+    if (data.meta.hasOwnProperty('limit')) {
+      limit = data.meta.limit
+    } else {
+      // default ?
+      limit = 100
+    }
 
     // http://js-grid.com/docs/#grid-fields
     var fields = [{
