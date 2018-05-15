@@ -11,6 +11,9 @@
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
 
+  // var lang = window.lang
+  var i18n = window.i18n
+
   // create button
   $('#' + tabId + '-create').click(function () {
     // go to 'new' route
@@ -18,6 +21,7 @@
   })
 
   // resource list data
+  var resourceSlug = window.routeParams[0]
   var data = window.tabData[tabId]
   var list = data.result
   if (list.length) {
@@ -36,6 +40,7 @@
     // offset and limit
     // control pagination
     var offset = 0
+    /*
     var limit
     if (data.meta.hasOwnProperty('limit')) {
       limit = data.meta.limit
@@ -43,6 +48,7 @@
       // default ?
       limit = 100
     }
+    */
 
     // http://js-grid.com/docs/#grid-fields
     var fields = [{
@@ -183,18 +189,30 @@
         // resource list
         // work with pagination and filtering
         loadData: function (filter) {
-          // reset current row
-          row = 0
-          // fix pagination offset
-          offset = (filter.pageIndex - 1) * limit
           return {
-            data: list.slice(offset, offset + limit),
+            data: list,
             itemsCount: list.length
           }
         }
       },
+      onRefreshing: function () {
+        // reset current row
+        row = 0
+      },
 
       fields: fields
+    })
+
+    $.getJSON('json/resources/' + resourceSlug + '.json', function (json) {
+      // successful
+      // change fields labels
+      for (var i = 0; i < fields.length; i++) {
+        var field = fields[i].name
+        var obj = json[field]
+        if (obj && obj.label) {
+          $grid.jsGrid('fieldOption', field, 'title', i18n(obj.label))
+        }
+      }
     })
 
     // select items from list to delete and edit
@@ -213,7 +231,6 @@
     // delete button
     $('#' + tabId + '-delete').click(function () {
       if (selectedItems.length) {
-        console.log(selectedItems)
         // call API to delete documents
         $grid.jsGrid('loadData')
         // reset
