@@ -81,9 +81,6 @@
   editor.setTheme('ace/theme/dawn')
   editor.session.setMode('ace/mode/json')
 
-  // show content and unlock screen
-  window.routeReady(tabTitle)
-
   var loadContent = function (err) {
     // check err if callback
     if (!err) {
@@ -98,6 +95,8 @@
       }
       window.loadContent(contentUri, $('#' + tabId + '-tab-normal'))
     }
+    // show content and unlock screen
+    window.routeReady(tabTitle)
   }
 
   var commit = function (json) {
