@@ -429,6 +429,9 @@ body {
   overflow: hidden;
   list-style: none;
 }
+.data-list-control {
+  font-family: "Lucida Console", Monaco, monospace;
+}
 .data-list tr > .data-list-check,
 .data-list tr > .data-list-control {
   -webkit-box-flex: 0;
