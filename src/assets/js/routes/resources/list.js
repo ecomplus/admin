@@ -40,15 +40,20 @@
     // offset and limit
     // control pagination
     var offset = 0
-    /*
     var limit
     if (data.meta.hasOwnProperty('limit')) {
       limit = data.meta.limit
     } else {
       // default ?
-      limit = 100
+      limit = 1000
     }
-    */
+    // current list filters
+    var filters = {}
+    // start with no sorting
+    var sort = {
+      field: null,
+      order: null
+    }
 
     // http://js-grid.com/docs/#grid-fields
     var fields = [{
@@ -99,6 +104,8 @@
           name: field,
           type: 'text'
         })
+        // starts with no filtering
+        filters[field] = ''
       }
     }
 
@@ -148,6 +155,7 @@
       sorting: true,
       confirmDeleting: false,
       pageLoading: true,
+      pageSize: limit,
 
       // treat click on row
       // select item or redirect to document edit page
@@ -188,7 +196,28 @@
         // load data from API
         // resource list
         // work with pagination and filtering
-        loadData: function (filter) {
+        loadData: function (query) {
+          var changed = false
+          // check if filters has been changed
+          for (var field in filters) {
+            if (filters.hasOwnProperty(field) && query[field] !== filters[field]) {
+              changed = true
+            }
+          }
+          // check current order
+          if (!changed) {
+            if (query.sortField) {
+              if (sort.field !== query.sortField || sort.order !== query.sortOrder) {
+                changed = true
+              }
+            } else if (sort.field) {
+              changed = true
+            }
+          }
+          if (changed) {
+            console.log(query)
+          }
+
           return {
             data: list,
             itemsCount: list.length
@@ -206,8 +235,8 @@
     $.getJSON('json/resources/' + resourceSlug + '.json', function (json) {
       // successful
       // change fields labels
-      for (var i = 0; i < fields.length; i++) {
-        var field = fields[i].name
+      for (var i = 0; i < fieldsList.length; i++) {
+        var field = fieldsList[i]
         var obj = json[field]
         if (obj && obj.label) {
           $grid.jsGrid('fieldOption', field, 'title', i18n(obj.label))
