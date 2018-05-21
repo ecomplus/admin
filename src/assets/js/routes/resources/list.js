@@ -22,8 +22,13 @@
 
   // resource list data
   var resourceSlug = window.routeParams[0]
-  var data = window.tabData[tabId]
-  var list = data.result
+  var data, list
+  var updateData = function () {
+    data = window.tabData[tabId]
+    list = data.result
+  }
+  updateData()
+
   if (list.length) {
     // delete checkbox element HTML
     var elCheckbox = '<div class="custom-controls-stacked">' +
@@ -53,6 +58,56 @@
     var sort = {
       field: null,
       order: null
+    }
+
+    var dataUpdated = false
+    // control request queue
+    var loading = false
+    var waiting = false
+    var load = function () {
+      if (!loading) {
+        // mount API request query string
+        // https://ecomstore.docs.apiary.io/#introduction/overview/url-params
+        var params = 'limit=' + limit
+        if (offset > 0) {
+          params += '&offset=' + offset
+        }
+        if (sort.field) {
+          params += '&sort='
+          if (sort.order === 'desc') {
+            params += '-'
+          }
+          params += sort.field
+        }
+
+        // object properties
+        for (var i = 0; i < fieldsList.length; i++) {
+          var field = fieldsList[i]
+          if (filters.hasOwnProperty(field) && filters[field] !== '') {
+            params += '&' + field + '=' + filters[field]
+          }
+        }
+
+        var callback = function (err) {
+          if (!err) {
+            updateData()
+            dataUpdated = true
+            // update jsGrid
+            $grid.jsGrid('loadData')
+          }
+          // request queue
+          loading = false
+          if (waiting) {
+            // update params and run again
+            load()
+            waiting = false
+          }
+        }
+        window.tabLoad[tabId](callback, params)
+        loading = true
+      } else if (!waiting) {
+        waiting = true
+      }
     }
 
     // http://js-grid.com/docs/#grid-fields
@@ -197,25 +252,40 @@
         // resource list
         // work with pagination and filtering
         loadData: function (query) {
-          var changed = false
-          // check if filters has been changed
-          for (var field in filters) {
-            if (filters.hasOwnProperty(field) && query[field] !== filters[field]) {
-              changed = true
+          if (!dataUpdated) {
+            var changed = false
+            // check if filters has been changed
+            for (var field in filters) {
+              if (filters.hasOwnProperty(field) && query[field] !== filters[field]) {
+                filters[field] = query[field]
+                if (!changed) {
+                  changed = true
+                }
+              }
             }
-          }
-          // check current order
-          if (!changed) {
+            // check current order
             if (query.sortField) {
               if (sort.field !== query.sortField || sort.order !== query.sortOrder) {
-                changed = true
+                sort.field = query.sortField
+                sort.order = query.sortOrder
+                if (!changed) {
+                  changed = true
+                }
               }
             } else if (sort.field) {
-              changed = true
+              // no sorting
+              sort.field = sort.order = null
+              if (!changed) {
+                changed = true
+              }
             }
-          }
-          if (changed) {
-            console.log(query)
+            if (changed) {
+              // reload data
+              load()
+            }
+          } else {
+            // reset data status
+            dataUpdated = false
           }
 
           return {
