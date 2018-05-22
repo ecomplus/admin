@@ -66,6 +66,10 @@
     var waiting = false
     var load = function () {
       if (!loading) {
+        loading = true
+        var $loading = $grid.find('.loading')
+        $loading.show()
+
         // mount API request query string
         // https://ecomstore.docs.apiary.io/#introduction/overview/url-params
         var params = 'limit=' + limit
@@ -97,17 +101,14 @@
           }
           // request queue
           loading = false
-          $grid.find('.loading').fadeOut()
+          $loading.fadeOut()
           if (waiting) {
             // update params and run again
             load()
             waiting = false
           }
         }
-
         window.tabLoad[tabId](callback, params)
-        loading = true
-        $grid.find('.loading').show()
       } else if (!waiting) {
         waiting = true
       }
