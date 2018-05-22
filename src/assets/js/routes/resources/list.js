@@ -126,7 +126,7 @@
       // checkbox to select all
       headerTemplate: function () {
         var el = $(elCheckbox)
-        el.find('input').attr('id', tabId + '-check-all').on('change', function () {
+        el.find('input').addClass('checkbox-all').on('change', function () {
           var selector = $(this).is(':checked') ? ':not(:checked)' : ':checked'
           $grid.find('.data-list-check input' + selector).next().click()
         })
@@ -339,7 +339,7 @@
         // reset
         selectedItems = []
         // unckeck if checked
-        $('#' + tabId + '-check-all:checked').next().click()
+        $grid.find('.checkbox-all').next().click()
       }
     })
   } else {
