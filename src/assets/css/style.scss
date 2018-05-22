@@ -472,6 +472,11 @@ body {
 .data-list-check .custom-controls-stacked .custom-control {
   margin-bottom: 0;
 }
+.list-pagination *:disabled {
+  opacity: .25;
+  cursor: not-allowed;
+  background: none;
+}
 
 @media (max-width: 500px) {
   .topbar {
