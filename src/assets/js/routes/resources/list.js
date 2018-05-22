@@ -142,26 +142,22 @@
     }]
 
     // setup resource specific fields
-    var field, fieldsList
-    if (data.meta.hasOwnProperty('fields')) {
-      fieldsList = data.meta.fields
-    } else {
-      // get from first resource object properties
-      fieldsList = []
-      for (field in list[0]) {
+    var field
+    // get from first resource object properties
+    var fieldsList = []
+    for (field in list[0]) {
+      if (typeof list[0][field] === 'string' && field !== '_id') {
         fieldsList.push(field)
       }
     }
     for (var i = 0; i < fieldsList.length; i++) {
       field = fieldsList[i]
-      if (field !== '_id') {
-        fields.push({
-          name: field,
-          type: 'text'
-        })
-        // starts with no filtering
-        filters[field] = ''
-      }
+      fields.push({
+        name: field,
+        type: 'text'
+      })
+      // starts with no filtering
+      filters[field] = ''
     }
 
     fields.push({
