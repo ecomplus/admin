@@ -60,6 +60,75 @@
       order: null
     }
 
+    // control pagination
+    var updatePage = function (page) {
+      offset = (page - 1) * limit
+      // reload data
+      load()
+    }
+    var increasePage = function (x) {
+      var el = $('#' + tabId + '-page')
+      // change page number
+      var page = parseInt(el.val(), 10) + x
+      if (page > 0) {
+        updatePage(page)
+        el.val(page)
+      }
+    }
+
+    var paginationControls = function () {
+      // update pagination buttons states
+      var $prev = $('#' + tabId + '-prev')
+      var $next = $('#' + tabId + '-next')
+      var $page = $('#' + tabId + '-page')
+      if (offset <= 0) {
+        // no prev page
+        $prev.attr('disabled', true)
+      } else {
+        $prev.removeAttr('disabled')
+      }
+      if (list.length < limit) {
+        // no next page
+        $next.attr('disabled', true)
+      } else {
+        $next.removeAttr('disabled')
+      }
+      if (offset <= 0 && list.length < limit) {
+        // also disable input
+        // unique page
+        $page.attr('disabled', true)
+      } else {
+        $page.removeAttr('disabled')
+      }
+    }
+
+    // pagination input and buttons
+    $('#' + tabId + '-page').keydown(window.keyIsNumber).change(function () {
+      updatePage(parseInt($(this).val(), 10))
+    })
+    $('#' + tabId + '-next').click(function () {
+      increasePage(1)
+    })
+    $('#' + tabId + '-prev').click(function () {
+      // decrease page number
+      increasePage(-1)
+    })
+    // preset buttons states
+    paginationControls()
+
+    // change max number of results
+    $('#' + tabId + '-page-size').change(function () {
+      var val = parseInt($(this).val(), 10)
+      if (!isNaN(val) && val > 0) {
+        limit = val
+        // reset
+        offset = 0
+        $('#' + tabId + '-page').val('1')
+      }
+      // reload data
+      load()
+    })
+
     var dataUpdated = false
     // control request queue
     var loading = false
@@ -92,12 +161,6 @@
         }
 
         var callback = function (err) {
-          if (!err) {
-            updateData()
-            dataUpdated = true
-            // update jsGrid
-            $grid.jsGrid('loadData')
-          }
           // request queue
           loading = false
           $loading.fadeOut()
@@ -105,6 +168,14 @@
             // update params and run again
             load()
             waiting = false
+          }
+          if (!err) {
+            updateData()
+            dataUpdated = true
+            // update jsGrid
+            $grid.jsGrid('loadData')
+            // update pagination controls
+            paginationControls()
           }
         }
         window.tabLoad[tabId](callback, params)
@@ -339,44 +410,6 @@
         // unckeck if checked
         $grid.find('.checkbox-all').next().click()
       }
-    })
-
-    // change max number of results
-    $('#' + tabId + '-page-size').change(function () {
-      var val = parseInt($(this).val(), 10)
-      if (!isNaN(val) && val > 0) {
-        limit = val
-      }
-      // reload data
-      load()
-    })
-
-    // control pagination
-    var updatePage = function (page) {
-      offset = (page - 1) * limit
-      // reload data
-      load()
-    }
-    var increasePage = function (x) {
-      var el = $('#' + tabId + '-page')
-      // change page number
-      var page = parseInt(el.val(), 10) + x
-      if (page > 0) {
-        updatePage(page)
-        el.val(page)
-      }
-    }
-
-    // pagination input and buttons
-    $('#' + tabId + '-page').keydown(window.keyIsNumber).change(function () {
-      updatePage(parseInt($(this).val(), 10))
-    })
-    $('#' + tabId + '-next').click(function () {
-      increasePage(1)
-    })
-    $('#' + tabId + '-prev').click(function () {
-      // decrease page number
-      increasePage(-1)
     })
   } else {
     // no resource objects
