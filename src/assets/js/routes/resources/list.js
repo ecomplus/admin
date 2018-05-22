@@ -97,14 +97,17 @@
           }
           // request queue
           loading = false
+          $grid.find('.loading').fadeOut()
           if (waiting) {
             // update params and run again
             load()
             waiting = false
           }
         }
+
         window.tabLoad[tabId](callback, params)
         loading = true
+        $grid.find('.loading').show()
       } else if (!waiting) {
         waiting = true
       }
@@ -128,6 +131,11 @@
           $grid.find('.data-list-check input' + selector).next().click()
         })
         return el
+      },
+
+      // loading spinner
+      filterTemplate: function () {
+        return '<div class="spinner-circle-shadow loading"></div>'
       },
 
       // checkbox to select current row item
