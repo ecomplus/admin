@@ -83,7 +83,6 @@
           }
           params += sort.field
         }
-
         // object properties
         for (var i = 0; i < fieldsList.length; i++) {
           var field = fieldsList[i]
@@ -321,11 +320,9 @@
 
     // select items from list to delete and edit
     var selectedItems = []
-
     var selectItem = function (id) {
       selectedItems.push(id)
     }
-
     var unselectItem = function (id) {
       selectedItems = $.grep(selectedItems, function (i) {
         return i !== id
@@ -342,6 +339,44 @@
         // unckeck if checked
         $grid.find('.checkbox-all').next().click()
       }
+    })
+
+    // change max number of results
+    $('#' + tabId + '-page-size').change(function () {
+      var val = parseInt($(this).val(), 10)
+      if (!isNaN(val) && val > 0) {
+        limit = val
+      }
+      // reload data
+      load()
+    })
+
+    // control pagination
+    var updatePage = function (page) {
+      offset = (page - 1) * limit
+      // reload data
+      load()
+    }
+    var increasePage = function (x) {
+      var el = $('#' + tabId + '-page')
+      // change page number
+      var page = parseInt(el.val(), 10) + x
+      if (page > 0) {
+        updatePage(page)
+        el.val(page)
+      }
+    }
+
+    // pagination input and buttons
+    $('#' + tabId + '-page').keydown(window.keyIsNumber).change(function () {
+      updatePage(parseInt($(this).val(), 10))
+    })
+    $('#' + tabId + '-next').click(function () {
+      increasePage(1)
+    })
+    $('#' + tabId + '-prev').click(function () {
+      // decrease page number
+      increasePage(-1)
     })
   } else {
     // no resource objects

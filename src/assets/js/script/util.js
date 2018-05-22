@@ -80,4 +80,22 @@
       }
     })
   }
+
+  /* utilities */
+
+  window.keyIsNumber = function (e) {
+    if (e.which !== 13 && e.which !== 8) {
+      var charCode = (e.which) ? e.which : e.keyCode
+      if (charCode > 95 && charCode < 106) {
+        // numeric keyboard
+        charCode -= 48
+      }
+      if (isNaN(String.fromCharCode(charCode))) {
+        e.preventDefault()
+        return false
+      } else {
+        return true
+      }
+    }
+  }
 }())
