@@ -441,6 +441,13 @@ body {
 .data-list tr > .data-list-control {
   width: 90px !important;
 }
+.data-list td > .loading {
+  margin: 0 auto;
+  display: none;
+}
+.data-list td > .spinner-circle-shadow {
+  margin-top: 3px;
+}
 .data-list-control-buttons {
   text-align: center;
 }
