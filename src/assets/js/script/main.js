@@ -320,8 +320,53 @@ app.ready(function () {
     sessionStorage.removeItem('my_id')
     sessionStorage.removeItem('access_token')
 
+    // run API requests with intervals to prevent rate limit
+    var apiQueue = []
+    // control API requests queue
+    var requestsRunning = false
     // confirm some requests with modal
     var confirmRequest = {}
+
+    var runRequest = function () {
+      if (apiQueue.length) {
+        var req = apiQueue.shift()
+        // up to 2 req/sec
+        setTimeout(function () {
+          // proceed to next request
+          runRequest()
+        }, 500)
+
+        var options = req.options
+        var callback = req.callback
+        // call AJAX request
+        var ajax = $.ajax(options)
+
+        ajax.done(function (json) {
+          // successful response
+          if (typeof callback === 'function') {
+            callback(null, json)
+          } else {
+            console.log(json)
+          }
+        })
+
+        ajax.fail(function (jqXHR, textStatus, err) {
+          var json = jqXHR.responseJSON
+          // error response
+          if (typeof callback === 'function') {
+            callback(err, json)
+          }
+          apiError(json)
+          if (jqXHR.status >= 500) {
+            console.log('API request with internal error response:')
+            console.log(jqXHR)
+          }
+        })
+      } else {
+        // all done
+        requestsRunning = false
+      }
+    }
 
     var callApi = function (endpoint, method, callback, bodyObject, id) {
       // reset notification toast
@@ -428,30 +473,16 @@ app.ready(function () {
         options.data = JSON.stringify(bodyObject)
       }
 
-      // call AJAX request
-      var ajax = $.ajax(options)
-
-      ajax.done(function (json) {
-        // successful response
-        if (typeof callback === 'function') {
-          callback(null, json)
-        } else {
-          console.log(json)
-        }
+      // add request to queue
+      apiQueue.push({
+        'options': options,
+        'callback': callback
       })
-
-      ajax.fail(function (jqXHR, textStatus, err) {
-        var json = jqXHR.responseJSON
-        // error response
-        if (typeof callback === 'function') {
-          callback(err, json)
-        }
-        apiError(json)
-        if (jqXHR.status >= 500) {
-          console.log('API request with internal error response:')
-          console.log(jqXHR)
-        }
-      })
+      if (!requestsRunning) {
+        // starts running the queue
+        requestsRunning = true
+        runRequest()
+      }
     }
 
     // global
