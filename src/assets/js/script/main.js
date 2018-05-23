@@ -395,7 +395,7 @@ app.ready(function () {
 
           // open confirmation modal
           var modal = $('#modal-confirm-request')
-          modal.find('#confirm-api-request').data('request-id', id)
+          modal.find('#api-request-control').data('request-id', id)
           modal.find('.modal-body > p').text(msg).next('pre').children('code').text(reqText)
           modal.modal('show')
         }
@@ -526,13 +526,28 @@ app.ready(function () {
       })
     }
 
-    $('#confirm-api-request').click(function () {
-      var reqId = $(this).data('request-id')
+    var requestControl = function ($el, confirm) {
+      var reqId = $el.closest('#api-request-control').data('request-id')
       if (reqId && confirmRequest.hasOwnProperty(reqId)) {
-        confirmRequest[reqId].confirmed = true
-        // call API after confirmation
-        callApi(null, null, null, null, reqId)
+        if (!confirm) {
+          // request rejected
+          var callback = confirmRequest[reqId].callback
+          if (typeof callback === 'function') {
+            // callback with error
+            callback(new Error('Request rejected'), null)
+          }
+        } else {
+          confirmRequest[reqId].confirmed = true
+          // call API after confirmation
+          callApi(null, null, null, null, reqId)
+        }
       }
+    }
+    $('#confirm-api-request').click(function () {
+      requestControl($(this), true)
+    })
+    $('#discard-api-request').click(function () {
+      requestControl($(this), false)
     })
 
     $(window).on('beforeunload', function (e) {
