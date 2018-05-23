@@ -130,6 +130,7 @@
     })
 
     var dataUpdated = false
+    var forceReload = false
     // control request queue
     var loading = false
     var waiting = false
@@ -328,34 +329,41 @@
         // work with pagination and filtering
         loadData: function (query) {
           if (!dataUpdated) {
-            var changed = false
-            // check if filters has been changed
-            for (var field in filters) {
-              if (filters.hasOwnProperty(field) && query[field] !== filters[field]) {
-                filters[field] = query[field]
+            if (!forceReload) {
+              // check if filters has been changed
+              var changed = false
+
+              for (var field in filters) {
+                if (filters.hasOwnProperty(field) && query[field] !== filters[field]) {
+                  filters[field] = query[field]
+                  if (!changed) {
+                    changed = true
+                  }
+                }
+              }
+              // check current order
+              if (query.sortField) {
+                if (sort.field !== query.sortField || sort.order !== query.sortOrder) {
+                  sort.field = query.sortField
+                  sort.order = query.sortOrder
+                  if (!changed) {
+                    changed = true
+                  }
+                }
+              } else if (sort.field) {
+                // no sorting
+                sort.field = sort.order = null
                 if (!changed) {
                   changed = true
                 }
               }
-            }
-            // check current order
-            if (query.sortField) {
-              if (sort.field !== query.sortField || sort.order !== query.sortOrder) {
-                sort.field = query.sortField
-                sort.order = query.sortOrder
-                if (!changed) {
-                  changed = true
-                }
+
+              if (changed) {
+                // reload data with different filters
+                load()
               }
-            } else if (sort.field) {
-              // no sorting
-              sort.field = sort.order = null
-              if (!changed) {
-                changed = true
-              }
-            }
-            if (changed) {
-              // reload data
+            } else {
+              // force reload data
               load()
             }
           } else {
@@ -402,13 +410,36 @@
 
     // delete button
     $('#' + tabId + '-delete').click(function () {
-      if (selectedItems.length) {
+      var todo = selectedItems.length
+      if (todo > 0) {
+        // show spinner and let it to fade out after list reload
+        $grid.find('.loading').show()
+
         // call API to delete documents
-        $grid.jsGrid('loadData')
-        // reset
-        selectedItems = []
-        // unckeck if checked
-        $grid.find('.checkbox-all').next().click()
+        var done = 0
+        var next = function () {
+          var id = selectedItems[done]
+          window.callApi(resourceSlug + '/' + id + '.json', 'DELETE', function () {
+            // ignore errors here
+            done++
+            if (done === todo) {
+              // end
+              // reload list
+              forceReload = true
+              // reset data status
+              dataUpdated = false
+              $grid.jsGrid('loadData')
+
+              // reset selected IDs
+              selectedItems = []
+              // unckeck if checked
+              $grid.find('.checkbox-all:checked').next().click()
+            } else {
+              next()
+            }
+          })
+        }
+        next()
       }
     })
   } else {
