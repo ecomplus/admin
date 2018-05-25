@@ -1,0 +1,156 @@
+<form action="javascript:;" data-id="category-form">
+  <div class="row">
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group">
+            <label class="i18n require" for="name">
+              <span data-lang="en_us">Category name</span>
+              <span data-lang="pt_br">Nome da categoria</span>
+            </label>
+            <input type="text" class="form-control action-title" name="name" required />
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="i18n" for="parent">
+                  <span data-lang="en_us">Parent category</span>
+                  <span data-lang="pt_br">Categoria parental</span>
+                </label>
+                <select class="form-control" name="parent">
+                  <option value="physical"
+                    data-content="&lt;span class=&apos;i18n&apos;&gt;
+                    &lt;span data-lang=&apos;en_us&apos;&gt;Physical&lt;/span&gt;
+                    &lt;span data-lang=&apos;pt_br&apos;&gt;Físico&lt;/span&gt;
+                    &lt;/span&gt;">
+                    Physical
+                  </option>
+                  <option value="digital">Digital</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Subcategories</span>
+                  <span data-lang="pt_br">Subcategorias</span>
+                </label>
+                <select multiple data-id="childs">
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Icon</span>
+                  <span data-lang="pt_br">Ícone</span>
+                </label>
+                <select multiple data-id="childs">
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Description</span>
+            <span data-lang="pt_br">Descrição</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <textarea data-id="html-editor" name="body_html">
+            </textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Category banners</span>
+            <span data-lang="pt_br">Banners da categoria</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="dropzone dz-clickable">
+              <div class="dz-default dz-message i18n">
+                <span data-lang="en_us">Drop or select files to upload</span>
+                <span data-lang="pt_br">Selecione ou arraste arquivos para upload</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">Search engine listing</span>
+            <span data-lang="pt_br">Listagem em motores de busca</span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit SEO fields</span>
+                <span data-lang="pt_br">Editar campos de SEO</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="form-group">
+              <label for="slug">
+                Slug (URL)
+              </label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">/</span>
+                </div>
+                <input type="text" class="form-control" name="slug" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="i18n" for="meta_title">
+                Title tag
+              </label>
+              <input type="text" class="form-control" name="meta_title" />
+            </div>
+            <div class="form-group">
+              <label class="i18n" for="meta_description">
+                Meta description Tag
+              </label>
+              <textarea class="form-control" rows="4" name="meta_description">
+              </textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $.getScript('../assets/js/routes/resources/form/products.min.js')
+  </script>
+</form>
