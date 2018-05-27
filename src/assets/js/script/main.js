@@ -660,6 +660,10 @@ app.ready(function () {
       if (routeInProgress !== true) {
         // remove from tabs object
         delete appTabs[tabId]
+        // free up memory
+        delete window.tabData[tabId]
+        delete window.tabCommit[tabId]
+        delete window.tabLoad[tabId]
 
         if (tabId === currentTab) {
           // have to change the current tab
