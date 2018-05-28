@@ -80,6 +80,13 @@
   var editor = ace.edit(tabId + '-code-editor')
   editor.setTheme('ace/theme/dawn')
   editor.session.setMode('ace/mode/json')
+  $('#' + tabId + '-code-tab').click(function () {
+    // focus on editor and force viewport update
+    setTimeout(function () {
+      editor.focus()
+      editor.renderer.updateFull()
+    }, 200)
+  })
 
   var loadContent = function (err) {
     // check err if callback
