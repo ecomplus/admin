@@ -777,7 +777,8 @@ app.ready(function () {
         appTabs[currentTab] = {
           'tabTitle': null,
           'routesHistory': [],
-          'saveAction': false
+          'saveAction': false,
+          'actionTitle': null
         }
         // add tab to route content element
         $('#route-content').append('<div id="app-tab-' + id + '"></div>')
@@ -1042,6 +1043,7 @@ app.ready(function () {
             // do not permit multiple tabs with same route
             // change to this tab
             $('#app-nav-' + tabId + ' > a').click()
+            updateTopbar()
             return false
           }
         }
@@ -1098,13 +1100,7 @@ app.ready(function () {
       if (tabObj) {
         // update current tab hash
         tabObj.hash = hash
-        if (watchingSave) {
-          if (!tabObj.saveAction) {
-            unwatchSave()
-          }
-        } else if (tabObj.saveAction) {
-          watchSave()
-        }
+        updateTopbar()
       }
     }
     $(window).on('hashchange', hashChange)
@@ -1168,28 +1164,41 @@ app.ready(function () {
     var watchingSave = false
 
     var watchSave = function () {
-      var clearTopbarTitle = true
-      if (window.elTab) {
-        var elTitle = window.elTab.find('input.action-title')
-        if (elTitle.length) {
-          // write title on topbar
-          var updateTopbarTitle = function () {
-            $('#action-title').text($(this).val())
-          }
-          elTitle.change(updateTopbarTitle)
-          updateTopbarTitle()
-          clearTopbarTitle = false
-        }
-      }
-      if (clearTopbarTitle === true) {
-        // clear title on action topbar
-        $('#action-title').text('')
-      }
-
       var tabObj = appTabs[currentTab]
-      if (tabObj && tabObj.unsavedChanges === false) {
+      if (tabObj) {
+        if (tabObj.actionTitle === null) {
+          // first time watching this tab
+          var clearTopbarTitle = true
+          if (window.elTab) {
+            var elTitle = window.elTab.find('input.action-title')
+            if (elTitle.length) {
+              // write title on topbar
+              var updateTopbarTitle = function (title) {
+                tabObj.actionTitle = title
+                $('#action-title').text(title)
+              }
+              elTitle.change(function () {
+                updateTopbarTitle($(this).val())
+              })
+              updateTopbarTitle('')
+              clearTopbarTitle = false
+            }
+          }
+          if (clearTopbarTitle === true) {
+            // clear title on action topbar
+            $('#action-title').text('')
+          }
+        } else {
+          // just show current tab action title
+          $('#action-title').text(tabObj.actionTitle)
+        }
+
         // disable save button while there are nothing to save
-        $('#action-save').attr('disabled', true)
+        if (tabObj.unsavedChanges === false) {
+          $('#action-save').attr('disabled', true)
+        } else {
+          $('#action-save').removeAttr('disabled')
+        }
       }
 
       // show action (save) topbar
@@ -1200,9 +1209,19 @@ app.ready(function () {
     var unwatchSave = function () {
       // hide action (save) topbar
       $('#topbar-action').fadeOut()
-      // reset to no title
-      $('#action-title').text('')
       watchingSave = false
+    }
+
+    var updateTopbar = function () {
+      var tabObj = appTabs[currentTab]
+      if (tabObj) {
+        // update current topbar state
+        if (tabObj.saveAction) {
+          watchSave()
+        } else if (watchingSave) {
+          unwatchSave()
+        }
+      }
     }
 
     window.setSaveAction = function (elForm, callback) {
