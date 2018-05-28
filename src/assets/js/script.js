@@ -1174,6 +1174,8 @@ app.ready(function () {
     var unwatchSave = function () {
       // hide action (save) topbar
       $('#topbar-action').fadeOut()
+      // reset to no title
+      $('#action-title').text('')
       watchingSave = false
     }
 
