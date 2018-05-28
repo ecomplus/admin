@@ -12,9 +12,11 @@
   window.renderContentIds(elContainer)
   window.setSaveAction()
 
-  $('#' + tabId + '-html-editor').summernote()
-  $('select[multiple]').tagsinput('items')
-  $('select:not([multiple])').selectpicker({
+  var $form = elContainer.children('form')
+
+  $form.find('.html-editor').summernote()
+  $form.find('select[multiple]').tagsinput('items')
+  $form.find('select:not([multiple])').selectpicker({
     'style': 'btn-light'
   })
 }())

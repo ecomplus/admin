@@ -140,6 +140,9 @@
     // preload data, then load HTML content
     load(loadContent, params)
   } else {
+    // creating
+    // starts with empty object
+    commit({})
     loadContent()
   }
 }())
