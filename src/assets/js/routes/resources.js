@@ -99,9 +99,11 @@
     window.routeReady(tabTitle)
   }
 
-  var commit = function (json) {
-    // pass JSON data
-    window.tabData[tabId] = json
+  var commit = function (json, updated) {
+    if (!updated) {
+      // pass JSON data
+      window.tabData[tabId] = json
+    }
     // reset Ace editor content
     editor.session.setValue(JSON.stringify(json, null, 4))
   }
@@ -144,5 +146,11 @@
     // starts with empty object
     commit({})
     loadContent()
+  }
+
+  if (listing !== true) {
+    // commit changes on JSON document globally
+    // improve reactivity
+    window.tabCommit[tabId] = commit
   }
 }())
