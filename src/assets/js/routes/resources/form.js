@@ -10,13 +10,33 @@
   var elContainer = $('#' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
-  window.setSaveAction()
 
+  var slug = window.routeParams[0]
+  var resourceId = window.routeParams[1]
+  var creating
+  if (resourceId === 'new') {
+    creating = true
+  }
   // JSON document
   var data = window.tabData[tabId]
   var commit = window.tabCommit[tabId]
 
   var $form = elContainer.children('form')
+  window.setSaveAction($form, function () {
+    var method, uri
+    if (creating) {
+      uri = slug + '.json'
+      method = 'POST'
+    } else {
+      uri = slug + '/' + resourceId + '.json'
+      // overwrite
+      method = 'PUT'
+    }
+
+    var callback = function () {
+    }
+    window.callApi(uri, method, callback, data)
+  })
 
   $form.find('.html-editor').summernote()
   $form.find('select[multiple]').tagsinput('items')
