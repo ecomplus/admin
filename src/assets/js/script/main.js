@@ -565,7 +565,6 @@ app.ready(function () {
     // control routing queue
     var routeInProgress = false
     var ignoreRoute = false
-    window.unsavedChanges = false
     var waitingRoute, routeReadyTimeout
 
     var newTab = function (callback, toHashNew) {
@@ -658,32 +657,47 @@ app.ready(function () {
 
     var closeTab = function (tabId) {
       if (routeInProgress !== true) {
-        // remove from tabs object
-        delete appTabs[tabId]
-        // free up memory
-        delete window.tabData[tabId]
-        delete window.tabCommit[tabId]
-        delete window.tabLoad[tabId]
-
-        if (tabId === currentTab) {
-          // have to change the current tab
-          var tabs = Object.keys(appTabs)
-          if (tabs.length === 0) {
-            // create new tab
-            // toHashNew = true
-            newTab(null, true)
-          } else {
-            // change tab
-            // click on any nav item link
-            $('#app-nav-' + tabs[tabs.length - 1] + ' > a').click()
+        var tabObj = appTabs[tabId]
+        if (tabObj) {
+          if (tabObj.unsavedChanges === true) {
+            // have unsaved changes
+            // focus on this tab
+            $('#app-nav-' + tabId + ' > a').click()
+            waitingRoute = null
+            setTimeout(function () {
+              $('#modal-unsaved').modal('show')
+            }, 100)
+            // do not close, wait for confirmation
+            return
           }
-        }
 
-        // remove from HTML dom
-        $('#app-tab-' + tabId).remove()
-        $('#app-nav-' + tabId).toggle('slide', function () {
-          $(this).remove()
-        })
+          // remove from tabs object
+          delete appTabs[tabId]
+          // free up memory
+          delete window.tabData[tabId]
+          delete window.tabCommit[tabId]
+          delete window.tabLoad[tabId]
+
+          if (tabId === currentTab) {
+            // have to change the current tab
+            var tabs = Object.keys(appTabs)
+            if (tabs.length === 0) {
+              // create new tab
+              // toHashNew = true
+              newTab(null, true)
+            } else {
+              // change tab
+              // click on any nav item link
+              $('#app-nav-' + tabs[tabs.length - 1] + ' > a').click()
+            }
+          }
+
+          // remove from HTML dom
+          $('#app-tab-' + tabId).remove()
+          $('#app-nav-' + tabId).toggle('slide', function () {
+            $(this).remove()
+          })
+        }
       }
     }
 
@@ -858,7 +872,7 @@ app.ready(function () {
         if (routeInProgress === true && keepRoute()) {
           // routing currenty in progress
           return
-        } else if (window.unsavedChanges === true && keepRoute()) {
+        } else if (tabObj.unsavedChanges === true && keepRoute()) {
           // have unsaved changes
           $('#modal-unsaved').modal('show')
           // do not route, wait for confirmation
@@ -922,11 +936,17 @@ app.ready(function () {
     })
 
     $('#ignore-unsaved').click(function () {
-      // discard unsaved changes
-      window.unsavedChanges = false
-      if (waitingRoute) {
-        // go to previous requested route
-        window.location = '/#/' + waitingRoute
+      var tabObj = appTabs[currentTab]
+      if (tabObj) {
+        // discard unsaved changes
+        tabObj.unsavedChanges = false
+        if (waitingRoute) {
+          // go to previous requested route
+          window.location = '/#/' + waitingRoute
+        } else {
+          // close tab
+          closeTab(currentTab)
+        }
       }
     })
 
@@ -938,7 +958,7 @@ app.ready(function () {
         tabObj.saveCallback()
       }
       // saved
-      window.unsavedChanges = false
+      tabObj.unsavedChanges = false
     }
     $('#action-save').click(saveAction)
 
@@ -964,6 +984,12 @@ app.ready(function () {
         $('#action-title').text('')
       }
 
+      var tabObj = appTabs[currentTab]
+      if (tabObj && tabObj.unsavedChanges === false) {
+        // disable save button while there are nothing to save
+        $('#action-save').attr('disabled', true)
+      }
+
       // show action (save) topbar
       $('#topbar-action').fadeIn()
       watchingSave = true
@@ -980,24 +1006,28 @@ app.ready(function () {
     window.setSaveAction = function (elForm, callback) {
       var tabObj = appTabs[currentTab]
       if (tabObj) {
+        if (elForm) {
+          // start with nothing to save
+          tabObj.unsavedChanges = false
+          try {
+            // watch form submit and input changes
+            elForm.submit(saveAction).find('input').change(function () {
+              // new unsaved changes
+              if (tabObj.unsavedChanges !== true) {
+                tabObj.unsavedChanges = true
+                // enable save button again
+                $('#action-save').removeAttr('disabled')
+              }
+            })
+          } catch (err) {
+            // not a valid form element ?
+            console.error(err)
+          }
+        }
+
         tabObj.saveAction = true
         tabObj.saveCallback = callback
         watchSave()
-
-        if (elForm) {
-          // disable save button while there are nothing to save
-          $('#action-save').attr('disabled', true)
-
-          // watch form submit and input changes
-          elForm.submit(saveAction).find('input').change(function () {
-            // new unsaved changes
-            if (window.unsavedChanges !== true) {
-              window.unsavedChanges = true
-              // enable save button again
-              $('#action-save').removeAttr('disabled')
-            }
-          })
-        }
       }
     }
 
