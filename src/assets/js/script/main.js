@@ -955,6 +955,8 @@ app.ready(function () {
       }
       // saved
       tabObj.unsavedChanges = false
+      // nothing more to save, disable button
+      $('#action-save').attr('disabled', true)
     }
     $('#action-save').click(saveAction)
 
