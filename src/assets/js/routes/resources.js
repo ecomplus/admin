@@ -105,8 +105,15 @@
         window.tabCommit[tabId] = commit
         editor.on('blur', function () {
           // code editor manually changed (?)
+          var json
+          try {
+            json = JSON.parse(editor.session.getValue())
+          } catch (e) {
+            // invalid JSON
+            return
+          }
           // update data
-          window.tabData[tabId] = editor.session.getValue()
+          window.tabData[tabId] = json
         })
       }
       window.loadContent(contentUri, $('#' + tabId + '-tab-normal'))
