@@ -392,6 +392,18 @@ body {
 #topbar-action .btn {
   margin-right: 12px;
 }
+#action-done {
+  padding: 21px;
+  margin-right: -20px;
+  display: none;
+  line-height: 1;
+  font-size: 19px;
+  font-weight: 400;
+  background: $color-success;
+}
+#action-done > i {
+  margin-right: 5px;
+}
 
 // JSON code editor
 .ace-editor {
