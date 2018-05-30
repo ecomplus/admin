@@ -17,9 +17,12 @@
   if (resourceId === 'new') {
     creating = true
   }
-  // JSON document
-  var data = window.tabData[tabId]
+  // edit JSON document
   var commit = window.tabCommit[tabId]
+  var Data = function () {
+    // current data from global variable
+    return window.tabData[tabId]
+  }
 
   var $form = elContainer.children('form')
   window.setSaveAction($form, function () {
@@ -35,7 +38,7 @@
 
     var callback = function () {
     }
-    window.callApi(uri, method, callback, data)
+    window.callApi(uri, method, callback, Data())
   })
 
   $form.find('.html-editor').summernote()
@@ -47,6 +50,7 @@
   $form.find('input[type="text"]').change(function () {
     var prop = $(this).attr('name')
     if (prop && prop !== '') {
+      var data = Data()
       // string property
       data[prop] = $(this).val()
       // global object already changed by reference
