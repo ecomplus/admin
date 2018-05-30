@@ -99,6 +99,15 @@
       } else {
         // form to create and edit
         contentUri = 'routes/resources/form/' + slug + '.html'
+
+        // commit changes on JSON document globally
+        // improve reactivity
+        window.tabCommit[tabId] = commit
+        editor.on('blur', function () {
+          // code editor manually changed (?)
+          // update data
+          window.tabData[tabId] = editor.session.getValue()
+        })
       }
       window.loadContent(contentUri, $('#' + tabId + '-tab-normal'))
     }
@@ -153,11 +162,5 @@
     // starts with empty object
     commit({})
     loadContent()
-  }
-
-  if (listing !== true) {
-    // commit changes on JSON document globally
-    // improve reactivity
-    window.tabCommit[tabId] = commit
   }
 }())
