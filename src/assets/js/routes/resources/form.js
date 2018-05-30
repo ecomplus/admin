@@ -25,7 +25,7 @@
   }
 
   var $form = elContainer.children('form')
-  window.setSaveAction($form, function () {
+  window.setSaveAction($form, function (cb) {
     var method, uri
     if (creating) {
       uri = slug + '.json'
@@ -37,6 +37,9 @@
     }
 
     var callback = function () {
+      if (typeof cb === 'function') {
+        cb()
+      }
     }
     window.callApi(uri, method, callback, Data())
   })

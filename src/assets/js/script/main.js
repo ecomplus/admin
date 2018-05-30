@@ -950,13 +950,28 @@ app.ready(function () {
     // main save action
     var saveAction = function () {
       var tabObj = appTabs[currentTab]
-      if (tabObj && typeof tabObj.saveCallback === 'function') {
-        tabObj.saveCallback()
-      }
       // saved
       tabObj.unsavedChanges = false
       // nothing more to save, disable button
       $('#action-save').attr('disabled', true)
+
+      if (tabObj && typeof tabObj.saveCallback === 'function') {
+        // call tab save action callback function
+        tabObj.saveCallback(function () {
+          // confirm action done
+          var $todo = $('#action-todo')
+          var $done = $('#action-done')
+          $todo.fadeOut(200, function () {
+            $done.fadeIn(400, function () {
+              setTimeout(function () {
+                $done.fadeOut(200, function () {
+                  $todo.fadeIn()
+                })
+              }, 800)
+            })
+          })
+        })
+      }
     }
     $('#action-save').click(saveAction)
 
