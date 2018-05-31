@@ -1159,19 +1159,21 @@ app.ready(function () {
 
       if (tabObj && typeof tabObj.saveCallback === 'function') {
         // call tab save action callback function
-        tabObj.saveCallback(function () {
-          // confirm action done
-          var $todo = $('#action-todo')
-          var $done = $('#action-done')
-          $todo.fadeOut(200, function () {
-            $done.fadeIn(400, function () {
-              setTimeout(function () {
-                $done.fadeOut(200, function () {
-                  $todo.fadeIn()
-                })
-              }, 800)
+        tabObj.saveCallback(function (tabId) {
+          if (tabId === currentTab) {
+            // confirm action done
+            var $todo = $('#action-todo')
+            var $done = $('#action-done')
+            $todo.fadeOut(200, function () {
+              $done.fadeIn(400, function () {
+                setTimeout(function () {
+                  $done.fadeOut(200, function () {
+                    $todo.fadeIn()
+                  })
+                }, 800)
+              })
             })
-          })
+          }
         })
       }
     }

@@ -41,7 +41,7 @@
     var callback = function () {
       $form.removeClass('ajax')
       if (typeof cb === 'function') {
-        cb()
+        cb(tabId)
       }
     }
     window.callApi(uri, method, callback, Data())
