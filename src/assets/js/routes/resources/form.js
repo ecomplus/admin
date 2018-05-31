@@ -35,8 +35,11 @@
       // overwrite
       method = 'PUT'
     }
+    // show loading spinner
+    $form.addClass('ajax')
 
     var callback = function () {
+      $form.removeClass('ajax')
       if (typeof cb === 'function') {
         cb()
       }
