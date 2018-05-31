@@ -887,8 +887,8 @@ app.ready(function () {
         if (tabObj && tabObj.saveAction) {
           // leaving form page
           tabObj.saveAction = false
-          // discard save function
-          tabObj.saveCallback = null
+          // discard save function and action title
+          tabObj.saveCallback = tabObj.actionTitle = null
         }
       } else {
         // next will not be ignored
