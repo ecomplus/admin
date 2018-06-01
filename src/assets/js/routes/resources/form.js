@@ -67,8 +67,8 @@
     if (done === todo) {
       // ready
       $form.find('.html-editor').summernote()
-      $form.find('select[multiple]').tagsinput('items')
-      $form.find('select:not([multiple])').selectpicker({
+      $form.find('.tagsinput').tagsinput('items')
+      $form.find('select:not(.tags)').selectpicker({
         'style': 'btn-light'
       })
       // show form
@@ -83,8 +83,11 @@
     if (fill) {
       todo++
       // array of destination elements
-      var $els = $form.find('select[data-fill-same="' + $(this).attr('name') + '"]')
-      $els.push($(this))
+      var $els = [ $(this) ]
+      // add select elements with the same options (same resource)
+      $form.find('select[data-fill-same="' + $(this).attr('name') + '"]').each(function () {
+        $els.push($(this))
+      })
 
       window.callApi(fill + '.json', 'GET', function (err, json) {
         if (!err) {

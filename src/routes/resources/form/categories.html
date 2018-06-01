@@ -21,9 +21,10 @@
               <div class="form-group">
                 <label class="i18n" for="parent">
                   <span data-lang="en_us">Parent category</span>
-                  <span data-lang="pt_br">Categoria parental</span>
+                  <span data-lang="pt_br">Categoria superior</span>
                 </label>
-                <select class="form-control" name="parent" data-fill="categories">
+                <select class="form-control" data-live-search="true" name="parent" data-fill="categories">
+                  <option value="" selected >--</option>
                 </select>
               </div>
               <div class="form-group">
@@ -31,7 +32,7 @@
                   <span data-lang="en_us">Subcategories</span>
                   <span data-lang="pt_br">Subcategorias</span>
                 </label>
-                <select multiple data-id="childs" data-fill-same="parent">
+                <select class="form-control" data-live-search="true" name="childs" data-fill-same="parent" multiple >
                 </select>
               </div>
             </div>
@@ -42,8 +43,6 @@
                   <span data-lang="en_us">Icon</span>
                   <span data-lang="pt_br">Ícone</span>
                 </label>
-                <select multiple data-id="childs">
-                </select>
               </div>
             </div>
           </div>
