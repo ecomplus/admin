@@ -1,7 +1,8 @@
-<form action="javascript:;" data-id="category-form" class="ajax-form">
-  <div class="ajax-overlay">
-    <div class="spinner-circle-material"></div>
+<form action="javascript:;" data-id="category-form" class="ajax-cards ajax-form ajax">
+  <div class="spinner-linear">
+    <div class="line"></div>
   </div>
+  <div class="ajax-overlay"></div>
 
   <div class="row">
     <div class="col-md-7">
@@ -22,15 +23,7 @@
                   <span data-lang="en_us">Parent category</span>
                   <span data-lang="pt_br">Categoria parental</span>
                 </label>
-                <select class="form-control" name="parent">
-                  <option value="physical"
-                    data-content="&lt;span class=&apos;i18n&apos;&gt;
-                    &lt;span data-lang=&apos;en_us&apos;&gt;Physical&lt;/span&gt;
-                    &lt;span data-lang=&apos;pt_br&apos;&gt;Físico&lt;/span&gt;
-                    &lt;/span&gt;">
-                    Physical
-                  </option>
-                  <option value="digital">Digital</option>
+                <select class="form-control" name="parent" data-fill="categories">
                 </select>
               </div>
               <div class="form-group">
@@ -38,7 +31,7 @@
                   <span data-lang="en_us">Subcategories</span>
                   <span data-lang="pt_br">Subcategorias</span>
                 </label>
-                <select multiple data-id="childs">
+                <select multiple data-id="childs" data-fill-same="parent">
                 </select>
               </div>
             </div>
