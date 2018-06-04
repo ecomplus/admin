@@ -23,7 +23,10 @@
                   <span data-lang="en_us">Parent category</span>
                   <span data-lang="pt_br">Categoria superior</span>
                 </label>
-                <select class="form-control" data-live-search="true" name="parent" data-fill="categories">
+                <select class="form-control" data-live-search="true" name="parent"
+                  data-fill="categories"
+                  data-properties="_id,name,slug"
+                  data-json="true">
                   <option value="" selected >--</option>
                 </select>
               </div>
@@ -32,7 +35,9 @@
                   <span data-lang="en_us">Subcategories</span>
                   <span data-lang="pt_br">Subcategorias</span>
                 </label>
-                <select class="form-control" data-live-search="true" name="childs" data-fill-same="parent" multiple >
+                <select multiple class="form-control" data-live-search="true" name="childs"
+                  data-fill-same="parent"
+                  data-json="true">
                 </select>
               </div>
             </div>

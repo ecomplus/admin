@@ -66,10 +66,18 @@
         var prop = $(this).attr('name')
         if (prop && prop !== '') {
           var data = Data()
-          // string property
-          var str = $(this).val().trim()
-          if (str !== '') {
-            data[prop] = str
+          var val = $(this).val().trim()
+          if (val !== '') {
+            if ($(this).data('json')) {
+              // value is a JSON string
+              try {
+                val = JSON.parse(val)
+              } catch (e) {
+                // ignore invalid JSON
+                return
+              }
+            }
+            data[prop] = val
           } else if (data.hasOwnProperty(prop)) {
             // empty, remove property
             delete data[prop]
@@ -77,6 +85,7 @@
             // nothing to change
             return
           }
+
           // global object already changed by reference
           // commit only to perform reactive actions
           commit(data, true)
@@ -101,7 +110,16 @@
         $els.push($(this))
       })
 
-      window.callApi(fill + '.json', 'GET', function (err, json) {
+      var uri = fill + '.json'
+      var fields = $(this).data('properties')
+      var object
+      if (fields) {
+        // object property
+        object = true
+        uri += '?fields=' + fields
+      }
+
+      window.callApi(uri, 'GET', function (err, json) {
         if (!err) {
           // response should be a resource list
           var list = json.result
@@ -110,7 +128,15 @@
               var doc = list[i]
               for (var j = 0; j < $els.length; j++) {
                 // fill select element with new option
-                $els[j].append('<option value="' + doc._id + '">' + doc.name + '</option>')
+                var value
+                if (object) {
+                  value = JSON.stringify(doc)
+                } else {
+                  // string property
+                  // use document ID as option value
+                  value = doc._id
+                }
+                $('<option />', { value: value }).text(doc.name).appendTo($els[j])
               }
             }
           }
