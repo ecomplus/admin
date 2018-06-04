@@ -47,18 +47,6 @@
     window.callApi(uri, method, callback, Data())
   })
 
-  $form.find('input[type="text"]').change(function () {
-    var prop = $(this).attr('name')
-    if (prop && prop !== '') {
-      var data = Data()
-      // string property
-      data[prop] = $(this).val()
-      // global object already changed by reference
-      // commit only to perform reactive actions
-      commit(data, true)
-    }
-  })
-
   // count AJAX requests
   var todo = 0
   var done = 0
@@ -66,11 +54,35 @@
     done++
     if (done === todo) {
       // ready
+      // plugins and addons
       $form.find('.html-editor').summernote()
       $form.find('.tagsinput').tagsinput('items')
       $form.find('select:not(.tags)').selectpicker({
         'style': 'btn-light'
       })
+
+      // setup input events
+      $form.find('input[type="text"],select').change(function () {
+        var prop = $(this).attr('name')
+        if (prop && prop !== '') {
+          var data = Data()
+          // string property
+          var str = $(this).val().trim()
+          if (str !== '') {
+            data[prop] = str
+          } else if (data.hasOwnProperty(prop)) {
+            // empty, remove property
+            delete data[prop]
+          } else {
+            // nothing to change
+            return
+          }
+          // global object already changed by reference
+          // commit only to perform reactive actions
+          commit(data, true)
+        }
+      })
+
       // show form
       $form.removeClass('ajax ajax-cards')
     }
