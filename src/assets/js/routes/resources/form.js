@@ -66,7 +66,8 @@
           [ 'insert', [ 'picture', 'link', 'video', 'hr', 'table' ] ],
           [ 'paragraph', [ 'ul', 'ol', 'paragraph', 'height' ] ],
           [ 'misc', [ 'codeview', 'help' ] ]
-        ]
+        ],
+        dialogsFade: true
       })
       $form.find('.tagsinput').tagsinput('items')
       $form.find('select:not(.tags)').selectpicker({
