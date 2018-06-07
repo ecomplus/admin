@@ -1251,7 +1251,7 @@ app.ready(function () {
           tabObj.unsavedChanges = false
           try {
             // watch form submit and input changes
-            elForm.submit(saveAction).find('input').change(function () {
+            elForm.submit(saveAction).find('input,select,textarea').change(function () {
               // new unsaved changes
               if (tabObj.unsavedChanges !== true) {
                 tabObj.unsavedChanges = true
