@@ -58,17 +58,31 @@
     if (done === todo) {
       // ready
       // plugins and addons
-      $form.find('.html-editor').summernote({
+      var $editor = $form.find('.html-editor')
+      $editor.summernote({
         // https://summernote.org/deep-dive/
         toolbar: [
-          [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'fontsize', 'clear' ] ],
+          [ 'style', [ 'style' ] ],
+          [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear' ] ],
           [ 'color', [ 'color' ] ],
           [ 'insert', [ 'picture', 'link', 'video', 'hr', 'table' ] ],
-          [ 'paragraph', [ 'ul', 'ol', 'paragraph', 'height' ] ],
+          [ 'paragraph', [ 'ul', 'ol', 'paragraph' ] ],
           [ 'misc', [ 'codeview', 'help' ] ]
         ],
-        dialogsFade: true
+        height: 400,
+        dialogsFade: true,
+
+        callbacks: {
+          onChange: function (content) {
+            var html = content.trim()
+            // fix for problem with ENTER and new paragraphs
+            if (html.substring(0, 5) !== '<div>') {
+              $editor.summernote('code', '<div><br></div>' + html)
+            }
+          }
+        }
       })
+
       $form.find('.tagsinput').tagsinput('items')
       $form.find('select:not(.tags)').selectpicker({
         style: 'btn-light',
@@ -97,7 +111,7 @@
       }
 
       // setup input events
-      $form.find('input[type="text"],select').change(function () {
+      $form.find('input[type="text"],select,textarea').change(function () {
         var prop = $(this).attr('name')
         if (prop && prop !== '') {
           var data = Data()
