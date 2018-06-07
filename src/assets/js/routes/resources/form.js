@@ -61,29 +61,68 @@
         'style': 'btn-light'
       })
 
+      // treat input values to data properties
+      var strToProperty = function ($el, str) {
+        str = str.trim()
+        if (str !== '') {
+          if ($el.data('json')) {
+            // value is a JSON string
+            var obj
+            try {
+              obj = JSON.parse(str)
+            } catch (e) {
+              // ignore invalid JSON
+              obj = false
+            }
+            return obj
+          }
+        } else {
+          return null
+        }
+        return str
+      }
+
       // setup input events
       $form.find('input[type="text"],select').change(function () {
         var prop = $(this).attr('name')
         if (prop && prop !== '') {
           var data = Data()
-          var val = $(this).val().trim()
-          if (val !== '') {
-            if ($(this).data('json')) {
-              // value is a JSON string
-              try {
-                val = JSON.parse(val)
-              } catch (e) {
-                // ignore invalid JSON
+          var val = $(this).val()
+          var obj
+
+          if (typeof val === 'string') {
+            obj = strToProperty($(this), val)
+            if (obj) {
+              // continue with valid value
+              data[prop] = obj
+            } else if (obj === null && data.hasOwnProperty(prop)) {
+              // empty, remove property
+              delete data[prop]
+            } else {
+              // invalid value or nothing to change
+              return
+            }
+          } else if (Array.isArray(val)) {
+            // select multiple
+            var array = []
+            for (var i = 0; i < val.length; i++) {
+              obj = strToProperty($(this), val[i])
+              if (obj) {
+                // add valid value to array
+                array.push(obj)
+              }
+            }
+            if (array.length) {
+              data[prop] = array
+            } else {
+              // empty array
+              if (data.hasOwnProperty(prop)) {
+                delete data[prop]
+              } else {
+                // nothing to change
                 return
               }
             }
-            data[prop] = val
-          } else if (data.hasOwnProperty(prop)) {
-            // empty, remove property
-            delete data[prop]
-          } else {
-            // nothing to change
-            return
           }
 
           // global object already changed by reference
