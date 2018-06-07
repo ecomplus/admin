@@ -11,7 +11,7 @@
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
 
-  var lang = window.lang
+  // var lang = window.lang
   // var i18n = window.i18n
 
   var slug = window.routeParams[0]
@@ -62,7 +62,6 @@
       $form.find('.tagsinput').tagsinput('items')
       $form.find('select:not(.tags)').selectpicker({
         'style': 'btn-light',
-        'tickIcon': 'ti-check',
         'noneSelectedText': '--'
       })
 
