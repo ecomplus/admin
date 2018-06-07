@@ -58,11 +58,20 @@
     if (done === todo) {
       // ready
       // plugins and addons
-      $form.find('.html-editor').summernote()
+      $form.find('.html-editor').summernote({
+        // https://summernote.org/deep-dive/
+        toolbar: [
+          [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'fontsize', 'clear' ] ],
+          [ 'color', [ 'color' ] ],
+          [ 'insert', [ 'picture', 'link', 'video', 'hr', 'table' ] ],
+          [ 'paragraph', [ 'ul', 'ol', 'paragraph', 'height' ] ],
+          [ 'misc', [ 'codeview', 'help' ] ]
+        ]
+      })
       $form.find('.tagsinput').tagsinput('items')
       $form.find('select:not(.tags)').selectpicker({
-        'style': 'btn-light',
-        'noneSelectedText': '--'
+        style: 'btn-light',
+        noneSelectedText: '--'
       })
 
       // treat input values to data properties
