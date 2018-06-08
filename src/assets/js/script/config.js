@@ -24,9 +24,10 @@ app.config({
   |
   */
   provide: [
+    'jqueryui',
     'jsgrid',
     'summernote',
-    'dropzone',
+    'dropify',
     'typeahead',
     'tagsinput',
     'mask',
