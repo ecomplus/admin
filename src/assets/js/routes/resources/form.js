@@ -87,6 +87,9 @@
         }
       })
 
+      $form.find('.dropzone').dropzone({
+        url: '/file/post'
+      })
       $form.find('.tagsinput').tagsinput('items')
       $form.find('select:not(.tags)').selectpicker({
         style: 'btn-light',
