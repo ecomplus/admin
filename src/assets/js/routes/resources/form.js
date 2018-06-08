@@ -87,8 +87,9 @@
         }
       })
 
-      $form.find('.tagsinput').tagsinput('items')
-      $form.find('select:not(.tags)').selectpicker({
+      $form.find('input[type="file"]').dropify()
+      $form.find('.tagsinput').tagsinput()
+      $form.find('select:not(.tagsinput)').selectpicker({
         style: 'btn-light',
         noneSelectedText: '--'
       })
