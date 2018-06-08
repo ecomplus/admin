@@ -79,6 +79,10 @@
             if (html.substring(0, 5) !== '<div>') {
               $editor.summernote('code', '<div><br></div>' + html)
             }
+          },
+          onBlur: function () {
+            // update textarea
+            $editor.trigger('change')
           }
         }
       })
