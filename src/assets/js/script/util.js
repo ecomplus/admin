@@ -81,6 +81,15 @@
     })
   }
 
+  window.appReady = function () {
+    // plugins localization
+    if (window.lang === 'pt_br') {
+      $.getScript('../assets/vendor/jsgrid/i18n/jsgrid-pt-br.js', function () {
+        jsGrid.locale('pt-br')
+      })
+    }
+  }
+
   /* utilities */
 
   window.keyIsNumber = function (e) {

@@ -1252,6 +1252,8 @@ app.ready(function () {
             User = body
             // ready to start dashboard
             Start()
+            // see util.js
+            window.appReady()
           }
         })
       }
