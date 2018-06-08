@@ -24,7 +24,6 @@ app.config({
   |
   */
   provide: [
-    'jqueryui',
     'jsgrid',
     'summernote',
     'dropify',
