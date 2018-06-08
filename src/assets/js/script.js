@@ -195,6 +195,9 @@ app.config({
       $.getScript('../assets/vendor/jsgrid/i18n/jsgrid-pt-br.js', function () {
         jsGrid.locale('pt-br')
       })
+      $.getScript('../assets/vendor/summernote/lang/summernote-pt-BR.js', function () {
+        $.summernote.options.lang = 'pt-BR'
+      })
     }
   }
 
