@@ -33,6 +33,7 @@ app.config({
   provide: [
     'jsgrid',
     'summernote',
+    'dropzone',
     'dropify',
     'typeahead',
     'bloodhound',
@@ -320,6 +321,10 @@ app.ready(function () {
     'channels': i18n({
       'en_us': 'Sales channels',
       'pt_br': 'Canais de venda'
+    }),
+    'lib': i18n({
+      'en_us': 'Library',
+      'pt_br': 'Biblioteca'
     }),
     'go_to_store': i18n({
       'en_us': 'Go to store',
@@ -1387,6 +1392,13 @@ app.ready(function () {
                  '<a class="menu-link" href="/#/apps">' +
                    '<span class="icon fa fa-puzzle-piece"></span>' +
                    '<span class="title">Apps</span>' +
+                 '</a>' +
+               '</li>' +
+               '<li class="menu-item">' +
+                 '<a class="menu-link" href="javascript:;" ' +
+                   'data-toggle="quickview" data-target="#qv-storage" data-url="../partials/storage.html">' +
+                   '<span class="icon fa fa-picture"></span>' +
+                   '<span class="title">' + dictionary.lib + '</span>' +
                  '</a>' +
                '</li>' +
                '<li class="menu-item">' +
