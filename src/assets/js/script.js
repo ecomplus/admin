@@ -322,9 +322,9 @@ app.ready(function () {
       'en_us': 'Sales channels',
       'pt_br': 'Canais de venda'
     }),
-    'lib': i18n({
-      'en_us': 'Library',
-      'pt_br': 'Biblioteca'
+    'media': i18n({
+      'en_us': 'Media',
+      'pt_br': 'Mídia'
     }),
     'go_to_store': i18n({
       'en_us': 'Go to store',
@@ -1397,8 +1397,8 @@ app.ready(function () {
                '<li class="menu-item">' +
                  '<a class="menu-link" href="javascript:;" ' +
                    'data-toggle="quickview" data-target="#qv-storage" data-url="../partials/storage.html">' +
-                   '<span class="icon fa fa-picture"></span>' +
-                   '<span class="title">' + dictionary.lib + '</span>' +
+                   '<span class="icon fa fa-picture-o"></span>' +
+                   '<span class="title">' + dictionary.media + '</span>' +
                  '</a>' +
                '</li>' +
                '<li class="menu-item">' +
