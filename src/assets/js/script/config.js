@@ -26,6 +26,7 @@ app.config({
   provide: [
     'jsgrid',
     'summernote',
+    'dropzone',
     'dropify',
     'typeahead',
     'bloodhound',
