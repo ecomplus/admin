@@ -1179,8 +1179,8 @@ app.ready(function () {
                  '</a>' +
                '</li>' +
                '<li class="menu-item">' +
-                 '<a class="menu-link" href="javascript:;" ' +
-                   'data-toggle="quickview" data-target="#qv-storage" data-url="../partials/storage.html">' +
+                 '<a class="menu-link" href="javascript:;" id="view-storage" ' +
+                 'data-toggle="quickview" data-target="#qv-storage">' +
                    '<span class="icon fa fa-picture-o"></span>' +
                    '<span class="title">' + dictionary.media + '</span>' +
                  '</a>' +
@@ -1245,6 +1245,15 @@ app.ready(function () {
       }
     }
     renderChannels()
+
+    // handle dropzone with Storage API
+    $('#dropzone').dropzone({
+      url: '/file/post'
+    })
+    $('#view-storage').click(function () {
+      // reload storage content
+      console.log('storage')
+    })
 
     // store and user JSON body
     var Store, User
