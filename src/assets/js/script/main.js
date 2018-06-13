@@ -191,9 +191,87 @@ app.ready(function () {
         }
       }
       changeBg()
-      setInterval(changeBg, 9000)
+      setInterval(changeBg, 60000)
     }
     dynamicBg('#full-bg')
+
+    // random quote of the day
+    // select random quote from array
+    var quote = (function () {
+      var quotes = [{
+        msg: {
+          en_us: 'Start where you are. Use what you have. Do what you can.',
+          pt_br: 'Comece de onde você está. Use o que você tiver. Faça o que você puder.'
+        },
+        author: 'Arthur Ashe'
+      }, {
+        msg: {
+          en_us: 'Success is the sum of repeated small efforts day after day.',
+          pt_br: 'O sucesso é a soma de pequenos esforços repetidos dia após dia.'
+        },
+        author: 'Robert Collier'
+      }, {
+        msg: {
+          en_us: 'All progress takes place outside the comfort zone.',
+          pt_br: 'Todo progresso acontece fora da zona de conforto.'
+        },
+        author: ' Michael John Bobak'
+      }, {
+        msg: {
+          en_us: 'Courage is the resistance and mastery of fear, not its absence.',
+          pt_br: 'Coragem é a resistência e o domínio do medo, não a ausência dele.'
+        },
+        author: ' Mark Twain'
+      }, {
+        msg: {
+          en_us: 'The only place where success comes before work is in the dictionary.',
+          pt_br: 'O único lugar em que o sucesso vem antes do trabalho é no dicionário.'
+        },
+        author: 'Vidal Sassoon'
+      }, {
+        msg: {
+          en_us: 'To dream small and big requires the same work.',
+          pt_br: 'Sonhar grande e sonhar pequeno dá o mesmo trabalho.'
+        },
+        author: 'Jorge Paulo Lemann'
+      }, {
+        msg: {
+          en_us: 'If you want to live and are curious, sleeping is not the most important thing.',
+          pt_br: 'Se você tem vontade de viver e curiosidade, dormir não é a coisa mais importante.'
+        },
+        author: 'Martha Stewart'
+      }, {
+        msg: {
+          en_us: 'Do or do not, there is no try.',
+          pt_br: 'Faça ou não faça. Tentativas não existem.'
+        },
+        author: 'Yoda'
+      }, {
+        msg: {
+          en_us: 'You don\'t need a company with 100 people to develop this idea.',
+          pt_br: 'Você não precisa de uma equipe de 100 pessoas para desenvolver uma ideia.'
+        },
+        author: 'Larry Page'
+      }, {
+        msg: {
+          en_us: 'Do not let what you cannot do interfere with what you can do.',
+          pt_br: 'Não deixe o que você não pode fazer interferir no que você pode fazer.'
+        },
+        author: 'John Wooden'
+      }, {
+        msg: {
+          en_us: 'Winners never quit and quitters never win.',
+          pt_br: 'Vencedores nunca desistem e quem desiste nunca vence.'
+        },
+        author: 'Vince Lombardi'
+      }]
+      return quotes[Math.floor((Math.random() * (quotes.length - 1)))]
+    }())
+
+    el = $('#quote-of-day')
+    el.find('[data-lang="en_us"]').text('"' + quote.msg.en_us + '"')
+    el.find('[data-lang="pt_br"]').text('"' + quote.msg.pt_br + '"')
+    el.find('cite').text(quote.author)
 
     // 'remember' username
     var username = localStorage.getItem('username')
