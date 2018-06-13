@@ -1487,7 +1487,14 @@ app.ready(function () {
     })
     $('#view-storage').click(function () {
       // get bucket objects from Storage API
-      callStorageApi()
+      var s3Method = 'listObjects'
+      var callback = function (err, json) {
+        if (!err) {
+          // array json.Content
+          console.log(json)
+        }
+      }
+      callStorageApi(s3Method, callback)
       // reload storage content
       // var content
       // $('#storage-content').html(content)
