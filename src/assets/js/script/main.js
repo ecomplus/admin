@@ -323,6 +323,12 @@ app.ready(function () {
     // hide for security
     sessionStorage.removeItem('my_id')
     sessionStorage.removeItem('access_token')
+    // common APIs authentication headers
+    var authHeaders = {
+      'X-Store-ID': storeId,
+      'X-My-ID': session.my_id,
+      'X-Access-Token': session.access_token
+    }
 
     // run API requests with intervals to prevent rate limit
     var apiQueue = []
@@ -341,6 +347,7 @@ app.ready(function () {
         }, 500)
 
         var options = req.options
+        options.dataType = 'json'
         var callback = req.callback
         // call AJAX request
         var ajax = $.ajax(options)
@@ -372,111 +379,7 @@ app.ready(function () {
       }
     }
 
-    var callApi = function (endpoint, method, callback, bodyObject, id) {
-      // reset notification toast
-      hideToastr()
-      var apiHost = 'https://api.e-com.plus/v1/'
-      // API endpoint full URL
-      var uri
-      if (id === undefined) {
-        uri = apiHost + endpoint
-
-        var askConfirmation = function (msg) {
-          // random unique request ID
-          var id = Date.now()
-          confirmRequest[id] = {
-            'endpoint': endpoint,
-            'method': method,
-            'callback': callback,
-            'bodyObject': bodyObject,
-            'confirmed': false
-          }
-          // expose request
-          var reqText = method + ' ' + uri
-          if (bodyObject) {
-            reqText += '\n' + JSON.stringify(bodyObject, null, 2)
-          }
-
-          // open confirmation modal
-          var modal = $('#modal-confirm-request')
-          modal.find('#api-request-control').data('request-id', id)
-          modal.find('.modal-body > p').text(msg).next('pre').children('code').text(reqText)
-          modal.modal('show')
-        }
-
-        // request not confirmed
-        switch (method) {
-          case 'GET':
-          case 'POST':
-          case 'PATCH':
-          case 'PUT':
-            // continue
-            break
-          case 'DELETE':
-            askConfirmation(i18n({
-              'en_us': 'You are going to delete a resource permanently, are you sure?',
-              'pt_br': 'Você vai excluir um recurso permanentemente, tem certeza?'
-            }))
-            return
-          default:
-            // invalid method
-            app.toast(i18n({
-              'en_us': 'Invalid request method',
-              'pt_br': 'Método de requisição inválido'
-            }))
-            return
-        }
-
-        if (typeof endpoint === 'string' && endpoint !== '') {
-          if (/^\$update\.json/.test(endpoint)) {
-            askConfirmation(i18n({
-              'en_us': 'You are going to do a bulk update, are you sure?',
-              'pt_br': 'Você vai fazer uma atualização em massa, tem certeza?'
-            }))
-            return
-          }
-        } else {
-          // invalid endpoint argument
-          app.toast(i18n({
-            'en_us': 'Invalid request endpoint',
-            'pt_br': 'O endpoint da requisição é inválido'
-          }))
-          return
-        }
-      } else {
-        if (!confirmRequest.hasOwnProperty(id) || confirmRequest[id].confirmed !== true) {
-          // something is wrong
-          app.toast(i18n({
-            'en_us': 'You should not do that',
-            'pt_br': 'Você não deveria fazer isto'
-          }))
-          return false
-        }
-
-        // request confirmed
-        // reset params
-        endpoint = confirmRequest[id].endpoint
-        method = confirmRequest[id].method
-        callback = confirmRequest[id].callback
-        bodyObject = confirmRequest[id].bodyObject
-        // set URL
-        uri = apiHost + endpoint
-      }
-
-      var options = {
-        url: uri,
-        method: method,
-        dataType: 'json',
-        headers: {
-          'X-Store-ID': storeId,
-          'X-My-ID': session.my_id,
-          'X-Access-Token': session.access_token
-        }
-      }
-      if (bodyObject) {
-        options.data = JSON.stringify(bodyObject)
-      }
-
+    var addRequest = function (options, callback) {
       // add request to queue
       apiQueue.push({
         'options': options,
@@ -489,8 +392,110 @@ app.ready(function () {
       }
     }
 
+    var askConfirmation = function (uri, method, callback, bodyObject, msg) {
+      // random unique request ID
+      var id = Date.now()
+      confirmRequest[id] = {
+        'uri': uri,
+        'method': method,
+        'callback': callback,
+        'bodyObject': bodyObject
+      }
+      // expose request
+      var reqText = method + ' ' + uri
+      if (bodyObject) {
+        reqText += '\n' + JSON.stringify(bodyObject, null, 2)
+      }
+
+      // open confirmation modal
+      var modal = $('#modal-confirm-request')
+      modal.find('#api-request-control').data('request-id', id)
+      modal.find('.modal-body > p').text(msg).next('pre').children('code').text(reqText)
+      modal.modal('show')
+    }
+
+    var callApi = function (endpoint, method, callback, bodyObject) {
+      // reset notification toast
+      hideToastr()
+      var apiHost = 'https://api.e-com.plus/v1/'
+      // API endpoint full URL
+      var uri = apiHost + endpoint
+
+      // request not confirmed
+      switch (method) {
+        case 'GET':
+        case 'POST':
+        case 'PATCH':
+        case 'PUT':
+          // continue
+          break
+        case 'DELETE':
+          askConfirmation(uri, method, callback, bodyObject, i18n({
+            'en_us': 'You are going to delete a resource permanently, are you sure?',
+            'pt_br': 'Você vai excluir um recurso permanentemente, tem certeza?'
+          }))
+          return
+        default:
+          // invalid method
+          app.toast(i18n({
+            'en_us': 'Invalid request method',
+            'pt_br': 'Método de requisição inválido'
+          }))
+          return
+      }
+
+      if (typeof endpoint === 'string' && endpoint !== '') {
+        if (/^\$update\.json/.test(endpoint)) {
+          askConfirmation(uri, method, callback, bodyObject, i18n({
+            'en_us': 'You are going to do a bulk update, are you sure?',
+            'pt_br': 'Você vai fazer uma atualização em massa, tem certeza?'
+          }))
+          return
+        }
+      } else {
+        // invalid endpoint argument
+        app.toast(i18n({
+          'en_us': 'Invalid request endpoint',
+          'pt_br': 'O endpoint da requisição é inválido'
+        }))
+        return
+      }
+
+      var options = {
+        url: uri,
+        headers: authHeaders,
+        method: method
+      }
+      if (bodyObject) {
+        options.data = JSON.stringify(bodyObject)
+      }
+      addRequest(options, callback)
+    }
+
+    var callStorageApi = function (s3Method, callback, bodyObject) {
+      var uri = 'https://apx-storage.e-com.plus/' + storeId + '/api/v1/s3/' + s3Method + '.json'
+      var method = 'POST'
+
+      // check if S3 method name starts with 'delete'
+      if (!/^delete/.test(s3Method)) {
+        var options = {
+          url: uri,
+          headers: authHeaders,
+          method: method
+        }
+        addRequest(options, callback)
+      } else {
+        // require confirmation
+        askConfirmation(uri, method, callback, bodyObject, i18n({
+          'en_us': 'You are going to delete files permanently, are you sure?',
+          'pt_br': 'Você vai excluir arquivos permanentemente, tem certeza?'
+        }))
+      }
+    }
+
     // global
     window.callApi = callApi
+    window.callStorageApi = callStorageApi
     // store data when necessary
     // commit changes on tab data globally
     // get tab JSON data globally
@@ -531,22 +536,35 @@ app.ready(function () {
     }
 
     var requestControl = function ($el, confirm) {
-      var reqId = $el.closest('#api-request-control').data('request-id')
-      if (reqId && confirmRequest.hasOwnProperty(reqId)) {
+      var id = $el.closest('#api-request-control').data('request-id')
+      if (id && confirmRequest.hasOwnProperty(id)) {
         if (!confirm) {
           // request rejected
-          var callback = confirmRequest[reqId].callback
+          var callback = confirmRequest[id].callback
           if (typeof callback === 'function') {
             // callback with error
             callback(new Error('Request rejected'), null)
           }
         } else {
-          confirmRequest[reqId].confirmed = true
+          // confirmed
+          var req = confirmRequest[id]
+
           // call API after confirmation
-          callApi(null, null, null, null, reqId)
+          var options = {
+            url: req.uri,
+            headers: authHeaders,
+            method: req.method
+          }
+          if (req.bodyObject) {
+            options.data = JSON.stringify(req.bodyObject)
+          }
+          addRequest(options, req.callback)
+
+          delete confirmRequest[id]
         }
       }
     }
+
     $('#confirm-api-request').click(function () {
       requestControl($(this), true)
     })
@@ -1248,11 +1266,15 @@ app.ready(function () {
 
     // handle dropzone with Storage API
     $('#dropzone').dropzone({
-      url: '/file/post'
+      url: 'https://apx-storage.e-com.plus/' + storeId + '/api/v1/upload.json',
+      headers: authHeaders
     })
     $('#view-storage').click(function () {
+      // get bucket objects from Storage API
+      callStorageApi()
       // reload storage content
-      console.log('storage')
+      // var content
+      // $('#storage-content').html(content)
     })
 
     // store and user JSON body
