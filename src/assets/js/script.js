@@ -766,25 +766,38 @@ app.ready(function () {
       addRequest(options, callback)
     }
 
+    var storageApiPath = 'https://apx-storage.e-com.plus/' + storeId + '/api/v1/'
     var callStorageApi = function (s3Method, callback, bodyObject) {
-      var uri = 'https://apx-storage.e-com.plus/' + storeId + '/api/v1/s3/' + s3Method + '.json'
-      var method = 'POST'
-
-      // check if S3 method name starts with 'delete'
-      if (!/^delete/.test(s3Method)) {
-        var options = {
-          url: uri,
-          headers: authHeaders,
-          method: method
+      var uri = storageApiPath
+      var method
+      if (s3Method) {
+        uri += 's3/' + s3Method + '.json'
+        method = 'POST'
+        // check if S3 method name starts with 'delete'
+        if (/^delete/.test(s3Method)) {
+          // require confirmation
+          askConfirmation(uri, method, callback, bodyObject, i18n({
+            'en_us': 'You are going to delete files permanently, are you sure?',
+            'pt_br': 'Você vai excluir arquivos permanentemente, tem certeza?'
+          }))
+          return
         }
-        addRequest(options, callback)
       } else {
-        // require confirmation
-        askConfirmation(uri, method, callback, bodyObject, i18n({
-          'en_us': 'You are going to delete files permanently, are you sure?',
-          'pt_br': 'Você vai excluir arquivos permanentemente, tem certeza?'
-        }))
+        method = 'GET'
+        /*
+        {
+          bucket,
+          host: bucket + '.' + awsEndpoint
+        }
+        */
       }
+
+      var options = {
+        url: uri,
+        headers: authHeaders,
+        method: method
+      }
+      addRequest(options, callback)
     }
 
     // global
@@ -1560,32 +1573,47 @@ app.ready(function () {
 
     // handle dropzone with Storage API
     $('#dropzone').dropzone({
-      url: 'https://apx-storage.e-com.plus/' + storeId + '/api/v1/upload.json',
+      url: storageApiPath + 'upload.json',
       headers: authHeaders
     })
 
-    $('#view-storage').click(function () {
-      // get bucket objects from Storage API
-      var s3Method = 'listObjects'
-      var callback = function (err, json) {
-        if (!err) {
-          var list = json.Contents
-          if (Array.isArray(list)) {
-            // HTML content listing files
-            // Mansory grid
-            var content = ''
-            for (var i = 0; i < list.length; i++) {
-              var object = list[i]
-              content += '<div class="masonry-item">' +
-                '<img src="https://ecom-ptqgjveg.nyc3.digitaloceanspaces.com/' + object.Key + '">' +
-              '</div>'
+    callStorageApi(null, function (err, json) {
+      if (!err) {
+        // use store bucket endpoint
+        if (json.host) {
+          var domain = 'https://' + json.host + '/'
+
+          $('#view-storage').click(function () {
+            // get bucket objects from Storage API
+            var s3Method = 'listObjects'
+            var callback = function (err, json) {
+              if (!err) {
+                var list = json.Contents
+                if (Array.isArray(list)) {
+                  // HTML content listing files
+                  // Mansory grid
+                  var content = ''
+                  for (var i = 0; i < list.length; i++) {
+                    var object = list[i]
+                    content += '<div class="masonry-item">' +
+                      '<img src="' + domain + object.Key + '">' +
+                    '</div>'
+                  }
+                  // update DOM element
+                  $('#storage-content').html(content)
+                }
+              }
             }
-            // update element
-            $('#storage-content').html(content)
-          }
+
+            callStorageApi(s3Method, callback)
+          })
+        } else {
+          console.log('Unexpected Storage API response:', json)
         }
+      } else {
+        // hash, try to debug
+        console.error(err)
       }
-      callStorageApi(s3Method, callback)
     })
 
     // store and user JSON body
