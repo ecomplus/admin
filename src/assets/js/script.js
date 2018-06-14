@@ -537,6 +537,7 @@ app.ready(function () {
           url: 'https://api.e-com.plus/v1/_login.json?username',
           method: 'POST',
           dataType: 'json',
+          contentType: 'application/json; charset=UTF-8',
           headers: {
             // random store ID
             'X-Store-ID': 1
@@ -557,6 +558,7 @@ app.ready(function () {
             url: 'https://api.e-com.plus/v1/_authenticate.json',
             method: 'POST',
             dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
             headers: {
               'X-Store-ID': storeId
             },
@@ -641,7 +643,9 @@ app.ready(function () {
         }, 500)
 
         var options = req.options
+        // always JSON
         options.dataType = 'json'
+        options.contentType = 'application/json; charset=UTF-8'
         var callback = req.callback
         // call AJAX request
         var ajax = $.ajax(options)
