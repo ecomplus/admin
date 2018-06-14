@@ -358,11 +358,40 @@ body {
 .quickview {
   z-index: 1003;
 }
-.quickview-footer .dropzone {
+
+// storage app
+#dropzone {
   min-height: 90px;
 }
-.quickview-footer .dropzone .dz-message {
+#dropzone .dz-message {
   margin: 1.2em 0;
+}
+.storage-object {
+  position: relative;
+}
+.storage-object > i {
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  font-size: 30px;
+  top: 4px;
+  left: 6px;
+  color: $color-danger;
+}
+.storage-object > * {
+  transition: 0.1s linear;
+}
+.storage-object:hover > i {
+  opacity: .65;
+}
+.storage-object:hover > *:not(i) {
+  opacity: .45;
+}
+.storage-object > i:hover {
+  opacity: .85;
+}
+.storage-select .storage-object > i {
+  display: none;
 }
 
 // fix icon alignment

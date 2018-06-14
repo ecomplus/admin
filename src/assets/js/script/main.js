@@ -457,7 +457,11 @@ app.ready(function () {
       }
     }
 
-    var addRequest = function (options, callback) {
+    var addRequest = function (options, bodyObject, callback) {
+      if (bodyObject) {
+        options.data = JSON.stringify(bodyObject)
+      }
+      // console.log(options)
       // add request to queue
       apiQueue.push({
         'options': options,
@@ -544,10 +548,7 @@ app.ready(function () {
         headers: authHeaders,
         method: method
       }
-      if (bodyObject) {
-        options.data = JSON.stringify(bodyObject)
-      }
-      addRequest(options, callback)
+      addRequest(options, bodyObject, callback)
     }
 
     var storageApiPath = 'https://apx-storage.e-com.plus/' + storeId + '/api/v1/'
@@ -581,7 +582,7 @@ app.ready(function () {
         headers: authHeaders,
         method: method
       }
-      addRequest(options, callback)
+      addRequest(options, bodyObject, callback)
     }
 
     // global
@@ -646,10 +647,7 @@ app.ready(function () {
             headers: authHeaders,
             method: req.method
           }
-          if (req.bodyObject) {
-            options.data = JSON.stringify(req.bodyObject)
-          }
-          addRequest(options, req.callback)
+          addRequest(options, req.bodyObject, req.callback)
 
           delete confirmRequest[id]
         }
@@ -1367,7 +1365,29 @@ app.ready(function () {
         if (json.host) {
           var domain = 'https://' + json.host + '/'
 
-          $('#view-storage').click(function () {
+          window.delObject = function (key) {
+            // delete bucket object
+            // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property
+            var s3Method = 'deleteObject'
+            var bodyObject = {
+              Key: key
+            }
+            var callback = function (err, json) {
+              if (!err) {
+                // reload
+                loadStorageContent()
+              }
+            }
+            callStorageApi(s3Method, callback, bodyObject)
+          }
+
+          var loadStorageContent = function () {
+            // reset DOM element
+            var $el = $('#storage-content')
+            var $ajax = $el.prev('.ajax-content')
+            $el.html('')
+            $ajax.addClass('ajax')
+
             // get bucket objects from Storage API
             var s3Method = 'listObjects'
             var callback = function (err, json) {
@@ -1377,20 +1397,41 @@ app.ready(function () {
                   // HTML content listing files
                   // Mansory grid
                   var content = ''
-                  for (var i = 0; i < list.length; i++) {
-                    var object = list[i]
-                    content += '<div class="masonry-item">' +
-                      '<img src="' + domain + object.Key + '">' +
-                    '</div>'
+                  var todo = list.length
+                  var done = 0
+                  var Done = function () {
+                    done++
+                    if (done === todo) {
+                      // ready
+                      $ajax.removeClass('ajax')
+                      $el.html(content)
+                    }
                   }
-                  // update DOM element
-                  $('#storage-content').html(content)
+
+                  for (var i = 0; i < todo; i++) {
+                    (function () {
+                      var key = list[i].Key
+                      // load image first
+                      var newImg = new Image()
+                      newImg.onload = function () {
+                        content += '<div class="masonry-item storage-object">' +
+                                     '<a href="' + this.src + '" target="_blank">' +
+                                       '<img src="' + this.src + '">' +
+                                     '</a>' +
+                                     '<i class="fa fa-trash" onclick="delObject(\'' + key + '\')"></i>' +
+                                   '</div>'
+                        Done()
+                      }
+                      newImg.src = domain + key
+                    }())
+                  }
                 }
               }
             }
 
             callStorageApi(s3Method, callback)
-          })
+          }
+          $('#view-storage').click(loadStorageContent)
         } else {
           console.log('Unexpected Storage API response:', json)
         }
