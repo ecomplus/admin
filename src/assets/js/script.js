@@ -1563,19 +1563,29 @@ app.ready(function () {
       url: 'https://apx-storage.e-com.plus/' + storeId + '/api/v1/upload.json',
       headers: authHeaders
     })
+
     $('#view-storage').click(function () {
       // get bucket objects from Storage API
       var s3Method = 'listObjects'
       var callback = function (err, json) {
         if (!err) {
-          // array json.Content
-          console.log(json)
+          var list = json.Contents
+          if (Array.isArray(list)) {
+            // HTML content listing files
+            // Mansory grid
+            var content = ''
+            for (var i = 0; i < list.length; i++) {
+              var object = list[i]
+              content += '<div class="masonry-item">' +
+                '<img src="https://ecom-ptqgjveg.nyc3.digitaloceanspaces.com/' + object.Key + '">' +
+              '</div>'
+            }
+            // update element
+            $('#storage-content').html(content)
+          }
         }
       }
       callStorageApi(s3Method, callback)
-      // reload storage content
-      // var content
-      // $('#storage-content').html(content)
     })
 
     // store and user JSON body

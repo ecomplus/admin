@@ -358,6 +358,12 @@ body {
 .quickview {
   z-index: 1003;
 }
+.quickview-footer .dropzone {
+  min-height: 90px;
+}
+.quickview-footer .dropzone .dz-message {
+  margin: 1.2em 0;
+}
 
 // fix icon alignment
 .topbar-btn.sidebar-toggler {
@@ -502,6 +508,10 @@ body {
   background: none;
 }
 
+.masonry-grid .masonry-item > * {
+  width: 100%;
+}
+
 @media (max-width: 500px) {
   .topbar {
     padding-right: 6px;
@@ -514,6 +524,18 @@ body {
   .topbar-divider,
   .breadcrumb {
     display: none;
+  }
+}
+
+@media (min-width: 700px) {
+  .masonry-grid {
+    column-count: 5;
+  }
+}
+
+@media (min-width: 900px) {
+  .masonry-grid {
+    column-count: 6;
   }
 }
 
