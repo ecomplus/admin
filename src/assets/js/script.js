@@ -645,7 +645,9 @@ app.ready(function () {
         var options = req.options
         // always JSON
         options.dataType = 'json'
-        options.contentType = 'application/json; charset=UTF-8'
+        if (options.data) {
+          options.contentType = 'application/json; charset=UTF-8'
+        }
         var callback = req.callback
         // call AJAX request
         var ajax = $.ajax(options)
