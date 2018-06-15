@@ -215,13 +215,13 @@ app.ready(function () {
           en_us: 'All progress takes place outside the comfort zone.',
           pt_br: 'Todo progresso acontece fora da zona de conforto.'
         },
-        author: ' Michael John Bobak'
+        author: 'Michael John Bobak'
       }, {
         msg: {
           en_us: 'Courage is the resistance and mastery of fear, not its absence.',
           pt_br: 'Coragem é a resistência e o domínio do medo, não a ausência dele.'
         },
-        author: ' Mark Twain'
+        author: 'Mark Twain'
       }, {
         msg: {
           en_us: 'The only place where success comes before work is in the dictionary.',
