@@ -1623,29 +1623,34 @@ app.ready(function () {
                   var done = 0
                   var Done = function () {
                     done++
-                    if (done === todo) {
+                    if (done >= todo) {
                       // ready
                       $ajax.removeClass('ajax')
                       $el.html(content)
                     }
                   }
 
-                  for (var i = 0; i < todo; i++) {
-                    (function () {
-                      var key = list[i].Key
-                      // load image first
-                      var newImg = new Image()
-                      newImg.onload = function () {
-                        content += '<div class="masonry-item storage-object">' +
-                                     '<a href="' + this.src + '" target="_blank">' +
-                                       '<img src="' + this.src + '">' +
-                                     '</a>' +
-                                     '<i class="fa fa-trash" onclick="delObject(\'' + key + '\')"></i>' +
-                                   '</div>'
-                        Done()
-                      }
-                      newImg.src = domain + key
-                    }())
+                  if (todo > 0) {
+                    for (var i = 0; i < todo; i++) {
+                      (function () {
+                        var key = list[i].Key
+                        // load image first
+                        var newImg = new Image()
+                        newImg.onload = function () {
+                          content += '<div class="masonry-item storage-object">' +
+                                       '<a href="' + this.src + '" target="_blank">' +
+                                         '<img src="' + this.src + '">' +
+                                       '</a>' +
+                                       '<i class="fa fa-trash" onclick="delObject(\'' + key + '\')"></i>' +
+                                     '</div>'
+                          Done()
+                        }
+                        newImg.src = domain + key
+                      }())
+                    }
+                  } else {
+                    // no content
+                    Done()
                   }
                 }
               }
