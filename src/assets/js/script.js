@@ -431,7 +431,7 @@ app.ready(function () {
           en_us: 'All progress takes place outside the comfort zone.',
           pt_br: 'Todo progresso acontece fora da zona de conforto.'
         },
-        author: ' Michael John Bobak'
+        author: 'Michael John Bobak'
       }, {
         msg: {
           en_us: 'Courage is the resistance and mastery of fear, not its absence.',
