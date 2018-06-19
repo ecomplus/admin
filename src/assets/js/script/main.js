@@ -1503,8 +1503,9 @@ app.ready(function () {
 
                     $el.html('<div id="jstree"></div>')
                     $('#jstree').jstree({
-                      'plugins': [ 'checkbox' ],
+                      'plugins': [ 'sort', 'dnd', 'contextmenu' ],
                       'core': {
+                        'check_callback': true,
                         'data': treeData
                       }
                     })
