@@ -1479,10 +1479,22 @@ app.ready(function () {
                         filename = key
                       }
 
+                      var icon
+                      if (filename.slice(-1) === '/') {
+                        icon = 'folder'
+                        // remove bar
+                        filename = filename.slice(0, -1)
+                      } else {
+                        icon = 'file'
+                        // remove file ID
+                        filename = filename.replace(/^[0-9]{9,}-/, '')
+                      }
+
                       treeData.push({
                         id: key,
                         parent: parent,
-                        text: filename
+                        text: filename,
+                        icon: 'fa fa-' + icon + '-o'
                       })
                     }
                     for (i = 0; i < list.length; i++) {
