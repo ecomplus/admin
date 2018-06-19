@@ -437,7 +437,7 @@ app.ready(function () {
           en_us: 'Courage is the resistance and mastery of fear, not its absence.',
           pt_br: 'Coragem é a resistência e o domínio do medo, não a ausência dele.'
         },
-        author: ' Mark Twain'
+        author: 'Mark Twain'
       }, {
         msg: {
           en_us: 'The only place where success comes before work is in the dictionary.',
@@ -1508,8 +1508,7 @@ app.ready(function () {
                  '</a>' +
                '</li>' +
                '<li class="menu-item">' +
-                 '<a class="menu-link" href="javascript:;" id="view-storage" ' +
-                 'data-toggle="quickview" data-target="#qv-storage">' +
+                 '<a class="menu-link" href="javascript:;" data-toggle="quickview" data-target="#qv-storage">' +
                    '<span class="icon fa fa-picture-o"></span>' +
                    '<span class="title">' + dictionary.media + '</span>' +
                  '</a>' +
@@ -1604,6 +1603,7 @@ app.ready(function () {
           }
 
           var loadStorageContent = function () {
+            var viewType = $('.btn-storage-view.active').data('view')
             // reset DOM element
             var $el = $('#storage-content')
             var $ajax = $el.prev('.ajax-content')
@@ -1611,20 +1611,32 @@ app.ready(function () {
             $ajax.addClass('ajax')
 
             // get bucket objects from Storage API
-            var s3Method = 'listObjects'
+            var s3Method = 'listObjectsV2'
+            var bodyObject = {}
+            if (viewType === 'grid') {
+              // show thumbnails only
+              bodyObject.Prefix = '@imgs/400px/'
+            }
+
             var callback = function (err, json) {
               if (!err) {
                 var list = json.Contents
                 if (Array.isArray(list)) {
                   // HTML content listing files
                   // Mansory grid
-                  var content = ''
+                  var content
+                  if (viewType === 'grid') {
+                    content = '<div class="masonry-grid gap-1">'
+                  } else {
+                    content = '<div id="jstree">'
+                  }
                   var todo = list.length
                   var done = 0
                   var Done = function () {
                     done++
                     if (done >= todo) {
                       // ready
+                      content += '</div>'
                       $ajax.removeClass('ajax')
                       $el.html(content)
                     }
@@ -1656,9 +1668,10 @@ app.ready(function () {
               }
             }
 
-            callStorageApi(s3Method, callback)
+            callStorageApi(s3Method, callback, bodyObject)
           }
-          $('#view-storage').click(loadStorageContent)
+          // init
+          loadStorageContent()
         } else {
           console.log('Unexpected Storage API response:', json)
         }
