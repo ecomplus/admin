@@ -541,20 +541,6 @@ body {
   width: 100%;
 }
 
-#jstree {
-  font-family: $font-monospace;
-  font-size: 12px;
-}
-.jstree-icon.fa {
-  font-size: 15px;
-}
-.jstree-icon.fa-folder-o {
-  color: $color-yellow;
-}
-.jstree-icon.fa-file-o {
-  color: $color-blue;
-}
-
 @media (max-width: 500px) {
   .topbar {
     padding-right: 6px;
