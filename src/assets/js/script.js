@@ -1623,46 +1623,96 @@ app.ready(function () {
                 var list = json.Contents
                 if (Array.isArray(list)) {
                   // HTML content listing files
-                  // Mansory grid
-                  var content
-                  if (viewType === 'grid') {
-                    content = '<div class="masonry-grid gap-1">'
-                  } else {
-                    content = '<div id="jstree">'
-                  }
-                  var todo = list.length
-                  var done = 0
-                  var Done = function () {
-                    done++
-                    if (done >= todo) {
-                      // ready
-                      content += '</div>'
-                      $ajax.removeClass('ajax')
-                      $el.html(content)
-                    }
-                  }
+                  var i
 
-                  if (todo > 0) {
-                    for (var i = 0; i < todo; i++) {
-                      (function () {
-                        var key = list[i].Key
-                        // load image first
-                        var newImg = new Image()
-                        newImg.onload = function () {
-                          content += '<div class="masonry-item storage-object">' +
-                                       '<a href="' + this.src + '" target="_blank">' +
-                                         '<img src="' + this.src + '">' +
-                                       '</a>' +
-                                       '<i class="fa fa-trash" onclick="delObject(\'' + key + '\')"></i>' +
-                                     '</div>'
+                  if (viewType === 'grid') {
+                    // Mansory grid
+                    var content = '<div class="masonry-grid gap-1">'
+                    var todo = list.length
+                    var done = 0
+                    var Done = function () {
+                      done++
+                      if (done >= todo) {
+                        // ready
+                        content += '</div>'
+                        $ajax.removeClass('ajax')
+                        $el.html(content)
+                      }
+                    }
+
+                    if (todo > 0) {
+                      for (i = 0; i < todo; i++) {
+                        if (viewType === 'grid') {
+                          (function () {
+                            var key = list[i].Key
+                            // load image first
+                            var newImg = new Image()
+                            newImg.onload = function () {
+                              content += '<div class="masonry-item storage-object">' +
+                                           '<a href="' + this.src + '" target="_blank">' +
+                                             '<img src="' + this.src + '">' +
+                                           '</a>' +
+                                           '<i class="fa fa-trash" onclick="delObject(\'' + key + '\')"></i>' +
+                                         '</div>'
+                              Done()
+                            }
+                            newImg.src = domain + key
+                          }())
+                        } else {
                           Done()
                         }
-                        newImg.src = domain + key
-                      }())
+                      }
+                    } else {
+                      // no content
+                      Done()
                     }
                   } else {
-                    // no content
-                    Done()
+                    // jsTree
+                    var treeData = []
+
+                    var toTree = function (key) {
+                      var parts = /^(.*\/)([^/]+\/?)$/.exec(key)
+                      var parent, filename
+                      if (parts !== null) {
+                        // inside folders
+                        parent = parts[1]
+                        filename = parts[2]
+
+                        // check if parent path already exists
+                        var addParentNode = true
+                        for (var i = 0; i < treeData.length; i++) {
+                          if (treeData[i].id === parent) {
+                            addParentNode = false
+                            break
+                          }
+                        }
+                        if (addParentNode) {
+                          // recursive
+                          toTree(parent)
+                        }
+                      } else {
+                        parent = '#'
+                        filename = key
+                      }
+
+                      treeData.push({
+                        id: key,
+                        parent: parent,
+                        text: filename
+                      })
+                    }
+                    for (i = 0; i < list.length; i++) {
+                      toTree(list[i].Key)
+                    }
+
+                    $el.html('<div id="jstree"></div>')
+                    $('#jstree').jstree({
+                      'plugins': [ 'checkbox' ],
+                      'core': {
+                        'data': treeData
+                      }
+                    })
+                    $ajax.removeClass('ajax')
                   }
                 }
               }
