@@ -1397,7 +1397,7 @@ app.ready(function () {
             var s3Method = 'listObjectsV2'
             var bodyObject = {}
             // show thumbnails only
-            bodyObject.Prefix = '@imgs/400px/'
+            bodyObject.Prefix = 'imgs/400px/'
 
             var callback = function (err, json) {
               if (!err) {
