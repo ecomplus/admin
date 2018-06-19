@@ -1387,7 +1387,6 @@ app.ready(function () {
           }
 
           var loadStorageContent = function () {
-            var viewType = $('.btn-storage-view.active').data('view')
             // reset DOM element
             var $el = $('#storage-content')
             var $ajax = $el.prev('.ajax-content')
@@ -1397,119 +1396,49 @@ app.ready(function () {
             // get bucket objects from Storage API
             var s3Method = 'listObjectsV2'
             var bodyObject = {}
-            if (viewType === 'grid') {
-              // show thumbnails only
-              bodyObject.Prefix = '@imgs/400px/'
-            }
+            // show thumbnails only
+            bodyObject.Prefix = '@imgs/400px/'
 
             var callback = function (err, json) {
               if (!err) {
                 var list = json.Contents
                 if (Array.isArray(list)) {
                   // HTML content listing files
-                  var i
-
-                  if (viewType === 'grid') {
-                    // Mansory grid
-                    var content = '<div class="masonry-grid gap-1">'
-                    var todo = list.length
-                    var done = 0
-                    var Done = function () {
-                      done++
-                      if (done >= todo) {
-                        // ready
-                        content += '</div>'
-                        $ajax.removeClass('ajax')
-                        $el.html(content)
-                      }
+                  // Mansory grid
+                  var content = '<div class="masonry-grid gap-1">'
+                  var todo = list.length
+                  var done = 0
+                  var Done = function () {
+                    done++
+                    if (done >= todo) {
+                      // ready
+                      content += '</div>'
+                      $ajax.removeClass('ajax')
+                      $el.html(content)
                     }
+                  }
 
-                    if (todo > 0) {
-                      for (i = 0; i < todo; i++) {
-                        if (viewType === 'grid') {
-                          (function () {
-                            var key = list[i].Key
-                            // load image first
-                            var newImg = new Image()
-                            newImg.onload = function () {
-                              content += '<div class="masonry-item storage-object">' +
-                                           '<a href="' + this.src + '" target="_blank">' +
-                                             '<img src="' + this.src + '">' +
-                                           '</a>' +
-                                           '<i class="fa fa-trash" onclick="delObject(\'' + key + '\')"></i>' +
-                                         '</div>'
-                              Done()
-                            }
-                            newImg.src = domain + key
-                          }())
-                        } else {
+                  if (todo > 0) {
+                    for (var i = 0; i < todo; i++) {
+                      (function () {
+                        var key = list[i].Key
+                        // load image first
+                        var newImg = new Image()
+                        newImg.onload = function () {
+                          content += '<div class="masonry-item storage-object">' +
+                                       '<a href="' + this.src + '" target="_blank">' +
+                                         '<img src="' + this.src + '">' +
+                                       '</a>' +
+                                       '<i class="fa fa-trash" onclick="delObject(\'' + key + '\')"></i>' +
+                                     '</div>'
                           Done()
                         }
-                      }
-                    } else {
-                      // no content
-                      Done()
+                        newImg.src = domain + key
+                      }())
                     }
                   } else {
-                    // jsTree
-                    var treeData = []
-
-                    var toTree = function (key) {
-                      var parts = /^(.*\/)([^/]+\/?)$/.exec(key)
-                      var parent, filename
-                      if (parts !== null) {
-                        // inside folders
-                        parent = parts[1]
-                        filename = parts[2]
-
-                        // check if parent path already exists
-                        var addParentNode = true
-                        for (var i = 0; i < treeData.length; i++) {
-                          if (treeData[i].id === parent) {
-                            addParentNode = false
-                            break
-                          }
-                        }
-                        if (addParentNode) {
-                          // recursive
-                          toTree(parent)
-                        }
-                      } else {
-                        parent = '#'
-                        filename = key
-                      }
-
-                      var icon
-                      if (filename.slice(-1) === '/') {
-                        icon = 'folder'
-                        // remove bar
-                        filename = filename.slice(0, -1)
-                      } else {
-                        icon = 'file'
-                        // remove file ID
-                        filename = filename.replace(/^[0-9]{9,}-/, '')
-                      }
-
-                      treeData.push({
-                        id: key,
-                        parent: parent,
-                        text: filename,
-                        icon: 'fa fa-' + icon + '-o'
-                      })
-                    }
-                    for (i = 0; i < list.length; i++) {
-                      toTree(list[i].Key)
-                    }
-
-                    $el.html('<div id="jstree"></div>')
-                    $('#jstree').jstree({
-                      'plugins': [ 'sort', 'dnd', 'contextmenu' ],
-                      'core': {
-                        'check_callback': true,
-                        'data': treeData
-                      }
-                    })
-                    $ajax.removeClass('ajax')
+                    // no content
+                    Done()
                   }
                 }
               }
