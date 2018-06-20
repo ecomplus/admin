@@ -1598,9 +1598,9 @@ app.ready(function () {
                   { Key: 'imgs/100px/' + baseKey },
                   { Key: 'imgs/400px/' + baseKey },
                   { Key: 'imgs/700px/' + baseKey }
-                ]
-              },
-              Quiet: true
+                ],
+                Quiet: true
+              }
             }
             var callback = function (err, json) {
               if (!err) {
