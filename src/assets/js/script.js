@@ -1589,9 +1589,18 @@ app.ready(function () {
           window.delObject = function (key) {
             // delete bucket object
             // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property
-            var s3Method = 'deleteObject'
+            var s3Method = 'deleteObjects'
+            var baseKey = key.replace(/^.*(@.*)$/, '$1')
             var bodyObject = {
-              Key: key
+              Delete: {
+                Objects: [
+                  { Key: baseKey },
+                  { Key: 'imgs/100px/' + baseKey },
+                  { Key: 'imgs/400px/' + baseKey },
+                  { Key: 'imgs/700px/' + baseKey }
+                ]
+              },
+              Quiet: true
             }
             var callback = function (err, json) {
               if (!err) {
