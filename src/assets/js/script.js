@@ -1614,7 +1614,7 @@ app.ready(function () {
             var bodyObject = {
               // show thumbnails only
               Prefix: 'imgs/400px/',
-              MaxKeys: 2
+              MaxKeys: 20
             }
 
             var callback = function (err, json) {
@@ -1623,19 +1623,14 @@ app.ready(function () {
                 if (Array.isArray(list)) {
                   // HTML content listing files
                   // Mansory grid
-                  var content = '<div class="masonry-grid gap-1">'
+                  var content = ''
                   var todo = list.length
                   var done = 0
                   var Done = function () {
                     done++
                     if (done >= todo) {
                       // ready
-                      content += '</div>'
                       if (json.IsTruncated) {
-                        content += '<button class="btn btn-primary i18n">' +
-                                     '<span data-lang="en_us">Load more</span>' +
-                                     '<span data-lang="pt_br">Carregar mais</span>' +
-                                   '</button>'
                       }
                       $ajax.removeClass('ajax')
                       $el.html(content)
