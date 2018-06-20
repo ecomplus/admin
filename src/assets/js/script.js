@@ -1586,7 +1586,7 @@ app.ready(function () {
         if (json.host) {
           var domain = 'https://' + json.host + '/'
 
-          window.delObject = function (key) {
+          window.deleteImage = function (key) {
             // delete bucket object
             // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property
             var s3Method = 'deleteObjects'
@@ -1657,7 +1657,7 @@ app.ready(function () {
                                        '<a href="' + this.src + '" target="_blank">' +
                                          '<img src="' + this.src + '">' +
                                        '</a>' +
-                                       '<i class="fa fa-trash" onclick="delObject(\'' + key + '\')"></i>' +
+                                       '<i class="fa fa-trash" onclick="deleteImage(\'' + key + '\')"></i>' +
                                      '</div>'
                           Done()
                         }
