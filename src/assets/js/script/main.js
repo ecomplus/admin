@@ -1395,9 +1395,11 @@ app.ready(function () {
 
             // get bucket objects from Storage API
             var s3Method = 'listObjectsV2'
-            var bodyObject = {}
-            // show thumbnails only
-            bodyObject.Prefix = 'imgs/400px/'
+            var bodyObject = {
+              // show thumbnails only
+              Prefix: 'imgs/400px/',
+              MaxKeys: 2
+            }
 
             var callback = function (err, json) {
               if (!err) {
@@ -1413,6 +1415,12 @@ app.ready(function () {
                     if (done >= todo) {
                       // ready
                       content += '</div>'
+                      if (json.IsTruncated) {
+                        content += '<button class="btn btn-primary i18n">' +
+                                     '<span data-lang="en_us">Load more</span>' +
+                                     '<span data-lang="pt_br">Carregar mais</span>' +
+                                   '</button>'
+                      }
                       $ajax.removeClass('ajax')
                       $el.html(content)
                     }
