@@ -541,10 +541,12 @@ body {
   display: inline-block;
   border: $card-internal-border;
   padding: 3px;
+  border-radius: 2px;
 }
 .masonry-item > a > img,
 .masonry-item > img {
   width: 100%;
+  border-radius: 2px;
 }
 
 @media (max-width: 400px) {
