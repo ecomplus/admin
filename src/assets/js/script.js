@@ -1614,7 +1614,7 @@ app.ready(function () {
           var loadStorageContent = function () {
             // reset DOM element
             var $el = $('#storage-content')
-            var $ajax = $el.prev('.ajax-content')
+            var $ajax = $el.prevAll('.ajax-content')
             $el.html('')
             $ajax.addClass('ajax')
 
