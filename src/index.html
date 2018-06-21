@@ -519,10 +519,20 @@
 
     <div id="qv-storage" class="quickview backdrop-light quickview-xl">
       <header class="quickview-header">
-        <p class="quickview-title lead i18n">
+        <p class="quickview-title lead i18n flex-grow">
           <span data-lang="en_us">Library</span>
           <span data-lang="pt_br">Biblioteca</span>
         </p>
+        <div class="btn-toolbar">
+          <div class="btn-group">
+            <button class="btn btn-light">
+              <i class="fa fa-trash"></i>
+            </button>
+            <button class="btn btn-light">
+              <i class="fa fa-check-square-o"></i>
+            </button>
+          </div>
+        </div>
         <span class="close"><i class="ti-close"></i></span>
       </header>
 
@@ -533,8 +543,8 @@
               <div class="line"></div>
             </div>
           </div>
-          <div class="p-20 masonry-grid gap-1" id="storage-content"></div>
-          <div class="text-center pb-20">
+          <div class="m-20 masonry-grid gap-1" id="storage-content"></div>
+          <div class="text-center pb-30">
             <button class="btn btn-primary i18n" id="load-storage">
               <span data-lang="en_us">Load more</span>
               <span data-lang="pt_br">Carregar mais</span>
@@ -647,7 +657,7 @@
           </div>
           <div class="modal-body">
             <p></p>
-            <pre><code class="language-http"></code></pre>
+            <pre class="scrollable"><code class="language-http"></code></pre>
           </div>
           <div class="modal-footer" id="api-request-control">
             <button class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal" id="discard-api-request">
