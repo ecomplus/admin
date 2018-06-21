@@ -399,17 +399,19 @@ app.ready(function () {
       // force stop
       return
     }
+    // start showing pace and headers while loading
+    $('#dashboard').fadeIn()
     console.log('Hello #' + session.my_id)
     // hide for security
     sessionStorage.removeItem('my_id')
     sessionStorage.removeItem('access_token')
+
     // common APIs authentication headers
     var authHeaders = {
       'X-Store-ID': storeId,
       'X-My-ID': session.my_id,
       'X-Access-Token': session.access_token
     }
-
     // run API requests with intervals to prevent rate limit
     var apiQueue = []
     // control API requests queue
@@ -1493,9 +1495,6 @@ app.ready(function () {
     })
 
     var Start = function () {
-      // show rendered application
-      $('#dashboard').fadeIn()
-
       // create first tab
       newTab(function () {
         // force routing
