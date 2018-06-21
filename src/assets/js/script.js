@@ -1657,7 +1657,6 @@ app.ready(function () {
                                        '<a href="' + this.src + '" target="_blank">' +
                                          '<img src="' + this.src + '">' +
                                        '</a>' +
-                                       '<i class="fa fa-trash" onclick="deleteImage(\'' + key + '\')"></i>' +
                                      '</div>'
                           Done()
                         }
