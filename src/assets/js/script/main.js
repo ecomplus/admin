@@ -1431,8 +1431,12 @@ app.ready(function () {
             // reset DOM element
             var $el = $('#storage-content')
             var $ajax = $el.prevAll('.ajax-content')
-            $el.html('')
+            if (!nextMarker) {
+              $el.html('')
+            }
             $ajax.addClass('ajax')
+            var $btn = $('#load-storage')
+            $btn.attr('disabled', true)
 
             // get bucket objects from Storage API
             // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#listObjects-property
@@ -1460,6 +1464,8 @@ app.ready(function () {
                     if (done >= todo) {
                       // ready
                       if (json.IsTruncated) {
+                        // there are more images to load
+                        $btn.removeAttr('disabled')
                         if (json.NextMarker) {
                           lastKey = json.NextMarker
                         }
@@ -1468,7 +1474,7 @@ app.ready(function () {
                         lastKey = null
                       }
                       $ajax.removeClass('ajax')
-                      $el.html(content)
+                      $el.append(content).find('.storage-object').fadeIn()
                     }
                   }
 
