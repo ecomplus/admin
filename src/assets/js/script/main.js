@@ -1422,7 +1422,12 @@ app.ready(function () {
             window.deleteImages(selectedImages())
           })
 
-          var loadStorageContent = function () {
+          var lastKey
+          $('#load-storage').click(function () {
+            loadStorageContent(lastKey)
+          })
+
+          var loadStorageContent = function (nextMarker) {
             // reset DOM element
             var $el = $('#storage-content')
             var $ajax = $el.prevAll('.ajax-content')
@@ -1430,11 +1435,15 @@ app.ready(function () {
             $ajax.addClass('ajax')
 
             // get bucket objects from Storage API
-            var s3Method = 'listObjectsV2'
+            // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#listObjects-property
+            var s3Method = 'listObjects'
             var bodyObject = {
               // show thumbnails only
               Prefix: 'imgs/400px/',
-              MaxKeys: 20
+              MaxKeys: 2
+            }
+            if (nextMarker) {
+              bodyObject.Marker = nextMarker
             }
 
             var callback = function (err, json) {
@@ -1451,6 +1460,12 @@ app.ready(function () {
                     if (done >= todo) {
                       // ready
                       if (json.IsTruncated) {
+                        if (json.NextMarker) {
+                          lastKey = json.NextMarker
+                        }
+                      } else {
+                        // unset last key
+                        lastKey = null
                       }
                       $ajax.removeClass('ajax')
                       $el.html(content)
