@@ -327,6 +327,9 @@ body {
 .modal-open .topbar {
   padding-right: 18px;
 }
+.modal-body.scrollable {
+  max-height: calc(100vh - 180px);
+}
 
 // card control links
 .card-btn-slide:not(:empty) {
