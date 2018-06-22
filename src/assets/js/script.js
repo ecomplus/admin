@@ -1588,22 +1588,31 @@ app.ready(function () {
         if (json.host) {
           var domain = 'https://' + json.host + '/'
 
-          window.deleteImage = function (key) {
+          window.deleteImages = function (keys) {
             // delete bucket object
             // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property
             var s3Method = 'deleteObjects'
-            var baseKey = key.replace(/^.*(@.*)$/, '$1')
+            // mount array of objects with Key property
+            var objects = []
+            for (var i = 0; i < keys.length; i++) {
+              var baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
+              objects.push({
+                Key: baseKey
+              }, {
+                Key: 'imgs/100px/' + baseKey
+              }, {
+                Key: 'imgs/400px/' + baseKey
+              }, {
+                Key: 'imgs/700px/' + baseKey
+              })
+            }
             var bodyObject = {
               Delete: {
-                Objects: [
-                  { Key: baseKey },
-                  { Key: 'imgs/100px/' + baseKey },
-                  { Key: 'imgs/400px/' + baseKey },
-                  { Key: 'imgs/700px/' + baseKey }
-                ],
+                Objects: objects,
                 Quiet: true
               }
             }
+
             var callback = function (err, json) {
               if (!err) {
                 // reload
@@ -1612,6 +1621,22 @@ app.ready(function () {
             }
             callStorageApi(s3Method, callback, bodyObject)
           }
+
+          var selectedImages = function () {
+            // mount array with keys of selected images
+            var keys = []
+            $('#storage-content a.active').each(function () {
+              var key = $(this).data('key')
+              if (key) {
+                keys.push(key)
+              }
+            })
+            return keys
+          }
+
+          $('#storage-delete').click(function () {
+            window.deleteImages(selectedImages())
+          })
 
           var loadStorageContent = function () {
             // reset DOM element
@@ -1656,7 +1681,8 @@ app.ready(function () {
                         var newImg = new Image()
                         newImg.onload = function () {
                           content += '<div class="masonry-item storage-object">' +
-                                       '<a href="javascript:;" onclick="$(this).toggleClass(\'active\')">' +
+                                       '<a href="javascript:;" onclick="$(this).toggleClass(\'active\')" ' +
+                                       'data-key="' + key + '">' +
                                          '<img src="' + this.src + '">' +
                                        '</a>' +
                                      '</div>'
