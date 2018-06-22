@@ -1696,7 +1696,7 @@ app.ready(function () {
             var bodyObject = {
               // show thumbnails only
               Prefix: 'imgs/400px/',
-              MaxKeys: 20
+              MaxKeys: 12
             }
             if (nextMarker) {
               bodyObject.Marker = nextMarker
