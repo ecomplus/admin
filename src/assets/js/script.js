@@ -1576,32 +1576,6 @@ app.ready(function () {
     }
     renderChannels()
 
-    // handle dropzone with Storage API
-    // http://www.dropzonejs.com/#configuration
-    $('#dropzone').dropzone({
-      url: storageApiPath + 'upload.json',
-      headers: authHeaders,
-      thumbnailHeight: 84,
-
-      complete: function (file) {
-        // upload completed
-        // console.log(file)
-        if (file) {
-          // remove thumbnail
-          var $el = $(file.previewElement)
-          if ($el) {
-            $el.find('.dz-progress').hide()
-            var dropzone = this
-            setTimeout(function () {
-              $el.toggle('slide', function () {
-                dropzone.removeFile(file)
-              })
-            }, 1000)
-          }
-        }
-      }
-    })
-
     callStorageApi(null, function (err, json) {
       if (!err) {
         // use store bucket endpoint
@@ -1674,7 +1648,8 @@ app.ready(function () {
             }
           })
 
-          var lastKey
+          // images pagination control
+          var isTruncated, lastKey
           $('#load-storage').click(function () {
             loadStorageContent(lastKey)
           })
@@ -1715,15 +1690,13 @@ app.ready(function () {
                     done++
                     if (done >= todo) {
                       // ready
-                      if (json.IsTruncated) {
+                      isTruncated = json.IsTruncated
+                      if (isTruncated) {
                         // there are more images to load
                         $btn.removeAttr('disabled')
                         if (json.NextMarker) {
                           lastKey = json.NextMarker
                         }
-                      } else {
-                        // unset last key
-                        lastKey = null
                       }
                       $ajax.removeClass('ajax')
                       $el.append(content).find('.storage-object').fadeIn()
@@ -1760,6 +1733,48 @@ app.ready(function () {
           }
           // init
           loadStorageContent()
+
+          // handle dropzone with Storage API
+          // http://www.dropzonejs.com/#configuration
+          $('#dropzone').dropzone({
+            url: storageApiPath + 'upload.json',
+            headers: authHeaders,
+            thumbnailHeight: 84,
+
+            complete: function (file) {
+              // request completed
+              if (file) {
+                // check upload status
+                if (file.status !== 'success') {
+                  // not uploaded
+                  // treat request error response
+                  try {
+                    apiError(JSON.parse(file.xhr.responseText))
+                  } catch (e) {
+                    console.error(file)
+                  }
+                } else if (this.getQueuedFiles().length === 0 && this.getUploadingFiles().length === 0) {
+                  // no files waiting
+                  if (!isTruncated) {
+                    // reload storage content body
+                    loadStorageContent(lastKey)
+                  }
+                }
+
+                // remove thumbnail
+                var $el = $(file.previewElement)
+                if ($el) {
+                  $el.find('.dz-progress').hide()
+                  var dropzone = this
+                  setTimeout(function () {
+                    $el.toggle('slide', function () {
+                      dropzone.removeFile(file)
+                    })
+                  }, 1000)
+                }
+              }
+            }
+          })
         } else {
           console.log('Unexpected Storage API response:', json)
         }
