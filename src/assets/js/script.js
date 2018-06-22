@@ -1613,11 +1613,14 @@ app.ready(function () {
               }
             }
 
+            var $ajax = $('#storage-content').parent()
+            $ajax.addClass('ajax')
             var callback = function (err, json) {
               if (!err) {
                 // reload
                 loadStorageContent()
               }
+              $ajax.removeClass('ajax')
             }
             callStorageApi(s3Method, callback, bodyObject)
           }
@@ -1635,7 +1638,17 @@ app.ready(function () {
           }
 
           $('#storage-delete').click(function () {
-            window.deleteImages(selectedImages())
+            var keys = selectedImages()
+            if (keys.length) {
+              window.deleteImages(keys)
+              // unset selected images
+              $('#storage-content a.active').removeClass('active')
+            } else {
+              app.toast(i18n({
+                'en_us': 'No image selected to delete',
+                'pt_br': 'Nenhuma imagem selecionada para deletar'
+              }))
+            }
           })
 
           var lastKey
@@ -1646,7 +1659,7 @@ app.ready(function () {
           var loadStorageContent = function (nextMarker) {
             // reset DOM element
             var $el = $('#storage-content')
-            var $ajax = $el.prevAll('.ajax-content')
+            var $ajax = $el.parent()
             if (!nextMarker) {
               $el.html('')
             }
