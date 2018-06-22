@@ -1420,7 +1420,7 @@ app.ready(function () {
               }
             }
 
-            var $ajax = $('#storage-content').parent()
+            var $ajax = $('#storage-content').closest('.ajax-content')
             $ajax.addClass('ajax')
             var callback = function (err, json) {
               if (!err) {
@@ -1466,7 +1466,7 @@ app.ready(function () {
           var loadStorageContent = function (nextMarker) {
             // reset DOM element
             var $el = $('#storage-content')
-            var $ajax = $el.parent()
+            var $ajax = $el.closest('.ajax-content')
             if (!nextMarker) {
               $el.html('')
             }
@@ -1480,7 +1480,7 @@ app.ready(function () {
             var bodyObject = {
               // show thumbnails only
               Prefix: 'imgs/400px/',
-              MaxKeys: 12
+              MaxKeys: 15
             }
             if (nextMarker) {
               bodyObject.Marker = nextMarker
