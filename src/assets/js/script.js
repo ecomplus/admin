@@ -1656,7 +1656,7 @@ app.ready(function () {
                         var newImg = new Image()
                         newImg.onload = function () {
                           content += '<div class="masonry-item storage-object">' +
-                                       '<a href="' + this.src + '" target="_blank">' +
+                                       '<a href="javascript:;" onclick="$(this).toggleClass(\'active\')">' +
                                          '<img src="' + this.src + '">' +
                                        '</a>' +
                                      '</div>'
