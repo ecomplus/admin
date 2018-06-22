@@ -532,6 +532,11 @@ body {
   border-radius: 2px;
 }
 
+// storage items async load
+.storage-object {
+  display: none;
+}
+
 @media (max-width: 400px) {
   .masonry-grid {
     column-count: 2;
@@ -566,4 +571,9 @@ body {
 // utilities
 .fs-200 {
   font-size: 200px;
+}
+
+// general
+.btn:disabled {
+  cursor: not-allowed;
 }
