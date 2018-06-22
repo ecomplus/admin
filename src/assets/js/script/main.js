@@ -1361,9 +1361,29 @@ app.ready(function () {
     renderChannels()
 
     // handle dropzone with Storage API
+    // http://www.dropzonejs.com/#configuration
     $('#dropzone').dropzone({
       url: storageApiPath + 'upload.json',
-      headers: authHeaders
+      headers: authHeaders,
+      thumbnailHeight: 84,
+
+      complete: function (file) {
+        // upload completed
+        // console.log(file)
+        if (file) {
+          // remove thumbnail
+          var $el = $(file.previewElement)
+          if ($el) {
+            $el.find('.dz-progress').hide()
+            var dropzone = this
+            setTimeout(function () {
+              $el.toggle('slide', function () {
+                dropzone.removeFile(file)
+              })
+            }, 1000)
+          }
+        }
+      }
     })
 
     callStorageApi(null, function (err, json) {
@@ -1376,9 +1396,12 @@ app.ready(function () {
             // delete bucket object
             // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property
             var s3Method = 'deleteObjects'
+
             // mount array of objects with Key property
             var objects = []
             for (var i = 0; i < keys.length; i++) {
+              // delete all image sizes
+              // ref.: https://github.com/ecomclub/storage-api/blob/master/bin/web.js
               var baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
               objects.push({
                 Key: baseKey
