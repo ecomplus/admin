@@ -1510,7 +1510,8 @@ app.ready(function () {
                  '</a>' +
                '</li>' +
                '<li class="menu-item">' +
-                 '<a class="menu-link" href="javascript:;" data-toggle="quickview" data-target="#qv-storage">' +
+                 '<a class="menu-link" href="javascript:;" onclick="initStorageLib()" ' +
+                 'data-toggle="quickview" data-target="#qv-storage">' +
                    '<span class="icon fa fa-picture-o"></span>' +
                    '<span class="title">' + dictionary.media + '</span>' +
                  '</a>' +
@@ -1575,19 +1576,6 @@ app.ready(function () {
       }
     }
     renderChannels()
-
-    // handle dropzone with Storage API
-    // http://www.dropzonejs.com/#configuration
-    /* global Dropzone */
-    var dropzone = new Dropzone('#dropzone', {
-      url: storageApiPath + 'upload.json',
-      headers: authHeaders
-    })
-    window.upload = function () {
-      // clear dropzone and open modal
-      dropzone.removeAllFiles()
-      $('#modal-uploads').modal('show')
-    }
 
     callStorageApi(null, function (err, json) {
       if (!err) {
@@ -1744,8 +1732,27 @@ app.ready(function () {
 
             callStorageApi(s3Method, callback, bodyObject)
           }
+
+          // handle dropzone with Storage API
+          // http://www.dropzonejs.com/#configuration
+          /* global Dropzone */
+          var dropzone = new Dropzone('#dropzone', {
+            url: storageApiPath + 'upload.json',
+            headers: authHeaders
+          })
+          window.upload = function () {
+            // clear dropzone and open modal
+            dropzone.removeAllFiles()
+            $('#modal-uploads').modal('show')
+          }
+
           // init
-          loadStorageContent()
+          // loadStorageContent()
+          window.initStorageLib = function () {
+            if (lastKey === undefined) {
+              loadStorageContent()
+            }
+          }
         } else {
           console.log('Unexpected Storage API response:', json)
         }
