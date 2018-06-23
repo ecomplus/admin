@@ -549,15 +549,6 @@
           <div class="m-20 masonry-grid gap-1" id="storage-content"></div>
         </div>
       </div>
-
-      <footer class="quickview-footer p-10">
-        <div id="dropzone" class="dropzone dz-clickable w-100">
-          <div class="dz-default dz-message i18n">
-            <span data-lang="en_us">Drop or select files to upload</span>
-            <span data-lang="pt_br">Selecione ou arraste arquivos para upload</span>
-          </div>
-        </div>
-      </footer>
     </div>
     <!-- END Global quickview -->
 
@@ -667,6 +658,35 @@
               <span class="i18n">
                 <span data-lang="en_us">Continue</span>
                 <span data-lang="pt_br">Continuar</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal-center fade" id="modal-uploads" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-body scrollable">
+            <div id="dropzone" class="dropzone dz-clickable w-100">
+              <div class="dz-default dz-message i18n">
+                <span data-lang="en_us">Drop or select files to upload</span>
+                <span data-lang="pt_br">Selecione ou arraste arquivos para upload</span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Cancel</span>
+                <span data-lang="pt_br">Cancelar</span>
+              </span>
+            </button>
+            <button class="btn btn-bold btn-pure btn-success" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Done</span>
+                <span data-lang="pt_br">Pronto</span>
               </span>
             </button>
           </div>
