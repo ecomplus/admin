@@ -523,7 +523,24 @@
           <span data-lang="en_us">Library</span>
           <span data-lang="pt_br">Biblioteca</span>
         </p>
+        <span class="close"><i class="ti-close"></i></span>
+      </header>
+      <div class="quickview-body">
+        <div class="ajax-content scrollable">
+          <div class="spinner-linear">
+            <div class="line"></div>
+          </div>
+          <div class="ajax-overlay"></div>
+          <div class="m-20 masonry-grid gap-1" id="storage-content"></div>
+        </div>
+      </div>
+      <footer class="quickview-footer flex-row-reverse">
         <div class="btn-toolbar">
+          <div class="btn-group mr-2">
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modal-uploads">
+              Upload
+            </button>
+          </div>
           <div class="btn-group">
             <button class="btn btn-light i18n" id="load-storage">
               <span data-lang="en_us">Load more</span>
@@ -537,18 +554,7 @@
             </button>
           </div>
         </div>
-        <span class="close"><i class="ti-close"></i></span>
-      </header>
-
-      <div class="quickview-body">
-        <div class="ajax-content scrollable">
-          <div class="spinner-linear">
-            <div class="line"></div>
-          </div>
-          <div class="ajax-overlay"></div>
-          <div class="m-20 masonry-grid gap-1" id="storage-content"></div>
-        </div>
-      </div>
+      </footer>
     </div>
     <!-- END Global quickview -->
 
@@ -685,8 +691,8 @@
             </button>
             <button class="btn btn-bold btn-pure btn-success" data-dismiss="modal">
               <span class="i18n">
-                <span data-lang="en_us">Done</span>
-                <span data-lang="pt_br">Pronto</span>
+                <span data-lang="en_us">Save</span>
+                <span data-lang="pt_br">Salvar</span>
               </span>
             </button>
           </div>
