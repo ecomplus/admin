@@ -1294,7 +1294,10 @@ app.ready(function () {
                  '</a>' +
                '</li>' +
                '<li class="menu-item">' +
-                 '<a class="menu-link" href="javascript:;" data-toggle="quickview" data-target="#qv-storage">' +
+                 // media link
+                 // open storage library quickview and clear dropzone (uploads)
+                 '<a class="menu-link" href="javascript:;" onclick="dropzone.removeAllFiles()" ' +
+                   'data-toggle="quickview" data-target="#qv-storage">' +
                    '<span class="icon fa fa-picture-o"></span>' +
                    '<span class="title">' + dictionary.media + '</span>' +
                  '</a>' +
@@ -1359,6 +1362,15 @@ app.ready(function () {
       }
     }
     renderChannels()
+
+    // handle dropzone with Storage API
+    // http://www.dropzonejs.com/#configuration
+    /* global Dropzone */
+    window.dropzone = new Dropzone('#dropzone', {
+      url: storageApiPath + 'upload.json',
+      headers: authHeaders,
+      thumbnailHeight: 84
+    })
 
     callStorageApi(null, function (err, json) {
       if (!err) {
@@ -1517,48 +1529,6 @@ app.ready(function () {
           }
           // init
           loadStorageContent()
-
-          // handle dropzone with Storage API
-          // http://www.dropzonejs.com/#configuration
-          $('#dropzone').dropzone({
-            url: storageApiPath + 'upload.json',
-            headers: authHeaders,
-            thumbnailHeight: 84,
-
-            complete: function (file) {
-              // request completed
-              if (file) {
-                // check upload status
-                if (file.status !== 'success') {
-                  // not uploaded
-                  // treat request error response
-                  try {
-                    apiError(JSON.parse(file.xhr.responseText))
-                  } catch (e) {
-                    console.error(file)
-                  }
-                } else if (this.getQueuedFiles().length === 0 && this.getUploadingFiles().length === 0) {
-                  // no files waiting
-                  if (!isTruncated) {
-                    // reload storage content body
-                    loadStorageContent(lastKey)
-                  }
-                }
-
-                // remove thumbnail
-                var $el = $(file.previewElement)
-                if ($el) {
-                  $el.find('.dz-progress').hide()
-                  var dropzone = this
-                  setTimeout(function () {
-                    $el.toggle('slide', function () {
-                      dropzone.removeFile(file)
-                    })
-                  }, 1000)
-                }
-              }
-            }
-          })
         } else {
           console.log('Unexpected Storage API response:', json)
         }
