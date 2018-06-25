@@ -1376,6 +1376,9 @@ app.ready(function () {
             // callback just once, unset
             window.selectImagesCallback = null
           }
+          $('#uploads-done').click(function () {
+            selectImagesCallback()
+          })
 
           // image is resized after upload
           var imageSizes = {
@@ -1615,10 +1618,12 @@ app.ready(function () {
                 // console.log(selectedImages)
               }
 
+              /* wait for further uploads
               if (dropzone.getQueuedFiles().length === 0 && dropzone.getUploadingFiles().length === 0) {
                 // all uploads done
                 selectImagesCallback()
               }
+              */
             }
           })
 
