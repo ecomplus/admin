@@ -1784,13 +1784,13 @@ app.ready(function () {
                     picture.zoom.size = w + 'x' + h
                     // calculate thumbnails sizes
                     if (w > h) {
-                      picture.small.size = '100x' + (h * 100 / w)
-                      picture.normal.size = '400x' + (h * 400 / w)
-                      picture.big.size = '700x' + (h * 700 / w)
+                      picture.small.size = '100x' + Math.round(h * 100 / w)
+                      picture.normal.size = '400x' + Math.round(h * 400 / w)
+                      picture.big.size = '700x' + Math.round(h * 700 / w)
                     } else {
-                      picture.small.size = (w * 100 / h) + 'x100'
-                      picture.normal.size = (w * 400 / h) + 'x400'
-                      picture.big.size = (w * 700 / h) + 'x700'
+                      picture.small.size = Math.round(w * 100 / h) + 'x100'
+                      picture.normal.size = Math.round(w * 400 / h) + 'x400'
+                      picture.big.size = Math.round(w * 700 / h) + 'x700'
                     }
                   }
                   if (file.name) {
