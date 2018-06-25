@@ -153,7 +153,8 @@
               <a class="media" href="#">
                 <div class="media-body">
                   <h6 class="fs-13 lh-1">Typography</h6>
-                  <p class="fs-12 text-truncate">Simple and easily customized typography for headings, body text, lists, and more.</p>
+                  <p class="fs-12 text-truncate">Simple and easily customized typography for headings,
+                    body text, lists, and more.</p>
                 </div>
               </a>
             </div>
@@ -181,19 +182,22 @@
               <a class="media" href="#">
                 <div class="media-body">
                   <h6 class="fs-13 lh-1">Notification</h6>
-                  <p class="fs-12 text-truncate">Alert, tooltip, popover, toast, callout, push notification and more.</p>
+                  <p class="fs-12 text-truncate">Alert, tooltip, popover, toast, callout,
+                    push notification and more.</p>
                 </div>
               </a>
               <a class="media" href="#">
                 <div class="media-body">
                   <h6 class="fs-13 lh-1">Dropdown</h6>
-                  <p class="fs-12 text-truncate">Toggleable, contextual overlays for displaying lists of links and more.</p>
+                  <p class="fs-12 text-truncate">Toggleable, contextual overlays for displaying
+                    lists of links and more.</p>
                 </div>
               </a>
               <a class="media" href="#">
                 <div class="media-body">
                   <h6 class="fs-13 lh-1">Misc</h6>
-                  <p class="fs-12 text-truncate">Breadcrumbs, pagination, pager, context menu, sortable and more.</p>
+                  <p class="fs-12 text-truncate">Breadcrumbs, pagination, pager,
+                    context menu, sortable and more.</p>
                 </div>
               </a>
             </div>
@@ -537,7 +541,7 @@
       <footer class="quickview-footer flex-row-reverse">
         <div class="btn-toolbar">
           <div class="btn-group mr-2">
-            <button class="btn btn-primary" data-toggle="modal" data-target="#modal-uploads">
+            <button class="btn btn-primary qv-close" onclick="upload()">
               Upload
             </button>
           </div>
@@ -546,7 +550,7 @@
               <span data-lang="en_us">Load more</span>
               <span data-lang="pt_br">Carregar mais</span>
             </button>
-            <button class="btn btn-light" id="storage-select">
+            <button class="btn btn-light qv-close" id="storage-select">
               <i class="fa fa-check-square-o"></i>
             </button>
             <button class="btn btn-light" id="storage-delete">
@@ -683,6 +687,13 @@
             </div>
           </div>
           <div class="modal-footer">
+            <button class="btn btn-bold btn-pure btn-info" data-dismiss="modal"
+              data-toggle="quickview" data-target="#qv-storage">
+              <span class="i18n">
+                <span data-lang="en_us">Library</span>
+                <span data-lang="pt_br">Biblioteca</span>
+              </span>
+            </button>
             <button class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">
               <span class="i18n">
                 <span data-lang="en_us">Cancel</span>

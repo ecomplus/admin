@@ -1584,13 +1584,20 @@ app.ready(function () {
           var domain = 'https://' + json.host + '/'
 
           // global to return images selection
-          window.selectImagesCallback = null
+          var imagesCallback = null
+          window.setImagesCallback = function (cb) {
+            imagesCallback = cb
+            // reset selected images array
+            selectedImages = []
+          }
           var selectedImages = []
           var selectImagesCallback = function (err) {
-            // return selected images
-            window.selectImagesCallback(err, selectedImages)
-            // callback just once, unset
-            window.selectImagesCallback = null
+            if (typeof imagesCallback === 'function') {
+              // return selected images
+              imagesCallback(err, selectedImages)
+              // callback just once, unset
+              imagesCallback = null
+            }
           }
           $('#uploads-done').click(function () {
             selectImagesCallback()
@@ -1664,13 +1671,39 @@ app.ready(function () {
             })
             return keys
           }
+          var unactivateImages = function () {
+            // unset selected images
+            $('#storage-content a.active').removeClass('active')
+          }
+
+          $('#storage-select').click(function () {
+            var keys = activeImages()
+            if (keys.length) {
+              for (var i = 0; i < keys.length; i++) {
+                // all image sizes
+                // ref.: https://github.com/ecomclub/storage-api/blob/master/bin/web.js
+                var baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
+                // picture object
+                // based on product resource picture property
+                // https://ecomstore.docs.apiary.io/#reference/products/product-object
+                var picture = {}
+                for (var thumb in imageSizes) {
+                  if (imageSizes.hasOwnProperty(thumb)) {
+                    picture[thumb] = { url: domain + imageSizes[thumb].path + baseKey }
+                  }
+                }
+                selectedImages.push(picture)
+              }
+              unactivateImages()
+            }
+            selectImagesCallback()
+          })
 
           $('#storage-delete').click(function () {
             var keys = activeImages()
             if (keys.length) {
               deleteImages(keys)
-              // unset selected images
-              $('#storage-content a.active').removeClass('active')
+              unactivateImages()
             } else {
               app.toast(i18n({
                 'en_us': 'No image selected to delete',
@@ -1786,7 +1819,7 @@ app.ready(function () {
               apiError(json)
             }
 
-            if (typeof window.selectImagesCallback === 'function') {
+            if (typeof imagesCallback === 'function') {
               // check if uploaded file is an image by mime type
               if (file.type.substr(0, 6) === 'image/' && json.key && file.status === 'success') {
                 // picture object
@@ -1847,7 +1880,7 @@ app.ready(function () {
             // clear dropzone and open modal
             dropzone.removeAllFiles()
             // reset
-            selectedImages = []
+            // selectedImages = []
             $('#modal-uploads').modal('show')
           }
 
