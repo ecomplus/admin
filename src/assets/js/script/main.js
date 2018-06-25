@@ -1562,6 +1562,20 @@ app.ready(function () {
                   }
 
                   if (file.height && file.width) {
+                    // save image sizes
+                    var w = file.width
+                    var h = file.height
+                    picture.zoom.size = w + 'x' + h
+                    // calculate thumbnails sizes
+                    if (w > h) {
+                      picture.small.size = '100x' + (h * 100 / w)
+                      picture.normal.size = '400x' + (h * 400 / w)
+                      picture.big.size = '700x' + (h * 700 / w)
+                    } else {
+                      picture.small.size = (w * 100 / h) + 'x100'
+                      picture.normal.size = (w * 400 / h) + 'x400'
+                      picture.big.size = (w * 700 / h) + 'x700'
+                    }
                   }
                   if (file.name) {
                     // use filename as default image alt
@@ -1573,6 +1587,7 @@ app.ready(function () {
                       }
                     }
                   }
+
                   window.selectedImages.push(picture)
                 }
               }
