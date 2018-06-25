@@ -1581,9 +1581,12 @@ app.ready(function () {
       if (!err) {
         // use store bucket endpoint
         if (json.host) {
+          // globals to return images selection
+          window.selectedImages = []
+          window.selectImagesCallback = null
           var domain = 'https://' + json.host + '/'
 
-          window.deleteImages = function (keys) {
+          var deleteImages = function (keys) {
             // delete bucket object
             // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property
             var s3Method = 'deleteObjects'
@@ -1623,7 +1626,7 @@ app.ready(function () {
             callStorageApi(s3Method, callback, bodyObject)
           }
 
-          var selectedImages = function () {
+          var activeImages = function () {
             // mount array with keys of selected images
             var keys = []
             $('#storage-content a.active').each(function () {
@@ -1636,9 +1639,9 @@ app.ready(function () {
           }
 
           $('#storage-delete').click(function () {
-            var keys = selectedImages()
+            var keys = activeImages()
             if (keys.length) {
-              window.deleteImages(keys)
+              deleteImages(keys)
               // unset selected images
               $('#storage-content a.active').removeClass('active')
             } else {
@@ -1740,14 +1743,69 @@ app.ready(function () {
             url: storageApiPath + 'upload.json',
             headers: authHeaders
           })
+
+          dropzone.on('complete', function (file) {
+            console.log(file)
+            // API request done
+            try {
+              var json = JSON.parse(file.xhr.responseText)
+            } catch (e) {
+              // unexpected response
+              apiError()
+              console.error(new Error('Upload filed'), file)
+              return
+            }
+
+            if (file.status === 'success') {
+              if (file.type.substr(0, 6) === 'image/') {
+                if (json.key) {
+                  // picture object
+                  // based on product resource picture property
+                  // https://ecomstore.docs.apiary.io/#reference/products/product-object
+                  var picture = {
+                    zoom: {
+                      url: domain + json.key
+                    },
+                    small: {
+                      url: domain + 'imgs/100px/' + json.key
+                    },
+                    normal: {
+                      url: domain + 'imgs/400px/' + json.key
+                    },
+                    big: {
+                      url: domain + 'imgs/700px/' + json.key
+                    }
+                  }
+
+                  if (file.height && file.width) {
+                  }
+                  if (file.name) {
+                    // use filename as default image alt
+                    // remove file extension
+                    var alt = file.name.replace(/\.[^.]+$/, '')
+                    for (var thumb in picture) {
+                      if (picture.hasOwnProperty(thumb)) {
+                        picture[thumb].alt = alt
+                      }
+                    }
+                  }
+                  window.selectedImages.push(picture)
+                }
+              }
+            } else {
+              apiError(json)
+            }
+          })
+
           window.upload = function () {
             // clear dropzone and open modal
             dropzone.removeAllFiles()
+            // reset
+            window.selectedImages = []
             $('#modal-uploads').modal('show')
           }
 
-          // init
-          // loadStorageContent()
+          // init images library
           window.initStorageLib = function () {
             if (lastKey === undefined) {
               loadStorageContent()
