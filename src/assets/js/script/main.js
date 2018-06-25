@@ -1365,10 +1365,17 @@ app.ready(function () {
       if (!err) {
         // use store bucket endpoint
         if (json.host) {
+          var domain = 'https://' + json.host + '/'
+
           // global to return images selection
           window.selectImagesCallback = null
           var selectedImages = []
-          var domain = 'https://' + json.host + '/'
+          var selectImagesCallback = function (err) {
+            // return selected images
+            window.selectImagesCallback(err, selectedImages)
+            // callback just once, unset
+            window.selectImagesCallback = null
+          }
 
           // image is resized after upload
           var imageSizes = {
@@ -1610,8 +1617,7 @@ app.ready(function () {
 
               if (dropzone.getQueuedFiles().length === 0 && dropzone.getUploadingFiles().length === 0) {
                 // all uploads done
-                // return selected images
-                window.selectImagesCallback(null, selectedImages)
+                selectImagesCallback()
               }
             }
           })
