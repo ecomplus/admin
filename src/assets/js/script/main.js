@@ -1370,6 +1370,27 @@ app.ready(function () {
           window.selectImagesCallback = null
           var domain = 'https://' + json.host + '/'
 
+          // image is resized after upload
+          var imageSizes = {
+            zoom: {
+              // original size
+              // no path, domain root
+              path: ''
+            },
+            small: {
+              size: 100,
+              path: 'imgs/100px/'
+            },
+            normal: {
+              size: 400,
+              path: 'imgs/400px/'
+            },
+            big: {
+              size: 700,
+              path: 'imgs/700px/'
+            }
+          }
+
           var deleteImages = function (keys) {
             // delete bucket object
             // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property
@@ -1381,15 +1402,11 @@ app.ready(function () {
               // delete all image sizes
               // ref.: https://github.com/ecomclub/storage-api/blob/master/bin/web.js
               var baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
-              objects.push({
-                Key: baseKey
-              }, {
-                Key: 'imgs/100px/' + baseKey
-              }, {
-                Key: 'imgs/400px/' + baseKey
-              }, {
-                Key: 'imgs/700px/' + baseKey
-              })
+              for (var thumb in imageSizes) {
+                if (imageSizes.hasOwnProperty(thumb)) {
+                  objects.push({ Key: imageSizes[thumb] + baseKey })
+                }
+              }
             }
             var bodyObject = {
               Delete: {
@@ -1458,7 +1475,7 @@ app.ready(function () {
             var s3Method = 'listObjects'
             var bodyObject = {
               // show thumbnails only
-              Prefix: 'imgs/400px/',
+              Prefix: imageSizes.normal.path,
               MaxKeys: 15
             }
             if (nextMarker) {
@@ -1529,7 +1546,7 @@ app.ready(function () {
           })
 
           dropzone.on('complete', function (file) {
-            console.log(file)
+            // console.log(file)
             // API request done
             try {
               var json = JSON.parse(file.xhr.responseText)
@@ -1546,18 +1563,11 @@ app.ready(function () {
                   // picture object
                   // based on product resource picture property
                   // https://ecomstore.docs.apiary.io/#reference/products/product-object
-                  var picture = {
-                    zoom: {
-                      url: domain + json.key
-                    },
-                    small: {
-                      url: domain + 'imgs/100px/' + json.key
-                    },
-                    normal: {
-                      url: domain + 'imgs/400px/' + json.key
-                    },
-                    big: {
-                      url: domain + 'imgs/700px/' + json.key
+                  var picture = {}
+                  var thumb
+                  for (thumb in imageSizes) {
+                    if (imageSizes.hasOwnProperty(thumb)) {
+                      picture[thumb] = { url: domain + imageSizes[thumb].path + json.key }
                     }
                   }
 
@@ -1565,23 +1575,25 @@ app.ready(function () {
                     // save image sizes
                     var w = file.width
                     var h = file.height
+                    // original sizes
                     picture.zoom.size = w + 'x' + h
                     // calculate thumbnails sizes
-                    if (w > h) {
-                      picture.small.size = '100x' + Math.round(h * 100 / w)
-                      picture.normal.size = '400x' + Math.round(h * 400 / w)
-                      picture.big.size = '700x' + Math.round(h * 700 / w)
-                    } else {
-                      picture.small.size = Math.round(w * 100 / h) + 'x100'
-                      picture.normal.size = Math.round(w * 400 / h) + 'x400'
-                      picture.big.size = Math.round(w * 700 / h) + 'x700'
+                    for (thumb in imageSizes) {
+                      if (imageSizes.hasOwnProperty(thumb)) {
+                        var px = imageSizes[thumb].size
+                        if (px) {
+                          // resize base
+                          picture[thumb].size =
+                            ((w < h) ? px + 'x' + Math.round(h * px / w) : Math.round(w * px / h) + 'x' + px)
+                        }
+                      }
                     }
                   }
                   if (file.name) {
                     // use filename as default image alt
                     // remove file extension
                     var alt = file.name.replace(/\.[^.]+$/, '')
-                    for (var thumb in picture) {
+                    for (thumb in picture) {
                       if (picture.hasOwnProperty(thumb)) {
                         picture[thumb].alt = alt
                       }
