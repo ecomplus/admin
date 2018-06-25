@@ -1404,7 +1404,7 @@ app.ready(function () {
               var baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
               for (var thumb in imageSizes) {
                 if (imageSizes.hasOwnProperty(thumb)) {
-                  objects.push({ Key: imageSizes[thumb] + baseKey })
+                  objects.push({ Key: imageSizes[thumb].path + baseKey })
                 }
               }
             }
