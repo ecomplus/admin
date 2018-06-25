@@ -1556,11 +1556,13 @@ app.ready(function () {
               console.error(new Error('Upload filed'), file)
               return
             }
-            // check if uploaded file is an image by mime type
-            var isImage = (file.type.substr(0, 6) === 'image/')
+            if (file.status !== 'success') {
+              apiError(json)
+            }
 
-            if (file.status === 'success') {
-              if (isImage && json.key) {
+            if (typeof window.selectImagesCallback === 'function') {
+              // check if uploaded file is an image by mime type
+              if (file.type.substr(0, 6) === 'image/' && json.key && file.status === 'success') {
                 // picture object
                 // based on product resource picture property
                 // https://ecomstore.docs.apiary.io/#reference/products/product-object
@@ -1605,13 +1607,12 @@ app.ready(function () {
                 selectedImages.push(picture)
                 // console.log(selectedImages)
               }
-            } else {
-              apiError(json)
-            }
 
-            if (isImage && typeof window.selectImagesCallback === 'function') {
-              // return selected images
-              window.selectImagesCallback(null, selectedImages)
+              if (dropzone.getQueuedFiles().length === 0 && dropzone.getUploadingFiles().length === 0) {
+                // all uploads done
+                // return selected images
+                window.selectImagesCallback(null, selectedImages)
+              }
             }
           })
 
