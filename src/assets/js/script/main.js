@@ -1365,9 +1365,9 @@ app.ready(function () {
       if (!err) {
         // use store bucket endpoint
         if (json.host) {
-          // globals to return images selection
-          window.selectedImages = []
+          // global to return images selection
           window.selectImagesCallback = null
+          var selectedImages = []
           var domain = 'https://' + json.host + '/'
 
           // image is resized after upload
@@ -1556,55 +1556,62 @@ app.ready(function () {
               console.error(new Error('Upload filed'), file)
               return
             }
+            // check if uploaded file is an image by mime type
+            var isImage = (file.type.substr(0, 6) === 'image/')
 
             if (file.status === 'success') {
-              if (file.type.substr(0, 6) === 'image/') {
-                if (json.key) {
-                  // picture object
-                  // based on product resource picture property
-                  // https://ecomstore.docs.apiary.io/#reference/products/product-object
-                  var picture = {}
-                  var thumb
+              if (isImage && json.key) {
+                // picture object
+                // based on product resource picture property
+                // https://ecomstore.docs.apiary.io/#reference/products/product-object
+                var picture = {}
+                var thumb
+                for (thumb in imageSizes) {
+                  if (imageSizes.hasOwnProperty(thumb)) {
+                    picture[thumb] = { url: domain + imageSizes[thumb].path + json.key }
+                  }
+                }
+
+                if (file.height && file.width) {
+                  // save image sizes
+                  var w = file.width
+                  var h = file.height
+                  // original sizes
+                  picture.zoom.size = w + 'x' + h
+                  // calculate thumbnails sizes
                   for (thumb in imageSizes) {
                     if (imageSizes.hasOwnProperty(thumb)) {
-                      picture[thumb] = { url: domain + imageSizes[thumb].path + json.key }
-                    }
-                  }
-
-                  if (file.height && file.width) {
-                    // save image sizes
-                    var w = file.width
-                    var h = file.height
-                    // original sizes
-                    picture.zoom.size = w + 'x' + h
-                    // calculate thumbnails sizes
-                    for (thumb in imageSizes) {
-                      if (imageSizes.hasOwnProperty(thumb)) {
-                        var px = imageSizes[thumb].size
-                        if (px) {
-                          // resize base
-                          picture[thumb].size =
-                            ((w < h) ? px + 'x' + Math.round(h * px / w) : Math.round(w * px / h) + 'x' + px)
-                        }
+                      var px = imageSizes[thumb].size
+                      if (px) {
+                        // resize base
+                        picture[thumb].size = w > h
+                          ? px + 'x' + Math.round(h * px / w)
+                          : Math.round(w * px / h) + 'x' + px
                       }
                     }
                   }
-                  if (file.name) {
-                    // use filename as default image alt
-                    // remove file extension
-                    var alt = file.name.replace(/\.[^.]+$/, '')
-                    for (thumb in picture) {
-                      if (picture.hasOwnProperty(thumb)) {
-                        picture[thumb].alt = alt
-                      }
-                    }
-                  }
-
-                  window.selectedImages.push(picture)
                 }
+                if (file.name) {
+                  // use filename as default image alt
+                  // remove file extension
+                  var alt = file.name.replace(/\.[^.]+$/, '')
+                  for (thumb in picture) {
+                    if (picture.hasOwnProperty(thumb)) {
+                      picture[thumb].alt = alt
+                    }
+                  }
+                }
+
+                selectedImages.push(picture)
+                // console.log(selectedImages)
               }
             } else {
               apiError(json)
+            }
+
+            if (isImage && typeof window.selectImagesCallback === 'function') {
+              // return selected images
+              window.selectImagesCallback(null, selectedImages)
             }
           })
 
@@ -1612,7 +1619,7 @@ app.ready(function () {
             // clear dropzone and open modal
             dropzone.removeAllFiles()
             // reset
-            window.selectedImages = []
+            selectedImages = []
             $('#modal-uploads').modal('show')
           }
 
