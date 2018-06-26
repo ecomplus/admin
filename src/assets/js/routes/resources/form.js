@@ -240,6 +240,7 @@
       })
 
       // show form
+      window.fixScrollbars($form)
       $form.removeClass('ajax ajax-cards')
     }
   }
