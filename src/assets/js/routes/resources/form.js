@@ -110,11 +110,12 @@
             'pt_br': 'Selecionar imagem'
           })
         }
+        console.log(multiple)
+        console.log(name)
 
-        var button = $('<button/>', {
-          'class': 'btn btn-sm btn-outline btn-secondary',
-          type: 'button',
-          html: '<i class="fa fa-picture-o"></i>&nbsp; ' + text,
+        var button = $('<div/>', {
+          'class': 'select-image scrollable',
+          html: '<p><i class="fa fa-picture-o"></i>&nbsp; ' + text + '</p>',
           click: function () {
             window.upload()
           }

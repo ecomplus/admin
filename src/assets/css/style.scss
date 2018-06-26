@@ -425,6 +425,43 @@ body {
   height: 500px;
 }
 
+// block to select image replacing input file
+.select-image {
+  cursor: pointer;
+  padding: 15px;
+  height: 120px;
+  width: 100%;
+  background: $color-bg-lightest;
+  border: $card-internal-border;
+  overflow: hidden;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-wrap: nowrap;
+  -webkit-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+.select-image p {
+  display: none;
+}
+.select-image p:last-child {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.select-image img {
+  height: 90px;
+  width: auto;
+  max-width: 100%;
+  margin-right: 10px;
+}
+.select-image img:last-child {
+  margin-right: 0;
+}
+
 // resources list
 .data-list,
 .data-list > * {
