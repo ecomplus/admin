@@ -216,10 +216,19 @@
             }
             // commit only to perform reactive actions
             commit(data, true)
+
+            for (var i = 0; i < pictures.length && i < max; i++) {
+              var img = new Image()
+              var url = pictures[i].small.url
+              img.onload = function () {
+                $el.prepend('<img src="' + url + '" />')
+              }
+              img.src = url
+            }
           }
         }
 
-        var el = $('<div/>', {
+        var $el = $('<div/>', {
           'class': 'select-image scrollable',
           html: '<p><i class="fa fa-picture-o"></i>&nbsp; ' + text + '</p>',
           click: function () {
@@ -227,7 +236,7 @@
             window.upload()
           }
         })
-        $(this).replaceWith(el)
+        $(this).replaceWith($el)
       })
 
       // show form

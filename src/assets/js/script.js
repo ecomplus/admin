@@ -837,6 +837,14 @@ app.ready(function () {
         // successful response
         // put HTML content
         el.html(html).fadeIn()
+
+        setTimeout(function () {
+          // handle scrollbars inside loaded container
+          el.find('.scrollable').perfectScrollbar({
+            wheelPropagation: false,
+            wheelSpeed: 0.5
+          })
+        }, 400)
       })
       .fail(function (jqXHR, textStatus, err) {
         app.toast(i18n({
@@ -1148,16 +1156,7 @@ app.ready(function () {
         $('#app-nav-' + window.tabId + ' > a').text(tabTitle)
       }
       $('#router > .loading').fadeOut()
-      var $tab = window.elTab.children()
-      $tab.fadeIn()
-      setTimeout(function () {
-        // handle scrollbars inside tab
-        $tab.find('.scrollable').perfectScrollbar({
-          wheelPropagation: false,
-          wheelSpeed: 0.5
-        })
-      }, 400)
-
+      window.elTab.children().fadeIn()
       // save title for further tab changes
       appTabs[currentTab].tabTitle = tabTitle
       changeBrowserTabTitle(tabTitle)
