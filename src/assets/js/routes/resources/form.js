@@ -218,12 +218,16 @@
             commit(data, true)
 
             for (var i = 0; i < pictures.length && i < max; i++) {
-              var img = new Image()
-              var url = pictures[i].small.url
-              img.onload = function () {
-                $el.prepend('<img src="' + url + '" />')
-              }
-              img.src = url
+              // load image, then show inside select image block
+              // async process
+              (function () {
+                var img = new Image()
+                var url = pictures[i].small.url
+                img.onload = function () {
+                  $el.prepend('<img src="' + url + '" />')
+                }
+                img.src = url
+              }())
             }
           }
         }
