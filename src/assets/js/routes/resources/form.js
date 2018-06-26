@@ -87,40 +87,11 @@
         }
       })
 
+      // setup inputs plugins
       $form.find('.tagsinput').tagsinput()
       $form.find('select:not(.tagsinput)').selectpicker({
         style: 'btn-light',
         noneSelectedText: '--'
-      })
-
-      $form.find('input[type="file"]').each(function () {
-        // handle images selection
-        // use global dropzone and library
-        var text, multiple, name
-        if ($(this).attr('multiple')) {
-          multiple = true
-          text = i18n({
-            'en_us': 'Select images',
-            'pt_br': 'Selecionar imagens'
-          })
-        } else {
-          multiple = false
-          text = i18n({
-            'en_us': 'Select image',
-            'pt_br': 'Selecionar imagem'
-          })
-        }
-        console.log(multiple)
-        console.log(name)
-
-        var button = $('<div/>', {
-          'class': 'select-image scrollable',
-          html: '<p><i class="fa fa-picture-o"></i>&nbsp; ' + text + '</p>',
-          click: function () {
-            window.upload()
-          }
-        })
-        $(this).replaceWith(button)
       })
 
       // treat input values to data properties
@@ -191,6 +162,72 @@
           // commit only to perform reactive actions
           commit(data, true)
         }
+      })
+
+      $form.find('input[type="file"]').each(function () {
+        // handle images selection
+        // use global dropzone and library
+        var text, multiple, max, prop
+        multiple = $(this).attr('multiple')
+        if (multiple) {
+          max = $(this).data('max')
+          if (!max) {
+            // default maximum number of images
+            max = 50
+          }
+          text = i18n({
+            'en_us': 'Select images',
+            'pt_br': 'Selecionar imagens'
+          })
+        } else {
+          max = 1
+          text = i18n({
+            'en_us': 'Select image',
+            'pt_br': 'Selecionar imagem'
+          })
+        }
+        prop = $(this).attr('name')
+
+        // callback after images selection
+        var imagesCallback = function (err, pictures) {
+          if (!err) {
+            var data = Data()
+            // check number of images
+            if (pictures.length > max) {
+              if (multiple) {
+                // remove excess elements
+                pictures.splice(max, pictures.length - max)
+                app.toast(i18n({
+                  'en_us': 'A maximum of ' + max + ' images will be selected',
+                  'pt_br': 'No máximo ' + max + ' imagens serão selecionadas'
+                }))
+              } else {
+                app.toast(i18n({
+                  'en_us': 'Only one image will be selected',
+                  'pt_br': 'Apenas uma imagem será selecionada'
+                }))
+              }
+            }
+
+            if (multiple) {
+              data[prop] = pictures
+            } else {
+              data[prop] = pictures[0]
+            }
+            // commit only to perform reactive actions
+            commit(data, true)
+          }
+        }
+
+        var el = $('<div/>', {
+          'class': 'select-image scrollable',
+          html: '<p><i class="fa fa-picture-o"></i>&nbsp; ' + text + '</p>',
+          click: function () {
+            window.setImagesCallback(imagesCallback)
+            window.upload()
+          }
+        })
+        $(this).replaceWith(el)
       })
 
       // show form
