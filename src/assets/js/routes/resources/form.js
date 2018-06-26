@@ -217,14 +217,29 @@
             // commit only to perform reactive actions
             commit(data, true)
 
+            // show spinner while loading images
+            $el.addClass('ajax').find('img').remove()
+            var todo = 0
+            var done = 0
+            // concat HTML content with images
+            var content = ''
+            var Done = function () {
+              done++
+              if (done === todo) {
+                $el.removeClass('ajax').children('.images-list').prepend(content)
+              }
+            }
+
             for (var i = 0; i < pictures.length && i < max; i++) {
+              todo++
               // load image, then show inside select image block
               // async process
               (function () {
+                var url = pictures[i].zoom.url
                 var img = new Image()
-                var url = pictures[i].normal.url
                 img.onload = function () {
-                  $el.prepend('<img src="' + url + '" />')
+                  content += '<img src="' + url + '" />'
+                  Done()
                 }
                 img.src = url
               }())
@@ -233,8 +248,11 @@
         }
 
         var $el = $('<div/>', {
-          'class': 'select-image scrollable',
-          html: '<p><i class="fa fa-picture-o"></i>&nbsp; ' + text + '</p>',
+          'class': 'select-image scrollable ajax-content',
+          html: '<div class="ajax-overlay"><div class="spinner-circle-material"></div></div>' +
+                '<div class="images-list">' +
+                  '<p><i class="fa fa-picture-o"></i>&nbsp; ' + text + '</p>' +
+                '</div>',
           click: function () {
             window.setImagesCallback(imagesCallback)
             window.upload()

@@ -128,6 +128,8 @@
 }
 .ajax-overlay {
   position: absolute;
+  top: 0;
+  left: 0;
   height: 100%;
   width: 100%;
   z-index: -10;
@@ -428,12 +430,19 @@ body {
 // block to select image replacing input file
 .select-image {
   cursor: pointer;
-  padding: 15px;
   height: 120px;
   width: 100%;
   background: $color-bg-lightest;
   border: $card-internal-border;
   overflow: hidden;
+}
+.select-image > div {
+  width: 100%;
+}
+.select-image .images-list {
+  padding: 15px;
+  width: 100%;
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
