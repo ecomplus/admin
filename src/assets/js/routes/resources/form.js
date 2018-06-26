@@ -222,7 +222,7 @@
               // async process
               (function () {
                 var img = new Image()
-                var url = pictures[i].small.url
+                var url = pictures[i].normal.url
                 img.onload = function () {
                   $el.prepend('<img src="' + url + '" />')
                 }
