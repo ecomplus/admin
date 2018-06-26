@@ -12,7 +12,7 @@
   window.renderContentIds(elContainer)
 
   // var lang = window.lang
-  // var i18n = window.i18n
+  var i18n = window.i18n
 
   var slug = window.routeParams[0]
   var resourceId = window.routeParams[1]
@@ -87,11 +87,39 @@
         }
       })
 
-      $form.find('input[type="file"]').dropify()
       $form.find('.tagsinput').tagsinput()
       $form.find('select:not(.tagsinput)').selectpicker({
         style: 'btn-light',
         noneSelectedText: '--'
+      })
+
+      $form.find('input[type="file"]').each(function () {
+        // handle images selection
+        // use global dropzone and library
+        var text, multiple, name
+        if ($(this).attr('multiple')) {
+          multiple = true
+          text = i18n({
+            'en_us': 'Select images',
+            'pt_br': 'Selecionar imagens'
+          })
+        } else {
+          multiple = false
+          text = i18n({
+            'en_us': 'Select image',
+            'pt_br': 'Selecionar imagem'
+          })
+        }
+
+        var button = $('<button/>', {
+          'class': 'btn btn-sm btn-outline btn-secondary',
+          type: 'button',
+          html: '<i class="fa fa-picture-o"></i>&nbsp; ' + text,
+          click: function () {
+            window.upload()
+          }
+        })
+        $(this).replaceWith(button)
       })
 
       // treat input values to data properties
