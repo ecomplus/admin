@@ -110,4 +110,12 @@
       }
     }
   }
+
+  window.fixScrollbars = function ($el) {
+    // handle scrollbars inside loaded container
+    $el.find('.scrollable').perfectScrollbar({
+      wheelPropagation: false,
+      wheelSpeed: 0.5
+    })
+  }
 }())

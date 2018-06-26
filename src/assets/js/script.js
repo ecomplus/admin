@@ -220,6 +220,14 @@ app.config({
       }
     }
   }
+
+  window.fixScrollbars = function ($el) {
+    // handle scrollbars inside loaded container
+    $el.find('.scrollable').perfectScrollbar({
+      wheelPropagation: false,
+      wheelSpeed: 0.5
+    })
+  }
 }())
 
 
@@ -837,14 +845,6 @@ app.ready(function () {
         // successful response
         // put HTML content
         el.html(html).fadeIn()
-
-        setTimeout(function () {
-          // handle scrollbars inside loaded container
-          el.find('.scrollable').perfectScrollbar({
-            wheelPropagation: false,
-            wheelSpeed: 0.5
-          })
-        }, 400)
       })
       .fail(function (jqXHR, textStatus, err) {
         app.toast(i18n({
