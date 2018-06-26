@@ -103,6 +103,7 @@
         // commit changes on JSON document globally
         // improve reactivity
         window.tabCommit[tabId] = commit
+
         editor.on('blur', function () {
           // code editor manually changed (?)
           var json
@@ -114,6 +115,9 @@
           }
           // update data
           window.tabData[tabId] = json
+        })
+        editor.on('change', function () {
+          window.triggerUnsaved(tabId)
         })
       }
       window.loadContent(contentUri, $('#' + tabId + '-tab-normal'))

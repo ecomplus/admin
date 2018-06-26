@@ -1167,15 +1167,8 @@ app.ready(function () {
           // start with nothing to save
           tabObj.unsavedChanges = false
           try {
-            // watch form submit and input changes
-            elForm.submit(saveAction).find('input,select,textarea').change(function () {
-              // new unsaved changes
-              if (tabObj.unsavedChanges !== true) {
-                tabObj.unsavedChanges = true
-                // enable save button again
-                $('#action-save').removeAttr('disabled')
-              }
-            })
+            // watch form submit
+            elForm.submit(saveAction)
           } catch (err) {
             // not a valid form element ?
             console.error(err)
@@ -1185,6 +1178,18 @@ app.ready(function () {
         tabObj.saveAction = true
         tabObj.saveCallback = callback
         watchSave()
+      }
+    }
+
+    window.triggerUnsaved = function (tabId) {
+      var tabObj = appTabs[tabId]
+      if (tabObj) {
+        // new unsaved changes
+        if (tabObj.unsavedChanges !== true) {
+          tabObj.unsavedChanges = true
+          // enable save button again
+          $('#action-save').removeAttr('disabled')
+        }
       }
     }
 
