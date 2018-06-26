@@ -1148,7 +1148,16 @@ app.ready(function () {
         $('#app-nav-' + window.tabId + ' > a').text(tabTitle)
       }
       $('#router > .loading').fadeOut()
-      window.elTab.children().fadeIn()
+      var $tab = window.elTab.children()
+      $tab.fadeIn()
+      setTimeout(function () {
+        // handle scrollbars inside tab
+        $tab.find('.scrollable').perfectScrollbar({
+          wheelPropagation: false,
+          wheelSpeed: 0.5
+        })
+      }, 400)
+
       // save title for further tab changes
       appTabs[currentTab].tabTitle = tabTitle
       changeBrowserTabTitle(tabTitle)

@@ -447,7 +447,7 @@ body {
 .select-image p {
   display: none;
 }
-.select-image p:last-child {
+.select-image p:first-child {
   display: block;
   width: 100%;
   text-align: center;
