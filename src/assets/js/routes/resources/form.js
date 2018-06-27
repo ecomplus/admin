@@ -165,6 +165,7 @@
       })
 
       $form.find('input[type="file"]').each(function () {
+        // console.log($(this))
         // handle images selection
         // use global dropzone and library
         var text, multiple, thumbnails, max, prop, i
@@ -263,16 +264,31 @@
           }
         }
 
+        // check if input is from summernote image upload dialog
+        var isSummernote = $(this).hasClass('note-image-input')
+        var selectImage = function () {
+          var delay
+          if (isSummernote) {
+            // hide summernote modal
+            $form.find('.note-editor .modal.show').modal('hide')
+            delay = 400
+          } else {
+            delay = 100
+          }
+          window.setImagesCallback(imagesCallback)
+          // delay to open uploads modal
+          setTimeout(function () {
+            window.upload()
+          }, delay)
+        }
+
         var $el = $('<div/>', {
           'class': 'select-image scrollable ajax-content',
           html: '<div class="ajax-overlay"><div class="spinner-circle-material"></div></div>' +
                 '<div class="images-list">' +
                   '<p><i class="fa fa-picture-o"></i>&nbsp; ' + text + '</p>' +
                 '</div>',
-          click: function () {
-            window.setImagesCallback(imagesCallback)
-            window.upload()
-          }
+          click: selectImage
         })
         $(this).replaceWith($el)
       })
