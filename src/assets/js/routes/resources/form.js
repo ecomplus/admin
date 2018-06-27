@@ -234,31 +234,46 @@
             // commit only to perform reactive actions
             commit(data, true)
 
-            // show spinner while loading images
-            $el.addClass('ajax').find('img').remove()
-            var todo = 0
-            var done = 0
-            // concat HTML content with images
-            var content = ''
-            var Done = function () {
-              done++
-              if (done === todo) {
-                $el.removeClass('ajax').children('.images-list').prepend(content)
+            if (!isSummernote) {
+              // show spinner while loading images
+              $el.addClass('ajax').find('img').remove()
+              var todo = 0
+              var done = 0
+              // concat HTML content with images
+              var content = ''
+              var Done = function () {
+                done++
+                if (done === todo) {
+                  $el.removeClass('ajax').children('.images-list').prepend(content)
+                }
               }
             }
 
             for (i = 0; i < pictures.length && i < max; i++) {
-              todo++
               // load image, then show inside select image block
               // async process
               (function () {
-                var url = pictures[i].normal.url
-                var img = new Image()
-                img.onload = function () {
-                  content += '<img src="' + url + '" />'
-                  Done()
+                if (!isSummernote) {
+                  todo++
+                  // show thumbnail only
+                  var url = pictures[i].normal.url
+                  var img = new Image()
+                  img.onload = function () {
+                    if (!isSummernote) {
+                      content += '<img src="' + url + '" />'
+                      Done()
+                    } else {
+
+                    }
+                  }
+                  img.src = url
+                } else {
+                  // add image to summernote editor
+                  // https://summernote.org/deep-dive/#insertion-api
+                  $editor.summernote('insertImage', pictures[i].zoom.url, function ($image) {
+                    $image.css('max-width', '100%')
+                  })
                 }
-                img.src = url
               }())
             }
           }
