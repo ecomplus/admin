@@ -466,14 +466,35 @@ body {
   width: 100%;
   text-align: center;
 }
-.select-image img {
+.select-image span {
   height: 90px;
+  position: relative;
+  margin-right: 10px;
+  border: 1px solid $color-bg-lightest;
+}
+.select-image span:last-child {
+  margin-right: 0;
+}
+.select-image span:hover {
+  border-color: $color-text;
+}
+.select-image span > img {
+  height: 88px;
   width: auto;
   max-width: 100%;
-  margin-right: 10px;
+  transition: 0.1s linear;
 }
-.select-image img:last-child {
-  margin-right: 0;
+.select-image span:hover > img {
+  opacity: .3;
+}
+.select-image span > i {
+  display: none;
+}
+.select-image span:hover > i {
+  position: absolute;
+  display: block;
+  top: 5px;
+  right: 5px;
 }
 
 // resources list
