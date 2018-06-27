@@ -235,7 +235,7 @@
               // load image, then show inside select image block
               // async process
               (function () {
-                var url = pictures[i].zoom.url
+                var url = pictures[i].normal.url
                 var img = new Image()
                 img.onload = function () {
                   content += '<img src="' + url + '" />'
