@@ -1673,6 +1673,14 @@ app.ready(function () {
             $('#modal-uploads').modal('show')
           }
 
+          window.editImage = function (el, event) {
+            if (event) {
+              event.stopPropagation()
+            }
+            // configure image options
+            $('#modal-edit-image').modal('show')
+          }
+
           // init images library
           window.initStorageLib = function () {
             if (lastKey === undefined) {

@@ -710,6 +710,49 @@
         </div>
       </div>
     </div>
+
+    <div class="modal modal-center fade" id="modal-edit-image" tabindex="-5">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-body scrollable">
+            <div class="form-group">
+              <label class="i18n" for="alt">
+                <span data-lang="en_us">Alternative text</span>
+                <span data-lang="pt_br">Texto alternativo</span>
+              </label>
+              <code>alt</code>
+              <input type="text" class="form-control" name="alt">
+            </div>
+            <div class="form-group">
+              <label class="i18n" for="size">
+                <span data-lang="en_us">Image dimensions</span>
+                <span data-lang="pt_br">Dimensões da imagem</span>
+              </label>
+              <input type="text" class="form-control" name="size"
+                pattern="^[1-9]([0-9]+)?x[1-9]([0-9]+)?$" placeholder="200x300">
+              <small class="form-text i18n">
+                <span data-lang="en_us">width x height</span>
+                <span data-lang="pt_br">largura x altura</span>
+              </small>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Cancel</span>
+                <span data-lang="pt_br">Cancelar</span>
+              </span>
+            </button>
+            <button class="btn btn-bold btn-pure btn-success" id="edit-image" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Save</span>
+                <span data-lang="pt_br">Salvar</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- END Modal -->
 
     <!-- Scripts -->

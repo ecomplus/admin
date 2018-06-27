@@ -269,7 +269,9 @@
                 var img = new Image()
                 img.onload = function () {
                   if (!isSummernote) {
-                    content += '<span><img src="' + url + '" /><i class="fa fa-cog"></i></span>'
+                    content += '<span onclick="editImage(this, event)">' +
+                                 '<img src="' + url + '" /><i class="fa fa-cog"></i>' +
+                                '</span>'
                     Done()
                   } else {
                     // add image to summernote editor
