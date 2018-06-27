@@ -236,7 +236,10 @@
 
             if (!isSummernote) {
               // show spinner while loading images
-              $el.addClass('ajax').find('img').remove()
+              $el.addClass('ajax')
+              // reset images list
+              var $list = $el.children('.images-list')
+              $list.children('span').remove()
               var todo = 0
               var done = 0
               // concat HTML content with images
@@ -244,7 +247,8 @@
               var Done = function () {
                 done++
                 if (done === todo) {
-                  $el.removeClass('ajax').children('.images-list').prepend(content)
+                  $list.prepend(content)
+                  $el.removeClass('ajax')
                 }
               }
             }
@@ -265,7 +269,7 @@
                 var img = new Image()
                 img.onload = function () {
                   if (!isSummernote) {
-                    content += '<img src="' + url + '" />'
+                    content += '<span><img src="' + url + '" /><i class="fa fa-cog"></i></span>'
                     Done()
                   } else {
                     // add image to summernote editor
