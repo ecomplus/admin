@@ -167,7 +167,7 @@
       $form.find('input[type="file"]').each(function () {
         // handle images selection
         // use global dropzone and library
-        var text, multiple, max, prop
+        var text, multiple, thumbnails, max, prop, i
         multiple = $(this).attr('multiple')
         if (multiple) {
           max = $(this).data('max')
@@ -187,6 +187,7 @@
           })
         }
         prop = $(this).attr('name')
+        thumbnails = $(this).data('thumbnails')
 
         // callback after images selection
         var imagesCallback = function (err, pictures) {
@@ -195,8 +196,10 @@
             // check number of images
             if (pictures.length > max) {
               if (multiple) {
-                // remove excess elements
-                pictures.splice(max, pictures.length - max)
+                if (thumbnails) {
+                  // remove excess elements
+                  pictures.splice(max, pictures.length - max)
+                }
                 app.toast(i18n({
                   'en_us': 'A maximum of ' + max + ' images will be selected',
                   'pt_br': 'No máximo ' + max + ' imagens serão selecionadas'
@@ -209,10 +212,23 @@
               }
             }
 
-            if (multiple) {
-              data[prop] = pictures
+            if (thumbnails) {
+              if (multiple) {
+                data[prop] = pictures
+              } else {
+                data[prop] = pictures[0]
+              }
             } else {
-              data[prop] = pictures[0]
+              // no thumbnails
+              // use image with original (zoom) size
+              if (multiple) {
+                data[prop] = []
+                for (i = 0; i < pictures.length; i++) {
+                  data[prop].push(pictures[i].zoom)
+                }
+              } else {
+                data[prop] = pictures[0].zoom
+              }
             }
             // commit only to perform reactive actions
             commit(data, true)
@@ -230,7 +246,7 @@
               }
             }
 
-            for (var i = 0; i < pictures.length && i < max; i++) {
+            for (i = 0; i < pictures.length && i < max; i++) {
               todo++
               // load image, then show inside select image block
               // async process
