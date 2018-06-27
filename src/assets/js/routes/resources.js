@@ -144,6 +144,11 @@
       }
       window.callApi(uri, 'GET', function (err, json) {
         if (!err) {
+          // remove common immutable data
+          delete json._id
+          delete json.store_id
+          delete json.created_at
+          delete json.updated_at
           // set tab JSON data
           commit(json)
         }
