@@ -427,6 +427,11 @@ body {
   height: 500px;
 }
 
+// dropzone progress bar is confused
+.dz-progress .dz-upload {
+  max-width: 93% !important;
+}
+
 // block to select image replacing input file
 .select-image {
   cursor: pointer;
