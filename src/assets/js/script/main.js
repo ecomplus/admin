@@ -1673,13 +1673,27 @@ app.ready(function () {
             $('#modal-uploads').modal('show')
           }
 
-          window.editImage = function (el, event) {
-            if (event) {
-              event.stopPropagation()
-            }
+          var editImageCallback = null
+          window.editImage = function (callback) {
+            editImageCallback = callback
             // configure image options
-            $('#modal-edit-image').modal('show')
+            // open modal and clear inputs
+            $('#modal-edit-image').modal('show').find('input').val('')
           }
+
+          $('#edit-image').click(function () {
+            if (typeof editImageCallback === 'function') {
+              // return JSON of edit images form
+              var data = {}
+              $('#modal-edit-image input').each(function () {
+                var val = $(this).val().trim()
+                if (val !== '') {
+                  data[$(this).attr('name')] = val
+                }
+              })
+              editImageCallback(null, data)
+            }
+          })
 
           // init images library
           window.initStorageLib = function () {
