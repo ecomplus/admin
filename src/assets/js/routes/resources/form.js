@@ -253,27 +253,29 @@
               // load image, then show inside select image block
               // async process
               (function () {
+                var url
                 if (!isSummernote) {
                   todo++
                   // show thumbnail only
-                  var url = pictures[i].normal.url
-                  var img = new Image()
-                  img.onload = function () {
-                    if (!isSummernote) {
-                      content += '<img src="' + url + '" />'
-                      Done()
-                    } else {
-
-                    }
-                  }
-                  img.src = url
+                  url = pictures[i].normal.url
                 } else {
-                  // add image to summernote editor
-                  // https://summernote.org/deep-dive/#insertion-api
-                  $editor.summernote('insertImage', pictures[i].zoom.url, function ($image) {
-                    $image.css('max-width', '100%')
-                  })
+                  url = pictures[i].zoom.url
                 }
+
+                var img = new Image()
+                img.onload = function () {
+                  if (!isSummernote) {
+                    content += '<img src="' + url + '" />'
+                    Done()
+                  } else {
+                    // add image to summernote editor
+                    // https://summernote.org/deep-dive/#insertion-api
+                    $editor.summernote('insertImage', url, function ($image) {
+                      $image.css('max-width', '100%')
+                    })
+                  }
+                }
+                img.src = url
               }())
             }
           }
