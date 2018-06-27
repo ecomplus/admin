@@ -243,7 +243,7 @@
               var todo = 0
               var done = 0
               // concat HTML content with images
-              var content = ''
+              var content = []
               var Done = function () {
                 done++
                 if (done === todo) {
@@ -266,12 +266,14 @@
                   url = pictures[i].zoom.url
                 }
 
+                var index = i
                 var img = new Image()
                 img.onload = function () {
                   if (!isSummernote) {
-                    content += '<span onclick="editImage(this, event)">' +
-                                 '<img src="' + url + '" /><i class="fa fa-cog"></i>' +
-                                '</span>'
+                    content.push($('<span />', {
+                      html: '<img src="' + url + '" /><i class="fa fa-cog"></i>',
+                      click: editImage(prop, index)
+                    }))
                     Done()
                   } else {
                     // add image to summernote editor
@@ -315,6 +317,54 @@
         })
         $(this).replaceWith($el)
       })
+
+      // edit common image properties
+      var editImage = function (prop, index) {
+        return function (event) {
+          // should not open uploads modal
+          event.stopPropagation()
+
+          // open edit image modal and wait for 'save' action
+          window.editImage(function (err, json) {
+            if (!err) {
+              for (var imgProp in json) {
+                var value = json[imgProp]
+                if (value) {
+                  var data = Data()
+                  var picture = data[prop]
+                  if (typeof picture === 'object') {
+                    if (Array.isArray(picture)) {
+                      // multiple images, array
+                      picture = picture[index]
+                    }
+
+                    if (picture.hasOwnProperty('zoom')) {
+                      // with thumbnails
+                      if (imgProp !== 'size') {
+                        // assing value to all thumbnails
+                        for (var thumb in picture) {
+                          if (picture.hasOwnProperty(thumb)) {
+                            picture[thumb][imgProp] = value
+                          }
+                        }
+                      } else {
+                        // vary by thumbnail
+                        // assing only to original image size
+                        picture.zoom[imgProp] = value
+                      }
+                    } else {
+                      picture[imgProp] = value
+                    }
+
+                    // commit only to perform reactive actions
+                    commit(data, true)
+                  }
+                }
+              }
+            }
+          })
+        }
+      }
 
       // show form
       window.fixScrollbars($form)
