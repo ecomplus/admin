@@ -16,12 +16,26 @@
 
   var slug = window.routeParams[0]
   var resourceId = window.routeParams[1]
-  var creating
+  var creating, endpoint
   if (resourceId === 'new') {
     creating = true
+    endpoint = slug + '.json'
   } else {
     // console.log('editing')
-    // show edit document buttons
+    endpoint = slug + '/' + resourceId + '.json'
+
+    // setup edit document buttons
+    $('#' + tabId + '-delete').click(function () {
+      window.callApi(endpoint, 'DELETE', function (err, json) {
+        if (!err) {
+          // document deleted
+          // redirect to resource list
+          window.location = '/#/resources/' + slug
+        }
+      })
+    })
+
+    // show buttons
     $('#' + tabId + '-nav .edit-btn').fadeIn()
   }
 
@@ -34,12 +48,10 @@
 
   var $form = elContainer.children('form')
   window.setSaveAction($form, function (cb) {
-    var method, uri
+    var method
     if (creating) {
-      uri = slug + '.json'
       method = 'POST'
     } else {
-      uri = slug + '/' + resourceId + '.json'
       // overwrite
       method = 'PUT'
     }
@@ -59,7 +71,7 @@
         $form.removeClass('ajax')
       }
     }
-    window.callApi(uri, method, callback, Data())
+    window.callApi(endpoint, method, callback, Data())
   })
 
   // count AJAX requests
