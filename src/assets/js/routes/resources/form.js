@@ -323,44 +323,62 @@
         return function (event) {
           // should not open uploads modal
           event.stopPropagation()
+          var $span = $(this)
 
           // open edit image modal and wait for 'save' action
           window.editImage(function (err, json) {
             if (!err) {
-              for (var imgProp in json) {
-                var value = json[imgProp]
-                if (value) {
-                  var data = Data()
-                  var picture = data[prop]
-                  if (typeof picture === 'object') {
-                    if (Array.isArray(picture)) {
-                      // multiple images, array
-                      picture = picture[index]
-                    }
+              var data = Data()
 
-                    if (picture.hasOwnProperty('zoom')) {
-                      // with thumbnails
-                      if (imgProp !== 'size') {
-                        // assing value to all thumbnails
-                        for (var thumb in picture) {
-                          if (picture.hasOwnProperty(thumb)) {
-                            picture[thumb][imgProp] = value
+              if (json === false) {
+                // remove image
+                if (Array.isArray(data[prop])) {
+                  // multiple images
+                  // remove respective array element only
+                  data[prop].splice(index, 1)
+                } else {
+                  delete data[prop]
+                }
+
+                // remove HTML element
+                $span.toggle('slide', function () {
+                  $(this).remove()
+                })
+              } else {
+                var picture = data[prop]
+                if (typeof picture === 'object') {
+                  if (Array.isArray(picture)) {
+                    // multiple images, array
+                    picture = picture[index]
+                  }
+
+                  for (var imgProp in json) {
+                    var value = json[imgProp]
+                    if (value) {
+                      if (picture.hasOwnProperty('zoom')) {
+                        // with thumbnails
+                        if (imgProp !== 'size') {
+                          // assing value to all thumbnails
+                          for (var thumb in picture) {
+                            if (picture.hasOwnProperty(thumb)) {
+                              picture[thumb][imgProp] = value
+                            }
                           }
+                        } else {
+                          // vary by thumbnail
+                          // assing only to original image size
+                          picture.zoom[imgProp] = value
                         }
                       } else {
-                        // vary by thumbnail
-                        // assing only to original image size
-                        picture.zoom[imgProp] = value
+                        picture[imgProp] = value
                       }
-                    } else {
-                      picture[imgProp] = value
                     }
-
-                    // commit only to perform reactive actions
-                    commit(data, true)
                   }
                 }
               }
+
+              // commit only to perform reactive actions
+              commit(data, true)
             }
           })
         }
