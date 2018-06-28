@@ -409,7 +409,7 @@
     }
 
     // delete button
-    $('#' + tabId + '-delete').click(function () {
+    $('#' + tabId + '-delete-list').click(function () {
       var todo = selectedItems.length
       if (todo > 0) {
         // show spinner and let it to fade out after list reload
