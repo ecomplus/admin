@@ -427,6 +427,20 @@ body {
   height: 500px;
 }
 
+// buttons for document edition
+.header-action .edit-btn {
+  display: none;
+}
+.header-action .edit-btn,
+.header-action .edit-btn:hover {
+  border-color: $color-yellow;
+}
+@media (max-width: 600px) {
+  .edit-btn > :not(i) {
+    display: none;
+  }
+}
+
 // dropzone progress bar is confused
 .dz-progress .dz-upload {
   max-width: 93% !important;
@@ -637,6 +651,14 @@ body {
 // utilities
 .fs-200 {
   font-size: 200px;
+}
+.hidden {
+  display: none;
+}
+@media (max-width: 767px) {
+  .hidden-sm-down {
+    display: none;
+  }
 }
 
 // general

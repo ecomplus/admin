@@ -20,8 +20,11 @@
   if (resourceId === 'new') {
     creating = true
   } else {
-    console.log('editing')
+    // console.log('editing')
+    // show edit document buttons
+    $('#' + tabId + '-nav .edit-btn').fadeIn()
   }
+
   // edit JSON document
   var commit = window.tabCommit[tabId]
   var Data = function () {
