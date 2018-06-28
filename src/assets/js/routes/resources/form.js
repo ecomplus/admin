@@ -19,6 +19,8 @@
   var creating
   if (resourceId === 'new') {
     creating = true
+  } else {
+    console.log('editing')
   }
   // edit JSON document
   var commit = window.tabCommit[tabId]
@@ -41,10 +43,17 @@
     // show loading spinner
     $form.addClass('ajax')
 
-    var callback = function () {
-      $form.removeClass('ajax')
+    var callback = function (err, json) {
       if (typeof cb === 'function') {
         cb(tabId)
+      }
+
+      if (creating && !err && json._id) {
+        // document created
+        // redirect to resource edit page
+        window.location = '/#/resources/' + slug + '/' + json._id
+      } else {
+        $form.removeClass('ajax')
       }
     }
     window.callApi(uri, method, callback, Data())
