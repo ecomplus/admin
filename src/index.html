@@ -545,16 +545,18 @@
               Upload
             </button>
           </div>
-          <div class="btn-group">
+          <div class="btn-group mr-2">
             <button class="btn btn-light i18n" id="load-storage">
               <span data-lang="en_us">Load more</span>
               <span data-lang="pt_br">Carregar mais</span>
             </button>
-            <button class="btn btn-light qv-close" id="storage-select">
-              <i class="fa fa-check-square-o"></i>
-            </button>
             <button class="btn btn-light" id="storage-delete">
               <i class="fa fa-trash"></i>
+            </button>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-success qv-close" id="storage-select">
+              <i class="fa fa-check-square-o"></i>
             </button>
           </div>
         </div>
@@ -724,15 +726,18 @@
               <input type="text" class="form-control" name="alt">
             </div>
             <div class="form-group">
-              <label class="i18n" for="size">
-                <span data-lang="en_us">Image dimensions</span>
-                <span data-lang="pt_br">Dimensões da imagem</span>
+              <label for="size">
+                <span class="i18n">
+                  <span data-lang="en_us">Image dimensions</span>
+                  <span data-lang="pt_br">Dimensões da imagem</span>
+                </span>
+                (px)
               </label>
               <input type="text" class="form-control" name="size"
                 pattern="^[1-9]([0-9]+)?x[1-9]([0-9]+)?$" placeholder="200x300">
               <small class="form-text i18n">
-                <span data-lang="en_us">width x height</span>
-                <span data-lang="pt_br">largura x altura</span>
+                <span data-lang="en_us">width <i>x</i> height</span>
+                <span data-lang="pt_br">largura <i>x</i> altura</span>
               </small>
             </div>
           </div>
