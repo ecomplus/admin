@@ -1695,6 +1695,13 @@ app.ready(function () {
             }
           })
 
+          $('#remove-image').click(function () {
+            if (typeof editImageCallback === 'function') {
+              // return false to remove selected image
+              editImageCallback(null, false)
+            }
+          })
+
           // init images library
           window.initStorageLib = function () {
             if (lastKey === undefined) {

@@ -482,19 +482,21 @@ body {
   height: 88px;
   width: auto;
   max-width: 100%;
+}
+.select-image span > * {
   transition: 0.1s linear;
 }
 .select-image span:hover > img {
   opacity: .3;
 }
 .select-image span > i {
-  display: none;
-}
-.select-image span:hover > i {
+  opacity: 0;
   position: absolute;
-  display: block;
   top: 5px;
   right: 5px;
+}
+.select-image span:hover > i {
+  opacity: 1;
 }
 
 // resources list
