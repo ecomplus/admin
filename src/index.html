@@ -781,16 +781,33 @@
             <div class="row">
               <div class="col-sm">
                 <div class="form-group">
-                  <label class="i18n" for="title">
+                  <select class="form-control" name="type">
+                    <option value="ecommerce" selected >E-Commerce</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="i18n require" for="title">
                     <span data-lang="en_us">Title</span>
                     <span data-lang="pt_br">Título</span>
+                  </label>
+                  <input type="text" class="form-control" name="title">
+                </div>
+                <div class="form-group">
+                  <label class="i18n" for="title">
+                    <span data-lang="en_us">Code</span>
+                    <span data-lang="pt_br">Código</span>
                   </label>
                   <input type="text" class="form-control" name="title">
                 </div>
               </div>
               <div class="col-sm">
                 <div class="form-group">
-                  <label class="i18n" for="domain">
+                  <select class="form-control" name="lang">
+                    <option value="pt_br" selected >PT-BR</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="i18n require" for="domain">
                     <span data-lang="en_us">Domain</span>
                     <span data-lang="pt_br">Domínio</span>
                   </label>

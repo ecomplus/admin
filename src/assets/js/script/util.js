@@ -82,6 +82,7 @@
   }
 
   window.appReady = function () {
+    // console.log('Setup JS plugins')
     // plugins localization
     if (window.lang === 'pt_br') {
       $.getScript('../assets/vendor/jsgrid/i18n/jsgrid-pt-br.js', function () {
@@ -91,6 +92,12 @@
         $.summernote.options.lang = 'pt-BR'
       })
     }
+
+    // setup general preloaded plugins
+    $('select').selectpicker({
+      style: 'btn-light',
+      noneSelectedText: '--'
+    })
   }
 
   /* utilities */

@@ -1737,8 +1737,6 @@ app.ready(function () {
             User = body
             // ready to start dashboard
             Start()
-            // see util.js
-            window.appReady()
           }
         })
       }
@@ -2042,5 +2040,7 @@ app.ready(function () {
       // see util.js
       window.startMony(Store, User, session)
     }
+    // see util.js
+    window.appReady()
   }
 })
