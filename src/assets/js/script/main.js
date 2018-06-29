@@ -122,6 +122,7 @@ app.ready(function () {
       'en_us': 'Settings',
       'pt_br': 'Configurações'
     }),
+    // general
     'unknown_error': i18n({
       'en_us': 'Unknown error, please try again',
       'pt_br': 'Erro desconhecido, por favor tente novamente'
@@ -1313,7 +1314,9 @@ app.ready(function () {
                '</li>' +
 
                // channels will be rendered after
-               '<li class="menu-category">' + dictionary.channels + '</li>'
+               '<li class="menu-category">' +
+                 dictionary.channels + '<i class="fa fa-plus-circle"></i>' +
+               '</li>'
 
       $('#sidebar').append(el)
 

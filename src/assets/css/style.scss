@@ -35,6 +35,20 @@
 .sidebar:not(.sidebar-light) .ps-container > .ps-scrollbar-y-rail > .ps-scrollbar-y {
   background-color: rgba($white, .35);
 }
+.sidebar .menu-category,
+.sidebar .menu-category i {
+  cursor: pointer;
+  transition: 0.2s linear;
+}
+.sidebar .menu-category i {
+  margin-left: 10px;
+}
+.sidebar .menu-category:hover {
+  opacity: .9;
+}
+.sidebar .menu-category:hover i {
+  color: $color-green;
+}
 
 .header-action .nav-link.active,
 .header-action .nav-link:hover {
