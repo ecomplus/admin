@@ -1537,7 +1537,7 @@ app.ready(function () {
                '</li>' +
 
                // channels will be rendered after
-               '<li class="menu-category">' +
+               '<li class="menu-category" data-toggle="modal" data-target="#modal-channel">' +
                  dictionary.channels + '<i class="fa fa-plus-circle"></i>' +
                '</li>'
 
