@@ -191,6 +191,7 @@ app.config({
   }
 
   window.appReady = function () {
+    // console.log('Setup JS plugins')
     // plugins localization
     if (window.lang === 'pt_br') {
       $.getScript('../assets/vendor/jsgrid/i18n/jsgrid-pt-br.js', function () {
@@ -200,6 +201,12 @@ app.config({
         $.summernote.options.lang = 'pt-BR'
       })
     }
+
+    // setup general preloaded plugins
+    $('select').selectpicker({
+      style: 'btn-light',
+      noneSelectedText: '--'
+    })
   }
 
   /* utilities */
@@ -1960,8 +1967,6 @@ app.ready(function () {
             User = body
             // ready to start dashboard
             Start()
-            // see util.js
-            window.appReady()
           }
         })
       }
@@ -2265,5 +2270,7 @@ app.ready(function () {
       // see util.js
       window.startMony(Store, User, session)
     }
+    // see util.js
+    window.appReady()
   }
 })
