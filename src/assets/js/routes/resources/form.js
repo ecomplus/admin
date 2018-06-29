@@ -14,6 +14,20 @@
   // var lang = window.lang
   var i18n = window.i18n
 
+  // abstraction for callApi function
+  var callApi = function (endpoint, method, callback, data) {
+    // show loading spinner
+    $form.addClass('ajax')
+    var Callback = function (err, json) {
+      // request done
+      $form.removeClass('ajax')
+      if (!err) {
+        callback(json)
+      }
+    }
+    window.callApi(endpoint, method, Callback, data)
+  }
+
   var slug = window.routeParams[0]
   var resourceId = window.routeParams[1]
   var creating, endpoint
@@ -24,15 +38,23 @@
     // console.log('editing')
     endpoint = slug + '/' + resourceId + '.json'
 
-    // setup edit document buttons
+    /*  setup edit document buttons */
+
     $('#' + tabId + '-delete').click(function () {
-      window.callApi(endpoint, 'DELETE', function (err, json) {
-        if (!err) {
-          // document deleted
-          // redirect to resource list
-          window.location = '/#/resources/' + slug
-        }
+      callApi(endpoint, 'DELETE', function (json) {
+        // document deleted
+        // redirect to resource list
+        window.location = '/#/resources/' + slug
       })
+    })
+
+    $('#' + tabId + '-duplicate').click(function () {
+      // create new document with same JSON data
+      var callback = function (json) {
+        // redirect to new document edit page
+        window.location = '/#/resources/' + slug + '/' + json._id
+      }
+      callApi(slug + '.json', 'POST', callback, Data())
     })
 
     // show buttons
@@ -55,23 +77,19 @@
       // overwrite
       method = 'PUT'
     }
-    // show loading spinner
-    $form.addClass('ajax')
 
-    var callback = function (err, json) {
+    var callback = function (json) {
       if (typeof cb === 'function') {
+        // save action callback
         cb(tabId)
       }
-
-      if (creating && !err && json._id) {
+      if (creating && json._id) {
         // document created
         // redirect to resource edit page
         window.location = '/#/resources/' + slug + '/' + json._id
-      } else {
-        $form.removeClass('ajax')
       }
     }
-    window.callApi(endpoint, method, callback, Data())
+    callApi(endpoint, method, callback, Data())
   })
 
   // count AJAX requests
