@@ -801,24 +801,30 @@
                 </div>
               </div>
               <div class="col-sm">
-                <div class="form-group w-100px">
-                  <select class="form-control flags-list" name="lang">
-                    <option data-content="<img src=../assets/img/flag/Brazil.png>PT"
-                      value="pt_br" selected ></option>
-                    <option data-content="<img src=../assets/img/flag/United-States-of-America.png>EN"
-                      value="en_us"></option>
-                    <option data-content="<img src=../assets/img/flag/Spain.png>ES"
-                      value="es"></option>
-                    <option data-content="<img src=../assets/img/flag/France.png>FR"
-                      value="fr"></option>
-                  </select>
+                <div class="bg-lighter p-15 mb-20 i18n">
+                  <span data-lang="en_us">
+                    Sell through your online store and checkout, using your own domain
+                    or our free subdomain at
+                    <code><span class="text-primary">yourstore</span>.e-com.plus</code>.
+                  </span>
+                  <span data-lang="pt_br">
+                    Venda através de sua loja virtual e check-out, usando seu domínio próprio
+                    ou nosso subdomínio gratuito
+                    <code><span class="text-primary">sualoja</span>.e-com.plus</code>.
+                  </span>
                 </div>
-                <div class="form-group">
-                  <label class="i18n require" for="domain">
-                    <span data-lang="en_us">Domain</span>
-                    <span data-lang="pt_br">Domínio</span>
-                  </label>
-                  <input type="text" class="form-control" name="domain" pattern="^[0-9a-z-.]+$">
+                <div id="channel-price" class="bg-lighter p-15 mb-20">
+                  <span class="i18n">
+                    <span data-lang="en_us">
+                      The first sales channel is free with your current plan, the others are
+                      paid at monthly cost of
+                    </span>
+                    <span data-lang="pt_br">
+                      O primeiro canal de vendas é gratuito no seu plano atual,
+                      os outros são pagos ao custo mensal de
+                    </span>
+                  </span>
+                  <strong class="text-info">R$ 20,00</strong>.
                 </div>
               </div>
             </div>
