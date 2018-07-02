@@ -1345,19 +1345,21 @@ app.ready(function () {
     }
     renderMenu()
 
+    var channels = []
     var renderChannels = function () {
       var menu = $('#sidebar')
       // reset
       menu.find('.li-channel').remove()
 
-      for (var i = 0; i < 1; i++) {
-        var url = '/#/channels/channel_id'
+      for (var i = 0; i < channels.length; i++) {
+        var channel = channels[i]
+        var url = '/#/channels/' + channel.id
 
         // sales channels on menu
         var el = '<li class="menu-item li-channel">' +
                    '<a class="menu-link" href="javascript:;">' +
                      '<span class="icon fa fa-shopping-bag"></span>' +
-                     '<span class="title">Channel name</span>' +
+                     '<span class="title">' + channel.title + '</span>' +
                      '<span class="arrow"></span>' +
                    '</a>' +
                    '<ul class="menu-submenu">' +
@@ -1384,7 +1386,7 @@ app.ready(function () {
         menu.append(el)
       }
     }
-    renderChannels()
+    // renderChannels()
 
     callStorageApi(null, function (err, json) {
       if (!err) {
@@ -1758,7 +1760,31 @@ app.ready(function () {
             // get store channels
             callBaseApi('channels.json', 'GET', function (err, body) {
               if (!err) {
-                console.log(body)
+                channels = body.result
+                if (channels.length) {
+                  for (var i = 0; i < channels.length; i++) {
+                    // setup channel domains array
+                    channels[i].domains = []
+                  }
+
+                  // get store domains and associate with channels
+                  callBaseApi('domains.json', 'GET', function (err, body) {
+                    if (!err) {
+                      var domains = body.result
+                      // add each domain to respective channel
+                      for (var i = 0; i < domains.length; i++) {
+                        for (var ii = 0; ii < channels.length; ii++) {
+                          if (domains[i].channel_id === channels[ii].id) {
+                            channels[ii].domains.push(domains[i])
+                          }
+                        }
+                      }
+
+                      // render channels on sidebar menu
+                      renderChannels()
+                    }
+                  })
+                }
               }
             })
           }
