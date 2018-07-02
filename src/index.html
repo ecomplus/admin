@@ -395,13 +395,13 @@
               <span class="btn fs-13" data-toggle="dropdown" id="current-lang">
                 <img class="mr-10" height="14"><strong></strong>
               </span>
-              <div class="dropdown-menu" id="langs-menu">
+              <div class="dropdown-menu flags-list" id="langs-menu">
                 <a class="dropdown-item" href="javascript:;" data-lang="en_us">
-                  <img class="mr-10" src="../assets/img/flag/United-States-of-America.png" height="15">
+                  <img src="../assets/img/flag/United-States-of-America.png">
                   English
                 </a>
                 <a class="dropdown-item" href="javascript:;" data-lang="pt_br">
-                  <img class="mr-10" src="../assets/img/flag/Brazil.png" height="15">
+                  <img src="../assets/img/flag/Brazil.png">
                   Português
                 </a>
               </div>
@@ -801,9 +801,16 @@
                 </div>
               </div>
               <div class="col-sm">
-                <div class="form-group">
-                  <select class="form-control" name="lang">
-                    <option value="pt_br" selected >PT-BR</option>
+                <div class="form-group w-100px">
+                  <select class="form-control flags-list" name="lang">
+                    <option data-content="<img src=../assets/img/flag/Brazil.png> PT"
+                      value="pt_br" selected ></option>
+                    <option data-content="<img src=../assets/img/flag/United-States-of-America.png> EN"
+                      value="en_us"></option>
+                    <option data-content="<img src=../assets/img/flag/Spain.png> ES"
+                      value="es"></option>
+                    <option data-content="<img src=../assets/img/flag/France.png> FR"
+                      value="fr"></option>
                   </select>
                 </div>
                 <div class="form-group">
