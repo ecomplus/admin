@@ -1354,6 +1354,15 @@ app.ready(function () {
       for (var i = 0; i < channels.length; i++) {
         var channel = channels[i]
         var url = '/#/channels/' + channel.id
+        var link
+        if (channel.domains.length) {
+          // use last channel domain
+          link = 'https://' + channel.domains[channel.domains.length - 1]
+        } else {
+          // @TODO
+          // other channel type ?
+          link = '#'
+        }
 
         // sales channels on menu
         var el = '<li class="menu-item li-channel">' +
@@ -1364,7 +1373,7 @@ app.ready(function () {
                    '</a>' +
                    '<ul class="menu-submenu">' +
                      '<li class="menu-item">' +
-                       '<a class="menu-link" href="https://google.com" target="_blank">' +
+                       '<a class="menu-link" href="' + link + '" target="_blank">' +
                          '<span class="icon fa fa-eye"></span>' +
                          '<span class="title">' + dictionary.go_to_store + '</span>' +
                        '</a>' +
