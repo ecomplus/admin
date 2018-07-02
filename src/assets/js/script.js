@@ -632,7 +632,7 @@ app.ready(function () {
     }
     // start showing pace and headers while loading
     $('#dashboard').fadeIn()
-    console.log('Hello #' + session.my_id)
+    console.log('Hello #' + session.my_id + '\nStore #' + storeId)
     // hide for security
     sessionStorage.removeItem('my_id')
     sessionStorage.removeItem('access_token')
@@ -781,6 +781,24 @@ app.ready(function () {
         }))
         return
       }
+
+      var options = {
+        url: uri,
+        headers: authHeaders,
+        method: method
+      }
+      addRequest(options, bodyObject, callback)
+    }
+
+    var callBaseApi = function (endpoint, method, callback, bodyObject) {
+      var apiHost = 'https://e-com.plus/api/v1/'
+      // API endpoint full URL
+      var uri = apiHost + endpoint
+      if (method === 'GET') {
+        // specify store on URL query string
+        uri += '?store_id=' + storeId
+      }
+      // console.log(uri)
 
       var options = {
         url: uri,
@@ -1062,7 +1080,7 @@ app.ready(function () {
           // routing in progress
           return
         }
-        console.log('Go to route => ' + route)
+        // console.log('Go to route => ' + route)
         if (currentTab !== null) {
           // add route to history
           appTabs[currentTab].routesHistory.push(route)
@@ -1967,6 +1985,13 @@ app.ready(function () {
             User = body
             // ready to start dashboard
             Start()
+
+            // get store channels
+            callBaseApi('channels.json', 'GET', function (err, body) {
+              if (!err) {
+                console.log(body)
+              }
+            })
           }
         })
       }
