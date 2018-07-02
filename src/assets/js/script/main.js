@@ -572,7 +572,6 @@ app.ready(function () {
 
       var options = {
         url: uri,
-        headers: authHeaders,
         method: method
       }
       addRequest(options, bodyObject, callback)
