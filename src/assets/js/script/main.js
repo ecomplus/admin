@@ -508,6 +508,8 @@ app.ready(function () {
     var callApi = function (endpoint, method, callback, bodyObject) {
       // reset notification toast
       hideToastr()
+      // E-Com Plus Store API
+      // https://ecomstore.docs.apiary.io/#
       var apiHost = 'https://api.e-com.plus/v1/'
       // API endpoint full URL
       var uri = apiHost + endpoint
@@ -560,7 +562,9 @@ app.ready(function () {
       addRequest(options, bodyObject, callback)
     }
 
-    var callBaseApi = function (endpoint, method, callback, bodyObject) {
+    var callMainApi = function (endpoint, method, callback, bodyObject) {
+      // E-Com Plus Main API
+      // https://ecomplus.docs.apiary.io/#
       var apiHost = 'https://e-com.plus/api/v1/'
       // API endpoint full URL
       var uri = apiHost + endpoint
@@ -1765,41 +1769,44 @@ app.ready(function () {
             User = body
             // ready to start dashboard
             Start()
-
-            // get store channels
-            callBaseApi('channels.json', 'GET', function (err, body) {
-              if (!err) {
-                channels = body.result
-                if (channels.length) {
-                  for (var i = 0; i < channels.length; i++) {
-                    // setup channel domains array
-                    channels[i].domains = []
-                  }
-
-                  // get store domains and associate with channels
-                  callBaseApi('domains.json', 'GET', function (err, body) {
-                    if (!err) {
-                      var domains = body.result
-                      // add each domain to respective channel
-                      for (var i = 0; i < domains.length; i++) {
-                        for (var ii = 0; ii < channels.length; ii++) {
-                          if (domains[i].channel_id === channels[ii].id) {
-                            channels[ii].domains.push(domains[i])
-                          }
-                        }
-                      }
-
-                      // render channels on sidebar menu
-                      renderChannels()
-                    }
-                  })
-                }
-              }
-            })
+            getStoreChannels()
           }
         })
       }
     })
+
+    // get store channels and domains from Main API
+    var getStoreChannels = function () {
+      callMainApi('channels.json', 'GET', function (err, body) {
+        if (!err) {
+          channels = body.result
+          if (channels.length) {
+            for (var i = 0; i < channels.length; i++) {
+              // setup channel domains array
+              channels[i].domains = []
+            }
+
+            // get store domains and associate with channels
+            callMainApi('domains.json', 'GET', function (err, body) {
+              if (!err) {
+                var domains = body.result
+                // add each domain to respective channel
+                for (var i = 0; i < domains.length; i++) {
+                  for (var ii = 0; ii < channels.length; ii++) {
+                    if (domains[i].channel_id === channels[ii].id) {
+                      channels[ii].domains.push(domains[i])
+                    }
+                  }
+                }
+
+                // render channels on sidebar menu
+                renderChannels()
+              }
+            })
+          }
+        }
+      })
+    }
 
     var Start = function () {
       // create first tab
