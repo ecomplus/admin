@@ -1833,6 +1833,30 @@ app.ready(function () {
         window.location = '/'
       })
 
+      $('#new-channel').click(function () {
+        // create new sales channel
+        var body = {}
+        $('#modal-channel').find('input,select').each(function () {
+          var prop = $(this).attr('name')
+          var val = $(this).val()
+          if (prop && val) {
+            // add property to request body
+            body[prop] = val
+          }
+        })
+
+        var callback = function (err) {
+          if (!err) {
+            // reload store channels
+            getStoreChannels()
+            // reset form
+            $('#modal-channel input').val('')
+          }
+        }
+
+        callApi('@channels.json', 'POST', callback, body)
+      })
+
       // open new tab on target blank click
       var targetBlank = false
 
