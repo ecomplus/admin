@@ -1579,6 +1579,7 @@ app.ready(function () {
     }
     renderMenu()
 
+    // store sales channels
     var channels = []
     var renderChannels = function () {
       var menu = $('#sidebar')
@@ -2025,9 +2026,18 @@ app.ready(function () {
                 var domains = body.result
                 // add each domain to respective channel
                 for (var i = 0; i < domains.length; i++) {
+                  var domain = domains[i].id
                   for (var ii = 0; ii < channels.length; ii++) {
                     if (domains[i].channel_id === channels[ii].id) {
-                      channels[ii].domains.push(domains[i])
+                      channels[ii].domains.push(domain)
+                    }
+                  }
+
+                  // check domain name
+                  if (!window.shopDomain) {
+                    if (domain.indexOf('.e-com.plus') === -1 || i === domains.length - 1) {
+                      // save as main domain globally
+                      window.shopDomain = domain
                     }
                   }
                 }
