@@ -49,6 +49,9 @@
 .sidebar .menu-category:hover i {
   color: $color-green;
 }
+.sidebar .li-channel {
+  display: none;
+}
 
 .header-action .nav-link.active,
 .header-action .nav-link:hover {

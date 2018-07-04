@@ -1369,34 +1369,37 @@ app.ready(function () {
         }
 
         // sales channels on menu
-        var el = '<li class="menu-item li-channel">' +
-                   '<a class="menu-link" href="javascript:;">' +
-                     '<span class="icon fa fa-shopping-bag"></span>' +
-                     '<span class="title">' + channel.title + '</span>' +
-                     '<span class="arrow"></span>' +
-                   '</a>' +
-                   '<ul class="menu-submenu">' +
-                     '<li class="menu-item">' +
-                       '<a class="menu-link" href="' + link + '" target="_blank">' +
-                         '<span class="icon fa fa-eye"></span>' +
-                         '<span class="title">' + dictionary.go_to_store + '</span>' +
-                       '</a>' +
-                     '</li>' +
-                     '<li class="menu-item">' +
-                       '<a class="menu-link" href="' + url + '/themes">' +
-                         '<span class="icon fa fa-paint-brush"></span>' +
-                         '<span class="title">' + dictionary.themes + '</span>' +
-                       '</a>' +
-                     '</li>' +
-                     '<li class="menu-item">' +
-                       '<a class="menu-link" href="' + url + '/settings">' +
-                         '<span class="icon fa fa-wrench"></span>' +
-                         '<span class="title">' + dictionary.settings + '</span>' +
-                       '</a>' +
-                     '</li>' +
-                   '</ul>' +
-                 '</li>'
-        menu.append(el)
+        var $el = $('<li />', {
+          'class': 'menu-item li-channel',
+          html: '<a class="menu-link" href="javascript:;">' +
+                  '<span class="icon fa fa-shopping-bag"></span>' +
+                  '<span class="title">' + channel.title + '</span>' +
+                  '<span class="arrow"></span>' +
+                '</a>' +
+                '<ul class="menu-submenu">' +
+                  '<li class="menu-item">' +
+                    '<a class="menu-link" href="' + link + '" target="_blank">' +
+                      '<span class="icon fa fa-eye"></span>' +
+                      '<span class="title">' + dictionary.go_to_store + '</span>' +
+                    '</a>' +
+                  '</li>' +
+                  '<li class="menu-item">' +
+                    '<a class="menu-link" href="' + url + '/themes">' +
+                      '<span class="icon fa fa-paint-brush"></span>' +
+                      '<span class="title">' + dictionary.themes + '</span>' +
+                    '</a>' +
+                  '</li>' +
+                  '<li class="menu-item">' +
+                    '<a class="menu-link" href="' + url + '/settings">' +
+                      '<span class="icon fa fa-wrench"></span>' +
+                      '<span class="title">' + dictionary.settings + '</span>' +
+                    '</a>' +
+                  '</li>' +
+                '</ul>'
+        })
+        menu.append($el)
+        // show channels with animation
+        $el.slideDown('slow')
       }
     }
     // renderChannels()
