@@ -1565,7 +1565,7 @@ app.ready(function () {
                '</li>' +
 
                // channels will be rendered after
-               '<li class="menu-category" data-toggle="modal" data-target="#modal-channel">' +
+               '<li class="menu-category" onclick="newChannel()">' +
                  dictionary.channels + '<i class="fa fa-plus-circle"></i>' +
                '</li>'
 
@@ -1634,6 +1634,15 @@ app.ready(function () {
       }
     }
     // renderChannels()
+
+    window.newChannel = function () {
+      // handle new channel price and open modal
+      // only first channel is free
+      if (channels.length) {
+        $('#channel-price').show()
+      }
+      $('#modal-channel').modal('show')
+    }
 
     callStorageApi(null, function (err, json) {
       if (!err) {
@@ -2011,6 +2020,12 @@ app.ready(function () {
 
     // get store channels and domains from Main API
     var getStoreChannels = function () {
+      callApi('@me.json', 'GET', function (err, body) {
+        if (!err) {
+          console.log(body)
+        }
+      })
+
       callMainApi('channels.json', 'GET', function (err, body) {
         if (!err) {
           channels = body.result
