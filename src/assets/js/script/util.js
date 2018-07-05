@@ -152,4 +152,11 @@
     }
     return priceString
   }
+
+  window.newTabLink = function (link) {
+    var win = window.open(link, '_blank')
+    if (win) {
+      win.focus()
+    }
+  }
 }())

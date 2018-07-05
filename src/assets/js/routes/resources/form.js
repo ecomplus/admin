@@ -28,6 +28,13 @@
     window.callApi(endpoint, method, Callback, data)
   }
 
+  // edit JSON document
+  var commit = window.tabCommit[tabId]
+  var Data = function () {
+    // current data from global variable
+    return window.tabData[tabId]
+  }
+
   var slug = window.routeParams[0]
   var resourceId = window.routeParams[1]
   var creating, endpoint
@@ -57,15 +64,41 @@
       callApi(slug + '.json', 'POST', callback, Data())
     })
 
+    // direct link and share
+    var link = function (link) {
+      if (window.shopDomain && Data().slug) {
+        var Link = 'https://' + window.shopDomain + '/' + Data().slug
+        if (link) {
+          // add link prefix
+          Link = link + encodeURIComponent(Link)
+        }
+        window.newTabLink(Link)
+      } else {
+        app.toast(i18n({
+          'en_us': 'No link to share',
+          'pt_br': 'Nenhum link para compartilhar'
+        }))
+      }
+    }
+
+    $('#' + tabId + '-view').click(function () {
+      link()
+    })
+    $('#' + tabId + '-facebook').click(function () {
+      link('https://www.facebook.com/sharer.php?u=')
+    })
+    $('#' + tabId + '-whatsapp').click(function () {
+      var platform
+      if ($(window).width() < 480) {
+        platform = 'api'
+      } else {
+        platform = 'web'
+      }
+      link('https://' + platform + '.whatsapp.com/send?text=')
+    })
+
     // show buttons
     $('#' + tabId + '-nav .edit-btn').fadeIn()
-  }
-
-  // edit JSON document
-  var commit = window.tabCommit[tabId]
-  var Data = function () {
-    // current data from global variable
-    return window.tabData[tabId]
   }
 
   var $form = elContainer.children('form')
