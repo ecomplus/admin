@@ -125,4 +125,23 @@
       wheelSpeed: 0.5
     })
   }
+
+  window.formatMoney = function (price, currency, lang) {
+    if (!currency) {
+      // default currency, Reais
+      currency = 'BRL'
+    }
+    if (!lang) {
+      // try to get global lang variable
+      lang = window.lang
+    }
+    if (lang) {
+      // format pt-BR, en-US
+      lang = lang.replace('_', '-')
+    } else {
+      // default lang
+      lang = 'pt-BR'
+    }
+    return price.toLocaleString(lang, { style: 'currency', currency: currency })
+  }
 }())
