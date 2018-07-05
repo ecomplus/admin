@@ -384,24 +384,31 @@
               }
 
               if (!skipCommit) {
-                if (thumbnails) {
-                  if (multiple) {
-                    data[prop] = pictures
-                  } else {
-                    data[prop] = pictures[0]
-                  }
-                } else {
-                  // no thumbnails
-                  // use image with original (zoom) size
-                  if (multiple) {
-                    data[prop] = []
-                    for (i = 0; i < pictures.length; i++) {
-                      data[prop].push(pictures[i].zoom)
+                if (multiple) {
+                  data[prop] = []
+                  // generate IDs for each image
+                  // 24 chars hexadecimal
+                  var idPad = '110000000000000000000000'
+
+                  for (i = 0; i < pictures.length; i++) {
+                    var item
+                    if (thumbnails) {
+                      item = pictures[i]
+                    } else {
+                      // no thumbnails
+                      // use image with original (zoom) size
+                      item = pictures[i].zoom
                     }
-                  } else {
-                    data[prop] = pictures[0].zoom
+                    var index = '' + i
+                    item._id = idPad.substring(0, idPad.length - index.length) + index
+                    data[prop].push(item)
                   }
+                } else if (thumbnails) {
+                  data[prop] = pictures[0]
+                } else {
+                  data[prop] = pictures[0].zoom
                 }
+
                 // commit only to perform reactive actions
                 commit(data, true)
               }
