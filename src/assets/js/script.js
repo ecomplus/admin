@@ -251,7 +251,15 @@ app.config({
       // default lang
       lang = 'pt-BR'
     }
-    return price.toLocaleString(lang, { style: 'currency', currency: currency })
+
+    var priceString
+    try {
+      priceString = price.toLocaleString(lang, { style: 'currency', currency: currency })
+    } catch (e) {
+      // fallback
+      priceString = price
+    }
+    return priceString
   }
 }())
 
