@@ -1138,7 +1138,8 @@ app.ready(function () {
               elTitle.change(function () {
                 updateTopbarTitle($(this).val())
               })
-              updateTopbarTitle('')
+              // reset topbar title with current input val
+              updateTopbarTitle(elTitle.val())
               clearTopbarTitle = false
             }
           }
