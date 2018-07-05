@@ -320,9 +320,15 @@
                   if (!thumbnails) {
                     // no thumbnails
                     // only original (zoom) size is saved
+                    var url = picture.url
                     picture = { zoom: picture }
-                    picture.normal = {
-                      url: picture.zoom.url.replace(/^((https?:)?\/\/[^/]+\/)(.*)$/, '$1imgs/400px/$3')
+                    if (url.indexOf('digitaloceanspaces.com/@') !== -1) {
+                      // from store bucket
+                      picture.normal = {
+                        url: url.replace(/^((https?:)?\/\/[^/]+\/)(.*)$/, '$1imgs/400px/$3')
+                      }
+                    } else {
+                      picture.normal = picture.zoom
                     }
                   }
                   pictures.push(picture)
@@ -404,8 +410,7 @@
                 }
 
                 var index = i
-                var img = new Image()
-                img.onload = function () {
+                var add = function () {
                   if (!isSummernote) {
                     content.push($('<span />', {
                       html: '<img src="' + url + '" /><i class="fa fa-cog"></i>',
@@ -420,6 +425,14 @@
                     })
                   }
                 }
+
+                var img = new Image()
+                img.onload = function () {
+                  add()
+                  clearTimeout(fallback)
+                }
+                // fallback if image not loading
+                var fallback = setTimeout(add, 5000)
                 img.src = url
               }())
             }
