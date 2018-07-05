@@ -204,8 +204,9 @@
 
       if (!creating) {
         // fill form fields with current data
-        for (var prop in Data()) {
-          var val = Data()[prop]
+        var data = Data()
+        for (var prop in data) {
+          var val = data[prop]
           var $el = $('[name="' + prop + '"]')
           if ($el) {
             switch (typeof val) {
@@ -215,22 +216,25 @@
 
               case 'object':
                 // handle JSON objects and arrays
-                // select fields ?
-                if (Array.isArray(val)) {
-                  var list = []
-                  for (var i = 0; i < val.length; i++) {
-                    var item = val[i]
-                    if (typeof item !== 'string') {
-                      // array of objects
-                      list.push(JSON.stringify(item))
-                    } else {
-                      list.push(item)
+                if (!$el.is('input:file')) {
+                  // select fields ?
+                  if (Array.isArray(val)) {
+                    var list = []
+                    for (var i = 0; i < val.length; i++) {
+                      var item = val[i]
+                      if (typeof item !== 'string') {
+                        // array of objects
+                        list.push(JSON.stringify(item))
+                      } else {
+                        list.push(item)
+                      }
                     }
+                    $el.val(list)
+                  } else if (val !== null) {
+                    // JSON object
+                    $el.val(JSON.stringify(val))
                   }
-                  $el.val(list)
-                } else if (val !== null) {
-                  // JSON object
-                  $el.val(JSON.stringify(val))
+                } else {
                 }
             }
           }
@@ -308,6 +312,25 @@
         var imagesCallback = function (err, pictures) {
           if (!err) {
             var data = Data()
+            if (multiple && data.hasOwnProperty(prop)) {
+              // keep current pictures
+              for (i = 0; i < data[prop].length; i++) {
+                var picture = data[prop][i]
+                if (picture) {
+                  if (!thumbnails) {
+                    // no thumbnails
+                    // only original (zoom) size is saved
+                    picture = { zoom: picture }
+                    picture.normal = {
+                      url: picture.zoom.url.replace(/^((https?:)?\/\/[^/]+\/)(.*)$/, '$1imgs/400px/$3')
+                    }
+                  }
+                  pictures.push(picture)
+                }
+              }
+              // console.log(pictures)
+            }
+
             // check number of images
             if (pictures.length > max) {
               if (multiple) {
