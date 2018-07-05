@@ -237,6 +237,13 @@
           // commit only to perform reactive actions
           commit(data, true)
         }
+      }).each(function () {
+        // fill input with current data
+        var prop = $(this).attr('name')
+        var val = Data()[prop]
+        if (typeof val === 'string' && prop !== 'body_html') {
+          $(this).val(val)
+        }
       })
 
       $form.find('input[type="file"]').each(function () {
