@@ -161,7 +161,8 @@
       }
 
       // setup input events
-      $form.find('input[type="text"],select,textarea').change(function () {
+      var $fields = $form.find('input[type="text"],select,textarea')
+      $fields.change(function () {
         var prop = $(this).attr('name')
         if (prop && prop !== '') {
           var data = Data()
@@ -207,14 +208,18 @@
           // commit only to perform reactive actions
           commit(data, true)
         }
-      }).each(function () {
-        // fill input with current data
-        var prop = $(this).attr('name')
-        var val = Data()[prop]
-        if (typeof val === 'string') {
-          $(this).val(val)
-        }
       })
+
+      if (!creating) {
+        $fields.each(function () {
+          // fill input with current data
+          var prop = $(this).attr('name')
+          var val = Data()[prop]
+          if (typeof val === 'string') {
+            $(this).val(val)
+          }
+        })
+      }
 
       var $editor = $form.find('.html-editor')
       var editorChanged = false
