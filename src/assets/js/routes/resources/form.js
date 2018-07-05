@@ -132,36 +132,6 @@
     done++
     if (done === todo) {
       // ready
-      // plugins and addons
-      var $editor = $form.find('.html-editor')
-      $editor.summernote({
-        // https://summernote.org/deep-dive/
-        toolbar: [
-          [ 'style', [ 'style' ] ],
-          [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear' ] ],
-          [ 'color', [ 'color' ] ],
-          [ 'insert', [ 'picture', 'link', 'video', 'hr', 'table' ] ],
-          [ 'paragraph', [ 'ul', 'ol', 'paragraph' ] ],
-          [ 'misc', [ 'codeview', 'help' ] ]
-        ],
-        height: 400,
-        dialogsFade: true,
-
-        callbacks: {
-          onChange: function (content) {
-            var html = content.trim()
-            // fix for problem with ENTER and new paragraphs
-            if (html.substring(0, 5) !== '<div>') {
-              $editor.summernote('code', '<div><br></div>' + html)
-            }
-          },
-          onBlur: function () {
-            // update textarea
-            $editor.trigger('change')
-          }
-        }
-      })
-
       // setup inputs plugins
       $form.find('.tagsinput').tagsinput()
       $form.find('select:not(.tagsinput)').selectpicker({
@@ -241,8 +211,42 @@
         // fill input with current data
         var prop = $(this).attr('name')
         var val = Data()[prop]
-        if (typeof val === 'string' && prop !== 'body_html') {
+        if (typeof val === 'string') {
           $(this).val(val)
+        }
+      })
+
+      var $editor = $form.find('.html-editor')
+      var editorChanged = false
+      $editor.summernote({
+        // https://summernote.org/deep-dive/
+        toolbar: [
+          [ 'style', [ 'style' ] ],
+          [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear' ] ],
+          [ 'color', [ 'color' ] ],
+          [ 'insert', [ 'picture', 'link', 'video', 'hr', 'table' ] ],
+          [ 'paragraph', [ 'ul', 'ol', 'paragraph' ] ],
+          [ 'misc', [ 'codeview', 'help' ] ]
+        ],
+        height: 400,
+        dialogsFade: true,
+
+        callbacks: {
+          onChange: function (content) {
+            editorChanged = true
+            var html = content.trim()
+            // fix for problem with ENTER and new paragraphs
+            if (html.substring(0, 5) !== '<div>') {
+              $editor.summernote('code', '<div><br></div>' + html)
+            }
+          },
+          onBlur: function () {
+            if (editorChanged) {
+              // update textarea
+              $editor.trigger('change')
+              editorChanged = false
+            }
+          }
         }
       })
 
@@ -295,28 +299,28 @@
               }
             }
 
-            if (thumbnails) {
-              if (multiple) {
-                data[prop] = pictures
-              } else {
-                data[prop] = pictures[0]
-              }
-            } else {
-              // no thumbnails
-              // use image with original (zoom) size
-              if (multiple) {
-                data[prop] = []
-                for (i = 0; i < pictures.length; i++) {
-                  data[prop].push(pictures[i].zoom)
+            if (!isSummernote) {
+              if (thumbnails) {
+                if (multiple) {
+                  data[prop] = pictures
+                } else {
+                  data[prop] = pictures[0]
                 }
               } else {
-                data[prop] = pictures[0].zoom
+                // no thumbnails
+                // use image with original (zoom) size
+                if (multiple) {
+                  data[prop] = []
+                  for (i = 0; i < pictures.length; i++) {
+                    data[prop].push(pictures[i].zoom)
+                  }
+                } else {
+                  data[prop] = pictures[0].zoom
+                }
               }
-            }
-            // commit only to perform reactive actions
-            commit(data, true)
+              // commit only to perform reactive actions
+              commit(data, true)
 
-            if (!isSummernote) {
               // show spinner while loading images
               $el.addClass('ajax')
               // reset images list
