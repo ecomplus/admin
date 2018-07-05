@@ -312,10 +312,9 @@
         var imagesCallback = function (err, pictures) {
           if (!err) {
             var data = Data()
-            if (multiple && data.hasOwnProperty(prop)) {
+            if (data.hasOwnProperty(prop)) {
               // keep current pictures
-              for (i = 0; i < data[prop].length; i++) {
-                var picture = data[prop][i]
+              var add = function (picture) {
                 if (picture) {
                   if (!thumbnails) {
                     // no thumbnails
@@ -334,10 +333,23 @@
                   pictures.push(picture)
                 }
               }
+
+              if (multiple) {
+                for (i = 0; i < data[prop].length; i++) {
+                  var picture = data[prop][i]
+                  add(picture)
+                }
+              } else if (!pictures.length) {
+                add(data[prop])
+              }
               // console.log(pictures)
             }
 
             // check number of images
+            if (!pictures.length) {
+              // no images
+              return
+            }
             if (pictures.length > max) {
               if (multiple) {
                 if (thumbnails) {
@@ -466,6 +478,10 @@
           click: selectImage
         })
         $(this).replaceWith($el)
+        if (!creating) {
+          // setup images list with current data
+          imagesCallback(null, [])
+        }
       })
 
       // edit common image properties
