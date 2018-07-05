@@ -132,18 +132,6 @@
     done++
     if (done === todo) {
       // ready
-      if (!creating) {
-        // fill form fields with current data
-        for (var prop in Data()) {
-          var val = Data()[prop]
-          switch (typeof val) {
-            case 'string':
-              $('[name="' + prop + '"]').val(val)
-              break
-          }
-        }
-      }
-
       // treat input values to data properties
       var strToProperty = function ($el, str) {
         str = str.trim()
@@ -213,6 +201,41 @@
           commit(data, true)
         }
       })
+
+      if (!creating) {
+        // fill form fields with current data
+        for (var prop in Data()) {
+          var val = Data()[prop]
+          var $el = $('[name="' + prop + '"]')
+          if ($el) {
+            switch (typeof val) {
+              case 'string':
+                $el.val(val)
+                break
+
+              case 'object':
+                // handle JSON objects and arrays
+                // select fields ?
+                if (Array.isArray(val)) {
+                  var list = []
+                  for (var i = 0; i < val.length; i++) {
+                    var item = val[i]
+                    if (typeof item !== 'string') {
+                      // array of objects
+                      list.push(JSON.stringify(item))
+                    } else {
+                      list.push(item)
+                    }
+                  }
+                  $el.val(list)
+                } else if (val !== null) {
+                  // JSON object
+                  $el.val(JSON.stringify(val))
+                }
+            }
+          }
+        }
+      }
 
       // setup inputs plugins
       $form.find('.tagsinput').tagsinput()
@@ -510,17 +533,20 @@
           if (list) {
             for (var i = 0; i < list.length; i++) {
               var doc = list[i]
-              for (var j = 0; j < $els.length; j++) {
-                // fill select element with new option
-                var value
-                if (object) {
-                  value = JSON.stringify(doc)
-                } else {
-                  // string property
-                  // use document ID as option value
-                  value = doc._id
+              // escape itself
+              if (doc._id !== resourceId) {
+                for (var j = 0; j < $els.length; j++) {
+                  // fill select element with new option
+                  var value
+                  if (object) {
+                    value = JSON.stringify(doc)
+                  } else {
+                    // string property
+                    // use document ID as option value
+                    value = doc._id
+                  }
+                  $('<option />', { value: value, text: doc.name }).appendTo($els[j])
                 }
-                $('<option />', { value: value, text: doc.name }).appendTo($els[j])
               }
             }
           }
