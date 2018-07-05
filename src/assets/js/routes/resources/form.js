@@ -132,12 +132,17 @@
     done++
     if (done === todo) {
       // ready
-      // setup inputs plugins
-      $form.find('.tagsinput').tagsinput()
-      $form.find('select:not(.tagsinput)').selectpicker({
-        style: 'btn-light',
-        noneSelectedText: '--'
-      })
+      if (!creating) {
+        // fill form fields with current data
+        for (var prop in Data()) {
+          var val = Data()[prop]
+          switch (typeof val) {
+            case 'string':
+              $('[name="' + prop + '"]').val(val)
+              break
+          }
+        }
+      }
 
       // treat input values to data properties
       var strToProperty = function ($el, str) {
@@ -161,8 +166,7 @@
       }
 
       // setup input events
-      var $fields = $form.find('input[type="text"],select,textarea')
-      $fields.change(function () {
+      $form.find('input[type="text"],select,textarea').change(function () {
         var prop = $(this).attr('name')
         if (prop && prop !== '') {
           var data = Data()
@@ -210,16 +214,12 @@
         }
       })
 
-      if (!creating) {
-        $fields.each(function () {
-          // fill input with current data
-          var prop = $(this).attr('name')
-          var val = Data()[prop]
-          if (typeof val === 'string') {
-            $(this).val(val)
-          }
-        })
-      }
+      // setup inputs plugins
+      $form.find('.tagsinput').tagsinput()
+      $form.find('select:not(.tagsinput)').selectpicker({
+        style: 'btn-light',
+        noneSelectedText: '--'
+      })
 
       var $editor = $form.find('.html-editor')
       var editorChanged = false
@@ -520,7 +520,7 @@
                   // use document ID as option value
                   value = doc._id
                 }
-                $('<option />', { value: value }).text(doc.name).appendTo($els[j])
+                $('<option />', { value: value, text: doc.name }).appendTo($els[j])
               }
             }
           }
