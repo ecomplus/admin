@@ -259,6 +259,10 @@
       })
 
       $form.find('input[type="file"]').each(function () {
+        /*
+          @TODO
+          Drag images to change order
+        */
         // console.log($(this))
         // handle images selection
         // use global dropzone and library
