@@ -234,6 +234,25 @@ app.config({
       wheelSpeed: 0.5
     })
   }
+
+  window.formatMoney = function (price, currency, lang) {
+    if (!currency) {
+      // default currency, Reais
+      currency = 'BRL'
+    }
+    if (!lang) {
+      // try to get global lang variable
+      lang = window.lang
+    }
+    if (lang) {
+      // format pt-BR, en-US
+      lang = lang.replace('_', '-')
+    } else {
+      // default lang
+      lang = 'pt-BR'
+    }
+    return price.toLocaleString(lang, { style: 'currency', currency: currency })
+  }
 }())
 
 
@@ -1639,7 +1658,14 @@ app.ready(function () {
       // handle new channel price and open modal
       // only first channel is free
       if (channels.length) {
-        $('#channel-price').show()
+        var price = Store.$main.additional_channels_cost
+        if (price === undefined) {
+          return
+        } else {
+          var $div = $('#channel-price')
+          $div.children('strong').text(window.formatMoney(price))
+          $div.show()
+        }
       }
       $('#modal-channel').modal('show')
     }
@@ -2004,6 +2030,7 @@ app.ready(function () {
         fatalError(err)
       } else {
         Store = body
+        // console.log(Store)
         // get authentication object
         callApi('authentications/me.json', 'GET', function (err, body) {
           if (err) {
@@ -2020,12 +2047,6 @@ app.ready(function () {
 
     // get store channels and domains from Main API
     var getStoreChannels = function () {
-      callApi('@me.json', 'GET', function (err, body) {
-        if (!err) {
-          console.log(body)
-        }
-      })
-
       callMainApi('channels.json', 'GET', function (err, body) {
         if (!err) {
           channels = body.result

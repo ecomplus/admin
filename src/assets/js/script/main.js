@@ -1409,7 +1409,14 @@ app.ready(function () {
       // handle new channel price and open modal
       // only first channel is free
       if (channels.length) {
-        $('#channel-price').show()
+        var price = Store.$main.additional_channels_cost
+        if (price === undefined) {
+          return
+        } else {
+          var $div = $('#channel-price')
+          $div.children('strong').text(window.formatMoney(price))
+          $div.show()
+        }
       }
       $('#modal-channel').modal('show')
     }
@@ -1774,6 +1781,7 @@ app.ready(function () {
         fatalError(err)
       } else {
         Store = body
+        // console.log(Store)
         // get authentication object
         callApi('authentications/me.json', 'GET', function (err, body) {
           if (err) {
@@ -1790,12 +1798,6 @@ app.ready(function () {
 
     // get store channels and domains from Main API
     var getStoreChannels = function () {
-      callApi('@me.json', 'GET', function (err, body) {
-        if (!err) {
-          console.log(body)
-        }
-      })
-
       callMainApi('channels.json', 'GET', function (err, body) {
         if (!err) {
           channels = body.result
