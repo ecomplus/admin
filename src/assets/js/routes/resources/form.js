@@ -48,13 +48,15 @@
 
     /*  setup edit document buttons */
 
-    $('#' + tabId + '-delete').click(function () {
+    var Delete = function () {
       callApi(endpoint, 'DELETE', function (json) {
         // document deleted
         // redirect to resource list
         window.location = '/#/resources/' + slug
       })
-    })
+    }
+    $('#' + tabId + '-delete').click(Delete)
+    elContainer.find('.delete-resource').click(Delete).fadeIn()
 
     $('#' + tabId + '-duplicate').click(function () {
       // create new document with same JSON data
