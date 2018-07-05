@@ -208,7 +208,7 @@
         for (var prop in data) {
           var val = data[prop]
           var $el = $('[name="' + prop + '"]')
-          if ($el) {
+          if ($el && !$el.is('input:file')) {
             switch (typeof val) {
               case 'string':
                 $el.val(val)
@@ -216,25 +216,22 @@
 
               case 'object':
                 // handle JSON objects and arrays
-                if (!$el.is('input:file')) {
-                  // select fields ?
-                  if (Array.isArray(val)) {
-                    var list = []
-                    for (var i = 0; i < val.length; i++) {
-                      var item = val[i]
-                      if (typeof item !== 'string') {
-                        // array of objects
-                        list.push(JSON.stringify(item))
-                      } else {
-                        list.push(item)
-                      }
+                // select fields ?
+                if (Array.isArray(val)) {
+                  var list = []
+                  for (var i = 0; i < val.length; i++) {
+                    var item = val[i]
+                    if (typeof item !== 'string') {
+                      // array of objects
+                      list.push(JSON.stringify(item))
+                    } else {
+                      list.push(item)
                     }
-                    $el.val(list)
-                  } else if (val !== null) {
-                    // JSON object
-                    $el.val(JSON.stringify(val))
                   }
-                } else {
+                  $el.val(list)
+                } else if (val !== null) {
+                  // JSON object
+                  $el.val(JSON.stringify(val))
                 }
             }
           }
@@ -309,7 +306,7 @@
         thumbnails = $(this).data('thumbnails')
 
         // callback after images selection
-        var imagesCallback = function (err, pictures) {
+        var imagesCallback = function (err, pictures, skipCommit) {
           if (!err) {
             var data = Data()
             if (data.hasOwnProperty(prop)) {
@@ -369,27 +366,6 @@
             }
 
             if (!isSummernote) {
-              if (thumbnails) {
-                if (multiple) {
-                  data[prop] = pictures
-                } else {
-                  data[prop] = pictures[0]
-                }
-              } else {
-                // no thumbnails
-                // use image with original (zoom) size
-                if (multiple) {
-                  data[prop] = []
-                  for (i = 0; i < pictures.length; i++) {
-                    data[prop].push(pictures[i].zoom)
-                  }
-                } else {
-                  data[prop] = pictures[0].zoom
-                }
-              }
-              // commit only to perform reactive actions
-              commit(data, true)
-
               // show spinner while loading images
               $el.addClass('ajax')
               // reset images list
@@ -405,6 +381,29 @@
                   $list.prepend(content)
                   $el.removeClass('ajax')
                 }
+              }
+
+              if (!skipCommit) {
+                if (thumbnails) {
+                  if (multiple) {
+                    data[prop] = pictures
+                  } else {
+                    data[prop] = pictures[0]
+                  }
+                } else {
+                  // no thumbnails
+                  // use image with original (zoom) size
+                  if (multiple) {
+                    data[prop] = []
+                    for (i = 0; i < pictures.length; i++) {
+                      data[prop].push(pictures[i].zoom)
+                    }
+                  } else {
+                    data[prop] = pictures[0].zoom
+                  }
+                }
+                // commit only to perform reactive actions
+                commit(data, true)
               }
             }
 
@@ -478,9 +477,11 @@
           click: selectImage
         })
         $(this).replaceWith($el)
+
         if (!creating) {
           // setup images list with current data
-          imagesCallback(null, [])
+          // true to skipCommit, no data changes
+          imagesCallback(null, [], true)
         }
       })
 
