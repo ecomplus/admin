@@ -8,6 +8,7 @@
   // current tab ID
   var tabId = window.tabId
   var elContainer = $('#' + tabId + '-tab-normal')
+  var $form = elContainer.children('form')
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
 
@@ -100,30 +101,6 @@
     // show buttons
     $('#' + tabId + '-nav .edit-btn').fadeIn()
   }
-
-  var $form = elContainer.children('form')
-  window.setSaveAction($form, function (cb) {
-    var method
-    if (creating) {
-      method = 'POST'
-    } else {
-      // overwrite
-      method = 'PUT'
-    }
-
-    var callback = function (json) {
-      if (typeof cb === 'function') {
-        // save action callback
-        cb(tabId)
-      }
-      if (creating && json._id) {
-        // document created
-        // redirect to resource edit page
-        window.location = '/#/resources/' + slug + '/' + json._id
-      }
-    }
-    callApi(endpoint, method, callback, Data())
-  })
 
   // count AJAX requests
   var todo = 0
@@ -557,6 +534,30 @@
           })
         }
       }
+
+      // setup save action
+      window.setSaveAction($form, function (cb) {
+        var method
+        if (creating) {
+          method = 'POST'
+        } else {
+          // overwrite
+          method = 'PUT'
+        }
+
+        var callback = function (json) {
+          if (typeof cb === 'function') {
+            // save action callback
+            cb(tabId)
+          }
+          if (creating && json._id) {
+            // document created
+            // redirect to resource edit page
+            window.location = '/#/resources/' + slug + '/' + json._id
+          }
+        }
+        callApi(endpoint, method, callback, Data())
+      })
 
       // show form
       window.fixScrollbars($form)
