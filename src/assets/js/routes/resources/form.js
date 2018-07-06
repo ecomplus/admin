@@ -423,12 +423,15 @@
                   url = pictures[i].zoom.url
                 }
 
+                if (!isSummernote) {
+                  // push content before image loading
+                  content.push($('<span />', {
+                    html: '<img src="' + url + '" /><i class="fa fa-cog"></i>',
+                    click: editImage(prop)
+                  }))
+                }
                 var add = function () {
                   if (!isSummernote) {
-                    content.push($('<span />', {
-                      html: '<img src="' + url + '" /><i class="fa fa-cog"></i>',
-                      click: editImage(prop)
-                    }))
                     Done()
                   } else {
                     // add image to summernote editor
