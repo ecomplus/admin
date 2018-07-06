@@ -481,8 +481,8 @@ body {
   width: 100%;
 }
 .select-image .images-list {
-  padding: 15px;
-  width: 100%;
+  padding: 15px 10px;
+  min-width: 100%;
   height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -495,6 +495,7 @@ body {
   flex-wrap: nowrap;
 }
 .select-image p {
+  padding-top: 5px;
   display: none;
 }
 .select-image p:first-child {
@@ -505,11 +506,8 @@ body {
 .select-image span {
   height: 90px;
   position: relative;
-  margin-right: 10px;
+  margin: 0 5px;
   border: 1px solid $color-bg-lightest;
-}
-.select-image span:last-child {
-  margin-right: 0;
 }
 .select-image span:hover {
   border-color: $color-text;
@@ -517,7 +515,7 @@ body {
 .select-image span > img {
   height: 88px;
   width: auto;
-  max-width: 100%;
+  max-width: none;
 }
 .select-image span > * {
   transition: 0.1s linear;
