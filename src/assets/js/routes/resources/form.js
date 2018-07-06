@@ -259,10 +259,6 @@
       })
 
       $form.find('input[type="file"]').each(function () {
-        /*
-          @TODO
-          Drag images to change order
-        */
         // console.log($(this))
         // handle images selection
         // use global dropzone and library
@@ -363,6 +359,24 @@
                 if (done === todo) {
                   $list.prepend(content)
                   $el.removeClass('ajax')
+
+                  if (done > 1) {
+                    // handle images sorting
+                    // https://github.com/lukasoppermann/html5sortable
+                    window.sortable($list)[0].addEventListener('sortupdate', function (e) {
+                      // console.log(e.detail)
+                      // invert array elements on data
+                      var i = e.detail.oldElementIndex
+                      var j = e.detail.elementIndex
+                      var data = Data()
+                      var x = data[prop][i]
+                      data[prop][i] = data[prop][j]
+                      data[prop][j] = x
+
+                      // commit only to perform reactive actions
+                      commit(data, true)
+                    })
+                  }
                 }
               }
 
