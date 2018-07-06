@@ -362,19 +362,18 @@
 
                   if (done > 1) {
                     // handle images sorting
-                    // https://github.com/lukasoppermann/html5sortable
-                    window.sortable($list)[0].addEventListener('sortupdate', function (e) {
-                      // console.log(e.detail)
-                      // invert array elements on data
-                      var i = e.detail.oldElementIndex
-                      var j = e.detail.elementIndex
-                      var data = Data()
-                      var x = data[prop][i]
-                      data[prop][i] = data[prop][j]
-                      data[prop][j] = x
-
-                      // commit only to perform reactive actions
-                      commit(data, true)
+                    // https://github.com/RubaXa/Sortable
+                    window.Sortable.create($list[0], {
+                      onUpdate: function (e) {
+                        // console.log(e.detail)
+                        // invert array elements on data
+                        var data = Data()
+                        var x = data[prop][e.oldIndex]
+                        data[prop][e.oldIndex] = data[prop][e.newIndex]
+                        data[prop][e.newIndex] = x
+                        // commit only to perform reactive actions
+                        commit(data, true)
+                      }
                     })
                   }
                 }
