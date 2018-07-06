@@ -516,6 +516,7 @@ body {
   height: 88px;
   width: auto;
   max-width: none;
+  cursor: move;
 }
 .select-image span > * {
   transition: 0.1s linear;
@@ -524,6 +525,8 @@ body {
   opacity: .3;
 }
 .select-image span > i {
+  font-size: 18px;
+  cursor: pointer;
   opacity: 0;
   position: absolute;
   top: 5px;
@@ -531,6 +534,11 @@ body {
 }
 .select-image span:hover > i {
   opacity: 1;
+}
+.images-list .sortable-placeholder {
+  background: $color-bg-light;
+  margin: 0 5px;
+  padding: 0 45px;
 }
 
 // resources list
