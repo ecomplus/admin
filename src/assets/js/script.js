@@ -38,7 +38,8 @@ app.config({
     'bloodhound',
     'tagsinput',
     'mask',
-    'selectpicker'
+    'selectpicker',
+    'sortable'
   ],
 
   /*
