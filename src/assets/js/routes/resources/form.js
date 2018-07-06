@@ -423,12 +423,11 @@
                   url = pictures[i].zoom.url
                 }
 
-                var index = i
                 var add = function () {
                   if (!isSummernote) {
                     content.push($('<span />', {
                       html: '<img src="' + url + '" /><i class="fa fa-cog"></i>',
-                      click: editImage(prop, index)
+                      click: editImage(prop)
                     }))
                     Done()
                   } else {
@@ -489,7 +488,7 @@
       })
 
       // edit common image properties
-      var editImage = function (prop, index) {
+      var editImage = function (prop) {
         return function (event) {
           // should not open uploads modal
           event.stopPropagation()
@@ -498,6 +497,7 @@
           // open edit image modal and wait for 'save' action
           window.editImage(function (err, json) {
             if (!err) {
+              var index = $span.index()
               var data = Data()
 
               if (json === false) {
