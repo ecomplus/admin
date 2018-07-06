@@ -420,7 +420,7 @@
               $el.addClass('ajax')
               // reset images list
               var $list = $el.children('.images-list')
-              $list.children('span').remove()
+              $list.html('')
               var todo = 0
               var done = 0
               // concat HTML content with images
@@ -440,9 +440,11 @@
                         // move array elements on data
                         var data = Data()
                         var x = data[prop].splice(e.oldIndex, 1)[0]
-                        data[prop].splice(e.newIndex, 0, x)
-                        // commit only to perform reactive actions
-                        commit(data, true)
+                        if (x) {
+                          data[prop].splice(e.newIndex, 0, x)
+                          // commit only to perform reactive actions
+                          commit(data, true)
+                        }
                       }
                     })
                   }
@@ -546,9 +548,8 @@
         var $el = $('<div/>', {
           'class': 'select-image scrollable ajax-content',
           html: '<div class="ajax-overlay"><div class="spinner-circle-material"></div></div>' +
-                '<div class="images-list">' +
-                  '<p><i class="fa fa-picture-o"></i>&nbsp; ' + text + '</p>' +
-                '</div>',
+                '<div class="images-list"></div>' +
+                '<p><i class="fa fa-picture-o"></i>&nbsp; ' + text + '</p>',
           click: selectImage
         })
         $(this).replaceWith($el)
