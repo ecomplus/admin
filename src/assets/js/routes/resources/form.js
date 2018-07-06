@@ -266,6 +266,10 @@
           var $span = $(this)
 
           // open edit image modal and wait for 'save' action
+          /*
+            @TODO
+            Pass current data values, alt and size
+          */
           window.editImage(function (err, json) {
             if (!err) {
               var index = $span.index()
