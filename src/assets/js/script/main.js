@@ -1730,11 +1730,26 @@ app.ready(function () {
           }
 
           var editImageCallback = null
-          window.editImage = function (callback) {
+          window.editImage = function (callback, picture) {
             editImageCallback = callback
             // configure image options
-            // open modal and clear inputs
-            $('#modal-edit-image').modal('show').find('input').val('')
+            var $modal = $('#modal-edit-image')
+            if (picture) {
+              $modal.find('input').each(function () {
+                var value = picture[$(this).attr('name')]
+                if (value) {
+                  $(this).val(value)
+                } else {
+                  // clear
+                  $(this).val('')
+                }
+              })
+            } else {
+              // clear all inputs
+              $modal.find('input').val('')
+            }
+            // open modal and show form
+            $modal.modal('show')
           }
 
           $('#edit-image').click(function () {
