@@ -360,6 +360,7 @@ body {
   font-family: $font-body;
   transform: unset;
   color: $color-primary;
+  font-weight: 400;
 }
 .card-btn-slide:not(:empty).rotate-180 {
   opacity: .3;

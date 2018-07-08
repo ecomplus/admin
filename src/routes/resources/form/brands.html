@@ -19,15 +19,6 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="i18n">
-                  <span data-lang="en_us">Short description</span>
-                  <span data-lang="pt_br">Descrição curta</span>
-                </label>
-                <textarea class="form-control" rows="4" name="short_description"></textarea>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
                 <label>Logo</label>
                 <input type="file" name="logo" />
               </div>
@@ -36,7 +27,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card card-slided-up">
         <header class="card-header">
           <h4 class="card-title i18n">
             <span data-lang="en_us">Description</span>
@@ -44,7 +35,10 @@
           </h4>
           <ul class="card-controls">
             <li>
-              <a class="card-btn-slide" href="#"></a>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit HTML description</span>
+                <span data-lang="pt_br">Editar descrição HTML</span>
+              </a>
             </li>
           </ul>
         </header>
@@ -58,6 +52,26 @@
     </div>
 
     <div class="col-md-5">
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Short description</span>
+            <span data-lang="pt_br">Descrição curta</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <textarea class="form-control" rows="3" name="short_description"></textarea>
+          </div>
+        </div>
+      </div>
+
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
