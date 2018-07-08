@@ -495,6 +495,11 @@ body {
   -ms-flex-wrap: nowrap;
   -webkit-flex-wrap: nowrap;
   flex-wrap: nowrap;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
 }
 .images-list:empty {
   position: absolute;
@@ -523,6 +528,9 @@ body {
   width: auto;
   max-width: 180px;
   cursor: move;
+}
+.select-image span:only-child > img {
+  max-width: none;
 }
 .select-image span > * {
   transition: 0.1s linear;
