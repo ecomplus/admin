@@ -578,7 +578,7 @@
                 .replace(/[ÓÔÕóôõ]/, 'o')
                 .replace(/[ÚÛŨúûõ]/, 'u')
                 // replace spaces and new lines
-                .replace(/\s\n/g, '-')
+                .replace(/[\s\n]/g, '-')
                 // remove illegal characters
                 .replace(/[^a-z0-9-_./]/g, '')
             }

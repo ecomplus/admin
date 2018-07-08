@@ -271,7 +271,7 @@ app.config({
 
   window.cutString = function (str, maxLength) {
     // trim the string to the maximum length
-    var trimmed = str.substr(0, maxLength)
+    var trimmed = (str + ' ').substr(0, maxLength)
     // re-trim if we are in the middle of a word
     return trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))
   }
