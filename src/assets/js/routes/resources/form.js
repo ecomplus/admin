@@ -109,7 +109,7 @@
   var done = 0
   var Done = function () {
     done++
-    if (done === todo) {
+    if (done >= todo) {
       // ready
       // treat input values to data properties
       var strToProperty = function ($el, str) {
@@ -584,54 +584,59 @@
   }
 
   // fill select options (autocomplete)
-  $form.find('select').each(function (index) {
-    // resource name
-    var fill = $(this).data('fill')
-    if (fill) {
-      todo++
-      // array of destination elements
-      var $els = [ $(this) ]
-      // add select elements with the same options (same resource)
-      $form.find('select[data-fill-same="' + $(this).attr('name') + '"]').each(function () {
-        $els.push($(this))
-      })
+  var $select = $form.find('select')
+  if (!$select.length) {
+    Done()
+  } else {
+    $select.each(function (index) {
+      // resource name
+      var fill = $(this).data('fill')
+      if (fill) {
+        todo++
+        // array of destination elements
+        var $els = [ $(this) ]
+        // add select elements with the same options (same resource)
+        $form.find('select[data-fill-same="' + $(this).attr('name') + '"]').each(function () {
+          $els.push($(this))
+        })
 
-      var uri = fill + '.json'
-      var fields = $(this).data('properties')
-      var object
-      if (fields) {
-        // object property
-        object = true
-        uri += '?fields=' + fields
-      }
+        var uri = fill + '.json'
+        var fields = $(this).data('properties')
+        var object
+        if (fields) {
+          // object property
+          object = true
+          uri += '?fields=' + fields
+        }
 
-      window.callApi(uri, 'GET', function (err, json) {
-        if (!err) {
-          // response should be a resource list
-          var list = json.result
-          if (list) {
-            for (var i = 0; i < list.length; i++) {
-              var doc = list[i]
-              // escape itself
-              if (doc._id !== resourceId) {
-                for (var j = 0; j < $els.length; j++) {
-                  // fill select element with new option
-                  var value
-                  if (object) {
-                    value = JSON.stringify(doc)
-                  } else {
-                    // string property
-                    // use document ID as option value
-                    value = doc._id
+        window.callApi(uri, 'GET', function (err, json) {
+          if (!err) {
+            // response should be a resource list
+            var list = json.result
+            if (list) {
+              for (var i = 0; i < list.length; i++) {
+                var doc = list[i]
+                // escape itself
+                if (doc._id !== resourceId) {
+                  for (var j = 0; j < $els.length; j++) {
+                    // fill select element with new option
+                    var value
+                    if (object) {
+                      value = JSON.stringify(doc)
+                    } else {
+                      // string property
+                      // use document ID as option value
+                      value = doc._id
+                    }
+                    $('<option />', { value: value, text: doc.name }).appendTo($els[j])
                   }
-                  $('<option />', { value: value, text: doc.name }).appendTo($els[j])
                 }
               }
             }
           }
-        }
-        Done()
-      })
-    }
-  })
+          Done()
+        })
+      }
+    })
+  }
 }())
