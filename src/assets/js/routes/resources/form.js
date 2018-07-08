@@ -584,7 +584,7 @@
             }
             if (!data.meta_title) {
               // copy name to title tag
-              data.meta_title = data.name
+              data.meta_title = window.cutString(data.name, 70)
             }
           }
           if (!data.meta_description) {
@@ -594,7 +594,7 @@
             }
           } else if (!data.short_description) {
             // copy meta to short description
-            data.short_description = data.meta_description.substr(0, 255)
+            data.short_description = window.cutString(data.meta_description, 255)
           }
         }
 
