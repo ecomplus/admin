@@ -449,6 +449,11 @@ body {
 .ace-editor {
   height: 500px;
 }
+// HTML editor
+.note-toolbar.panel-heading {
+  position: relative !important;
+  width: 100% !important;
+}
 
 // buttons for document edition
 .header-action .edit-btn {
