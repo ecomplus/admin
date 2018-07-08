@@ -225,38 +225,40 @@
       })
 
       var $editor = $form.find('.html-editor')
-      var editorChanged = false
-      $editor.summernote({
-        // https://summernote.org/deep-dive/
-        toolbar: [
-          [ 'style', [ 'style' ] ],
-          [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear' ] ],
-          [ 'color', [ 'color' ] ],
-          [ 'insert', [ 'picture', 'link', 'video', 'hr', 'table' ] ],
-          [ 'paragraph', [ 'ul', 'ol', 'paragraph' ] ],
-          [ 'misc', [ 'codeview', 'help' ] ]
-        ],
-        height: 400,
-        dialogsFade: true,
+      if ($editor.length) {
+        var editorChanged = false
+        $editor.summernote({
+          // https://summernote.org/deep-dive/
+          toolbar: [
+            [ 'style', [ 'style' ] ],
+            [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear' ] ],
+            [ 'color', [ 'color' ] ],
+            [ 'insert', [ 'picture', 'link', 'video', 'hr', 'table' ] ],
+            [ 'paragraph', [ 'ul', 'ol', 'paragraph' ] ],
+            [ 'misc', [ 'codeview', 'help' ] ]
+          ],
+          height: 400,
+          dialogsFade: true,
 
-        callbacks: {
-          onChange: function (content) {
-            editorChanged = true
-            var html = content.trim()
-            // fix for problem with ENTER and new paragraphs
-            if (html.substring(0, 5) !== '<div>') {
-              $editor.summernote('code', '<div><br></div>' + html)
-            }
-          },
-          onBlur: function () {
-            if (editorChanged) {
-              // update textarea
-              $editor.trigger('change')
-              editorChanged = false
+          callbacks: {
+            onChange: function (content) {
+              editorChanged = true
+              var html = content.trim()
+              // fix for problem with ENTER and new paragraphs
+              if (html.substring(0, 5) !== '<div>') {
+                $editor.summernote('code', '<div><br></div>' + html)
+              }
+            },
+            onBlur: function () {
+              if (editorChanged) {
+                // update textarea
+                $editor.trigger('change')
+                editorChanged = false
+              }
             }
           }
-        }
-      })
+        })
+      }
 
       // edit common image properties
       var editImage = function (prop) {
@@ -557,9 +559,14 @@
       window.setSaveAction($form, function (cb) {
         var method
         var data = Data()
-        if (creating) {
+        if (!creating) {
+          // overwrite
+          method = 'PUT'
+        } else {
           method = 'POST'
-          if (data.name && !data.slug && $form.find('input[name="slug"]').length) {
+
+          // try to auto fill important fields when undefined
+          if (data.name && !data.slug && $form.find('[name="slug"]').length) {
             // generate slug from name
             data.slug = data.name.toLowerCase()
               // replace accents
@@ -574,9 +581,15 @@
               // remove illegal characters
               .replace(/[^a-z0-9-_./]/g, '')
           }
-        } else {
-          // overwrite
-          method = 'PUT'
+          if (!data.meta_description) {
+            if (data.short_description && $form.find('[name="meta_description"]').length) {
+              // copy short description to meta
+              data.meta_description = data.short_description
+            }
+          } else if (!data.short_description) {
+            // copy meta to short description
+            data.short_description = data.meta_description.substr(0, 255)
+          }
         }
 
         var callback = function (json) {
