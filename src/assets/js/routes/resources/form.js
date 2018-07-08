@@ -566,20 +566,26 @@
           method = 'POST'
 
           // try to auto fill important fields when undefined
-          if (data.name && !data.slug && $form.find('[name="slug"]').length) {
-            // generate slug from name
-            data.slug = data.name.toLowerCase()
-              // replace accents
-              .replace(/[ÇĆçć]/, 'c')
-              .replace(/[ÁÂÃÀáâãà]/, 'a')
-              .replace(/[ÉÊẼéêẽ]/, 'e')
-              .replace(/[ÍÎĨíîĩ]/, 'i')
-              .replace(/[ÓÔÕóôõ]/, 'o')
-              .replace(/[ÚÛŨúûõ]/, 'u')
-              // replace spaces and new lines
-              .replace(/\s\n/g, '-')
-              // remove illegal characters
-              .replace(/[^a-z0-9-_./]/g, '')
+          if (data.name && $form.find('[name="slug"]').length) {
+            if (!data.slug) {
+              // generate slug from name
+              data.slug = data.name.toLowerCase()
+                // replace accents
+                .replace(/[ÇĆçć]/, 'c')
+                .replace(/[ÁÂÃÀáâãà]/, 'a')
+                .replace(/[ÉÊẼéêẽ]/, 'e')
+                .replace(/[ÍÎĨíîĩ]/, 'i')
+                .replace(/[ÓÔÕóôõ]/, 'o')
+                .replace(/[ÚÛŨúûõ]/, 'u')
+                // replace spaces and new lines
+                .replace(/\s\n/g, '-')
+                // remove illegal characters
+                .replace(/[^a-z0-9-_./]/g, '')
+            }
+            if (!data.meta_title) {
+              // copy name to title tag
+              data.meta_title = data.name
+            }
           }
           if (!data.meta_description) {
             if (data.short_description && $form.find('[name="meta_description"]').length) {
