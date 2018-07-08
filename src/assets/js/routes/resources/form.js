@@ -582,6 +582,8 @@
               .replace(/[^a-z0-9-_./]/g, '')
           }
           /*
+            Do not copy name and short description (prevent outdating)
+            Shoud be checked on store template
           if (!data.meta_title) {
             // copy name to title tag
             data.meta_title = window.cutString(data.name, 70)
