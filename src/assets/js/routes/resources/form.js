@@ -237,7 +237,7 @@
             [ 'paragraph', [ 'ul', 'ol', 'paragraph' ] ],
             [ 'misc', [ 'codeview', 'help' ] ]
           ],
-          height: 400,
+          height: 300,
           dialogsFade: true,
 
           callbacks: {
