@@ -556,8 +556,24 @@
       // setup save action
       window.setSaveAction($form, function (cb) {
         var method
+        var data = Data()
         if (creating) {
           method = 'POST'
+          if (data.name && !data.slug && $form.find('input[name="slug"]').length) {
+            // generate slug from name
+            data.slug = data.name.toLowerCase()
+              // replace accents
+              .replace(/[ÇĆçć]/, 'c')
+              .replace(/[ÁÂÃÀáâãà]/, 'a')
+              .replace(/[ÉÊẼéêẽ]/, 'e')
+              .replace(/[ÍÎĨíîĩ]/, 'i')
+              .replace(/[ÓÔÕóôõ]/, 'o')
+              .replace(/[ÚÛŨúûõ]/, 'u')
+              // replace spaces and new lines
+              .replace(/\s\n/g, '-')
+              // remove illegal characters
+              .replace(/[^a-z0-9-_./]/g, '')
+          }
         } else {
           // overwrite
           method = 'PUT'
@@ -574,7 +590,7 @@
             window.location = '/#/resources/' + slug + '/' + json._id
           }
         }
-        callApi(endpoint, method, callback, Data())
+        callApi(endpoint, method, callback, data)
       })
 
       // show form
