@@ -149,6 +149,24 @@
         var prop = $input.attr('name')
         if (prop && prop !== '') {
           var data = Data()
+          var i
+          // object dot notation
+          var parts = prop.split('.')
+          if (parts.length) {
+            i = 0
+            while (true) {
+              prop = parts[i]
+              if (i === parts.length - 1) {
+                break
+              }
+              if (!data.hasOwnProperty(prop)) {
+                // declare object
+                data[prop] = {}
+              }
+              data = data[prop]
+              i++
+            }
+          }
 
           if (!checkbox) {
             var val = $input.val()
@@ -168,7 +186,7 @@
             } else if (Array.isArray(val)) {
               // select multiple
               var array = []
-              for (var i = 0; i < val.length; i++) {
+              for (i = 0; i < val.length; i++) {
                 obj = strToProperty($input, val[i])
                 if (obj) {
                   // add valid value to array
@@ -194,7 +212,7 @@
 
           // global object already changed by reference
           // commit only to perform reactive actions
-          commit(data, true)
+          commit(Data(), true)
         }
       }
 
