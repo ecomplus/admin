@@ -53,10 +53,6 @@
   display: none;
 }
 
-.header-action .nav-link.active,
-.header-action .nav-link:hover {
-  border-bottom-color: $color-green;
-}
 .topbar-btn:hover,
 .topbar .dropdown.show .topbar-btn {
   border-top-color: $color-green;
@@ -472,7 +468,7 @@ body {
 .header-action .edit-btn:hover {
   border-color: $color-yellow;
 }
-@media (max-width: 600px) {
+@media (max-width: 650px) {
   .edit-btn > :not(i) {
     display: none;
   }

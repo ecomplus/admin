@@ -67,6 +67,11 @@
       callApi(slug + '.json', 'POST', callback, Data())
     })
 
+    $('#' + tabId + '-new').click(function () {
+      // redirect to create document page
+      window.location = '/#/resources/' + slug + '/new'
+    })
+
     // direct link and share
     var link = function (link) {
       if (window.shopDomain && Data().slug) {
