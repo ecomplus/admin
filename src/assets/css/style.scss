@@ -530,6 +530,7 @@ body {
   position: relative;
   margin: 0 5px;
   border: 1px solid $color-bg-lightest;
+  overflow: hidden;
 }
 .select-image span:hover {
   border-color: $color-text;
@@ -538,6 +539,7 @@ body {
   height: 88px;
   width: auto;
   max-width: 180px;
+  min-width: 50px;
   cursor: move;
 }
 .select-image span:only-child > img {

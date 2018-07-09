@@ -498,7 +498,7 @@
                 if (!isSummernote) {
                   // push content before image loading
                   content.push($('<span />', {
-                    html: '<img src="' + url + '" /><i class="fa fa-cog"></i>',
+                    html: '<img src="' + url + '"><i class="fa fa-cog"></i>',
                     click: editImage(prop)
                   }))
                 }
