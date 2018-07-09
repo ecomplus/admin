@@ -586,7 +586,7 @@
             Shoud be checked on store template
           if (!data.meta_title) {
             // copy name to title tag
-            data.meta_title = window.cutString(data.name, 70)
+            data.meta_title = cutString(data.name, 70)
           }
           if (!data.meta_description) {
             if (data.short_description && $form.find('[name="meta_description"]').length) {
@@ -595,7 +595,7 @@
             }
           } else if (!data.short_description) {
             // copy meta to short description
-            data.short_description = window.cutString(data.meta_description, 255)
+            data.short_description = cutString(data.meta_description, 255)
           }
           */
         }
@@ -669,7 +669,7 @@
                     var obj
                     if (fields) {
                       // object with wanted fields only
-                      obj = window.getProperties(doc, fields)
+                      obj = getProperties(doc, fields)
                     } else {
                       obj = doc
                     }
@@ -683,10 +683,10 @@
                   // setup option
                   var option = {
                     value: value,
-                    text: window.cutString(doc.name, 42, '...')
+                    text: cutString(doc.name, 42, '...')
                   }
                   if (subtextProp) {
-                    option['data-subtext'] = window.getFromDotNotation(doc, subtextProp)
+                    option['data-subtext'] = cutString(getFromDotNotation(doc, subtextProp), 45, '...')
                   }
                   // add element on selects
                   for (var j = 0; j < $els.length; j++) {
