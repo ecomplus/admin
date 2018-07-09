@@ -75,7 +75,7 @@
           // add link prefix
           Link = link + encodeURIComponent(Link)
         }
-        window.newTabLink(Link)
+        newTabLink(Link)
       } else {
         app.toast(i18n({
           'en_us': 'No link to share',
@@ -221,7 +221,8 @@
       $form.find('.tagsinput').tagsinput()
       $form.find('select:not(.tagsinput)').selectpicker({
         style: 'btn-light',
-        noneSelectedText: '--'
+        noneSelectedText: '--',
+        windowPadding: 70
       })
 
       var $editor = $form.find('.html-editor')
@@ -615,7 +616,7 @@
       })
 
       // show form
-      window.fixScrollbars($form)
+      fixScrollbars($form)
       $form.removeClass('ajax ajax-cards')
     }
   }
@@ -686,7 +687,10 @@
                     text: cutString(doc.name, 42, '...')
                   }
                   if (subtextProp) {
-                    option['data-subtext'] = cutString(getFromDotNotation(doc, subtextProp), 45, '...')
+                    var subtext = getFromDotNotation(doc, subtextProp)
+                    if (subtext) {
+                      option['data-subtext'] = cutString(subtext, 45, '...')
+                    }
                   }
                   // add element on selects
                   for (var j = 0; j < $els.length; j++) {
