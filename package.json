@@ -24,7 +24,14 @@
       "location",
       "md5",
       "ace",
-      "jsGrid"
+      "jsGrid",
+      "keyIsNumber",
+      "fixScrollbars",
+      "formatMoney",
+      "newTabLink",
+      "cutString",
+      "getFromDotNotation",
+      "getProperties"
     ]
   },
   "devDependencies": {
