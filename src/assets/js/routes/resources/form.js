@@ -579,7 +579,7 @@
           method = 'POST'
 
           // try to auto fill important fields when undefined
-          if (data.name && !data.slug && $form.find('[name="slug"]').length) {
+          if (data.name && !data.slug && hasSlug) {
             // generate slug from name
             data.slug = data.name.toLowerCase()
               // replace accents
