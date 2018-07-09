@@ -637,13 +637,14 @@
           $els.push($(this))
         })
 
-        var uri = fill + '.json'
+        // default sort by name asc
+        var uri = fill + '.json?sort=' + ($(this).data('sort') || 'name')
         var fields = $(this).data('properties')
         var object
         if (fields) {
           // object property
           object = true
-          uri += '?fields=' + fields
+          uri += '&fields=' + fields
         }
 
         window.callApi(uri, 'GET', function (err, json) {
@@ -665,7 +666,10 @@
                       // use document ID as option value
                       value = doc._id
                     }
-                    $('<option />', { value: value, text: doc.name }).appendTo($els[j])
+                    $('<option />', {
+                      value: value,
+                      text: window.cutString(doc.name, 42, '...')
+                    }).appendTo($els[j])
                   }
                 }
               }

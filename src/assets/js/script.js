@@ -269,11 +269,20 @@ app.config({
     }
   }
 
-  window.cutString = function (str, maxLength) {
-    // trim the string to the maximum length
-    var trimmed = (str + ' ').substr(0, maxLength)
-    // re-trim if we are in the middle of a word
-    return trimmed.substr(0, Math.min(trimmed.length, trimmed.lastIndexOf(' ')))
+  window.cutString = function (str, maxLength, suffix) {
+    if (maxLength < str.length) {
+      // trim the string to the maximum length plus one char (space)
+      var trimmed = str.substr(0, maxLength + 1)
+      // re-trim if we are in the middle of a word
+      trimmed = trimmed.substr(0, trimmed.lastIndexOf(' '))
+      if (suffix) {
+        return trimmed + suffix
+      } else {
+        return trimmed
+      }
+    } else {
+      return str
+    }
   }
 }())
 
