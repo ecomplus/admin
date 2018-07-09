@@ -640,11 +640,17 @@
         // default sort by name asc
         var uri = fill + '.json?sort=' + ($(this).data('sort') || 'name')
         var fields = $(this).data('properties')
+        var subtextProp
         var object
         if (fields) {
           // object property
           object = true
           uri += '&fields=' + fields
+          subtextProp = $(this).data('subtext-property')
+          if (subtextProp) {
+            // add property to fields on URL
+            uri += ',' + subtextProp
+          }
         }
 
         window.callApi(uri, 'GET', function (err, json) {
@@ -656,20 +662,35 @@
                 var doc = list[i]
                 // escape itself
                 if (doc._id !== resourceId) {
-                  for (var j = 0; j < $els.length; j++) {
-                    // fill select element with new option
-                    var value
-                    if (object) {
-                      value = JSON.stringify(doc)
+                  // fill select element with new option
+                  var value
+                  if (object) {
+                    // JSON string as value
+                    var obj
+                    if (fields) {
+                      // object with wanted fields only
+                      obj = window.getProperties(doc, fields)
                     } else {
-                      // string property
-                      // use document ID as option value
-                      value = doc._id
+                      obj = doc
                     }
-                    $('<option />', {
-                      value: value,
-                      text: window.cutString(doc.name, 42, '...')
-                    }).appendTo($els[j])
+                    value = JSON.stringify(obj)
+                  } else {
+                    // string property
+                    // use document ID as option value
+                    value = doc._id
+                  }
+
+                  // setup option
+                  var option = {
+                    value: value,
+                    text: window.cutString(doc.name, 42, '...')
+                  }
+                  if (subtextProp) {
+                    option['data-subtext'] = window.getFromDotNotation(doc, subtextProp)
+                  }
+                  // add element on selects
+                  for (var j = 0; j < $els.length; j++) {
+                    $('<option />', option).appendTo($els[j])
                   }
                 }
               }

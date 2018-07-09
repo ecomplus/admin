@@ -175,4 +175,32 @@
       return str
     }
   }
+
+  window.getFromDotNotation = function (obj, prop) {
+    var parts = prop.split('.')
+    if (parts.length <= 1) {
+      // no dot notation
+      return obj[prop]
+    } else {
+      for (var i = 0; i < parts.length; i++) {
+        if (typeof obj !== 'object' || obj === null) {
+          // property does not exists on the object
+          return undefined
+        }
+        obj = obj[parts[i]]
+      }
+      return obj
+    }
+  }
+
+  window.getProperties = function (obj, propsList) {
+    // return new object only with listed properties
+    var props = propsList.split(',')
+    var newObj = {}
+    for (var i = 0; i < props.length; i++) {
+      var prop = props[i]
+      newObj[prop] = obj[prop]
+    }
+    return newObj
+  }
 }())
