@@ -454,6 +454,15 @@ body {
   position: relative !important;
   width: 100% !important;
 }
+// selectpicker
+.dropdown-item-inner span > small {
+  display: block;
+  line-height: 1;
+  padding-left: 0 !important;
+}
+.dropdown-item-inner span > small::before {
+  content: "/ "
+}
 
 // buttons for document edition
 .header-action .edit-btn {
