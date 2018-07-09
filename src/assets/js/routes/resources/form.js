@@ -39,6 +39,8 @@
   var slug = window.routeParams[0]
   var resourceId = window.routeParams[1]
   var creating, endpoint
+  // check if resource has slug property
+  var hasSlug = !!$form.find('[name="slug"]').length
   if (resourceId === 'new') {
     creating = true
     endpoint = slug + '.json'
@@ -72,38 +74,43 @@
       window.location = '/#/resources/' + slug + '/new'
     })
 
-    // direct link and share
-    var link = function (link) {
-      if (window.shopDomain && Data().slug) {
-        var Link = 'https://' + window.shopDomain + '/' + Data().slug
-        if (link) {
-          // add link prefix
-          Link = link + encodeURIComponent(Link)
+    if (hasSlug) {
+      // direct link and share
+      var link = function (link) {
+        if (window.shopDomain && Data().slug) {
+          var Link = 'https://' + window.shopDomain + '/' + Data().slug
+          if (link) {
+            // add link prefix
+            Link = link + encodeURIComponent(Link)
+          }
+          newTabLink(Link)
+        } else {
+          app.toast(i18n({
+            'en_us': 'No link to share',
+            'pt_br': 'Nenhum link para compartilhar'
+          }))
         }
-        newTabLink(Link)
-      } else {
-        app.toast(i18n({
-          'en_us': 'No link to share',
-          'pt_br': 'Nenhum link para compartilhar'
-        }))
       }
-    }
 
-    $('#' + tabId + '-view').click(function () {
-      link()
-    })
-    $('#' + tabId + '-facebook').click(function () {
-      link('https://www.facebook.com/sharer.php?u=')
-    })
-    $('#' + tabId + '-whatsapp').click(function () {
-      var platform
-      if ($(window).width() < 480) {
-        platform = 'api'
-      } else {
-        platform = 'web'
-      }
-      link('https://' + platform + '.whatsapp.com/send?text=')
-    })
+      $('#' + tabId + '-view').click(function () {
+        link()
+      })
+      $('#' + tabId + '-facebook').click(function () {
+        link('https://www.facebook.com/sharer.php?u=')
+      })
+      $('#' + tabId + '-whatsapp').click(function () {
+        var platform
+        if ($(window).width() < 480) {
+          platform = 'api'
+        } else {
+          platform = 'web'
+        }
+        link('https://' + platform + '.whatsapp.com/send?text=')
+      })
+    } else {
+      // document doest not have link
+      $('#' + tabId + '-view, #' + tabId + '-facebook, #' + tabId + '-whatsapp').remove()
+    }
 
     // show buttons
     $('#' + tabId + '-nav .edit-btn').fadeIn()
