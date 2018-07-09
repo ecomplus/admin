@@ -145,52 +145,64 @@
       }
 
       // setup input events
-      $form.find('input[type="text"],select,textarea').change(function () {
-        var prop = $(this).attr('name')
+      var inputToData = function ($input, checkbox) {
+        var prop = $input.attr('name')
         if (prop && prop !== '') {
           var data = Data()
-          var val = $(this).val()
-          var obj
 
-          if (typeof val === 'string') {
-            obj = strToProperty($(this), val)
-            if (obj) {
-              // continue with valid value
-              data[prop] = obj
-            } else if (obj === null && data.hasOwnProperty(prop)) {
-              // empty, remove property
-              delete data[prop]
-            } else {
-              // invalid value or nothing to change
-              return
-            }
-          } else if (Array.isArray(val)) {
-            // select multiple
-            var array = []
-            for (var i = 0; i < val.length; i++) {
-              obj = strToProperty($(this), val[i])
+          if (!checkbox) {
+            var val = $input.val()
+            var obj
+            if (typeof val === 'string') {
+              obj = strToProperty($input, val)
               if (obj) {
-                // add valid value to array
-                array.push(obj)
-              }
-            }
-            if (array.length) {
-              data[prop] = array
-            } else {
-              // empty array
-              if (data.hasOwnProperty(prop)) {
+                // continue with valid value
+                data[prop] = obj
+              } else if (obj === null && data.hasOwnProperty(prop)) {
+                // empty, remove property
                 delete data[prop]
               } else {
-                // nothing to change
+                // invalid value or nothing to change
                 return
               }
+            } else if (Array.isArray(val)) {
+              // select multiple
+              var array = []
+              for (var i = 0; i < val.length; i++) {
+                obj = strToProperty($input, val[i])
+                if (obj) {
+                  // add valid value to array
+                  array.push(obj)
+                }
+              }
+              if (array.length) {
+                data[prop] = array
+              } else {
+                // empty array
+                if (data.hasOwnProperty(prop)) {
+                  delete data[prop]
+                } else {
+                  // nothing to change
+                  return
+                }
+              }
             }
+          } else {
+            // checkbox
+            data[prop] = $input.is(':checked')
           }
 
           // global object already changed by reference
           // commit only to perform reactive actions
           commit(data, true)
         }
+      }
+
+      $form.find('input[type="text"],select,textarea').change(function () {
+        inputToData($(this))
+      })
+      $form.find('input[type="checkbox"]').change(function () {
+        inputToData($(this), true)
       })
 
       if (!creating) {
