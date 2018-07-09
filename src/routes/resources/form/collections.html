@@ -1,4 +1,4 @@
-<form action="javascript:;" data-id="brand-form" class="ajax-cards ajax-form ajax mb-30">
+<form action="javascript:;" data-id="collection-form" class="ajax-cards ajax-form ajax mb-30">
   <div class="spinner-linear">
     <div class="line"></div>
   </div>
@@ -10,8 +10,8 @@
         <div class="card-body">
           <div class="form-group">
             <label class="i18n require">
-              <span data-lang="en_us">Brand name</span>
-              <span data-lang="pt_br">Nome da marca</span>
+              <span data-lang="en_us">Collection name</span>
+              <span data-lang="pt_br">Nome da coleção</span>
             </label>
             <input type="text" class="form-control action-title" name="name" required />
           </div>
@@ -19,8 +19,11 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label>Logo</label>
-                <input type="file" name="logo" />
+                <label class="i18n">
+                  <span data-lang="en_us">Icon</span>
+                  <span data-lang="pt_br">Ícone</span>
+                </label>
+                <input type="file" name="icon" />
               </div>
             </div>
           </div>
@@ -75,8 +78,8 @@
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
-            <span data-lang="en_us">Brand banners</span>
-            <span data-lang="pt_br">Banners da marca</span>
+            <span data-lang="en_us">Collection banners</span>
+            <span data-lang="pt_br">Banners da coleção</span>
           </h4>
           <ul class="card-controls">
             <li>
@@ -135,8 +138,8 @@
 
   <div class="bt-1 pt-20">
     <button class="btn btn-success i18n mr-10">
-      <span data-lang="en_us">Save brand</span>
-      <span data-lang="pt_br">Salvar marca</span>
+      <span data-lang="en_us">Save collection</span>
+      <span data-lang="pt_br">Salvar coleção</span>
     </button>
     <button type="button" class="btn btn-danger i18n delete-resource hidden">
       <span data-lang="en_us">Delete</span>
