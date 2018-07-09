@@ -8,22 +8,46 @@
     <div class="col-md-7">
       <div class="card">
         <div class="card-body">
-          <div class="form-group">
-            <label class="i18n require">
-              <span data-lang="en_us">Grid name</span>
-              <span data-lang="pt_br">Nome da grade</span>
-            </label>
-            <input type="text" class="form-control action-title" name="name" required />
+          <div class="row">
+            <div class="col-md-7">
+              <div class="form-group">
+                <label class="i18n require">
+                  <span data-lang="en_us">Grid name</span>
+                  <span data-lang="pt_br">Nome da grade</span>
+                </label>
+                <input type="text" class="form-control action-title" name="name" required
+                  data-id="grid-name"/>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <label class="i18n require">
+                  <span data-lang="en_us">Code</span>
+                  <span data-lang="pt_br">Código</span>
+                </label>
+                <input type="text" class="form-control" name="grid_id" required
+                  data-id="grid-id" placeholder="grid_id"/>
+              </div>
+            </div>
           </div>
 
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="i18n">
-                  <span data-lang="en_us">Icon</span>
-                  <span data-lang="pt_br">Ícone</span>
+          <div class="form-group">
+            <div class="custom-controls-stacked">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="custom_value"/>
+                <label class="custom-control-label i18n">
+                  <span data-lang="en_us">Accept custom option by customer</span>
+                  <span data-lang="pt_br">Aceitar opção personalizada pelo cliente</span>
                 </label>
-                <input type="file" name="icon" />
+              </div>
+            </div>
+            <div class="custom-controls-stacked">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="attachment"/>
+                <label class="custom-control-label i18n">
+                  <span data-lang="en_us">Accept attached file</span>
+                  <span data-lang="pt_br">Aceitar arquivo em anexo</span>
+                </label>
               </div>
             </div>
           </div>
@@ -33,14 +57,14 @@
       <div class="card card-slided-up">
         <header class="card-header">
           <h4 class="card-title i18n">
-            <span data-lang="en_us">Description</span>
-            <span data-lang="pt_br">Descrição</span>
+            <span data-lang="en_us">Add to price</span>
+            <span data-lang="pt_br">Adicionar ao preço</span>
           </h4>
           <ul class="card-controls">
             <li>
               <a class="card-btn-slide i18n" href="#">
-                <span data-lang="en_us">Edit HTML description</span>
-                <span data-lang="pt_br">Editar descrição HTML</span>
+                <span data-lang="en_us">Edit additional value</span>
+                <span data-lang="pt_br">Editar valor adicional</span>
               </a>
             </li>
           </ul>
@@ -48,7 +72,21 @@
 
         <div class="card-content">
           <div class="card-body">
-            <textarea class="html-editor" name="body_html"><div><br></div></textarea>
+            <div class="callout callout-info" role="alert">
+              <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+                <span>×</span>
+              </button>
+              <p class="i18n">
+                <span data-lang="en_us">
+                  Default price alteration for products with this grid for
+                  customization or variations.
+                </span>
+                <span data-lang="pt_br">
+                  Alteração padrão de preço para produtos com essa grade para
+                  personalização ou variações.
+                </span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -58,8 +96,8 @@
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
-            <span data-lang="en_us">Short description</span>
-            <span data-lang="pt_br">Descrição curta</span>
+            <span data-lang="en_us">Options</span>
+            <span data-lang="pt_br">Opções</span>
           </h4>
           <ul class="card-controls">
             <li>
@@ -70,27 +108,6 @@
 
         <div class="card-content">
           <div class="card-body">
-            <textarea class="form-control" rows="3" name="short_description"></textarea>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <header class="card-header">
-          <h4 class="card-title i18n">
-            <span data-lang="en_us">Grid banners</span>
-            <span data-lang="pt_br">Banners da grade</span>
-          </h4>
-          <ul class="card-controls">
-            <li>
-              <a class="card-btn-slide" href="#"></a>
-            </li>
-          </ul>
-        </header>
-
-        <div class="card-content">
-          <div class="card-body">
-            <input type="file" name="pictures" multiple />
           </div>
         </div>
       </div>
@@ -110,5 +127,6 @@
 
   <script>
     $.getScript('../assets/js/routes/resources/form.min.js')
+    $.getScript('../assets/js/routes/resources/form/grids.min.js')
   </script>
 </form>
