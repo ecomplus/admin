@@ -5,6 +5,7 @@ $files = array(
   'md5/md5.min.js',
   'promise/es6-promise.auto.min.js',
   'cleave/dist/cleave.min.js',
+  'sortable/sortable.min.js',
   'dialogflow/ApiAi.min.js',
   'mony/index.js'
 );
