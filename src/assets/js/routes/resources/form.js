@@ -168,6 +168,23 @@
             }
           }
 
+          var remove = function () {
+            // remove property
+            delete data[prop]
+            if (parts.length) {
+              // remove empty parents
+              data = Data()
+              for (var i = 0; i < parts.length - 1; i++) {
+                var part = parts[i]
+                if (!Object.keys(data[part]).length) {
+                  delete data[part]
+                } else {
+                  data = data[part]
+                }
+              }
+            }
+          }
+
           if (!checkbox) {
             var val = $input.val()
             var obj
@@ -178,7 +195,7 @@
                 data[prop] = obj
               } else if (obj === null && data.hasOwnProperty(prop)) {
                 // empty, remove property
-                delete data[prop]
+                remove()
               } else {
                 // invalid value or nothing to change
                 return
@@ -198,7 +215,7 @@
               } else {
                 // empty array
                 if (data.hasOwnProperty(prop)) {
-                  delete data[prop]
+                  remove()
                 } else {
                   // nothing to change
                   return
