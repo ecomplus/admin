@@ -16,7 +16,7 @@
                   <span data-lang="pt_br">Nome da grade</span>
                 </label>
                 <input type="text" class="form-control action-title" name="title" required
-                  data-id="grid-name"/>
+                  data-fill-field="grid_id"/>
               </div>
             </div>
             <div class="col-md-5">
@@ -25,8 +25,12 @@
                   <span data-lang="en_us">Code</span>
                   <span data-lang="pt_br">Código</span>
                 </label>
-                <input type="text" class="form-control" name="grid_id" required
-                  data-id="grid-id" placeholder="grid_id"/>
+                <input type="text" class="form-control" name="grid_id" placeholder="grid_id" required
+                  pattern="^[a-z0-9_]{2,30}$"
+                  data-fill-case="lower"
+                  data-fill-clear-accents="true"
+                  data-fill-pattern="[^a-z0-9_]"
+                  maxlength="30"/>
               </div>
             </div>
           </div>

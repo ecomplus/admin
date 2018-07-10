@@ -216,14 +216,37 @@
         }
       }
 
-      $form.find('input[type="text"],select,textarea').change(function () {
-        inputToData($(this))
-      })
       $form.find('input[type="radio"]').change(function () {
         inputToData($form.find('input[name="' + $(this).attr('name') + '"]:checked'))
       })
       $form.find('input[type="checkbox"]').change(function () {
         inputToData($(this), true)
+      })
+      $form.find('input[type="text"],select,textarea').change(function () {
+        inputToData($(this))
+
+        // check if other input field is filled based on this
+        var fillField = $(this).data('fill-field')
+        if (fillField) {
+          var $input = $form.find('[name="' + fillField + '"]')
+          var val = $(this).val()
+
+          // parse value before set on input
+          if ($input.data('fill-case') === 'lower') {
+            // lowercase only
+            val = val.toLowerCase()
+          }
+          var regex = $input.data('fill-pattern')
+          if (regex) {
+            // RegExp to remove invalid chars
+            val = val.replace(new RegExp(regex, 'g'), '')
+          }
+          var maxLength = $input.attr('maxlength')
+          if (maxLength) {
+            val = val.substring(0, parseInt(maxLength, 10))
+          }
+          $input.val(val).trigger('change')
+        }
       })
 
       if (!creating) {
