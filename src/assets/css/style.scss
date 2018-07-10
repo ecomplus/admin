@@ -450,6 +450,7 @@ body {
   position: relative !important;
   width: 100% !important;
 }
+
 // selectpicker
 .dropdown-item-inner span > small {
   display: block;
@@ -458,6 +459,19 @@ body {
 }
 .dropdown-item-inner span > small::before {
   content: "/ "
+}
+
+// input defaults
+.form-control:disabled,
+.form-control[readonly] {
+  background: $color-bg-lightest;
+}
+.form-control:disabled {
+  cursor: not-allowed;
+}
+.input-group.w-150px,
+.input-group.w-250px {
+  max-width: 100%;
 }
 
 // buttons for document edition
