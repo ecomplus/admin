@@ -231,10 +231,14 @@
           var $input = $form.find('[name="' + fillField + '"]')
           var val = $(this).val()
 
-          // parse value before set on input
+          // prepare string value before set on input
           if ($input.data('fill-case') === 'lower') {
-            // lowercase only
             val = val.toLowerCase()
+          }
+          var replaceAccents = $input.data('fill-clear-accents')
+          if (replaceAccents) {
+            val = clearAccents(val, replaceAccents)
+            console.log(val)
           }
           var regex = $input.data('fill-pattern')
           if (regex) {
@@ -243,7 +247,7 @@
           }
           var maxLength = $input.attr('maxlength')
           if (maxLength) {
-            val = val.substring(0, parseInt(maxLength, 10))
+            val = val.substr(0, parseInt(maxLength, 10))
           }
           $input.val(val).trigger('change')
         }
@@ -637,18 +641,8 @@
           // try to auto fill important fields when undefined
           if (data.name && !data.slug && hasSlug) {
             // generate slug from name
-            data.slug = data.name.toLowerCase()
-              // replace accents
-              .replace(/[ÇĆçć]/, 'c')
-              .replace(/[ÁÂÃÀáâãà]/, 'a')
-              .replace(/[ÉÊẼéêẽ]/, 'e')
-              .replace(/[ÍÎĨíîĩ]/, 'i')
-              .replace(/[ÓÔÕóôõ]/, 'o')
-              .replace(/[ÚÛŨúûõ]/, 'u')
-              // replace spaces and new lines
-              .replace(/[\s\n]/g, '-')
-              // remove illegal characters
-              .replace(/[^a-z0-9-_./]/g, '')
+            // prepare string and remove illegal characters
+            data.slug = clearAccents(data.name.toLowerCase(), '-').replace(/[^a-z0-9-_./]/g, '')
           }
           /*
             Do not copy name and short description (prevent outdating)
