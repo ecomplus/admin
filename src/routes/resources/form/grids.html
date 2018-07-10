@@ -90,20 +90,61 @@
               </p>
             </div>
 
-            <div class="custom-controls-stacked">
-              <div class="custom-control custom-radio">
-                <input type="radio" name="add_to_price.type" class="custom-control-input" value="percentage">
-                <label class="custom-control-label i18n">
-                  <span data-lang="en_us">Percentage</span>
-                  <span data-lang="pt_br">Percentual</span>
-                </label>
+            <div class="row align-items-center">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <div class="custom-controls-stacked">
+                    <div class="custom-control custom-radio">
+                      <input type="radio" name="add_to_price.type" class="custom-control-input"
+                        value="" checked >
+                      <label class="custom-control-label i18n">
+                        <span data-lang="en_us">No additional</span>
+                        <span data-lang="pt_br">Sem adicional</span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                      <input type="radio" name="add_to_price.type" class="custom-control-input"
+                        value="percentage">
+                      <label class="custom-control-label i18n">
+                        <span data-lang="en_us">Percentage</span>
+                        <span data-lang="pt_br">Percentual</span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                      <input type="radio" name="add_to_price.type" class="custom-control-input"
+                        value="fixed">
+                      <label class="custom-control-label i18n">
+                        <span data-lang="en_us">Fixed</span>
+                        <span data-lang="pt_br">Fixo</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="custom-control custom-radio">
-                <input type="radio" name="add_to_price.type" class="custom-control-input" value="fixed">
-                <label class="custom-control-label i18n">
-                  <span data-lang="en_us">Fixed</span>
-                  <span data-lang="pt_br">Fixo</span>
-                </label>
+
+              <div class="col-lg-8">
+                <div class="row">
+                  <div class="col-5">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input class="form-control" type="text">
+                        <div class="input-group-append">
+                          <span class="input-group-text">%</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-7">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">R$</span>
+                        </div>
+                        <input class="form-control" type="text">
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
