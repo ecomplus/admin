@@ -31,7 +31,8 @@
       "newTabLink",
       "cutString",
       "getFromDotNotation",
-      "getProperties"
+      "getProperties",
+      "clearAccents"
     ]
   },
   "devDependencies": {

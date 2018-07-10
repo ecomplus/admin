@@ -203,4 +203,24 @@
     }
     return newObj
   }
+
+  window.clearAccents = function (str, removeSpaces) {
+    // replace common accents
+    str = str
+      .replace(/[ÇĆçć]/g, 'c')
+      .replace(/[ÁÂÃÀáâãà]/g, 'a')
+      .replace(/[ÉÊẼéêẽ]/g, 'e')
+      .replace(/[ÍÎĨíîĩ]/g, 'i')
+      .replace(/[ÓÔÕóôõ]/g, 'o')
+      .replace(/[ÚÛŨúûõ]/g, 'u')
+    if (removeSpaces) {
+      if (typeof removeSpaces !== 'string') {
+        // just clear
+        removeSpaces = ''
+      }
+      // replace spaces and new lines
+      str = str.replace(/[\s\n]/g, removeSpaces)
+    }
+    return str
+  }
 }())
