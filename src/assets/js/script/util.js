@@ -236,4 +236,9 @@
     // return unique and valid MongoDB ObjectId pattern
     return idPad.substring(0, 24 - timestamp.length) + timestamp
   }
+
+  window.objectIdPad = function (id, index) {
+    // mix and return base ID with index
+    return id.substring(0, 24 - index.length) + index
+  }
 }())
