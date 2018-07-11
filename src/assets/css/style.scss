@@ -661,15 +661,18 @@ body {
 }
 
 // grids options ul
+.options-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
 .options-list > li {
   padding-left: 0;
   padding-right: 0;
-}
-.options-list > li:first-child {
-  padding-top: 0;
+  margin-bottom: 1rem;
 }
 .options-list > li:last-child {
-  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .masonry-item > a {
