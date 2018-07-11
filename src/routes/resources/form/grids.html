@@ -166,14 +166,20 @@
           <div class="card-body">
             <ul class="hide-empty" data-id="options-list"></ul>
             <p class="prev-empty i18n">
-              <span data-lang="en_us">This grid has no saved variations.</span>
-              <span data-lang="pt_br">Esta grade não possui nenhuma variação salva.</span>
+              <span data-lang="en_us">
+                This grid has no saved variations.
+                <br><a href="javascript:;">Add the first option</a>
+              </span>
+              <span data-lang="pt_br">
+                Esta grade não possui nenhuma variação salva.
+                <br><a href="javascript:;">Adicione a primeira opção</a>
+              </span>
             </p>
           </div>
           <footer class="card-footer">
             <div class="btn-toolbar">
               <div class="btn-group">
-                <button type="button" class="btn btn-light i18n">
+                <button type="button" class="btn btn-light i18n" data-id="add-option">
                   <span data-lang="en_us">Add</span>
                   <span data-lang="pt_br">Adicionar</span>
                 </button>
@@ -201,6 +207,6 @@
 
   <script>
     $.getScript('../assets/js/routes/resources/form.min.js')
-    // $.getScript('../assets/js/routes/resources/form/grids.min.js')
+    $.getScript('../assets/js/routes/resources/form/grids.min.js')
   </script>
 </form>
