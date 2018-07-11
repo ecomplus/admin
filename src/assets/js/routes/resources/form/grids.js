@@ -9,15 +9,26 @@
   var tabId = window.tabId
 
   var $list = $('#' + tabId + '-options-list')
+  // option li element HTML
+  var $liOption = $('<li />', {
+    html: '<div class="input-group">' +
+            '<div class="input-group-prepend">' +
+              '<span class="input-group-text">' +
+                '<div class="custom-control custom-checkbox">' +
+                  '<input type="checkbox" class="custom-control-input">' +
+                  '<label class="custom-control-label"> </label>' +
+                '</div>' +
+              '</span>' +
+            '</div>' +
+            '<input class="form-control" type="text">' +
+            '<span class="input-group-append">' +
+              '<button class="btn btn-light" type="button"><i class="fa fa-cog"></i></button>' +
+            '</span>' +
+          '</div>'
+  })
   var addOption = function () {
     // add li element
-    var li = '<li>' +
-               '<div class="input-group">' +
-                 '<input type="text" class="form-control">' +
-                 '<div class="input-group-append"><i class="fa fa-cog"></i></div>' +
-               '</div>' +
-             '</li>'
-    $list.append(li)
+    $list.append($liOption)
   }
 
   $('#' + tabId + '-add-option').click(addOption)

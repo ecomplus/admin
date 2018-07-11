@@ -674,6 +674,13 @@ body {
 .options-list > li:last-child {
   margin-bottom: 0;
 }
+.input-group-text > .custom-checkbox {
+  width: 18px;
+  margin-right: -6px;
+}
+.input-group-text > .custom-checkbox > label::after {
+  top: 3px;
+}
 
 .masonry-item > a {
   display: inline-block;
