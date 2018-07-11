@@ -8,7 +8,12 @@
   // current tab ID
   var tabId = window.tabId
 
-  $('#' + tabId + '-add-option').click(function () {
-    console.log(1)
-  })
+  var $list = $('#' + tabId + '-options-list')
+  var addOption = function () {
+    // add li element
+    $list.append('<li class="list-group-item"><i class="fa fa-cog"></i></li>')
+  }
+
+  $('#' + tabId + '-add-option').click(addOption)
+  $list.next().find('a').click(addOption)
 }())
