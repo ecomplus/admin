@@ -331,6 +331,19 @@ app.config({
     }
     return str
   }
+
+  window.randomInt = function (min, max) {
+    // generate random arbitrary number
+    return Math.floor(Math.random() * (max - min)) + min
+  }
+
+  window.randomObjectId = function () {
+    // generate 24 chars hexadecimal string
+    var timestamp = Date.now().toString()
+    var idPad = randomInt(10000, 99999) + '000000000000000000'
+    // return unique and valid MongoDB ObjectId pattern
+    return idPad.substring(0, 24 - timestamp.length) + timestamp
+  }
 }())
 
 

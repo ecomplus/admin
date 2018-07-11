@@ -32,7 +32,9 @@
       "cutString",
       "getFromDotNotation",
       "getProperties",
-      "clearAccents"
+      "clearAccents",
+      "randomInt",
+      "randomObjectId"
     ]
   },
   "devDependencies": {
