@@ -337,17 +337,16 @@ app.config({
     return Math.floor(Math.random() * (max - min)) + min
   }
 
-  window.randomObjectId = function () {
-    // generate 24 chars hexadecimal string
-    var timestamp = Date.now().toString()
-    var idPad = randomInt(10000, 99999) + '000000000000000000'
-    // return unique and valid MongoDB ObjectId pattern
-    return idPad.substring(0, 24 - timestamp.length) + timestamp
-  }
-
   window.objectIdPad = function (id, index) {
     // mix and return base ID with index
     return id.substring(0, 24 - index.length) + index
+  }
+
+  window.randomObjectId = function () {
+    // generate 24 chars hexadecimal string
+    var timestamp = Date.now().toString()
+    // return unique and valid MongoDB ObjectId pattern
+    return objectIdPad(randomInt(10000, 99999) + '000000000000000000', timestamp)
   }
 }())
 

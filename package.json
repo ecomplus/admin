@@ -34,7 +34,8 @@
       "getProperties",
       "clearAccents",
       "randomInt",
-      "randomObjectId"
+      "randomObjectId",
+      "objectIdPad"
     ]
   },
   "devDependencies": {
