@@ -236,6 +236,7 @@
       $form.find('input[type="checkbox"]').change(function () {
         inputToData($(this), true)
       })
+
       $form.find('input[type="radio"]').change(function () {
         var $checked = $form.find('input[name="' + $(this).attr('name') + '"]:checked')
         inputToData($checked)
@@ -252,6 +253,7 @@
           })
         }
       })
+
       $form.find('input[type="text"],select,textarea').change(function () {
         inputToData($(this))
 
