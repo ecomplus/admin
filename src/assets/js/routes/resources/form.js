@@ -237,11 +237,20 @@
         inputToData($(this), true)
       })
       $form.find('input[type="radio"]').change(function () {
-        inputToData($form.find('input[name="' + $(this).attr('name') + '"]:checked'))
+        var $checked = $form.find('input[name="' + $(this).attr('name') + '"]:checked')
+        inputToData($checked)
 
         // check if other elements are controled by this options
-        var disable = $(this).data('disable')
-        console.log(disable)
+        var disable = $checked.data('disable')
+        if (disable) {
+          $form.find('[name="' + disable + '"]').each(function () {
+            if ($(this).data('enable-value') === $checked.val()) {
+              $(this).removeAttr('disabled')
+            } else {
+              $(this).attr('disabled', true).val('').trigger('change')
+            }
+          })
+        }
       })
       $form.find('input[type="text"],select,textarea').change(function () {
         inputToData($(this))
