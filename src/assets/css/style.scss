@@ -660,6 +660,18 @@ body {
   background: none;
 }
 
+// grids options ul
+.options-list > li {
+  padding-left: 0;
+  padding-right: 0;
+}
+.options-list > li:first-child {
+  padding-top: 0;
+}
+.options-list > li:last-child {
+  padding-bottom: 0;
+}
+
 .masonry-item > a {
   display: inline-block;
   border: $card-internal-border;
