@@ -554,8 +554,7 @@
                 if (multiple) {
                   data[prop] = []
                   // generate IDs for each image
-                  // 24 chars hexadecimal
-                  var idPad = '110000000000000000000000'
+                  var idPad = randomObjectId()
 
                   for (i = 0; i < pictures.length; i++) {
                     var item
@@ -566,8 +565,10 @@
                       // use image with original (zoom) size
                       item = pictures[i].zoom
                     }
-                    var index = '' + i
-                    item._id = idPad.substring(0, idPad.length - index.length) + index
+                    // keep existing ID if any
+                    if (!item._id) {
+                      item._id = objectIdPad(idPad, '' + i)
+                    }
                     data[prop].push(item)
                   }
                 } else if (thumbnails) {
