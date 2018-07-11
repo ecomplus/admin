@@ -715,8 +715,13 @@ body {
 .fs-200 {
   font-size: 200px;
 }
-.hidden {
+.hidden,
+.prev-empty,
+.hide-empty:empty {
   display: none;
+}
+*:empty + .prev-empty {
+  display: inherit;
 }
 @media (max-width: 767px) {
   .hidden-sm-down {
