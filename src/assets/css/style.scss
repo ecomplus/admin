@@ -464,7 +464,7 @@ body {
 // input defaults
 .form-control:disabled,
 .form-control[readonly] {
-  background: $color-bg-lightest;
+  background: $color-bg-lighter;
 }
 .form-control:disabled {
   cursor: not-allowed;
