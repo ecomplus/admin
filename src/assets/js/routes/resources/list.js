@@ -24,7 +24,7 @@
   var resourceSlug = window.routeParams[0]
   var data, list
   var updateData = function () {
-    data = window.tabData[tabId]
+    data = window.Tabs[tabId].data
     list = data.result
   }
   updateData()
@@ -179,7 +179,7 @@
             paginationControls()
           }
         }
-        window.tabLoad[tabId](callback, params)
+        window.Tabs[tabId].load(callback, params)
       } else if (!waiting) {
         waiting = true
       }

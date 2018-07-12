@@ -30,10 +30,10 @@
   }
 
   // edit JSON document
-  var commit = window.tabCommit[tabId]
+  var commit = window.Tabs[tabId].commit
   var Data = function () {
     // current data from global variable
-    return window.tabData[tabId]
+    return window.Tabs[tabId].data
   }
 
   var slug = window.routeParams[0]

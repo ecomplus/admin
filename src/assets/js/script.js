@@ -962,13 +962,8 @@ app.ready(function () {
     // global
     window.callApi = callApi
     window.callStorageApi = callStorageApi
-    // store data when necessary
-    // commit changes on tab data globally
-    // get tab JSON data globally
-    // improve reactivity
-    window.tabData = {}
-    window.tabCommit = {}
-    window.tabLoad = {}
+    // use tabs functions and objects globally
+    window.Tabs = {}
 
     // general function to load HTML content
     window.loadContent = function (uri, el) {
@@ -1160,9 +1155,8 @@ app.ready(function () {
           // remove from tabs object
           delete appTabs[tabId]
           // free up memory
-          delete window.tabData[tabId]
-          delete window.tabCommit[tabId]
-          delete window.tabLoad[tabId]
+          // console.log(window.Tabs[tabId])
+          delete window.Tabs[tabId]
 
           if (tabId === currentTab) {
             // have to change the current tab
@@ -1232,6 +1226,18 @@ app.ready(function () {
         // global to identify tab on route scripts
         window.tabId = currentTab
         window.elTab = elTab
+
+        // store data when necessary
+        // commit changes on tab data globally
+        // get tab JSON data globally
+        // improve reactivity
+        window.Tabs[currentTab] = {
+          /*
+          data: {},
+          commit: function () {},
+          load: function () {}
+          */
+        }
 
         if (!internal) {
           // have to force routeReady call after 10s
