@@ -33,6 +33,8 @@
     var $li = $('<li />', {
       html: liOption
     })
+    $list.append($li)
+
     // setup li and input elements
     $li.find('input')
       .data('object-id', objectIdPad(idPad, '' + liCount))
@@ -41,7 +43,6 @@
         window.Tabs[tabId].inputToData($(this))
       }).focus()
     liCount++
-    $list.append($li)
   }
 
   $('#' + tabId + '-add-option').click(addOption)

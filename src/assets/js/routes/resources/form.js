@@ -179,14 +179,20 @@
                 for (var j = 0; j < data[prop].length; j++) {
                   if (data[prop][j]._id === objectId) {
                     data = data[prop][j]
+                    // object ID for first level only
+                    objectId = null
                     // data[prop] is undefined
                     break
                   }
                 }
+                if (objectId) {
+                  // not found
+                  data[prop].push({ _id: objectId })
+                  data = data[prop][data[prop].length - 1]
+                  objectId = null
+                }
               }
               i++
-              // object ID for first level only
-              objectId = null
             }
           }
 
