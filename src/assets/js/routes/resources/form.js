@@ -232,6 +232,8 @@
           commit(Data(), true)
         }
       }
+      // use function on specific resources forms scripts
+      window.Tabs[tabId].inputToData = inputToData
 
       $form.find('input[type="checkbox"]').change(function () {
         inputToData($(this), true)
