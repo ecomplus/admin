@@ -157,7 +157,12 @@
             var objectId = $input.data('object-id')
             i = 0
             while (true) {
-              prop = parts[i]
+              if (parts[i] !== '') {
+                if (i > 0) {
+                  data = data[prop]
+                }
+                prop = parts[i]
+              }
               if (i === parts.length - 1) {
                 break
               }
@@ -171,14 +176,13 @@
                 }
               }
 
-              if (!objectId) {
-                data = data[prop]
-              } else {
+              if (objectId) {
                 // array of nested objects
                 // pass correct object by checking ID
                 for (var j = 0; j < data[prop].length; j++) {
                   if (data[prop][j]._id === objectId) {
-                    data = data[prop][j]
+                    data = data[prop]
+                    prop = j
                     // object ID for first level only
                     objectId = null
                     // data[prop] is undefined
@@ -188,7 +192,8 @@
                 if (objectId) {
                   // not found
                   data[prop].push({ _id: objectId })
-                  data = data[prop][data[prop].length - 1]
+                  data = data[prop]
+                  prop = data[prop].length - 1
                   objectId = null
                 }
               }
@@ -214,13 +219,17 @@
           }
 
           if (!checkbox) {
-            var val = $input.val()
+            var val = $input.data('value') || $input.val()
             var obj
             if (typeof val === 'string') {
               obj = strToProperty($input, val)
               if (obj) {
                 // continue with valid value
-                data[prop] = obj
+                if (!$input.data('object-assign')) {
+                  data[prop] = obj
+                } else {
+                  data[prop] = Object.assign(data[prop], obj)
+                }
               } else if (obj === null && data.hasOwnProperty(prop)) {
                 // empty, remove property
                 remove()
@@ -300,7 +309,6 @@
           var replaceAccents = $input.data('fill-clear-accents')
           if (replaceAccents) {
             val = clearAccents(val, replaceAccents)
-            console.log(val)
           }
           var regex = $input.data('fill-pattern')
           if (regex) {
