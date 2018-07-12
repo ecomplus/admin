@@ -31,12 +31,17 @@
   var addOption = function () {
     // add li element
     var $li = $('<li />', {
-      html: liOption,
-      'data-object-id': objectIdPad(idPad, '' + liCount)
+      html: liOption
     })
-    $list.append($li)
-    $li.find('input').focus()
+    // setup li and input elements
+    $li.find('input')
+      .data('object-id', objectIdPad(idPad, '' + liCount))
+      .attr('name', 'options.text')
+      .change(function () {
+        window.Tabs[tabId].inputToData($(this))
+      }).focus()
     liCount++
+    $list.append($li)
   }
 
   $('#' + tabId + '-add-option').click(addOption)
