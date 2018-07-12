@@ -11,7 +11,7 @@
   var $list = $('#' + tabId + '-options-list')
   // generate IDs for each option
   var idPad = randomObjectId()
-  var liCount = 0
+  var liIndex = 0
   // option li element HTML
   var liOption = '<div class="input-group">' +
                    '<div class="input-group-prepend">' +
@@ -29,32 +29,57 @@
                    '</span>' +
                  '</div>'
 
-  var addOption = function () {
+  var addOption = function (optionObject) {
     // add li element
     var $li = $('<li />', {
       html: liOption
     })
     $list.append($li)
+    var objectId
+    if (!optionObject) {
+      // new unique ID
+      objectId = objectIdPad(idPad, '' + liIndex)
+    } else {
+      objectId = optionObject._id
+    }
+    liIndex++
 
     // setup li and input elements
-    $li.find('input').focus()
-      .data('object-id', objectIdPad(idPad, '' + liCount))
-      .change(function () {
-        var text = $(this).val()
-        if (text.trim() !== '') {
-          $(this).data('value', JSON.stringify({
-            text: text,
-            // parse text to option_id
-            option_id: clearAccents(text.toLowerCase(), '_').replace(/[^a-z0-9_]/g, '').substr(0, 30)
-          }))
-        } else {
-          $(this).data('value', '')
-        }
-        window.Tabs[tabId].inputToData($(this))
-      })
-    liCount++
+    var $input = $li.find('input')
+    $input.data('object-id', objectId).change(function () {
+      var text = $(this).val()
+      if (text.trim() !== '') {
+        $(this).data('value', JSON.stringify({
+          text: text,
+          // parse text to option_id
+          option_id: clearAccents(text.toLowerCase(), '_').replace(/[^a-z0-9_]/g, '').substr(0, 30)
+        }))
+      } else {
+        $(this).data('value', '')
+      }
+      window.Tabs[tabId].inputToData($(this))
+    })
+    if (optionObject) {
+      // keep option object JSON
+      $input.val(optionObject.text).data('value', JSON.stringify(optionObject))
+    } else {
+      // new option
+      $input.focus()
+    }
   }
 
-  $('#' + tabId + '-add-option').click(addOption)
-  $list.next().find('a').click(addOption)
+  $('#' + tabId + '-add-option').click(function () {
+    addOption()
+  })
+  $list.next().find('a').click(function () {
+    addOption()
+  })
+
+  // setup current grid saved options
+  var data = window.Tabs[tabId].data
+  if (data.options) {
+    for (var i = 0; i < data.options.length; i++) {
+      addOption(data.options[i])
+    }
+  }
 }())
