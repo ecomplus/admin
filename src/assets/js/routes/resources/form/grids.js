@@ -91,8 +91,12 @@
         if (data.options) {
           for (var i = 0; i < data.options.length; i++) {
             if (data.options[i]._id === $(this).data('object-id')) {
-              delete data.options[i]
+              data.options.splice(i, 1)
             }
+          }
+          if (!data.options.length) {
+            // all deleted
+            delete data.options
           }
           // commit only to perform reactive actions
           commit(data, true)
