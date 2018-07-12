@@ -206,7 +206,10 @@
   </div>
 
   <script>
-    $.getScript('../assets/js/routes/resources/form.min.js')
-    $.getScript('../assets/js/routes/resources/form/grids.min.js')
+    $.getScript('../assets/js/routes/resources/form.min.js', function () {
+      setTimeout(function () {
+        $.getScript('../assets/js/routes/resources/form/grids.min.js')
+      }, 400)
+    })
   </script>
 </form>
