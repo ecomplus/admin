@@ -203,7 +203,11 @@
 
           var remove = function () {
             // remove property
-            delete data[prop]
+            if (!Array.isArray(data)) {
+              delete data[prop]
+            } else {
+              data.splice(prop, 1)
+            }
             if (parts.length) {
               // remove empty parents
               data = Data()
