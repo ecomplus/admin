@@ -669,6 +669,7 @@ body {
   padding-left: 0;
   padding-right: 0;
   margin-bottom: 1rem;
+  display: none;
 }
 .options-list > li:last-child {
   margin-bottom: 0;
@@ -740,10 +741,13 @@ body {
 .fs-200 {
   font-size: 200px;
 }
-.hidden,
+.hidden {
+  display: none;
+}
 .prev-empty,
 .hide-empty:empty {
   display: none;
+  transition: 0.2s linear;
 }
 *:empty + .prev-empty {
   display: inherit;
