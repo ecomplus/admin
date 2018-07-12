@@ -36,6 +36,9 @@
                    '<span class="input-group-append">' +
                      '<button class="btn btn-light" type="button"><i class="fa fa-cog"></i></button>' +
                    '</span>' +
+                 '</div>' +
+                 '<div class="mt-10 hidden edit-option">' +
+                   'EDIT' +
                  '</div>'
 
   var addOption = function (optionObject) {
@@ -68,6 +71,12 @@
       }
       window.Tabs[tabId].inputToData($(this))
     })
+
+    // setup edit button
+    $li.find('button').click(function () {
+      $li.find('.edit-option').slideToggle()
+    })
+
     if (optionObject) {
       // keep option object JSON
       $input.val(optionObject.text).data('value', JSON.stringify(optionObject))
@@ -105,7 +114,7 @@
         }
 
         // remove list element
-        $(this).closest('li').toggle('slide', function () {
+        $(this).closest('li').slideUp(400, function () {
           $(this).remove()
         })
       })
