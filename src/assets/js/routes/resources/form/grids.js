@@ -7,13 +7,15 @@
 
   // current tab ID
   var tabId = window.tabId
-
   // edit JSON document
   var commit = window.Tabs[tabId].commit
   var Data = function () {
     // current data from global variable
     return window.Tabs[tabId].data
   }
+
+  // var lang = window.lang
+  var i18n = window.i18n
 
   var $list = $('#' + tabId + '-options-list')
   // generate IDs for each option
@@ -107,6 +109,11 @@
           $(this).remove()
         })
       })
+    } else {
+      app.toast(i18n({
+        'en_us': 'Select the options to delete',
+        'pt_br': 'Selecione as opções para deletar'
+      }))
     }
   })
 
