@@ -150,9 +150,11 @@
         if (prop && prop !== '') {
           var data = Data()
           var i
+
           // object dot notation
           var parts = prop.split('.')
           if (parts.length) {
+            var objectId = $input.data('object-id')
             i = 0
             while (true) {
               prop = parts[i]
@@ -161,10 +163,30 @@
               }
               if (!data.hasOwnProperty(prop)) {
                 // declare object
-                data[prop] = {}
+                if (!objectId) {
+                  data[prop] = {}
+                } else {
+                  // array of nested objects
+                  data[prop] = [{ _id: objectId }]
+                }
               }
-              data = data[prop]
+
+              if (!objectId) {
+                data = data[prop]
+              } else {
+                // array of nested objects
+                // pass correct object by checking ID
+                for (var j = 0; j < data[prop].length; j++) {
+                  if (data[prop][j]._id === objectId) {
+                    data = data[prop][j]
+                    // data[prop] is undefined
+                    break
+                  }
+                }
+              }
               i++
+              // object ID for first level only
+              objectId = null
             }
           }
 
