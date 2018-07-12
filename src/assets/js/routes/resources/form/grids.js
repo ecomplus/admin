@@ -8,6 +8,13 @@
   // current tab ID
   var tabId = window.tabId
 
+  // edit JSON document
+  var commit = window.Tabs[tabId].commit
+  var Data = function () {
+    // current data from global variable
+    return window.Tabs[tabId].data
+  }
+
   var $list = $('#' + tabId + '-options-list')
   // generate IDs for each option
   var idPad = randomObjectId()
@@ -75,8 +82,32 @@
     addOption()
   })
 
+  $('#' + tabId + '-delete-options').click(function () {
+    var $options = $list.find('input:checked')
+    if ($options.length) {
+      var data = Data()
+      // remove all selected options
+      $options.each(function () {
+        if (data.options) {
+          for (var i = 0; i < data.options.length; i++) {
+            if (data.options[i]._id === $(this).data('object-id')) {
+              delete data.options[i]
+            }
+          }
+          // commit only to perform reactive actions
+          commit(data, true)
+        }
+
+        // remove list element
+        $(this).closest('li').toggle('slide', function () {
+          $(this).remove()
+        })
+      })
+    }
+  })
+
   // setup current grid saved options
-  var data = window.Tabs[tabId].data
+  var data = Data()
   if (data.options) {
     for (var i = 0; i < data.options.length; i++) {
       addOption(data.options[i])
