@@ -22,7 +22,8 @@
                        '</div>' +
                      '</span>' +
                    '</div>' +
-                   '<input class="form-control" type="text" />' +
+                   '<input class="form-control" type="text" name="options." ' +
+                     'data-json="true" data-object-assign="true">' +
                    '<span class="input-group-append">' +
                      '<button class="btn btn-light" type="button"><i class="fa fa-cog"></i></button>' +
                    '</span>' +
@@ -36,12 +37,21 @@
     $list.append($li)
 
     // setup li and input elements
-    $li.find('input')
+    $li.find('input').focus()
       .data('object-id', objectIdPad(idPad, '' + liCount))
-      .attr('name', 'options.text')
       .change(function () {
+        var text = $(this).val()
+        if (text.trim() !== '') {
+          $(this).data('value', JSON.stringify({
+            text: text,
+            // parse text to option_id
+            option_id: clearAccents(text.toLowerCase(), '_').replace(/[^a-z0-9_]/g, '').substr(0, 30)
+          }))
+        } else {
+          $(this).data('value', '')
+        }
         window.Tabs[tabId].inputToData($(this))
-      }).focus()
+      })
     liCount++
   }
 
