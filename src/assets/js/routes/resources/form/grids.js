@@ -9,6 +9,9 @@
   var tabId = window.tabId
 
   var $list = $('#' + tabId + '-options-list')
+  // generate IDs for each option
+  var idPad = randomObjectId()
+  var liCount = 0
   // option li element HTML
   var liOption = '<div class="input-group">' +
                    '<div class="input-group-prepend">' +
@@ -24,11 +27,16 @@
                      '<button class="btn btn-light" type="button"><i class="fa fa-cog"></i></button>' +
                    '</span>' +
                  '</div>'
+
   var addOption = function () {
     // add li element
-    $list.append($('<li />', {
-      html: liOption
-    }))
+    var $li = $('<li />', {
+      html: liOption,
+      'data-object-id': objectIdPad(idPad, '' + liCount)
+    })
+    $list.append($li)
+    $li.find('input').focus()
+    liCount++
   }
 
   $('#' + tabId + '-add-option').click(addOption)
