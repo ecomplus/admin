@@ -77,13 +77,15 @@
       $li.find('.edit-option').slideToggle()
     })
 
-    if (optionObject) {
-      // keep option object JSON
-      $input.val(optionObject.text).data('value', JSON.stringify(optionObject))
-    } else {
-      // new option
-      $input.focus()
-    }
+    $li.slideDown(400, function () {
+      if (optionObject) {
+        // keep option object JSON
+        $input.val(optionObject.text).data('value', JSON.stringify(optionObject))
+      } else {
+        // new option
+        $input.focus()
+      }
+    })
   }
 
   $('#' + tabId + '-add-option').click(function () {
