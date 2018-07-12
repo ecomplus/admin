@@ -102,7 +102,7 @@
 
         // commit changes on JSON document globally
         // improve reactivity
-        window.tabCommit[tabId] = commit
+        window.Tabs[tabId].commit = commit
 
         editor.on('blur', function () {
           // code editor manually changed (?)
@@ -114,7 +114,7 @@
             return
           }
           // update data
-          window.tabData[tabId] = json
+          window.Tabs[tabId].data = json
         })
         editor.on('change', function () {
           window.triggerUnsaved(tabId)
@@ -129,7 +129,7 @@
   var commit = function (json, updated) {
     if (!updated) {
       // pass JSON data
-      window.tabData[tabId] = json
+      window.Tabs[tabId].data = json
     }
     // reset Ace editor content
     editor.session.setValue(JSON.stringify(json, null, 4))
@@ -158,7 +158,7 @@
       })
     }
     // load JSON data globally
-    window.tabLoad[tabId] = load
+    window.Tabs[tabId].load = load
 
     var params
     if (resourceId === undefined) {
