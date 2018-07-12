@@ -193,7 +193,7 @@
                   // not found
                   data[prop].push({ _id: objectId })
                   data = data[prop]
-                  prop = data[prop].length - 1
+                  prop = data.length - 1
                   objectId = null
                 }
               }
