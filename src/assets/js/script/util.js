@@ -242,19 +242,20 @@
     return objectIdPad(randomInt(10000, 99999) + '000000000000000000', timestamp)
   }
 
-  window.handleInputs = function ($form, callback) {
+  window.handleInputs = function ($form, inputToData) {
     /*
       default form setup
       handle custom data attributes and callback on change
     */
 
     $form.find('input[type="checkbox"]').change(function () {
-      callback($(this), true)
+      // true for checkbox type
+      inputToData($(this), true)
     })
 
     $form.find('input[type="radio"]').change(function () {
       var $checked = $form.find('input[name="' + $(this).attr('name') + '"]:checked')
-      callback($checked)
+      inputToData($checked)
 
       // check if other elements are controled by this options
       var disable = $checked.data('disable')
@@ -270,7 +271,7 @@
     })
 
     $form.find('input[type="text"],select,textarea').change(function () {
-      callback($(this))
+      inputToData($(this))
 
       // check if other input field is filled based on this
       var fillField = $(this).data('fill-field')
