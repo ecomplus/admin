@@ -38,8 +38,14 @@
                    '</span>' +
                  '</div>' +
                  '<div class="mt-10 hidden edit-option">' +
-                   // copy content from add to price block
-                   $('#' + tabId + '-add-to-price').html() +
+                   '<a class="i18n" href="javascript:;" onclick="$(this).next().slideToggle()">' +
+                     '<span data-lang="en_us">+ Option\'s additional cost</span>' +
+                     '<span data-lang="pt_br">+ Custo adicional da opção</span>' +
+                   '</a>' +
+                   '<div class="hidden mt-10">' +
+                     // copy content from add to price block
+                     $('#' + tabId + '-add-to-price').html().replace(/(add_to_price)/g, 'options.$1') +
+                   '</div>' +
                  '</div>'
 
   var addOption = function (optionObject) {
