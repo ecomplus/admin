@@ -35,7 +35,8 @@
       "clearAccents",
       "randomInt",
       "randomObjectId",
-      "objectIdPad"
+      "objectIdPad",
+      "handleInputs"
     ]
   },
   "devDependencies": {
