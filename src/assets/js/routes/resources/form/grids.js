@@ -65,7 +65,7 @@
 
     // setup li and input elements
     var $input = $li.find('input')
-    $input.data('object-id', objectId).change(function () {
+    $input.data('object-id', objectId).filter('[name="options."]').change(function () {
       var text = $(this).val()
       if (text.trim() !== '') {
         $(this).data('value', JSON.stringify({
@@ -76,8 +76,8 @@
       } else {
         $(this).data('value', '')
       }
-      window.Tabs[tabId].inputToData($(this))
     })
+    handleInputs($li, window.Tabs[tabId].inputToData)
 
     // setup edit button
     $li.find('button').click(function () {
