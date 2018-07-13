@@ -38,6 +38,20 @@
                    '</span>' +
                  '</div>' +
                  '<div class="mt-10 hidden edit-option">' +
+                   '<div class="mb-10 row no-gutters">' +
+                     '<div class="col mr-2">' +
+                       '<input type="text" class="form-control colorpicker" ' +
+                         'name="options.colors" placeholder="Cor 1">' +
+                     '</div>' +
+                     '<div class="col mr-2">' +
+                       '<input type="text" class="form-control colorpicker" ' +
+                         'name="options.colors" placeholder="Cor 2">' +
+                     '</div>' +
+                     '<div class="col">' +
+                       '<input type="text" class="form-control colorpicker" ' +
+                         'name="options.colors" placeholder="Cor 3">' +
+                     '</div>' +
+                   '</div>' +
                    '<a class="i18n" href="javascript:;" onclick="$(this).next().slideToggle()">' +
                      '<span data-lang="en_us">+ Option\'s additional cost</span>' +
                      '<span data-lang="pt_br">+ Custo adicional da opção</span>' +
@@ -76,6 +90,9 @@
       } else {
         $(this).data('value', '')
       }
+    })
+    $input.filter('.colorpicker').minicolors({
+      theme: 'bootstrap'
     })
     handleInputs($li, window.Tabs[tabId].inputToData)
 
