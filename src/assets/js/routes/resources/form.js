@@ -181,19 +181,17 @@
                 // pass correct object by checking ID
                 for (var j = 0; j < data[prop].length; j++) {
                   if (data[prop][j]._id === objectId) {
-                    data = data[prop]
-                    prop = j
+                    // add element index on property parts array
+                    parts.splice(i + 1, 0, j)
                     // object ID for first level only
                     objectId = null
-                    // data[prop] is undefined
                     break
                   }
                 }
                 if (objectId) {
                   // not found
                   data[prop].push({ _id: objectId })
-                  data = data[prop]
-                  prop = data.length - 1
+                  parts.splice(i + 1, 0, data[prop].length - 1)
                   objectId = null
                 }
               }
