@@ -38,7 +38,8 @@
                    '</span>' +
                  '</div>' +
                  '<div class="mt-10 hidden edit-option">' +
-                   'EDIT' +
+                   // copy content from add to price block
+                   $('#' + tabId + '-add-to-price').html() +
                  '</div>'
 
   var addOption = function (optionObject) {
