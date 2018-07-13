@@ -37,7 +37,8 @@ app.config({
     'typeahead',
     'bloodhound',
     'tagsinput',
-    'selectpicker'
+    'selectpicker',
+    'colorpicker'
   ],
 
   /*
