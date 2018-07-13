@@ -275,57 +275,7 @@
       }
       // use function on specific resources forms scripts
       window.Tabs[tabId].inputToData = inputToData
-
-      $form.find('input[type="checkbox"]').change(function () {
-        inputToData($(this), true)
-      })
-
-      $form.find('input[type="radio"]').change(function () {
-        var $checked = $form.find('input[name="' + $(this).attr('name') + '"]:checked')
-        inputToData($checked)
-
-        // check if other elements are controled by this options
-        var disable = $checked.data('disable')
-        if (disable) {
-          $form.find('[name="' + disable + '"]').each(function () {
-            if ($(this).data('enable-value') === $checked.val()) {
-              $(this).removeAttr('disabled')
-            } else {
-              $(this).attr('disabled', true).val('').trigger('change')
-            }
-          })
-        }
-      })
-
-      $form.find('input[type="text"],select,textarea').change(function () {
-        inputToData($(this))
-
-        // check if other input field is filled based on this
-        var fillField = $(this).data('fill-field')
-        if (fillField) {
-          var $input = $form.find('[name="' + fillField + '"]')
-          var val = $(this).val()
-
-          // prepare string value before set on input
-          if ($input.data('fill-case') === 'lower') {
-            val = val.toLowerCase()
-          }
-          var replaceAccents = $input.data('fill-clear-accents')
-          if (replaceAccents) {
-            val = clearAccents(val, replaceAccents)
-          }
-          var regex = $input.data('fill-pattern')
-          if (regex) {
-            // RegExp to remove invalid chars
-            val = val.replace(new RegExp(regex, 'g'), '')
-          }
-          var maxLength = $input.attr('maxlength')
-          if (maxLength) {
-            val = val.substr(0, parseInt(maxLength, 10))
-          }
-          $input.val(val).trigger('change')
-        }
-      })
+      handleInputs($form, inputToData)
 
       if (!creating) {
         // fill form fields with current data
