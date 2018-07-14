@@ -155,24 +155,40 @@
           var parts = prop.split('.')
           if (parts.length) {
             var objectId = $input.data('object-id')
+            var isArray
             i = 0
             while (true) {
               if (parts[i] !== '') {
                 if (i > 0) {
                   data = data[prop]
                 }
-                prop = parts[i]
+                if (!isArray) {
+                  prop = parts[i]
+                  if (/\[\]$/.test(prop)) {
+                    // next property is an array
+                    isArray = true
+                    // remove [] chars from property name
+                    prop = prop.slice(0, -2)
+                  }
+                } else {
+                  // array element
+                  prop = parseInt(parts[i], 10)
+                  isArray = false
+                }
               }
               if (i === parts.length - 1) {
                 break
               }
+
               if (!data.hasOwnProperty(prop)) {
                 // declare object
-                if (!objectId) {
-                  data[prop] = {}
-                } else {
+                if (objectId) {
                   // array of nested objects
                   data[prop] = [{ _id: objectId }]
+                } else if (!isArray) {
+                  data[prop] = {}
+                } else {
+                  data[prop] = []
                 }
               }
 
