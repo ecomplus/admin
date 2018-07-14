@@ -163,13 +163,13 @@
                   data = data[prop]
                 }
                 if (!isArray) {
-                  prop = parts[i]
-                  if (/\[\]$/.test(prop)) {
+                  if (/\[\]$/.test(parts[i])) {
                     // next property is an array
                     isArray = true
                     // remove [] chars from property name
-                    prop = prop.slice(0, -2)
+                    parts[i] = parts[i].slice(0, -2)
                   }
+                  prop = parts[i]
                 } else {
                   // array element
                   prop = parseInt(parts[i], 10)
