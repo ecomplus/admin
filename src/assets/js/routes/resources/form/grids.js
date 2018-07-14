@@ -16,6 +16,12 @@
 
   // var lang = window.lang
   var i18n = window.i18n
+  var dictionary = {
+    'color': i18n({
+      'en_us': 'Color',
+      'pt_br': 'Cor'
+    })
+  }
 
   var $list = $('#' + tabId + '-options-list')
   // generate IDs for each option
@@ -41,15 +47,15 @@
                    '<div class="mb-10 row no-gutters">' +
                      '<div class="col mr-2">' +
                        '<input type="text" class="form-control colorpicker" ' +
-                         'name="options.colors" placeholder="Cor 1">' +
+                         'name="options.colors.[]" placeholder="' + dictionary.color + ' 1">' +
                      '</div>' +
                      '<div class="col mr-2">' +
                        '<input type="text" class="form-control colorpicker" ' +
-                         'name="options.colors" placeholder="Cor 2">' +
+                         'name="options.colors.[]" placeholder="' + dictionary.color + ' 2">' +
                      '</div>' +
                      '<div class="col">' +
                        '<input type="text" class="form-control colorpicker" ' +
-                         'name="options.colors" placeholder="Cor 3">' +
+                         'name="options.colors.[]" placeholder="' + dictionary.color + ' 3">' +
                      '</div>' +
                    '</div>' +
                    '<a class="i18n" href="javascript:;" onclick="$(this).next().slideToggle()">' +
