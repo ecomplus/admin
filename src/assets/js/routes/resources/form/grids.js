@@ -47,15 +47,15 @@
                    '<div class="mb-10 row no-gutters">' +
                      '<div class="col mr-2">' +
                        '<input type="text" class="form-control colorpicker" ' +
-                         'name="options.colors.[]" placeholder="' + dictionary.color + ' 1">' +
+                         'name="options.colors[].0" placeholder="' + dictionary.color + ' 1">' +
                      '</div>' +
                      '<div class="col mr-2">' +
                        '<input type="text" class="form-control colorpicker" ' +
-                         'name="options.colors.[]" placeholder="' + dictionary.color + ' 2">' +
+                         'name="options.colors[].1" placeholder="' + dictionary.color + ' 2">' +
                      '</div>' +
                      '<div class="col">' +
                        '<input type="text" class="form-control colorpicker" ' +
-                         'name="options.colors.[]" placeholder="' + dictionary.color + ' 3">' +
+                         'name="options.colors[].2" placeholder="' + dictionary.color + ' 3">' +
                      '</div>' +
                    '</div>' +
                    '<a class="i18n" href="javascript:;" onclick="$(this).next().slideToggle()">' +
