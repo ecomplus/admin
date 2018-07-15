@@ -719,7 +719,10 @@
             window.location = '/#/resources/' + slug + '/' + json._id
           }
         }
-        callApi(endpoint, method, callback, data)
+        // timeout to wait input changes events
+        setTimeout(function () {
+          callApi(endpoint, method, callback, data)
+        }, 200)
       })
 
       // show form
