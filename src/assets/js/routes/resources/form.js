@@ -310,10 +310,13 @@
               if (!$el.is('input:file')) {
                 switch (typeof val) {
                   case 'string':
+                  case 'number':
                     if ($el.attr('type') !== 'radio') {
                       $el.val(val)
                     } else {
-                      console.log(val)
+                      // check respective radio input
+                      $el.removeAttr('checked')
+                      $el.filter(function () { return $(this).val() === val }).attr('checked', true)
                     }
                     break
 
