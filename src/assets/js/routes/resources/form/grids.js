@@ -84,8 +84,10 @@
     liIndex++
 
     // setup li and input elements
-    var $input = $li.find('input')
-    $input.data('object-id', objectId).filter('[name="options."]').change(function () {
+    var $inputs = $li.find('input')
+    $inputs.data('object-id', objectId)
+    var $text = $inputs.filter('[name="options."]')
+    $text.change(function () {
       var text = $(this).val()
       if (text.trim() !== '') {
         $(this).data('value', JSON.stringify({
@@ -97,7 +99,7 @@
         $(this).data('value', '')
       }
     })
-    $input.filter('.colorpicker').minicolors({
+    $inputs.filter('.colorpicker').minicolors({
       theme: 'bootstrap'
     })
     handleInputs($li, window.Tabs[tabId].inputToData)
@@ -110,10 +112,15 @@
     $li.slideDown(400, function () {
       if (optionObject) {
         // keep option object JSON
-        $input.val(optionObject.text).data('value', JSON.stringify(optionObject))
+        $text.val(optionObject.text).data('value', JSON.stringify(optionObject))
+        if (optionObject.colors) {
+          for (var i = 0; i < optionObject.colors.length; i++) {
+            $inputs.filter('[name="options.colors[].' + i + '"]').minicolors('value', optionObject.colors[i])
+          }
+        }
       } else {
         // new option
-        $input.focus()
+        $text.focus()
       }
     })
   }
