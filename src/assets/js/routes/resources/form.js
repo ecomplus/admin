@@ -328,6 +328,15 @@
                   // JSON object
                   $el.val(JSON.stringify(val))
                 }
+                break
+
+              case 'boolean':
+                // checkbox
+                if (val) {
+                  $el.attr('checked', true)
+                } else {
+                  $el.removeAttr('checked')
+                }
             }
           }
         }
