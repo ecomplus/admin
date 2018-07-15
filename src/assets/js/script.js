@@ -371,7 +371,7 @@ app.config({
       if (disable) {
         $form.find('[name="' + disable + '"]').each(function () {
           if ($(this).data('enable-value') === $checked.val()) {
-            $(this).removeAttr('disabled')
+            $(this).removeAttr('disabled').focus()
           } else {
             $(this).attr('disabled', true).val('').trigger('change')
           }
