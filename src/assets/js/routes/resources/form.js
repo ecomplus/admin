@@ -299,47 +299,64 @@
 
       if (!creating) {
         // fill form fields with current data
-        var data = Data()
-        for (var prop in data) {
-          var val = data[prop]
-          var $el = $('[name="' + prop + '"]')
-          if ($el && !$el.is('input:file')) {
-            switch (typeof val) {
-              case 'string':
-                $el.val(val)
-                break
-
-              case 'object':
-                // handle JSON objects and arrays
-                // select fields ?
-                if (Array.isArray(val)) {
-                  var list = []
-                  for (var i = 0; i < val.length; i++) {
-                    var item = val[i]
-                    if (typeof item !== 'string') {
-                      // array of objects
-                      list.push(JSON.stringify(item))
+        var setupValues = function (data, prefix) {
+          if (!prefix) {
+            prefix = ''
+          }
+          for (var prop in data) {
+            var val = data[prop]
+            var $el = $('[name="' + prefix + prop + '"]')
+            if ($el.length) {
+              if (!$el.is('input:file')) {
+                switch (typeof val) {
+                  case 'string':
+                    if ($el.attr('type') !== 'radio') {
+                      $el.val(val)
                     } else {
-                      list.push(item)
+                      console.log(val)
                     }
-                  }
-                  $el.val(list)
-                } else if (val !== null) {
-                  // JSON object
-                  $el.val(JSON.stringify(val))
-                }
-                break
+                    break
 
-              case 'boolean':
-                // checkbox
-                if (val) {
-                  $el.attr('checked', true)
-                } else {
-                  $el.removeAttr('checked')
+                  case 'object':
+                    // handle JSON objects and arrays
+                    // select fields ?
+                    if (Array.isArray(val)) {
+                      var list = []
+                      for (var i = 0; i < val.length; i++) {
+                        var item = val[i]
+                        if (typeof item !== 'string') {
+                          // array of objects
+                          list.push(JSON.stringify(item))
+                        } else {
+                          list.push(item)
+                        }
+                      }
+                      $el.val(list)
+                    } else if (val !== null) {
+                      // JSON object
+                      $el.val(JSON.stringify(val))
+                    }
+                    break
+
+                  case 'boolean':
+                    // checkbox
+                    if (val) {
+                      $el.attr('checked', true)
+                    } else {
+                      $el.removeAttr('checked')
+                    }
                 }
+              }
+            } else if (typeof val === 'object' && val !== null) {
+              // recursive
+              if (!Array.isArray(val)) {
+                // nested object
+                setupValues(val, prefix + prop + '.')
+              }
             }
           }
         }
+        setupValues(Data())
       }
 
       // setup inputs plugins
