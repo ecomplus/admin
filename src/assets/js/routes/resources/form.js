@@ -244,6 +244,12 @@
               if (obj) {
                 // continue with valid value
                 if (!$input.data('object-assign')) {
+                  if (Array.isArray(data)) {
+                    // fill array to prevent null elements
+                    while (data.length < prop) {
+                      data.push(obj)
+                    }
+                  }
                   data[prop] = obj
                 } else {
                   data[prop] = Object.assign(data[prop], obj)
