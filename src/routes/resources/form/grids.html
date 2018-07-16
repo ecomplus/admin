@@ -210,10 +210,8 @@
   <script>
     // wait for second script loading before form setup
     window.Tabs[window.tabId].wait = true
-    $.getScript('../assets/js/routes/resources/form.min.js', function () {
-      setTimeout(function () {
-        $.getScript('../assets/js/routes/resources/form/grids.min.js')
-      }, 200)
+    $.getScript('../assets/js/routes/resources/form/grids.min.js', function () {
+      $.getScript('../assets/js/routes/resources/form.min.js')
     })
   </script>
 </form>

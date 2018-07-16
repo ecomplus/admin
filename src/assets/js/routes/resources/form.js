@@ -7,6 +7,7 @@
 
   // current tab ID
   var tabId = window.tabId
+  var Tab = window.Tabs[tabId]
   var elContainer = $('#' + tabId + '-tab-normal')
   var $form = elContainer.children('form')
   // prefix tab ID on content elements IDs
@@ -30,10 +31,10 @@
   }
 
   // edit JSON document
-  var commit = window.Tabs[tabId].commit
+  var commit = Tab.commit
   var Data = function () {
     // current data from global variable
-    return window.Tabs[tabId].data
+    return Tab.data
   }
 
   var slug = window.routeParams[0]
@@ -303,7 +304,7 @@
         }
       }
       // use function on specific resources forms scripts
-      window.Tabs[tabId].inputToData = inputToData
+      Tab.inputToData = inputToData
       handleInputs($form, inputToData)
 
       var formSetup = function () {
@@ -794,11 +795,14 @@
       }
 
       // wait for async handling
-      if (!window.Tabs[tabId].wait) {
-        setTimeout(formSetup, 300)
+      if (!Tab.wait) {
+        setTimeout(formSetup, 200)
       } else {
-        window.Tabs[tabId].formSetup = function () {
+        Tab.formSetup = function () {
           setTimeout(formSetup, 100)
+        }
+        if (typeof Tab.continue === 'function') {
+          Tab.continue()
         }
       }
     }
