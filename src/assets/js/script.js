@@ -430,6 +430,32 @@ app.config({
         $input.val(val).trigger('change')
       }
     })
+
+    // input masking
+    $form.find('input[type="number"],input[data-is-number]').toArray().forEach(function (field) {
+      var cleave
+      try {
+        // https://github.com/nosir/cleave.js/blob/master/doc/options.md
+        var options = {
+          numeral: true
+        }
+        if (!$(field).data('decimal')) {
+          // integer
+          options.numeralDecimalScale = 0
+        } else {
+          options.numeralDecimalMark = decimalPoint
+          if (decimalPoint === '.') {
+            options.delimiter = ','
+          } else {
+            options.delimiter = '.'
+          }
+        }
+        cleave = new window.Cleave(field, options)
+      } catch (e) {
+        // no inputs ?
+        console.error(e, cleave)
+      }
+    })
   }
 }())
 
