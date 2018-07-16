@@ -244,8 +244,13 @@
             var val = $input.data('value') || $input.val()
             var obj
             if (typeof val === 'string') {
-              obj = strToProperty($input, val)
-              if (obj) {
+              if ($input.attr('type') === 'number' || $input.data('is-number')) {
+                obj = stringToNumber(val)
+              } else {
+                obj = strToProperty($input, val)
+              }
+
+              if (obj || obj === 0) {
                 // continue with valid value
                 if (!$input.data('object-assign')) {
                   if (Array.isArray(data)) {
