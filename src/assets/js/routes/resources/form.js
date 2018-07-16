@@ -805,87 +805,85 @@
   }
 
   // fill select options (autocomplete)
-  var $select = $form.find('select')
+  var $select = $form.find('select').filter(function () { return $(this).data('fill') })
   if (!$select.length) {
     Done()
   } else {
-    $select.each(function (index) {
+    $select.each(function () {
       // resource name
       var fill = $(this).data('fill')
-      if (fill) {
-        todo++
-        // array of destination elements
-        var $els = [ $(this) ]
-        // add select elements with the same options (same resource)
-        $form.find('select[data-fill-same="' + $(this).attr('name') + '"]').each(function () {
-          $els.push($(this))
-        })
+      todo++
+      // array of destination elements
+      var $els = [ $(this) ]
+      // add select elements with the same options (same resource)
+      $form.find('select[data-fill-same="' + $(this).attr('name') + '"]').each(function () {
+        $els.push($(this))
+      })
 
-        // default sort by name asc
-        var uri = fill + '.json?sort=' + ($(this).data('sort') || 'name')
-        var fields = $(this).data('properties')
-        var subtextProp
-        var object
-        if (fields) {
-          // object property
-          object = true
-          uri += '&fields=' + fields
-          subtextProp = $(this).data('subtext-property')
-          if (subtextProp) {
-            // add property to fields on URL
-            uri += ',' + subtextProp
-          }
+      // default sort by name asc
+      var uri = fill + '.json?sort=' + ($(this).data('sort') || 'name')
+      var fields = $(this).data('properties')
+      var subtextProp
+      var object
+      if (fields) {
+        // object property
+        object = true
+        uri += '&fields=' + fields
+        subtextProp = $(this).data('subtext-property')
+        if (subtextProp) {
+          // add property to fields on URL
+          uri += ',' + subtextProp
         }
+      }
 
-        window.callApi(uri, 'GET', function (err, json) {
-          if (!err) {
-            // response should be a resource list
-            var list = json.result
-            if (list) {
-              for (var i = 0; i < list.length; i++) {
-                var doc = list[i]
-                // escape itself
-                if (doc._id !== resourceId) {
-                  // fill select element with new option
-                  var value
-                  if (object) {
-                    // JSON string as value
-                    var obj
-                    if (fields) {
-                      // object with wanted fields only
-                      obj = getProperties(doc, fields)
-                    } else {
-                      obj = doc
-                    }
-                    value = JSON.stringify(obj)
+      window.callApi(uri, 'GET', function (err, json) {
+        if (!err) {
+          // response should be a resource list
+          var list = json.result
+          if (list) {
+            for (var i = 0; i < list.length; i++) {
+              var doc = list[i]
+              // escape itself
+              if (doc._id !== resourceId) {
+                // fill select element with new option
+                var value
+                if (object) {
+                  // JSON string as value
+                  var obj
+                  if (fields) {
+                    // object with wanted fields only
+                    obj = getProperties(doc, fields)
                   } else {
-                    // string property
-                    // use document ID as option value
-                    value = doc._id
+                    obj = doc
                   }
+                  value = JSON.stringify(obj)
+                } else {
+                  // string property
+                  // use document ID as option value
+                  value = doc._id
+                }
 
-                  // setup option
-                  var option = {
-                    value: value,
-                    text: cutString(doc.name, 42, '...')
+                // setup option
+                var option = {
+                  value: value,
+                  text: cutString(doc.name, 42, '...')
+                }
+                if (subtextProp) {
+                  var subtext = getFromDotNotation(doc, subtextProp)
+                  if (subtext) {
+                    option['data-subtext'] = cutString(subtext, 45, '...')
                   }
-                  if (subtextProp) {
-                    var subtext = getFromDotNotation(doc, subtextProp)
-                    if (subtext) {
-                      option['data-subtext'] = cutString(subtext, 45, '...')
-                    }
-                  }
-                  // add element on selects
-                  for (var j = 0; j < $els.length; j++) {
-                    $('<option />', option).appendTo($els[j])
-                  }
+                }
+                // add element on selects
+                for (var j = 0; j < $els.length; j++) {
+                  $('<option />', option).appendTo($els[j])
                 }
               }
             }
           }
-          Done()
-        })
-      }
+        }
+        Done()
+      })
     })
   }
 }())
