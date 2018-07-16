@@ -330,13 +330,17 @@
                 if (!$el.is('input:file')) {
                   switch (typeof val) {
                     case 'string':
-                    case 'number':
                       if ($el.attr('type') !== 'radio') {
                         $el.val(val)
                       } else {
                         // check respective radio input
                         $el.filter(function () { return $(this).val() === val }).click()
                       }
+                      break
+
+                    case 'number':
+                      // format number before set value
+                      $el.val(numberToString(val, $el.data('decimal')))
                       break
 
                     case 'object':
