@@ -304,18 +304,22 @@
       var formSetup = function () {
         if (!creating) {
           // fill form fields with current data
-          var setupValues = function (data, prefix) {
+          var setupValues = function (data, prefix, objectId) {
             if (!prefix) {
               prefix = ''
             }
             for (var prop in data) {
               var val = data[prop]
               var $el = $('[name="' + prefix + prop + '"]:not(:disabled)')
+              if (objectId) {
+                $el = $el.filter(function () { return $(this).data('object-id') === objectId })
+              }
               /*
               if (prefix !== '') {
                 console.log(prefix + prop, $el)
               }
               */
+              var i
 
               if ($el.length) {
                 if (!$el.is('input:file')) {
@@ -335,7 +339,7 @@
                       // select fields ?
                       if (Array.isArray(val)) {
                         var list = []
-                        for (var i = 0; i < val.length; i++) {
+                        for (i = 0; i < val.length; i++) {
                           var item = val[i]
                           if (typeof item !== 'string') {
                             // array of objects
@@ -362,9 +366,15 @@
                 }
               } else if (typeof val === 'object' && val !== null) {
                 // recursive
+                var nextPrefix = prefix + prop + '.'
                 if (!Array.isArray(val)) {
                   // nested object
-                  setupValues(val, prefix + prop + '.')
+                  setupValues(val, nextPrefix)
+                } else if (val[0] && typeof val[0] === 'object' && val[0]._id) {
+                  // array of nested objects
+                  for (i = 0; i < val.length; i++) {
+                    setupValues(val[i], nextPrefix, val[i]._id)
+                  }
                 }
               }
             }

@@ -117,7 +117,7 @@
     })
     if (optionObject) {
       // keep option object JSON
-      $text.val(optionObject.text).data('value', JSON.stringify(optionObject))
+      // $text.val(optionObject.text).data('value', JSON.stringify(optionObject))
       if (optionObject.colors) {
         for (var i = 0; i < optionObject.colors.length; i++) {
           $inputs.filter('[name="options.colors[].' + i + '"]').minicolors('value', optionObject.colors[i])
