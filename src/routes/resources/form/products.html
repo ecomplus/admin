@@ -283,12 +283,7 @@
 
       <div class="card-content">
         <div class="card-body">
-          <div class="dropzone dz-clickable">
-            <div class="dz-default dz-message i18n">
-              <span data-lang="en_us">Drop or select files to upload</span>
-              <span data-lang="pt_br">Selecione ou arraste arquivos para upload</span>
-            </div>
-          </div>
+          <input type="file" name="pictures" multiple data-thumbnails="true"/>
         </div>
       </div>
     </div>
@@ -310,8 +305,7 @@
         <div class="card-body">
           <div class="form-group">
             <label for="keywords">Keywords</label>
-            <select multiple name="keywords">
-            </select>
+            <select multiple name="keywords" class="tagsinput"></select>
             <span class="i18n">
               <small data-lang="en_us" class="form-text">
                 Tags related with product for internal search
@@ -327,7 +321,11 @@
               <span data-lang="en_us">Brands</span>
               <span data-lang="pt_br">Marcas</span>
             </label>
-            <select multiple data-id="brands">
+            <select class="form-control" data-live-search="true" name="brands"
+              data-fill="brands"
+              data-properties="_id,name,slug,logo"
+              data-json="true">
+              <option value="" selected >--</option>
             </select>
           </div>
           <div class="form-group">
@@ -335,7 +333,11 @@
               <span data-lang="en_us">Categories</span>
               <span data-lang="pt_br">Categorias</span>
             </label>
-            <select multiple data-id="categories">
+            <select multiple class="form-control" data-live-search="true" name="categories"
+              data-fill="categories"
+              data-properties="_id,name,slug,ml_category_id,google_product_category_id"
+              data-json="true">
+              <option value="" selected >--</option>
             </select>
           </div>
 
