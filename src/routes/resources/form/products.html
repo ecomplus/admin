@@ -1,7 +1,8 @@
-<form action="javascript:;" data-id="product-form" class="ajax-form">
-  <div class="ajax-overlay">
-    <div class="spinner-circle-material"></div>
+<form action="javascript:;" data-id="product-form" class="ajax-cards ajax-form ajax mb-30">
+  <div class="spinner-linear">
+    <div class="line"></div>
   </div>
+  <div class="ajax-overlay"></div>
 
   <div class="row">
     <div class="col-md-7">
@@ -522,8 +523,24 @@
   </div>
   </div>
 
+  <div class="bt-1 pt-20">
+    <button class="btn btn-success i18n mr-10">
+      <span data-lang="en_us">Save product</span>
+      <span data-lang="pt_br">Salvar produto</span>
+    </button>
+    <button type="button" class="btn btn-danger i18n delete-resource hidden">
+      <span data-lang="en_us">Delete</span>
+      <span data-lang="pt_br">Deletar</span>
+    </button>
+  </div>
+
   <script>
-    $.getScript('../assets/js/routes/resources/form.min.js')
-    $.getScript('../assets/js/routes/resources/form/products.min.js')
+    // wait for second script loading before form setup
+    window.Tabs[window.tabId].wait = true
+    $.getScript('../assets/js/routes/resources/form.min.js', function () {
+      setTimeout(function () {
+        $.getScript('../assets/js/routes/resources/form/products.min.js')
+      }, 200)
+    })
   </script>
 </form>
