@@ -311,7 +311,7 @@
             }
             for (var prop in data) {
               var val = data[prop]
-              var $el = $('[name="' + prefix + prop + '"]')
+              var $el = $('[name="' + prefix + prop + '"]:not(:disabled)')
               /*
               if (prefix !== '') {
                 console.log(prefix + prop, $el)
