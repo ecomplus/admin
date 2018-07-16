@@ -277,13 +277,37 @@ app.config({
     } else {
       str = str.replace(/^[0-9.]/g, '')
     }
-    console.log(str)
     if (str.indexOf('.') === -1) {
       // no decimals
       return parseInt(str, 10)
     } else {
       return parseFloat(str)
     }
+  }
+
+  window.numberToString = function (num, decimals) {
+    // parse value to string
+    var str
+    if (decimals) {
+      str = num.toString()
+      var thousandsDelimiter
+      if (decimalPoint !== '.') {
+        str = str.replace('.', decimalPoint)
+        thousandsDelimiter = '.'
+      } else {
+        thousandsDelimiter = ','
+      }
+      // format with thousands separator
+      str = str.replace(/\B(?=(\d{3})+(?!\d))/g, thousandsDelimiter)
+      if (str.indexOf(decimalPoint) === -1) {
+        // default decimal scale
+        str += decimalPoint + '00'
+      }
+    } else {
+      // integer
+      str = parseInt(num, 10).toString()
+    }
+    return str
   }
 
   window.newTabLink = function (link) {
