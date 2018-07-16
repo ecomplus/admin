@@ -173,4 +173,6 @@
       addOption(data.options[i])
     }
   }
+  // ready to setup and show form
+  window.Tabs[tabId].formSetup()
 }())
