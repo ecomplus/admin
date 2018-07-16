@@ -190,6 +190,9 @@ app.config({
     })
   }
 
+  // auxiliary local only variables
+  var decimalPoint
+
   window.appReady = function () {
     // console.log('Setup JS plugins')
     // plugins localization
@@ -200,6 +203,10 @@ app.config({
       $.getScript('../assets/vendor/summernote/lang/summernote-pt-BR.js', function () {
         $.summernote.options.lang = 'pt-BR'
       })
+      decimalPoint = ','
+    } else {
+      // default en-US
+      decimalPoint = '.'
     }
 
     // setup general preloaded plugins
@@ -261,6 +268,21 @@ app.config({
       priceString = price
     }
     return priceString
+  }
+
+  window.stringToNumber = function (str) {
+    // parse value to number
+    if (decimalPoint !== '.') {
+      str = str.replace('.', '').replace(decimalPoint, '.')
+    } else {
+      str = str.replace(/^[0-9.]/g, '')
+    }
+    if (str.indexOf('.') !== -1) {
+      // no decimals
+      return parseInt(str, 10)
+    } else {
+      return parseFloat(str)
+    }
   }
 
   window.newTabLink = function (link) {
@@ -379,7 +401,7 @@ app.config({
       }
     })
 
-    $form.find('input[type="text"],select,textarea').change(function () {
+    $form.find('input[type="text"],input[type="number"],select,textarea').change(function () {
       toData($(this))
 
       // check if other input field is filled based on this
