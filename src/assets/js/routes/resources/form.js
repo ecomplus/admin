@@ -301,8 +301,7 @@
       window.Tabs[tabId].inputToData = inputToData
       handleInputs($form, inputToData)
 
-      // wait for async handling
-      setTimeout(function () {
+      var formSetup = function () {
         if (!creating) {
           // fill form fields with current data
           var setupValues = function (data, prefix) {
@@ -773,7 +772,16 @@
         // show form
         fixScrollbars($form)
         $form.removeClass('ajax ajax-cards')
-      }, 300)
+      }
+
+      // wait for async handling
+      if (!window.Tabs[tabId].wait) {
+        setTimeout(formSetup, 300)
+      } else {
+        window.Tabs[tabId].formSetup = function () {
+          setTimeout(formSetup, 100)
+        }
+      }
     }
   }
 
