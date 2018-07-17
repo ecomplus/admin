@@ -349,23 +349,32 @@
 
     // input masking
     $form.find('input[type="number"],input[data-is-number]').toArray().forEach(function (field) {
+      var $input = $(field)
+      // https://github.com/nosir/cleave.js/blob/master/doc/options.md
+      var options = {
+        numeral: true
+      }
+      if (!$input.data('decimal')) {
+        // integer
+        options.numeralDecimalScale = 0
+      } else {
+        if ($input.data('money')) {
+          var money = formatMoney(0)
+          $input.attr('placeholder', money)
+          // currency symbol as prefix
+          options.prefix = money.replace(/0.*/, '')
+          options.noImmediatePrefix = true
+        }
+        options.numeralDecimalMark = decimalPoint
+        if (decimalPoint === '.') {
+          options.delimiter = ','
+        } else {
+          options.delimiter = '.'
+        }
+      }
+
       var cleave
       try {
-        // https://github.com/nosir/cleave.js/blob/master/doc/options.md
-        var options = {
-          numeral: true
-        }
-        if (!$(field).data('decimal')) {
-          // integer
-          options.numeralDecimalScale = 0
-        } else {
-          options.numeralDecimalMark = decimalPoint
-          if (decimalPoint === '.') {
-            options.delimiter = ','
-          } else {
-            options.delimiter = '.'
-          }
-        }
         cleave = new window.Cleave(field, options)
       } catch (e) {
         // no inputs ?
