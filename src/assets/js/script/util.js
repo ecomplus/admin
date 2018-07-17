@@ -388,8 +388,22 @@
     })
 
     $form.find('input[type="number"]').keydown(function (e) {
-      // allow: backspace, delete, tab, escape, enter, -, . and ,
-      if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 109, 110, 173, 188, 189, 190]) !== -1 ||
+      // allow: backspace, delete, tab, escape, enter
+      var allowed = [46, 8, 9, 27, 13]
+      var scale = $(this).attr('step')
+      if (scale && scale.indexOf('.') !== -1) {
+        // not only integer
+        // allow: comma and dot
+        allowed.push(110, 188, 190)
+      }
+      var min = $(this).attr('min')
+      if (!min || parseInt(min, 10) < 0) {
+        // not only positive
+        // allow: substract and dash
+        allowed.push(109, 173, 189)
+      }
+
+      if ($.inArray(e.keyCode, allowed) !== -1 ||
       // allow: Ctrl(Command)+(A,C,V,X)
       ($.inArray(e.keyCode, [65, 67, 86, 88]) !== -1 && (e.ctrlKey === true || e.metaKey === true)) ||
       // allow: home, end, left, right, down, up
@@ -401,8 +415,6 @@
       if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
         e.preventDefault()
       }
-    }).keyup(function (e) {
-      // mask number input value after keyup
     })
   }
 }())
