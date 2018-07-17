@@ -348,14 +348,14 @@
     })
 
     // input masking
-    $form.find('input[type="number"],input[data-is-number]').toArray().forEach(function (field) {
+    $form.find('input[data-is-number]').toArray().forEach(function (field) {
       var $input = $(field)
       // https://github.com/nosir/cleave.js/blob/master/doc/options.md
       var options = {
         numeral: true
       }
-      if (!$input.data('decimal')) {
-        // integer
+      if ($input.data('integer')) {
+        // no decimals
         options.numeralDecimalScale = 0
       } else {
         if ($input.data('money')) {
