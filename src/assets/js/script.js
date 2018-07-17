@@ -273,7 +273,7 @@ app.config({
   window.stringToNumber = function (str) {
     // parse value to number
     if (decimalPoint !== '.') {
-      str = str.replace('.', '').replace(decimalPoint, '.')
+      str = str.replace(/\./g, '').replace(decimalPoint, '.')
     }
     // remove prefix, suffix and invalid chars
     str = str.replace(/[^0-9-.]/g, '')
@@ -458,43 +458,25 @@ app.config({
 
     /* input masking */
 
-    $form.find('input[type="text"][data-is-number]').toArray().forEach(function (field) {
-      var $input = $(field)
-      // https://github.com/nosir/cleave.js/blob/master/doc/options.md
-      var options = {
-        numeral: true
-      }
-      if ($input.data('integer')) {
-        // no decimals
-        options.numeralDecimalScale = 0
-        var scale = parseInt($input.data('scale'), 10)
-        if (!isNaN(scale)) {
-          options.numeralIntegerScale = scale
-        }
-      } else {
-        if ($input.data('money')) {
-          var money = formatMoney(0)
-          $input.attr('placeholder', money)
-          // currency symbol as prefix
-          options.prefix = money.replace(/0.*/, '')
-          options.noImmediatePrefix = true
-        }
-        options.numeralDecimalMark = decimalPoint
-        if (decimalPoint === '.') {
-          options.delimiter = ','
-        } else {
-          options.delimiter = '.'
-        }
-      }
+    var $money = $form.find('input[data-money]')
+    if ($money.length) {
+      var money = formatMoney(0)
+      $money.attr('placeholder', money)
 
-      var cleave
-      try {
-        cleave = new window.Cleave(field, options)
-      } catch (e) {
-        // no inputs ?
-        console.error(e, cleave)
+      // mask inputs with currency pattern
+      // currency symbol as prefix
+      var maskOptions = {
+        prefix: money.replace(/0.*/, ''),
+        allowNegative: true,
+        decimal: decimalPoint
       }
-    })
+      if (decimalPoint === '.') {
+        maskOptions.thousands = ','
+      } else {
+        maskOptions.thousands = '.'
+      }
+      $money.maskMoney(maskOptions)
+    }
 
     $form.find('input[type="number"]').keydown(function (e) {
       // allow: backspace, delete, tab, escape, enter
