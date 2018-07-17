@@ -285,7 +285,7 @@ app.config({
     }
   }
 
-  window.numberToString = function (num, decimals) {
+  window.numberToString = function (num, decimals, forceDecimalScale) {
     // parse value to string
     var str
     if (decimals) {
@@ -299,7 +299,7 @@ app.config({
       }
       // format with thousands separator
       str = str.replace(/\B(?=(\d{3})+(?!\d))/g, thousandsDelimiter)
-      if (str.indexOf(decimalPoint) === -1) {
+      if (forceDecimalScale && str.indexOf(decimalPoint) === -1) {
         // default decimal scale
         str += decimalPoint + '00'
       }
