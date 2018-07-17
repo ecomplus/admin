@@ -391,7 +391,7 @@
       // allow: backspace, delete, tab, escape, enter
       var allowed = [46, 8, 9, 27, 13]
       var scale = $(this).attr('step')
-      if (scale && scale.indexOf('.') !== -1) {
+      if (scale && (scale === 'any' || scale.indexOf('.') !== -1)) {
         // not only integer
         // allow: comma and dot
         allowed.push(110, 188, 190)
