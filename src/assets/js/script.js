@@ -276,7 +276,7 @@ app.config({
       str = str.replace('.', '').replace(decimalPoint, '.')
     }
     // remove prefix, suffix and invalid chars
-    str = str.replace(/^[0-9.]/g, '')
+    str = str.replace(/[^0-9.]/g, '')
     if (str.indexOf('.') === -1) {
       // no decimals
       return parseInt(str, 10)
