@@ -495,6 +495,24 @@ app.config({
         console.error(e, cleave)
       }
     })
+
+    $form.find('input[type="number"]').keydown(function (e) {
+      // allow: backspace, delete, tab, escape, enter, -, . and ,
+      if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 109, 110, 173, 188, 189, 190]) !== -1 ||
+      // allow: Ctrl(Command)+(A,C,V,X)
+      ($.inArray(e.keyCode, [65, 67, 86, 88]) !== -1 && (e.ctrlKey === true || e.metaKey === true)) ||
+      // allow: home, end, left, right, down, up
+      (e.keyCode >= 35 && e.keyCode <= 40)) {
+        // let it happen, don't do anything
+        return
+      }
+      // ensure that it is a number and stop the keypress
+      if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        e.preventDefault()
+      }
+    }).keyup(function (e) {
+      // mask number input value after keyup
+    })
   }
 }())
 
