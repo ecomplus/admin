@@ -344,7 +344,7 @@
                       if ($el.data('money')) {
                         $el.val(formatMoney(val))
                       } else {
-                        $el.val(numberToString(val, !($el.attr('type') === 'number')))
+                        $el.val(numberToString(val, !($el.data('integer'))))
                       }
                       break
 

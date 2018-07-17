@@ -456,15 +456,16 @@ app.config({
       }
     })
 
-    // input masking
-    $form.find('input[data-is-number],input[type="number"]').toArray().forEach(function (field) {
+    /* input masking */
+
+    $form.find('input[type="text"][data-is-number]').toArray().forEach(function (field) {
       var $input = $(field)
       // https://github.com/nosir/cleave.js/blob/master/doc/options.md
       var options = {
         numeral: true
       }
-      if ($input.attr('type') === 'number') {
-        // integer
+      if ($input.data('integer')) {
+        // no decimals
         options.numeralDecimalScale = 0
         var scale = parseInt($input.data('scale'), 10)
         if (!isNaN(scale)) {
