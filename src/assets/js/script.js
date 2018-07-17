@@ -274,9 +274,9 @@ app.config({
     // parse value to number
     if (decimalPoint !== '.') {
       str = str.replace('.', '').replace(decimalPoint, '.')
-    } else {
-      str = str.replace(/^[0-9.]/g, '')
     }
+    // remove prefix, suffix and invalid chars
+    str = str.replace(/^[0-9.]/g, '')
     if (str.indexOf('.') === -1) {
       // no decimals
       return parseInt(str, 10)
