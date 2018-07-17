@@ -264,7 +264,7 @@
                 } else {
                   data[prop] = Object.assign(data[prop], obj)
                 }
-              } else if (obj === null && data.hasOwnProperty(prop)) {
+              } else if ((obj === null || isNaN(obj)) && data.hasOwnProperty(prop)) {
                 // empty, remove property
                 remove()
               } else {
@@ -341,7 +341,11 @@
 
                     case 'number':
                       // format number before set value
-                      $el.val(numberToString(val, $el.data('decimal')))
+                      if ($el.data('money')) {
+                        $el.val(formatMoney(val))
+                      } else {
+                        $el.val(numberToString(val, $el.data('decimal')))
+                      }
                       break
 
                     case 'object':
