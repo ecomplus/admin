@@ -466,6 +466,10 @@ app.config({
       if ($input.attr('type') === 'number') {
         // integer
         options.numeralDecimalScale = 0
+        var scale = parseInt($input.data('scale'), 10)
+        if (!isNaN(scale)) {
+          options.numeralIntegerScale = scale
+        }
       } else {
         if ($input.data('money')) {
           var money = formatMoney(0)
