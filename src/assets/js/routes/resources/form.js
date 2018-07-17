@@ -245,8 +245,10 @@
             var val = $input.data('value') || $input.val()
             var obj
             if (typeof val === 'string') {
-              if ($input.attr('type') === 'number' || $input.data('is-number')) {
+              if ($input.data('is-number')) {
                 obj = stringToNumber(val)
+              } else if ($input.attr('type') === 'number') {
+                obj = parseFloat(val)
               } else {
                 obj = strToProperty($input, val)
               }
