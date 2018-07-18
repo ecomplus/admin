@@ -16,7 +16,21 @@
     Tab.formSetup()
 
     setTimeout(function () {
-      console.log($form.find('select[multiple]').prev().find('.bs-searchbox input'))
+      $form.find('select[multiple]').each(function () {
+        var $dropdown = $(this).prev('.dropdown-menu')
+        if ($dropdown.length) {
+          // var $select = $(this)
+          $dropdown.find('.bs-searchbox input').keydown(function () {
+            setTimeout(function () {
+              var $li = $dropdown.find('.dropdown-menu > .no-results')
+              if ($li.length) {
+                // no results
+                $li.html('<button class="btn btn-outline btn-secondary btn-xs btn-block"><i class="fa fa-plus"></i> Adicionar</button>').fadeIn()
+              }
+            }, 200)
+          })
+        }
+      })
     }, 400)
   }
 }())
