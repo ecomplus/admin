@@ -804,6 +804,7 @@
       if (!Tab.wait) {
         setTimeout(formSetup, 200)
       } else {
+        Tab.$form = $form
         Tab.formSetup = function () {
           setTimeout(formSetup, 100)
         }
