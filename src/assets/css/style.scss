@@ -456,12 +456,17 @@ body {
 }
 
 // selectpicker
-.dropdown-item-inner span > small {
+.bootstrap-select .dropdown-menu > .no-results {
+  font-size: 0;
+  line-height: 0;
+  padding: 6px;
+}
+.bootstrap-select .dropdown-item-inner span > small {
   display: block;
   line-height: 1;
   padding-left: 0 !important;
 }
-.dropdown-item-inner span > small::before {
+.bootstrap-select .dropdown-item-inner span > small::before {
   content: "/ "
 }
 
