@@ -17,7 +17,7 @@
           </div>
 
           <div class="row mt-30">
-            <div class="col-sm-7 col-md-12 col-lg-8">
+            <div class="col-sm-7 col-md-12 col-lg-7">
               <h4 class="i18n">
                 <span data-lang="en_us">Inventory</span>
                 <span data-lang="pt_br">Inventário</span>
@@ -74,7 +74,7 @@
               </div>
 
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-7">
                   <div class="form-group">
                     <label class="i18n">
                       <span data-lang="en_us">Type</span>
@@ -129,7 +129,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-5">
                   <div class="form-group">
                     <label class="i18n">
                       <span data-lang="en_us">Quantity</span>
@@ -142,7 +142,7 @@
               </div>
             </div>
 
-            <div class="col-sm-5 col-md-12 col-lg-4">
+            <div class="col-sm-5 col-md-12 col-lg-5">
               <h4 class="i18n">
                 <span data-lang="en_us">Pricing</span>
                 <span data-lang="pt_br">Precificação</span>
@@ -204,7 +204,7 @@
               </p>
             </div>
 
-            <div class="row">
+            <div class="row hidden">
               <div class="col-md-12">
                 <div class="row">
                   <div class="form-group col-md-3">
@@ -237,55 +237,55 @@
                 </div>
               </div>
             </div>
-            <div class="row">
+            <div class="row hidden">
               <div class="col-md-12">
                 <div class="row">
-                    <div class="form-group col-md-6">
-                      <label class="i18n">
-                        <span data-lang="en_us">Variant</span>
-                        <span data-lang="pt_br">Variação</span>
-                      </label>
-                    </div>
-                    <div class="form-group col-md-2">
-                      <label class="i18n">
-                        <span data-lang="en_us">Price</span>
-                        <span data-lang="pt_br">Preço</span>
-                      </label>
-                    </div>
-                    <div class="form-group col-md-2">
-                      <label class="i18n">
-                        <span data-lang="en_us">SKU</span>
-                        <span data-lang="pt_br">SKU</span>
-                      </label>
-                    </div>
-                    <div class="form-group col-md-2">
-                      <label class="i18n">
-                        <span data-lang="en_us">Inventory</span>
-                        <span data-lang="pt_br">Estoque</span>
-                      </label>
-                    </div>
+                  <div class="form-group col-md-6">
+                    <label class="i18n">
+                      <span data-lang="en_us">Variant</span>
+                      <span data-lang="pt_br">Variação</span>
+                    </label>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="i18n">
+                      <span data-lang="en_us">Price</span>
+                      <span data-lang="pt_br">Preço</span>
+                    </label>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="i18n">
+                      <span data-lang="en_us">SKU</span>
+                      <span data-lang="pt_br">SKU</span>
+                    </label>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="i18n">
+                      <span data-lang="en_us">Inventory</span>
+                      <span data-lang="pt_br">Estoque</span>
+                    </label>
+                  </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-md-6">
-                      <div class="input-group">
-                        <span class="input-group-addon">
-                          <label class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input">
-                            <span class="custom-control-indicator"></span>
-                          </label>
-                        </span>
-                        <input type="text" class="form-control" aria-label="Text input with checkbox">
-                      </div>
+                  <div class="form-group col-md-6">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <label class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input">
+                          <span class="custom-control-indicator"></span>
+                        </label>
+                      </span>
+                      <input type="text" class="form-control" aria-label="Text input with checkbox">
                     </div>
-                    <div class="form-group col-md-2">
-                      <input type="text" class="form-control" id="input-normal">
-                    </div>
-                    <div class="form-group col-md-2">
-                      <input type="text" class="form-control" id="input-normal">
-                    </div>
-                    <div class="form-group col-md-2">
-                      <input type="text" class="form-control" id="input-normal">
-                    </div>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <input type="text" class="form-control" id="input-normal">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <input type="text" class="form-control" id="input-normal">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <input type="text" class="form-control" id="input-normal">
+                  </div>
                 </div>
               </div>
             </div>
@@ -385,11 +385,10 @@
                     <span data-lang="en_us">Brands</span>
                     <span data-lang="pt_br">Marcas</span>
                   </label>
-                  <select class="form-control" data-live-search="true" name="brands"
+                  <select multiple class="form-control" data-live-search="true" name="brands"
                     data-fill="brands"
                     data-properties="_id,name,slug,logo"
                     data-json="true">
-                    <option value="" selected >--</option>
                   </select>
                 </div>
               </div>
