@@ -18,6 +18,19 @@
     // ready to setup and show form
     Tab.formSetup()
 
+    // generate new random SKU
+    $('#' + tabId + '-random-sku').click(function () {
+      var sku = ''
+      // start always with uppercase letters
+      var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+      for (var i = 0; i < 3; i++) {
+        sku += letters.charAt(Math.floor(Math.random() * letters.length))
+      }
+      // random digits
+      sku += randomInt(10000, 99999)
+      $(this).closest('.input-group').find('input').val(sku)
+    })
+
     setTimeout(function () {
       // generate IDs for each new option
       var idPad = randomObjectId()
