@@ -17,7 +17,7 @@
           </div>
 
           <div class="row mt-30">
-            <div class="col-md-8">
+            <div class="col-sm-7 col-md-12 col-lg-8">
               <h4 class="i18n">
                 <span data-lang="en_us">Inventory</span>
                 <span data-lang="pt_br">Inventário</span>
@@ -104,7 +104,27 @@
                         &lt;/span&gt;">
                         New
                       </option>
-                      <option value="digital">Digital</option>
+                      <option value="refurbished"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Refurbished&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Restaurado&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Refurbished
+                      </option>
+                      <option value="used"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Used&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Usado&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Used
+                      </option>
+                      <option value="not_specified"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Not specified&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Não especificado&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Not specified
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -115,13 +135,14 @@
                       <span data-lang="en_us">Quantity</span>
                       <span data-lang="pt_br">Quantidade</span>
                     </label>
-                    <input type="number" class="form-control" name="quantity" min="0" step="any"/>
+                    <input type="number" class="form-control" name="quantity"
+                      min="0" max="9999999" step="any"/>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="col-md-4">
+            <div class="col-sm-5 col-md-12 col-lg-4">
               <h4 class="i18n">
                 <span data-lang="en_us">Pricing</span>
                 <span data-lang="pt_br">Precificação</span>
@@ -132,14 +153,16 @@
                   <span data-lang="en_us">Sale price</span>
                   <span data-lang="pt_br">Preço de venda</span>
                 </label>
-                <input type="text" class="form-control" name="price" />
+                <input type="tel" class="form-control" name="price"
+                  data-is-number="true" data-money="true"/>
               </div>
               <div class="form-group">
                 <label class="i18n">
                   <span data-lang="en_us">Compare at price</span>
                   <span data-lang="pt_br">Compare ao preço</span>
                 </label>
-                <input type="text" class="form-control" name="base_price" />
+                <input type="tel" class="form-control" name="base_price"
+                  data-is-number="true" data-money="true"/>
                 <span class="i18n">
                   <small data-lang="en_us" class="form-text">Base price</small>
                   <small data-lang="pt_br" class="form-text">Preço base</small>
@@ -243,278 +266,303 @@
                     </div>
                   </div>
                 </div>
-    </div>
-
-    <div class="card">
-      <header class="card-header">
-        <h4 class="card-title i18n">
-          <span data-lang="en_us">Description</span>
-          <span data-lang="pt_br">Descrição</span>
-        </h4>
-        <ul class="card-controls">
-          <li>
-            <a class="card-btn-slide" href="#"></a>
-          </li>
-        </ul>
-      </header>
-
-      <div class="card-content">
-        <div class="card-body">
-          <textarea class="html-editor" name="body_html">
-          </textarea>
-        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="col-md-5">
-    <div class="card">
-      <header class="card-header">
-        <h4 class="card-title i18n">
-          <span data-lang="en_us">Product images</span>
-          <span data-lang="pt_br">Imagens do produto</span>
-        </h4>
-        <ul class="card-controls">
-          <li>
-            <a class="card-btn-slide" href="#"></a>
-          </li>
-        </ul>
-      </header>
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Description</span>
+            <span data-lang="pt_br">Descrição</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
 
-      <div class="card-content">
-        <div class="card-body">
-          <input type="file" name="pictures" multiple data-thumbnails="true"/>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <header class="card-header">
-        <h4 class="card-title i18n">
-          <span data-lang="en_us">Organization</span>
-          <span data-lang="pt_br">Organização</span>
-        </h4>
-        <ul class="card-controls">
-          <li>
-            <a class="card-btn-slide" href="#"></a>
-          </li>
-        </ul>
-      </header>
-
-      <div class="card-content">
-        <div class="card-body">
-          <div class="form-group">
-            <label>Keywords</label>
-            <select multiple name="keywords" class="tagsinput"></select>
-            <span class="i18n">
-              <small data-lang="en_us" class="form-text">
-                Tags related with product for internal search
-              </small>
-              <small data-lang="pt_br" class="form-text">
-                Tags relacionadas ao produto para pesquisa interna
-              </small>
-            </span>
-          </div>
-
-          <div class="form-group">
-            <label class="i18n">
-              <span data-lang="en_us">Brands</span>
-              <span data-lang="pt_br">Marcas</span>
-            </label>
-            <select class="form-control" data-live-search="true" name="brands"
-              data-fill="brands"
-              data-properties="_id,name,slug,logo"
-              data-json="true">
-              <option value="" selected >--</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="i18n">
-              <span data-lang="en_us">Categories</span>
-              <span data-lang="pt_br">Categorias</span>
-            </label>
-            <select multiple class="form-control" data-live-search="true" name="categories"
-              data-fill="categories"
-              data-subtext-property="parent.name"
-              data-properties="_id,name,slug,ml_category_id,google_product_category_id"
-              data-json="true">
-            </select>
-          </div>
-
-          <div class="form-group" style="display: none">
-            <label>GTIN</label>
-            <select multiple name="gtin">
-            </select>
-            <span class="i18n">
-              <small data-lang="en_us" class="form-text">Barcode</small>
-              <small data-lang="pt_br" class="form-text">Código de barras</small>
-            </span>
-          </div>
-          <div class="form-group" style="display: none">
-            <label>MPN</label>
-            <select multiple name="mpn">
-            </select>
-            <span class="i18n">
-              <small data-lang="en_us" class="form-text">Manufacturer code</small>
-              <small data-lang="pt_br" class="form-text">Código do fabricante</small>
-            </span>
+        <div class="card-content">
+          <div class="card-body">
+            <textarea class="html-editor" name="body_html">
+            </textarea>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="card card-slided-up">
-      <header class="card-header">
-        <h6 class="card-title i18n">
-          <span data-lang="en_us">Shipping</span>
-          <span data-lang="pt_br">Frete</span>
-        </h6>
-        <ul class="card-controls">
-          <li>
-            <a class="card-btn-slide i18n" href="#">
-              <span data-lang="en_us">Edit product dimensions</span>
-              <span data-lang="pt_br">Editar dimensões do produto</span>
-            </a>
-          </li>
-        </ul>
-      </header>
+    <div class="col-md-5">
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Product images</span>
+            <span data-lang="pt_br">Imagens do produto</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
 
-      <div class="card-content">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="i18n">
-                  <span data-lang="en_us">Weight</span>
-                  <span data-lang="pt_br">Peso</span>
-                </label>
-                <div class="input-group">
-                  <input type="text" class="form-control" name="weight.value" />
-                  <div class="input-group-append w-70px">
-                    <select name="weight.unit">
-                      <option value="mg">mg</option>
-                      <option value="g" selected>g</option>
-                      <option value="kg">kg</option>
-                      <option value="lb">lb</option>
-                      <option value="oz">oz</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="i18n">
-                  <span data-lang="en_us">Width</span>
-                  <span data-lang="pt_br">Largura</span>
-                </label>
-                <div class="input-group">
-                  <input type="text" class="form-control" name="dimensions.width.value" />
-                  <div class="input-group-append w-70px">
-                    <select name="dimensions.width.unit">
-                      <option value="mm">mm</option>
-                      <option value="cm" selected>cm</option>
-                      <option value="m">m</option>
-                      <option value="ft">ft</option>
-                      <option value="in">in</option>
-                      <option value="yd">yd</option>
-                      <option value="mi">mi</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div class="card-content">
+          <div class="card-body">
+            <input type="file" name="pictures" multiple data-thumbnails="true" />
           </div>
+        </div>
+      </div>
 
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="i18n">
-                  <span data-lang="en_us">Height</span>
-                  <span data-lang="pt_br">Altura</span>
-                </label>
-                <div class="input-group">
-                  <input type="text" class="form-control" name="dimensions.height.value" />
-                  <div class="input-group-append w-70px">
-                    <select name="dimensions.height.unit">
-                      <option value="mm">mm</option>
-                      <option value="cm" selected>cm</option>
-                      <option value="m">m</option>
-                      <option value="ft">ft</option>
-                      <option value="in">in</option>
-                      <option value="yd">yd</option>
-                      <option value="mi">mi</option>
-                    </select>
-                  </div>
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Organization</span>
+            <span data-lang="pt_br">Organização</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="form-group">
+              <label>Keywords</label>
+              <select multiple name="keywords" class="tagsinput"></select>
+              <span class="i18n">
+                <small data-lang="en_us" class="form-text">
+                  Tags related with product for internal search
+                </small>
+                <small data-lang="pt_br" class="form-text">
+                  Tags relacionadas ao produto para pesquisa interna
+                </small>
+              </span>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-5 col-md-12 col-lg-5">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Brands</span>
+                    <span data-lang="pt_br">Marcas</span>
+                  </label>
+                  <select class="form-control" data-live-search="true" name="brands"
+                    data-fill="brands"
+                    data-properties="_id,name,slug,logo"
+                    data-json="true">
+                    <option value="" selected >--</option>
+                  </select>
                 </div>
               </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="i18n">
-                  <span data-lang="en_us">Length</span>
-                  <span data-lang="pt_br">Comprimento</span>
-                </label>
-                <div class="input-group">
-                  <input type="text" class="form-control" name="dimensions.length.value" />
-                  <div class="input-group-append w-70px">
-                    <select name="dimensions.length.unit">
-                      <option value="mm">mm</option>
-                      <option value="cm" selected>cm</option>
-                      <option value="m">m</option>
-                      <option value="ft">ft</option>
-                      <option value="in">in</option>
-                      <option value="yd">yd</option>
-                      <option value="mi">mi</option>
-                    </select>
-                  </div>
+              <div class="col-sm-7 col-md-12 col-lg-7">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Categories</span>
+                    <span data-lang="pt_br">Categorias</span>
+                  </label>
+                  <select multiple class="form-control" data-live-search="true" name="categories"
+                    data-fill="categories"
+                    data-subtext-property="parent.name"
+                    data-properties="_id,name,slug,ml_category_id,google_product_category_id"
+                    data-json="true">
+                  </select>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="card card-slided-up">
-      <header class="card-header">
-        <h6 class="card-title i18n">
-          <span data-lang="en_us">Search engine listing</span>
-          <span data-lang="pt_br">Listagem em motores de busca</span>
-        </h6>
-        <ul class="card-controls">
-          <li>
-            <a class="card-btn-slide i18n" href="#">
-              <span data-lang="en_us">Edit SEO fields</span>
-              <span data-lang="pt_br">Editar campos de SEO</span>
-            </a>
-          </li>
-        </ul>
-      </header>
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">Barcodes</span>
+            <span data-lang="pt_br">Códigos de barra</span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit GTIN and MPN</span>
+                <span data-lang="pt_br">Editar GTIN e MPN</span>
+              </a>
+            </li>
+          </ul>
+        </header>
 
-      <div class="card-content">
-        <div class="card-body">
-          <div class="form-group">
-            <label>Slug (URL)</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">/</span>
-              </div>
-              <input type="text" class="form-control" name="slug" />
+        <div class="card-content">
+          <div class="card-body">
+            <div class="form-group">
+              <label>GTIN</label>
+              <select multiple name="gtin" class="tagsinput"></select>
+              <span class="i18n">
+                <small data-lang="en_us" class="form-text">Barcode</small>
+                <small data-lang="pt_br" class="form-text">Código de barras</small>
+              </span>
+            </div>
+            <div class="form-group">
+              <label>MPN</label>
+              <select multiple name="mpn" class="tagsinput"></select>
+              <span class="i18n">
+                <small data-lang="en_us" class="form-text">Manufacturer code</small>
+                <small data-lang="pt_br" class="form-text">Código do fabricante</small>
+              </span>
             </div>
           </div>
-          <div class="form-group">
-            <label>Title tag</label>
-            <input type="text" class="form-control" name="meta_title" />
+        </div>
+      </div>
+
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">Shipping</span>
+            <span data-lang="pt_br">Frete</span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit product dimensions</span>
+                <span data-lang="pt_br">Editar dimensões do produto</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Weight</span>
+                    <span data-lang="pt_br">Peso</span>
+                  </label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="weight.value" />
+                    <div class="input-group-append w-70px">
+                      <select name="weight.unit">
+                        <option value="mg">mg</option>
+                        <option value="g" selected >g</option>
+                        <option value="kg">kg</option>
+                        <option value="lb">lb</option>
+                        <option value="oz">oz</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Width</span>
+                    <span data-lang="pt_br">Largura</span>
+                  </label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="dimensions.width.value" />
+                    <div class="input-group-append w-70px">
+                      <select name="dimensions.width.unit">
+                        <option value="mm">mm</option>
+                        <option value="cm" selected >cm</option>
+                        <option value="m">m</option>
+                        <option value="ft">ft</option>
+                        <option value="in">in</option>
+                        <option value="yd">yd</option>
+                        <option value="mi">mi</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Height</span>
+                    <span data-lang="pt_br">Altura</span>
+                  </label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="dimensions.height.value" />
+                    <div class="input-group-append w-70px">
+                      <select name="dimensions.height.unit">
+                        <option value="mm">mm</option>
+                        <option value="cm" selected >cm</option>
+                        <option value="m">m</option>
+                        <option value="ft">ft</option>
+                        <option value="in">in</option>
+                        <option value="yd">yd</option>
+                        <option value="mi">mi</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Length</span>
+                    <span data-lang="pt_br">Comprimento</span>
+                  </label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" name="dimensions.length.value" />
+                    <div class="input-group-append w-70px">
+                      <select name="dimensions.length.unit">
+                        <option value="mm">mm</option>
+                        <option value="cm" selected >cm</option>
+                        <option value="m">m</option>
+                        <option value="ft">ft</option>
+                        <option value="in">in</option>
+                        <option value="yd">yd</option>
+                        <option value="mi">mi</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label>Meta description Tag</label>
-            <textarea class="form-control" rows="4" name="meta_description"></textarea>
+        </div>
+      </div>
+
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">Search engine listing</span>
+            <span data-lang="pt_br">Listagem em motores de busca</span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit SEO fields</span>
+                <span data-lang="pt_br">Editar campos de SEO</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="form-group">
+              <label>Slug (URL)</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">/</span>
+                </div>
+                <input type="text" class="form-control" name="slug" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Title tag</label>
+              <input type="text" class="form-control" name="meta_title" />
+            </div>
+            <div class="form-group">
+              <label>Meta description Tag</label>
+              <textarea class="form-control" rows="4" name="meta_description"></textarea>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 
   <div class="bt-1 pt-20">
