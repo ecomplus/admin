@@ -28,7 +28,7 @@
       }
       // random digits
       sku += randomInt(10000, 99999)
-      $(this).closest('.input-group').find('input').val(sku)
+      $(this).closest('.input-group').find('input').val(sku).trigger('change')
     })
 
     setTimeout(function () {
