@@ -679,26 +679,32 @@
                       click: editImage(prop)
                     }))
                   }
-                  var add = function () {
-                    if (!isSummernote) {
-                      Done()
-                    } else {
-                      // add image to summernote editor
-                      // https://summernote.org/deep-dive/#insertion-api
-                      $editor.summernote('insertImage', url, function ($image) {
-                        $image.css('max-width', '100%')
-                      })
-                    }
-                  }
 
-                  var img = new Image()
-                  img.onload = function () {
-                    add()
-                    clearTimeout(fallback)
+                  if (!isSummernote) {
+                    var img = new Image()
+                    img.onload = function () {
+                      Done()
+                      clearTimeout(fallback)
+                    }
+                    // fallback if image not loading
+                    var fallback = setTimeout(Done, 5000)
+                    img.src = url
+                  } else {
+                    // add image to summernote editor
+                    // https://summernote.org/deep-dive/#insertion-api
+                    $editor.summernote('insertImage', '../assets/img/util/loading.gif', function ($image) {
+                      // change spinner gif to correct image after loading
+                      var img = new Image()
+                      img.onload = function () {
+                        $image.attr('src', url)
+                        // force data change
+                        $editor.summernote('insertText', ' ')
+                      }
+                      img.src = url
+                      // CSS defaults
+                      $image.css('max-width', '100%')
+                    })
                   }
-                  // fallback if image not loading
-                  var fallback = setTimeout(add, 5000)
-                  img.src = url
                 }())
               }
             }
