@@ -38,18 +38,33 @@
 
       var addOption = function ($select, term) {
         // add option to select
+        var optionValue = function (objectId) {
+          return JSON.stringify({
+            _id: objectId,
+            name: term
+          })
+        }
+
         var $option = $('<option />', {
           text: term,
           selected: true,
-          value: JSON.stringify({
-            _id: objectIdPad(idPad, '' + index),
-            name: term
-          })
+          value: optionValue(objectIdPad(idPad, '' + index))
         })
-        // then refresh the picker plugin
+        // refresh the picker plugin
         // trigger change to handle commit and save action
         $select.append($option).selectpicker('refresh').trigger('change')
         index++
+
+        // create resource document
+        var slug = $select.attr('name')
+        var callback = function (err, json) {
+          if (!err) {
+            // update option value
+            $option.val(optionValue(json._id))
+            $select.trigger('change')
+          }
+        }
+        window.callApi(slug + '.json', 'POST', callback, { name: term })
       }
 
       $form.find('select[name="brands"],select[name="categories"]').each(function () {
