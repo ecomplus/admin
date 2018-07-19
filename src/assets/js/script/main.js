@@ -498,11 +498,14 @@ app.ready(function () {
         reqText += '\n' + JSON.stringify(bodyObject, null, 2)
       }
 
-      // open confirmation modal
-      var modal = $('#modal-confirm-request')
-      modal.find('#api-request-control').data('request-id', id)
-      modal.find('.modal-body > p').text(msg).next('pre').children('code').text(reqText)
-      modal.modal('show')
+      // delay to prevent events crash
+      setTimeout(function () {
+        // open confirmation modal
+        var modal = $('#modal-confirm-request')
+        modal.find('#api-request-control').data('request-id', id)
+        modal.find('.modal-body > p').text(msg).next('pre').children('code').text(reqText)
+        modal.modal('show')
+      }, 400)
     }
 
     var callApi = function (endpoint, method, callback, bodyObject) {
