@@ -222,15 +222,29 @@
     }]
 
     // setup resource specific fields
-    var field
+    var field, i
     // get from first resource object properties
     var fieldsList = []
-    for (field in list[0]) {
-      if (typeof list[0][field] === 'string' && field !== '_id') {
-        fieldsList.push(field)
+    for (i = 0; i < data.meta.fields.length; i++) {
+      field = data.meta.fields[i]
+      if (field !== '_id') {
+        // check field type
+        for (var ii = 0; ii < list.length; ii++) {
+          switch (typeof list[ii][field]) {
+            case 'undefined':
+              // continue and try next list object
+              continue
+            case 'string':
+              // valid field to grid
+              fieldsList.push(field)
+              break
+          }
+          // exit for loop
+          ii = list.length
+        }
       }
     }
-    for (var i = 0; i < fieldsList.length; i++) {
+    for (i = 0; i < fieldsList.length; i++) {
       field = fieldsList[i]
       fields.push({
         name: field,
