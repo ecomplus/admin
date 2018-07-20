@@ -768,6 +768,27 @@ body {
   }
 }
 
+// drag and drop icon
+.i-drag {
+  display: inline-block;
+  width: 8px;
+  height: 16px;
+  cursor: move;
+}
+.i-drag,
+.i-drag::before {
+  background-image: radial-gradient($color-text 40%, transparent 40%);
+  background-size: 4px 4px;
+  background-position: 80% 0;
+  background-repeat: repeat-y;
+}
+.i-drag::before {
+  content: '';
+  display: inline-block;
+  width: 40%;
+  height: 100%;
+}
+
 // general
 .btn:disabled {
   cursor: not-allowed;
