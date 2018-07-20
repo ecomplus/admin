@@ -22,8 +22,8 @@
 
     var $listGrids = $('#' + tabId + '-grids-list')
     // grid li element HTML
-    var liGrid = '<div class="flexbox">' +
-                   '<div class="w-200px">' +
+    var liGrid = '<div class="row">' +
+                   '<div class="col-sm-6 col-md-12 col-lg-6">' +
                      '<div class="input-group">' +
                        '<div class="input-group-prepend">' +
                          '<button class="btn btn-light" type="button"><i class="fa fa-trash"></i></button>' +
@@ -31,7 +31,7 @@
                        '<input class="form-control" type="text">' +
                      '</div>' +
                    '</div>' +
-                   '<div class="flex-grow">' +
+                   '<div class="col-sm-6 col-md-12 col-lg-6">' +
                      '<select multiple ></select>' +
                    '</div>'
 
