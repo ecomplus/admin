@@ -22,18 +22,16 @@
 
     var $listGrids = $('#' + tabId + '-grids-list')
     // grid li element HTML
-    var liGrid = '<div class="row">' +
-                   '<div class="col-sm-6 col-md-12 col-lg-6">' +
-                     '<div class="input-group mb-10">' +
-                       '<div class="input-group-prepend">' +
-                         '<button class="btn btn-light" type="button"><i class="fa fa-trash"></i></button>' +
-                       '</div>' +
-                       '<input class="form-control" type="text">' +
-                     '</div>' +
+    var liGrid = '<div class="input-group">' +
+                   '<div class="input-group-prepend">' +
+                     '<button class="btn btn-light" type="button"><i class="fa fa-trash"></i></button>' +
                    '</div>' +
-                   '<div class="col-sm-6 col-md-12 col-lg-6 hidden">' +
-                     '<select multiple ></select>' +
-                   '</div>'
+                   '<input class="form-control" type="text" name="grid">' +
+                   '<input class="form-control" type="text" name="option" disabled >' +
+                   '<div class="input-group-append">' +
+                     '<button class="btn btn-light" type="button"><i class="fa fa-plus"></i></button>' +
+                   '</div>' +
+                 '</div>'
 
     var addGrid = function (gridObject) {
       // add li element
@@ -43,28 +41,27 @@
       $listGrids.append($li)
 
       // setup li and input elements
-      var $text = $li.find('input')
-      var $select = $li.find('select')
-      $text.keyup(function () {
+      var $inputGrid = $li.find('input[name="grid"]')
+      var $inputOption = $li.find('input[name="option"]')
+      $inputGrid.keyup(function () {
         if ($(this).val() !== '') {
-          $select.parent().slideDown()
+          $inputOption.removeAttr('disabled')
         } else {
-          $select.parent().slideUp()
+          $inputOption.attr('disabled', true)
         }
       }).change(function () {
         if ($(this).val() !== '') {
-          // focus on tags input
-          $select.parent().find('input').focus()
+          // focus on option text input
+          $inputOption.focus()
         }
       })
 
       $li.slideDown(400, function () {
         if (!gridObject) {
           // new variation
-          $text.focus()
+          $inputGrid.focus()
         }
       })
-      $select.tagsinput()
     }
 
     $('#' + tabId + '-add-grid').click(function () {
