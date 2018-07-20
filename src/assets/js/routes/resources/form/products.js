@@ -15,24 +15,37 @@
   Tab.continue = function () {
     // get form element from global Tab object
     var $form = Tab.$form
-
     // generate IDs for each new variation, brand or category
     var idPad = randomObjectId()
     var index = 0
 
     var $listGrids = $('#' + tabId + '-grids-list')
     // grid li element HTML
-    var liGrid = '<div class="input-group">' +
-                   '<div class="input-group-prepend">' +
-                     '<button class="btn btn-light" type="button"><i class="fa fa-trash"></i></button>' +
-                   '</div>' +
-                   '<input class="form-control" type="text" name="grid">' +
-                   '<input class="form-control" type="text" name="option" disabled >' +
-                   '<div class="input-group-append">' +
-                     '<button class="btn btn-light" type="button"><i class="fa fa-plus"></i></button>' +
-                   '</div>' +
+    var liGrid = '<div class="row">' +
+                    '<div class="col-6">' +
+                      '<div class="input-group">' +
+                        '<div class="input-group-prepend">' +
+                          '<button class="btn btn-light" type="button"><i class="fa fa-trash"></i></button>' +
+                        '</div>' +
+                        '<input class="form-control" type="text" name="grid" placeholder="' + i18n({
+                          'en_us': 'Size',
+                          'pt_br': 'Tamanho'
+                        }) + '">' +
+                      '</div>' +
+                    '</div>' +
+                    '<div class="col-6 hidden option-block">' +
+                      '<div class="input-group">' +
+                        '<input class="form-control" type="text" name="option" placeholder="GG">' +
+                        '<div class="input-group-append">' +
+                          '<button class="btn btn-light" type="button">' +
+                            '<i class="fa fa-plus"></i>' +
+                          '</button>' +
+                        '</div>' +
+                      '</div>' +
+                    '</div>' +
                  '</div>'
 
+    var FirstGrid = true
     var addGrid = function (gridObject) {
       // add li element
       var $li = $('<li />', {
@@ -42,20 +55,55 @@
 
       // setup li and input elements
       var $inputGrid = $li.find('input[name="grid"]')
-      var $inputOption = $li.find('input[name="option"]')
-      $inputGrid.keyup(function () {
-        if ($(this).val() !== '') {
-          $inputOption.removeAttr('disabled')
-        } else {
-          $inputOption.attr('disabled', true)
+      var $blockOption = $li.find('.option-block')
+      var $inputOption = $blockOption.find('input[name="option"]')
+      // enable option input after grid only
+      var optionDisabled = true
+      var firstGrid = FirstGrid
+
+      $inputGrid.keyup(function (e) {
+        switch (e.which) {
+          // tab, enter
+          case 9:
+          case 13:
+            $(this).trigger('change')
+            break
+
+          default:
+            if ($(this).val() !== '') {
+              // grid name not empty
+              if (optionDisabled) {
+                // enable to add the grid options
+                $blockOption.fadeIn()
+                optionDisabled = false
+                if (firstGrid) {
+                  $('#' + tabId + '-add-option-header').fadeIn()
+                }
+              }
+            } else if (!optionDisabled) {
+              // grid name empty
+              $blockOption.fadeOut()
+              optionDisabled = true
+              if (firstGrid) {
+                $('#' + tabId + '-add-option-header').fadeOut()
+              }
+            }
         }
       }).change(function () {
         if ($(this).val() !== '') {
           // focus on option text input
           $inputOption.focus()
+        } else {
+          // clear option
+          $inputOption.val('')
         }
       })
 
+      if (firstGrid) {
+        // first added grid
+        $('#' + tabId + '-grids-list-header').slideDown()
+        FirstGrid = false
+      }
       $li.slideDown(400, function () {
         if (!gridObject) {
           // new variation
