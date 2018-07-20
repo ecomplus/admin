@@ -15,8 +15,47 @@
   Tab.continue = function () {
     // get form element from global Tab object
     var $form = Tab.$form
-    // ready to setup and show form
-    Tab.formSetup()
+
+    // generate IDs for each new variation, brand or category
+    var idPad = randomObjectId()
+    var index = 0
+
+    var $listGrids = $('#' + tabId + '-grids-list')
+    // grid li element HTML
+    var liGrid = '<div class="flexbox">' +
+                   '<div class="w-200px">' +
+                     '<div class="input-group">' +
+                       '<div class="input-group-prepend">' +
+                         '<button class="btn btn-light" type="button"><i class="fa fa-trash"></i></button>' +
+                       '</div>' +
+                       '<input class="form-control" type="text">' +
+                     '</div>' +
+                   '</div>' +
+                   '<div class="flex-grow">' +
+                     '<select multiple ></select>' +
+                   '</div>'
+
+    var addGrid = function (gridObject) {
+      // add li element
+      var $li = $('<li />', {
+        html: liGrid
+      })
+      $listGrids.append($li)
+
+      // setup li and input elements
+      var $text = $li.find('input')
+      $li.slideDown(400, function () {
+        if (!gridObject) {
+          // new variation
+          $text.focus()
+        }
+      })
+      $li.find('select').tagsinput()
+    }
+
+    $('#' + tabId + '-add-grid').click(function () {
+      addGrid()
+    })
 
     // generate new random SKU
     $('#' + tabId + '-random-sku').click(function () {
@@ -32,10 +71,6 @@
     })
 
     setTimeout(function () {
-      // generate IDs for each new option
-      var idPad = randomObjectId()
-      var index = 0
-
       var addOption = function ($select, term) {
         // add option to select
         var optionValue = function (objectId) {
@@ -100,5 +135,8 @@
         }
       })
     }, 400)
+
+    // ready to setup and show form
+    Tab.formSetup()
   }
 }())
