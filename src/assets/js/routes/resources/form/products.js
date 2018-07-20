@@ -21,18 +21,21 @@
 
     var $listGrids = $('#' + tabId + '-grids-list')
     // grid li element HTML
-    var liGrid = '<div class="row">' +
+    var liGrid = '<div class="row gap-2">' +
                     '<div class="col-6">' +
-                      '<div class="input-group">' +
-                        '<div class="input-group-prepend">' +
-                          '<button class="btn btn-light remove-grid" type="button">' +
-                            '<i class="fa fa-trash"></i>' +
-                          '</button>' +
+                      '<div class="flexbox align-items-center">' +
+                        '<div class="i-drag"></div>' +
+                        '<div class="input-group">' +
+                          '<div class="input-group-prepend">' +
+                            '<button class="btn btn-light remove-grid" type="button">' +
+                              '<i class="fa fa-trash"></i>' +
+                            '</button>' +
+                          '</div>' +
+                          '<input class="form-control" type="text" name="grid" placeholder="' + i18n({
+                            'en_us': 'Size',
+                            'pt_br': 'Tamanho'
+                          }) + '">' +
                         '</div>' +
-                        '<input class="form-control" type="text" name="grid" placeholder="' + i18n({
-                          'en_us': 'Size',
-                          'pt_br': 'Tamanho'
-                        }) + '">' +
                       '</div>' +
                     '</div>' +
                     '<div class="col-6 hidden option-block">' +
