@@ -188,118 +188,30 @@
 
         <div class="card-content">
           <div class="card-body">
-            <div class="row hidden">
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="form-group col-md-3">
-                    <label class="i18n">
-                      <span data-lang="en_us">Grids</span>
-                      <span data-lang="pt_br">Grids</span>
-                    </label>
-                    <input type="text" class="form-control" id="input-normal" name="grid">
-                  </div>
-                  <div class="form-group col-md-9">
-                    <label class="i18n">
-                      <span data-lang="en_us">Values</span>
-                      <span data-lang="pt_br">Valores</span>
-                    </label>
-                    <input type="text" class="form-control" id="input-normal" name="specifications">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-group col-md-3">
-                    <input type="text" class="form-control" id="input-normal">
-                  </div>
-                  <div class="form-group col-md-9">
-                    <input type="text" class="form-control" id="input-normal">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-group col-md-4">
-                    <button class="btn btn-float btn-sm btn-primary"><i class="ti-plus"></i></button>
-                  </div>
-                </div>
-              </div>
+            <div class="callout callout-info" role="alert">
+              <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+                <span>×</span>
+              </button>
+              <p class="i18n">
+                <span data-lang="en_us">
+                  Add variants if the product has different versions and grids,
+                  <span class="text-info">such as sizes or colors</span>.
+                </span>
+                <span data-lang="pt_br">
+                  Adicione variantes se o produto possuir diferentes versões e grades,
+                  <span class="text-info">como tamanhos ou cores</span>.
+                </span>
+              </p>
             </div>
-            <div class="row hidden">
-              <div class="col-md-12">
-                <div class="row">
-                  <div class="form-group col-md-6">
-                    <label class="i18n">
-                      <span data-lang="en_us">Variant</span>
-                      <span data-lang="pt_br">Variação</span>
-                    </label>
-                  </div>
-                  <div class="form-group col-md-2">
-                    <label class="i18n">
-                      <span data-lang="en_us">Price</span>
-                      <span data-lang="pt_br">Preço</span>
-                    </label>
-                  </div>
-                  <div class="form-group col-md-2">
-                    <label class="i18n">
-                      <span data-lang="en_us">SKU</span>
-                      <span data-lang="pt_br">SKU</span>
-                    </label>
-                  </div>
-                  <div class="form-group col-md-2">
-                    <label class="i18n">
-                      <span data-lang="en_us">Inventory</span>
-                      <span data-lang="pt_br">Estoque</span>
-                    </label>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="form-group col-md-6">
-                    <div class="input-group">
-                      <span class="input-group-addon">
-                        <label class="custom-control custom-checkbox">
-                          <input type="checkbox" class="custom-control-input">
-                          <span class="custom-control-indicator"></span>
-                        </label>
-                      </span>
-                      <input type="text" class="form-control" aria-label="Text input with checkbox">
-                    </div>
-                  </div>
-                  <div class="form-group col-md-2">
-                    <input type="text" class="form-control" id="input-normal">
-                  </div>
-                  <div class="form-group col-md-2">
-                    <input type="text" class="form-control" id="input-normal">
-                  </div>
-                  <div class="form-group col-md-2">
-                    <input type="text" class="form-control" id="input-normal">
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <ul class="hide-empty options-list" data-id="variations-list"></ul>
-            <div class="prev-empty i18n">
-              <span data-lang="en_us">
-                Add variants if the product has different versions and grids,
-                <span class="text-info">such as sizes or colors</span>.
+            <ul class="hide-empty mb-20 options-list" data-id="grids-list"></ul>
+            <button type="button" class="btn btn-light" data-id="add-grid">
+              <i class="fa fa-filter"></i>
+              <span class="i18n">
+                <span data-lang="en_us">Add grid</span>
+                <span data-lang="pt_br">Adicionar grade</span>
               </span>
-              <span data-lang="pt_br">
-                Adicione variantes se o produto possuir diferentes versões e grades,
-                <span class="text-info">como tamanhos ou cores</span>.
-              </span>
-            </div>
+            </button>
           </div>
-
-          <footer class="card-footer">
-            <div class="btn-toolbar">
-              <div class="btn-group">
-                <button type="button" class="btn btn-light i18n" data-id="add-option">
-                  <span data-lang="en_us">Add</span>
-                  <span data-lang="pt_br">Adicionar</span>
-                </button>
-                <button type="button" class="btn btn-light" data-id="delete-options">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </div>
-            </div>
-          </footer>
         </div>
       </div>
 
