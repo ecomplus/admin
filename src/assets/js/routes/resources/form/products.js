@@ -24,14 +24,14 @@
     // grid li element HTML
     var liGrid = '<div class="row">' +
                    '<div class="col-sm-6 col-md-12 col-lg-6">' +
-                     '<div class="input-group">' +
+                     '<div class="input-group mb-10">' +
                        '<div class="input-group-prepend">' +
                          '<button class="btn btn-light" type="button"><i class="fa fa-trash"></i></button>' +
                        '</div>' +
                        '<input class="form-control" type="text">' +
                      '</div>' +
                    '</div>' +
-                   '<div class="col-sm-6 col-md-12 col-lg-6">' +
+                   '<div class="col-sm-6 col-md-12 col-lg-6 hidden">' +
                      '<select multiple ></select>' +
                    '</div>'
 
@@ -44,13 +44,27 @@
 
       // setup li and input elements
       var $text = $li.find('input')
+      var $select = $li.find('select')
+      $text.keyup(function () {
+        if ($(this).val() !== '') {
+          $select.parent().slideDown()
+        } else {
+          $select.parent().slideUp()
+        }
+      }).change(function () {
+        if ($(this).val() !== '') {
+          // focus on tags input
+          $select.parent().find('input').focus()
+        }
+      })
+
       $li.slideDown(400, function () {
         if (!gridObject) {
           // new variation
           $text.focus()
         }
       })
-      $li.find('select').tagsinput()
+      $select.tagsinput()
     }
 
     $('#' + tabId + '-add-grid').click(function () {
