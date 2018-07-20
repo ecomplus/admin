@@ -25,7 +25,9 @@
                     '<div class="col-6">' +
                       '<div class="input-group">' +
                         '<div class="input-group-prepend">' +
-                          '<button class="btn btn-light" type="button"><i class="fa fa-trash"></i></button>' +
+                          '<button class="btn btn-light remove-grid" type="button">' +
+                            '<i class="fa fa-trash"></i>' +
+                          '</button>' +
                         '</div>' +
                         '<input class="form-control" type="text" name="grid" placeholder="' + i18n({
                           'en_us': 'Size',
@@ -45,8 +47,16 @@
                     '</div>' +
                  '</div>'
 
-    var FirstGrid = true
+    var countGrids = 0
     var addGrid = function (gridObject) {
+      var $emptyGrid = $listGrids.find('input[name="grid"]').filter(function () { return $(this).val() === '' })
+      if ($emptyGrid.length) {
+        // focus on empty input
+        // does not add new grid
+        $emptyGrid.focus()
+        return
+      }
+
       // add li element
       var $li = $('<li />', {
         html: liGrid
@@ -59,7 +69,6 @@
       var $inputOption = $blockOption.find('input[name="option"]')
       // enable option input after grid only
       var optionDisabled = true
-      var firstGrid = FirstGrid
 
       $inputGrid.keyup(function (e) {
         switch (e.which) {
@@ -76,7 +85,7 @@
                 // enable to add the grid options
                 $blockOption.fadeIn()
                 optionDisabled = false
-                if (firstGrid) {
+                if (countGrids === 1) {
                   $('#' + tabId + '-add-option-header').fadeIn()
                 }
               }
@@ -84,7 +93,7 @@
               // grid name empty
               $blockOption.fadeOut()
               optionDisabled = true
-              if (firstGrid) {
+              if (countGrids === 1) {
                 $('#' + tabId + '-add-option-header').fadeOut()
               }
             }
@@ -96,14 +105,24 @@
         } else {
           // clear option
           $inputOption.val('')
+          if (countGrids > 1) {
+            // remove empty grid from list
+            removeGrid($li)
+          }
         }
       })
 
-      if (firstGrid) {
+      // setup remove button
+      $li.find('.remove-grid').click(function () {
+        removeGrid($li)
+      })
+
+      countGrids++
+      if (countGrids === 1) {
         // first added grid
         $('#' + tabId + '-grids-list-header').slideDown()
-        FirstGrid = false
       }
+      // show added list element
       $li.slideDown(400, function () {
         if (!gridObject) {
           // new variation
@@ -115,6 +134,19 @@
     $('#' + tabId + '-add-grid').click(function () {
       addGrid()
     })
+
+    var removeGrid = function ($li) {
+      // remove list element of respective grid
+      $li.slideUp(400, function () {
+        $(this).remove()
+      })
+      countGrids--
+      if (countGrids === 0) {
+        // all grids removed
+        // list is empty, hide list header
+        $('#' + tabId + '-grids-list-header, #' + tabId + '-add-option-header').slideUp()
+      }
+    }
 
     // generate new random SKU
     $('#' + tabId + '-random-sku').click(function () {
