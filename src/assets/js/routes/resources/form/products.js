@@ -297,6 +297,10 @@
       })
     }, 400)
 
+    $form.find('input[name="name"]').attr('placeholder', i18n({
+      'en_us': 'Long Sleeve Polo Shirt',
+      'pt_br': 'Camisa Polo Manga Longa'
+    }))
     // ready to setup and show form
     Tab.formSetup()
   }
