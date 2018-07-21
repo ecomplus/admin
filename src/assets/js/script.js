@@ -399,6 +399,7 @@ app.config({
   }
 
   window.substringMatcher = function (strs) {
+    // Ref.: http://twitter.github.io/typeahead.js/examples/
     return function findMatches (q, cb) {
       var matches, substrRegex
       // an array that will be populated with substring matches
