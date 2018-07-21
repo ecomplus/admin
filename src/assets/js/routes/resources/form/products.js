@@ -41,7 +41,12 @@
         'title': i18n({
           'en_us': 'Size',
           'pt_br': 'Tamanho'
-        })
+        }),
+        'options': [{
+          'text': 'PP'
+        }, {
+          'text': 'M'
+        }]
       },
       'colors': {
         'title': i18n({
@@ -70,6 +75,34 @@
         }
       }
       return titles
+    }
+
+    var optionsTitles = function (gridId) {
+      // return strings array with all grid options titles
+      var titles = []
+      if (Grids[gridId]) {
+        // Ref.: https://ecomstore.docs.apiary.io/#reference/grids/grid-object
+        var options = Grids[gridId].options
+        if (options !== undefined) {
+          for (var i = 0; i < options.length; i++) {
+            titles.push(options[i].text)
+          }
+        }
+      }
+      return titles
+    }
+
+    var Typeahead = function ($el, name, source) {
+      // abstraction to setup typeahead addon
+      // input autocomplete
+      $el.typeahead({
+        hint: true,
+        highlight: true,
+        minLength: 1
+      }, {
+        name: name,
+        source: source
+      })
     }
 
     var $listGrids = $('#' + tabId + '-grids-list')
@@ -126,13 +159,12 @@
       var $inputOption = $blockOption.find('input[name="option"]')
       // enable option input after grid only
       var optionDisabled = true
+      // predefined options for autocomplete
+      var options = []
 
       $inputGrid.change(function () {
         var grid = $(this).val().trim()
         if (grid !== '') {
-          // focus on option text input
-          $inputOption.focus()
-
           // save grid ID
           var gridId
           for (var id in Grids) {
@@ -147,7 +179,12 @@
             // generate new grid ID
             gridId = clearAccents(grid.toLowerCase(), '_')
           }
-          $inputGrid.data('grid-id', gridId)
+          $(this).data('grid-id', gridId)
+
+          // update options for autocomplete
+          options = optionsTitles(gridId)
+          // focus on option text input
+          $inputOption.focus()
         } else {
           // clear option
           $inputOption.val('')
@@ -205,14 +242,9 @@
         }
       })
 
-      $inputGrid.typeahead({
-        hint: true,
-        highlight: true,
-        minLength: 1
-      }, {
-        name: 'grids',
-        source: substringMatcher(gridsTitles())
-      })
+      // setup inputs autocomplete
+      Typeahead($inputGrid, 'grids', substringMatcher(gridsTitles()))
+      Typeahead($inputOption, 'options', substringMatcher(function () { return options }))
 
       // setup remove button
       $li.find('.remove-grid').click(function () {
