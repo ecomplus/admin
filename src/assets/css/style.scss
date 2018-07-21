@@ -35,6 +35,22 @@
 .sidebar:not(.sidebar-light) .ps-container > .ps-scrollbar-y-rail > .ps-scrollbar-y {
   background-color: rgba($white, .35);
 }
+.sidebar .menu-item > .menu-featured-link::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: $color-primary;
+}
+.sidebar .menu-item > .menu-featured-link > .title {
+  color: $color-text;
+}
+.sidebar:not(.sidebar-light) .menu-item > .menu-featured-link > .title {
+  color: $white;
+}
 .sidebar .menu-category,
 .sidebar .menu-category i {
   cursor: pointer;
