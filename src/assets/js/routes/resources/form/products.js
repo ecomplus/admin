@@ -25,6 +25,24 @@
     var idPad = randomObjectId()
     var index = 0
 
+    // setup predefined grids
+    // GMC defaults
+    var Grids = {}
+    var presetGrids = function (specifications) {
+      Grids = specifications
+      console.log(Grids)
+    }
+    if (!Tab.schema) {
+      // get products specifications JSON schema
+      window.callApi('products/schema/specifications.json', 'GET', function (err, json) {
+        if (!err) {
+          presetGrids(json.properties)
+        }
+      })
+    } else {
+      presetGrids(Tab.schema.properties.specifications)
+    }
+
     var $listGrids = $('#' + tabId + '-grids-list')
     // grid li element HTML
     var liGrid = '<div class="row gap-2">' +
