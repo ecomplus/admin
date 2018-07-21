@@ -8,6 +8,12 @@
   // current tab ID
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
+  // edit JSON document
+  // var commit = Tab.commit
+  var Data = function () {
+    // current data from global variable
+    return Tab.data
+  }
 
   // var lang = window.lang
   var i18n = window.i18n
@@ -206,6 +212,17 @@
       sku += randomInt(10000, 99999)
       $(this).closest('.input-group').find('input').val(sku).trigger('change')
     })
+
+    if (!Data().sku) {
+      // generate the SKU previously
+      var firstSku = function () {
+        $('#' + tabId + '-random-sku').click()
+        // run once only
+        // remove the event handler
+        $form.off('change', 'input[name="name"]', firstSku)
+      }
+      $form.on('change', 'input[name="name"]', firstSku)
+    }
 
     setTimeout(function () {
       var addOption = function ($select, term) {
