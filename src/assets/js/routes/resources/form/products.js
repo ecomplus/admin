@@ -200,8 +200,14 @@
       }
     }
 
+    var $inputSku = $form.find('input[name="sku"]')
+    $inputSku.click(function () {
+      // select all input text
+      $(this).select()
+    })
+
     // generate new random SKU
-    $('#' + tabId + '-random-sku').click(function () {
+    var randomSku = function () {
       var sku = ''
       // start always with uppercase letters
       var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -210,13 +216,14 @@
       }
       // random digits
       sku += randomInt(10000, 99999)
-      $(this).closest('.input-group').find('input').val(sku).trigger('change')
-    })
+      $inputSku.val(sku).trigger('change')
+    }
+    $('#' + tabId + '-random-sku').click(randomSku)
 
     if (!Data().sku) {
       // generate the SKU previously
       var firstSku = function () {
-        $('#' + tabId + '-random-sku').click()
+        randomSku()
         // run once only
         // remove the event handler
         $form.off('change', 'input[name="name"]', firstSku)
