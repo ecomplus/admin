@@ -27,20 +27,39 @@
 
     // setup predefined grids
     // GMC defaults
-    var Grids = {}
-    var presetGrids = function (specifications) {
-      Grids = specifications
-      console.log(Grids)
+    var Grids = {
+      'material': {
+        'title': 'Material'
+      },
+      'pattern': {
+        'title': i18n({
+          'en_us': 'Pattern',
+          'pt_br': 'Modelo'
+        })
+      },
+      'size': {
+        'title': i18n({
+          'en_us': 'Size',
+          'pt_br': 'Tamanho'
+        })
+      },
+      'colors': {
+        'title': i18n({
+          'en_us': 'Colors',
+          'pt_br': 'Cores'
+        })
+      }
     }
-    if (!Tab.schema) {
-      // get products specifications JSON schema
-      window.callApi('products/schema/specifications.json', 'GET', function (err, json) {
-        if (!err) {
-          presetGrids(json.properties)
+
+    var gridsTitles = function () {
+      // return strings array with all grids titles
+      var titles = []
+      for (var gridId in Grids) {
+        if (Grids.hasOwnProperty(gridId)) {
+          titles.push(Grids[gridId].title)
         }
-      })
-    } else {
-      presetGrids(Tab.schema.properties.specifications)
+      }
+      return titles
     }
 
     var $listGrids = $('#' + tabId + '-grids-list')
@@ -164,8 +183,8 @@
         highlight: true,
         minLength: 1
       }, {
-        name: 'states',
-        source: substringMatcher(states)
+        name: 'grids',
+        source: substringMatcher(gridsTitles())
       })
 
       // setup remove button
@@ -226,16 +245,6 @@
         $('#' + tabId + '-grids-list-header, #' + tabId + '-add-option-header').slideUp()
       }
     }
-
-    var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-      'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-      'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-      'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-      'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-      'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-      'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-      'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-      'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
 
     var $inputSku = $form.find('input[name="sku"]')
     $inputSku.click(function () {
