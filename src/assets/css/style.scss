@@ -498,6 +498,12 @@ body {
 .form-control {
   max-width: 100%;
 }
+.input-group > .twitter-typeahead {
+  z-index: 3;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  width: 1%;
+}
 
 // buttons for document edition
 .header-action .edit-btn {
