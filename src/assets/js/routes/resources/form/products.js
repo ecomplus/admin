@@ -128,9 +128,26 @@
       var optionDisabled = true
 
       $inputGrid.change(function () {
-        if ($(this).val() !== '') {
+        var grid = $(this).val().trim()
+        if (grid !== '') {
           // focus on option text input
           $inputOption.focus()
+
+          // save grid ID
+          var gridId
+          for (var id in Grids) {
+            if (Grids.hasOwnProperty(id) && Grids[id].title === grid) {
+              // found respective grid object
+              gridId = id
+              break
+            }
+          }
+          if (!gridId) {
+            // grid not found
+            // generate new grid ID
+            gridId = clearAccents(grid.toLowerCase(), '_')
+          }
+          $inputGrid.data('grid-id', gridId)
         } else {
           // clear option
           $inputOption.val('')
