@@ -698,7 +698,7 @@ body {
   border-radius: 2px;
   padding: 6px 20px 6px 18px;
   line-height: 1;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   color: $white;
   position: relative;
@@ -706,12 +706,12 @@ body {
 .badges-list li > .i-drag {
   position: absolute;
   left: 5px;
-  top: 6px;
+  top: 5px;
 }
 .badges-list li > .fa-times {
   position: absolute;
   right: 3px;
-  top: 4px;
+  top: 3px;
   padding: 2px;
   font-size: 12px;
   cursor: pointer;
