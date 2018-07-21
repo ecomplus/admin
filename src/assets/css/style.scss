@@ -666,7 +666,8 @@ body {
 }
 
 // grids options ul
-.options-list {
+.options-list,
+.badges-list {
   margin: 0;
   padding: 0;
   list-style-type: none;
@@ -686,6 +687,34 @@ body {
 }
 .input-group-text > .custom-checkbox > label::after {
   top: 3px;
+}
+.badges-list {
+  margin-top: 5px;
+}
+.badges-list li {
+  background: $color-primary;
+  display: inline-block;
+  margin: 5px 5px 0 0;
+  border-radius: 2px;
+  padding: 6px 20px 6px 18px;
+  line-height: 1;
+  font-size: 16px;
+  font-weight: 400;
+  color: $white;
+  position: relative;
+}
+.badges-list li > .i-drag {
+  position: absolute;
+  left: 5px;
+  top: 6px;
+}
+.badges-list li > .fa-times {
+  position: absolute;
+  right: 3px;
+  top: 4px;
+  padding: 2px;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 .masonry-item > a {
@@ -774,6 +803,11 @@ body {
   width: 8px;
   height: 16px;
   cursor: move;
+}
+.i-drag.white,
+.i-drag.white::before {
+  background-image: radial-gradient($white 40%, transparent 40%);
+  opacity: .8;
 }
 .i-drag,
 .i-drag::before {
