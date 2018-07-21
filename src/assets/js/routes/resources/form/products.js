@@ -42,13 +42,14 @@
                       '<div class="input-group">' +
                         '<input class="form-control" type="text" name="option" placeholder="GG">' +
                         '<div class="input-group-append">' +
-                          '<button class="btn btn-light" type="button">' +
+                          '<button class="btn btn-light add-option" type="button">' +
                             '<i class="fa fa-plus"></i>' +
                           '</button>' +
                         '</div>' +
                       '</div>' +
                     '</div>' +
-                 '</div>'
+                 '</div>' +
+                 '<ul class="hide-empty badges-list"></ul>'
 
     var countGrids = 0
     var addGrid = function (gridObject) {
@@ -118,6 +119,14 @@
       // setup remove button
       $li.find('.remove-grid').click(function () {
         removeGrid($li)
+      })
+      // add button
+      $li.find('.add-option').click(function () {
+        var option = $inputOption.val()
+        var $liOption = $('<li />', {
+          html: '<span class="i-drag white"></span>' + option + '<i class="fa fa-times"></i>'
+        })
+        $li.find('.badges-list').append($liOption)
       })
 
       countGrids++
