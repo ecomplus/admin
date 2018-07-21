@@ -1314,7 +1314,7 @@ app.ready(function () {
                '</li>' +
 
                '<li class="menu-item">' +
-                 '<a class="menu-link" href="javascript:;">' +
+                 '<a class="menu-link menu-featured-link" href="javascript:;">' +
                    '<span class="icon fa fa-database"></span>' +
                    '<span class="title">' + dictionary.resources + '</span>' +
                    '<span class="arrow"></span>' +
