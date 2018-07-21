@@ -74,35 +74,7 @@
       // enable option input after grid only
       var optionDisabled = true
 
-      $inputGrid.keyup(function (e) {
-        switch (e.which) {
-          // tab, enter
-          case 9:
-          case 13:
-            $(this).trigger('change')
-            break
-
-          default:
-            if ($(this).val() !== '') {
-              // grid name not empty
-              if (optionDisabled) {
-                // enable to add the grid options
-                $blockOption.fadeIn()
-                optionDisabled = false
-                if (countGrids === 1) {
-                  $('#' + tabId + '-add-option-header').fadeIn()
-                }
-              }
-            } else if (!optionDisabled) {
-              // grid name empty
-              $blockOption.fadeOut()
-              optionDisabled = true
-              if (countGrids === 1) {
-                $('#' + tabId + '-add-option-header').fadeOut()
-              }
-            }
-        }
-      }).change(function () {
+      $inputGrid.change(function () {
         if ($(this).val() !== '') {
           // focus on option text input
           $inputOption.focus()
@@ -116,17 +88,60 @@
         }
       })
 
+      .keyup(function () {
+        if ($inputGrid.val() !== '') {
+          // grid name not empty
+          if (optionDisabled) {
+            // enable to add the grid options
+            $blockOption.fadeIn()
+            optionDisabled = false
+            if (countGrids === 1) {
+              $('#' + tabId + '-add-option-header').fadeIn()
+            }
+          }
+        } else if (!optionDisabled) {
+          // grid name empty
+          $blockOption.fadeOut()
+          optionDisabled = true
+          if (countGrids === 1) {
+            $('#' + tabId + '-add-option-header').fadeOut()
+          }
+        }
+      })
+      .keydown(function (e) {
+        switch (e.which) {
+          // tab, enter
+          case 9:
+          case 13:
+            setTimeout(function () {
+              $inputGrid.trigger('change')
+            }, 100)
+            break
+        }
+      })
+
+      $inputOption.keydown(function (e) {
+        switch (e.which) {
+          // tab
+          case 9:
+            setTimeout(function () {
+              $inputGrid.focus()
+            }, 100)
+            break
+          // enter
+          case 13:
+            addGridOption($li, $inputOption)
+            break
+        }
+      })
+
       // setup remove button
       $li.find('.remove-grid').click(function () {
         removeGrid($li)
       })
       // add button
       $li.find('.add-option').click(function () {
-        var option = $inputOption.val()
-        var $liOption = $('<li />', {
-          html: '<span class="i-drag white"></span>' + option + '<i class="fa fa-times"></i>'
-        })
-        $li.find('.badges-list').append($liOption)
+        addGridOption($li, $inputOption)
       })
 
       countGrids++
@@ -141,6 +156,25 @@
           $inputGrid.focus()
         }
       })
+    }
+
+    var addGridOption = function ($li, $inputOption) {
+      // add options to grid
+      // multiple options should be separated with comma
+      var options = $inputOption.val().split(',')
+      for (var i = 0; i < options.length; i++) {
+        var option = options[i].trim()
+        if (option !== '') {
+          var $liOption = $('<li />', {
+            html: '<span class="i-drag white"></span>' + option + '<i class="fa fa-times"></i>'
+          })
+          $li.find('.badges-list').append($liOption)
+          // setup remove icon
+          $liOption.find('.fa-times').click(function () {
+            $liOption.remove()
+          })
+        }
+      }
     }
 
     $('#' + tabId + '-add-grid').click(function () {
