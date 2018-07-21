@@ -398,9 +398,17 @@ app.config({
     return objectIdPad(randomInt(10000, 99999) + '000000000000000000', timestamp)
   }
 
-  window.substringMatcher = function (strs) {
+  window.substringMatcher = function (data) {
     // Ref.: http://twitter.github.io/typeahead.js/examples/
     return function findMatches (q, cb) {
+      var strs
+      if (typeof data === 'function') {
+        // keep it reactive
+        strs = data()
+      } else {
+        strs = data
+      }
+
       var matches, substrRegex
       // an array that will be populated with substring matches
       matches = []
