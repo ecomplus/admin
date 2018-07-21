@@ -748,52 +748,52 @@
         setTimeout(function () {
           // setup save action
           window.setSaveAction($form, function (cb) {
-            var method
-            var data = Data()
-            if (!creating) {
-              // overwrite
-              method = 'PUT'
-            } else {
-              method = 'POST'
-
-              // try to auto fill important fields when undefined
-              if (data.name && !data.slug && hasSlug) {
-                // generate slug from name
-                // prepare string and remove illegal characters
-                data.slug = clearAccents(data.name.toLowerCase(), '-').replace(/[^a-z0-9-_./]/g, '')
-              }
-              /*
-                Do not copy name and short description (prevent outdating)
-                Shoud be checked on store template
-              if (!data.meta_title) {
-                // copy name to title tag
-                data.meta_title = cutString(data.name, 70)
-              }
-              if (!data.meta_description) {
-                if (data.short_description && $form.find('[name="meta_description"]').length) {
-                  // copy short description to meta
-                  data.meta_description = data.short_description
-                }
-              } else if (!data.short_description) {
-                // copy meta to short description
-                data.short_description = cutString(data.meta_description, 255)
-              }
-              */
-            }
-
-            var callback = function (json) {
-              if (typeof cb === 'function') {
-                // save action callback
-                cb(tabId)
-              }
-              if (creating && json._id) {
-                // document created
-                // redirect to resource edit page
-                window.location = '/#/resources/' + slug + '/' + json._id
-              }
-            }
             // timeout to wait input changes events
             setTimeout(function () {
+              var method
+              var data = Data()
+              if (!creating) {
+                // overwrite
+                method = 'PUT'
+              } else {
+                method = 'POST'
+
+                // try to auto fill important fields when undefined
+                if (data.name && !data.slug && hasSlug) {
+                  // generate slug from name
+                  // prepare string and remove illegal characters
+                  data.slug = clearAccents(data.name.toLowerCase(), '-').replace(/[^a-z0-9-_./]/g, '')
+                }
+                /*
+                  Do not copy name and short description (prevent outdating)
+                  Shoud be checked on store template
+                if (!data.meta_title) {
+                  // copy name to title tag
+                  data.meta_title = cutString(data.name, 70)
+                }
+                if (!data.meta_description) {
+                  if (data.short_description && $form.find('[name="meta_description"]').length) {
+                    // copy short description to meta
+                    data.meta_description = data.short_description
+                  }
+                } else if (!data.short_description) {
+                  // copy meta to short description
+                  data.short_description = cutString(data.meta_description, 255)
+                }
+                */
+              }
+
+              var callback = function (json) {
+                if (typeof cb === 'function') {
+                  // save action callback
+                  cb(tabId)
+                }
+                if (creating && json._id) {
+                  // document created
+                  // redirect to resource edit page
+                  window.location = '/#/resources/' + slug + '/' + json._id
+                }
+              }
               callApi(endpoint, method, callback, data)
             }, 200)
           })
