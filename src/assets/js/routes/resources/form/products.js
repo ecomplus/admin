@@ -51,6 +51,16 @@
       }
     }
 
+    // add store custom grids
+    window.callApi('grids.json', 'GET', function (err, json) {
+      if (!err) {
+        for (var i = 0; i < json.result.length; i++) {
+          var grid = json.result[i]
+          Grids[grid.grid_id] = grid
+        }
+      }
+    })
+
     var gridsTitles = function () {
       // return strings array with all grids titles
       var titles = []
