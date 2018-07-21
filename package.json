@@ -38,6 +38,7 @@
       "randomInt",
       "randomObjectId",
       "objectIdPad",
+      "substringMatcher",
       "handleInputs"
     ]
   },
