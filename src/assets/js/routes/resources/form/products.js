@@ -41,12 +41,7 @@
         'title': i18n({
           'en_us': 'Size',
           'pt_br': 'Tamanho'
-        }),
-        'options': [{
-          'text': 'PP'
-        }, {
-          'text': 'M'
-        }]
+        })
       },
       'colors': {
         'title': i18n({
