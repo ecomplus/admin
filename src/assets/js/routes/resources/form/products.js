@@ -57,7 +57,7 @@
     }
 
     // add store custom grids
-    window.callApi('grids.json', 'GET', function (err, json) {
+    window.callApi('grids.json?fields=title,grid_id,options', 'GET', function (err, json) {
       if (!err) {
         for (var i = 0; i < json.result.length; i++) {
           var grid = json.result[i]
@@ -183,6 +183,7 @@
 
           // update options for autocomplete
           options = optionsTitles(gridId)
+          // console.log(gridId, options)
           // focus on option text input
           $inputOption.focus()
         } else {
