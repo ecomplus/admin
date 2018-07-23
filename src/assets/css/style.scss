@@ -740,6 +740,18 @@ body {
   font-size: 12px;
   cursor: pointer;
 }
+ul > li:nth-child(4n+1) > .badges-list li {
+  background: $color-cyan;
+}
+ul > li:nth-child(4n+2) > .badges-list li {
+  background: $color-brown;
+}
+ul > li:nth-child(4n+3) > .badges-list li {
+  background: $color-teal;
+}
+ul > li:nth-child(4n+4) > .badges-list li {
+  background: $color-pink;
+}
 
 .masonry-item > a {
   display: inline-block;
