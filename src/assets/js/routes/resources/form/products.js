@@ -156,12 +156,14 @@
       var optionDisabled = true
       // predefined options for autocomplete
       var options = []
+      // save grid ID
+      var gridId
 
       $inputGrid.change(function () {
         var grid = $(this).val().trim()
         if (grid !== '') {
           // save grid ID
-          var gridId
+          gridId = null
           for (var id in Grids) {
             if (Grids.hasOwnProperty(id) && Grids[id].title === grid) {
               // found respective grid object
@@ -223,7 +225,12 @@
         }
       })
 
-      $inputOption.keydown(function (e) {
+      $inputOption.click(function () {
+        // select all text content to facilitate
+        $(this).select()
+      })
+
+      .keydown(function (e) {
         switch (e.which) {
           // tab
           case 9:
@@ -233,7 +240,7 @@
             break
           // enter
           case 13:
-            addGridOption($li, $inputOption)
+            addGridOption($li, $inputOption, gridId)
             break
         }
       })
@@ -248,7 +255,7 @@
       })
       // add button
       $li.find('.add-option').click(function () {
-        addGridOption($li, $inputOption)
+        addGridOption($li, $inputOption, gridId)
       })
 
       countGrids++
@@ -282,6 +289,8 @@
           })
         }
       }
+      // clear input
+      $inputOption.val('').focus()
     }
 
     $('#' + tabId + '-add-grid').click(function () {
