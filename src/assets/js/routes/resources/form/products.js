@@ -50,6 +50,8 @@
         })
       }
     }
+    // svae grids and options in use
+    var gridsOptions = {}
 
     // add store custom grids
     window.callApi('grids.json?fields=title,grid_id,options', 'GET', function (err, json) {
@@ -163,6 +165,10 @@
         var grid = $(this).val().trim()
         if (grid !== '') {
           // save grid ID
+          var oldGridId
+          if (gridId) {
+            oldGridId = gridId
+          }
           gridId = null
           for (var id in Grids) {
             if (Grids.hasOwnProperty(id) && Grids[id].title === grid) {
@@ -177,6 +183,12 @@
             gridId = clearAccents(grid.toLowerCase(), '_')
           }
           $(this).data('grid-id', gridId)
+          if (oldGridId) {
+            gridsOptions[gridId] = gridsOptions[oldGridId]
+          } else {
+            // setup options array
+            gridsOptions[gridId] = []
+          }
 
           // update options for autocomplete
           options = optionsTitles(gridId)
@@ -279,7 +291,7 @@
                         '<label class="custom-control-label"> </label>' +
                       '</div>'
 
-    var addGridOption = function ($li, $inputOption) {
+    var addGridOption = function ($li, $inputOption, gridId) {
       // add options to grid
       // multiple options should be separated with comma
       var options = $inputOption.val().split(',')
@@ -289,6 +301,22 @@
       for (var i = 0; i < options.length; i++) {
         var option = options[i].trim()
         if (option !== '') {
+          if (gridId) {
+            var savedOptions = gridsOptions[gridId]
+            var skip
+            for (var ii = 0; ii < savedOptions.length; ii++) {
+              if (option === savedOptions[ii]) {
+                // option already in use
+                skip = true
+                break
+              }
+            }
+            if (skip) {
+              continue
+            }
+            savedOptions.push(option)
+          }
+
           var $liOption = $('<li />', {
             html: '<span class="i-drag white"></span>' + option + '<i class="fa fa-times"></i>'
           })
