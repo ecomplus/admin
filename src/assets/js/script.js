@@ -364,12 +364,18 @@ app.config({
   window.clearAccents = function (str, removeSpaces) {
     // replace common accents
     str = str
-      .replace(/[ÇĆçć]/g, 'c')
-      .replace(/[ÁÂÃÀáâãà]/g, 'a')
-      .replace(/[ÉÊẼéêẽ]/g, 'e')
-      .replace(/[ÍÎĨíîĩ]/g, 'i')
-      .replace(/[ÓÔÕóôõ]/g, 'o')
-      .replace(/[ÚÛŨúûõ]/g, 'u')
+      .replace(/[çć]/g, 'c')
+      .replace(/[ÇĆ]/g, 'C')
+      .replace(/[áâãà]/g, 'a')
+      .replace(/[ÁÂÃÀ]/g, 'A')
+      .replace(/[éêẽ]/g, 'e')
+      .replace(/[ÉÊẼ]/g, 'E')
+      .replace(/[íîĩ]/g, 'i')
+      .replace(/[ÍÎĨ]/g, 'I')
+      .replace(/[óôõ]/g, 'o')
+      .replace(/[ÓÔÕ]/g, 'O')
+      .replace(/[úûõ]/g, 'u')
+      .replace(/[ÚÛŨ]/g, 'U')
     if (removeSpaces) {
       if (typeof removeSpaces !== 'string') {
         // just clear
@@ -463,12 +469,12 @@ app.config({
         var val = $(this).val()
 
         // prepare string value before set on input
-        if ($input.data('fill-case') === 'lower') {
-          val = val.toLowerCase()
-        }
         var replaceAccents = $input.data('fill-clear-accents')
         if (replaceAccents) {
           val = clearAccents(val, replaceAccents)
+        }
+        if ($input.data('fill-case') === 'lower') {
+          val = val.toLowerCase()
         }
         var regex = $input.data('fill-pattern')
         if (regex) {
