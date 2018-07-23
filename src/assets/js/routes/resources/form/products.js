@@ -184,6 +184,10 @@
           }
 
           if (oldGridId !== gridId) {
+            // update options for autocomplete
+            options = optionsTitles(gridId)
+            // console.log(gridId, options)
+
             var idAux = 0
             while (gridsOptions.hasOwnProperty(gridId)) {
               // grid already in use
@@ -198,10 +202,6 @@
               gridsOptions[gridId] = []
             }
             $(this).data('grid-id', gridId)
-
-            // update options for autocomplete
-            options = optionsTitles(gridId)
-            // console.log(gridId, options)
           }
 
           // focus on option text input
