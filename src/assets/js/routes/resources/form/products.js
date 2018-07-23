@@ -169,18 +169,15 @@
           if (gridId) {
             oldGridId = gridId
           }
-          gridId = null
+          // generate new grid ID
+          gridId = clearAccents(grid.toLowerCase(), '_')
+          // try to match with defined grids titles
           for (var id in Grids) {
-            if (Grids.hasOwnProperty(id) && Grids[id].title === grid) {
+            if (Grids.hasOwnProperty(id) && clearAccents(Grids[id].title.toLowerCase(), '_') === gridId) {
               // found respective grid object
               gridId = id
               break
             }
-          }
-          if (!gridId) {
-            // grid not found
-            // generate new grid ID
-            gridId = clearAccents(grid.toLowerCase(), '_')
           }
 
           if (oldGridId !== gridId) {
