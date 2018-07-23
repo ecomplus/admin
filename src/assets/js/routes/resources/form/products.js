@@ -50,7 +50,7 @@
         })
       }
     }
-    // svae grids and options in use
+    // save grids and options in use
     var gridsOptions = {}
 
     // add store custom grids
@@ -182,17 +182,28 @@
             // generate new grid ID
             gridId = clearAccents(grid.toLowerCase(), '_')
           }
-          $(this).data('grid-id', gridId)
-          if (oldGridId) {
-            gridsOptions[gridId] = gridsOptions[oldGridId]
-          } else {
-            // setup options array
-            gridsOptions[gridId] = []
+
+          if (oldGridId !== gridId) {
+            var idAux = 0
+            while (gridsOptions.hasOwnProperty(gridId)) {
+              // grid already in use
+              idAux++
+              gridId += gridId + '_' + idAux
+            }
+            if (oldGridId) {
+              gridsOptions[gridId] = gridsOptions[oldGridId]
+              delete gridsOptions[oldGridId]
+            } else {
+              // setup options array
+              gridsOptions[gridId] = []
+            }
+            $(this).data('grid-id', gridId)
+
+            // update options for autocomplete
+            options = optionsTitles(gridId)
+            // console.log(gridId, options)
           }
 
-          // update options for autocomplete
-          options = optionsTitles(gridId)
-          // console.log(gridId, options)
           // focus on option text input
           $inputOption.focus()
         } else {
