@@ -387,6 +387,11 @@ app.config({
     return str
   }
 
+  window.normalizeString = function (str) {
+    // generate normalize ID from string
+    return clearAccents(str, '_')
+  }
+
   window.randomInt = function (min, max) {
     // generate random arbitrary number
     return Math.floor(Math.random() * (max - min)) + min
