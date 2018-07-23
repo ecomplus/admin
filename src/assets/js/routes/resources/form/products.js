@@ -329,7 +329,7 @@
             var savedOptions = gridsOptions[gridId]
             var skip
             for (ii = 0; ii < savedOptions.length; ii++) {
-              if (option === savedOptions[ii]) {
+              if (optionId === savedOptions[ii]) {
                 // option already in use
                 skip = true
                 break
