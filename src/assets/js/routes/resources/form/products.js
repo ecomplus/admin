@@ -292,24 +292,6 @@
       })
     }
 
-    var $listVariations = $('#' + tabId + '-variations-list')
-    // variation li element HTML
-    var liVariation = '<div class="flexbox align-items-center">' +
-                        '<div>' +
-                          '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" class="custom-control-input" checked >' +
-                            '<label class="custom-control-label"> </label>' +
-                          '</div>' +
-                        '</div>' +
-                        '<button class="btn btn-light" type="button">' +
-                          '<i class="fa fa-cog"></i>' +
-                          '<span class="i18n"> ' +
-                            '<span data-lang="en_us">Edit variation</span>' +
-                            '<span data-lang="pt_br">Editar variação</span>' +
-                          '</span>' +
-                        '</button>' +
-                      '</div>'
-
     var addGridOption = function ($li, $inputOption, gridId) {
       // add options to grid
       // multiple options should be separated with comma
@@ -367,7 +349,38 @@
           $listVariations.append($li)
           // show added list element
           $li.slideDown()
+          generateVariations()
         }
+      }
+    }
+
+    var $listVariations = $('#' + tabId + '-variations-list')
+    // variation li element HTML
+    var liVariation = '<div class="flexbox align-items-center">' +
+                        '<div>' +
+                          '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" class="custom-control-input" checked >' +
+                            '<label class="custom-control-label fw-400"> </label>' +
+                          '</div>' +
+                        '</div>' +
+                        '<button class="btn btn-light" type="button">' +
+                          '<i class="fa fa-cog"></i>' +
+                          '<span class="i18n"> ' +
+                            '<span data-lang="en_us">Edit variation</span>' +
+                            '<span data-lang="pt_br">Editar variação</span>' +
+                          '</span>' +
+                        '</button>' +
+                      '</div>'
+
+    var generateVariations = function () {
+      // clear variations
+      $listVariations.slideUp(400, function () {
+        $(this).html('')
+      })
+
+      // create new options matches
+      for (var i = 0; i < gridsOptions.length; i++) {
+        //
       }
     }
 
