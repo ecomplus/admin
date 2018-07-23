@@ -313,9 +313,22 @@
         var option = options[i].trim()
         if (option !== '') {
           if (gridId) {
+            // set option ID value
+            var optionId = clearAccents(option.toLowerCase(), '_')
+            var ii
+            if (Grids[gridId] && Grids[gridId].options) {
+              for (ii = 0; ii < Grids[gridId].options.length; ii++) {
+                var optionObject = Grids[gridId].options[ii]
+                if (optionId === clearAccents(optionObject.text.toLowerCase(), '_')) {
+                  optionId = optionObject.option_id
+                  break
+                }
+              }
+            }
+
             var savedOptions = gridsOptions[gridId]
             var skip
-            for (var ii = 0; ii < savedOptions.length; ii++) {
+            for (ii = 0; ii < savedOptions.length; ii++) {
               if (option === savedOptions[ii]) {
                 // option already in use
                 skip = true
@@ -325,7 +338,7 @@
             if (skip) {
               continue
             }
-            savedOptions.push(option)
+            savedOptions.push(optionId)
           }
 
           var $liOption = $('<li />', {
