@@ -319,7 +319,7 @@
             var savedOptions = gridsOptions[gridId]
             var skip
             for (ii = 0; ii < savedOptions.length; ii++) {
-              if (optionId === savedOptions[ii]) {
+              if (optionId === savedOptions[ii].option_id) {
                 // option already in use
                 skip = true
                 break
@@ -328,7 +328,10 @@
             if (skip) {
               continue
             }
-            savedOptions.push(optionId)
+            savedOptions.push({
+              'option_id': optionId,
+              'text': option
+            })
           }
 
           var $liOption = $('<li />', {
