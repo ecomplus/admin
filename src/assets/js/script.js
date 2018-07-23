@@ -389,7 +389,7 @@ app.config({
 
   window.normalizeString = function (str) {
     // generate normalize ID from string
-    return clearAccents(str, '_')
+    return clearAccents(str.toLowerCase(), '_')
   }
 
   window.randomInt = function (min, max) {
