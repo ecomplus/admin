@@ -105,7 +105,7 @@
     var $listGrids = $('#' + tabId + '-grids-list')
     // grid li element HTML
     var liGrid = '<div class="row gap-2">' +
-                    '<div class="col-6">' +
+                    '<div class="col-sm-6">' +
                       '<div class="flexbox align-items-center">' +
                         '<div class="i-drag"></div>' +
                         '<div class="input-group">' +
@@ -121,7 +121,7 @@
                         '</div>' +
                       '</div>' +
                     '</div>' +
-                    '<div class="col-6 hidden option-block">' +
+                    '<div class="col-sm-6 hidden option-block">' +
                       '<div class="input-group">' +
                         '<input class="form-control" type="text" name="option" placeholder="GG">' +
                         '<div class="input-group-append">' +
@@ -294,9 +294,26 @@
 
     var $listVariations = $('#' + tabId + '-variations-list')
     // variation li element HTML
-    var liVariation = '<div class="custom-control custom-checkbox">' +
-                        '<input type="checkbox" class="custom-control-input" checked >' +
-                        '<label class="custom-control-label"> </label>' +
+    var liVariation = '<div class="row align-items-center">' +
+                        '<div class="col-auto col-xs-6">' +
+                          '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" class="custom-control-input" checked >' +
+                            '<label class="custom-control-label"> </label>' +
+                          '</div>' +
+                        '</div>' +
+                        '<div class="col-auto col-xs-6">' +
+                          '<button class="btn btn-light" type="button">' +
+                            '<i class="fa fa-cog"></i>' +
+                            '<span class="i18n"> ' +
+                              '<span data-lang="en_us">Edit</span>' +
+                              '<span data-lang="pt_br">Editar</span>' +
+                            '</span>' +
+                          '</button>' +
+                        '</div>' +
+                        '<div class="col">' +
+                          '<input type="text" class="form-control" placeholder="SKU">' +
+                          '<input type="number" class="form-control w-120px">' +
+                        '</div>' +
                       '</div>'
 
     var addGridOption = function ($li, $inputOption, gridId) {
