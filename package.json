@@ -35,6 +35,7 @@
       "getFromDotNotation",
       "getProperties",
       "clearAccents",
+      "normalizeString",
       "randomInt",
       "randomObjectId",
       "objectIdPad",
