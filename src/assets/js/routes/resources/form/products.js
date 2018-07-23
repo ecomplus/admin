@@ -170,10 +170,10 @@
             oldGridId = gridId
           }
           // generate new grid ID
-          gridId = clearAccents(grid.toLowerCase(), '_')
+          gridId = normalizeString(grid)
           // try to match with defined grids titles
           for (var id in Grids) {
-            if (Grids.hasOwnProperty(id) && clearAccents(Grids[id].title.toLowerCase(), '_') === gridId) {
+            if (Grids.hasOwnProperty(id) && normalizeString(Grids[id].title) === gridId) {
               // found respective grid object
               gridId = id
               break
@@ -311,12 +311,12 @@
         if (option !== '') {
           if (gridId) {
             // set option ID value
-            var optionId = clearAccents(option.toLowerCase(), '_')
+            var optionId = normalizeString(option)
             var ii
             if (Grids[gridId] && Grids[gridId].options) {
               for (ii = 0; ii < Grids[gridId].options.length; ii++) {
                 var optionObject = Grids[gridId].options[ii]
-                if (optionId === clearAccents(optionObject.text.toLowerCase(), '_')) {
+                if (optionId === normalizeString(optionObject.text)) {
                   optionId = optionObject.option_id
                   break
                 }
