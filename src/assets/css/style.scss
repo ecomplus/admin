@@ -712,6 +712,17 @@ body {
 .input-group-text > .custom-checkbox > label::after {
   top: 3px;
 }
+.options-list-striped li {
+  border: $card-internal-border;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0;
+}
+.options-list-striped li:not(:last-child) {
+  border-bottom: none;
+}
+.options-list-striped li:nth-child(2n+1) {
+  background: $color-bg-lightest;
+}
 .badges-list {
   margin-top: 5px;
 }
