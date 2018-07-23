@@ -272,10 +272,20 @@
       })
     }
 
+    var $listVariations = $('#' + tabId + '-variations-list')
+    // variation li element HTML
+    var liVariation = '<div class="custom-control custom-checkbox">' +
+                        '<input type="checkbox" class="custom-control-input" checked >' +
+                        '<label class="custom-control-label"> </label>' +
+                      '</div>'
+
     var addGridOption = function ($li, $inputOption) {
       // add options to grid
       // multiple options should be separated with comma
       var options = $inputOption.val().split(',')
+      // clear input
+      $inputOption.val('').focus()
+
       for (var i = 0; i < options.length; i++) {
         var option = options[i].trim()
         if (option !== '') {
@@ -287,10 +297,18 @@
           $liOption.find('.fa-times').click(function () {
             $liOption.remove()
           })
+
+          // create variation
+          // add li element
+          $li = $('<li />', {
+            html: liVariation
+          })
+          $li.find('label').text(option)
+          $listVariations.append($li)
+          // show added list element
+          $li.slideDown()
         }
       }
-      // clear input
-      $inputOption.val('').focus()
     }
 
     $('#' + tabId + '-add-grid').click(function () {
