@@ -40,7 +40,8 @@
       "randomObjectId",
       "objectIdPad",
       "substringMatcher",
-      "handleInputs"
+      "handleInputs",
+      "getCombinations"
     ]
   },
   "devDependencies": {
