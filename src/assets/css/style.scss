@@ -763,6 +763,21 @@ ul > li:nth-child(4n+3) > .badges-list li {
 ul > li:nth-child(4n+4) > .badges-list li {
   background: $color-pink;
 }
+.colored > span {
+  margin-right: 8px;
+}
+.colored > span:nth-child(4n+1) {
+  color: $color-cyan;
+}
+.colored > span:nth-child(4n+2) {
+  color: $color-brown;
+}
+.colored > span:nth-child(4n+3) {
+  color: $color-teal;
+}
+.colored > span:nth-child(4n+4) {
+  color: $color-pink;
+}
 
 .masonry-item > a {
   display: inline-block;
