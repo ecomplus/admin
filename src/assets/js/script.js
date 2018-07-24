@@ -550,6 +550,36 @@ app.config({
       }
     })
   }
+
+  window.getCombinations = function (options, optionIndex, results, current) {
+    // receive object of arrays
+    // set default params
+    if (optionIndex === undefined) {
+      optionIndex = 0
+    }
+    if (!results) {
+      results = []
+    }
+    if (!current) {
+      current = {}
+    }
+
+    // returns all possible combinations
+    var allKeys = Object.keys(options)
+    var optionKey = allKeys[optionIndex]
+    var vals = options[optionKey]
+    for (var i = 0; i < vals.length; i++) {
+      current[optionKey] = vals[i]
+      if (optionIndex + 1 < allKeys.length) {
+        getCombinations(options, optionIndex + 1, results, current)
+      } else {
+        // clone the object
+        var res = Object.assign({}, current)
+        results.push(res)
+      }
+    }
+    return results
+  }
 }())
 
 

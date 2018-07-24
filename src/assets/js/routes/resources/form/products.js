@@ -387,10 +387,16 @@
         $(this).html('')
       })
 
-      // create new options matches
-      for (var i = 0; i < gridsOptions.length; i++) {
-        //
+      // remove empty grids
+      var GridsOptions = {}
+      for (var gridId in gridsOptions) {
+        var gridArray = gridsOptions[gridId]
+        if (gridArray && gridArray.length) {
+          GridsOptions[gridId] = gridArray
+        }
       }
+      // create new options matches
+      console.log(getCombinations(GridsOptions))
     }
 
     $('#' + tabId + '-add-grid').click(function () {
