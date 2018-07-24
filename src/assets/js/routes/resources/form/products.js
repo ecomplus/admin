@@ -325,6 +325,7 @@
       for (var i = 0; i < options.length; i++) {
         var option = options[i].trim()
         if (option !== '') {
+          var optionIndex, savedOptions
           if (gridId) {
             // set option ID value
             var optionId = normalizeString(option)
@@ -339,7 +340,7 @@
               }
             }
 
-            var savedOptions = gridsOptions[gridId]
+            savedOptions = gridsOptions[gridId]
             var skip
             for (ii = 0; ii < savedOptions.length; ii++) {
               if (optionId === savedOptions[ii].option_id) {
@@ -351,10 +352,13 @@
             if (skip) {
               continue
             }
-            savedOptions.push({
+
+            // save current option
+            optionIndex = savedOptions.length
+            savedOptions[optionIndex] = {
               'option_id': optionId,
               'text': option
-            })
+            }
           }
 
           var $liOption = $('<li />', {
@@ -364,6 +368,10 @@
           // setup remove icon
           $liOption.find('.fa-times').click(function () {
             $liOption.remove()
+            if (optionIndex !== undefined) {
+              savedOptions.splice(optionIndex, 1)
+              generateVariations()
+            }
           })
 
           generateVariations()
