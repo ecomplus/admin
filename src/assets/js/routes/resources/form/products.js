@@ -140,6 +140,14 @@
                  '</div>' +
                  '<ul class="hide-empty badges-list"></ul>'
 
+    // handle grids sorting
+    // https://github.com/RubaXa/Sortable
+    window.Sortable.create($listGrids[0], {
+      onUpdate: function (e) {
+        console.log(e)
+      }
+    })
+
     var countGrids = 0
     var addGrid = function (gridObject) {
       var $emptyGrid = $listGrids.find('input[name="grid"]').filter(function () { return $(this).val() === '' })
@@ -306,12 +314,22 @@
         // first added grid
         $('#' + tabId + '-grids-list-header').slideDown()
       }
+
       // show added list element
       $li.slideDown(400, function () {
         if (!gridObject) {
           // new variation
           $inputGrid.focus()
         }
+        setTimeout(function () {
+          // handle options sorting
+          // https://github.com/RubaXa/Sortable
+          window.Sortable.create($li.find('.badges-list')[0], {
+            onUpdate: function (e) {
+              console.log(e)
+            }
+          })
+        }, 200)
       })
     }
 
