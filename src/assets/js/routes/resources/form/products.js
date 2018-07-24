@@ -58,6 +58,12 @@
       if (!err) {
         for (var i = 0; i < json.result.length; i++) {
           var grid = json.result[i]
+          // check duplicated grids
+          for (var gridId in Grids) {
+            if (Grids.hasOwnProperty(gridId) && gridId !== grid.grid_id && Grids[gridId].title === grid.title) {
+              delete Grids[gridId]
+            }
+          }
           Grids[grid.grid_id] = grid
         }
       }
