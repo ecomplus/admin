@@ -191,11 +191,13 @@
             options = optionsTitles(gridId)
             // console.log(gridId, options)
 
-            var idAux = 0
-            while (gridsOptions.hasOwnProperty(gridId)) {
+            if (gridsOptions.hasOwnProperty(gridId)) {
               // grid already in use
-              idAux++
-              gridId += gridId + '_' + idAux
+              var idAux = 2
+              while (gridsOptions.hasOwnProperty(gridId + '_' + idAux)) {
+                idAux++
+              }
+              gridId += '_' + idAux
             }
             if (oldGridId) {
               gridsOptions[gridId] = gridsOptions[oldGridId]
