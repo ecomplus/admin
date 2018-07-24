@@ -366,15 +366,6 @@
             $liOption.remove()
           })
 
-          // create variation
-          // add li element
-          $li = $('<li />', {
-            html: liVariation
-          })
-          $li.find('label').text(option)
-          $listVariations.append($li)
-          // show added list element
-          $li.slideDown()
           generateVariations()
         }
       }
@@ -386,7 +377,7 @@
                         '<div>' +
                           '<div class="custom-control custom-checkbox">' +
                             '<input type="checkbox" class="custom-control-input" checked >' +
-                            '<label class="custom-control-label fw-400"> </label>' +
+                            '<label class="custom-control-label fw-400 colored"> </label>' +
                           '</div>' +
                         '</div>' +
                         '<button class="btn btn-light" type="button">' +
@@ -399,21 +390,45 @@
                       '</div>'
 
     var generateVariations = function () {
-      // clear variations
-      $listVariations.slideUp(400, function () {
-        $(this).html('')
-      })
-
       // remove empty grids
       var GridsOptions = {}
-      for (var gridId in gridsOptions) {
+      var gridId
+      for (gridId in gridsOptions) {
         var gridArray = gridsOptions[gridId]
         if (gridArray && gridArray.length) {
           GridsOptions[gridId] = gridArray
         }
       }
-      // create new options matches
-      console.log(getCombinations(GridsOptions))
+
+      // clear variations
+      $listVariations.slideUp(400, function () {
+        $(this).html('')
+
+        // create new options matches
+        var variations = getCombinations(GridsOptions)
+        for (var i = 0; i < variations.length; i++) {
+          // create variation
+          var variation = variations[i]
+          // add li element
+          var $li = $('<li />', {
+            html: liVariation,
+            'data-specifications': JSON.stringify(variation)
+          })
+          var label = ''
+          for (gridId in variation) {
+            if (variation.hasOwnProperty(gridId)) {
+              label += '<span>' + variation[gridId].text + '</span>'
+            }
+          }
+          $li.find('label').html(label)
+          $listVariations.append($li)
+          // show added list element
+          $li.slideDown()
+        }
+
+        // show list again
+        $(this).slideDown()
+      })
     }
 
     $('#' + tabId + '-add-grid').click(function () {
