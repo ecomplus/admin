@@ -459,10 +459,10 @@
         $(this).html('')
         // update product resource data
         var data = Data()
-        data.variations = []
 
         // create new options matches
         var variations = getCombinations(GridsOptions)
+        var variationsData = []
         for (var i = 0; i < variations.length; i++) {
           // create variation
           var variation = variations[i]
@@ -488,16 +488,84 @@
           // show added list element
           $li.slideDown()
 
+          var variationObject = {}
+          // check if current data has this variation
+          if (data.variations) {
+            var bestMatchedVariation = {
+              matches: 0,
+              index: null
+            }
+            for (var ii = 0; ii < data.variations.length; ii++) {
+              // compare each specification
+              var specs = data.variations[ii].specifications
+              // count matched specs
+              var matches = 0
+
+              for (var spec in specs) {
+                if (specs.hasOwnProperty(spec) && specifications.hasOwnProperty(spec)) {
+                  var ln = specs[spec].length
+                  var conflict = false
+                  // check each specification elements
+                  if (ln === specifications[spec].length) {
+                    for (var j = 0; j < ln; j++) {
+                      if (specs[spec][j].text !== specifications[spec][j].text) {
+                        conflict = true
+                        break
+                      }
+                    }
+                  } else {
+                    conflict = true
+                  }
+
+                  if (!conflict) {
+                    // current specification matches
+                    matches++
+                  } else {
+                    // specification changed
+                    // should to create new variation
+                    matches = 0
+                    break
+                  }
+                }
+              }
+
+              if (matches > bestMatchedVariation.matches) {
+                bestMatchedVariation.index = ii
+                if (matches === Object.keys(specifications).length) {
+                  // all specifications matched
+                  bestMatchedVariation.all = true
+                  break
+                }
+              }
+            }
+            if (bestMatchedVariation.index) {
+              // copy variation object
+              variationObject = data.variations[bestMatchedVariation.index]
+              if (!bestMatchedVariation.all) {
+                // not all specifications matched
+                delete variationObject._id
+                delete variationObject.specifications
+              }
+            }
+            console.log(bestMatchedVariation)
+          }
+
           // push to data
-          data.variations.push({
-            _id: objectIdPad(idPad, '' + index),
-            specifications: specifications
-          })
-          index++
+          if (!variationObject._id) {
+            // new variation ID
+            variationObject._id = objectIdPad(idPad, '' + index)
+            index++
+            if (!variationObject.specifications) {
+              variationObject.specifications = specifications
+            }
+          }
+          variationsData.push(variationObject)
         }
 
         // show list again
         $(this).slideDown()
+        // set product data variations
+        data.variations = variationsData
         // commit only to perform reactive actions
         commit(data, true)
       })
