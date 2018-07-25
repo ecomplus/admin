@@ -570,9 +570,9 @@
             // new variation ID
             variationObject._id = objectIdPad(idPad, '' + index)
             index++
-            if (variationObject.sku && data.sku) {
+            if (!variationObject.sku && data.sku) {
               // new random code based on product SKU
-              variationObject.sku = data.sku + '-' + randomInt(1000, 9999)
+              variationObject.sku = data.sku + '-' + randomInt(10000, 99999)
             }
             variationObject.specifications = specifications
           }
