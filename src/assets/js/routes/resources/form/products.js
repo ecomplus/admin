@@ -144,7 +144,23 @@
     // https://github.com/RubaXa/Sortable
     window.Sortable.create($listGrids[0], {
       onUpdate: function (e) {
-        console.log(e)
+        // console.log(e)
+        // move array elements
+        // object to array, then mount object reordered again
+        var gridsArray = Object.keys(gridsOptions)
+        var x = gridsArray.splice(e.oldIndex, 1)[0]
+        if (x) {
+          gridsArray.splice(e.newIndex, 0, x)
+        }
+        var GridsOptions = {}
+        for (var i = 0; i < gridsArray.length; i++) {
+          var gridId = gridsArray[i]
+          GridsOptions[gridId] = gridsOptions[gridId]
+        }
+        gridsOptions = GridsOptions
+
+        // update variations
+        generateVariations()
       }
     })
 
