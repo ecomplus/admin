@@ -342,7 +342,16 @@
           // https://github.com/RubaXa/Sortable
           window.Sortable.create($li.find('.badges-list')[0], {
             onUpdate: function (e) {
-              console.log(e)
+              // console.log(e)
+              // move array elements
+              var options = gridsOptions[gridId]
+              var x = options.splice(e.oldIndex, 1)[0]
+              if (x) {
+                options.splice(e.newIndex, 0, x)
+              }
+
+              // update variations
+              generateVariations()
             }
           })
         }, 200)
