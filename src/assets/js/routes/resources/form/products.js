@@ -9,7 +9,7 @@
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
   // edit JSON document
-  // var commit = Tab.commit
+  var commit = Tab.commit
   var Data = function () {
     // current data from global variable
     return Tab.data
@@ -457,6 +457,9 @@
       // clear variations
       $listVariations.slideUp(400, function () {
         $(this).html('')
+        // update product resource data
+        var data = Data()
+        data.variations = []
 
         // create new options matches
         var variations = getCombinations(GridsOptions)
@@ -469,19 +472,34 @@
             'data-specifications': JSON.stringify(variation)
           })
           var label = ''
+          var specifications = {}
           for (gridId in variation) {
+            var option = variation[gridId].text
             if (variation.hasOwnProperty(gridId)) {
-              label += '<span>' + variation[gridId].text + '</span>'
+              label += '<span>' + option + '</span>'
             }
+            // data specifications
+            specifications[gridId] = [{
+              text: option
+            }]
           }
           $li.find('label').html(label)
           $listVariations.append($li)
           // show added list element
           $li.slideDown()
+
+          // push to data
+          data.variations.push({
+            _id: objectIdPad(idPad, '' + index),
+            specifications: specifications
+          })
+          index++
         }
 
         // show list again
         $(this).slideDown()
+        // commit only to perform reactive actions
+        commit(data, true)
       })
     }
 
@@ -548,10 +566,10 @@
           selected: true,
           value: optionValue(objectIdPad(idPad, '' + index))
         })
+        index++
         // refresh the picker plugin
         // trigger change to handle commit and save action
         $select.append($option).selectpicker('refresh').trigger('change')
-        index++
 
         // create resource document
         var slug = $select.attr('name')
