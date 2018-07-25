@@ -58,10 +58,13 @@
       if (!err) {
         for (var i = 0; i < json.result.length; i++) {
           var grid = json.result[i]
+          var normalizedTitle = normalizeString(grid.title)
           // check duplicated grids
           for (var gridId in Grids) {
-            if (Grids.hasOwnProperty(gridId) && gridId !== grid.grid_id && Grids[gridId].title === grid.title) {
-              delete Grids[gridId]
+            if (Grids.hasOwnProperty(gridId)) {
+              if (gridId !== grid.grid_id && normalizeString(Grids[gridId].title) === normalizedTitle) {
+                delete Grids[gridId]
+              }
             }
           }
           Grids[grid.grid_id] = grid
