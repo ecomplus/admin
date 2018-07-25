@@ -538,7 +538,7 @@
                 }
               }
             }
-            if (bestMatchedVariation.index) {
+            if (bestMatchedVariation.index !== null) {
               // copy variation object
               variationObject = data.variations[bestMatchedVariation.index]
               if (!bestMatchedVariation.all) {
@@ -547,7 +547,6 @@
                 delete variationObject.specifications
               }
             }
-            console.log(bestMatchedVariation)
           }
 
           // push to data
