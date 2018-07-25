@@ -552,11 +552,9 @@
           // push to data
           if (!variationObject._id) {
             // new variation ID
+            variationObject.specifications = specifications
             variationObject._id = objectIdPad(idPad, '' + index)
             index++
-            if (!variationObject.specifications) {
-              variationObject.specifications = specifications
-            }
           }
           variationsData.push(variationObject)
         }
