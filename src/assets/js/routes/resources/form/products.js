@@ -491,10 +491,12 @@
           var variationObject = {}
           // check if current data has this variation
           if (data.variations) {
+            var variationsIndex = variationsData.length
             var bestMatchedVariation = {
               matches: 0,
               index: null
             }
+
             for (var ii = 0; ii < data.variations.length; ii++) {
               // compare each specification
               var specs = data.variations[ii].specifications
@@ -529,22 +531,36 @@
                 }
               }
 
-              if (matches > bestMatchedVariation.matches) {
+              if (!(matches < bestMatchedVariation.matches)) {
+                if (matches === bestMatchedVariation.matches) {
+                  // prefer same or lowest index
+                  if (ii !== variationsIndex) {
+                    continue
+                  } else {
+                    bestMatchedVariation.sameIndex = true
+                  }
+                }
                 bestMatchedVariation.index = ii
                 if (matches === Object.keys(specifications).length) {
                   // all specifications matched
-                  bestMatchedVariation.all = true
+                  bestMatchedVariation.sameSpecs = true
                   break
                 }
               }
             }
+
             if (bestMatchedVariation.index !== null) {
               // copy variation object
               variationObject = data.variations[bestMatchedVariation.index]
-              if (!bestMatchedVariation.all) {
+              if (!bestMatchedVariation.sameSpecs) {
                 // not all specifications matched
                 delete variationObject._id
                 delete variationObject.specifications
+                if (!bestMatchedVariation.sameIndex) {
+                  // not keeping same element index
+                  // also clear SKU if any
+                  delete variationObject.sku
+                }
               }
             }
           }
@@ -552,9 +568,13 @@
           // push to data
           if (!variationObject._id) {
             // new variation ID
-            variationObject.specifications = specifications
             variationObject._id = objectIdPad(idPad, '' + index)
             index++
+            if (variationObject.sku && data.sku) {
+              // new random code based on product SKU
+              variationObject.sku = data.sku + '-' + randomInt(1000, 9999)
+            }
+            variationObject.specifications = specifications
           }
           variationsData.push(variationObject)
         }
