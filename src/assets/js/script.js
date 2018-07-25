@@ -404,9 +404,13 @@ app.config({
 
   window.randomObjectId = function () {
     // generate 24 chars hexadecimal string
-    var timestamp = Date.now().toString()
     // return unique and valid MongoDB ObjectId pattern
-    return objectIdPad(randomInt(10000, 99999) + '000000000000000000', timestamp)
+    var objectId = randomInt(10000, 99999) + '0' + Date.now()
+    // pad zeros
+    while (objectId.length < 24) {
+      objectId += '0'
+    }
+    return objectId
   }
 
   window.substringMatcher = function (data) {
