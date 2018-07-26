@@ -698,11 +698,13 @@
       }
     }
 
-    var sku = Data().sku
-    if (!sku) {
+    if (!Tab.resourceId) {
+      // creating
       // generate the SKU previously
       var firstSku = function () {
-        randomSku()
+        if (!Data().sku) {
+          randomSku()
+        }
         // run once only
         // remove the event handler
         $form.off('change', 'input[name="name"]', firstSku)
@@ -710,7 +712,7 @@
       $form.on('change', 'input[name="name"]', firstSku)
     } else {
       // check current SKU
-      checkSku(sku)
+      checkSku(Data().sku)
     }
 
     setTimeout(function () {
