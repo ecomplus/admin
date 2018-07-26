@@ -7,6 +7,7 @@
 
   // current tab ID
   var tabId = window.tabId
+  var Tab = window.Tabs[tabId]
   var elContainer = $('#' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
@@ -21,10 +22,10 @@
   })
 
   // resource list data
-  var resourceSlug = window.routeParams[0]
+  var resourceSlug = Tab.slug
   var data, list
   var updateData = function () {
-    data = window.Tabs[tabId].data
+    data = Tab.data
     list = data.result
   }
   updateData()
@@ -179,7 +180,7 @@
             paginationControls()
           }
         }
-        window.Tabs[tabId].load(callback, params)
+        Tab.load(callback, params)
       } else if (!waiting) {
         waiting = true
       }
