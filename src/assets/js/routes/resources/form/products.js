@@ -640,12 +640,46 @@
         sku += letters.charAt(Math.floor(Math.random() * letters.length))
       }
       // random digits
-      sku += randomInt(100000, 999999)
+      sku += randomInt(1000, 9999)
       $inputSku.val(sku).trigger('change')
+      // validate generated SKU
+      checkSku(sku, function () {
+        // invalid SKU, already in use
+        // try another
+        randomSku()
+      })
     }
     $('#' + tabId + '-random-sku').click(randomSku)
 
-    if (!Data().sku) {
+    var checkSku = function (sku, cb) {
+      if (sku) {
+        // SKU should be unique
+        // checks if another product have the same SKU
+        window.callApi('products.json?sku=' + encodeURIComponent(sku), 'GET', function (err, json) {
+          if (!err) {
+            var list = json.result
+            var ln = list.length
+            if (ln) {
+              // product(s) found
+              if (ln > 1 || list[0]._id !== Tab.resourceId) {
+                // different of current product
+                if (typeof cb === 'function') {
+                  cb()
+                } else {
+                  app.toast({
+                    'en_us': 'There is another product registered with this same SKU',
+                    'pt_br': 'Existe outro produto cadastrado com este mesmo SKU'
+                  })
+                }
+              }
+            }
+          }
+        })
+      }
+    }
+
+    var sku = Data().sku
+    if (!sku) {
       // generate the SKU previously
       var firstSku = function () {
         randomSku()
@@ -654,6 +688,9 @@
         $form.off('change', 'input[name="name"]', firstSku)
       }
       $form.on('change', 'input[name="name"]', firstSku)
+    } else {
+      // check current SKU
+      checkSku(sku)
     }
 
     setTimeout(function () {
