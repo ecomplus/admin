@@ -467,10 +467,11 @@
         for (i = 0; i < variations.length; i++) {
           // create variation
           var variation = variations[i]
+
           // add li element
           var $li = $('<li />', {
-            html: liVariation,
-            'data-specifications': JSON.stringify(variation)
+            html: liVariation
+            // 'data-specifications': JSON.stringify(variation)
           })
           var label = ''
           var specifications = {}
@@ -485,6 +486,14 @@
             }]
           }
           $li.find('label').html(label)
+          $li.find('button').click(function () {
+            // edit variation
+            $form.children('#' + tabId + '-product-fields').slideUp(400, function () {
+              var $div = $form.children('#' + tabId + '-variation-fields')
+              $div.find('#' + tabId + '-variation-specs').html(label)
+              $div.slideDown()
+            })
+          })
           $listVariations.append($li)
           // show added list element
           $li.slideDown()
