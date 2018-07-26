@@ -631,6 +631,26 @@
       $(this).select()
     })
 
+    .change(function () {
+      // update variations SKUs
+      setTimeout(function () {
+        var data = Data()
+        var sku = data.sku
+        var variations = data.variations
+        if (sku && variations) {
+          for (var i = 0; i < variations.length; i++) {
+            var variation = variations[i]
+            if (typeof variation.sku === 'string') {
+              // regex pattern for random variations SKUs
+              variation.sku = variation.sku.replace(/^[A-Z]{3}[0-9]{4}(-[0-9]{3}-[0-9]+)$/, sku + '$1')
+            }
+          }
+          // commit only to perform reactive actions
+          commit(data, true)
+        }
+      }, 200)
+    })
+
     // generate new random SKU
     var randomSku = function () {
       var sku = ''
