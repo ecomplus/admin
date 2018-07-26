@@ -576,6 +576,7 @@
           variationsData.push(variationObject)
         }
 
+        // set variations SKUs
         if (!data.sku && typeof firstSku === 'function') {
           // create random product SKU first
           firstSku()
