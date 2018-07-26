@@ -37,12 +37,12 @@
     return Tab.data
   }
 
-  var slug = window.routeParams[0]
-  var resourceId = window.routeParams[1]
+  var slug = Tab.slug
+  var resourceId = Tab.resourceId
   var creating, endpoint
   // check if resource has slug property
   var hasSlug = !!$form.find('[name="slug"]').length
-  if (resourceId === 'new') {
+  if (!resourceId) {
     creating = true
     endpoint = slug + '.json'
   } else {
