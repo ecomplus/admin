@@ -577,12 +577,11 @@
         }
 
         // set variations SKUs
-        if (!data.sku && typeof firstSku === 'function') {
+        if (!Sku && typeof firstSku === 'function') {
           // create random product SKU first
           firstSku()
-          data.sku = Data().sku
         }
-        if (data.sku) {
+        if (Sku) {
           // create SKUs automatically for variations
           ln = variationsData.length
           for (i = 0; i < ln; i++) {
@@ -591,7 +590,7 @@
               // should be unique
               var sku = null
               while (!sku) {
-                sku = data.sku + '-' + randomInt(100, 999) + '-' + i
+                sku = Sku + '-' + randomInt(100, 999) + '-' + i
                 // check if other variation already have same SKU
                 for (ii = 0; ii < ln.length; ii++) {
                   if (sku === variationsData[ii].sku) {
@@ -631,6 +630,7 @@
       }
     }
 
+    var Sku = Data().sku
     var $inputSku = $form.find('input[name="sku"]')
     $inputSku.click(function () {
       // select all input text
@@ -639,22 +639,22 @@
 
     .change(function () {
       // update variations SKUs
-      setTimeout(function () {
-        var data = Data()
-        var sku = data.sku
-        var variations = data.variations
-        if (sku && variations) {
-          for (var i = 0; i < variations.length; i++) {
-            var variation = variations[i]
-            if (typeof variation.sku === 'string') {
-              // regex pattern for random variations SKUs
-              variation.sku = variation.sku.replace(/^[A-Z]{3}[0-9]{4}(-[0-9]{3}-[0-9]+)$/, sku + '$1')
-            }
+      var data = Data()
+      var sku = data.sku
+      var variations = data.variations
+      if (sku && variations) {
+        // regex pattern for random variations SKUs
+        var regex = new RegExp('^' + Sku + '(-[0-9]{3}-[0-9]+)$')
+        for (var i = 0; i < variations.length; i++) {
+          var variation = variations[i]
+          if (typeof variation.sku === 'string') {
+            variation.sku = variation.sku.replace(regex, sku + '$1')
           }
-          // commit only to perform reactive actions
-          commit(data, true)
         }
-      }, 200)
+        // commit only to perform reactive actions
+        commit(data, true)
+      }
+      Sku = sku
     })
 
     // generate new random SKU
@@ -709,7 +709,7 @@
       // creating
       // generate the SKU previously
       firstSku = function () {
-        if (!Data().sku) {
+        if (!Sku) {
           randomSku()
         }
         // run once only
@@ -718,9 +718,9 @@
         firstSku = null
       }
       $form.on('change', 'input[name="name"]', firstSku)
-    } else {
+    } else if (Sku) {
       // check current SKU
-      checkSku(Data().sku)
+      checkSku(Sku)
     }
 
     setTimeout(function () {
