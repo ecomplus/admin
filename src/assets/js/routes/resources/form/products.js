@@ -640,7 +640,7 @@
         sku += letters.charAt(Math.floor(Math.random() * letters.length))
       }
       // random digits
-      sku += randomInt(10000, 99999)
+      sku += randomInt(100000, 999999)
       $inputSku.val(sku).trigger('change')
     }
     $('#' + tabId + '-random-sku').click(randomSku)
