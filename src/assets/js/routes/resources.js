@@ -7,6 +7,7 @@
 
   // current tab ID
   var tabId = window.tabId
+  var Tab = window.Tabs[tabId]
   // prefix tab ID on content elements IDs
   window.renderContentIds()
 
@@ -102,7 +103,7 @@
 
         // commit changes on JSON document globally
         // improve reactivity
-        window.Tabs[tabId].commit = commit
+        Tab.commit = commit
 
         editor.on('blur', function () {
           // code editor manually changed (?)
@@ -114,7 +115,7 @@
             return
           }
           // update data
-          window.Tabs[tabId].data = json
+          Tab.data = json
         })
         editor.on('change', function () {
           window.triggerUnsaved(tabId)
@@ -129,11 +130,15 @@
   var commit = function (json, updated) {
     if (!updated) {
       // pass JSON data
-      window.Tabs[tabId].data = json
+      Tab.data = json
     }
     // reset Ace editor content
     editor.session.setValue(JSON.stringify(json, null, 4))
   }
+
+  // set resource params globally
+  Tab.resourceId = resourceId
+  Tab.slug = slug
 
   if (creating !== true) {
     var endpoint
@@ -158,7 +163,7 @@
       })
     }
     // load JSON data globally
-    window.Tabs[tabId].load = load
+    Tab.load = load
 
     var params
     if (resourceId === undefined) {
