@@ -572,7 +572,7 @@
             index++
             if (!variationObject.sku && data.sku) {
               // new random code based on product SKU
-              variationObject.sku = data.sku + '-' + randomInt(10000, 99999)
+              variationObject.sku = data.sku + '-' + randomInt(100000, 999999)
             }
             variationObject.specifications = specifications
           }
