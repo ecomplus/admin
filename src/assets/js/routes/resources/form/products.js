@@ -459,11 +459,12 @@
         $(this).html('')
         // update product resource data
         var data = Data()
+        var i, ii, ln
 
         // create new options matches
         var variations = getCombinations(GridsOptions)
         var variationsData = []
-        for (var i = 0; i < variations.length; i++) {
+        for (i = 0; i < variations.length; i++) {
           // create variation
           var variation = variations[i]
           // add li element
@@ -497,7 +498,7 @@
               index: null
             }
 
-            for (var ii = 0; ii < data.variations.length; ii++) {
+            for (ii = 0; ii < data.variations.length; ii++) {
               // compare each specification
               var specs = data.variations[ii].specifications
               // count matched specs
@@ -505,7 +506,7 @@
 
               for (var spec in specs) {
                 if (specs.hasOwnProperty(spec) && specifications.hasOwnProperty(spec)) {
-                  var ln = specs[spec].length
+                  ln = specs[spec].length
                   var conflict = false
                   // check each specification elements
                   if (ln === specifications[spec].length) {
@@ -570,13 +571,32 @@
             // new variation ID
             variationObject._id = objectIdPad(idPad, '' + index)
             index++
-            if (!variationObject.sku && data.sku) {
-              // new random code based on product SKU
-              variationObject.sku = data.sku + '-' + randomInt(100000, 999999)
-            }
             variationObject.specifications = specifications
           }
           variationsData.push(variationObject)
+        }
+
+        if (data.sku) {
+          // create SKUs automatically for variations
+          ln = variationsData.length
+          for (i = 0; i < ln; i++) {
+            if (!variationsData[i].sku) {
+              // new random code based on product SKU
+              // should be unique
+              var sku = null
+              while (!sku) {
+                sku = data.sku + '-' + randomInt(100, 999) + '-' + i
+                // check if other variation already have same SKU
+                for (ii = 0; ii < ln.length; ii++) {
+                  if (sku === variationsData[ii].sku) {
+                    sku = null
+                    break
+                  }
+                }
+              }
+              variationsData[i].sku = sku
+            }
+          }
         }
 
         // show list again
