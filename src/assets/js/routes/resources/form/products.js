@@ -576,6 +576,11 @@
           variationsData.push(variationObject)
         }
 
+        if (!data.sku && typeof firstSku === 'function') {
+          // create random product SKU first
+          firstSku()
+          data.sku = Data().sku
+        }
         if (data.sku) {
           // create SKUs automatically for variations
           ln = variationsData.length
@@ -698,16 +703,18 @@
       }
     }
 
+    var firstSku
     if (!Tab.resourceId) {
       // creating
       // generate the SKU previously
-      var firstSku = function () {
+      firstSku = function () {
         if (!Data().sku) {
           randomSku()
         }
         // run once only
         // remove the event handler
         $form.off('change', 'input[name="name"]', firstSku)
+        firstSku = null
       }
       $form.on('change', 'input[name="name"]', firstSku)
     } else {
