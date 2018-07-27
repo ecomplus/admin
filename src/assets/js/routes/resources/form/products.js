@@ -515,9 +515,29 @@
               $div.slideDown()
             })
           })
+
           $listVariations.append($li)
           // show added list element
           $li.slideDown()
+
+          // handle checkbox to add or remove variation
+          $li.find('input[type="checkbox"]').change((function (index) {
+            return function () {
+              var data = Data()
+              if (!$(this).is(':checked')) {
+                // save variation JSON
+                $(this).data('variation', JSON.stringify(data.variations[index]))
+                // remove variation from data
+                data.variations.splice(index, 1)
+              } else {
+                // add variation again
+                data.variations.splice(index, 0, JSON.parse($(this).data('variation')))
+              }
+
+              // commit only to perform reactive actions
+              commit(data, true)
+            }
+          }(i)))
 
           var variationObject = {}
           // check if current data has this variation
