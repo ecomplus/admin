@@ -460,9 +460,11 @@
       return function () {
         // add or remove variation from data
         var data = Data()
-        var index = variationIndexFromList($li)
+        // variation index
+        var index
 
         if (!$(this).is(':checked')) {
+          index = variationIndexFromList($li)
           // save variation JSON
           $(this).data('variation', JSON.stringify(data.variations[index]))
           // remove variation from data
@@ -471,11 +473,14 @@
           $li.addClass('disabled')
           $edit.attr('disabled', true)
         } else {
+          // remove disabled class first
+          // li most be enabled to get correct index
+          $li.removeClass('disabled')
+          index = variationIndexFromList($li)
           // add variation again
           data.variations.splice(index, 0, JSON.parse($(this).data('variation')))
           // enable edit button again
           $edit.removeAttr('disabled')
-          $li.removeClass('disabled')
         }
 
         // commit only to perform reactive actions
