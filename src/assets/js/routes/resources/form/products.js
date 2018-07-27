@@ -804,5 +804,12 @@
     }))
     // ready to setup and show form
     Tab.formSetup()
+
+    $('#' + tabId + '-back-to-product').click(function () {
+      // show product form again
+      $form.children('#' + tabId + '-variation-fields').slideUp(400, function () {
+        $form.children('#' + tabId + '-product-fields').slideDown()
+      })
+    })
   }
 }())
