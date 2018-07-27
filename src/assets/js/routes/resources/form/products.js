@@ -467,30 +467,44 @@
         for (i = 0; i < variations.length; i++) {
           // create variation
           var variation = variations[i]
+          var label = ''
+          var specifications = {}
+          for (gridId in variation) {
+            if (variation.hasOwnProperty(gridId)) {
+              var option = variation[gridId].text
+              label += '<span>' + option + '</span>'
+              // data specifications
+              specifications[gridId] = [{
+                text: option
+              }]
+            }
+          }
 
           // add li element
           var $li = $('<li />', {
             html: liVariation
             // 'data-specifications': JSON.stringify(variation)
           })
-          var label = ''
-          var specifications = {}
-          for (gridId in variation) {
-            var option = variation[gridId].text
-            if (variation.hasOwnProperty(gridId)) {
-              label += '<span>' + option + '</span>'
-            }
-            // data specifications
-            specifications[gridId] = [{
-              text: option
-            }]
-          }
           $li.find('label').html(label)
           $li.find('button').click(function () {
             // edit variation
             $form.children('#' + tabId + '-product-fields').slideUp(400, function () {
               var $div = $form.children('#' + tabId + '-variation-fields')
-              $div.find('#' + tabId + '-variation-specs').html(label)
+
+              // HTML element describing specifications
+              var elSpecs = ''
+              for (var gridId in specifications) {
+                var options = specifications[gridId]
+                if (options) {
+                  elSpecs += '<h4><small class="subtitle m-0">' + Grids[gridId].title + '</small>'
+                  for (var i = 0; i < options.length; i++) {
+                    elSpecs += ' <small>·</small> ' + options[i].text
+                  }
+                  elSpecs += '</h4>'
+                }
+              }
+              $div.find('#' + tabId + '-variation-specs').html(elSpecs)
+
               $div.slideDown()
             })
           })
