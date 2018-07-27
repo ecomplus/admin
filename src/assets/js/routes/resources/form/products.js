@@ -493,32 +493,6 @@
             // 'data-specifications': JSON.stringify(variation)
           })
           $li.find('label').html(label)
-          $li.find('button').click(function () {
-            // edit variation
-            $form.children('#' + tabId + '-product-fields').slideUp(400, function () {
-              var $div = $form.children('#' + tabId + '-variation-fields')
-
-              // HTML element describing specifications
-              var elSpecs = ''
-              for (var gridId in specifications) {
-                var options = specifications[gridId]
-                if (options) {
-                  elSpecs += '<h4><small class="subtitle m-0">' + Grids[gridId].title + '</small>'
-                  for (var i = 0; i < options.length; i++) {
-                    elSpecs += ' <small>·</small> ' + options[i].text
-                  }
-                  elSpecs += '</h4>'
-                }
-              }
-              $div.find('#' + tabId + '-variation-specs').html(elSpecs)
-
-              $div.slideDown()
-            })
-          })
-
-          $listVariations.append($li)
-          // show added list element
-          $li.slideDown()
 
           // handle checkbox to add or remove variation
           $li.find('input[type="checkbox"]').change((function (index) {
@@ -538,6 +512,18 @@
               commit(data, true)
             }
           }(i)))
+
+          // handle edit button
+          $li.find('button').click((function (index) {
+            return function () {
+              // edit variation passing current index
+              editVariation(index)
+            }
+          }(i)))
+
+          $listVariations.append($li)
+          // show added list element
+          $li.slideDown()
 
           var variationObject = {}
           // check if current data has this variation
@@ -846,11 +832,76 @@
     // ready to setup and show form
     Tab.formSetup()
 
+    /* Setup variation form */
+    var currentVariationIndex = 0
+    // product and variation form fields elements
+    var $productFields = $form.children('#' + tabId + '-product-fields')
+    var $variationFields = $form.children('#' + tabId + '-variation-fields')
+
     $('#' + tabId + '-back-to-product').click(function () {
       // show product form again
-      $form.children('#' + tabId + '-variation-fields').slideUp(400, function () {
-        $form.children('#' + tabId + '-product-fields').slideDown()
+      $variationFields.slideUp(400, function () {
+        $productFields.slideDown()
       })
+    })
+
+    var editVariation = function (index) {
+      var variations = Data().variations
+      if (variations && index >= 0 && variations.length > index) {
+        // edit variation by index
+        currentVariationIndex = index
+        var specifications = variations[index].specifications
+
+        $productFields.slideUp(400, function () {
+          var $div = $variationFields
+
+          // HTML element describing specifications
+          var elSpecs = ''
+          for (var gridId in specifications) {
+            var options = specifications[gridId]
+            if (options) {
+              elSpecs += '<h4><small class="subtitle m-0">' + Grids[gridId].title + '</small>'
+              for (var i = 0; i < options.length; i++) {
+                elSpecs += ' <small>·</small> ' + options[i].text
+              }
+              elSpecs += '</h4>'
+            }
+          }
+          $div.find('#' + tabId + '-variation-specs').html(elSpecs)
+
+          // update pagination buttons
+          if (index < variations.length - 1) {
+            $nextVariation.removeAttr('disabled')
+          } else {
+            $nextVariation.attr('disabled', true)
+          }
+          if (index > 0) {
+            $prevVariation.removeAttr('disabled')
+          } else {
+            $prevVariation.attr('disabled', true)
+          }
+
+          $div.slideDown()
+        })
+      }
+    }
+
+    // setup pagination buttons
+    var pageVariations = function (addIndex) {
+      // hide form, change edited variation, show form
+      $variationFields.slideUp(400, function () {
+        editVariation(currentVariationIndex + addIndex)
+      })
+    }
+    var $nextVariation = $variationFields.find('#' + tabId + '-next-variation')
+    var $prevVariation = $variationFields.find('#' + tabId + '-prev-variation')
+    $nextVariation.click(function () {
+      // pass to next variation
+      pageVariations(+1)
+    })
+    $prevVariation.click(function () {
+      // back to previous variation
+      pageVariations(-1)
     })
   }
 }())
