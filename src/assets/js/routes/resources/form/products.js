@@ -241,6 +241,13 @@
               // setup options array
               gridsOptions[gridId] = []
             }
+
+            if (!Grids.hasOwnProperty(gridId)) {
+              // save grid name
+              Grids[gridId] = {
+                title: grid
+              }
+            }
             $(this).data('grid-id', gridId)
           }
 
