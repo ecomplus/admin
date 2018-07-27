@@ -433,6 +433,11 @@
     }
 
     var $listVariations = $('#' + tabId + '-variations-list')
+    var variationIndexFromList = function ($li) {
+      // get variation index from list DOM element
+      return $listVariations.children(':not(.disabled)').index($li)
+    }
+
     // variation li element HTML
     var liVariation = '<div class="flexbox align-items-center">' +
                         '<div>' +
@@ -449,6 +454,42 @@
                           '</span>' +
                         '</button>' +
                       '</div>'
+
+    // on checkbox change event
+    var liVariationControl = function ($li, $edit) {
+      return function () {
+        // add or remove variation from data
+        var data = Data()
+        var index = variationIndexFromList($li)
+
+        if (!$(this).is(':checked')) {
+          // save variation JSON
+          $(this).data('variation', JSON.stringify(data.variations[index]))
+          // remove variation from data
+          data.variations.splice(index, 1)
+          // disable edition
+          $li.addClass('disabled')
+          $edit.attr('disabled', true)
+        } else {
+          // add variation again
+          data.variations.splice(index, 0, JSON.parse($(this).data('variation')))
+          // enable edit button again
+          $edit.removeAttr('disabled')
+          $li.removeClass('disabled')
+        }
+
+        // commit only to perform reactive actions
+        commit(data, true)
+      }
+    }
+
+    // on edit button click event
+    var liVariationEdit = function ($li) {
+      return function () {
+        // edit variation passing current index
+        editVariation(variationIndexFromList($li))
+      }
+    }
 
     var generateVariations = function () {
       // remove empty grids
@@ -493,34 +534,11 @@
             // 'data-specifications': JSON.stringify(variation)
           })
           $li.find('label').html(label)
-
-          // handle checkbox to add or remove variation
-          $li.find('input[type="checkbox"]').change((function (index) {
-            return function () {
-              var data = Data()
-              if (!$(this).is(':checked')) {
-                // save variation JSON
-                $(this).data('variation', JSON.stringify(data.variations[index]))
-                // remove variation from data
-                data.variations.splice(index, 1)
-              } else {
-                // add variation again
-                data.variations.splice(index, 0, JSON.parse($(this).data('variation')))
-              }
-
-              // commit only to perform reactive actions
-              commit(data, true)
-            }
-          }(i)))
-
           // handle edit button
-          $li.find('button').click((function (index) {
-            return function () {
-              // edit variation passing current index
-              editVariation(index)
-            }
-          }(i)))
-
+          var $edit = $li.find('button')
+          $edit.click(liVariationEdit($li))
+          // handle checkbox to add or remove variation
+          $li.find('input[type="checkbox"]').change(liVariationControl($li, $edit))
           $listVariations.append($li)
           // show added list element
           $li.slideDown()
