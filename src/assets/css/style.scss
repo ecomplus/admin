@@ -849,6 +849,13 @@ ul > li:nth-child(4n+4) > .badges-list li {
 *:empty + .prev-empty {
   display: inherit;
 }
+.inline-childs > * {
+  display: inline-block;
+  margin-right: 20px;
+}
+.inline-childs > *:last-child {
+  margin-right: none;
+}
 @media (max-width: 767px) {
   .hidden-sm-down {
     display: none;
