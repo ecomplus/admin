@@ -628,9 +628,156 @@
           </div>
         </div>
       </div>
+
       <div class="col-md-5">
-        <div class="card">
-          <div class="card-body">
+        <div class="card card-slided-up">
+          <header class="card-header">
+            <h6 class="card-title i18n">
+              <span data-lang="en_us">Barcodes</span>
+              <span data-lang="pt_br">Códigos de barra</span>
+            </h6>
+            <ul class="card-controls">
+              <li>
+                <a class="card-btn-slide i18n" href="#">
+                  <span data-lang="en_us">Edit GTIN and MPN</span>
+                  <span data-lang="pt_br">Editar GTIN e MPN</span>
+                </a>
+              </li>
+            </ul>
+          </header>
+
+          <div class="card-content">
+            <div class="card-body">
+              <div class="form-group">
+                <label>GTIN / ISBN / UPC</label>
+                <select multiple name="variations.gtin" class="tagsinput"></select>
+                <span class="i18n">
+                  <small data-lang="en_us" class="form-text">Barcode</small>
+                  <small data-lang="pt_br" class="form-text">Código de barras</small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label>MPN</label>
+                <select multiple name="variations.mpn" class="tagsinput"></select>
+                <span class="i18n">
+                  <small data-lang="en_us" class="form-text">Manufacturer code</small>
+                  <small data-lang="pt_br" class="form-text">Código do fabricante</small>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-slided-up">
+          <header class="card-header">
+            <h6 class="card-title i18n">
+              <span data-lang="en_us">Shipping</span>
+              <span data-lang="pt_br">Frete</span>
+            </h6>
+            <ul class="card-controls">
+              <li>
+                <a class="card-btn-slide i18n" href="#">
+                  <span data-lang="en_us">Edit product dimensions</span>
+                  <span data-lang="pt_br">Editar dimensões do produto</span>
+                </a>
+              </li>
+            </ul>
+          </header>
+
+          <div class="card-content">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Weight</span>
+                      <span data-lang="pt_br">Peso</span>
+                    </label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" name="variations.weight.value" />
+                      <div class="input-group-append w-70px">
+                        <select name="weight.unit">
+                          <option value="mg">mg</option>
+                          <option value="g" selected >g</option>
+                          <option value="kg">kg</option>
+                          <option value="lb">lb</option>
+                          <option value="oz">oz</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Width</span>
+                      <span data-lang="pt_br">Largura</span>
+                    </label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" name="variations.dimensions.width.value" />
+                      <div class="input-group-append w-70px">
+                        <select name="dimensions.width.unit">
+                          <option value="mm">mm</option>
+                          <option value="cm" selected >cm</option>
+                          <option value="m">m</option>
+                          <option value="ft">ft</option>
+                          <option value="in">in</option>
+                          <option value="yd">yd</option>
+                          <option value="mi">mi</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Height</span>
+                      <span data-lang="pt_br">Altura</span>
+                    </label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" name="variations.dimensions.height.value" />
+                      <div class="input-group-append w-70px">
+                        <select name="dimensions.height.unit">
+                          <option value="mm">mm</option>
+                          <option value="cm" selected >cm</option>
+                          <option value="m">m</option>
+                          <option value="ft">ft</option>
+                          <option value="in">in</option>
+                          <option value="yd">yd</option>
+                          <option value="mi">mi</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Length</span>
+                      <span data-lang="pt_br">Comprimento</span>
+                    </label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" name="variations.dimensions.length.value" />
+                      <div class="input-group-append w-70px">
+                        <select name="dimensions.length.unit">
+                          <option value="mm">mm</option>
+                          <option value="cm" selected >cm</option>
+                          <option value="m">m</option>
+                          <option value="ft">ft</option>
+                          <option value="in">in</option>
+                          <option value="yd">yd</option>
+                          <option value="mi">mi</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
