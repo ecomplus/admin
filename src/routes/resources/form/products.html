@@ -565,11 +565,11 @@
         <div class="card">
           <div class="card-body">
             <div class="form-group">
-              <label class="i18n require">
+              <label class="i18n">
                 <span data-lang="en_us">Variation name</span>
                 <span data-lang="pt_br">Nome do variação</span>
               </label>
-              <input type="text" class="form-control action-title" name="variation.name" required />
+              <input type="text" class="form-control action-title" name="variations.name"/>
             </div>
 
             <div class="row mt-30">
@@ -579,27 +579,21 @@
                   <span data-lang="pt_br">Inventário</span>
                 </h4>
 
-                <div class="row">
-                  <div class="col-md-7">
-                    <div class="form-group">
-                      <label class="require">SKU</label>
-                      <input type="text" class="form-control" name="variation.sku" required />
-                      <span class="i18n">
-                        <small data-lang="en_us" class="form-text">Reference code</small>
-                        <small data-lang="pt_br" class="form-text">Código de referência</small>
-                      </span>
-                    </div>
-                  </div>
-                  <div class="col-md-5">
-                    <div class="form-group">
-                      <label class="i18n">
-                        <span data-lang="en_us">Quantity</span>
-                        <span data-lang="pt_br">Quantidade</span>
-                      </label>
-                      <input type="number" class="form-control" name="variation.quantity"
-                        min="0" max="9999999" step="any"/>
-                    </div>
-                  </div>
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Quantity</span>
+                    <span data-lang="pt_br">Quantidade</span>
+                  </label>
+                  <input type="number" class="form-control w-140px" name="variations.quantity"
+                    min="0" max="9999999" step="any"/>
+                </div>
+                <div class="form-group">
+                  <label>SKU</label>
+                  <input type="text" class="form-control" name="variations.sku"/>
+                  <span class="i18n">
+                    <small data-lang="en_us" class="form-text">Reference code</small>
+                    <small data-lang="pt_br" class="form-text">Código de referência</small>
+                  </span>
                 </div>
               </div>
 
@@ -614,7 +608,7 @@
                     <span data-lang="en_us">Sale price</span>
                     <span data-lang="pt_br">Preço de venda</span>
                   </label>
-                  <input type="tel" class="form-control" name="variation.price"
+                  <input type="tel" class="form-control" name="variations.price"
                     data-is-number="true" data-money="true"/>
                 </div>
                 <div class="form-group">
@@ -622,7 +616,7 @@
                     <span data-lang="en_us">Compare at price</span>
                     <span data-lang="pt_br">Compare ao preço</span>
                   </label>
-                  <input type="tel" class="form-control" name="variation.base_price"
+                  <input type="tel" class="form-control" name="variations.base_price"
                     data-is-number="true" data-money="true"/>
                   <span class="i18n">
                     <small data-lang="en_us" class="form-text">Base price</small>
