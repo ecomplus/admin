@@ -880,17 +880,33 @@
         currentVariationIndex = index
         var variation = variations[index]
         var specifications = variation.specifications
+        var $div = $variationFields
+        var i
+
+        // check if there is other variation to copy
+        var canCopy
+        for (i = 0; i < variations.length; i++) {
+          if (i !== index && Object.keys(variations[i]).length > 3) {
+            // _is, sku and specifications are the basic variations properties
+            // variation has more (edited) properties
+            // can be copied
+            $copyVariation.show()
+            canCopy = true
+            break
+          }
+        }
+        if (!canCopy) {
+          $copyVariation.hide()
+        }
 
         $productFields.slideUp(400, function () {
-          var $div = $variationFields
-
           // HTML element describing specifications
           var elSpecs = ''
           for (var gridId in specifications) {
             var options = specifications[gridId]
             if (options) {
               elSpecs += '<h4><small class="subtitle m-0">' + Grids[gridId].title + '</small>'
-              for (var i = 0; i < options.length; i++) {
+              for (i = 0; i < options.length; i++) {
                 elSpecs += ' <small>·</small> ' + options[i].text
               }
               elSpecs += '</h4>'
@@ -936,6 +952,12 @@
     $prevVariation.click(function () {
       // back to previous variation
       pageVariations(-1)
+    })
+
+    // setup copy variation button
+    var $copyVariation = $variationFields.find('#' + tabId + '-copy-variation')
+    $copyVariation.click(function () {
+      console.log(1)
     })
   }
 }())
