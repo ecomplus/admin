@@ -540,25 +540,31 @@
       <div>
         <button class="btn btn-label btn-sm btn-light" type="button" data-id="back-to-product">
           <label><i class="ti-angle-double-left"></i></label>
-          <span class="i18n">
+          <span class="i18n hidden-sm-down">
             <span data-lang="en_us">Back to product</span>
             <span data-lang="pt_br">Voltar ao produto</span>
           </span>
+          <span class="i18n hidden-md-up">
+            <span data-lang="en_us">Product</span>
+            <span data-lang="pt_br">Produto</span>
+          </span>
         </button>
+        <div class="btn-group ml-10">
+          <button class="btn btn-pure btn-light" type="button" data-id="prev-variation" disabled >
+            <i class="ti-angle-left"></i>
+          </button>
+          <button class="btn btn-pure btn-light" type="button" data-id="next-variation" disabled >
+            <i class="ti-angle-right"></i>
+          </button>
+        </div>
+      </div>
+      <div>
         <button class="btn btn-pure btn-light" type="button" data-id="duplicate-variation">
           <i class="ti-layers"></i>
           <span class="i18n hidden-sm-down">
             <span data-lang="en_us">Duplicate variation</span>
             <span data-lang="pt_br">Duplicar variação</span>
           </span>
-        </button>
-      </div>
-      <div class="btn-group">
-        <button class="btn btn-pure btn-light" type="button" data-id="prev-variation" disabled >
-          <i class="ti-angle-left"></i>
-        </button>
-        <button class="btn btn-pure btn-light" type="button" data-id="next-variation" disabled >
-          <i class="ti-angle-right"></i>
         </button>
       </div>
     </div>
