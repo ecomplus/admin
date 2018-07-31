@@ -878,26 +878,46 @@
       if (variations && index >= 0 && variations.length > index) {
         // edit variation by index
         currentVariationIndex = index
-        var variation = variations[index]
-        var specifications = variation.specifications
-        var $div = $variationFields
-        var i
+        var variation, i
 
         // check if there is other variation to copy
-        var canCopy
+        var variationsToCopy = []
         for (i = 0; i < variations.length; i++) {
-          if (i !== index && Object.keys(variations[i]).length > 3) {
-            // _is, sku and specifications are the basic variations properties
-            // variation has more (edited) properties
-            // can be copied
-            $copyVariation.show()
-            canCopy = true
-            break
+          if (i !== index) {
+            variation = variations[i]
+            if (variation.sku && Object.keys(variation).length > 3) {
+              // _is, sku and specifications are the basic variations properties
+              // variation has more (edited) properties
+              // can be copied
+              variationsToCopy.push(variation.sku)
+            }
           }
         }
-        if (!canCopy) {
+        if (!variationsToCopy.length) {
           $copyVariation.hide()
+        } else {
+          var $html = []
+          for (i = 0; i < variationsToCopy.length; i++) {
+            // list variations that can be copied
+            $html.push($('<a />', {
+              'class': 'dropdown-item',
+              text: variationsToCopy[i],
+              href: 'javascript:;',
+              click: (function (index) {
+                return function () {
+                  console.log(index)
+                }
+              }(i))
+            }))
+          }
+          $copyVariationList.html($html)
+          $copyVariation.show()
         }
+
+        // current variation
+        variation = variations[index]
+        var specifications = variation.specifications
+        var $div = $variationFields
 
         $productFields.slideUp(400, function () {
           // HTML element describing specifications
@@ -959,15 +979,19 @@
 
     // setup copy variation button
     var $copyVariation = $variationFields.find('#' + tabId + '-copy-variation')
-    $copyVariation.click(function () {
-      console.log(1)
+    $copyVariation.children('button').click(function () {
+      // console.log(1)
     })
+    var $copyVariationList = $copyVariation.children('div')
 
     // variation name field with product name
     $variationFields.find('input[name="variations.name"]').focus(function () {
       if ($(this).val() === '') {
         // set product name on field and select all text
-        $(this).val(cutString(Data().name, 100)).select()
+        var productName = Data().name
+        if (productName) {
+          $(this).val(cutString(productName, 100)).select()
+        }
       }
     })
   }
