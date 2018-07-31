@@ -962,5 +962,13 @@
     $copyVariation.click(function () {
       console.log(1)
     })
+
+    // variation name field with product name
+    $variationFields.find('input[name="variations.name"]').focus(function () {
+      if ($(this).val() === '') {
+        // set product name on field and select all text
+        $(this).val(cutString(Data().name, 100)).select()
+      }
+    })
   }
 }())
