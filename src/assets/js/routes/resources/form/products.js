@@ -952,7 +952,7 @@
             $(this).val(($(this).data('default') || ''))
           })
           // setup inputs with values from data
-          setupInputValues($div, data)
+          setupInputValues($div, variation, 'variations.')
           // show form
           $div.slideDown()
         })
