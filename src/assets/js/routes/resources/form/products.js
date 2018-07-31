@@ -522,7 +522,9 @@
           var variation = variations[i]
           var label = ''
           // variation name
-          var name = data.name
+          // regex to test variations names
+          var nameRegex = variationNameRegex()
+          var name = Name
           var specifications = {}
           for (gridId in variation) {
             if (variation.hasOwnProperty(gridId)) {
@@ -552,10 +554,8 @@
           // show added list element
           $li.slideDown()
 
-          var variationObject = {
-            // preset variation name
-            name: name
-          }
+          // create new variation object
+          var variationObject = {}
           // check if current data has this variation
           if (data.variations) {
             var variationsIndex = variationsData.length
@@ -639,6 +639,10 @@
             index++
             variationObject.specifications = specifications
           }
+          if (!variationObject.name || nameRegex.test(variationObject.name)) {
+            // preset variation name
+            variationObject.name = name
+          }
           variationsData.push(variationObject)
         }
 
@@ -708,7 +712,7 @@
       var data = Data()
       var sku = data.sku
       var variations = data.variations
-      if (sku && variations) {
+      if (sku && variations && Sku) {
         // regex pattern for random variations SKUs
         var regex = new RegExp('^' + Sku + '(-[0-9]{3}-[0-9]+)$')
         for (var i = 0; i < variations.length; i++) {
@@ -855,7 +859,7 @@
       })
     }, 400)
 
-    var Name = Data().name
+    var Name = Data().name || ''
     $form.find('input[name="name"]').attr('placeholder', i18n({
       'en_us': 'Long Sleeve Polo Shirt',
       'pt_br': 'Camisa Polo Manga Longa'
@@ -866,9 +870,9 @@
       var data = Data()
       var name = data.name
       var variations = data.variations
-      if (name && variations && Name) {
-        // regex pattern for random variations names
-        var regex = new RegExp('^' + Name + '(\\s\\/\\s.*)$')
+      if (name && variations) {
+        // use regex to test and replace variations names
+        var regex = variationNameRegex()
         for (var i = 0; i < variations.length; i++) {
           var variation = variations[i]
           if (typeof variation.name === 'string') {
@@ -880,6 +884,12 @@
       }
       Name = name
     })
+
+    var variationNameRegex = function () {
+      // regex pattern for random variations names
+      // based on product name
+      return new RegExp('^' + Name + '(\\s\\/\\s.*)$')
+    }
 
     // sample placeholder for variation name
     $form.find('input[name="variations.name"]').attr('placeholder', i18n({
@@ -1071,7 +1081,7 @@
     $variationFields.find('input[name="variations.name"]').focus(function () {
       if ($(this).val() === '') {
         // set product name on field and select all text
-        var productName = Data().name
+        var productName = Name
         if (productName) {
           $(this).val(cutString(productName, 100)).select()
         }
