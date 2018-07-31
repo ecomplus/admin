@@ -698,9 +698,10 @@
                       <span data-lang="pt_br">Peso</span>
                     </label>
                     <div class="input-group">
-                      <input type="text" class="form-control" name="variations.weight.value" />
+                      <input type="number" class="form-control" name="variations.weight.value"
+                        min="0" max="999999" step="any"/>
                       <div class="input-group-append w-70px">
-                        <select name="weight.unit">
+                        <select name="variations.weight.unit">
                           <option value="mg">mg</option>
                           <option value="g" selected >g</option>
                           <option value="kg">kg</option>
@@ -718,9 +719,10 @@
                       <span data-lang="pt_br">Largura</span>
                     </label>
                     <div class="input-group">
-                      <input type="text" class="form-control" name="variations.dimensions.width.value" />
+                      <input type="number" class="form-control" name="variations.dimensions.width.value"
+                        min="0" max="999999" step="any"/>
                       <div class="input-group-append w-70px">
-                        <select name="dimensions.width.unit">
+                        <select name="variations.dimensions.width.unit">
                           <option value="mm">mm</option>
                           <option value="cm" selected >cm</option>
                           <option value="m">m</option>
@@ -743,9 +745,10 @@
                       <span data-lang="pt_br">Altura</span>
                     </label>
                     <div class="input-group">
-                      <input type="text" class="form-control" name="variations.dimensions.height.value" />
+                      <input type="number" class="form-control" name="variations.dimensions.height.value"
+                        min="0" max="999999" step="any"/>
                       <div class="input-group-append w-70px">
-                        <select name="dimensions.height.unit">
+                        <select name="variations.dimensions.height.unit">
                           <option value="mm">mm</option>
                           <option value="cm" selected >cm</option>
                           <option value="m">m</option>
@@ -765,9 +768,10 @@
                       <span data-lang="pt_br">Comprimento</span>
                     </label>
                     <div class="input-group">
-                      <input type="text" class="form-control" name="variations.dimensions.length.value" />
+                      <input type="number" class="form-control" name="variations.dimensions.length.value"
+                        min="0" max="999999" step="any"/>
                       <div class="input-group-append w-70px">
-                        <select name="dimensions.length.unit">
+                        <select name="variations.dimensions.length.unit">
                           <option value="mm">mm</option>
                           <option value="cm" selected >cm</option>
                           <option value="m">m</option>
