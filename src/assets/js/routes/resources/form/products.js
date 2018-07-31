@@ -527,7 +527,7 @@
           for (gridId in variation) {
             if (variation.hasOwnProperty(gridId)) {
               var option = variation[gridId].text
-              name += '; ' + option
+              name += ' / ' + option
               label += '<span>' + option + '</span>'
 
               // data specifications
@@ -855,13 +855,36 @@
       })
     }, 400)
 
+    var Name = Data().name
     $form.find('input[name="name"]').attr('placeholder', i18n({
       'en_us': 'Long Sleeve Polo Shirt',
       'pt_br': 'Camisa Polo Manga Longa'
     }))
+
+    .change(function () {
+      // update variations names
+      var data = Data()
+      var name = data.name
+      var variations = data.variations
+      if (name && variations && Name) {
+        // regex pattern for random variations names
+        var regex = new RegExp('^' + Name + '(\\s\\/\\s.*)$')
+        for (var i = 0; i < variations.length; i++) {
+          var variation = variations[i]
+          if (typeof variation.name === 'string') {
+            variation.name = variation.name.replace(regex, name + '$1')
+          }
+        }
+        // commit only to perform reactive actions
+        commit(data, true)
+      }
+      Name = name
+    })
+
+    // sample placeholder for variation name
     $form.find('input[name="variations.name"]').attr('placeholder', i18n({
-      'en_us': 'Long Sleeve Polo Shirt: size M',
-      'pt_br': 'Camisa Polo Manga Longa: tamanho M'
+      'en_us': 'Long Sleeve Polo Shirt / M / Red',
+      'pt_br': 'Camisa Polo Manga Longa / M / Vermelho'
     }))
     // ready to setup and show form
     Tab.formSetup()
