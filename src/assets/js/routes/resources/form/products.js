@@ -991,8 +991,39 @@
         var variation = variations[currentVariationIndex]
         if (variationToCopy && variation) {
           for (var prop in variationToCopy) {
-            if (prop !== '_id' && prop !== 'sku' && prop !== 'specifications' && variationToCopy[prop]) {
-              variation[prop] = variationToCopy[prop]
+            if (variationToCopy.hasOwnProperty(prop)) {
+              if (prop === 'name') {
+                // copy name replacing specs
+                var name = variationToCopy.name
+                var copySpecifications = variationToCopy.specifications
+                var specifications = variation.specifications
+
+                // replace specifications one by one
+                for (var spec in copySpecifications) {
+                  if (copySpecifications.hasOwnProperty(spec) && specifications.hasOwnProperty(spec)) {
+                    // parse spec array to string separated by comma
+                    var copyText = ''
+                    for (var i = 0; i < copySpecifications[spec].length; i++) {
+                      copyText += copySpecifications[spec][i].text
+                      if (i > 0) {
+                        copyText += ', '
+                      }
+                    }
+                    var text = ''
+                    for (i = 0; i < specifications[spec].length; i++) {
+                      text += specifications[spec][i].text
+                      if (i > 0) {
+                        text += ', '
+                      }
+                    }
+                    name = name.replace(copyText, text)
+                  }
+                }
+
+                variation.name = name
+              } else if (prop !== '_id' && prop !== 'sku' && prop !== 'specifications') {
+                variation[prop] = variationToCopy[prop]
+              }
             }
           }
 
