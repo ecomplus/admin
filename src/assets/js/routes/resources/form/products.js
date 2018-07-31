@@ -873,7 +873,8 @@
     })
 
     var editVariation = function (index) {
-      var variations = Data().variations
+      var data = Data()
+      var variations = data.variations
       if (variations && index >= 0 && variations.length > index) {
         // edit variation by index
         currentVariationIndex = index
@@ -909,8 +910,12 @@
             $prevVariation.attr('disabled', true)
           }
 
-          // set variation object ID on input fields and show form
-          $div.slideDown().find('input').data('object-id', variation._id)
+          // set variation object ID on input fields
+          $div.find('input').data('object-id', variation._id)
+          // setup inputs with values from data
+          setupInputValues($div, data)
+          // show form
+          $div.slideDown()
         })
       }
     }
