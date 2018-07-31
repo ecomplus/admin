@@ -521,11 +521,15 @@
           // create variation
           var variation = variations[i]
           var label = ''
+          // variation name
+          var name = data.name
           var specifications = {}
           for (gridId in variation) {
             if (variation.hasOwnProperty(gridId)) {
               var option = variation[gridId].text
+              name += '; ' + option
               label += '<span>' + option + '</span>'
+
               // data specifications
               specifications[gridId] = [{
                 text: option
@@ -548,7 +552,10 @@
           // show added list element
           $li.slideDown()
 
-          var variationObject = {}
+          var variationObject = {
+            // preset variation name
+            name: name
+          }
           // check if current data has this variation
           if (data.variations) {
             var variationsIndex = variationsData.length
@@ -993,34 +1000,36 @@
           for (var prop in variationToCopy) {
             if (variationToCopy.hasOwnProperty(prop)) {
               if (prop === 'name') {
-                // copy name replacing specs
-                var name = variationToCopy.name
-                var copySpecifications = variationToCopy.specifications
-                var specifications = variation.specifications
+                if (!variation.name) {
+                  // copy name replacing specs
+                  var name = variationToCopy.name
+                  var copySpecifications = variationToCopy.specifications
+                  var specifications = variation.specifications
 
-                // replace specifications one by one
-                for (var spec in copySpecifications) {
-                  if (copySpecifications.hasOwnProperty(spec) && specifications.hasOwnProperty(spec)) {
-                    // parse spec array to string separated by comma
-                    var copyText = ''
-                    for (var i = 0; i < copySpecifications[spec].length; i++) {
-                      copyText += copySpecifications[spec][i].text
-                      if (i > 0) {
-                        copyText += ', '
+                  // replace specifications one by one
+                  for (var spec in copySpecifications) {
+                    if (copySpecifications.hasOwnProperty(spec) && specifications.hasOwnProperty(spec)) {
+                      // parse spec array to string separated by comma
+                      var copyText = ''
+                      for (var i = 0; i < copySpecifications[spec].length; i++) {
+                        copyText += copySpecifications[spec][i].text
+                        if (i > 0) {
+                          copyText += ', '
+                        }
                       }
-                    }
-                    var text = ''
-                    for (i = 0; i < specifications[spec].length; i++) {
-                      text += specifications[spec][i].text
-                      if (i > 0) {
-                        text += ', '
+                      var text = ''
+                      for (i = 0; i < specifications[spec].length; i++) {
+                        text += specifications[spec][i].text
+                        if (i > 0) {
+                          text += ', '
+                        }
                       }
+                      name = name.replace(copyText, text)
                     }
-                    name = name.replace(copyText, text)
                   }
-                }
 
-                variation.name = name
+                  variation.name = name
+                }
               } else if (prop !== '_id' && prop !== 'sku' && prop !== 'specifications') {
                 variation[prop] = variationToCopy[prop]
               }
