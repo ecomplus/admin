@@ -852,6 +852,10 @@
       'en_us': 'Long Sleeve Polo Shirt',
       'pt_br': 'Camisa Polo Manga Longa'
     }))
+    $form.find('input[name="variations.name"]').attr('placeholder', i18n({
+      'en_us': 'Long Sleeve Polo Shirt: size M',
+      'pt_br': 'Camisa Polo Manga Longa: tamanho M'
+    }))
     // ready to setup and show form
     Tab.formSetup()
 
