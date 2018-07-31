@@ -865,6 +865,11 @@ ul > li:nth-child(4n+4) > .badges-list li {
     padding-left: 40px !important;
   }
 }
+@media (max-width: 991px) {
+  .hidden-md-down {
+    display: none;
+  }
+}
 @media (min-width: 768px) {
   .hidden-md-up {
     display: none;
