@@ -873,7 +873,8 @@
       if (variations && index >= 0 && variations.length > index) {
         // edit variation by index
         currentVariationIndex = index
-        var specifications = variations[index].specifications
+        var variation = variations[index]
+        var specifications = variation.specifications
 
         $productFields.slideUp(400, function () {
           var $div = $variationFields
@@ -904,7 +905,8 @@
             $prevVariation.attr('disabled', true)
           }
 
-          $div.slideDown()
+          // set variation object ID on input fields and show form
+          $div.slideDown().find('input').data('object-id', variation._id)
         })
       }
     }
