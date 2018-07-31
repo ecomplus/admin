@@ -41,6 +41,7 @@
       "objectIdPad",
       "substringMatcher",
       "handleInputs",
+      "setupInputValues",
       "getCombinations"
     ]
   },
