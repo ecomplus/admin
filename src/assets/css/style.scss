@@ -865,6 +865,11 @@ ul > li:nth-child(4n+4) > .badges-list li {
     padding-left: 40px !important;
   }
 }
+@media (min-width: 768px) {
+  .hidden-md-up {
+    display: none;
+  }
+}
 
 // drag and drop icon
 .i-drag {
@@ -895,4 +900,7 @@ ul > li:nth-child(4n+4) > .badges-list li {
 // general
 .btn:disabled {
   cursor: not-allowed;
+}
+.btn-pure.btn-light:disabled {
+  opacity: .25;
 }
