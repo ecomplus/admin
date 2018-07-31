@@ -15,12 +15,13 @@
       <a class="nav-link active" data-toggle="tab" data-id-href="tab-normal">
         Normal
       </a>
-      <a data-id="code-tab" class="nav-link" data-toggle="tab" data-id-href="tab-json">
-        JSON
+      <a data-id="code-tab" class="nav-link i18n" data-toggle="tab" data-id-href="tab-json">
+        <span data-lang="en_us">Advanced</span>
+        <span data-lang="pt_br">Avançado</span>
       </a>
       <a href="javascript:;" class="nav-link edit-btn border-info" data-id="duplicate">
         <i class="ti-layers"></i>
-        <span class="i18n">
+        <span class="i18n hidden-md-down">
           <span data-lang="en_us">Duplicate</span>
           <span data-lang="pt_br">Duplicar</span>
         </span>
@@ -33,7 +34,7 @@
       </a>
       <a href="javascript:;" class="nav-link edit-btn" data-id="view">
         <i class="ti-link"></i>
-        <span class="i18n">
+        <span class="i18n hidden-md-down">
           <span data-lang="en_us">View</span>
           <span data-lang="pt_br">Ver</span>
         </span>
@@ -68,6 +69,25 @@
       <div class="tab-pane fade" data-id="tab-json">
         <div class="card">
           <div class="card-body">
+            <div class="callout callout-warning" role="alert">
+              <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+                <span>&times;</span>
+              </button>
+              <h5 class="i18n">
+                <span data-lang="en_us">Be careful!</span>
+                <span data-lang="pt_br">Tome cuidado!</span>
+              </h5>
+              <p class="i18n">
+                <span data-lang="en_us">
+                  It may not be a good idea to directly edit the code below,
+                  do this only if you know <strong>JSON</strong>.
+                </span>
+                <span data-lang="pt_br">
+                  Pode não ser uma boa ideia editar diretamente o código abaixo,
+                  faça isto apenas se tiver conhecimento em <strong>JSON</strong>.
+                </span>
+              </p>
+            </div>
             <div data-id="code-editor" class="ace-editor"></div>
           </div>
         </div>
