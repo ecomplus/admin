@@ -555,6 +555,90 @@ app.config({
     })
   }
 
+  window.setupInputValues = function ($form, data, prefix, objectId) {
+    if (!prefix) {
+      prefix = ''
+    }
+    for (var prop in data) {
+      var val = data[prop]
+      var $el = $form.find('[name="' + prefix + prop + '"]:not(:disabled)')
+      if (objectId) {
+        $el = $el.filter(function () { return $(this).data('object-id') === objectId })
+      }
+      /*
+      if (prefix !== '') {
+        console.log(prefix + prop, $el)
+      }
+      */
+      var i
+
+      if ($el.length) {
+        if (!$el.is('input:file')) {
+          switch (typeof val) {
+            case 'string':
+              if ($el.attr('type') !== 'radio') {
+                $el.val(val)
+              } else {
+                // check respective radio input
+                $el.filter(function () { return $(this).val() === val }).click()
+              }
+              break
+
+            case 'number':
+              // format number before set value
+              if ($el.data('money')) {
+                $el.val(formatMoney(val))
+              } else {
+                $el.val(numberToString(val, !($el.data('integer'))))
+              }
+              break
+
+            case 'object':
+              // handle JSON objects and arrays
+              // select fields ?
+              if (Array.isArray(val)) {
+                var list = []
+                for (i = 0; i < val.length; i++) {
+                  var item = val[i]
+                  if (typeof item !== 'string') {
+                    // array of objects
+                    list.push(JSON.stringify(item))
+                  } else {
+                    list.push(item)
+                  }
+                }
+                $el.val(list)
+              } else if (val !== null) {
+                // JSON object
+                $el.val(JSON.stringify(val))
+              }
+              break
+
+            case 'boolean':
+              // checkbox
+              if (val) {
+                $el.attr('checked', true)
+              } else {
+                $el.removeAttr('checked')
+              }
+          }
+        }
+      } else if (typeof val === 'object' && val !== null) {
+        // recursive
+        var nextPrefix = prefix + prop + '.'
+        if (!Array.isArray(val)) {
+          // nested object
+          setupInputValues($form, val, nextPrefix)
+        } else if (val[0] && typeof val[0] === 'object' && val[0]._id) {
+          // array of nested objects
+          for (i = 0; i < val.length; i++) {
+            setupInputValues($form, val[i], nextPrefix, val[i]._id)
+          }
+        }
+      }
+    }
+  }
+
   window.getCombinations = function (options, optionIndex, results, current) {
     // receive object of arrays
     // set default params
