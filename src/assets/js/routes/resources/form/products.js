@@ -927,7 +927,10 @@
           }
 
           // set variation object ID on input fields
-          $div.find('input').data('object-id', variation._id)
+          $div.find('input,select').data('object-id', variation._id).each(function () {
+            // reset inputs
+            $(this).val(($(this).data('default') || ''))
+          })
           // setup inputs with values from data
           setupInputValues($div, data)
           // show form
