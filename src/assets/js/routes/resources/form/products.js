@@ -905,7 +905,7 @@
               href: 'javascript:;',
               click: (function (index) {
                 return function () {
-                  console.log(index)
+                  copyVariation(index)
                 }
               }(i))
             }))
@@ -979,10 +979,30 @@
 
     // setup copy variation button
     var $copyVariation = $variationFields.find('#' + tabId + '-copy-variation')
-    $copyVariation.children('button').click(function () {
-      // console.log(1)
-    })
     var $copyVariationList = $copyVariation.children('div')
+
+    var copyVariation = function (index) {
+      var data = Data()
+      var variations = data.variations
+      if (variations) {
+        // copy variation properties
+        var variationToCopy = variations[index]
+        // pastle to current variation
+        var variation = variations[currentVariationIndex]
+        if (variationToCopy && variation) {
+          for (var prop in variationToCopy) {
+            if (prop !== '_id' && prop !== 'sku' && prop !== 'specifications' && variationToCopy[prop]) {
+              variation[prop] = variationToCopy[prop]
+            }
+          }
+
+          // commit only to perform reactive actions
+          commit(data, true)
+          // update inputs with values from data
+          setupInputValues($variationFields, data)
+        }
+      }
+    }
 
     // variation name field with product name
     $variationFields.find('input[name="variations.name"]').focus(function () {
