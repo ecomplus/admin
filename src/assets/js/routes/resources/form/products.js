@@ -865,8 +865,8 @@
     // generic product name
     // used to force product name (required) not empty
     var genericName = i18n({
-      'en_us': 'New and spectacular product',
-      'pt_br': 'Novo e espetacular produto'
+      'en_us': 'New product',
+      'pt_br': 'Novo produto'
     })
 
     var $inputName = $form.find('input[name="name"]')
