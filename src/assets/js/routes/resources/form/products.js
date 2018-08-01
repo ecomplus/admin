@@ -609,7 +609,7 @@
                   }
                 }
                 bestMatchedVariation.index = ii
-                if (matches === Object.keys(specifications).length) {
+                if (matches === Object.keys(specifications).length && matches === Object.keys(specs).length) {
                   // all specifications matched
                   bestMatchedVariation.sameSpecs = true
                   break
