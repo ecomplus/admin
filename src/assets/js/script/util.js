@@ -106,6 +106,31 @@
       noneSelectedText: '--',
       windowPadding: 70
     })
+
+    /* jQuery addons */
+
+    // https://gist.github.com/beiyuu/2029907
+    // Source here: http://plugins.jquery.com/project/selectRange
+    $.fn.selectRange = function (start, end) {
+      var e = $(this)[0]
+      if (e) {
+        if (e.setSelectionRange) {
+          /* WebKit */
+          e.focus()
+          e.setSelectionRange(start, end)
+        } else if (e.createTextRange) {
+          /* IE */
+          var range = e.createTextRange()
+          range.collapse(true)
+          range.moveEnd('character', end)
+          range.moveStart('character', start)
+          range.select()
+        } else if (e.selectionStart) {
+          e.selectionStart = start
+          e.selectionEnd = end
+        }
+      }
+    }
   }
 
   /* utilities */
