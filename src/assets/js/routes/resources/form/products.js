@@ -1066,8 +1066,16 @@
 
     // fix for SKU field
     $variationFields.find('input[name="variations.sku"]').click(function () {
-      // select all text content to facilitate
-      $(this).selectRange(1, 3)
+      var sku = $(this).val()
+      if (sku.indexOf(Sku) === 0) {
+        // stars with product SKU
+        // select text part referring to the variation SKU
+        // keep product SKU unselected
+        $(this).selectRange(Sku.length, sku.length)
+      } else {
+        // select all
+        $(this).select()
+      }
     })
   }
 }())
