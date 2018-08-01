@@ -1063,5 +1063,11 @@
         }
       }
     })
+
+    // fix for SKU field
+    $variationFields.find('input[name="variations.sku"]').click(function () {
+      // select all text content to facilitate
+      $(this).select()
+    })
   }
 }())
