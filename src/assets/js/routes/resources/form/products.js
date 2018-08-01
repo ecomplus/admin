@@ -648,30 +648,28 @@
         }
 
         // set variations SKUs
-        if (!Sku && typeof firstSku === 'function') {
+        if (Sku === '' && typeof firstSku === 'function') {
           // create random product SKU first
           firstSku()
         }
-        if (Sku) {
-          // create SKUs automatically for variations
-          ln = variationsData.length
-          for (i = 0; i < ln; i++) {
-            if (!variationsData[i].sku) {
-              // new random code based on product SKU
-              // should be unique
-              var sku = null
-              while (!sku) {
-                sku = Sku + '-' + randomInt(100, 999) + '-' + i
-                // check if other variation already have same SKU
-                for (ii = 0; ii < ln.length; ii++) {
-                  if (sku === variationsData[ii].sku) {
-                    sku = null
-                    break
-                  }
+        // create SKUs automatically for variations
+        ln = variationsData.length
+        for (i = 0; i < ln; i++) {
+          if (!variationsData[i].sku) {
+            // new random code based on product SKU
+            // should be unique
+            var sku = null
+            while (!sku) {
+              sku = Sku + '-' + randomInt(100, 999) + '-' + i
+              // check if other variation already have same SKU
+              for (ii = 0; ii < ln.length; ii++) {
+                if (sku === variationsData[ii].sku) {
+                  sku = null
+                  break
                 }
               }
-              variationsData[i].sku = sku
             }
+            variationsData[i].sku = sku
           }
         }
 
@@ -701,7 +699,7 @@
       }
     }
 
-    var Sku = Data().sku
+    var Sku = Data().sku || ''
     var $inputSku = $form.find('input[name="sku"]')
     $inputSku.click(function () {
       // select all input text
@@ -713,20 +711,27 @@
       var data = Data()
       var sku = data.sku
       var variations = data.variations
-      if (sku && variations && Sku) {
-        // regex pattern for random variations SKUs
-        // check if variation SKU starts with product SKU
-        var regex = new RegExp('^' + Sku)
-        for (var i = 0; i < variations.length; i++) {
-          var variation = variations[i]
-          if (typeof variation.sku === 'string') {
-            variation.sku = variation.sku.replace(regex, sku)
+      if (sku) {
+        if (variations) {
+          // regex pattern for random variations SKUs
+          // check if variation SKU starts with product SKU
+          var regex = new RegExp('^' + Sku)
+          for (var i = 0; i < variations.length; i++) {
+            var variation = variations[i]
+            if (typeof variation.sku === 'string') {
+              variation.sku = variation.sku.replace(regex, sku)
+            }
           }
+          // commit only to perform reactive actions
+          commit(data, true)
         }
-        // commit only to perform reactive actions
-        commit(data, true)
+
+        // update 'Sku' only when new SKU is defined and not null
+        Sku = sku
+      } else {
+        // reset empty SKU
+        Sku = ''
       }
-      Sku = sku
     })
 
     // generate new random SKU
@@ -781,7 +786,7 @@
       // creating
       // generate the SKU previously
       firstSku = function () {
-        if (!Sku) {
+        if (Sku === '') {
           randomSku()
         }
         // run once only
@@ -790,7 +795,7 @@
         firstSku = null
       }
       $form.on('change', 'input[name="name"]', firstSku)
-    } else if (Sku) {
+    } else if (Sku !== '') {
       // check current SKU
       checkSku(Sku)
     }
@@ -888,19 +893,25 @@
       var data = Data()
       var name = data.name
       var variations = data.variations
-      if (name && variations) {
-        // use regex to test and replace variations names
-        var regex = new RegExp('^' + Name)
-        for (var i = 0; i < variations.length; i++) {
-          var variation = variations[i]
-          if (typeof variation.name === 'string') {
-            variation.name = variation.name.replace(regex, name)
+      if (name) {
+        if (variations) {
+          // use regex to test and replace variations names
+          var regex = new RegExp('^' + Name)
+          for (var i = 0; i < variations.length; i++) {
+            var variation = variations[i]
+            if (typeof variation.name === 'string') {
+              variation.name = variation.name.replace(regex, name)
+            }
           }
+          // commit only to perform reactive actions
+          commit(data, true)
         }
-        // commit only to perform reactive actions
-        commit(data, true)
-        // update 'Name' only when new name is defined and not empty
+
+        // update 'Name' only when new name is defined and not null
         Name = name
+      } else {
+        // reset empty name
+        Name = ''
       }
     })
 
