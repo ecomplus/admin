@@ -523,7 +523,8 @@
           var label = ''
           // variation name
           // regex to test variations names
-          var nameRegex = variationNameRegex()
+          // check if variation name was generated automatically by pattern
+          var nameRegex = new RegExp('^' + Name + '(\\s\\/\\s.*)$')
           var name = Name
           var specifications = {}
           for (gridId in variation) {
@@ -714,11 +715,12 @@
       var variations = data.variations
       if (sku && variations && Sku) {
         // regex pattern for random variations SKUs
-        var regex = new RegExp('^' + Sku + '(-[0-9]{3}-[0-9]+)$')
+        // check if variation SKU starts with product SKU
+        var regex = new RegExp('^' + Sku)
         for (var i = 0; i < variations.length; i++) {
           var variation = variations[i]
           if (typeof variation.sku === 'string') {
-            variation.sku = variation.sku.replace(regex, sku + '$1')
+            variation.sku = variation.sku.replace(regex, sku)
           }
         }
         // commit only to perform reactive actions
@@ -872,11 +874,11 @@
       var variations = data.variations
       if (name && variations) {
         // use regex to test and replace variations names
-        var regex = variationNameRegex()
+        var regex = new RegExp('^' + Name)
         for (var i = 0; i < variations.length; i++) {
           var variation = variations[i]
           if (typeof variation.name === 'string') {
-            variation.name = variation.name.replace(regex, name + '$1')
+            variation.name = variation.name.replace(regex, name)
           }
         }
         // commit only to perform reactive actions
@@ -884,12 +886,6 @@
       }
       Name = name
     })
-
-    var variationNameRegex = function () {
-      // regex pattern for random variations names
-      // based on product name
-      return new RegExp('^' + Name + '(\\s\\/\\s.*)$')
-    }
 
     // sample placeholder for variation name
     $form.find('input[name="variations.name"]').attr('placeholder', i18n({
