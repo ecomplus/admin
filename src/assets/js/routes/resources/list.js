@@ -8,7 +8,7 @@
   // current tab ID
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
-  var elContainer = $('#' + tabId + '-tab-normal')
+  var elContainer = $('#t' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
 
@@ -16,7 +16,7 @@
   var i18n = window.i18n
 
   // create button
-  $('#' + tabId + '-create').click(function () {
+  $('#t' + tabId + '-create').click(function () {
     // go to 'new' route
     window.location = '/' + window.location.hash + '/new'
   })
@@ -40,7 +40,7 @@
                      '</div>'
 
     // setup jsGrid
-    var $grid = $('#' + tabId + '-resource-list')
+    var $grid = $('#t' + tabId + '-resource-list')
     // current grid row
     var row = 0
     // offset and limit
@@ -68,7 +68,7 @@
       load()
     }
     var increasePage = function (x) {
-      var el = $('#' + tabId + '-page')
+      var el = $('#t' + tabId + '-page')
       // change page number
       var page = parseInt(el.val(), 10) + x
       if (page > 0) {
@@ -79,9 +79,9 @@
 
     var paginationControls = function () {
       // update pagination buttons states
-      var $prev = $('#' + tabId + '-prev')
-      var $next = $('#' + tabId + '-next')
-      var $page = $('#' + tabId + '-page')
+      var $prev = $('#t' + tabId + '-prev')
+      var $next = $('#t' + tabId + '-next')
+      var $page = $('#t' + tabId + '-page')
       if (offset <= 0) {
         // no prev page
         $prev.attr('disabled', true)
@@ -104,13 +104,13 @@
     }
 
     // pagination input and buttons
-    $('#' + tabId + '-page').keydown(window.keyIsNumber).change(function () {
+    $('#t' + tabId + '-page').keydown(window.keyIsNumber).change(function () {
       updatePage(parseInt($(this).val(), 10))
     })
-    $('#' + tabId + '-next').click(function () {
+    $('#t' + tabId + '-next').click(function () {
       increasePage(1)
     })
-    $('#' + tabId + '-prev').click(function () {
+    $('#t' + tabId + '-prev').click(function () {
       // decrease page number
       increasePage(-1)
     })
@@ -118,13 +118,13 @@
     paginationControls()
 
     // change max number of results
-    $('#' + tabId + '-page-size').change(function () {
+    $('#t' + tabId + '-page-size').change(function () {
       var val = parseInt($(this).val(), 10)
       if (!isNaN(val) && val > 0) {
         limit = val
         // reset
         offset = 0
-        $('#' + tabId + '-page').val('1')
+        $('#t' + tabId + '-page').val('1')
       }
       // reload data
       load()
@@ -424,7 +424,7 @@
     }
 
     // delete button
-    $('#' + tabId + '-delete-list').click(function () {
+    $('#t' + tabId + '-delete-list').click(function () {
       var todo = selectedItems.length
       if (todo > 0) {
         // show spinner and let it to fade out after list reload

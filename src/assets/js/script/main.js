@@ -941,11 +941,12 @@ app.ready(function () {
         el = window.elTab
       }
       // prefix tab ID on content elements IDs
+      var prefixId = 't' + tabId + '-'
       el.find('[data-id]').each(function () {
-        $(this).attr('id', tabId + '-' + $(this).data('id'))
+        $(this).attr('id', prefixId + $(this).data('id'))
       })
       el.find('[data-id-href]').each(function () {
-        $(this).attr('href', '#' + tabId + '-' + $(this).data('id-href'))
+        $(this).attr('href', '#' + prefixId + $(this).data('id-href'))
       })
     }
 

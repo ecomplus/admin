@@ -111,7 +111,7 @@
       })
     }
 
-    var $listGrids = $('#' + tabId + '-grids-list')
+    var $listGrids = $('#t' + tabId + '-grids-list')
     // grid li element HTML
     var liGrid = '<div class="row gap-2">' +
                     '<div class="col-6">' +
@@ -276,7 +276,7 @@
             $blockOption.fadeIn()
             optionDisabled = false
             if (countGrids === 1) {
-              $('#' + tabId + '-add-option-header').fadeIn()
+              $('#t' + tabId + '-add-option-header').fadeIn()
             }
           }
         } else if (!optionDisabled) {
@@ -284,7 +284,7 @@
           $blockOption.fadeOut()
           optionDisabled = true
           if (countGrids === 1) {
-            $('#' + tabId + '-add-option-header').fadeOut()
+            $('#t' + tabId + '-add-option-header').fadeOut()
           }
         }
       })
@@ -338,7 +338,7 @@
       countGrids++
       if (countGrids === 1) {
         // first added grid
-        $('#' + tabId + '-grids-list-header').slideDown()
+        $('#t' + tabId + '-grids-list-header').slideDown()
       }
 
       // show added list element
@@ -432,7 +432,7 @@
       }
     }
 
-    var $listVariations = $('#' + tabId + '-variations-list')
+    var $listVariations = $('#t' + tabId + '-variations-list')
     var variationIndexFromList = function ($li) {
       // get variation index from list DOM element
       return $listVariations.children(':not(.disabled)').index($li)
@@ -683,7 +683,7 @@
       })
     }
 
-    $('#' + tabId + '-add-grid').click(function () {
+    $('#t' + tabId + '-add-grid').click(function () {
       addGrid()
     })
 
@@ -696,7 +696,7 @@
       if (countGrids === 0) {
         // all grids removed
         // list is empty, hide list header
-        $('#' + tabId + '-grids-list-header, #' + tabId + '-add-option-header').slideUp()
+        $('#t' + tabId + '-grids-list-header, #t' + tabId + '-add-option-header').slideUp()
       }
     }
 
@@ -745,7 +745,7 @@
         randomSku()
       })
     }
-    $('#' + tabId + '-random-sku').click(randomSku)
+    $('#t' + tabId + '-random-sku').click(randomSku)
 
     var checkSku = function (sku, cb) {
       if (sku) {
@@ -902,10 +902,10 @@
     /* Setup variation form */
     var currentVariationIndex = 0
     // product and variation form fields elements
-    var $productFields = $form.children('#' + tabId + '-product-fields')
-    var $variationFields = $form.children('#' + tabId + '-variation-fields')
+    var $productFields = $form.children('#t' + tabId + '-product-fields')
+    var $variationFields = $form.children('#t' + tabId + '-variation-fields')
 
-    $('#' + tabId + '-back-to-product').click(function () {
+    $('#t' + tabId + '-back-to-product').click(function () {
       // show product form again
       $variationFields.slideUp(400, function () {
         $productFields.slideDown()
@@ -972,7 +972,7 @@
               elSpecs += '</h4>'
             }
           }
-          $div.find('#' + tabId + '-variation-specs').html(elSpecs)
+          $div.find('#t' + tabId + '-variation-specs').html(elSpecs)
 
           // update pagination buttons
           if (index < variations.length - 1) {
@@ -1006,8 +1006,8 @@
         editVariation(currentVariationIndex + addIndex)
       })
     }
-    var $nextVariation = $variationFields.find('#' + tabId + '-next-variation')
-    var $prevVariation = $variationFields.find('#' + tabId + '-prev-variation')
+    var $nextVariation = $variationFields.find('#t' + tabId + '-next-variation')
+    var $prevVariation = $variationFields.find('#t' + tabId + '-prev-variation')
     $nextVariation.click(function () {
       // pass to next variation
       pageVariations(+1)
@@ -1018,7 +1018,7 @@
     })
 
     // setup copy variation button
-    var $copyVariation = $variationFields.find('#' + tabId + '-copy-variation')
+    var $copyVariation = $variationFields.find('#t' + tabId + '-copy-variation')
     var $copyVariationList = $copyVariation.children('div')
 
     var copyVariation = function (index) {

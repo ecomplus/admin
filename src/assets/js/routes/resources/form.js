@@ -8,7 +8,7 @@
   // current tab ID
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
-  var elContainer = $('#' + tabId + '-tab-normal')
+  var elContainer = $('#t' + tabId + '-tab-normal')
   var $form = elContainer.children('form')
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
@@ -58,10 +58,10 @@
         window.location = '/#/resources/' + slug
       })
     }
-    $('#' + tabId + '-delete').click(Delete)
+    $('#t' + tabId + '-delete').click(Delete)
     elContainer.find('.delete-resource').click(Delete).fadeIn()
 
-    $('#' + tabId + '-duplicate').click(function () {
+    $('#t' + tabId + '-duplicate').click(function () {
       // create new document with same JSON data
       var callback = function (json) {
         // redirect to new document edit page
@@ -70,7 +70,7 @@
       callApi(slug + '.json', 'POST', callback, Data())
     })
 
-    $('#' + tabId + '-new').click(function () {
+    $('#t' + tabId + '-new').click(function () {
       // redirect to create document page
       window.location = '/#/resources/' + slug + '/new'
     })
@@ -93,13 +93,13 @@
         }
       }
 
-      $('#' + tabId + '-view').click(function () {
+      $('#t' + tabId + '-view').click(function () {
         link()
       })
-      $('#' + tabId + '-facebook').click(function () {
+      $('#t' + tabId + '-facebook').click(function () {
         link('https://www.facebook.com/sharer.php?u=')
       })
-      $('#' + tabId + '-whatsapp').click(function () {
+      $('#t' + tabId + '-whatsapp').click(function () {
         var platform
         if ($(window).width() < 480) {
           platform = 'api'
@@ -110,11 +110,11 @@
       })
     } else {
       // document doest not have link
-      $('#' + tabId + '-view, #' + tabId + '-facebook, #' + tabId + '-whatsapp').remove()
+      $('#t' + tabId + '-view, #t' + tabId + '-facebook, #t' + tabId + '-whatsapp').remove()
     }
 
     // show buttons
-    $('#' + tabId + '-nav .edit-btn').fadeIn()
+    $('#t' + tabId + '-nav .edit-btn').fadeIn()
   }
 
   // count AJAX requests

@@ -25,7 +25,7 @@
   }
 
   Tab.continue = function () {
-    var $list = $('#' + tabId + '-options-list')
+    var $list = $('#t' + tabId + '-options-list')
     // generate IDs for each option
     var idPad = randomObjectId()
     var liIndex = 0
@@ -66,7 +66,7 @@
                      '</a>' +
                      '<div class="hidden mt-10">' +
                        // copy content from add to price block
-                       $('#' + tabId + '-add-to-price').html().replace(/(add_to_price)/g, 'options.$1') +
+                       $('#t' + tabId + '-add-to-price').html().replace(/(add_to_price)/g, 'options.$1') +
                      '</div>' +
                    '</div>'
 
@@ -128,14 +128,14 @@
       }
     }
 
-    $('#' + tabId + '-add-option').click(function () {
+    $('#t' + tabId + '-add-option').click(function () {
       addOption()
     })
     $list.next().find('a').click(function () {
       addOption()
     })
 
-    $('#' + tabId + '-delete-options').click(function () {
+    $('#t' + tabId + '-delete-options').click(function () {
       var $options = $list.find('input:checked')
       if ($options.length) {
         var data = Data()

@@ -64,7 +64,7 @@
 
   // render H1
   html = '<strong>' + resource.label[lang] + '</strong> · ' + tabLabel
-  $('#' + tabId + '-resource-name').html(html)
+  $('#t' + tabId + '-resource-name').html(html)
 
   // render breadcrumb links
   html = '<li class="breadcrumb-item">' +
@@ -75,13 +75,13 @@
              '<li class="breadcrumb-item active">' +
                tabLabel +
              '</li>'
-  $('#' + tabId + '-breadcrumbs').append(html)
+  $('#t' + tabId + '-breadcrumbs').append(html)
 
   // set up JSON code editor
-  var editor = ace.edit(tabId + '-code-editor')
+  var editor = ace.edit('t' + tabId + '-code-editor')
   editor.setTheme('ace/theme/dawn')
   editor.session.setMode('ace/mode/json')
-  $('#' + tabId + '-code-tab').click(function () {
+  $('#t' + tabId + '-code-tab').click(function () {
     // focus on editor and force viewport update
     setTimeout(function () {
       editor.focus()
@@ -121,7 +121,7 @@
           window.triggerUnsaved(tabId)
         })
       }
-      window.loadContent(contentUri, $('#' + tabId + '-tab-normal'))
+      window.loadContent(contentUri, $('#t' + tabId + '-tab-normal'))
     }
     // show content and unlock screen
     window.routeReady(tabTitle)
