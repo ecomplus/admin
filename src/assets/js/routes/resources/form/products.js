@@ -982,6 +982,41 @@
             $prevVariation.attr('disabled', true)
           }
 
+          var pictures = data.pictures
+          if (pictures && pictures.length) {
+            // handle select image for current variation
+            var $html = []
+            for (i = 0; i < pictures.length; i++) {
+              var src
+              var picture = pictures[i]
+              if (picture.hasOwnProperty('normal')) {
+                // show thumbnail only
+                src = picture.normal.url
+              } else {
+                src = picture.zoom.url
+              }
+
+              // add span block with image content
+              $html.push($('<span />', {
+                html: '<img src="' + src + '">',
+                click: (function (objectId) {
+                  return function () {
+                    // select by picture object ID
+                    variation.picture_id = objectId
+                    // commit only to perform reactive actions
+                    commit(Data(), true)
+                  }
+                }(pictures[i]._id))
+              }))
+            }
+            // set list content and show select image block
+            $variationImage.show().find('.images-list').html($html)
+          } else {
+            // no product images
+            // hide select variation image block
+            $variationImage.hide()
+          }
+
           // set variation object ID on input fields
           $div.find('input,select').data('object-id', variation._id).each(function () {
             // reset inputs
@@ -1073,5 +1108,8 @@
         $(this).select()
       }
     })
+
+    // select variation image from product images
+    var $variationImage = $variationFields.find('#t' + tabId + '-variation-image')
   }
 }())
