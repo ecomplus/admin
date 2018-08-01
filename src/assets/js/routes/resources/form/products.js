@@ -699,39 +699,50 @@
       }
     }
 
+    var updateVariations = function (prop) {
+      // update variations properties
+      var data = Data()
+      // use empty string when undefined or null
+      var newValue = data[prop] || ''
+      var variations = data.variations
+      // local (backup) variable
+      var oldValue
+      if (prop === 'name') {
+        oldValue = Name
+      } else {
+        oldValue = Sku
+      }
+
+      if (variations) {
+        // regex pattern for random variations
+        // check if variation property starts with respective product property
+        var regex = new RegExp('^' + oldValue)
+        for (var i = 0; i < variations.length; i++) {
+          var variation = variations[i]
+          if (typeof variation[prop] === 'string') {
+            variation[prop] = variation[prop].replace(regex, newValue)
+          }
+        }
+        // commit only to perform reactive actions
+        commit(data, true)
+      }
+
+      // update local variable
+      if (prop === 'name') {
+        Name = newValue
+      } else {
+        Sku = newValue
+      }
+    }
+
     var Sku = Data().sku || ''
     var $inputSku = $form.find('input[name="sku"]')
     $inputSku.click(function () {
       // select all input text
       $(this).select()
-    })
-
-    .change(function () {
+    }).change(function () {
       // update variations SKUs
-      var data = Data()
-      var sku = data.sku
-      var variations = data.variations
-      if (sku) {
-        if (variations) {
-          // regex pattern for random variations SKUs
-          // check if variation SKU starts with product SKU
-          var regex = new RegExp('^' + Sku)
-          for (var i = 0; i < variations.length; i++) {
-            var variation = variations[i]
-            if (typeof variation.sku === 'string') {
-              variation.sku = variation.sku.replace(regex, sku)
-            }
-          }
-          // commit only to perform reactive actions
-          commit(data, true)
-        }
-
-        // update 'Sku' only when new SKU is defined and not null
-        Sku = sku
-      } else {
-        // reset empty SKU
-        Sku = ''
-      }
+      updateVariations('sku')
     })
 
     // generate new random SKU
@@ -878,41 +889,15 @@
     $inputName.attr('placeholder', i18n({
       'en_us': 'Long Sleeve Polo Shirt',
       'pt_br': 'Camisa Polo Manga Longa'
-    }))
-
-    .click(function () {
+    })).click(function () {
       if ($(this).val() === genericName) {
         // using generic product name
         // clear input
         $(this).val('').trigger('change')
       }
-    })
-
-    .change(function () {
+    }).change(function () {
       // update variations names
-      var data = Data()
-      var name = data.name
-      var variations = data.variations
-      if (name) {
-        if (variations) {
-          // use regex to test and replace variations names
-          var regex = new RegExp('^' + Name)
-          for (var i = 0; i < variations.length; i++) {
-            var variation = variations[i]
-            if (typeof variation.name === 'string') {
-              variation.name = variation.name.replace(regex, name)
-            }
-          }
-          // commit only to perform reactive actions
-          commit(data, true)
-        }
-
-        // update 'Name' only when new name is defined and not null
-        Name = name
-      } else {
-        // reset empty name
-        Name = ''
-      }
+      updateVariations('name')
     })
 
     // sample placeholder for variation name
