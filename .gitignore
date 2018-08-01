@@ -3,6 +3,8 @@ gruntfile.js
 src/assets/css/app.css
 src/assets/css/app.css.map
 src/assets/js/app.js
+src/assets/css/scss/*
+!src/assets/css/scss/_variables.scss
 
 # Logs
 logs
