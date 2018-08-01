@@ -995,20 +995,30 @@
               } else {
                 src = picture.zoom.url
               }
+              var objectId = picture._id
 
               // add span block with image content
-              $html.push($('<span />', {
+              var spanObject = {
                 html: '<img src="' + src + '">',
-                click: (function (objectId) {
+                click: (function (id) {
                   return function () {
                     // select by picture object ID
-                    variation.picture_id = objectId
+                    variation.picture_id = id
                     // commit only to perform reactive actions
                     commit(Data(), true)
+                    // mark element as selected
+                    // unmark previous selected image on list
+                    $(this).addClass('selected').siblings('.selected').removeClass('selected')
                   }
-                }(pictures[i]._id))
-              }))
+                }(objectId))
+              }
+              if (variation.picture_id === objectId) {
+                // preset as selected
+                spanObject.class = 'selected'
+              }
+              $html.push($('<span />', spanObject))
             }
+
             // set list content and show select image block
             $variationImage.show().find('.images-list').html($html)
           } else {
