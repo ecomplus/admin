@@ -899,8 +899,9 @@
         }
         // commit only to perform reactive actions
         commit(data, true)
+        // update 'Name' only when new name is defined and not empty
+        Name = name
       }
-      Name = name
     })
 
     // sample placeholder for variation name
@@ -1124,10 +1125,7 @@
     $variationFields.find('input[name="variations.name"]').focus(function () {
       if ($(this).val() === '') {
         // set product name on field and select all text
-        var productName = Name
-        if (productName) {
-          $(this).val(cutString(productName, 100)).select()
-        }
+        $(this).val(cutString(Name, 100)).select()
       }
     })
 
