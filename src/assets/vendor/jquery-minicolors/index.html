@@ -33,11 +33,17 @@
       border: none;
       background: rgba(128, 128, 128, .1);
     }
+    [dir=rtl] code {
+      direction: ltr;
+    }
     pre {
       background: #f8f8f8;
       border: none;
       color: #333;
       padding: 20px;
+    }
+    [dir=rtl] pre {
+      direction: ltr;
     }
     h2 {
       margin-top: 50px;
@@ -77,7 +83,7 @@
           inline: $(this).attr('data-inline') === 'true',
           letterCase: $(this).attr('data-letterCase') || 'lowercase',
           opacity: $(this).attr('data-opacity'),
-          position: $(this).attr('data-position') || 'bottom left',
+          position: $(this).attr('data-position') || 'bottom',
           swatches: $(this).attr('data-swatches') ? $(this).attr('data-swatches').split('|') : [],
           change: function(value, opacity) {
             if( !value ) return;
@@ -144,6 +150,9 @@
       </p>
       <p>
         <a href="without-bootstrap.html" class="btn btn-primary">View Demo Without Bootstrap</a>
+      </p>
+      <p>
+        <a class="btn btn-primary" onclick="$(body).attr('dir')=='rtl'?$(body).removeAttr('dir'):$(body).attr('dir', 'rtl')">Toggle LTR/RTL</a>
       </p>
 
       <!-- Control types -->
@@ -321,7 +330,7 @@
               <label for="input-group">Input Groups</label>
               <div class="input-group">
                 <input type="text" id="input-group" class="form-control demo" value="#ff0000"/>
-                <span class="input-group-append">
+                <span class="input-group-btn">
                   <button class="btn btn-default" type="button">Button</button>
                 </span>
               </div>
@@ -334,11 +343,9 @@
             <div class="form-group">
               <label for="more-input-group">More Input Groups</label>
               <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">Color</span>
-                </div>
+                <span class="input-group-addon">Color</span>
                 <input type="text" id="more-input-group" class="form-control demo" value="#ff0000"/>
-                <span class="input-group-append">
+                <span class="input-group-btn">
                   <button class="btn btn-default" type="button">Button</button>
                 </span>
               </div>
@@ -573,8 +580,13 @@ $.minicolors.defaults = $.extend($.minicolors.defaults, {
         <dt>swatches</dt>
         <dd>
           <p>
-            An array containing some colors, in either rgb(a) or hex format, that will
-            show up under the main color grid.
+            An array containing one or more strings of hex colors that will show up under the main
+            color grid.
+          </p>
+          <p>
+            Alternatively, this can be an array of <code>{ name, color }</code> objects where
+            <code>name</code> is a human-readable color name and <code>color</code> is a hex code.
+            In this case, the name will be used to set the swatch's <code>title</code> attribute.
           </p>
         </dd>
       </dl>
@@ -600,6 +612,20 @@ $.minicolors.defaults = $.extend($.minicolors.defaults, {
         <dd>
           <p>
             Returns the <em>input</em> element to its original, uninitialized state.
+          </p>
+        </dd>
+
+        <dt>hide</dt>
+        <dd>
+          <p>
+            Hide the color picker box
+          </p>
+        </dd>
+
+        <dt>show</dt>
+        <dd>
+          <p>
+            Show the color picker box
           </p>
         </dd>
 

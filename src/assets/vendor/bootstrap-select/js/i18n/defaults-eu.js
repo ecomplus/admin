@@ -1,8 +1,8 @@
 /*!
- * Bootstrap-select v1.12.2 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.13.1 (https://developer.snapappointments.com/bootstrap-select)
  *
- * Copyright 2013-2017 bootstrap-select
- * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
+ * Copyright 2012-2018 SnapAppointments, LLC
+ * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
  */
 
 (function (root, factory) {
@@ -27,7 +27,9 @@
     noneResultsText: 'Emaitzarik ez {0}',
     countSelectedText: '{1}(e)tik {0} hautatuta',
     maxOptionsText: ['Mugara iritsita ({n} {var} gehienez)', 'Taldearen mugara iritsita ({n} {var} gehienez)', ['elementu', 'elementu']],
-    multipleSeparator: ', '
+    multipleSeparator: ', ',
+    selectAllText: 'Hautatu Guztiak',
+    deselectAllText: 'Desautatu Guztiak'
   };
 })(jQuery);
 
