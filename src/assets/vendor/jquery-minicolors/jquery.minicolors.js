@@ -35,7 +35,7 @@
       keywords: '',
       letterCase: 'lowercase',
       opacity: false,
-      position: 'bottom left',
+      position: 'bottom',
       show: null,
       showSpeed: 100,
       theme: 'default',
@@ -110,8 +110,8 @@
         } else {
           // Setter
           $(this).each(function() {
-            if(typeof(data) === 'object' && data !== 'null') {
-              if(data.opacity) {
+            if(typeof(data) === 'object' && data !== null) {
+              if(data.opacity !== undefined) {
                 $(this).attr('data-opacity', keepWithin(data.opacity, 0, 1));
               }
               if(data.color) {
@@ -142,6 +142,7 @@
   function init(input, settings) {
     var minicolors = $('<div class="minicolors" />');
     var defaults = $.minicolors.defaults;
+    var name;
     var size;
     var swatches;
     var swatch;
@@ -214,9 +215,16 @@
       swatches = $('<ul class="minicolors-swatches"></ul>')
       .appendTo(panel);
       for(i = 0; i < settings.swatches.length; ++i) {
-        swatch = settings.swatches[i];
+        // allow for custom objects as swatches
+        if($.type(settings.swatches[i]) === "object") {
+          name = settings.swatches[i].name;
+          swatch = settings.swatches[i].color;
+        } else {
+          name = '';
+          swatch = settings.swatches[i];
+        }
         swatch = isRgb(swatch) ? parseRgb(swatch, true) : hex2rgb(parseHex(swatch, true));
-        $('<li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color"></span></li>')
+        $('<li class="minicolors-swatch minicolors-sprite"><span class="minicolors-swatch-color" title="' + name + '"></span></li>')
         .appendTo(swatches)
         .data('swatch-color', settings.swatches[i])
         .find('.minicolors-swatch-color')
@@ -975,7 +983,7 @@
   }
 
   // Handle events
-  $([document, top.document])
+  $([document])
     // Hide on clicks outside of the control
     .on('mousedown.minicolors touchstart.minicolors', function(event) {
       if(!$(event.target).parents().add(event.target).hasClass('minicolors')) {
@@ -1080,7 +1088,7 @@
     .on('keydown.minicolors', '.minicolors-input', function(event) {
       var input = $(this);
       if(!input.data('minicolors-initialized')) return;
-      switch(event.keyCode) {
+      switch(event.which) {
       case 9: // tab
         hide();
         break;

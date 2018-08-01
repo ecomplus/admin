@@ -1,22 +1,27 @@
 //-----------------------------------------------------------------
 //
 //
+
 // Table of Contents
 //
 // Colors
 // Options
 // Components
+
 //-----------------------------------------------------------------
 // General
 //
+
 $line-height-xs:      18px;
 $line-height-sm:      20px;
 $line-height-md:      24px;
 $line-height-lg:      32px;
 $line-height-xl:      54px;
+
 //-----------------------------------------------------------------
 // Sizes
 //
+
 // Elements height
 $height-xs:            24px;
 $height-sm:            29px;
@@ -25,12 +30,14 @@ $height-lg:            48px;
 $height-xl:            64px;
 $height-xxl:           96px;
 $height-xxxl:          128px;
+
 // Elements consistent width
 $width-cons-xs:        85px;
 $width-cons-sm:        100px;
 $width-cons-md:        120px;
 $width-cons-lg:        145px;
 $width-cons-xl:        180px;
+
 // Layout sizes
 $width-sidebar-normal:    260px;
 $width-sidebar-sm:        220px;
@@ -38,20 +45,26 @@ $width-sidebar-lg:        300px;
 $width-sidebar-iconic:    100px;
 $width-sidebar-folded:    80px;
 $width-sidebar-icon-only: 70px;
+
 $width-aside-sm:       200px;
 $width-aside-md:       250px;
 $width-aside-lg:       300px;
+
 $width-quickview-sm:   220px;
 $width-quickview-md:   300px;
 $width-quickview-lg:   420px;
 $width-quickview-xl:   640px;
 $width-quickview-xxl:  860px;
+
 $width-aside:          300px;
+
 $height-topbar:        64px;
 $height-topbar-sec:    80px;
+
 //-----------------------------------------------------------------
 // Spacing
 //
+
 //-----------------------------------------------------------------
 // Fonts
 //
@@ -63,6 +76,7 @@ $font-quote:            Georgia, Verdana, Serif;
 $font-monospace:        SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 $font-icon-fontawesome: FontAwesome;
 $font-icon-themify:     themify;
+
 //-----------------------------------------------------------------
 // Colors
 //
@@ -77,6 +91,7 @@ $gray-700:               #495057 !default;
 $gray-800:               #343a40 !default;
 $gray-900:               #212529 !default;
 $black:                  #000 !default;
+
 // Base colors
 $color-blue:             #03a9b3 !default;
 $color-indigo:           #33003c !default;
@@ -92,6 +107,7 @@ $color-brown:            #993400 !default;
 $color-dark:             #595959 !default;
 $color-gray:             $gray-600 !default;
 $color-light:            $gray-100 !default;
+
 // Context colors
 $color-primary:          #ff015b !default;
 $color-secondary:        #e4e7ea !default;
@@ -99,6 +115,7 @@ $color-success:          $color-green !default; // 46be8a
 $color-info:             $color-blue !default;
 $color-warning:          $color-orange !default;
 $color-danger:           $color-red !default;
+
 // Pale context colors
 $color-pale-primary:     #dcfcfa !default;
 $color-pale-secondary:   #f7fafc !default;
@@ -113,6 +130,7 @@ $color-pale-yellow:      #fcf8e3 !default;
 $color-pale-brown:       #eddcd5 !default;
 $color-pale-dark:        #c8c8c8 !default;
 $color-pale-gray:        #f2f2f2 !default;
+
 // Background colors
 $color-bg-light:         #f5f6f7 !default;
 $color-bg-lighter:       #f9fafb !default;
@@ -122,6 +140,7 @@ $color-bg-new:           #f3f9ff !default;
 $color-bg-new-hover:     #ecf5fe !default;
 $color-bg-dark:          #e3e4e5 !default;
 $color-bg-darker:        #dcddde !default;
+
 // Text colors
 $color-title:            #313944 !default; //37404d
 $color-subtitle:         #999999 !default;
@@ -130,9 +149,11 @@ $color-text-light:       #616a78 !default;
 $color-text-secondary:   #8b95a5 !default;
 $color-text-placeholder: #c9ccce !default;
 $color-text-disable:     #a5b3c7 !default;
+
 // Divider color
 $color-divider:          #ebebeb !default;
 $color-divider-light:    #f1f2f3 !default;
+
 // Social media
 $color-facebook:         #3b5998 !default;
 $color-google-plus:      #dd4b39 !default;
@@ -151,6 +172,7 @@ $color-instagram:        #517fa4 !default;
 $color-lastfm:           #c3000d !default;
 $color-behance:          #1769ff !default;
 $color-rss:              #f26522 !default;
+
 // Alpha channel colors
 $color-alpha-dark-text:           rgba($color-text, .7)  !default;
 $color-alpha-dark-text-light:     rgba($color-text, .4)  !default;
@@ -158,6 +180,7 @@ $color-alpha-dark-text-active:    rgba($color-text, 1)   !default;
 $color-alpha-dark-bg:             rgba($color-text, .04) !default;
 $color-alpha-dark-bg-hover:       rgba($color-text, .05) !default;
 $color-alpha-dark-divider:        rgba($color-text, .07) !default;
+
 $color-alpha-light-text:          rgba(#fff, .7)  !default;
 $color-alpha-light-text-light:    rgba(#fff, .4)  !default;
 $color-alpha-light-text-active:   rgba(#fff, 1)   !default;
@@ -165,6 +188,7 @@ $color-alpha-light-bg:            rgba(#fff, .1)  !default;
 $color-alpha-light-bg-hover:      rgba(#fff, .15) !default;
 $color-alpha-light-divider:       rgba(#fff, .15) !default;
 $color-alpha-light-divider-light: rgba(#fff, .08) !default;
+
 $zindex-fab:                9 !default;
 $zindex-morris:             900 !default;
 $zindex-topbar:             995 !default;
@@ -188,12 +212,15 @@ $zindex-toast:              1051 !default;
 $zindex-dropdown:           992 !default;
 $zindex-preloader:          2000 !default;
 $zindex-pace:               2001 !default;
+
 //-----------------------------------------------------------------
 // Components
 //
+
 // Offcanvas
 $offcanvas-right-shadow: 5px 0px 13px 3px rgba(0, 0, 0, 0.1) !default;
 $offcanvas-left-shadow:  0px 0px 25px rgba(0, 0, 0, 0.1) !default;
+
 // Menu
 $menu-height-xs:              42px;
 $menu-height-sm:              48px;
@@ -203,6 +230,7 @@ $menu-height-xl:              72px;
 $menu-submenu-height:         32px;
 $menu-link-items-margin-x:    8px  !default;
 $menu-light-submenu-bg:       #f7f9fa !default;
+
 // Sidebar
 $sidebar-header-bg:           $color-purple !default;
 $sidebar-dark-bg:             #150017 !default;
@@ -215,6 +243,7 @@ $sidebar-items-margin-x:      8px  !default;
 $sidebar-icon-size:           30px !default;
 $sidebar-icon-size-lg:        40px !default;
 $sidebar-submenu-item-height: 34px !default;
+
 // Topbar
 $topbar-gap:                  12px !default;
 $topbar-padding-x:            20px !default;
@@ -222,20 +251,26 @@ $topbar-items-margin-x:       8px  !default;
 $topbar-submenu-item-height:  38px !default;
 $topbar-icon-size:            16px !default;
 $topbar-menu-dropdown-size:   200px !default;
+
 // Notification
 $tooltip-bg:                  #323232 !default;
 $toaster-bg:                  #323232 !default;
+
 // Card
 $card-internal-border:        1px solid $color-alpha-dark-divider;
+
 // Backdrop
 $backdrop-bg-light:           rgba(255,255,255,0.8);
 $backdrop-bg-dark:            rgba(0,0,0,0.5);
+
 // Dock
 $dock-header-height:          44px !default;
+
 //
 // Lists
 //
 $sides: left right top bottom;
+
 //
 // Maps
 //
@@ -254,6 +289,7 @@ $colors: (
   'gray':      $color-gray,
   'dark':      $color-dark,
 );
+
 $colors-pale: (
   'primary':   $color-pale-primary,
   'secondary': $color-pale-secondary,
@@ -269,6 +305,7 @@ $colors-pale: (
   'gray':      $color-pale-gray,
   'dark':      $color-pale-dark,
 );
+
 $social-colors: (
   'facebook':    $color-facebook,
   'google':      $color-google-plus,

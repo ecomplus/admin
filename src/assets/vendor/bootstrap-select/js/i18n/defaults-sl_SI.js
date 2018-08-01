@@ -1,8 +1,8 @@
 /*!
- * Bootstrap-select v1.12.2 (http://silviomoreto.github.io/bootstrap-select)
+ * Bootstrap-select v1.13.1 (https://developer.snapappointments.com/bootstrap-select)
  *
- * Copyright 2013-2017 bootstrap-select
- * Licensed under MIT (https://github.com/silviomoreto/bootstrap-select/blob/master/LICENSE)
+ * Copyright 2012-2018 SnapAppointments, LLC
+ * Licensed under MIT (https://github.com/snapappointments/bootstrap-select/blob/master/LICENSE)
  */
 
 (function (root, factory) {
@@ -25,9 +25,7 @@
   $.fn.selectpicker.defaults = {
     noneSelectedText: 'Nič izbranega',
     noneResultsText: 'Ni zadetkov za {0}',
-    countSelectedText: function (numSelected, numTotal) {
-      "Število izbranih: {0}";
-    },
+    countSelectedText: '{0} od {1} izbranih',
     maxOptionsText: function (numAll, numGroup) {
       return [
         'Omejitev dosežena (max. izbranih: {n})',
