@@ -660,7 +660,7 @@
             // should be unique
             var sku = null
             while (!sku) {
-              sku = Sku + '-' + randomInt(100, 999) + '-' + i
+              sku = Sku + '-' + randomInt(100, 999) + '-' + (i + 1)
               // check if other variation already have same SKU
               for (ii = 0; ii < ln.length; ii++) {
                 if (sku === variationsData[ii].sku) {
