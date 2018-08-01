@@ -536,6 +536,9 @@ body {
   overflow: hidden;
   position: relative;
 }
+.select-image.select-only {
+  cursor: default;
+}
 .select-image > div {
   width: 100%;
 }
@@ -578,7 +581,8 @@ body {
   margin: 0 5px;
   border: 1px solid $color-bg-lightest;
 }
-.select-image span:hover {
+.select-image span:hover,
+.select-image span.selected {
   border-color: $color-text;
 }
 .select-image span > img {
@@ -607,6 +611,9 @@ body {
 }
 .select-image span:hover > i {
   opacity: 1;
+}
+.select-image.select-only span > img {
+  cursor: pointer;
 }
 
 // resources list
