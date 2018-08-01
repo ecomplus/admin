@@ -925,8 +925,8 @@
         for (i = 0; i < variations.length; i++) {
           if (i !== index) {
             variation = variations[i]
-            if (variation.sku && Object.keys(variation).length > 3) {
-              // _is, sku and specifications are the basic variations properties
+            if (variation.sku && Object.keys(variation).length > 4) {
+              // _is, sku, specifications and name are the basic variations properties
               // variation has more (edited) properties
               // can be copied
               variationsToCopy.push(variation.sku)
@@ -1032,39 +1032,15 @@
         if (variationToCopy && variation) {
           for (var prop in variationToCopy) {
             if (variationToCopy.hasOwnProperty(prop)) {
-              if (prop === 'name') {
-                if (!variation.name) {
-                  // copy name replacing specs
-                  var name = variationToCopy.name
-                  var copySpecifications = variationToCopy.specifications
-                  var specifications = variation.specifications
-
-                  // replace specifications one by one
-                  for (var spec in copySpecifications) {
-                    if (copySpecifications.hasOwnProperty(spec) && specifications.hasOwnProperty(spec)) {
-                      // parse spec array to string separated by comma
-                      var copyText = ''
-                      for (var i = 0; i < copySpecifications[spec].length; i++) {
-                        copyText += copySpecifications[spec][i].text
-                        if (i > 0) {
-                          copyText += ', '
-                        }
-                      }
-                      var text = ''
-                      for (i = 0; i < specifications[spec].length; i++) {
-                        text += specifications[spec][i].text
-                        if (i > 0) {
-                          text += ', '
-                        }
-                      }
-                      name = name.replace(copyText, text)
-                    }
-                  }
-
-                  variation.name = name
-                }
-              } else if (prop !== '_id' && prop !== 'sku' && prop !== 'specifications') {
-                variation[prop] = variationToCopy[prop]
+              switch (prop) {
+                case '_id':
+                case 'sku':
+                case 'specifications':
+                case 'name':
+                  // skip
+                  break
+                default:
+                  variation[prop] = variationToCopy[prop]
               }
             }
           }
