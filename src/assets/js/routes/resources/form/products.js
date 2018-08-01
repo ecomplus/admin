@@ -862,10 +862,26 @@
     }, 400)
 
     var Name = Data().name || ''
-    $form.find('input[name="name"]').attr('placeholder', i18n({
+    // generic product name
+    // used to force product name (required) not empty
+    var genericName = i18n({
+      'en_us': 'New and spectacular product',
+      'pt_br': 'Novo e espetacular produto'
+    })
+
+    var $inputName = $form.find('input[name="name"]')
+    $inputName.attr('placeholder', i18n({
       'en_us': 'Long Sleeve Polo Shirt',
       'pt_br': 'Camisa Polo Manga Longa'
     }))
+
+    .click(function () {
+      if ($(this).val() === genericName) {
+        // using generic product name
+        // clear input
+        $(this).val('').trigger('change')
+      }
+    })
 
     .change(function () {
       // update variations names
@@ -912,6 +928,16 @@
       var data = Data()
       var variations = data.variations
       if (variations && index >= 0 && variations.length > index) {
+        // first of all, check if product has name and SKU (required)
+        if (!data.name) {
+          // set generic product name
+          $inputName.val(genericName).trigger('change')
+        }
+        if (!data.sku) {
+          // set new random SKU
+          randomSku()
+        }
+
         // edit variation by index
         currentVariationIndex = index
         var variation, i
