@@ -286,7 +286,19 @@
                   'pt_br': 'Transparente'
                 }),
                 type: 'text',
-                name: 'rgb'
+                name: 'rgb',
+                keydown: function (e) {
+                  switch (e.which) {
+                    // tab
+                    // enter
+                    case 9:
+                    case 13:
+                      setTimeout(function () {
+                        $inputOption.focus()
+                      }, 100)
+                      break
+                  }
+                }
               })
               // insert before option input
               $blockOption.prepend($colorpicker)
@@ -310,6 +322,7 @@
                         $inputOption.typeahead('val', option.text)
                         // automatically add option
                         addOption()
+                        return
                       }
                     }
                   }
