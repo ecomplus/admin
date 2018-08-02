@@ -290,6 +290,7 @@
               // https://labs.abeautifulsite.net/jquery-minicolors/
               var minicolorsOptions = {
                 theme: 'bootstrap',
+                position: 'top left',
                 swatches: [],
                 change: function (value) {
                   // test preconfigured colors
@@ -319,6 +320,9 @@
                 }
               }
               $colorpicker.minicolors(minicolorsOptions)
+              // fix colorpicker panel position
+              var $panel = $colorpicker.nextAll('.minicolors-panel')
+              $panel.css('top', (-($panel.height() + 8)) + 'px')
             }
 
             // focus on RGB input
