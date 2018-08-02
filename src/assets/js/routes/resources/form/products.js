@@ -290,8 +290,24 @@
               // https://labs.abeautifulsite.net/jquery-minicolors/
               var minicolorsOptions = {
                 theme: 'bootstrap',
-                swatches: []
+                swatches: [],
+                change: function (value) {
+                  // test preconfigured colors
+                  if (Grids[gridId].options) {
+                    for (var i = 0; i < Grids[gridId].options.length; i++) {
+                      // array first RGB of array only
+                      var option = Grids[gridId].options[i]
+                      var rgbs = option.colors
+                      if (rgbs && rgbs[0] === value) {
+                        // matched
+                        // set option text input value with color name
+                        $inputOption.typeahead('val', option.text)
+                      }
+                    }
+                  }
+                }
               }
+
               if (Grids[gridId].options) {
                 // preconfigured colors
                 for (var i = 0; i < Grids[gridId].options.length; i++) {
@@ -304,17 +320,21 @@
               }
               $colorpicker.minicolors(minicolorsOptions)
             }
-          } else if ($colorpicker) {
-            // remove colorpicker and reset
-            $colorpicker.minicolors('destroy').remove()
-            $colorpicker = null
-          }
 
-          // focus on option text input
-          $inputOption.focus()
+            // focus on RGB input
+            $colorpicker.focus()
+          } else {
+            if ($colorpicker) {
+              // remove colorpicker and reset
+              $colorpicker.minicolors('destroy').remove()
+              $colorpicker = null
+            }
+            // focus on option text input
+            $inputOption.focus()
+          }
         } else {
           // clear option
-          $inputOption.val('')
+          $inputOption.typeahead('val', '')
           if (countGrids > 1) {
             // remove empty grid from list
             removeGrid($li)
@@ -361,12 +381,7 @@
         }
       })
 
-      $inputOption.click(function () {
-        // select all text content to facilitate
-        $(this).select()
-      })
-
-      .keydown(function (e) {
+      $inputOption.keydown(function (e) {
         switch (e.which) {
           // tab
           case 9:
@@ -432,7 +447,7 @@
       // multiple options should be separated with comma
       var options = $inputOption.val().split(',')
       // clear input
-      $inputOption.val('').focus()
+      $inputOption.typeahead('val', '').focus()
 
       for (var i = 0; i < options.length; i++) {
         var option = options[i].trim()
