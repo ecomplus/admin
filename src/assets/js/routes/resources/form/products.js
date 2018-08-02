@@ -573,7 +573,12 @@
           // save variation JSON
           $(this).data('variation', JSON.stringify(data.variations[index]))
           // remove variation from data
-          data.variations.splice(index, 1)
+          if (data.variations.length > 1) {
+            data.variations.splice(index, 1)
+          } else {
+            // last variation
+            delete data.variations
+          }
           // disable edition
           $li.addClass('disabled')
           $edit.attr('disabled', true)
@@ -583,7 +588,13 @@
           $li.removeClass('disabled')
           index = variationIndexFromList($li)
           // add variation again
-          data.variations.splice(index, 0, JSON.parse($(this).data('variation')))
+          var variation = JSON.parse($(this).data('variation'))
+          if (data.variations) {
+            data.variations.splice(index, 0, variation)
+          } else {
+            // first variation
+            data.variations = [ variation ]
+          }
           // enable edit button again
           $edit.removeAttr('disabled')
         }
