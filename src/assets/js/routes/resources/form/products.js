@@ -337,7 +337,7 @@
           $inputOption.typeahead('val', '')
           if (countGrids > 1) {
             // remove empty grid from list
-            removeGrid($li)
+            removeGrid($li, gridId)
           }
         }
 
@@ -402,7 +402,7 @@
 
       // setup remove button
       $li.find('.remove-grid').click(function () {
-        removeGrid($li)
+        removeGrid($li, gridId)
       })
       // add button
       $li.find('.add-option').click(function () {
@@ -760,7 +760,7 @@
       addGrid()
     })
 
-    var removeGrid = function ($li) {
+    var removeGrid = function ($li, gridId) {
       // remove list element of respective grid
       $li.slideUp(400, function () {
         $(this).remove()
@@ -771,6 +771,11 @@
         // list is empty, hide list header
         $('#t' + tabId + '-grids-list-header, #t' + tabId + '-add-option-header').slideUp()
       }
+
+      // remove from saved grids object
+      delete gridsOptions[gridId]
+      // regenerate variations
+      generateVariations()
     }
 
     var updateVariations = function (prop) {
