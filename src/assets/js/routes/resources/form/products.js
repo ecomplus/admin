@@ -391,7 +391,7 @@
             break
           // enter
           case 13:
-            addGridOption($li, $inputOption, gridId)
+            addGridOption($li, $inputOption, $colorpicker, gridId)
             break
         }
       })
@@ -406,7 +406,7 @@
       })
       // add button
       $li.find('.add-option').click(function () {
-        addGridOption($li, $inputOption, gridId)
+        addGridOption($li, $inputOption, $colorpicker, gridId)
       })
 
       countGrids++
@@ -442,7 +442,7 @@
       })
     }
 
-    var addGridOption = function ($li, $inputOption, gridId) {
+    var addGridOption = function ($li, $inputOption, $colorpicker, gridId) {
       // add options to grid
       // multiple options should be separated with comma
       var options = $inputOption.val().split(',')
@@ -455,11 +455,13 @@
           var optionIndex, savedOptions
           if (gridId) {
             // set option ID value
+            var optionObject
             var optionId = normalizeString(option)
             var ii
             if (Grids[gridId] && Grids[gridId].options) {
+              // test from predefined grid options
               for (ii = 0; ii < Grids[gridId].options.length; ii++) {
-                var optionObject = Grids[gridId].options[ii]
+                optionObject = Grids[gridId].options[ii]
                 if (optionId === normalizeString(optionObject.text)) {
                   optionId = optionObject.option_id
                   break
@@ -482,10 +484,15 @@
 
             // save current option
             optionIndex = savedOptions.length
-            savedOptions[optionIndex] = {
+            optionObject = {
               'option_id': optionId,
               'text': option
             }
+            if ($colorpicker) {
+              // save color RGB value
+              optionObject.value = $colorpicker.minicolors('value')
+            }
+            savedOptions[optionIndex] = optionObject
           }
 
           var $liOption = $('<li />', {
@@ -590,6 +597,7 @@
 
         // create new options matches
         var variations = getCombinations(GridsOptions)
+        // console.log(variations)
         var variationsData = []
         for (i = 0; i < variations.length; i++) {
           // create variation
@@ -608,9 +616,15 @@
               label += '<span>' + option + '</span>'
 
               // data specifications
-              specifications[gridId] = [{
+              var specObject = {
                 text: option
-              }]
+              }
+              // normalized or RGB (if color) option value
+              var value = variation[gridId].value
+              if (value) {
+                specObject.value = value
+              }
+              specifications[gridId] = [ specObject ]
             }
           }
 
