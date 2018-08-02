@@ -377,6 +377,7 @@ body {
   transform: unset;
   color: $color-primary;
   font-weight: 400;
+  text-align: right;
 }
 .card-btn-slide:not(:empty).rotate-180 {
   opacity: .3;
