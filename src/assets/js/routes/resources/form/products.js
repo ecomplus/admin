@@ -216,6 +216,11 @@
       // prevent grid event duplication
       var gridOnChange
 
+      // abstraction for add grid option function
+      var addOption = function () {
+        addGridOption($li, $inputOption, $colorpicker, gridId)
+      }
+
       $inputGrid.change(function () {
         if (gridOnChange) {
           // event is already running
@@ -303,6 +308,8 @@
                         // matched
                         // set option text input value with color name
                         $inputOption.typeahead('val', option.text)
+                        // automatically add option
+                        addOption()
                       }
                     }
                   }
@@ -395,7 +402,7 @@
             break
           // enter
           case 13:
-            addGridOption($li, $inputOption, $colorpicker, gridId)
+            addOption()
             break
         }
       })
@@ -410,7 +417,7 @@
       })
       // add button
       $li.find('.add-option').click(function () {
-        addGridOption($li, $inputOption, $colorpicker, gridId)
+        addOption()
       })
 
       countGrids++
