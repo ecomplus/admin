@@ -45,9 +45,28 @@
       },
       'colors': {
         'title': i18n({
-          'en_us': 'Color',
-          'pt_br': 'Cor'
-        })
+          'en_us': 'Colors',
+          'pt_br': 'Cores'
+        }),
+        // sample colors
+        'options': [
+          {
+            'text': i18n({
+              'en_us': 'Blue',
+              'pt_br': 'Azul'
+            }),
+            'value': 'blue',
+            'colors': [ '#0000ff' ]
+          },
+          {
+            'text': i18n({
+              'en_us': 'White',
+              'pt_br': 'Branco'
+            }),
+            'value': 'white',
+            'colors': [ '#ffffff' ]
+          }
+        ]
       }
     }
     // save grids and options in use
@@ -187,6 +206,7 @@
       var $inputGrid = $li.find('input[name="grid"]')
       var $blockOption = $li.find('.option-block')
       var $inputOption = $blockOption.find('input[name="option"]')
+      var $colorpicker
       // enable option input after grid only
       var optionDisabled = true
       // predefined options for autocomplete
@@ -249,6 +269,45 @@
               }
             }
             $(this).data('grid-id', gridId)
+          }
+
+          if (gridId === 'colors') {
+            if (!$colorpicker) {
+              // add colorpicker
+              $colorpicker = $('<input />', {
+                'class': 'mb-10 form-control',
+                placeholder: i18n({
+                  'en_us': 'Transparent',
+                  'pt_br': 'Transparente'
+                }),
+                type: 'text',
+                name: 'rgb'
+              })
+              // insert before option input
+              $blockOption.prepend($colorpicker)
+
+              // setup jQuery MiniColors addon
+              // https://labs.abeautifulsite.net/jquery-minicolors/
+              var minicolorsOptions = {
+                theme: 'bootstrap',
+                swatches: []
+              }
+              if (Grids[gridId].options) {
+                // preconfigured colors
+                for (var i = 0; i < Grids[gridId].options.length; i++) {
+                  // array of RGBs
+                  var rgbs = Grids[gridId].options[i].colors
+                  if (rgbs && rgbs.length) {
+                    minicolorsOptions.swatches.push(rgbs[0])
+                  }
+                }
+              }
+              $colorpicker.minicolors(minicolorsOptions)
+            }
+          } else if ($colorpicker) {
+            // remove colorpicker and reset
+            $colorpicker.minicolors('destroy').remove()
+            $colorpicker = null
           }
 
           // focus on option text input
