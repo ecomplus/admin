@@ -51,19 +51,19 @@
         // sample colors
         'options': [
           {
+            'option_id': 'blue',
             'text': i18n({
               'en_us': 'Blue',
               'pt_br': 'Azul'
             }),
-            'value': 'blue',
             'colors': [ '#0000ff' ]
           },
           {
+            'option_id': 'white',
             'text': i18n({
               'en_us': 'White',
               'pt_br': 'Branco'
             }),
-            'value': 'white',
             'colors': [ '#ffffff' ]
           }
         ]
