@@ -764,12 +764,25 @@ app.ready(function () {
   })
 
   var i18n = function (label) {
-    if (label.hasOwnProperty(lang)) {
-      return label[lang]
-    } else {
-      // en_us as default
-      return label.en_us
+    if (typeof label === 'object' && label !== null) {
+      if (label.hasOwnProperty('en_us')) {
+        // object with languages options
+        if (label.hasOwnProperty(lang)) {
+          return label[lang]
+        } else {
+          // en_us as default
+          return label.en_us
+        }
+      } else {
+        // recursive
+        for (var prop in label) {
+          if (label.hasOwnProperty(prop)) {
+            label[prop] = i18n(label[prop])
+          }
+        }
+      }
     }
+    return label
   }
   window.i18n = i18n
 
