@@ -487,6 +487,22 @@ body {
   content: "/ "
 }
 
+// colorpicker
+.minicolors-panel {
+  z-index: 199 !important;
+}
+.minicolors-panel.swatches-only > * {
+  display: none;
+}
+.minicolors-panel.swatches-only > .minicolors-swatches {
+  display: block;
+}
+.minicolors-panel.swatches-only > .minicolors-swatches > li {
+  width: 28px;
+  height: 28px;
+  border-radius: 2px;
+}
+
 // input defaults
 .form-control:disabled,
 .form-control[readonly] {
