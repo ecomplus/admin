@@ -232,11 +232,24 @@
           // generate new grid ID
           gridId = normalizeString(grid)
           // try to match with defined grids titles
+          var matched
           for (var id in Grids) {
             if (Grids.hasOwnProperty(id) && normalizeString(Grids[id].title) === gridId) {
               // found respective grid object
               gridId = id
+              matched = true
               break
+            }
+          }
+
+          if (!matched) {
+            // try to fix grid ID string
+            switch (gridId) {
+              case 'cor':
+              case 'color':
+                // fix to colors
+                gridId = 'colors'
+                break
             }
           }
 
@@ -273,8 +286,11 @@
             $(this).data('grid-id', gridId)
           }
 
-          if (gridId === 'colors') {
+          if (gridId.indexOf('colors') === 0) {
             if (!$colorpicker) {
+              // use predefined colors
+              var Colors = Grids.colors.options
+
               // add colorpicker
               $colorpicker = $('<input />', {
                 'class': 'mb-10 form-control',
@@ -308,10 +324,10 @@
                 swatches: [],
                 change: function (value) {
                   // test preconfigured colors
-                  if (Grids[gridId].options) {
-                    for (var i = 0; i < Grids[gridId].options.length; i++) {
+                  if (Colors) {
+                    for (var i = 0; i < Colors.length; i++) {
                       // array first RGB of array only
-                      var option = Grids[gridId].options[i]
+                      var option = Colors[i]
                       var rgbs = option.colors
                       if (rgbs && rgbs[0] === value) {
                         // matched
@@ -326,11 +342,11 @@
                 }
               }
 
-              if (Grids[gridId].options) {
+              if (Colors) {
                 // preconfigured colors
-                for (var i = 0; i < Grids[gridId].options.length; i++) {
+                for (var i = 0; i < Colors.length; i++) {
                   // array of RGBs
-                  var rgbs = Grids[gridId].options[i].colors
+                  var rgbs = Colors[i].colors
                   if (rgbs && rgbs.length) {
                     minicolorsOptions.swatches.push(rgbs[0])
                   }
