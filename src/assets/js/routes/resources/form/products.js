@@ -28,6 +28,12 @@
     // setup predefined grids
     // GMC defaults
     var Grids = {
+      'size': {
+        'title': i18n({
+          'en_us': 'Size',
+          'pt_br': 'Tamanho'
+        })
+      },
       'material': {
         'title': 'Material'
       },
@@ -35,12 +41,6 @@
         'title': i18n({
           'en_us': 'Pattern',
           'pt_br': 'Estampa'
-        })
-      },
-      'size': {
-        'title': i18n({
-          'en_us': 'Size',
-          'pt_br': 'Tamanho'
         })
       },
       'colors': {
@@ -569,12 +569,14 @@
       // setup remove icon
       $liOption.find('.fa-times').click(function () {
         $liOption.remove()
+
+        // remove from saved options and update variations
         if (optionIndex !== undefined) {
           if (savedOptions.length > 1) {
             savedOptions.splice(optionIndex, 1)
           } else {
             // last option
-            delete gridsOptions[gridId]
+            gridsOptions[gridId] = []
           }
           generateVariations()
         }
