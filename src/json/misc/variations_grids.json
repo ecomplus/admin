@@ -1,4 +1,57 @@
 {
+  "size": {
+    "title": {
+      "en_us": "Size",
+      "pt_br": "Tamanho"
+    },
+    "options": [
+      {
+        "option_id": "xs",
+        "value": "xs",
+        "text": {
+          "en_us": "XS",
+          "pt_br": "PP"
+        }
+      },
+      {
+        "option_id": "s",
+        "value": "s",
+        "text": {
+          "en_us": "S",
+          "pt_br": "P"
+        }
+      },
+      {
+        "option_id": "m",
+        "value": "m",
+        "text": "M"
+      },
+      {
+        "option_id": "l",
+        "value": "l",
+        "text": {
+          "en_us": "L",
+          "pt_br": "G"
+        }
+      },
+      {
+        "option_id": "xl",
+        "value": "xl",
+        "text": {
+          "en_us": "XL",
+          "pt_br": "GG"
+        }
+      },
+      {
+        "option_id": "xxl",
+        "value": "xxl",
+        "text": {
+          "en_us": "XXL",
+          "pt_br": "XG"
+        }
+      }
+    ]
+  },
   "material": {
     "title": "Material",
     "options": [
@@ -64,59 +117,6 @@
         "text": {
           "en_us": "Paisley",
           "pt_br": "Floral"
-        }
-      }
-    ]
-  },
-  "size": {
-    "title": {
-      "en_us": "Size",
-      "pt_br": "Tamanho"
-    },
-    "options": [
-      {
-        "option_id": "xs",
-        "value": "xs",
-        "text": {
-          "en_us": "XS",
-          "pt_br": "PP"
-        }
-      },
-      {
-        "option_id": "s",
-        "value": "s",
-        "text": {
-          "en_us": "S",
-          "pt_br": "P"
-        }
-      },
-      {
-        "option_id": "m",
-        "value": "m",
-        "text": "M"
-      },
-      {
-        "option_id": "l",
-        "value": "l",
-        "text": {
-          "en_us": "L",
-          "pt_br": "G"
-        }
-      },
-      {
-        "option_id": "xl",
-        "value": "xl",
-        "text": {
-          "en_us": "XL",
-          "pt_br": "GG"
-        }
-      },
-      {
-        "option_id": "xxl",
-        "value": "xxl",
-        "text": {
-          "en_us": "XXL",
-          "pt_br": "XG"
         }
       }
     ]
