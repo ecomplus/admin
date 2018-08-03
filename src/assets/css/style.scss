@@ -491,6 +491,9 @@ body {
 .minicolors-panel {
   z-index: 199 !important;
 }
+.minicolors-panel.swatches-only {
+  width: 198px;
+}
 .minicolors-panel.swatches-only > * {
   display: none;
 }
@@ -498,9 +501,11 @@ body {
   display: block;
 }
 .minicolors-panel.swatches-only > .minicolors-swatches > li {
-  width: 28px;
-  height: 28px;
+  width: 35px;
+  height: 35px;
   border-radius: 2px;
+  margin-right: 3px;
+  margin-bottom: 3px;
 }
 
 // input defaults
