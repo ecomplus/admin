@@ -572,14 +572,16 @@
     var allKeys = Object.keys(options)
     var optionKey = allKeys[optionIndex]
     var vals = options[optionKey]
-    for (var i = 0; i < vals.length; i++) {
-      current[optionKey] = vals[i]
-      if (optionIndex + 1 < allKeys.length) {
-        getCombinations(options, optionIndex + 1, results, current)
-      } else {
-        // clone the object
-        var res = Object.assign({}, current)
-        results.push(res)
+    if (Array.isArray(vals)) {
+      for (var i = 0; i < vals.length; i++) {
+        current[optionKey] = vals[i]
+        if (optionIndex + 1 < allKeys.length) {
+          getCombinations(options, optionIndex + 1, results, current)
+        } else {
+          // clone the object
+          var res = Object.assign({}, current)
+          results.push(res)
+        }
       }
     }
     return results
