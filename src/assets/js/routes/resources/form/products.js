@@ -48,6 +48,14 @@
           'en_us': 'Color',
           'pt_br': 'Cor'
         })
+      },
+      // multiple colors
+      // for sample purposes only
+      'colors.2': {
+        'title': i18n({
+          'en_us': 'Secondary color',
+          'pt_br': 'Cor secundária'
+        })
       }
     }
     // save grids and options in use
@@ -245,10 +253,17 @@
           if (!matched) {
             // try to fix grid ID string
             switch (gridId) {
+              case 'cores':
               case 'cor':
               case 'color':
                 // fix to colors
                 gridId = 'colors'
+                break
+              case 'tamanhos':
+              case 'tamanho':
+              case 'sizes':
+                // fix to size
+                gridId = 'size'
                 break
             }
           }
