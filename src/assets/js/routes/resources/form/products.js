@@ -145,7 +145,7 @@
                     '</div>' +
                     '<div class="col-6 hidden option-block">' +
                       '<div class="input-group">' +
-                        '<input class="form-control" type="text" name="option" placeholder="GG">' +
+                        '<input class="form-control" type="text" name="option" placeholder="M">' +
                         '<div class="input-group-append">' +
                           '<button class="btn btn-light add-option" type="button">' +
                             '<i class="fa fa-plus"></i>' +
@@ -244,6 +244,9 @@
             // update options for autocomplete
             options = optionsTitles(gridId)
             // console.log(gridId, options)
+            if (options.length) {
+              $inputOption.attr('placeholder', options[0])
+            }
 
             if (gridsOptions.hasOwnProperty(gridId)) {
               // grid already in use
@@ -463,9 +466,10 @@
     var addGridOption = function ($li, $inputOption, $colorpicker, gridId) {
       // add options to grid
       // multiple options should be separated with comma
-      var options = $inputOption.val().split(',')
+      var value = $inputOption.val()
+      var options = value.split(',')
       // clear input
-      $inputOption.typeahead('val', '').focus()
+      $inputOption.typeahead('val', '').attr('placeholder', value).focus()
 
       for (var i = 0; i < options.length; i++) {
         var option = options[i].trim()
