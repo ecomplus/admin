@@ -45,8 +45,8 @@
       },
       'colors': {
         'title': i18n({
-          'en_us': 'Color',
-          'pt_br': 'Cor'
+          'en_us': 'Primary color',
+          'pt_br': 'Cor primária'
         })
       },
       // multiple colors
@@ -65,9 +65,14 @@
     $.getJSON('json/misc/variations_grids.json', function (json) {
       // successful
       for (var gridId in json) {
-        if (json.hasOwnProperty(gridId)) {
-          // overwrite local Grids object
-          Grids[gridId] = i18n(json[gridId])
+        var grid = json[gridId]
+        if (grid) {
+          if (Grids.hasOwnProperty(gridId) && grid.options) {
+            // overwrite options only
+            Grids[gridId].options = i18n(grid.options)
+          } else {
+            Grids[gridId] = i18n(grid)
+          }
         }
       }
     })
