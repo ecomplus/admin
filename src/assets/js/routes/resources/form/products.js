@@ -34,7 +34,7 @@
       'pattern': {
         'title': i18n({
           'en_us': 'Pattern',
-          'pt_br': 'Modelo'
+          'pt_br': 'Estampa'
         })
       },
       'size': {
@@ -47,48 +47,42 @@
         'title': i18n({
           'en_us': 'Colors',
           'pt_br': 'Cores'
-        }),
-        // sample colors
-        'options': [
-          {
-            'option_id': 'blue',
-            'text': i18n({
-              'en_us': 'Blue',
-              'pt_br': 'Azul'
-            }),
-            'colors': [ '#0000ff' ]
-          },
-          {
-            'option_id': 'white',
-            'text': i18n({
-              'en_us': 'White',
-              'pt_br': 'Branco'
-            }),
-            'colors': [ '#ffffff' ]
-          }
-        ]
+        })
       }
     }
     // save grids and options in use
     var gridsOptions = {}
 
-    // add store custom grids
-    window.callApi('grids.json?fields=title,grid_id,options', 'GET', function (err, json) {
-      if (!err) {
-        for (var i = 0; i < json.result.length; i++) {
-          var grid = json.result[i]
-          var normalizedTitle = normalizeString(grid.title)
-          // check duplicated grids
-          for (var gridId in Grids) {
-            if (Grids.hasOwnProperty(gridId)) {
-              if (gridId !== grid.grid_id && normalizeString(Grids[gridId].title) === normalizedTitle) {
-                delete Grids[gridId]
-              }
-            }
-          }
-          Grids[grid.grid_id] = grid
+    // load grids and options samples
+    $.getJSON('json/misc/variations_grids.json', function (json) {
+      // successful
+      for (var gridId in json) {
+        if (json.hasOwnProperty(gridId)) {
+          // overwrite local Grids object
+          Grids[gridId] = i18n(json[gridId])
         }
       }
+    })
+
+    .always(function () {
+      // add store custom grids
+      window.callApi('grids.json?fields=title,grid_id,options', 'GET', function (err, json) {
+        if (!err) {
+          for (var i = 0; i < json.result.length; i++) {
+            var grid = json.result[i]
+            var normalizedTitle = normalizeString(grid.title)
+            // check duplicated grids
+            for (var gridId in Grids) {
+              if (Grids.hasOwnProperty(gridId)) {
+                if (gridId !== grid.grid_id && normalizeString(Grids[gridId].title) === normalizedTitle) {
+                  delete Grids[gridId]
+                }
+              }
+            }
+            Grids[grid.grid_id] = grid
+          }
+        }
+      })
     })
 
     var gridsTitles = function () {
