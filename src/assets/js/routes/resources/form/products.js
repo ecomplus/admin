@@ -45,8 +45,8 @@
       },
       'colors': {
         'title': i18n({
-          'en_us': 'Colors',
-          'pt_br': 'Cores'
+          'en_us': 'Color',
+          'pt_br': 'Cor'
         })
       }
     }
