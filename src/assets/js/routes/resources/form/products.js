@@ -264,10 +264,10 @@
             if (gridsOptions.hasOwnProperty(gridId)) {
               // grid already in use
               var idAux = 2
-              while (gridsOptions.hasOwnProperty(gridId + '_' + idAux)) {
+              while (gridsOptions.hasOwnProperty(gridId + '.' + idAux)) {
                 idAux++
               }
-              gridId += '_' + idAux
+              gridId += '.' + idAux
             }
             if (oldGridId) {
               gridsOptions[gridId] = gridsOptions[oldGridId]
@@ -712,7 +712,14 @@
               if (value) {
                 specObject.value = value
               }
-              specifications[gridId] = [ specObject ]
+              // fix grid ID
+              // eg.: 'colors.2'
+              gridId = gridId.replace(/\..*/, '')
+              if (specifications.hasOwnProperty(gridId)) {
+                specifications[gridId].push(specObject)
+              } else {
+                specifications[gridId] = [ specObject ]
+              }
             }
           }
 
