@@ -577,6 +577,7 @@
 
             var NewOption = newGridOption($li, $colorpicker, gridId, optionId, option)
             if (NewOption && !newOption) {
+              // mark new option added
               newOption = NewOption
             }
           }
