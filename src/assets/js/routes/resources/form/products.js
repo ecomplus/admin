@@ -305,6 +305,7 @@
             if (!$colorpicker) {
               // use predefined colors
               var Colors = Grids.colors.options
+              var $inputOptionGroup
 
               // add colorpicker
               $colorpicker = $('<input />', {
@@ -315,48 +316,71 @@
                 }),
                 type: 'text',
                 name: 'rgb',
+
                 keydown: function (e) {
                   switch (e.which) {
                     // tab
-                    // enter
                     case 9:
-                    case 13:
                       setTimeout(function () {
-                        $inputOption.focus()
+                        $inputGrid.focus()
                       }, 100)
                       break
+                    // enter
+                    case 13:
+                      $(this).trigger('change')
+                      break
+                  }
+                },
+
+                change: function () {
+                  var value = $(this).val().trim().toLowerCase()
+                  // check RGB string
+                  if (/^#[a-f0-9]{6}$/.test(value)) {
+                    // test preconfigured colors
+                    if (Colors) {
+                      for (var i = 0; i < Colors.length; i++) {
+                        // array first RGB of array only
+                        var option = Colors[i]
+                        var rgbs = option.colors
+                        if (rgbs && rgbs[0] === value) {
+                          // matched
+                          // set option text input value with color name
+                          $inputOption.typeahead('val', option.text)
+                          // input option not needed
+                          $inputOptionGroup.slideUp()
+                          // automatically add option
+                          addOption()
+                          return
+                        }
+                      }
+                    }
+
+                    // color not found
+                    // show input option to set color name
+                    var next = function () {
+                      $inputOption.focus()
+                    }
+                    if (!$inputOptionGroup.is(':visible')) {
+                      $inputOptionGroup.slideDown(400, next)
+                    } else {
+                      setTimeout(next, 100)
+                    }
                   }
                 }
               })
               // insert before option input
               $blockOption.prepend($colorpicker)
+              // hide input option (not needed)
+              $inputOptionGroup = $colorpicker.nextAll()
+              $inputOptionGroup.hide()
 
               // setup jQuery MiniColors addon
               // https://labs.abeautifulsite.net/jquery-minicolors/
               var minicolorsOptions = {
                 theme: 'bootstrap',
                 position: 'top left',
-                swatches: [],
-                change: function (value) {
-                  // test preconfigured colors
-                  if (Colors) {
-                    for (var i = 0; i < Colors.length; i++) {
-                      // array first RGB of array only
-                      var option = Colors[i]
-                      var rgbs = option.colors
-                      if (rgbs && rgbs[0] === value) {
-                        // matched
-                        // set option text input value with color name
-                        $inputOption.typeahead('val', option.text)
-                        // automatically add option
-                        addOption()
-                        return
-                      }
-                    }
-                  }
-                }
+                swatches: []
               }
-
               if (Colors) {
                 // preconfigured colors
                 for (var i = 0; i < Colors.length; i++) {
@@ -370,7 +394,7 @@
               $colorpicker.minicolors(minicolorsOptions)
               // fix colorpicker panel position
               var $panel = $colorpicker.nextAll('.minicolors-panel')
-              $panel.css('top', (-($panel.height() + 8)) + 'px')
+              $panel.addClass('swatches-only').css('top', (-($panel.height() + 8)) + 'px')
             }
 
             // focus on RGB input
