@@ -553,7 +553,6 @@
       }
 
       // save current option
-      var optionIndex = savedOptions.length
       var optionObject = {
         'option_id': optionId,
         'text': text
@@ -565,7 +564,7 @@
       if (value) {
         optionObject.value = value
       }
-      savedOptions[optionIndex] = optionObject
+      savedOptions.push(optionObject)
 
       var $liOption = $('<li />', {
         html: '<span class="i-drag white"></span>' + text + '<i class="fa fa-times"></i>'
@@ -576,9 +575,16 @@
         $liOption.remove()
 
         // remove from saved options and update variations
-        if (optionIndex !== undefined) {
+        if (optionId) {
           if (savedOptions.length > 1) {
-            savedOptions.splice(optionIndex, 1)
+            // find respective option by ID
+            for (var i = 0; i < savedOptions.length; i++) {
+              if (savedOptions[i].option_id === optionId) {
+                // found, remove
+                savedOptions.splice(i, 1)
+                break
+              }
+            }
           } else {
             // last option
             gridsOptions[gridId] = []
