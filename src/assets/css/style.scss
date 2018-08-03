@@ -733,11 +733,12 @@ body {
 }
 .badges-list {
   margin-top: 5px;
+  text-align: right;
 }
 .badges-list li {
   background: $color-primary;
   display: inline-block;
-  margin: 5px 5px 0 0;
+  margin: 5px 0 0 5px;
   border-radius: 2px;
   padding: 6px 20px 6px 18px;
   line-height: 1;
