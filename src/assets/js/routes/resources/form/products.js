@@ -479,75 +479,113 @@
       })
     }
 
+    var searchGridOption = function (gridId, optionId) {
+      // find grid option by ID
+      var optionObject
+      if (Grids[gridId]) {
+        // test from predefined grid options
+        var options = Grids[gridId].options
+        if (options) {
+          for (var i = 0; i < options.length; i++) {
+            if (optionId === normalizeString(options[i].text)) {
+              // matched
+              optionObject = options[i]
+              break
+            }
+          }
+        }
+      }
+      return optionObject
+    }
+
+    var newGridOption = function ($li, $colorpicker, gridId, optionId, text) {
+      // handle new grid option
+      var savedOptions, optionIndex
+      if (gridId) {
+        savedOptions = gridsOptions[gridId]
+        for (var i = 0; i < savedOptions.length; i++) {
+          if (optionId === savedOptions[i].option_id) {
+            // option already in use
+            return false
+          }
+        }
+
+        // save current option
+        optionIndex = savedOptions.length
+        var optionObject = {
+          'option_id': optionId,
+          'text': text
+        }
+        if ($colorpicker) {
+          // save color RGB value
+          optionObject.value = $colorpicker.minicolors('value')
+        }
+        savedOptions[optionIndex] = optionObject
+      }
+
+      var $liOption = $('<li />', {
+        html: '<span class="i-drag white"></span>' + text + '<i class="fa fa-times"></i>'
+      })
+      $li.find('.badges-list').append($liOption)
+      // setup remove icon
+      $liOption.find('.fa-times').click(function () {
+        $liOption.remove()
+        if (optionIndex !== undefined) {
+          savedOptions.splice(optionIndex, 1)
+          generateVariations()
+        }
+      })
+
+      // new option added
+      return true
+    }
+
     var addGridOption = function ($li, $inputOption, $colorpicker, gridId) {
       // add options to grid
-      // multiple options should be separated with comma
-      var value = $inputOption.val()
-      var options = value.split(',')
+      var value = $inputOption.val().trim()
       // clear input
       $inputOption.typeahead('val', '').attr('placeholder', value).focus()
 
-      for (var i = 0; i < options.length; i++) {
-        var option = options[i].trim()
-        if (option !== '') {
-          var optionIndex, savedOptions
-          if (gridId) {
-            // set option ID value
-            var optionObject
-            var optionId = normalizeString(option)
-            var ii
-            if (Grids[gridId] && Grids[gridId].options) {
-              // test from predefined grid options
-              for (ii = 0; ii < Grids[gridId].options.length; ii++) {
-                optionObject = Grids[gridId].options[ii]
-                if (optionId === normalizeString(optionObject.text)) {
-                  optionId = optionObject.option_id
-                  break
-                }
+      var optionObject, newOption
+      if (gridId) {
+        // search for an option for the full value string
+        // generate option ID
+        optionObject = searchGridOption(gridId, normalizeString(value))
+      }
+      if (optionObject) {
+        // full value string matches with some option
+        // single new option
+        newOption = newGridOption($li, $colorpicker, gridId, optionObject.option_id, value)
+      } else {
+        // multiple options should be separated with points
+        var options = value.split(/[,;/\\|.]+/g)
+
+        // handle all new options
+        for (var i = 0; i < options.length; i++) {
+          var option = options[i].trim()
+          var optionId
+          if (option !== '') {
+            if (gridId) {
+              // set option ID value
+              optionId = normalizeString(option)
+              // try to find predefined option
+              optionObject = searchGridOption(gridId, optionId)
+              if (optionObject) {
+                optionId = optionObject.option_id
               }
             }
 
-            savedOptions = gridsOptions[gridId]
-            var skip
-            for (ii = 0; ii < savedOptions.length; ii++) {
-              if (optionId === savedOptions[ii].option_id) {
-                // option already in use
-                skip = true
-                break
-              }
+            var NewOption = newGridOption($li, $colorpicker, gridId, optionId, option)
+            if (NewOption && !newOption) {
+              newOption = NewOption
             }
-            if (skip) {
-              continue
-            }
-
-            // save current option
-            optionIndex = savedOptions.length
-            optionObject = {
-              'option_id': optionId,
-              'text': option
-            }
-            if ($colorpicker) {
-              // save color RGB value
-              optionObject.value = $colorpicker.minicolors('value')
-            }
-            savedOptions[optionIndex] = optionObject
           }
-
-          var $liOption = $('<li />', {
-            html: '<span class="i-drag white"></span>' + option + '<i class="fa fa-times"></i>'
-          })
-          $li.find('.badges-list').append($liOption)
-          // setup remove icon
-          $liOption.find('.fa-times').click(function () {
-            $liOption.remove()
-            if (optionIndex !== undefined) {
-              savedOptions.splice(optionIndex, 1)
-              generateVariations()
-            }
-          })
-
-          generateVariations()
         }
+      }
+
+      if (newOption) {
+        // grid option(s) added
+        generateVariations()
       }
     }
 
