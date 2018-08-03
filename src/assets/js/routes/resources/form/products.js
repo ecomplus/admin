@@ -309,7 +309,7 @@
 
               // add colorpicker
               $colorpicker = $('<input />', {
-                'class': 'mb-10 form-control',
+                'class': 'form-control',
                 placeholder: i18n({
                   'en_us': 'Transparent',
                   'pt_br': 'Transparente'
@@ -372,7 +372,7 @@
               $blockOption.prepend($colorpicker)
               // hide input option (not needed)
               $inputOptionGroup = $colorpicker.nextAll()
-              $inputOptionGroup.hide()
+              $inputOptionGroup.addClass('mt-10').hide()
 
               // setup jQuery MiniColors addon
               // https://labs.abeautifulsite.net/jquery-minicolors/
