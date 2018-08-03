@@ -498,30 +498,30 @@
       return optionObject
     }
 
-    var newGridOption = function ($li, $colorpicker, gridId, optionId, text) {
+    var newGridOption = function ($li, $colorpicker, gridId, optionId, value, text) {
       // handle new grid option
-      var savedOptions, optionIndex
-      if (gridId) {
-        savedOptions = gridsOptions[gridId]
-        for (var i = 0; i < savedOptions.length; i++) {
-          if (optionId === savedOptions[i].option_id) {
-            // option already in use
-            return false
-          }
+      var savedOptions = gridsOptions[gridId]
+      for (var i = 0; i < savedOptions.length; i++) {
+        if (optionId === savedOptions[i].option_id) {
+          // option already in use
+          return false
         }
-
-        // save current option
-        optionIndex = savedOptions.length
-        var optionObject = {
-          'option_id': optionId,
-          'text': text
-        }
-        if ($colorpicker) {
-          // save color RGB value
-          optionObject.value = $colorpicker.minicolors('value')
-        }
-        savedOptions[optionIndex] = optionObject
       }
+
+      // save current option
+      var optionIndex = savedOptions.length
+      var optionObject = {
+        'option_id': optionId,
+        'text': text
+      }
+      if ($colorpicker) {
+        // save color RGB value
+        value = $colorpicker.minicolors('value')
+      }
+      if (value) {
+        optionObject.value = value
+      }
+      savedOptions[optionIndex] = optionObject
 
       var $liOption = $('<li />', {
         html: '<span class="i-drag white"></span>' + text + '<i class="fa fa-times"></i>'
@@ -542,40 +542,49 @@
 
     var addGridOption = function ($li, $inputOption, $colorpicker, gridId) {
       // add options to grid
-      var value = $inputOption.val().trim()
+      var option = $inputOption.val().trim()
       // clear input
-      $inputOption.typeahead('val', '').attr('placeholder', value).focus()
-
-      var optionObject, newOption
-      if (gridId) {
-        // search for an option for the full value string
-        // generate option ID
-        optionObject = searchGridOption(gridId, normalizeString(value))
+      $inputOption.typeahead('val', '').attr('placeholder', option).focus()
+      if (!gridId) {
+        // nothing more to do without grid ID
+        return
       }
+
+      var optionId, optionObject, newOption
+      var handleNewOption = function () {
+        // option value not required
+        var value
+        if (optionObject) {
+          // overwrite option ID
+          optionId = optionObject.option_id
+          value = optionObject.value
+        }
+        // handle new grid option
+        return newGridOption($li, $colorpicker, gridId, optionId, value, option)
+      }
+
+      // search for an option for the full value string
+      // generate option ID
+      optionObject = searchGridOption(gridId, normalizeString(option))
       if (optionObject) {
         // full value string matches with some option
         // single new option
-        newOption = newGridOption($li, $colorpicker, gridId, optionObject.option_id, value)
+        newOption = handleNewOption()
       } else {
         // multiple options should be separated with points
-        var options = value.split(/[,;/\\|.]+/g)
+        var options = option.split(/[,;/\\|.]+/g)
 
         // handle all new options
         for (var i = 0; i < options.length; i++) {
-          var option = options[i].trim()
-          var optionId
+          option = options[i].trim()
           if (option !== '') {
-            if (gridId) {
-              // set option ID value
-              optionId = normalizeString(option)
-              // try to find predefined option
-              optionObject = searchGridOption(gridId, optionId)
-              if (optionObject) {
-                optionId = optionObject.option_id
-              }
-            }
+            // set option ID value
+            optionId = normalizeString(option)
+            // try to find predefined option
+            optionObject = searchGridOption(gridId, optionId)
 
-            var NewOption = newGridOption($li, $colorpicker, gridId, optionId, option)
+            // handle current option
+            var NewOption = handleNewOption()
             if (NewOption && !newOption) {
               // mark new option added
               newOption = NewOption
