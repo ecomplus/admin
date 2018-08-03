@@ -570,7 +570,12 @@
       $liOption.find('.fa-times').click(function () {
         $liOption.remove()
         if (optionIndex !== undefined) {
-          savedOptions.splice(optionIndex, 1)
+          if (savedOptions.length > 1) {
+            savedOptions.splice(optionIndex, 1)
+          } else {
+            // last option
+            delete gridsOptions[gridId]
+          }
           generateVariations()
         }
       })
