@@ -144,6 +144,15 @@
           "pt_br": "Branco"
         },
         "colors": [ "#ffffff" ]
+      },
+      {
+        "option_id": "black",
+        "value": "black",
+        "text": {
+          "en_us": "Black",
+          "pt_br": "Preto"
+        },
+        "colors": [ "#000000" ]
       }
     ]
   }
