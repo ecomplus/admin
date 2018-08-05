@@ -143,37 +143,57 @@
   if (creating !== true) {
     var endpoint, load, params
     if (resourceId === undefined) {
-      endpoint = slug + '.json'
-      // default query string for results limit only
-      params = 'limit=60'
       // disable edition
       editor.setReadOnly(true)
+
+      if (slug === 'products') {
+        // specific load function for products listing
+        load = function (callback, params) {
+          window.callSearchApi('items.json', 'POST', function (err, json) {
+            if (!err) {
+              // set tab JSON data
+              commit(json)
+            }
+            if (typeof callback === 'function') {
+              callback(null, json)
+            }
+          })
+        }
+      } else {
+        // generic resource listing
+        endpoint = slug + '.json'
+        // default query string for results limit only
+        params = 'limit=60'
+      }
     } else {
       // specific resource document
       endpoint = slug + '/' + resourceId + '.json'
     }
 
-    load = function (callback, params) {
-      var uri = endpoint
-      if (params) {
-        uri += '?' + params
-      }
-      window.callApi(uri, 'GET', function (err, json) {
-        if (!err) {
-          if (resourceId !== undefined) {
-            // remove common immutable data
-            delete json._id
-            delete json.store_id
-            delete json.created_at
-            delete json.updated_at
+    if (!load) {
+      // default load function
+      load = function (callback, params) {
+        var uri = endpoint
+        if (params) {
+          uri += '?' + params
+        }
+        window.callApi(uri, 'GET', function (err, json) {
+          if (!err) {
+            if (resourceId !== undefined) {
+              // remove common immutable data
+              delete json._id
+              delete json.store_id
+              delete json.created_at
+              delete json.updated_at
+            }
+            // set tab JSON data
+            commit(json)
           }
-          // set tab JSON data
-          commit(json)
-        }
-        if (typeof callback === 'function') {
-          callback(null, json)
-        }
-      })
+          if (typeof callback === 'function') {
+            callback(null, json)
+          }
+        })
+      }
     }
     // load JSON data globally
     Tab.load = load
