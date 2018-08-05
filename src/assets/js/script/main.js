@@ -631,9 +631,29 @@ app.ready(function () {
       addRequest(options, bodyObject, callback)
     }
 
+    var callSearchApi = function (endpoint, method, callback, bodyObject) {
+      // E-Com Plus Search API
+      // https://ecomsearch.docs.apiary.io/#
+      var apiHost = 'https://apx-search.e-com.plus/api/v1/'
+      // API endpoint full URL
+      var uri = apiHost + endpoint
+
+      var options = {
+        url: uri,
+        headers: {
+          // authenticate store only
+          // no authorization tokens
+          'X-Store-ID': storeId
+        },
+        method: method
+      }
+      addRequest(options, bodyObject, callback)
+    }
+
     // global
     window.callApi = callApi
     window.callStorageApi = callStorageApi
+    window.callSearchApi = callSearchApi
     // use tabs functions and objects globally
     window.Tabs = {}
 
