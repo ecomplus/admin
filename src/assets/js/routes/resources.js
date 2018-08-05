@@ -141,19 +141,32 @@
   Tab.slug = slug
 
   if (creating !== true) {
-    var endpoint
-    var load = function (callback, params) {
+    var endpoint, load, params
+    if (resourceId === undefined) {
+      endpoint = slug + '.json'
+      // default query string for results limit only
+      params = 'limit=60'
+      // disable edition
+      editor.setReadOnly(true)
+    } else {
+      // specific resource document
+      endpoint = slug + '/' + resourceId + '.json'
+    }
+
+    load = function (callback, params) {
       var uri = endpoint
       if (params) {
         uri += '?' + params
       }
       window.callApi(uri, 'GET', function (err, json) {
         if (!err) {
-          // remove common immutable data
-          delete json._id
-          delete json.store_id
-          delete json.created_at
-          delete json.updated_at
+          if (resourceId !== undefined) {
+            // remove common immutable data
+            delete json._id
+            delete json.store_id
+            delete json.created_at
+            delete json.updated_at
+          }
           // set tab JSON data
           commit(json)
         }
@@ -165,17 +178,6 @@
     // load JSON data globally
     Tab.load = load
 
-    var params
-    if (resourceId === undefined) {
-      endpoint = slug + '.json'
-      // default query string for results limit only
-      params = 'limit=60'
-      // disable edition
-      editor.setReadOnly(true)
-    } else {
-      // specific resource document
-      endpoint = slug + '/' + resourceId + '.json'
-    }
     // preload data, then load HTML content
     load(loadContent, params)
   } else {
