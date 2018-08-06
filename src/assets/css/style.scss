@@ -761,7 +761,7 @@ body {
   display: inline-block;
   margin: 5px 0 0 5px;
   border-radius: 2px;
-  padding: 6px 20px 6px 18px;
+  padding: 6px 20px;
   line-height: 1;
   font-size: 14px;
   font-weight: 400;
@@ -913,22 +913,22 @@ ul > li:nth-child(4n+4) > .badges-list li {
   height: 16px;
   cursor: move;
 }
-.i-drag.white,
-.i-drag.white::before {
-  background-image: radial-gradient($white 40%, transparent 40%);
-  opacity: .8;
-}
 .i-drag,
 .i-drag::before {
   background-image: radial-gradient($color-text 40%, transparent 40%);
   background-size: 4px 4px;
   background-position: 80% 0;
   background-repeat: repeat-y;
+  text-align: left;
+}
+.i-drag.white,
+.i-drag.white::before {
+  background-image: radial-gradient($white 40%, transparent 40%);
 }
 .i-drag::before {
   content: '';
   display: inline-block;
-  width: 40%;
+  width: 42%;
   height: 100%;
 }
 
