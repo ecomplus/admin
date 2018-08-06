@@ -537,10 +537,13 @@ body {
 .header-action .edit-btn:hover {
   border-color: $color-yellow;
 }
-@media (max-width: 650px) {
-  .edit-btn > :not(i) {
-    display: none;
-  }
+
+// fix nav link item margin
+.nav:not(.nav-tabs) .nav-link > i:first-child {
+  margin-right: 0;
+}
+.nav:not(.nav-tabs) .nav-link > i:first-child + * {
+  margin-left: 4px;
 }
 
 // dropzone progress bar is confused
@@ -885,6 +888,11 @@ ul > li:nth-child(4n+4) > .badges-list li {
 }
 .inline-childs > *:last-child {
   margin-right: none;
+}
+@media (max-width: 543px) {
+  .hidden-xs-down {
+    display: none;
+  }
 }
 @media (max-width: 767px) {
   .hidden-sm-down {
