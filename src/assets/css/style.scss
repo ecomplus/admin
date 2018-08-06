@@ -1,6 +1,10 @@
 @import 'scss/_variables.scss';
 @import 'fonts.css';
 
+// add more variables
+$color-purple-light: lighten($color-purple, 20%);
+$color-purple-lighter: lighten($color-purple, 35%);
+
 // notification
 .toast {
   background-color: $color-orange;
@@ -244,11 +248,11 @@ a:focus {
   border-top: 1px solid transparent;
 }
 #app-tabs .nav-link:hover {
-  border-top-color: lighten($color-purple, 35%);
+  border-top-color: $color-purple-lighter;
 }
 #app-tabs .nav-link.active {
   background-color: rgba($color-pale-purple, .2);
-  border-top-color: lighten($color-purple, 20%);
+  border-top-color: $color-purple-light;
 }
 #app-tabs .nav-item {
   position: relative;
@@ -289,7 +293,7 @@ a#close-current-tab {
   color: $color-text-disable;
 }
 #app-tabs > a:hover {
-  color: lighten($color-purple, 20%);
+  color: $color-purple-light;
 }
 
 // SPA, ajax router
@@ -538,6 +542,10 @@ body {
   border-color: $color-yellow;
 }
 
+.header-action .nav-link.active,
+.header-action .nav-link:hover {
+  border-bottom-color: $color-purple-light;
+}
 // fix nav link item margin
 .nav:not(.nav-tabs) .nav-link > i:first-child {
   margin-right: 0;
