@@ -172,6 +172,10 @@
     // handle grids sorting
     // https://github.com/RubaXa/Sortable
     window.Sortable.create($listGrids[0], {
+      // handle sorting on drag icon only
+      handle: '.i-drag',
+
+      // listen update event to update saved grids and regenerate variations
       onUpdate: function (e) {
         // console.log(e)
         // move array elements
