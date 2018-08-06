@@ -95,8 +95,13 @@
       // HTML card content
       var contentUri
       if (listing === true) {
-        // custom list
-        contentUri = 'routes/resources/list.html'
+        if (slug !== 'products') {
+          // custom list
+          contentUri = 'routes/resources/list.html'
+        } else {
+          // products list
+          contentUri = 'routes/resources/list/products.html'
+        }
       } else {
         // form to create and edit
         contentUri = 'routes/resources/form/' + slug + '.html'
