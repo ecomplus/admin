@@ -413,50 +413,30 @@
     })
 
     // select items from list to delete and edit
-    var selectedItems = []
     var selectItem = function (id) {
-      selectedItems.push(id)
+      Tab.selectedItems.push(id)
     }
     var unselectItem = function (id) {
-      selectedItems = $.grep(selectedItems, function (i) {
+      Tab.selectedItems = $.grep(Tab.selectedItems, function (i) {
         return i !== id
       })
     }
 
-    // delete button
-    $('#t' + tabId + '-delete-list').click(function () {
-      var todo = selectedItems.length
-      if (todo > 0) {
-        // show spinner and let it to fade out after list reload
-        $grid.find('.loading').show()
-
-        // call API to delete documents
-        var done = 0
-        var next = function () {
-          var id = selectedItems[done]
-          window.callApi(resourceSlug + '/' + id + '.json', 'DELETE', function () {
-            // ignore errors here
-            done++
-            if (done === todo) {
-              // end
-              // reload list
-              forceReload = true
-              // reset data status
-              dataUpdated = false
-              $grid.jsGrid('loadData')
-
-              // reset selected IDs
-              selectedItems = []
-              // unckeck if checked
-              $grid.find('.checkbox-all:checked').next().click()
-            } else {
-              next()
-            }
-          })
-        }
-        next()
+    // delete event effects
+    Tab.deleteItems = function () {
+      // show spinner and let it to fade out after list reload
+      $grid.find('.loading').show()
+      // returns callback for delete end
+      return function () {
+        // reload list
+        forceReload = true
+        // reset data status
+        dataUpdated = false
+        $grid.jsGrid('loadData')
+        // unckeck if checked
+        $grid.find('.checkbox-all:checked').next().click()
       }
-    })
+    }
   } else {
     // no resource objects
   }

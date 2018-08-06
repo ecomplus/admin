@@ -224,12 +224,14 @@
       window.location = '/' + window.location.hash + '/new'
     })
 
-    // handle delete items
+    // handle delete list items
     Tab.selectedItems = []
     Tab.deleteItems = function () {
       // returns callback for delete end
       return function () {}
     }
+
+    // show delete button
     $('#t' + tabId + '-delete').fadeIn().click(function () {
       var todo = Tab.selectedItems.length
       if (todo > 0) {
@@ -246,6 +248,8 @@
               if (typeof cb === 'function') {
                 cb()
               }
+              // reset selected IDs
+              Tab.selectedItems = []
             } else {
               next()
             }
