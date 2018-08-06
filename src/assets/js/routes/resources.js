@@ -256,6 +256,12 @@
           })
         }
         next()
+      } else {
+        // nothing to do, alert
+        app.toast(i18n({
+          'en_us': 'No items selected to delete',
+          'pt_br': 'Nenhum item selecionado para deletar'
+        }))
       }
     })
 
