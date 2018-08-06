@@ -38,7 +38,9 @@
       data = Tab.data
       if (data.hasOwnProperty('hits') && Array.isArray(data.hits.hits)) {
         list = data.hits.hits.map(function (item) {
-          return item._source
+          return Object.assign(item._source, {
+            _id: item._id
+          })
         })
       } else {
         list = []
@@ -245,10 +247,10 @@
     }]
 
     // setup resource specific fields
-    var field, i
-    // get from first resource object properties
-    var fieldsList = []
-    if (data.hasOwnProperty('meta')) {
+    var field, i, fieldsList
+    if (resourceSlug !== 'products') {
+      // get from first resource object properties
+      fieldsList = []
       for (i = 0; i < data.meta.fields.length; i++) {
         field = data.meta.fields[i]
         if (field !== '_id') {
@@ -268,6 +270,9 @@
           }
         }
       }
+    } else {
+      // predefined fields list for products
+      fieldsList = [ 'name', 'sku' ]
     }
 
     for (i = 0; i < fieldsList.length; i++) {
