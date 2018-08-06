@@ -218,6 +218,43 @@
     // load JSON data globally
     Tab.load = load
 
+    // show create document button
+    $('#t' + tabId + '-new').fadeIn().click(function () {
+      // redirect to create document page
+      window.location = '/' + window.location.hash + '/new'
+    })
+
+    // handle delete items
+    Tab.selectedItems = []
+    Tab.deleteItems = function () {
+      // returns callback for delete end
+      return function () {}
+    }
+    $('#t' + tabId + '-delete').fadeIn().click(function () {
+      var todo = Tab.selectedItems.length
+      if (todo > 0) {
+        var cb = Tab.deleteItems()
+        // call API to delete documents
+        var done = 0
+        var next = function () {
+          var id = Tab.selectedItems[done]
+          window.callApi(slug + '/' + id + '.json', 'DELETE', function () {
+            // ignore errors here
+            done++
+            if (done === todo) {
+              // end
+              if (typeof cb === 'function') {
+                cb()
+              }
+            } else {
+              next()
+            }
+          })
+        }
+        next()
+      }
+    })
+
     // preload data, then load HTML content
     load(loadContent, params)
   } else {
