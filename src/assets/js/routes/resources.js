@@ -145,11 +145,13 @@
     if (resourceId === undefined) {
       // disable edition
       editor.setReadOnly(true)
+      // default list results limit
+      var limit = 60
 
       if (slug === 'products') {
         // specific load function for products listing
         load = function (callback, params) {
-          window.callSearchApi('items.json', 'POST', function (err, json) {
+          var cb = function (err, json) {
             if (!err) {
               // set tab JSON data
               commit(json)
@@ -157,13 +159,24 @@
             if (typeof callback === 'function') {
               callback(null, json)
             }
-          })
+          }
+          // body params
+          // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html
+          if (!params) {
+            params = {
+              // results limit
+              size: limit
+            }
+          }
+
+          // call Search API
+          window.callSearchApi('items.json', 'POST', cb, params)
         }
       } else {
         // generic resource listing
         endpoint = slug + '.json'
         // default query string for results limit only
-        params = 'limit=60'
+        params = 'limit=' + limit
       }
     } else {
       // specific resource document
@@ -177,6 +190,8 @@
         if (params) {
           uri += '?' + params
         }
+
+        // call Store API
         window.callApi(uri, 'GET', function (err, json) {
           if (!err) {
             if (resourceId !== undefined) {
