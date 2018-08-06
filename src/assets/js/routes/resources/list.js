@@ -23,31 +23,11 @@
 
   // resource list data
   var resourceSlug = Tab.slug
-  var data, list, updateData
-
-  if (resourceSlug !== 'products') {
-    // handle generic resource listing
-    updateData = function () {
-      data = Tab.data
-      list = data.result
-    }
-  } else {
-    // products listing
-    // https://ecomsearch.docs.apiary.io/#reference/items/items-search
-    updateData = function () {
-      data = Tab.data
-      if (data.hasOwnProperty('hits') && Array.isArray(data.hits.hits)) {
-        list = data.hits.hits.map(function (item) {
-          return Object.assign(item._source, {
-            _id: item._id
-          })
-        })
-      } else {
-        list = []
-      }
-    }
+  var data, list
+  var updateData = function () {
+    data = Tab.data
+    list = data.result
   }
-  // preset data
   updateData()
 
   if (list.length) {
@@ -67,15 +47,11 @@
     // control pagination
     var offset = 0
     var limit
-    if (data.hasOwnProperty('meta')) {
-      if (data.meta.hasOwnProperty('limit')) {
-        limit = data.meta.limit
-      } else {
-        // default ?
-        limit = 1000
-      }
+    if (data.meta.hasOwnProperty('limit')) {
+      limit = data.meta.limit
     } else {
-      limit = 60
+      // default ?
+      limit = 1000
     }
     // current list filters
     var filters = {}
@@ -128,7 +104,7 @@
     }
 
     // pagination input and buttons
-    $('#t' + tabId + '-page').keydown(keyIsNumber).change(function () {
+    $('#t' + tabId + '-page').keydown(window.keyIsNumber).change(function () {
       updatePage(parseInt($(this).val(), 10))
     })
     $('#t' + tabId + '-next').click(function () {
@@ -247,34 +223,28 @@
     }]
 
     // setup resource specific fields
-    var field, i, fieldsList
-    if (resourceSlug !== 'products') {
-      // get from first resource object properties
-      fieldsList = []
-      for (i = 0; i < data.meta.fields.length; i++) {
-        field = data.meta.fields[i]
-        if (field !== '_id') {
-          // check field type
-          for (var ii = 0; ii < list.length; ii++) {
-            switch (typeof list[ii][field]) {
-              case 'undefined':
-                // continue and try next list object
-                continue
-              case 'string':
-                // valid field to grid
-                fieldsList.push(field)
-                break
-            }
-            // exit for loop
-            ii = list.length
+    var field, i
+    // get from first resource object properties
+    var fieldsList = []
+    for (i = 0; i < data.meta.fields.length; i++) {
+      field = data.meta.fields[i]
+      if (field !== '_id') {
+        // check field type
+        for (var ii = 0; ii < list.length; ii++) {
+          switch (typeof list[ii][field]) {
+            case 'undefined':
+              // continue and try next list object
+              continue
+            case 'string':
+              // valid field to grid
+              fieldsList.push(field)
+              break
           }
+          // exit for loop
+          ii = list.length
         }
       }
-    } else {
-      // predefined fields list for products
-      fieldsList = [ 'name', 'sku' ]
     }
-
     for (i = 0; i < fieldsList.length; i++) {
       field = fieldsList[i]
       fields.push({
