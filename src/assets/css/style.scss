@@ -22,7 +22,8 @@ $color-purple-lighter: lighten($color-purple, 35%);
 .sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item > .menu-link {
   color: rgba($white, .75);
 }
-.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item:hover > .menu-link {
+.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item:hover > .menu-link,
+.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item.active > .menu-link {
   color: $white;
   background-color: darken($sidebar-header-bg, 7.4%);
 }
@@ -33,13 +34,15 @@ $color-purple-lighter: lighten($color-purple, 35%);
   opacity: 1;
   color: rgba($white, .55);
 }
-.sidebar:not(.sidebar-light) .menu-submenu .menu-item:hover > .menu-link {
+.sidebar:not(.sidebar-light) .menu-submenu .menu-item:hover > .menu-link,
+.sidebar:not(.sidebar-light) .menu-submenu .menu-item.active > .menu-link {
   color: $white;
 }
 .sidebar:not(.sidebar-light) .ps-container > .ps-scrollbar-y-rail > .ps-scrollbar-y {
   background-color: rgba($white, .35);
 }
-.sidebar .menu-item > .menu-featured-link::before {
+.sidebar .menu-item > .menu-featured-link::before,
+.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item.active > .menu-link::before {
   content: " ";
   display: block;
   position: absolute;
@@ -239,7 +242,7 @@ a:focus {
   flex-wrap: nowrap;
 }
 #app-tabs .nav {
-  min-height: 53px;
+  min-height: 56px;
   border-bottom: none;
 }
 #app-tabs .nav-link {
@@ -277,7 +280,7 @@ a:focus {
 #app-tabs > a {
   position: absolute;
   top: 0;
-  padding: 16px 15px 0 15px;
+  padding: 17px 15px 0 15px;
   height: 100%;
   font-size: 20px;
   text-align: center;
