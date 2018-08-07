@@ -1428,6 +1428,30 @@ app.ready(function () {
       return dialogText
     })
 
+    // preset update sidebar function
+    var updateSidebar = function () {
+      // mark active menu link
+      var $links = $('#sidebar').find('.menu-link').filter(function () {
+        // filter routes links only
+        // no submenu
+        return $(this).attr('href').slice(0, 3) === '/#/'
+      })
+      var updateActive = function ($item, method) {
+        $item[method]('active')
+        // update parent submenu link (if any)
+        $item.parent('.menu-submenu').parent()[method]('active')
+      }
+
+      // unmark last active menu item
+      updateActive($links.parent('.active'), 'removeClass')
+      // find current active
+      $links.each(function () {
+        if ($(this).attr('href') === '/' + window.location.hash) {
+          updateActive($(this).parent(), 'addClass')
+        }
+      })
+    }
+
     // SPA
     // work with multiple tabs
     // each tab with a route
@@ -1662,6 +1686,9 @@ app.ready(function () {
           router(eNum, true)
         }
       })
+
+      // update menu active item
+      updateSidebar()
     }
 
     // general function to render DOM elements IDs based on current tab ID
@@ -2176,34 +2203,6 @@ app.ready(function () {
         // show channels with animation
         $el.slideDown('slow')
       }
-
-      // menu is ready
-      // mark active menu link
-      var $links = menu.find('.menu-link').filter(function () {
-        // filter routes links only
-        // no submenu
-        return $(this).attr('href').slice(0, 3) === '/#/'
-      })
-      var updateActive = function ($item, method) {
-        $item[method]('active')
-        // update parent submenu link (if any)
-        $item.parent('.menu-submenu').parent()[method]('active')
-      }
-
-      $links.click(function () {
-        // unmark last active menu item
-        updateActive($links.parent('.active'), 'removeClass')
-        // mark new active
-        updateActive($(this).parent(), 'addClass')
-      })
-      setTimeout(function () {
-        // find current active
-        $links.each(function () {
-          if ($(this).attr('href') === '/' + window.location.hash) {
-            updateActive($(this).parent(), 'addClass')
-          }
-        })
-      }, 200)
     }
     // renderChannels()
 
