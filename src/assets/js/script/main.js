@@ -1461,7 +1461,7 @@ app.ready(function () {
       $menu.append(el)
       // add badge with number of orders
       var $badge = $('<span />', {
-        'class': 'badge badge-pill badge-primary'
+        'class': 'badge badge-primary'
       })
       $menu.find('#orders-menu > a > .title').after($badge)
 
