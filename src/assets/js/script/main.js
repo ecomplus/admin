@@ -135,6 +135,14 @@ app.ready(function () {
       'en_us': 'Settings',
       'pt_br': 'Configurações'
     }),
+    'all_the': i18n({
+      'en_us': 'All the',
+      'pt_br': 'Todos os'
+    }),
+    'create': i18n({
+      'en_us': 'Add',
+      'pt_br': 'Adicionar'
+    }),
     // general
     'unknown_error': i18n({
       'en_us': 'Unknown error, please try again',
@@ -1326,18 +1334,56 @@ app.ready(function () {
     }
 
     var renderMenu = function () {
-      // render resources on menu
-      var resourcesList = ''
-      for (var slug in window.apiResources) {
-        if (window.apiResources.hasOwnProperty(slug)) {
-          var resource = window.apiResources[slug]
-          resourcesList += '<li class="menu-item">' +
-                             '<a class="menu-link" href="/#/resources/' + slug + '">' +
-                               '<span class="icon fa fa-' + resource.icon + '"></span>' +
-                               '<span class="title">' + i18n(resource.label) + '</span>' +
-                             '</a>' +
-                           '</li>'
+      var mainResourceLink = function (slug, resources) {
+        var resource
+        // submenu with resource list
+        var submenu = ''
+        if (resources) {
+          // list of slugs
+          for (var i = 0; i < resources.length; i++) {
+            resource = window.apiResources[resources[i]]
+            submenu += '<li class="menu-item">' +
+                         '<a class="menu-link" href="/#/resources/' + resources[i] + '">' +
+                           '<span class="icon fa fa-' + resource.icon + '"></span>' +
+                           '<span class="title">' + i18n(resource.label) + '</span>' +
+                         '</a>' +
+                       '</li>'
+          }
         }
+
+        // main resource
+        resource = window.apiResources[slug]
+        var label = i18n(resource.label)
+        // parse first letter to lower
+        var labelLower = label.toLowerCase()
+
+        // render resource sidebar menu link and submenu
+        return '<li class="menu-item">' +
+                 '<a class="menu-link" href="javascript:;">' +
+                   '<span class="icon fa fa-' + resource.icon + '"></span>' +
+                   '<span class="title">' + label + '</span>' +
+                   '<span class="arrow"></span>' +
+                 '</a>' +
+                 '<ul class="menu-submenu">' +
+                   '<li class="menu-item">' +
+                     '<a class="menu-link" href="/#/resources/' + slug + '">' +
+                       '<span class="icon fa fa-th-list"></span>' +
+                       '<span class="title">' +
+                         dictionary.all_the + ' ' + labelLower +
+                       '</span>' +
+                     '</a>' +
+                   '</li>' +
+                   '<li class="menu-item">' +
+                     '<a class="menu-link" href="/#/resources/' + slug + '/new">' +
+                       '<span class="icon fa fa-plus"></span>' +
+                       '<span class="title">' +
+                         dictionary.create + ' ' + labelLower.slice(0, -1) +
+                       '</span>' +
+                     '</a>' +
+                   '</li>' +
+                   submenu +
+                 '</ul>' +
+               '</li>'
       }
 
       var el = '<li class="menu-item">' +
@@ -1347,16 +1393,9 @@ app.ready(function () {
                  '</a>' +
                '</li>' +
 
-               '<li class="menu-item">' +
-                 '<a class="menu-link menu-featured-link" href="javascript:;">' +
-                   '<span class="icon fa fa-database"></span>' +
-                   '<span class="title">' + dictionary.resources + '</span>' +
-                   '<span class="arrow"></span>' +
-                 '</a>' +
-                 '<ul class="menu-submenu">' +
-                   resourcesList +
-                 '</ul>' +
-               '</li>' +
+               // resources links
+               mainResourceLink('orders', [ 'customers', 'carts' ]) +
+               mainResourceLink('products', [ 'brands', 'categories', 'collections', 'grids' ]) +
 
                '<li class="menu-item">' +
                  '<a class="menu-link" href="/#/apps">' +
