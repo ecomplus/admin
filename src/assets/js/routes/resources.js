@@ -165,10 +165,43 @@
               callback(null, json)
             }
           }
+
           // body params
           // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html
           if (!params) {
+            // ref: https://github.com/ecomclub/ecomplus-sdk-js/blob/master/main.js
             params = {
+              sort: [
+                { visible: { order: 'desc' } },
+                { available: { order: 'desc' } },
+                '_score',
+                { ad_relevance: { order: 'desc' } },
+                { views: { order: 'desc' } }
+              ],
+              aggs: {
+                brands: { terms: { field: 'brands.name' } },
+                categories: { terms: { field: 'categories.name' } },
+                // ref.: https://github.com/elastic/elasticsearch/issues/5789
+                specs: {
+                  nested: { path: 'specs' },
+                  aggs: {
+                    grid: {
+                      terms: { field: 'specs.grid', size: 12 },
+                      aggs: { text: { terms: { field: 'specs.text' } } }
+                    }
+                  }
+                },
+                // Metric Aggregations
+                min_price: {
+                  min: { field: 'price' }
+                },
+                max_price: {
+                  max: { field: 'price' }
+                },
+                avg_price: {
+                  avg: { field: 'price' }
+                }
+              },
               // results limit
               size: limit
             }
