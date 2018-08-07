@@ -2049,7 +2049,7 @@ app.ready(function () {
         var labelLower = label.toLowerCase()
 
         // render resource sidebar menu link and submenu
-        return '<li class="menu-item">' +
+        return '<li class="menu-item" id="' + slug + '-menu">' +
                  '<a class="menu-link" href="javascript:;">' +
                    '<span class="icon fa fa-' + resource.icon + '"></span>' +
                    '<span class="title">' + label + '</span>' +
@@ -2176,6 +2176,25 @@ app.ready(function () {
         // show channels with animation
         $el.slideDown('slow')
       }
+
+      // menu is ready
+      // mark active menu link
+      var $links = menu.find('.menu-link').filter(function () {
+        // filter routes links only
+        // no submenu
+        return $(this).attr('href') !== 'javascript:;'
+      })
+      $links.click(function () {
+        $links.parent('.active').removeClass('active')
+        // mark new active menu item
+        $(this).parent().addClass('active')
+      })
+      // find current active
+      $links.each(function () {
+        if ($(this).attr('href') === '/' + window.location.hash) {
+          $(this).parent().addClass('active')
+        }
+      })
     }
     // renderChannels()
 
