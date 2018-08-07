@@ -2112,8 +2112,16 @@ app.ready(function () {
                '</li>' +
 
                // resources links
-               mainResourceLink('orders', [ 'customers', 'carts' ]) +
-               mainResourceLink('products', [ 'brands', 'categories', 'collections', 'grids' ]) +
+               mainResourceLink('orders', [
+                 'customers',
+                 'carts'
+               ]) +
+               mainResourceLink('products', [
+                 'brands',
+                 'categories',
+                 'collections',
+                 'grids'
+               ]) +
 
                '<li class="menu-item">' +
                  '<a class="menu-link" href="/#/apps">' +
@@ -2140,7 +2148,31 @@ app.ready(function () {
                  dictionary.channels + '<i class="fa fa-plus-circle"></i>' +
                '</li>'
 
-      $('#sidebar').append(el)
+      var $menu = $('#sidebar')
+      $menu.append(el)
+      // add badge with number of orders
+      var $badge = $('<span />', {
+        'class': 'badge badge-pill badge-primary'
+      })
+      $menu.find('#orders-menu > a > .title').after($badge)
+
+      var countOrders = function () {
+        // get current number of orders
+        var callback = function (err, body) {
+          if (!err) {
+            $badge.text(body.count)
+          }
+        }
+        var data = {
+          resource: 'orders'
+        }
+        callApi('$count.json', 'POST', callback, data)
+      }
+      setTimeout(function () {
+        countOrders()
+        // reload number of orders periodically
+        setInterval(countOrders, 30000)
+      }, 600)
 
       if ($('.sidebar-toggler').is(':visible')) {
         // mobile
