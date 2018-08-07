@@ -1273,14 +1273,14 @@ app.ready(function () {
           'en_us': 'Products',
           'pt_br': 'Produtos'
         },
-        'icon': 'tags'
+        'icon': 'tag'
       },
       'orders': {
         'label': {
           'en_us': 'Orders',
           'pt_br': 'Pedidos'
         },
-        'icon': 'rocket'
+        'icon': 'inbox'
       },
       'brands': {
         'label': {
@@ -1387,7 +1387,7 @@ app.ready(function () {
       }
 
       var el = '<li class="menu-item">' +
-                 '<a class="menu-link" href="/#/">' +
+                 '<a class="menu-link" href="/#/home">' +
                    '<span class="icon fa fa-home"></span>' +
                    '<span class="title">' + dictionary.home + '</span>' +
                  '</a>' +
@@ -1491,19 +1491,28 @@ app.ready(function () {
       var $links = menu.find('.menu-link').filter(function () {
         // filter routes links only
         // no submenu
-        return $(this).attr('href') !== 'javascript:;'
+        return $(this).attr('href').slice(0, 3) === '/#/'
       })
+      var updateActive = function ($item, method) {
+        $item[method]('active')
+        // update parent submenu link (if any)
+        $item.parent('.menu-submenu').parent()[method]('active')
+      }
+
       $links.click(function () {
-        $links.parent('.active').removeClass('active')
-        // mark new active menu item
-        $(this).parent().addClass('active')
+        // unmark last active menu item
+        updateActive($links.parent('.active'), 'removeClass')
+        // mark new active
+        updateActive($(this).parent(), 'addClass')
       })
-      // find current active
-      $links.each(function () {
-        if ($(this).attr('href') === '/' + window.location.hash) {
-          $(this).parent().addClass('active')
-        }
-      })
+      setTimeout(function () {
+        // find current active
+        $links.each(function () {
+          if ($(this).attr('href') === '/' + window.location.hash) {
+            updateActive($(this).parent(), 'addClass')
+          }
+        })
+      }, 200)
     }
     // renderChannels()
 
@@ -2192,7 +2201,7 @@ app.ready(function () {
                 case 72:
                   // h
                   // go to home
-                  window.location = '/#/'
+                  window.location = '/#/home'
                   break
                 case 83:
                   // s
