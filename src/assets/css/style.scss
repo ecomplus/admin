@@ -75,6 +75,15 @@ $color-purple-lighter: lighten($color-purple, 35%);
 .sidebar .li-channel {
   display: none;
 }
+.sidebar .sidebar-navigation > .menu .menu-item .badge {
+  font-family: $font-monospace;
+  font-weight: 600;
+  line-height: 1;
+  padding: 4px 6px;
+}
+.sidebar .sidebar-navigation > .menu .menu-item .badge:empty {
+  display: none;
+}
 
 .topbar-btn:hover,
 .topbar .dropdown.show .topbar-btn {
