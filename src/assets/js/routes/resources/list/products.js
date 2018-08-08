@@ -49,7 +49,17 @@
         var item = list[i]
         var $item = $('<div />', {
           'class': 'col',
-          html: '<div class="text-monospace">' + item.sku + '</div>' + item.name
+          html: '<div class="custom-controls-stacked">' +
+                  '<div class="custom-control custom-checkbox">' +
+                    '<input type="checkbox" class="custom-control-input">' +
+                    '<label class="custom-control-label text-monospace">' +
+                      item.sku +
+                    '</label>' +
+                  '</div>' +
+                '</div>' +
+                '<a href="/' + window.location.hash + '/' + item._id + '">' +
+                  item.name +
+                '</a>'
         })
 
         // count number of items on current row
