@@ -1,32 +1,39 @@
-<div class="row">
-  <div class="col-md-3">
-    <div class="card">
-      <div class="card-body">
-        <div id="products-list-filters"></div>
+<div id="products-list-container" class="ajax-cards ajax-content ajax mb-30">
+  <div class="spinner-linear">
+    <div class="line"></div>
+  </div>
+  <div class="ajax-overlay"></div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <div id="products-list-filters"></div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="col-md-9">
-    <div class="card">
-      <div class="card-body">
-        <div class="flexbox mb-20">
-          <span class="flex-grow">
-            <form id="search-products" action="javascript:;">
-              <div class="input-group">
-                <input type="search" class="form-control" name="search">
-                <span class="input-group-append">
-                  <button class="btn btn-primary i18n">
-                    <span data-lang="en_us">Search</span>
-                    <span data-lang="pt_br">Buscar</span>
-                  </button>
-                </span>
-              </div>
-            </form>
-          </span>
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-body">
+          <div class="flexbox mb-20">
+            <span class="flex-grow">
+              <form id="search-products" action="javascript:;">
+                <div class="input-group">
+                  <input type="search" class="form-control" name="search">
+                  <span class="input-group-append">
+                    <button class="btn btn-primary i18n">
+                      <span data-lang="en_us">Search</span>
+                      <span data-lang="pt_br">Buscar</span>
+                    </button>
+                  </span>
+                </div>
+              </form>
+            </span>
+          </div>
+
+          <div id="products-list-results"></div>
         </div>
-
-        <div id="products-list-results"></div>
       </div>
     </div>
   </div>

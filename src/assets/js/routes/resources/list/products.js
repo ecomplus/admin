@@ -8,9 +8,12 @@
   // current tab ID
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
+  /*
   var elContainer = $('#t' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
+  */
+  var $container = $('#products-list-container')
 
   // var lang = window.lang
   var i18n = window.i18n
@@ -31,7 +34,7 @@
   if (list.length) {
     var updateContent = function () {
       // update list content
-      var $list = $('#products-list-results')
+      var $list = $container.find('#products-list-results')
       // generate grid rows
       var $rows = []
       var $rowItems = []
@@ -64,6 +67,8 @@
       }
       // fill products list content
       $list.html($rows)
+      // show content
+      $container.removeClass('ajax')
     }
 
     // JSON data load
@@ -75,13 +80,16 @@
         updateData()
         updateContent()
       }
+      // show loading spinner
+      $container.addClass('ajax')
+      // perform search request
       Tab.load(callback, query)
     }
     // Elasticsearch query object
     var query = {}
 
     // search form
-    var $search = $('#search-products')
+    var $search = $container.find('#search-products')
     var $searchInput = $search.find('input')
     $searchInput.attr('placeholder', i18n({
       'en_us': 'Polo Shirt',
