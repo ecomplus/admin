@@ -1524,8 +1524,6 @@ app.ready(function () {
               // fix URL hash without routing again
               ignoreRoute = true
               window.location = '/' + hash
-              // update menu active item
-              updateSidebar()
             }
           }
         }
@@ -1688,9 +1686,6 @@ app.ready(function () {
           router(eNum, true)
         }
       })
-
-      // update menu active item
-      updateSidebar()
     }
 
     // general function to render DOM elements IDs based on current tab ID
@@ -1951,6 +1946,8 @@ app.ready(function () {
         } else if (watchingSave) {
           unwatchSave()
         }
+        // update menu active item
+        updateSidebar()
       }
     }
 
