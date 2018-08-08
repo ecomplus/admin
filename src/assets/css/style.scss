@@ -447,6 +447,18 @@ body {
   background-color: rgba($color-pale-purple, .6);
   color: $color-purple;
 }
+.lookup-huge-sm input,
+.lookup-huge-sm::before {
+  font-size: 18px;
+  font-weight: 200;
+}
+.lookup-huge-sm input {
+  height: 52px;
+}
+.lookup-huge-sm.lookup-right input {
+  padding-right: 50px;
+  padding-left: 20px;
+}
 
 // second topbar with action buttons
 #topbar-action {
