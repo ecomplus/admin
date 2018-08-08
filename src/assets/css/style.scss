@@ -552,15 +552,6 @@ body {
   z-index: 3;
 }
 
-// buttons for document edition
-.header-action .edit-btn {
-  display: none;
-}
-.header-action .edit-btn,
-.header-action .edit-btn:hover {
-  border-color: $color-yellow;
-}
-
 .header-action .nav-link.active,
 .header-action .nav-link:hover {
   border-bottom-color: $color-purple-light;
@@ -571,6 +562,15 @@ body {
 }
 .nav:not(.nav-tabs) .nav-link > i:first-child + * {
   margin-left: 4px;
+}
+
+// buttons for document edition
+.header-action .edit-btn {
+  display: none;
+}
+.header-action .edit-btn,
+.header-action .edit-btn:hover {
+  border-color: $color-yellow;
 }
 
 // dropzone progress bar is confused
