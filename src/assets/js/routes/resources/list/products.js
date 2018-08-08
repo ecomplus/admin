@@ -14,6 +14,7 @@
   window.renderContentIds(elContainer)
   */
   var $container = $('#products-list-container')
+  var $list = $container.find('#products-list-results')
 
   // var lang = window.lang
   var i18n = window.i18n
@@ -34,17 +35,8 @@
   if (list.length) {
     var updateContent = function () {
       // update list content
-      var $list = $container.find('#products-list-results')
-      // generate grid rows
-      var $rows = []
-      var $rowItems = []
-      var addRow = function () {
-        $rows.push($('<div />', {
-          'class': 'row row-products',
-          html: $rowItems
-        }))
-      }
-
+      // generate grid
+      var $items = []
       for (var i = 0; i < list.length; i++) {
         var item = list[i]
         var $item = $('<div />', {
@@ -59,22 +51,14 @@
                   '</div>' +
                 '</div>'
         })
-
-        // count number of items on current row
-        $rowItems.push($item)
-        if ($rowItems.length === 5) {
-          addRow()
-          // reset
-          $rowItems = []
-        }
+        $items.push($item)
       }
 
-      if ($rowItems.length) {
-        // last incomplete row
-        addRow()
-      }
       // fill products list content
-      $list.html($rows)
+      $list.html($('<div />', {
+        'class': 'row row-products',
+        html: $items
+      }))
       // show content
       $container.removeClass('ajax')
     }
