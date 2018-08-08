@@ -154,6 +154,46 @@
       var limit = 60
 
       if (slug === 'products') {
+        // ELS Request Body Search
+        // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html
+        // default body
+        // ref: https://github.com/ecomclub/ecomplus-sdk-js/blob/master/main.js
+        var Body = {
+          sort: [
+            { visible: { order: 'desc' } },
+            { available: { order: 'desc' } },
+            '_score',
+            { ad_relevance: { order: 'desc' } },
+            { views: { order: 'desc' } }
+          ],
+          aggs: {
+            brands: { terms: { field: 'brands.name' } },
+            categories: { terms: { field: 'categories.name' } },
+            // ref.: https://github.com/elastic/elasticsearch/issues/5789
+            specs: {
+              nested: { path: 'specs' },
+              aggs: {
+                grid: {
+                  terms: { field: 'specs.grid', size: 12 },
+                  aggs: { text: { terms: { field: 'specs.text' } } }
+                }
+              }
+            },
+            // Metric Aggregations
+            min_price: {
+              min: { field: 'price' }
+            },
+            max_price: {
+              max: { field: 'price' }
+            },
+            avg_price: {
+              avg: { field: 'price' }
+            }
+          },
+          // results limit
+          size: limit
+        }
+
         // specific load function for products listing
         load = function (callback, params) {
           var cb = function (err, json) {
@@ -165,50 +205,17 @@
               callback(null, json)
             }
           }
-
-          // body params
-          // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html
-          if (!params) {
-            // ref: https://github.com/ecomclub/ecomplus-sdk-js/blob/master/main.js
-            params = {
-              sort: [
-                { visible: { order: 'desc' } },
-                { available: { order: 'desc' } },
-                '_score',
-                { ad_relevance: { order: 'desc' } },
-                { views: { order: 'desc' } }
-              ],
-              aggs: {
-                brands: { terms: { field: 'brands.name' } },
-                categories: { terms: { field: 'categories.name' } },
-                // ref.: https://github.com/elastic/elasticsearch/issues/5789
-                specs: {
-                  nested: { path: 'specs' },
-                  aggs: {
-                    grid: {
-                      terms: { field: 'specs.grid', size: 12 },
-                      aggs: { text: { terms: { field: 'specs.text' } } }
-                    }
-                  }
-                },
-                // Metric Aggregations
-                min_price: {
-                  min: { field: 'price' }
-                },
-                max_price: {
-                  max: { field: 'price' }
-                },
-                avg_price: {
-                  avg: { field: 'price' }
-                }
-              },
-              // results limit
-              size: limit
-            }
+          // body data
+          var body
+          if (params) {
+            // merge params
+            body = Object.assign(Body, params)
+          } else {
+            body = Body
           }
 
           // call Search API
-          window.callSearchApi('items.json', 'POST', cb, params)
+          window.callSearchApi('items.json', 'POST', cb, body)
         }
       } else {
         // generic resource listing
