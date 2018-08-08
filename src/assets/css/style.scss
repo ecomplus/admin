@@ -42,7 +42,7 @@ $color-purple-lighter: lighten($color-purple, 35%);
   background-color: rgba($white, .35);
 }
 .sidebar .menu-item > .menu-featured-link::before,
-.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item.active > .menu-link::before {
+.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item > .menu-link::before {
   content: " ";
   display: block;
   position: absolute;
@@ -50,6 +50,13 @@ $color-purple-lighter: lighten($color-purple, 35%);
   left: 0;
   width: 3px;
   height: 100%;
+  background: $color-primary;
+}
+.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item > .menu-link::before {
+  background: transparent;
+  transition: 0.2s linear;
+}
+.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item.active > .menu-link::before {
   background: $color-primary;
 }
 .sidebar .menu-item > .menu-featured-link > .title {
