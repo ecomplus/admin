@@ -1479,7 +1479,7 @@ app.ready(function () {
       setTimeout(function () {
         countOrders()
         // reload number of orders periodically
-        setInterval(countOrders, 30000)
+        setInterval(countOrders, 60000)
       }, 600)
 
       if ($('.sidebar-toggler').is(':visible')) {
