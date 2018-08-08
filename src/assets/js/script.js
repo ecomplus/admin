@@ -1524,6 +1524,8 @@ app.ready(function () {
               // fix URL hash without routing again
               ignoreRoute = true
               window.location = '/' + hash
+              // update menu active item
+              updateSidebar()
             }
           }
         }
