@@ -2812,6 +2812,13 @@ app.ready(function () {
         }
       })
 
+      // handle search input
+      var $search = $('#app-search')
+      $search.attr('placeholder', i18n({
+        'en_us': 'Search',
+        'pt_br': 'Pesquisar'
+      }))
+
       /* default app shortcuts */
 
       // save keys pressed simultaneously
@@ -2853,7 +2860,7 @@ app.ready(function () {
                 // focus on topbar search input
                 // prevent write on input
                 e.preventDefault()
-                $('#app-search').focus()
+                $search.focus()
                 break
               case 81:
                 // q
