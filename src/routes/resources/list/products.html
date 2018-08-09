@@ -8,7 +8,7 @@
     <div class="col-md-3">
       <div class="card">
         <div class="card-body">
-          <div id="products-list-filters">
+          <form id="products-list-filters" action="javascript:;">
             <div class="mb-20">
               <h6>SKU</h6>
               <input class="form-control" type="input" name="sku">
@@ -35,7 +35,14 @@
                 </div>
               </div>
             </div>
-          </div>
+            <button class="btn btn-block btn-light">
+              <i class="fa fa-filter"></i>
+              <span class="i18n">
+                <span data-lang="en_us">Filter</span>
+                <span data-lang="pt_br">Filtrar</span>
+              </span>
+            </button>
+          </form>
         </div>
       </div>
     </div>
