@@ -64,34 +64,11 @@
     }
 
     // JSON data load
-    var load = function (Query) {
-      // update search query
-      query = Object.assign(query, Query)
-      // run a new search request and update data
-      var callback = function () {
-        updateData()
-        updateContent()
-      }
-      // show loading spinner
-      $container.addClass('ajax')
-      // perform search request
-      Tab.load(callback, query)
-    }
-    // Elasticsearch query object
-    var query = {}
-
-    // search form
-    var $search = $container.find('#search-products')
-    var $searchInput = $search.find('input')
-    $searchInput.attr('placeholder', i18n({
-      'en_us': 'Polo Shirt',
-      'pt_br': 'Camisa Polo'
-    }))
-    $search.submit(function () {
-      // https://ecomsearch.docs.apiary.io/#reference/items/items-search/complex-search
-      var term = $searchInput.val().trim()
+    var load = function () {
+      // search query
+      var query
       if (term !== '') {
-        load({
+        query = {
           query: {
             bool: {
               must: {
@@ -105,8 +82,37 @@
               }
             }
           }
-        })
+        }
+      } else {
+        // no search term
+        query = {}
       }
+
+      // run a new search request and update data
+      var callback = function () {
+        updateData()
+        updateContent()
+      }
+      // show loading spinner
+      $container.addClass('ajax')
+      // perform search request
+      Tab.load(callback, query)
+    }
+
+    // search filters
+    var term = ''
+
+    // search form
+    var $search = $container.find('#search-products')
+    var $searchInput = $search.find('input')
+    $searchInput.attr('placeholder', i18n({
+      'en_us': 'Polo Shirt',
+      'pt_br': 'Camisa Polo'
+    }))
+    $search.submit(function () {
+      // https://ecomsearch.docs.apiary.io/#reference/items/items-search/complex-search
+      term = $searchInput.val().trim()
+      load()
     })
 
     // ready
