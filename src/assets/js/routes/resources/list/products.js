@@ -14,8 +14,6 @@
   window.renderContentIds(elContainer)
   */
   var $container = $('#products-list-container')
-  var $filters = $container.find('#products-list-filters')
-  var $list = $container.find('#products-list-results')
 
   // var lang = window.lang
   var i18n = window.i18n
@@ -34,40 +32,6 @@
   updateData()
 
   if (list.length) {
-    var updateContent = function () {
-      // update list content
-      // generate grid
-      var $items = []
-      for (var i = 0; i < list.length; i++) {
-        var item = list[i]
-        var $item = $('<div />', {
-          'class': 'col',
-          html: '<a href="/' + window.location.hash + '/' + item._id + '">' + item.name + '</a>' +
-                '<div class="custom-controls-stacked">' +
-                  '<div class="custom-control custom-checkbox">' +
-                    '<input type="checkbox" class="custom-control-input">' +
-                    '<label class="custom-control-label text-monospace">' +
-                      item.sku +
-                    '</label>' +
-                  '</div>' +
-                '</div>'
-        })
-        $items.push($item)
-      }
-
-      // fill products list content
-      $list.html($('<div />', {
-        'class': 'row row-products',
-        html: $items
-      }))
-
-      // rendering filters
-      console.log($filters)
-
-      // show content
-      $container.removeClass('ajax')
-    }
-
     // search filters
     var term = ''
     var filters = []
@@ -112,6 +76,43 @@
       $container.addClass('ajax')
       // perform search request
       Tab.load(callback, query)
+    }
+
+    // products list div
+    var $list = $container.find('#products-list-results')
+    // filters form
+    var $filters = $container.find('#products-list-filters')
+    $filters.submit(load)
+
+    var updateContent = function () {
+      // update list content
+      // generate grid
+      var $items = []
+      for (var i = 0; i < list.length; i++) {
+        var item = list[i]
+        var $item = $('<div />', {
+          'class': 'col',
+          html: '<a href="/' + window.location.hash + '/' + item._id + '">' + item.name + '</a>' +
+                '<div class="custom-controls-stacked">' +
+                  '<div class="custom-control custom-checkbox">' +
+                    '<input type="checkbox" class="custom-control-input">' +
+                    '<label class="custom-control-label text-monospace">' +
+                      item.sku +
+                    '</label>' +
+                  '</div>' +
+                '</div>'
+        })
+        $items.push($item)
+      }
+
+      // fill products list content
+      $list.html($('<div />', {
+        'class': 'row row-products',
+        html: $items
+      }))
+
+      // show content
+      $container.removeClass('ajax')
     }
 
     // search form
