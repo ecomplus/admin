@@ -213,6 +213,8 @@
               // query object with search results conditions
               query: query
             })
+          } else {
+            body = Body
           }
 
           // call Search API
