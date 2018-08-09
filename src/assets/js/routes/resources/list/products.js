@@ -89,21 +89,24 @@
     }))
     $search.submit(function () {
       // https://ecomsearch.docs.apiary.io/#reference/items/items-search/complex-search
-      load({
-        query: {
-          bool: {
-            must: {
-              multi_match: {
-                query: $searchInput.val().trim(),
-                fields: [
-                  'name',
-                  'keywords'
-                ]
+      var term = $searchInput.val().trim()
+      if (term !== '') {
+        load({
+          query: {
+            bool: {
+              must: {
+                multi_match: {
+                  query: term,
+                  fields: [
+                    'name',
+                    'keywords'
+                  ]
+                }
               }
             }
           }
-        }
-      })
+        })
+      }
     })
 
     // ready
