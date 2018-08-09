@@ -195,7 +195,7 @@
         }
 
         // specific load function for products listing
-        load = function (callback, params) {
+        load = function (callback, query) {
           var cb = function (err, json) {
             if (!err) {
               // set tab JSON data
@@ -207,11 +207,12 @@
           }
           // body data
           var body
-          if (params) {
-            // merge params
-            body = Object.assign(Body, params)
-          } else {
-            body = Body
+          if (query) {
+            // merge params without changing original default body
+            body = Object.assign(Body, {
+              // query object with search results conditions
+              query: query
+            })
           }
 
           // call Search API

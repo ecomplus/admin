@@ -70,6 +70,7 @@
 
     // search filters
     var term = ''
+    var filters = []
 
     // JSON data load
     var load = function () {
@@ -77,23 +78,29 @@
       var query
       if (term !== '') {
         query = {
-          query: {
-            bool: {
-              must: {
-                multi_match: {
-                  query: term,
-                  fields: [
-                    'name',
-                    'keywords'
-                  ]
-                }
+          bool: {
+            must: {
+              multi_match: {
+                query: term,
+                fields: [
+                  'name',
+                  'keywords'
+                ]
               }
             }
           }
         }
-      } else {
+        if (filters.length) {
+          query.bool.filter = filters
+        }
+      } else if (filters.length) {
         // no search term
-        query = {}
+        // filters only
+        query = {
+          bool: {
+            filter: filters
+          }
+        }
       }
 
       // run a new search request and update data
