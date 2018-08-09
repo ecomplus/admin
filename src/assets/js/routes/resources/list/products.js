@@ -14,6 +14,7 @@
   window.renderContentIds(elContainer)
   */
   var $container = $('#products-list-container')
+  var $filters = $container.find('#products-list-filters')
   var $list = $container.find('#products-list-results')
 
   // var lang = window.lang
@@ -59,9 +60,16 @@
         'class': 'row row-products',
         html: $items
       }))
+
+      // rendering filters
+      console.log($filters)
+
       // show content
       $container.removeClass('ajax')
     }
+
+    // search filters
+    var term = ''
 
     // JSON data load
     var load = function () {
@@ -98,9 +106,6 @@
       // perform search request
       Tab.load(callback, query)
     }
-
-    // search filters
-    var term = ''
 
     // search form
     var $search = $container.find('#search-products')
