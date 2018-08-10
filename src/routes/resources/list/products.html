@@ -11,7 +11,7 @@
           <form id="products-list-filters" action="javascript:;">
             <div class="mb-20">
               <h6>SKU</h6>
-              <input class="form-control text-monospace" type="text" name="sku" data-filter="term">
+              <input class="form-control text-monospace" type="text" name="sku" data-filter="term"/>
             </div>
             <div class="mb-20">
               <h6 class="i18n">
@@ -20,14 +20,16 @@
               </h6>
               <div class="flexbox">
                 <div class="form-group">
-                  <input class="form-control" type="tel" name="min_price" data-is-number="true" data-money="true">
+                  <input class="form-control" type="tel" name="price" data-opt="gte" data-filter="range"
+                    data-is-number="true" data-money="true"/>
                   <small class="form-text i18n">
                     <span data-lang="en_us">Minimun</span>
                     <span data-lang="pt_br">Mínimo</span>
                   </small>
                 </div>
                 <div class="form-group">
-                  <input class="form-control" type="tel" name="max_price" data-is-number="true" data-money="true">
+                  <input class="form-control" type="tel" name="price" data-opt="lte" data-filter="range"
+                    data-is-number="true" data-money="true"/>
                   <small class="form-text i18n">
                     <span data-lang="en_us">Maximum</span>
                     <span data-lang="pt_br">Máximo</span>
