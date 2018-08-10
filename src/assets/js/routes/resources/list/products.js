@@ -90,6 +90,14 @@
       var operator = $input.data('opt')
       var filterType = $input.data('filter')
       var value = $input.val()
+      // fix input value
+      if ($input.data('is-number')) {
+        value = stringToNumber(value)
+      } else if ($input.attr('type') === 'number') {
+        value = parseFloat(value)
+      } else {
+        value = value.trim()
+      }
 
       // check if filter already exists
       for (var i = 0; i < filters.length; i++) {
@@ -97,25 +105,38 @@
         if (filterObj && filterObj.hasOwnProperty(prop)) {
           // found
           if (!operator) {
-            filterObj[prop] = value
-          } else {
+            if (value !== '') {
+              filterObj[prop] = value
+            } else {
+              // remove filter
+              filters.splice(i, 1)
+            }
+          } else if (value !== '') {
             filterObj[prop][operator] = value
+          } else {
+            // remove operator on current filter
+            delete filterObj[prop][operator]
+            if (!Object.keys(filterObj[prop]).length) {
+              filters.splice(i, 1)
+            }
           }
           return
         }
       }
 
       // filter not found
-      // add new object to filters array
-      var filter = {}
-      filter[filterType] = {}
-      if (!operator) {
-        filter[filterType][prop] = value
-      } else {
-        filter[filterType][prop] = {}
-        filter[filterType][prop][operator] = value
+      if (value !== '') {
+        // add new object to filters array
+        var filter = {}
+        filter[filterType] = {}
+        if (!operator) {
+          filter[filterType][prop] = value
+        } else {
+          filter[filterType][prop] = {}
+          filter[filterType][prop][operator] = value
+        }
+        filters.push(filter)
       }
-      filters.push(filter)
     })
 
     var updateContent = function () {
