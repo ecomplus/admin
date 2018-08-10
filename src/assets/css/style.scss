@@ -504,14 +504,24 @@ body {
 .bootstrap-select .dropdown-menu > .no-results > div {
   display: none;
 }
-.bootstrap-select:not(.selectpicker-default) .dropdown-menu.inner span > small {
+*:not(.selectpicker-default) > .bootstrap-select .dropdown-menu.inner span > small {
   display: block;
   line-height: 1;
   padding-left: 0 !important;
 }
-.bootstrap-select:not(.selectpicker-default) .dropdown-menu.inner span > small::before {
+*:not(.selectpicker-default) > .bootstrap-select .dropdown-menu.inner span > small::before {
   content: "/ "
 }
+.bootstrap-select .bs-ok-default {
+  display: none !important;
+}
+/*
+.bootstrap-select .bs-ok-default::after {
+  width: .45em;
+  height: .9em;
+  border-width: 0 .16em .16em 0;
+}
+*/
 
 // colorpicker
 .minicolors-panel {
