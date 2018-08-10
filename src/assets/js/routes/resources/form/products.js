@@ -1109,16 +1109,24 @@
       }
 
       $form.find('select[name="brands"],select[name="categories"]').each(function () {
-        var $dropdown = $(this).prev('.dropdown-menu')
+        var $dropdown = $(this).siblings('.dropdown-menu')
         if ($dropdown.length) {
           var $select = $(this)
+          var addBtnTimeout
 
           // listen keydown event on search input
           // detect when search have no results
           $dropdown.find('.bs-searchbox input').keydown(function () {
             var $input = $(this)
+
             // wait for search processing
-            setTimeout(function () {
+            if (addBtnTimeout) {
+              clearTimeout(addBtnTimeout)
+            }
+            addBtnTimeout = setTimeout(function () {
+              // unset timeout variable
+              addBtnTimeout = null
+
               var $li = $dropdown.find('.dropdown-menu > .no-results')
               if ($li.length) {
                 // no results
@@ -1134,7 +1142,11 @@
                     addOption($select, $input.val())
                   }
                 })
-                $li.html($btn)
+                var $div = $('<div />', {
+                  html: $btn
+                })
+                $li.html($div)
+                $div.slideDown(120)
               }
             }, 300)
           })
