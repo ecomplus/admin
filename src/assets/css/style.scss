@@ -501,12 +501,12 @@ body {
   line-height: 0;
   padding: 6px;
 }
-.bootstrap-select .dropdown-menu.inner span > small {
+.bootstrap-select:not(.selectpicker-default) .dropdown-menu.inner span > small {
   display: block;
   line-height: 1;
   padding-left: 0 !important;
 }
-.bootstrap-select .dropdown-menu.inner span > small::before {
+.bootstrap-select:not(.selectpicker-default) .dropdown-menu.inner span > small::before {
   content: "/ "
 }
 
