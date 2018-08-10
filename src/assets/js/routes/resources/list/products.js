@@ -181,14 +181,31 @@
           })
         }
       }
+      // search aggregations results
+      var Aggs = data.aggregations
+
       for (var prop in aggs) {
-        if (aggs.hasOwnProperty(prop)) {
+        if (aggs.hasOwnProperty(prop) && Aggs.hasOwnProperty(prop)) {
           var agg = aggs[prop]
+          // create select element for current aggregation field
+          var buckets = Aggs[prop].buckets
+          var elOptions = ''
+          for (i = 0; i < buckets.length; i++) {
+            // field value
+            var key = buckets[i].key
+            elOptions += '<option value="' + key + '" data-subtext="' + buckets[i].doc_count + '">' +
+                           key +
+                         '</option>'
+          }
+
+          // render select element with options
           var $select = $('<select />', {
             multiple: true,
             'data-live-search': true,
-            'class': 'form-control'
+            'class': 'form-control',
+            html: elOptions
           })
+          // add to filters content
           $filters.prepend($('<div />', {
             'class': 'form-group',
             html: $select
