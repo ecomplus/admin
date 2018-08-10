@@ -84,6 +84,17 @@
     var $filters = $container.find('#products-list-filters')
     $filters.submit(load)
 
+    handleInputs($filters, function ($input, checkbox) {
+      // add search filter
+      var prop = $input.attr('name')
+      var filterType = $input.data('filter')
+      var filter = {}
+      filter[filterType] = {}
+      filter[filterType][prop] = $input.val()
+      filters.push(filter)
+      console.log(filters)
+    })
+
     var updateContent = function () {
       // update list content
       // generate grid
