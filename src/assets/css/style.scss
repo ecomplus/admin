@@ -501,6 +501,9 @@ body {
   line-height: 0;
   padding: 6px;
 }
+.bootstrap-select .dropdown-menu > .no-results > div {
+  display: none;
+}
 .bootstrap-select:not(.selectpicker-default) .dropdown-menu.inner span > small {
   display: block;
   line-height: 1;
