@@ -87,12 +87,35 @@
     handleInputs($filters, function ($input, checkbox) {
       // add search filter
       var prop = $input.attr('name')
+      var operator = $input.data('opt')
       var filterType = $input.data('filter')
+      var value = $input.val()
+
+      // check if filter already exists
+      for (var i = 0; i < filters.length; i++) {
+        var filterObj = filters[i][filterType]
+        if (filterObj && filterObj.hasOwnProperty(prop)) {
+          // found
+          if (!operator) {
+            filterObj[prop] = value
+          } else {
+            filterObj[prop][operator] = value
+          }
+          return
+        }
+      }
+
+      // filter not found
+      // add new object to filters array
       var filter = {}
       filter[filterType] = {}
-      filter[filterType][prop] = $input.val()
+      if (!operator) {
+        filter[filterType][prop] = value
+      } else {
+        filter[filterType][prop] = {}
+        filter[filterType][prop][operator] = value
+      }
       filters.push(filter)
-      console.log(filters)
     })
 
     var updateContent = function () {
