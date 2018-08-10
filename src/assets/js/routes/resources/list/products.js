@@ -166,6 +166,41 @@
         html: $items
       }))
 
+      // update filters content with aggregations
+      var aggs = {
+        brands: {
+          label: i18n({
+            'en_us': 'Brands',
+            'pt_br': 'Marcas'
+          })
+        },
+        categories: {
+          label: i18n({
+            'en_us': 'Categories',
+            'pt_br': 'Categorias'
+          })
+        }
+      }
+      for (var prop in aggs) {
+        if (aggs.hasOwnProperty(prop)) {
+          var agg = aggs[prop]
+          var $select = $('<select />', {
+            multiple: true,
+            'data-live-search': true,
+            'class': 'form-control'
+          })
+          $filters.prepend($('<div />', {
+            'class': 'form-group',
+            html: $select
+          }))
+          $select.selectpicker({
+            style: 'btn-light',
+            noneSelectedText: agg.label,
+            windowPadding: 70
+          })
+        }
+      }
+
       // show content
       $container.removeClass('ajax')
     }
