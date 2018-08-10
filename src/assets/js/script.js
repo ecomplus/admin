@@ -1431,25 +1431,38 @@ app.ready(function () {
     // preset update sidebar function
     var updateSidebar = function () {
       // mark active menu link
-      var $links = $('#sidebar').find('.menu-link').filter(function () {
+      var $sidebar = $('#sidebar')
+      var $links = $sidebar.find('.menu-link').filter(function () {
         // filter routes links only
         // no submenu
         return $(this).attr('href').slice(0, 3) === '/#/'
       })
+
       var updateActive = function ($item, method) {
         $item[method]('active')
         // update parent submenu link (if any)
         $item.parent('.menu-submenu').parent()[method]('active')
       }
-
       // unmark last active menu item
       updateActive($links.parent('.active'), 'removeClass')
+
       // find current active
+      var found
       $links.each(function () {
         if ($(this).attr('href') === '/' + window.location.hash) {
           updateActive($(this).parent(), 'addClass')
+          // break
+          found = true
+          return false
         }
       })
+      if (!found && window.routeParams.length) {
+        // try to match by route param
+        var $li = $sidebar.find('li[data-route-param="' + window.routeParams[0] + '"]')
+        if ($li.length) {
+          updateActive($li, 'addClass')
+        }
+      }
     }
 
     // SPA
@@ -2058,9 +2071,10 @@ app.ready(function () {
         if (resources) {
           // list of slugs
           for (var i = 0; i < resources.length; i++) {
-            resource = window.apiResources[resources[i]]
-            submenu += '<li class="menu-item">' +
-                         '<a class="menu-link" href="/#/resources/' + resources[i] + '">' +
+            var Slug = resources[i]
+            resource = window.apiResources[Slug]
+            submenu += '<li class="menu-item" data-route-param="' + Slug + '">' +
+                         '<a class="menu-link" href="/#/resources/' + Slug + '">' +
                            '<span class="icon fa fa-' + resource.icon + '"></span>' +
                            '<span class="title">' + i18n(resource.label) + '</span>' +
                          '</a>' +
@@ -2075,7 +2089,7 @@ app.ready(function () {
         var labelLower = label.toLowerCase()
 
         // render resource sidebar menu link and submenu
-        return '<li class="menu-item" id="' + slug + '-menu">' +
+        return '<li class="menu-item" id="' + slug + '-menu" data-route-param="' + slug + '">' +
                  '<a class="menu-link" href="javascript:;">' +
                    '<span class="icon fa fa-' + resource.icon + '"></span>' +
                    '<span class="title">' + label + '</span>' +
