@@ -563,59 +563,15 @@
       </footer>
     </div>
 
-    <div id="qv-filters" class="quickview backdrop-light">
+    <div id="qvx" class="quickview backdrop-light">
       <header class="quickview-header">
-        <p class="quickview-title lead i18n">
-          <span data-lang="en_us">Filters</span>
-          <span data-lang="pt_br">Filtros</span>
-        </p>
+        <p class="quickview-title lead" id="qvx-title"></p>
         <span class="close"><i class="ti-close"></i></span>
       </header>
-
       <div class="quickview-body">
-        <form action="javascript:filterProducts();" id="filter-products" class="quickview-block">
-          <div class="form-group">
-            <input class="form-control text-monospace" placeholder="SKU" type="text" name="sku"
-              data-filter="term"/>
-          </div>
-          <div id="products-custom-filters"></div>
-          <div class="form-group">
-            <label class="i18n">
-              <span data-lang="en_us">Price</span>
-              <span data-lang="pt_br">Preço</span>
-            </label>
-            <div id="products-price-range"></div>
-            <div class="flexbox">
-              <div class="form-group">
-                <input class="form-control" type="tel" name="price" data-opt="gte" data-filter="range"
-                  data-is-number="true" data-money="true"/>
-                <small class="form-text i18n">
-                  <span data-lang="en_us">Minimun</span>
-                  <span data-lang="pt_br">Mínimo</span>
-                </small>
-              </div>
-              <div class="form-group">
-                <input class="form-control" type="tel" name="price" data-opt="lte" data-filter="range"
-                  data-is-number="true" data-money="true"/>
-                <small class="form-text i18n">
-                  <span data-lang="en_us">Maximum</span>
-                  <span data-lang="pt_br">Máximo</span>
-                </small>
-              </div>
-            </div>
-          </div>
-        </form>
+        <div class="quickview-block" id="qvx-body"></div>
       </div>
-
-      <footer class="quickview-footer">
-        <button class="btn btn-block btn-primary" onclick="filterProducts()">
-          <i class="fa fa-filter"></i>
-          <span class="i18n">
-            <span data-lang="en_us">Filter products</span>
-            <span data-lang="pt_br">Filtrar produtos</span>
-          </span>
-        </button>
-      </footer>
+      <footer class="quickview-footer" id="qvx-footer"></footer>
     </div>
     <!-- END Global quickviews -->
 
