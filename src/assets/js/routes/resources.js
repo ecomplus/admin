@@ -209,10 +209,8 @@
           var body
           if (query) {
             // merge params without changing original default body
-            body = Object.assign({
-              // query object with search results conditions
-              query: query
-            }, Body)
+            // query object with search results conditions
+            body = Object.assign({ query: query }, Body)
           } else {
             body = Body
           }

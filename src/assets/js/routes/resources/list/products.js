@@ -25,9 +25,7 @@
   var updateData = function () {
     data = Tab.data
     list = data.hits.hits.map(function (item) {
-      return Object.assign(item._source, {
-        _id: item._id
-      })
+      return Object.assign({ _id: item._id }, item._source)
     })
   }
   // startup
