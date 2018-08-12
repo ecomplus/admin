@@ -264,7 +264,7 @@
                   }
                   data[prop] = obj
                 } else {
-                  data[prop] = Object.assign(data[prop], obj)
+                  Object.assign(data[prop], obj)
                 }
               } else if ((obj === null || isNaN(obj)) && data.hasOwnProperty(prop)) {
                 // empty, remove property
