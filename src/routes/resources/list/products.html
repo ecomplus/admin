@@ -4,73 +4,34 @@
   </div>
   <div class="ajax-overlay"></div>
 
-  <div class="row">
-    <div class="col-md-3">
-      <div class="card">
-        <div class="card-body">
-          <form id="products-list-filters" action="javascript:;">
-            <div class="form-group">
-              <input class="form-control text-monospace" placeholder="SKU" type="text" name="sku"
-                data-filter="term"/>
-            </div>
-            <div class="form-group">
-              <label class="i18n">
-                <span data-lang="en_us">Price</span>
-                <span data-lang="pt_br">Preço</span>
-              </label>
-              <div class="flexbox">
-                <div class="form-group">
-                  <input class="form-control" type="tel" name="price" data-opt="gte" data-filter="range"
-                    data-is-number="true" data-money="true"/>
-                  <small class="form-text i18n">
-                    <span data-lang="en_us">Minimun</span>
-                    <span data-lang="pt_br">Mínimo</span>
-                  </small>
-                </div>
-                <div class="form-group">
-                  <input class="form-control" type="tel" name="price" data-opt="lte" data-filter="range"
-                    data-is-number="true" data-money="true"/>
-                  <small class="form-text i18n">
-                    <span data-lang="en_us">Maximum</span>
-                    <span data-lang="pt_br">Máximo</span>
-                  </small>
-                </div>
-              </div>
-            </div>
-            <button class="btn btn-block btn-light">
-              <i class="fa fa-filter"></i>
-              <span class="i18n">
-                <span data-lang="en_us">Filter</span>
-                <span data-lang="pt_br">Filtrar</span>
+  <div class="card">
+    <div class="card-body">
+      <div class="flexbox mb-20">
+        <span class="flex-grow">
+          <form id="search-products" action="javascript:;">
+            <div class="input-group">
+              <input type="search" class="form-control" name="search">
+              <span class="input-group-append">
+                <button class="btn btn-primary i18n">
+                  <span data-lang="en_us">Search</span>
+                  <span data-lang="pt_br">Buscar</span>
+                </button>
               </span>
-            </button>
+            </div>
           </form>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-9">
-      <div class="card">
-        <div class="card-body">
-          <div class="flexbox mb-20">
-            <span class="flex-grow">
-              <form id="search-products" action="javascript:;">
-                <div class="input-group">
-                  <input type="search" class="form-control" name="search">
-                  <span class="input-group-append">
-                    <button class="btn btn-primary i18n">
-                      <span data-lang="en_us">Search</span>
-                      <span data-lang="pt_br">Buscar</span>
-                    </button>
-                  </span>
-                </div>
-              </form>
+        </span>
+        <span>
+          <a class="btn btn-light" href="#qv-filters" data-toggle="quickview">
+            <i class="fa fa-filter"></i>
+            <span class="i18n hidden-sm-down">
+              <span data-lang="en_us">Filter results</span>
+              <span data-lang="pt_br">Filtrar resultados</span>
             </span>
-          </div>
-
-          <div id="products-list-results"></div>
-        </div>
+          </a>
+        </span>
       </div>
+
+      <div id="products-list-results"></div>
     </div>
   </div>
 
