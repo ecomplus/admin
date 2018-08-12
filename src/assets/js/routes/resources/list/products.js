@@ -133,7 +133,7 @@
       'class': 'btn btn-block btn-success',
       click: function () {
         // submit filters form
-        $filters.submit()
+        load()
         // close quickview
         quickview.close($qv)
       },
@@ -142,61 +142,6 @@
         'pt_br': 'Filtrar produtos'
       })
     }))
-
-    handleInputs($filters, function ($input, checkbox) {
-      // add search filter
-      var prop = $input.attr('name')
-      var operator = $input.data('opt')
-      var filterType = $input.data('filter')
-      var value = $input.val()
-      // fix input value
-      if ($input.data('is-number')) {
-        value = stringToNumber(value)
-      } else if ($input.attr('type') === 'number') {
-        value = parseFloat(value)
-      } else {
-        value = value.trim()
-      }
-
-      // check if filter already exists
-      for (var i = 0; i < filters.length; i++) {
-        var filterObj = filters[i][filterType]
-        if (filterObj && filterObj.hasOwnProperty(prop)) {
-          // found
-          if (!operator) {
-            if (value !== '') {
-              filterObj[prop] = value
-            } else {
-              // remove filter
-              filters.splice(i, 1)
-            }
-          } else if (value !== '') {
-            filterObj[prop][operator] = value
-          } else {
-            // remove operator on current filter
-            delete filterObj[prop][operator]
-            if (!Object.keys(filterObj[prop]).length) {
-              filters.splice(i, 1)
-            }
-          }
-          return
-        }
-      }
-
-      // filter not found
-      if (value !== '') {
-        // add new object to filters array
-        var filter = {}
-        filter[filterType] = {}
-        if (!operator) {
-          filter[filterType][prop] = value
-        } else {
-          filter[filterType][prop] = {}
-          filter[filterType][prop][operator] = value
-        }
-        filters.push(filter)
-      }
-    })
 
     var updateContent = function () {
       // update list content
@@ -264,6 +209,7 @@
             multiple: true,
             'data-live-search': true,
             'class': 'form-control',
+            name: prop + '.name',
             html: elOptions
           })
           // add to filters content
@@ -281,6 +227,72 @@
 
       // show content
       $container.removeClass('ajax')
+
+      // handle filter form input changes
+      handleInputs($filters, function ($input, checkbox) {
+        // add search filter
+        var prop = $input.attr('name')
+        var operator = $input.data('opt')
+        // ELS terms level queries
+        var filterType = $input.data('filter') || 'terms'
+
+        var value = $input.val()
+        // fix input value
+        if (!Array.isArray(value)) {
+          if ($input.data('is-number')) {
+            value = stringToNumber(value)
+          } else if ($input.attr('type') === 'number') {
+            value = parseFloat(value)
+          } else {
+            // string value
+            value = value.trim()
+            if (value === '') {
+              value = null
+            }
+          }
+        } else if (!value.length) {
+          value = null
+        }
+
+        // check if filter already exists
+        for (var i = 0; i < filters.length; i++) {
+          var filterObj = filters[i][filterType]
+          if (filterObj && filterObj.hasOwnProperty(prop)) {
+            // found
+            if (!operator) {
+              if (value !== null) {
+                filterObj[prop] = value
+              } else {
+                // remove filter
+                filters.splice(i, 1)
+              }
+            } else if (value !== null) {
+              filterObj[prop][operator] = value
+            } else {
+              // remove operator on current filter
+              delete filterObj[prop][operator]
+              if (!Object.keys(filterObj[prop]).length) {
+                filters.splice(i, 1)
+              }
+            }
+            return
+          }
+        }
+
+        // filter not found
+        if (value !== null) {
+          // add new object to filters array
+          var filter = {}
+          filter[filterType] = {}
+          if (!operator) {
+            filter[filterType][prop] = value
+          } else {
+            filter[filterType][prop] = {}
+            filter[filterType][prop][operator] = value
+          }
+          filters.push(filter)
+        }
+      })
     }
 
     // search form
