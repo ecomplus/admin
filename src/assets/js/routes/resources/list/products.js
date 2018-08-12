@@ -80,40 +80,44 @@
       Tab.load(callback, query)
     }
 
+    // filters dynamic elements
+    var $customFilters = $('<div />')
+    var $priceRanges = $('<div />')
     // setup filters form
     var $filters = $('<form />', {
       action: 'javascript:;',
       submit: load,
-      html: '<div class="form-group">' +
-              '<input class="form-control text-monospace" placeholder="SKU" type="text" name="sku" ' +
-              'data-filter="term"/>' +
-            '</div>' +
-            '<div id="products-custom-filters"></div>' +
-            '<div class="form-group">' +
-              '<label class="i18n">' +
-                '<span data-lang="en_us">Price</span>' +
-                '<span data-lang="pt_br">Preço</span>' +
-              '</label>' +
-              '<div id="products-price-range"></div>' +
-              '<div class="flexbox">' +
-                '<div class="form-group">' +
-                  '<input class="form-control" type="tel" name="price" data-opt="gte" data-filter="range" ' +
-                  'data-is-number="true" data-money="true"/>' +
-                  '<small class="form-text i18n">' +
-                    '<span data-lang="en_us">Minimun</span>' +
-                    '<span data-lang="pt_br">Mínimo</span>' +
-                  '</small>' +
-                '</div>' +
-                '<div class="form-group">' +
-                  '<input class="form-control" type="tel" name="price" data-opt="lte" data-filter="range" ' +
-                  'data-is-number="true" data-money="true"/>' +
-                  '<small class="form-text i18n">' +
-                    '<span data-lang="en_us">Maximum</span>' +
-                    '<span data-lang="pt_br">Máximo</span>' +
-                  '</small>' +
-                '</div>' +
-              '</div>' +
-            '</div>'
+      // base form HTML
+      html: [
+        '<div class="form-group">' +
+          '<input class="form-control text-monospace" placeholder="SKU" type="text" name="sku" ' +
+          'data-filter="term"/>' +
+        '</div>',
+        $customFilters,
+        '<label class="i18n">' +
+          '<span data-lang="en_us">Price</span>' +
+          '<span data-lang="pt_br">Preço</span>' +
+        '</label>',
+        $priceRanges,
+        '<div class="flexbox">' +
+          '<div class="form-group">' +
+            '<input class="form-control" type="tel" name="price" ' +
+            'data-opt="gte" data-filter="range" data-is-number="true" data-money="true"/>' +
+            '<small class="form-text i18n">' +
+              '<span data-lang="en_us">Minimun</span>' +
+              '<span data-lang="pt_br">Mínimo</span>' +
+            '</small>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<input class="form-control" type="tel" name="price" ' +
+            'data-opt="lte" data-filter="range" data-is-number="true" data-money="true"/>' +
+            '<small class="form-text i18n">' +
+              '<span data-lang="en_us">Maximum</span>' +
+              '<span data-lang="pt_br">Máximo</span>' +
+            '</small>' +
+          '</div>' +
+        '</div>'
+      ]
     })
 
     // use global dynamic quickview
@@ -126,9 +130,14 @@
     $qv.find('#qvx-body').html($filters)
     // add submit button
     $qv.find('#qvx-footer').html($('<button />', {
-      'class': 'btn btn-block btn-primary',
-      click: $filters.submit,
-      html: '<i class="fa fa-filter"></i> ' + i18n({
+      'class': 'btn btn-block btn-success',
+      click: function () {
+        // submit filters form
+        $filters.submit()
+        // close quickview
+        quickview.close($qv)
+      },
+      html: i18n({
         'en_us': 'Filter products',
         'pt_br': 'Filtrar produtos'
       })
@@ -217,7 +226,6 @@
       }))
 
       // update filters content with aggregations
-      var $customFilters = $filters.find('#products-custom-filters')
       // reset div element
       $customFilters.html('')
       var aggs = {
