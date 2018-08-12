@@ -81,7 +81,7 @@
     // products list div
     var $list = $container.find('#products-list-results')
     // filters form
-    var $filters = $container.find('#products-list-filters')
+    var $filters = $('#filter-products')
     $filters.submit(load)
 
     handleInputs($filters, function ($input, checkbox) {
@@ -167,6 +167,9 @@
       }))
 
       // update filters content with aggregations
+      var $customFilters = $filters.find('#products-custom-filters')
+      // reset div element
+      $customFilters.html('')
       var aggs = {
         brands: {
           label: i18n({
@@ -193,7 +196,7 @@
           for (i = 0; i < buckets.length; i++) {
             // field value
             var key = buckets[i].key
-            elOptions += '<option value="' + key + '" data-subtext="' + buckets[i].doc_count + '">' +
+            elOptions += '<option value="' + key + '" data-subtext="(' + buckets[i].doc_count + ')">' +
                            key +
                          '</option>'
           }
@@ -206,8 +209,8 @@
             html: elOptions
           })
           // add to filters content
-          $filters.prepend($('<div />', {
-            'class': 'form-group',
+          $customFilters.prepend($('<div />', {
+            'class': 'form-group selectpicker-default',
             html: $select
           }))
           $select.selectpicker({
