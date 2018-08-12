@@ -14,6 +14,8 @@
   window.renderContentIds(elContainer)
   */
   var $container = $('#products-list-container')
+  // products list div
+  var $list = $container.find('#products-list-results')
 
   // var lang = window.lang
   var i18n = window.i18n
@@ -78,11 +80,59 @@
       Tab.load(callback, query)
     }
 
-    // products list div
-    var $list = $container.find('#products-list-results')
-    // filters form
-    var $filters = $('#filter-products')
-    $filters.submit(load)
+    // setup filters form
+    var $filters = $('<form />', {
+      action: 'javascript:;',
+      submit: load,
+      html: '<div class="form-group">' +
+              '<input class="form-control text-monospace" placeholder="SKU" type="text" name="sku" ' +
+              'data-filter="term"/>' +
+            '</div>' +
+            '<div id="products-custom-filters"></div>' +
+            '<div class="form-group">' +
+              '<label class="i18n">' +
+                '<span data-lang="en_us">Price</span>' +
+                '<span data-lang="pt_br">Preço</span>' +
+              '</label>' +
+              '<div id="products-price-range"></div>' +
+              '<div class="flexbox">' +
+                '<div class="form-group">' +
+                  '<input class="form-control" type="tel" name="price" data-opt="gte" data-filter="range" ' +
+                  'data-is-number="true" data-money="true"/>' +
+                  '<small class="form-text i18n">' +
+                    '<span data-lang="en_us">Minimun</span>' +
+                    '<span data-lang="pt_br">Mínimo</span>' +
+                  '</small>' +
+                '</div>' +
+                '<div class="form-group">' +
+                  '<input class="form-control" type="tel" name="price" data-opt="lte" data-filter="range" ' +
+                  'data-is-number="true" data-money="true"/>' +
+                  '<small class="form-text i18n">' +
+                    '<span data-lang="en_us">Maximum</span>' +
+                    '<span data-lang="pt_br">Máximo</span>' +
+                  '</small>' +
+                '</div>' +
+              '</div>' +
+            '</div>'
+    })
+
+    // use global dynamic quickview
+    var $qv = $('#qvx')
+    $qv.find('#qvx-title').text(i18n({
+      'en_us': 'Filters',
+      'pt_br': 'Filtros'
+    }))
+    // show filters form
+    $qv.find('#qvx-body').html($filters)
+    // add submit button
+    $qv.find('#qvx-footer').html($('<button />', {
+      'class': 'btn btn-block btn-primary',
+      click: $filters.submit,
+      html: '<i class="fa fa-filter"></i> ' + i18n({
+        'en_us': 'Filter products',
+        'pt_br': 'Filtrar produtos'
+      })
+    }))
 
     handleInputs($filters, function ($input, checkbox) {
       // add search filter
