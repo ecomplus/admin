@@ -852,6 +852,23 @@ ul > li:nth-child(4n+4) > .badges-list li {
   color: $color-pink;
 }
 
+// products list
+.row-products > .col {
+  -webkit-flex: 0 0 150px;
+  -ms-flex: 0 0 150px;
+  flex: 0 0 150px;
+}
+.row-products .item-info {
+  line-height: 1.4;
+}
+.row-products .item-info > a {
+  height: 37px;
+  display: block;
+}
+.row-products .item-price {
+  font-weight: 500;
+}
+
 .masonry-item > a {
   display: inline-block;
   border: $card-internal-border;

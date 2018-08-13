@@ -147,8 +147,8 @@
       var $items = []
       for (var i = 0; i < list.length; i++) {
         var item = list[i]
-        // item price
-        var priceString
+        // render item price and quantity
+        var priceString, qntString
         if (item.price) {
           priceString = formatMoney(item.price, item.currency_id)
         } else {
@@ -157,11 +157,20 @@
             'pt_br': 'Preço indefinido'
           })
         }
+        if (item.quantity) {
+          qntString = item.quantity + ' un'
+        } else {
+          // infinite
+          qntString = '∞'
+        }
 
         var $item = $('<div />', {
           'class': 'col',
-          html: '<a href="/' + window.location.hash + '/' + item._id + '">' + item.name + '</a>' +
-                '<div class="item-price">' + priceString + '</div>' +
+          html: '<div class="item-info">' +
+                  '<a href="/' + window.location.hash + '/' + item._id + '">' + item.name + '</a>' +
+                  '<div class="item-price">' + priceString + '</div>' +
+                  '<div class="item-qnt">' + qntString + '</div>' +
+                '</div>' +
                 '<div class="custom-controls-stacked">' +
                   '<div class="custom-control custom-checkbox">' +
                     '<input type="checkbox" class="custom-control-input">' +
