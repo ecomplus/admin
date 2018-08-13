@@ -121,8 +121,8 @@
     // use global dynamic quickview
     var $qv = $('#qvx')
     $qv.find('#qvx-title').text(i18n({
-      'en_us': 'Filters',
-      'pt_br': 'Filtros'
+      'en_us': 'Filter products',
+      'pt_br': 'Filtrar produtos'
     }))
     // show filters form
     $qv.find('#qvx-body').html($filters)
@@ -136,8 +136,8 @@
         quickview.close($qv)
       },
       html: i18n({
-        'en_us': 'Filter products',
-        'pt_br': 'Filtrar produtos'
+        'en_us': 'Apply filters',
+        'pt_br': 'Aplicar filtros'
       })
     }))
 
