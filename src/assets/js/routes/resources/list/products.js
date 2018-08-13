@@ -147,9 +147,21 @@
       var $items = []
       for (var i = 0; i < list.length; i++) {
         var item = list[i]
+        // item price
+        var priceString
+        if (item.price) {
+          priceString = formatMoney(item.price, item.currency_id)
+        } else {
+          priceString = i18n({
+            'en_us': 'Undefined price',
+            'pt_br': 'Preço indefinido'
+          })
+        }
+
         var $item = $('<div />', {
           'class': 'col',
           html: '<a href="/' + window.location.hash + '/' + item._id + '">' + item.name + '</a>' +
+                '<div class="item-price">' + priceString + '</div>' +
                 '<div class="custom-controls-stacked">' +
                   '<div class="custom-control custom-checkbox">' +
                     '<input type="checkbox" class="custom-control-input">' +
