@@ -14,6 +14,11 @@ $color-purple-lighter: lighten($color-purple, 35%);
   width: 120px;
   height: 26px;
 }
+.sidebar-header > .logo-icon img {
+  width: 31px;
+  height: 26px;
+  max-width: none;
+}
 
 // notification
 .toast {
