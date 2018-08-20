@@ -5,6 +5,16 @@
 $color-purple-light: lighten($color-purple, 20%);
 $color-purple-lighter: lighten($color-purple, 35%);
 
+// logo image size
+.loggin-banner > img {
+  max-width: 198px;
+  height: auto;
+}
+.sidebar-header > .logo img {
+  width: 120px;
+  height: 26px;
+}
+
 // notification
 .toast {
   background-color: $color-orange;
