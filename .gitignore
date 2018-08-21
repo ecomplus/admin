@@ -4,6 +4,7 @@ gruntfile.js
 */assets/css/app.css.map
 */assets/js/app.js
 */assets/css/scss/*
+!*/assets/css/scss/_variables.scss
 
 # Logs
 logs
