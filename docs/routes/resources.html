@@ -1,0 +1,107 @@
+<header class="header pt-3">
+  <div class="header-bar no-border">
+    <h1 data-id="resource-name"></h1>
+    <ol class="breadcrumb" data-id="breadcrumbs">
+      <li class="breadcrumb-item">
+        <a href="/#/">
+          <i class="fa fa-home"></i> Home
+        </a>
+      </li>
+    </ol>
+  </div>
+
+  <div class="header-action">
+    <nav class="nav" data-id="nav">
+      <a class="nav-link active" data-toggle="tab" data-id-href="tab-normal">
+        <i class="ti-pencil-alt"></i>
+        <span class="hidden-md-down">
+          Normal
+        </span>
+      </a>
+      <a data-id="code-tab" class="nav-link" data-toggle="tab" data-id-href="tab-json">
+        <i class="ti-bolt-alt"></i>
+        <span class="i18n hidden-md-down">
+          <span data-lang="en_us">Advanced</span>
+          <span data-lang="pt_br">Avançado</span>
+        </span>
+      </a>
+      <a href="javascript:;" class="nav-link edit-btn border-danger" data-id="delete">
+        <i class="ti-trash"></i>
+        <span class="i18n hidden-xs-down">
+          <span data-lang="en_us">Delete</span>
+          <span data-lang="pt_br">Deletar</span>
+        </span>
+      </a>
+      <a href="javascript:;" class="nav-link edit-btn border-success" data-id="new">
+        <i class="ti-plus"></i>
+        <span class="i18n">
+          <span data-lang="en_us">New</span>
+          <span data-lang="pt_br">Novo</span>
+        </span>
+      </a>
+      <a href="javascript:;" class="nav-link edit-btn border-info" data-id="duplicate">
+        <i class="ti-layers"></i>
+        <span class="i18n hidden-md-down">
+          <span data-lang="en_us">Duplicate</span>
+          <span data-lang="pt_br">Duplicar</span>
+        </span>
+      </a>
+      <a href="javascript:;" class="nav-link edit-btn" data-id="facebook">
+        <i class="fa fa-facebook"></i>
+      </a>
+      <a href="javascript:;" class="nav-link edit-btn" data-id="whatsapp">
+        <i class="fa fa-whatsapp"></i>
+      </a>
+      <a href="javascript:;" class="nav-link edit-btn" data-id="view">
+        <i class="ti-link"></i>
+        <span class="i18n hidden-md-down">
+          <span data-lang="en_us">View</span>
+          <span data-lang="pt_br">Ver</span>
+        </span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<div class="main-content">
+  <div class="ajax-content">
+    <div class="spinner-linear">
+      <div class="line"></div>
+    </div>
+
+    <div class="tab-content">
+      <div class="tab-pane fade active show" data-id="tab-normal">
+      </div>
+      <div class="tab-pane fade" data-id="tab-json">
+        <div class="card">
+          <div class="card-body">
+            <div class="callout callout-warning" role="alert">
+              <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+                <span>&times;</span>
+              </button>
+              <h5 class="i18n">
+                <span data-lang="en_us">Be careful!</span>
+                <span data-lang="pt_br">Tome cuidado!</span>
+              </h5>
+              <p class="i18n">
+                <span data-lang="en_us">
+                  It may not be a good idea to directly edit the code below,
+                  do this only if you know <strong>JSON</strong>.
+                </span>
+                <span data-lang="pt_br">
+                  Pode não ser uma boa ideia editar diretamente o código abaixo,
+                  faça isto apenas se tiver conhecimento em <strong>JSON</strong>.
+                </span>
+              </p>
+            </div>
+            <div data-id="code-editor" class="ace-editor"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $.getScript('../assets/js/routes/resources.min.js')
+  </script>
+</div>
