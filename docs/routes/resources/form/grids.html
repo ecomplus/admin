@@ -1,0 +1,215 @@
+<form action="javascript:;" data-id="grid-form" class="ajax-cards ajax-form ajax mb-30">
+  <div class="spinner-linear">
+    <div class="line"></div>
+  </div>
+  <div class="ajax-overlay"></div>
+
+  <div class="row">
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-7">
+              <div class="form-group">
+                <label class="i18n require">
+                  <span data-lang="en_us">Grid name</span>
+                  <span data-lang="pt_br">Nome da grade</span>
+                </label>
+                <input type="text" class="form-control action-title" name="title" required
+                  data-fill-field="grid_id"/>
+              </div>
+            </div>
+            <div class="col-md-5">
+              <div class="form-group">
+                <label class="i18n require">
+                  <span data-lang="en_us">Code</span>
+                  <span data-lang="pt_br">Código</span>
+                </label>
+                <input type="text" class="form-control" name="grid_id" placeholder="grid_id" required
+                  pattern="^[a-z0-9_]{2,30}$"
+                  data-fill-case="lower"
+                  data-fill-clear-accents="_"
+                  data-fill-pattern="[^a-z0-9_]"
+                  maxlength="30"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="custom-controls-stacked">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="custom_value"/>
+                <label class="custom-control-label i18n">
+                  <span data-lang="en_us">Accept custom option by customer</span>
+                  <span data-lang="pt_br">Aceitar opção personalizada pelo cliente</span>
+                </label>
+              </div>
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="attachment"/>
+                <label class="custom-control-label i18n">
+                  <span data-lang="en_us">Accept attached file</span>
+                  <span data-lang="pt_br">Aceitar arquivo em anexo</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">Add to price</span>
+            <span data-lang="pt_br">Adicionar ao preço</span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit additional cost</span>
+                <span data-lang="pt_br">Editar custo adicional</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="callout callout-info" role="alert">
+              <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+                <span>×</span>
+              </button>
+              <p class="i18n">
+                <span data-lang="en_us">
+                  Default price alteration on products with this grid for
+                  customization or variations.
+                </span>
+                <span data-lang="pt_br">
+                  Alteração padrão de preço nos produtos com essa grade para
+                  personalização ou variações.
+                </span>
+              </p>
+            </div>
+
+            <div data-id="add-to-price">
+              <div class="row align-items-center">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <div class="custom-controls-stacked">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" name="add_to_price.type" class="custom-control-input"
+                          value="" checked data-disable="add_to_price.addition">
+                        <label class="custom-control-label i18n">
+                          <span data-lang="en_us">No additional</span>
+                          <span data-lang="pt_br">Sem adicional</span>
+                        </label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                        <input type="radio" name="add_to_price.type" class="custom-control-input"
+                          value="percentage" data-disable="add_to_price.addition">
+                        <label class="custom-control-label i18n">
+                          <span data-lang="en_us">Percentage</span>
+                          <span data-lang="pt_br">Percentual</span>
+                        </label>
+                      </div>
+                      <div class="custom-control custom-radio">
+                        <input type="radio" name="add_to_price.type" class="custom-control-input"
+                          value="fixed" data-disable="add_to_price.addition">
+                        <label class="custom-control-label i18n">
+                          <span data-lang="en_us">Fixed</span>
+                          <span data-lang="pt_br">Fixo</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-7">
+                  <div class="form-group">
+                    <div class="input-group w-100px">
+                      <input disabled class="form-control" type="number" step="any"
+                        name="add_to_price.addition"
+                        data-enable-value="percentage">
+                      <div class="input-group-append">
+                        <span class="input-group-text">%</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input disabled class="form-control w-150px" type="tel" name="add_to_price.addition"
+                      data-is-number="true"
+                      data-money="true"
+                      data-enable-value="fixed">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Options</span>
+            <span data-lang="pt_br">Opções</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <ul class="hide-empty options-list" data-id="options-list"></ul>
+            <p class="prev-empty i18n">
+              <span data-lang="en_us">
+                This grid has no saved variations.
+                <br><a href="javascript:;">Add the first option</a>
+              </span>
+              <span data-lang="pt_br">
+                Esta grade não possui nenhuma variação salva.
+                <br><a href="javascript:;">Adicione a primeira opção</a>
+              </span>
+            </p>
+          </div>
+          <footer class="card-footer">
+            <div class="btn-toolbar">
+              <div class="btn-group">
+                <button type="button" class="btn btn-light i18n" data-id="add-option">
+                  <span data-lang="en_us">Add</span>
+                  <span data-lang="pt_br">Adicionar</span>
+                </button>
+                <button type="button" class="btn btn-light" data-id="delete-options">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bt-1 pt-20">
+    <button class="btn btn-success i18n mr-10">
+      <span data-lang="en_us">Save grid</span>
+      <span data-lang="pt_br">Salvar grade</span>
+    </button>
+    <button type="button" class="btn btn-danger i18n delete-resource hidden">
+      <span data-lang="en_us">Delete</span>
+      <span data-lang="pt_br">Deletar</span>
+    </button>
+  </div>
+
+  <script>
+    // wait for second script loading before form setup
+    window.Tabs[window.tabId].wait = true
+    $.getScript('../assets/js/routes/resources/form/grids.min.js', function () {
+      $.getScript('../assets/js/routes/resources/form.min.js')
+    })
+  </script>
+</form>
