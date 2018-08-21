@@ -147,14 +147,17 @@
       var $items = []
       for (var i = 0; i < list.length; i++) {
         var item = list[i]
+        // link to edit product
+        var link = '/' + window.location.hash + '/' + item._id
+
         // render item price and quantity
         var priceString, qntString
         if (item.price) {
           priceString = formatMoney(item.price, item.currency_id)
         } else {
           priceString = i18n({
-            'en_us': 'Undefined price',
-            'pt_br': 'Preço indefinido'
+            'en_us': 'No price',
+            'pt_br': 'Sem preço'
           })
         }
         if (item.quantity) {
@@ -164,10 +167,31 @@
           qntString = '∞'
         }
 
+        // product picture or placeholder image
+        var pictureHtml = ''
+        if (item.pictures && item.pictures.length) {
+          var picture = item.pictures[0]
+          // try thumbnail
+          var thumb = picture.small
+          if (!thumb) {
+            // use any size
+            for (var size in picture) {
+              if (picture.hasOwnProperty(size) && size !== '_id') {
+                thumb = picture[size]
+                break
+              }
+            }
+          }
+          if (thumb) {
+            pictureHtml = '<img src="' + thumb.url + '">'
+          }
+        }
+
         var $item = $('<div />', {
           'class': 'col',
-          html: '<div class="item-info">' +
-                  '<a href="/' + window.location.hash + '/' + item._id + '">' + item.name + '</a>' +
+          html: '<a href="' + link + '" class="item-picture">' + pictureHtml + '</a>' +
+                '<div class="item-info">' +
+                  '<a href="' + link + '">' + item.name + '</a>' +
                   '<div class="item-price">' + priceString + '</div>' +
                   '<div class="item-qnt">' + qntString + '</div>' +
                 '</div>' +

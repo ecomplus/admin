@@ -11,11 +11,11 @@ $color-purple-lighter: lighten($color-purple, 35%);
   height: auto;
 }
 .sidebar-header > .logo img {
-  width: 120px;
+  width: auto;
   height: 26px;
 }
 .sidebar-header > .logo-icon img {
-  width: 31px;
+  width: auto;
   height: 26px;
   max-width: none;
 }
@@ -879,9 +879,20 @@ ul > li:nth-child(4n+4) > .badges-list li {
 .row-products .item-info > a {
   height: 37px;
   display: block;
+  overflow: hidden;
+  width: 100%;
 }
 .row-products .item-price {
   font-weight: 500;
+}
+.row-products .item-picture {
+  height: 102px;
+  width: 102px;
+  display: block;
+  margin-bottom: 10px;
+  background: $color-bg-lightest;
+  border-radius: 2px;
+  border: $card-internal-border;
 }
 
 .masonry-item > a {
