@@ -88,10 +88,10 @@
     // console.log('Setup JS plugins')
     // plugins localization
     if (window.lang === 'pt_br') {
-      $.getScript('../assets/vendor/jsgrid/i18n/jsgrid-pt-br.js', function () {
+      $.getScript('/assets/vendor/jsgrid/i18n/jsgrid-pt-br.js', function () {
         jsGrid.locale('pt-br')
       })
-      $.getScript('../assets/vendor/summernote/lang/summernote-pt-BR.js', function () {
+      $.getScript('/assets/vendor/summernote/lang/summernote-pt-BR.js', function () {
         $.summernote.options.lang = 'pt-BR'
       })
       decimalPoint = ','

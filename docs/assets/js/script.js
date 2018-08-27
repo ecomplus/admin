@@ -197,10 +197,10 @@ app.config({
     // console.log('Setup JS plugins')
     // plugins localization
     if (window.lang === 'pt_br') {
-      $.getScript('../assets/vendor/jsgrid/i18n/jsgrid-pt-br.js', function () {
+      $.getScript('/assets/vendor/jsgrid/i18n/jsgrid-pt-br.js', function () {
         jsGrid.locale('pt-br')
       })
-      $.getScript('../assets/vendor/summernote/lang/summernote-pt-BR.js', function () {
+      $.getScript('/assets/vendor/summernote/lang/summernote-pt-BR.js', function () {
         $.summernote.options.lang = 'pt-BR'
       })
       decimalPoint = ','
@@ -875,12 +875,12 @@ app.ready(function () {
       var images
       var setImages = function () {
         images = [
-          '../assets/img/bg/coffee.jpg',
-          '../assets/img/bg/notebook.jpg',
-          '../assets/img/bg/numbers.jpg',
-          '../assets/img/bg/pens.jpg',
-          '../assets/img/bg/table.jpg',
-          '../assets/img/bg/writer.jpg'
+          '/assets/img/bg/coffee.jpg',
+          '/assets/img/bg/notebook.jpg',
+          '/assets/img/bg/numbers.jpg',
+          '/assets/img/bg/pens.jpg',
+          '/assets/img/bg/table.jpg',
+          '/assets/img/bg/writer.jpg'
         ]
       }
       setImages()
