@@ -609,7 +609,7 @@
                   } else {
                     // add image to summernote editor
                     // https://summernote.org/deep-dive/#insertion-api
-                    $editor.summernote('insertImage', '../assets/img/util/loading.gif', function ($image) {
+                    $editor.summernote('insertImage', '/assets/img/util/loading.gif', function ($image) {
                       // change spinner gif to correct image after loading
                       var img = new Image()
                       img.onload = function () {

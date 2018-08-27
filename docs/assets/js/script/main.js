@@ -184,12 +184,12 @@ app.ready(function () {
       var images
       var setImages = function () {
         images = [
-          '../assets/img/bg/coffee.jpg',
-          '../assets/img/bg/notebook.jpg',
-          '../assets/img/bg/numbers.jpg',
-          '../assets/img/bg/pens.jpg',
-          '../assets/img/bg/table.jpg',
-          '../assets/img/bg/writer.jpg'
+          '/assets/img/bg/coffee.jpg',
+          '/assets/img/bg/notebook.jpg',
+          '/assets/img/bg/numbers.jpg',
+          '/assets/img/bg/pens.jpg',
+          '/assets/img/bg/table.jpg',
+          '/assets/img/bg/writer.jpg'
         ]
       }
       setImages()
