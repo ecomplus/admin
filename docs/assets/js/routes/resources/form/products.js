@@ -319,10 +319,7 @@
               // add colorpicker
               $colorpicker = $('<input />', {
                 'class': 'form-control',
-                placeholder: i18n({
-                  'en_us': 'Transparent',
-                  'pt_br': 'Transparente'
-                }),
+                placeholder: '#ffffff',
                 type: 'text',
                 name: 'rgb',
 
