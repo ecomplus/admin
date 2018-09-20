@@ -297,7 +297,7 @@
           })
         }
         next()
-      } else {
+      } else if (!resourceId) {
         // nothing to do, alert
         app.toast(i18n({
           'en_us': 'No items selected to delete',

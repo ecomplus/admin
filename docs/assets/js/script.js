@@ -1215,7 +1215,9 @@ app.ready(function () {
         // open confirmation modal
         var modal = $('#modal-confirm-request')
         modal.find('#api-request-control').data('request-id', id)
-        modal.find('.modal-body > p').text(msg).next('pre').children('code').text(reqText)
+        modal.find('.modal-body > p').text(msg)
+        // .next('pre').children('code').text(reqText)
+        console.log('Confirm request', reqText)
         modal.modal('show')
       }, 400)
     }
@@ -1870,29 +1872,51 @@ app.ready(function () {
     // main save action
     var saveAction = function () {
       var tabObj = appTabs[currentTab]
-      // saved
-      tabObj.unsavedChanges = false
-      // nothing more to save, disable button
-      $('#action-save').attr('disabled', true)
+      if (tabObj) {
+        var save = function () {
+          // mark saved
+          tabObj.unsavedChanges = false
+          /* nothing more to save, disable button
+          $('#action-save').attr('disabled', true)
+          */
 
-      if (tabObj && typeof tabObj.saveCallback === 'function') {
-        // call tab save action callback function
-        tabObj.saveCallback(function (tabId) {
-          if (tabId === currentTab) {
-            // confirm action done
-            var $todo = $('#action-todo')
-            var $done = $('#action-done')
-            $todo.fadeOut(200, function () {
-              $done.fadeIn(400, function () {
-                setTimeout(function () {
-                  $done.fadeOut(200, function () {
-                    $todo.fadeIn()
+          if (tabObj && typeof tabObj.saveCallback === 'function') {
+            // call tab save action callback function
+            tabObj.saveCallback(function (tabId) {
+              if (tabId === currentTab) {
+                // confirm action done
+                var $todo = $('#action-todo')
+                var $done = $('#action-done')
+                $todo.fadeOut(200, function () {
+                  $done.fadeIn(400, function () {
+                    setTimeout(function () {
+                      $done.fadeOut(200, function () {
+                        $todo.fadeIn()
+                      })
+                    }, 800)
                   })
-                }, 800)
-              })
+                })
+              }
             })
           }
-        })
+        }
+
+        if (tabObj.unsavedChanges) {
+          save()
+        } else {
+          // wait delay
+          setTimeout(function () {
+            if (tabObj.unsavedChanges) {
+              save()
+            } else {
+              // message only
+              app.toast(i18n({
+                'en_us': 'Nothing to save',
+                'pt_br': 'Não há alteração a ser salva'
+              }))
+            }
+          }, 300)
+        }
       }
     }
     $('#action-save').click(saveAction)
@@ -1931,12 +1955,13 @@ app.ready(function () {
           $('#action-title').text(tabObj.actionTitle)
         }
 
-        // disable save button while there are nothing to save
+        /* disable save button while there are nothing to save
         if (tabObj.unsavedChanges === false) {
           $('#action-save').attr('disabled', true)
         } else {
           $('#action-save').removeAttr('disabled')
         }
+        */
       }
 
       // show action (save) topbar
@@ -1991,8 +2016,9 @@ app.ready(function () {
         // new unsaved changes
         if (tabObj.unsavedChanges !== true) {
           tabObj.unsavedChanges = true
-          // enable save button again
+          /* enable save button again
           $('#action-save').removeAttr('disabled')
+          */
         }
       }
     }
