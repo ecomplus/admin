@@ -1282,6 +1282,15 @@
 				"colors": ["#008000"]
 			},
 			{
+				"option_id": "orange",
+				"value": "orange",
+				"text": {
+					"en_us": "Orange",
+					"pt_br": "Laranja"
+				},
+				"colors": ["#FF5900"]
+			},
+			{
 				"option_id": "purple",
 				"value": "purple",
 				"text": {
