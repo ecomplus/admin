@@ -1,7 +1,3923 @@
 {
+  "authorized_stores": {
+    "label": {
+      "en_us": "Authorized stores",
+      "pt_br": "Loja autorizadas"
+    },
+    "description": {
+      "en_us": "IDs from other stores authorized to sell this product",
+      "pt_br": "IDs das lojas autorizadas a vender este produto"
+    }
+  },
   "sku": {
     "label": {
       "en_us": "SKU"
+    },
+    "description": {
+      "en_us": "Product unique reference code",
+      "pt_br": "Código de referência único deste produto"
+    }
+  },
+  "commodity_type": {
+    "label": {
+      "en_us": "Commodity type",
+      "pt_br": "Tipo do produto"
+    },
+    "enum": {
+      "physical": {
+        "label": {
+          "en_us": "Physical",
+          "pt_br": "Físcio"
+        }
+      },
+      "digital": {
+        "label": {
+          "en_us": "Digital"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Product type",
+      "pt_br": "Tipo de produto"
+    }
+  },
+  "name": {
+    "label": {
+      "en_us": "Name",
+      "pt_br": "Nome"
+    },
+    "description": {
+      "en_us": "Product full name",
+      "pt_br": "Nome completo do produto"
+    }
+  },
+  "i18n": {
+    "label": {
+      "en_us": "Translation",
+      "pt_br": "Tradução"
+    },
+    "description": {
+      "en_us": "Product name translations",
+      "pt_br": "Traduções do nome do produto"
+    }
+  },
+  "subtitle": {
+    "label": {
+      "en_us": "Subtitle",
+      "pt_br": "Subtítulo"
+    },
+    "description": {
+      "en_us": "Optional subtitle intended to be used for SEO or layout purposes",
+      "pt_br": "Subtítulo opcional, usado para SEO ou layout"
+    }
+  },
+  "slug": {
+    "label": {
+      "en_us": "Slug"
+    },
+    "description": {
+      "en_us": "Slug to complete page URL, starting with number or lowercase letter",
+      "pt_br": "Slug para completar a URL da página, começando com número ou letra minúscula"
+    }
+  },
+  "permalink": {
+    "label": {
+      "en_us": "Permalink",
+      "pt_br": "Link permanente"
+    },
+    "description": {
+      "en_us": "Permanent URL to product page",
+      "pt_br": "URL permanente para a página do produto"
+    }
+  },
+  "mobile_link": {
+    "label": {
+      "en_us": "Mobile link",
+      "pt_br": "Link móvel"
+    },
+    "description": {
+      "en_us": "Optional URL specific to mobile devices",
+      "pt_br": "URL opcional específica para dispositivos móveis"
+    }
+  },
+  "status": {
+    "label": {
+      "en_us": "Status"
+    },
+    "description": {
+      "en_us": "Status defined by seller, such as draft or live",
+      "pt_br": "Status definidos pelo vendedor, como esboço ou em produção"
+    }
+  },
+  "available": {
+    "label": {
+      "en_us": "Available",
+      "pt_br": "Disponível"
+    },
+    "description": {
+      "en_us": "True when product is complete registered and ready to sell",
+      "pt_br": "Verdadeiro quando o cadastro do produto foi completo e ele está pronto para vendas"
+    }
+  },
+  "visible": {
+    "label": {
+      "en_us": "Visible",
+      "pt_br": "Visível"
+    },
+    "description": {
+      "en_us": "Visible on search results, collections and catalogs",
+      "pt_br": "Visível nos resultados de buscas, coleções e catálogos"
+    }
+  },
+  "ad_relevance": {
+    "label": {
+      "en_us": "Ad relevance",
+      "pt_br": "Relevância do anúncio"
+    },
+    "description": {
+      "en_us": "Number to define the importance of the ad, the higher should be displayed first",
+      "pt_br": "Número que define a importância do anúncio, os maiores serão exibidos antes "
+    }
+  },
+  "ad_type": {
+    "label": {
+      "en_us": "Ad type",
+      "pt_br": "Tipo de anúncio"
+    },
+    "description": {
+      "en_us": "Option ad type defined by seller, such as gold and silver",
+      "pt_br": "Tipo de anúncio definido pelo vendedor (ex: ouro, premium)"
+    }
+  },
+  "short_description": {
+    "label": {
+      "en_us": "Short description",
+      "pt_br": "Descrição curta"
+    },
+    "description": {
+      "en_us": "Short product description in plain text",
+      "pt_br": "Descrição curta do produto em texto "
+    }
+  },
+  "body_html": {
+    "label": {
+      "en_us": "Full description",
+      "pt_br": "Descrição completa"
+    },
+    "description": {
+      "en_us": "Full product description, may use HTML tags",
+      "pt_br": "Descrição completa do produto, podendo utilizar tags HTML"
+    }
+  },
+  "body_text": {
+    "label": {
+      "en_us": "Text description",
+      "pt_br": "Descrição textual"
+    },
+    "description": {
+      "en_us": "Full product description, plain text only",
+      "pt_br": "Descrição completa do produto em texto"
+    }
+  },
+  "meta_title": {
+    "label": {
+      "en_us": "Meta title"
+    },
+    "description": {
+      "en_us": "Title tag for page SEO",
+      "pt_br": "Title tag para o SEO da página"
+    }
+  },
+  "meta_description": {
+    "label": {
+      "en_us": "Meta description"
+    },
+    "description": {
+      "en_us": "Meta description tag for page SEO",
+      "pt_br": "Meta description tag para o SEO da página"
+    }
+  },
+  "keywords": {
+    "label": {
+      "en_us": "Keywords",
+      "pt_br": "Palavras chave"
+    },
+    "description": {
+      "en_us": "Tags related with product for internal search",
+      "pt_br": "Termos relacionados ao produto para busca interna"
+    }
+  },
+  "price": {
+    "label": {
+      "en_us": "Price",
+      "pt_br": "Preço"
+    },
+    "description": {
+      "en_us": "Product sale price, when undefined, product could be bought by any price",
+      "pt_br": "Preço de venda do produto. Quando indefinido o produto pode ser comprado por qualquer valor"
+    }
+  },
+  "price_effective_date": {
+    "label": {
+      "en_us": "Price effective date",
+      "pt_br": "Data de validade do preço"
+    },
+    "properties": {
+      "start": {
+        "label": {
+          "en_us": "Start",
+          "pt_br": "Começo"
+        },
+        "description": {
+          "en_us": "Start date and time in ISO 8601 standard representation",
+          "pt_br": "Data e hora de começo no padrão ISO 8601"
+        }
+      },
+      "end": {
+        "label": {
+          "en_us": "End",
+          "pt_br": "Fim"
+        },
+        "description": {
+          "en_us": "Promotion end date and time in ISO 8601 standard representation",
+          "pt_br": "Data e hora do fim do preço no padrão ISO 8601 "
+        }
+      }
+    }
+  },
+  "base_price": {
+    "label": {
+      "en_us": "Base price",
+      "pt_br": "Preço base"
+    },
+    "description": {
+      "en_us": "Product original sale price, without discounts",
+      "pt_br": "Preço de venda original do produto, sem descontos"
+    }
+  },
+  "cost_price": {
+    "label": {
+      "en_us": "Cost price",
+      "pt_br": "Preço de custo"
+    },
+    "description": {
+      "en_us": "Product cost price to calculate profit",
+      "pt_br": "Custo do produto, para calculo de lucro"
+    }
+  },
+  "currency_id": {
+    "label": {
+      "en_us": "Currency id",
+      "pt_br": "Id da moeda"
+    },
+    "description": {
+      "en_us": "Designator of currency according to ISO 4217 (3 uppercase letters)",
+      "pt_br": "Sigla da moeda de acordo com o padrão ISO 4217 (3 letras maiúsculas)"
+    }
+  },
+  "currency_symbol": {
+    "label": {
+      "en_us": "Currency symbol",
+      "pt_br": "Símbolo da moeda"
+    },
+    "description": {
+      "en_us": "Graphic symbol used as a shorthand for currency's name",
+      "pt_br": "Símbolo usado para representar o nome da moeda"
+    }
+  },
+  "quantity": {
+    "label": {
+      "en_us": "Quantity",
+      "pt_br": "Estoque"
+    },
+    "description": {
+      "en_us": "Product quantity available to sell, max to put in cart",
+      "pt_br": "Quantidade de unudades disponíveis para venda. Máximo que pode ser adicionado ao carrinho"
+    }
+  },
+  "min_quantity": {
+    "label": {
+      "en_us": "Min quantity",
+      "pt_br": "Quantidade mínima"
+    },
+    "description": {
+      "en_us": "Minimum quantity to put in cart",
+      "pt_br": "Quantidade mínima para colocar no carrinho"
+    }
+  },
+  "production_time": {
+    "label": {
+      "en_us": "Production time",
+      "pt_br": "Tempo de produção"
+    },
+    "properties": {
+      "days": {
+        "label": {
+          "en_us": "Days",
+          "pt_br": "Dias"
+        },
+        "description": {
+          "en_us": "Number of days to post the product after purchase, deadline for production or handling",
+          "pt_br": "Número de dias para postar o produto após a compra. Prazo para preparo ou produção"
+        }
+      },
+      "working_days": {
+        "label": {
+          "en_us": "Working days",
+          "pt_br": "Dias úteis"
+        },
+        "description": {
+          "en_us": "If the deadline is calculated in working days",
+          "pt_br": "Se o prazo é calculado em dias úteis"
+        }
+      },
+      "cumulative": {
+        "label": {
+          "en_us": "Cumulative",
+          "pt_br": "Cumulativo"
+        },
+        "description": {
+          "en_us": "If the production time is cumulative per product unit",
+          "pt_br": "Se o tempo de produção é cumulativo de acordo com o número de unidades"
+        }
+      },
+      "max_time": {
+        "label": {
+          "en_us": "Max time",
+          "pt_br": "Tempo máximo"
+        },
+        "description": {
+          "en_us": "When cumulative, increase the term proportionally up to this maximum (in days)",
+          "pt_br": "Quando cumulativo, aumenta o tempo proporcionalmente até este máximo (em dias)"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Deadline for production or handling of pre-ordered product",
+      "pt_br": "Datalimite para produção ou separação do produto"
+    }
+  },
+  "manage_stock": {
+    "label": {
+      "en_us": "Manage stock",
+      "pt_br": "Controle de estoque"
+    },
+    "description": {
+      "en_us": "Decrease product available quantity automatically after each order",
+      "pt_br": "Diminui a quantidade de produtos em estoque automáticamente após cada pedido"
+    }
+  },
+  "inventory_records": {
+    "label": {
+      "en_us": "Inventory records",
+      "pt_br": "Histórico de estoque"
+    },
+    "items": {
+      "properties": {
+        "_id": {
+          "label": {
+            "en_us": "ID"
+          },
+          "description": {
+            "en_us": "Unique ID (ObjectID)",
+            "pt_br": "ID único"
+          }
+        },
+        "date_of_change": {
+          "label": {
+            "en_us": "Date of change",
+            "pt_br": "Data de mudança"
+          },
+          "description": {
+            "en_us": "Date and time when stock changed in ISO 8601 standard representation",
+            "pt_br": "Data e hora da mudança de estoque, no padrão ISO 8601"
+          }
+        },
+        "origin": {
+          "label": {
+            "en_us": "Origin",
+            "pt_br": "Origem"
+          },
+          "description": {
+            "en_us": "Optional note about origin or reason of stock changing",
+            "pt_br": "Nota opicional sobre a origem da mudança de estoque"
+          }
+        },
+        "quantity": {
+          "label": {
+            "en_us": "Quantity",
+            "pt_br": "Quantidade"
+          },
+          "description": {
+            "en_us": "Added or decreased (negative) stock quantity",
+            "pt_br": "Quantidade adicionada ou retirada (negativo) do estoque"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Historical record",
+        "pt_br": "Histórico"
+      }
+    },
+    "description": {
+      "en_us": "Recent stock history",
+      "pt_br": "Histórico recente do estoque"
+    }
+  },
+  "measurement": {
+    "label": {
+      "en_us": "Measurement",
+      "pt_br": "Medição"
+    },
+    "properties": {
+      "unit": {
+        "label": {
+          "en_us": "Unit",
+          "pt_br": "Unidade"
+        },
+        "enum": {
+          "oz": {
+            "label": {
+              "en_us": "Oz"
+            }
+          },
+          "lb": {
+            "label": {
+              "en_us": "Lb"
+            }
+          },
+          "mg": {
+            "label": {
+              "en_us": "mg"
+            }
+          },
+          "g": {
+            "label": {
+              "en_us": "g"
+            }
+          },
+          "kg": {
+            "label": {
+              "en_us": "kg"
+            }
+          },
+          "floz": {
+            "label": {
+              "en_us": "floz"
+            }
+          },
+          "pt": {
+            "label": {
+              "en_us": "pt"
+            }
+          },
+          "qt": {
+            "label": {
+              "en_us": "qt"
+            }
+          },
+          "gal": {
+            "label": {
+              "en_us": "gal"
+            }
+          },
+          "ml": {
+            "label": {
+              "en_us": "ml"
+            }
+          },
+          "cl": {
+            "label": {
+              "en_us": "cl"
+            }
+          },
+          "l": {
+            "label": {
+              "en_us": "l"
+            }
+          },
+          "cbm": {
+            "label": {
+              "en_us": "cbm"
+            }
+          },
+          "in": {
+            "label": {
+              "en_us": "in"
+            }
+          },
+          "ft": {
+            "label": {
+              "en_us": "ft"
+            }
+          },
+          "yd": {
+            "label": {
+              "en_us": "yd"
+            }
+          },
+          "cm": {
+            "label": {
+              "en_us": "cm"
+            }
+          },
+          "m": {
+            "label": {
+              "en_us": "m"
+            }
+          },
+          "sqft": {
+            "label": {
+              "en_us": "sqft"
+            }
+          },
+          "sqm": {
+            "label": {
+              "en_us": "sqm",
+              "pt_br": "m²"
+            }
+          },
+          "ct": {
+            "label": {
+              "en_us": "ct"
+            }
+          }
+        },
+        "description": {
+          "en_us": "Unit of measurement",
+          "pt_br": "Unidade de medida"
+        }
+      },
+      "precision": {
+        "label": {
+          "en_us": "Precision",
+          "pt_br": "Precisão"
+        },
+        "description": {
+          "en_us": "Maximum number of decimal places in the product quantity (in unit of measure)",
+          "pt_br": "Número máximo de casas decimais na medida do produto"
+        }
+      },
+      "pricing_base_measure": {
+        "label": {
+          "en_us": "Pricing base measure",
+          "pt_br": "Preço de medida base"
+        },
+        "description": {
+          "en_us": "Quantity to calculate the price to be shown on ads, such as GMC unit_pricing_base_measure",
+          "pt_br": "Quantida para calcular o preço a ser exibido em anúncios, como o unit_pricing_base_measureunit_pricing_base_measure do GMC"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Measure and dimension of your product when users might be interested in price per unit",
+      "pt_br": "Medida e dimensão do produto quando usuários podem interessar em preço por unidade"
+    }
+  },
+  "multipack": {
+    "label": {
+      "en_us": "Multipack",
+      "pt_br": "Pacote"
+    },
+    "description": {
+      "en_us": "Indicate that this item is a group of multiple identical products",
+      "pt_br": "Indica que o item é um grupo de múltiplos produtos identicos"
+    }
+  },
+  "dimensions": {
+    "label": {
+      "en_us": "Dimensions",
+      "pt_br": "Dimensões"
+    },
+    "patternProperties": {
+      "^width|height|length$": {
+        "properties": {
+          "value": {
+            "label": {
+              "en_us": "Value",
+              "pt_br": "Valor"
+            },
+            "description": {
+              "en_us": "Size in specified unit",
+              "pt_br": "Tamanho na unidade especificada"
+            }
+          },
+          "unit": {
+            "enum": {
+              "mm": {
+                "label": {
+                  "en_us": "mm"
+                }
+              },
+              "cm": {
+                "label": {
+                  "en_us": "cm"
+                }
+              },
+              "m": {
+                "label": {
+                  "en_us": "m"
+                }
+              },
+              "ft": {
+                "label": {
+                  "en_us": "ft"
+                }
+              },
+              "in": {
+                "label": {
+                  "en_us": "in"
+                }
+              },
+              "yd": {
+                "label": {
+                  "en_us": "yd"
+                }
+              },
+              "mi": {
+                "label": {
+                  "en_us": "mi"
+                }
+              }
+            },
+            "description": {
+              "en_us": "Unit of measurement",
+              "pt_br": "Unidade de medida"
+            }
+          }
+        },
+        "description": {
+          "en_us": "Package width, height and length",
+          "pt_br": "Largura, altura e profundidade do pacote"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Product dimensions with packaging for freight calculation",
+      "pt_br": "Dimensões do pacote do produto, para calculo de frete"
+    }
+  },
+  "weight": {
+    "label": {
+      "en_us": "Weight",
+      "pt_br": "Peso"
+    },
+    "properties": {
+      "value": {
+        "label": {
+          "en_us": "Value",
+          "pt_br": "Valor"
+        },
+        "description": {
+          "en_us": "Size in specified unit",
+          "pt_br": "Tamanho na unidade especificada"
+        }
+      },
+      "unit": {
+        "label": {
+          "en_us": "Unit",
+          "pt_br": "Unidade"
+        },
+        "enum": {
+          "mg": {
+            "label": {
+              "en_us": "mg"
+            }
+          },
+          "g": {
+            "label": {
+              "en_us": "g"
+            }
+          },
+          "kg": {
+            "label": {
+              "en_us": "kg"
+            }
+          },
+          "lb": {
+            "label": {
+              "en_us": "lb"
+            }
+          },
+          "oz": {
+            "label": {
+              "en_us": "oz"
+            }
+          }
+        },
+        "description": {
+          "en_us": "Unit of measurement",
+          "pt_br": "Unidade de medida"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Package weight for freight calculation",
+      "pt_br": "Peso do paote, para calculo de frete"
+    }
+  },
+  "condition": {
+    "label": {
+      "en_us": "Condition",
+      "pt_br": "Condição"
+    },
+    "enum": {
+      "new": {
+        "label": {
+          "en_us": "New",
+          "pt_br": "Novo"
+        }
+      },
+      "refurbished": {
+        "label": {
+          "en_us": "Refurbished",
+          "pt_br": "Reformado "
+        }
+      },
+      "used": {
+        "label": {
+          "en_us": "Used",
+          "pt_br": "Usado"
+        }
+      },
+      "not_specified": {
+        "label": {
+          "en_us": "Not specified",
+          "pt_br": "Não especificado"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Item condition",
+      "pt_br": "Condição do item"
+    }
+  },
+  "adult": {
+    "label": {
+      "en_us": "Adult",
+      "pt_br": "Adulto"
+    },
+    "description": {
+      "en_us": "Product restricted to adults (18+)",
+      "pt_br": "Produto restrito para adultos (+18)"
+    }
+  },
+  "warranty": {
+    "label": {
+      "en_us": "Warranty",
+      "pt_br": "Garantia"
+    },
+    "description": {
+      "en_us": "Warranty time and conditions",
+      "pt_br": "Tempo e condições de garantia"
+    }
+  },
+  "brands": {
+    "label": {
+      "en_us": "Brands",
+      "pt_br": "Marcas"
+    },
+    "items": {
+      "properties": {
+        "_id": {
+          "label": {
+            "en_us": "ID"
+          },
+          "description": {
+            "en_us": "Brand ID",
+            "pt_br": "ID da marca"
+          }
+        },
+        "name": {
+          "label": {
+            "en_us": "Name",
+            "pt_br": "Nome"
+          },
+          "description": {
+            "en_us": "Brand name",
+            "pt_br": "Nome da marca"
+          }
+        },
+        "slug": {
+          "label": {
+            "en_us": "Slug"
+          },
+          "description": {
+            "en_us": "Brand page slug",
+            "pt_br": "Slug da página da marca"
+          }
+        },
+        "logo": {
+          "label": {
+            "en_us": "Logo",
+            "pt_br": "Logo"
+          },
+          "properties": {
+            "url": {
+              "label": {
+                "en_us": "URL"
+              },
+              "description": {
+                "en_us": "Image link",
+                "pt_br": "Link da imagem"
+              }
+            },
+            "size": {
+              "label": {
+                "en_us": "Size",
+                "pt_br": "Tamanho"
+              },
+              "description": {
+                "en_us": "Image size (width x height) in px, such as 100x50 (100px width, 50px height)",
+                "pt_br": "Tamanho da imagem (largura x altura) em pixels, como 100x50 (100px de largura, 50px de altura)"
+              }
+            },
+            "alt": {
+              "label": {
+                "en_us": "Alt"
+              },
+              "description": {
+                "en_us": "Alternative text, HTML alt tag (important for SEO)",
+                "pt_br": "Texto alternativo, alt tag HTML (importante para SEO) "
+              }
+            }
+          },
+          "description": {
+            "en_us": "Brand logo",
+            "pt_br": "Logo da marca"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Product brand (manufacturer)",
+        "pt_br": "Marca do produto"
+      }
+    },
+    "description": {
+      "en_us": "List of product brands",
+      "pt_br": "Lista de marcas do produto"
+    }
+  },
+  "categories": {
+    "label": {
+      "en_us": "Categories",
+      "pt_br": "Categorias"
+    },
+    "items": {
+      "properties": {
+        "_id": {
+          "label": {
+            "en_us": "ID",
+            "pt_br": "ID"
+          },
+          "description": {
+            "en_us": "Category ID",
+            "pt_br": "ID da categoria"
+          }
+        },
+        "name": {
+          "label": {
+            "en_us": "Name",
+            "pt_br": "Nome"
+          },
+          "description": {
+            "en_us": "Category name",
+            "pt_br": "Nome da categoria"
+          }
+        },
+        "slug": {
+          "label": {
+            "en_us": "Slug"
+          },
+          "description": {
+            "en_us": "Category page slug",
+            "pt_br": "Slug da página da categoria"
+          }
+        },
+        "ml_category_id": {
+          "label": {
+            "en_us": "Ml category id",
+            "pt_br": "Id da categoria no ML"
+          },
+          "description": {
+            "en_us": "ID in Mercado Libre Taxonomy",
+            "pt_br": "Id da categoria na taxonomia do Mercado Livre"
+          }
+        },
+        "google_product_category_id": {
+          "label": {
+            "en_us": "Google product category id",
+            "pt_br": "Id da categoria do produto no Google"
+          },
+          "description": {
+            "en_us": "ID in Google Taxonomy",
+            "pt_br": "ID na taxonomia do Google"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Category object",
+        "pt_br": "Objeto da categoria"
+      }
+    },
+    "description": {
+      "en_us": "List of product categories",
+      "pt_br": "Lista de categorias do produto"
+    }
+  },
+  "ml_category_id": {
+    "label": {
+      "en_us": "ML category ID",
+      "pt_br": "ID da categoria no ML"
+    },
+    "description": {
+      "en_us": "Preferential category of the product in the Mercado Libre Taxonomy",
+      "pt_br": "Id da categoria principal do produto na taxonomia do Mercado Livre"
+    }
+  },
+  "google_product_category_id": {
+    "label": {
+      "en_us": "Google product category id",
+      "pt_br": "Id da categoria do produto no Google"
+    },
+    "description": {
+      "en_us": "Preferential category of the product in the Google Products Taxonomy",
+      "pt_br": "Categoria preferêncial do produto na taxonomia do Google"
+    }
+  },
+  "grids": {
+    "label": {
+      "en_us": "Grids"
+    },
+    "description": {
+      "en_us": "Grids for specifications and variations, grid_id as property name, such as gender or colors",
+      "pt_br": "Grids para especificações e variações, como gênero e tamanho. O nome da propriedade é grid_id"
+    }
+  },
+  "specifications": {
+    "label": {
+      "en_us": "Specifications",
+      "pt_br": "Especificações"
+    },
+    "properties": {
+      "energy_efficiency_class": {
+        "label": {
+          "en_us": "Energy efficiency class",
+          "pt_br": "Núvel de eficiência energética"
+        },
+        "items": {
+          "properties": {
+            "text": {
+              "label": {
+                "en_us": "Text",
+                "pt_br": "Texto"
+              },
+              "description": {
+                "en_us": "Text displayed for the client describing the specification (custom value)",
+                "pt_br": "Texto exibido para o cliente descrevendo a especificação"
+              }
+            },
+            "value": {
+              "label": {
+                "en_us": "Value",
+                "pt_br": "Valor"
+              },
+              "enum": {
+                "A+++": {
+                  "label": {
+                    "en_us": "A+++"
+                  }
+                },
+                "A++": {
+                  "label": {
+                    "en_us": "A++"
+                  }
+                },
+                "A+": {
+                  "label": {
+                    "en_us": "A+"
+                  }
+                },
+                "A": {
+                  "label": {
+                    "en_us": "A"
+                  }
+                },
+                "B": {
+                  "label": {
+                    "en_us": "B"
+                  }
+                },
+                "C": {
+                  "label": {
+                    "en_us": "C"
+                  }
+                },
+                "D": {
+                  "label": {
+                    "en_us": "D"
+                  }
+                },
+                "E": {
+                  "label": {
+                    "en_us": "E"
+                  }
+                },
+                "F": {
+                  "label": {
+                    "en_us": "F"
+                  }
+                },
+                "G": {
+                  "label": {
+                    "en_us": "G"
+                  }
+                }
+              },
+              "description": {
+                "en_us": "Value in the Google Product Specification",
+                "pt_br": "Valor de acordo com a especificação de produtos do Google"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Specification object",
+            "pt_br": "Objeto da especificação "
+          }
+        },
+        "description": {
+          "en_us": "Attribute to tell users the energy efficiency class of your product",
+          "pt_br": "Atributo para exibir aos usuários o nível de efficiência do produto"
+        }
+      },
+      "age_group": {
+        "label": {
+          "en_us": "Age group",
+          "pt_br": "Faixa etária"
+        },
+        "items": {
+          "properties": {
+            "text": {
+              "label": {
+                "en_us": "Text",
+                "pt_br": "Texto"
+              },
+              "description": {
+                "en_us": "Text displayed for the client describing the specification (custom value)",
+                "pt_br": "Texto exposto ao cliente descrevendo a especificação"
+              }
+            },
+            "value": {
+              "label": {
+                "en_us": "Value",
+                "pt_br": "Valor"
+              },
+              "enum": {
+                "newborn": {
+                  "label": {
+                    "en_us": "Newborn",
+                    "pt_br": "Recém-nascido"
+                  }
+                },
+                "infant": {
+                  "label": {
+                    "en_us": "Infant",
+                    "pt_br": "Infantil"
+                  }
+                },
+                "toddler": {
+                  "label": {
+                    "en_us": "Toddler",
+                    "pt_br": "Criança de colo"
+                  }
+                },
+                "kids": {
+                  "label": {
+                    "en_us": "Kids",
+                    "pt_br": "Crianças de colo"
+                  }
+                },
+                "adult": {
+                  "label": {
+                    "en_us": "Adult",
+                    "pt_br": "Adulto"
+                  }
+                }
+              },
+              "description": {
+                "en_us": "Value in the Google Product Specification",
+                "pt_br": "Valor na especificação de produto do Google"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Specification object",
+            "pt_br": "Objeto da especificação"
+          }
+        },
+        "description": {
+          "en_us": "Attribute to set the demographic that your product is designed for",
+          "pt_br": "Atributo para definir a faixa etária que o produto é destinado"
+        }
+      },
+      "gender": {
+        "label": {
+          "en_us": "Gender",
+          "pt_br": "Gênero"
+        },
+        "items": {
+          "properties": {
+            "text": {
+              "label": {
+                "en_us": "Text",
+                "pt_br": "Texto"
+              },
+              "description": {
+                "en_us": "Text displayed for the client describing the specification (custom value)",
+                "pt_br": "Texto exibido para o cliente descrevendo a especificação"
+              }
+            },
+            "value": {
+              "label": {
+                "en_us": "Value",
+                "pt_br": "Valor"
+              },
+              "enum": {
+                "male": {
+                  "label": {
+                    "en_us": "Male",
+                    "pt_br": "Masculino"
+                  }
+                },
+                "female": {
+                  "label": {
+                    "en_us": "Female",
+                    "pt_br": "Feminino"
+                  }
+                },
+                "unisex": {
+                  "label": {
+                    "en_us": "Unisex"
+                  }
+                }
+              },
+              "description": {
+                "en_us": "Value in the Google Product Specification",
+                "pt_br": "Valor na especificação de produto do Google"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Specification object",
+            "pt_br": "Objeto de especificação"
+          }
+        },
+        "description": {
+          "en_us": "Specify for what gender your product is designed",
+          "pt_br": "Especifica para que gênero seu produto foi feito"
+        }
+      },
+      "material": {
+        "label": {
+          "en_us": "Material"
+        },
+        "items": {
+          "properties": {
+            "text": {
+              "label": {
+                "en_us": "Text",
+                "pt_br": "Texto"
+              },
+              "description": {
+                "en_us": "Text displayed for the client describing the attribute",
+                "pt_br": "Texto exibido para o cliente descrevendo o atributo"
+              }
+            },
+            "value": {
+              "label": {
+                "en_us": "Value",
+                "pt_br": "Valor"
+              },
+              "description": {
+                "en_us": "Default normalized value to use on GMC and other integrations",
+                "pt_br": "Valor padrão normalizado para usar no GMC e outras integrações"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Specification object",
+            "pt_br": "Objeto das especificações"
+          }
+        },
+        "description": {
+          "en_us": "Attribute to describe the main fabric or material that your product is made of",
+          "pt_br": "Atributo que descreve a principal matéria prima que o produto é feito"
+        }
+      },
+      "pattern": {
+        "label": {
+          "en_us": "Pattern",
+          "pt_br": "Padrão"
+        },
+        "items": {
+          "properties": {
+            "text": {
+              "label": {
+                "en_us": "Text",
+                "pt_br": "Texto"
+              },
+              "description": {
+                "en_us": "Text displayed for the client describing the attribute",
+                "pt_br": "Texto exibido para o cliente descrevendo o atributo"
+              }
+            },
+            "value": {
+              "label": {
+                "en_us": "Value",
+                "pt_br": "Valor"
+              },
+              "description": {
+                "en_us": "Default normalized value to use on GMC and other integrations",
+                "pt_br": "Valor padrão normalizado para utilizar no GMC e outras integrações"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Specification object",
+            "pt_br": "Objeto da especificação"
+          }
+        },
+        "description": {
+          "en_us": "Attribute to describe the pattern or graphic printed on your product",
+          "pt_br": "Atributo pra descrever o padrão de desenho do produto"
+        }
+      },
+      "size": {
+        "label": {
+          "en_us": "Size",
+          "pt_br": "Tamanho"
+        },
+        "items": {
+          "properties": {
+            "text": {
+              "label": {
+                "en_us": "Text",
+                "pt_br": "Texto"
+              },
+              "description": {
+                "en_us": "Text displayed for the client describing the attribute",
+                "pt_br": "Texto exibido para o cliente descrevendo o atributo"
+              }
+            },
+            "value": {
+              "label": {
+                "en_us": "Value",
+                "pt_br": "Valor"
+              },
+              "description": {
+                "en_us": "Default normalized value to use on GMC and other integrations",
+                "pt_br": "Valor padrão normalizado para utilizar no GMC e outras integrações"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Specification object",
+            "pt_br": "Objeto da especificação"
+          }
+        },
+        "description": {
+          "en_us": "Attribute to describe the standardized size of your product",
+          "pt_br": "Atributo para descrever o tamanho padronizado do produto"
+        }
+      },
+      "size_type": {
+        "label": {
+          "en_us": "Size type",
+          "pt_br": "Tipo do tamanho"
+        },
+        "items": {
+          "properties": {
+            "text": {
+              "label": {
+                "en_us": "Text",
+                "pt_br": "Texto"
+              },
+              "description": {
+                "en_us": "Text displayed for the client describing the attribute",
+                "pt_br": "Texto exibido para o cliente descrevendo o atributo"
+              }
+            },
+            "value": {
+              "label": {
+                "en_us": "Value",
+                "pt_br": "Valor"
+              },
+              "enum": {
+                "regular": {
+                  "label": {
+                    "en_us": "Regular",
+                    "pt_br": "Regular"
+                  }
+                },
+                "petite": {
+                  "label": {
+                    "en_us": "Petite",
+                    "pt_br": "Pequeno(a)"
+                  }
+                },
+                "plus": {
+                  "label": {
+                    "en_us": "Plus"
+                  }
+                },
+                "big and tall": {
+                  "label": {
+                    "en_us": "Big and tall",
+                    "pt_br": "Grande e alto(a)"
+                  }
+                },
+                "maternity": {
+                  "label": {
+                    "en_us": "Maternity",
+                    "pt_br": "Maternidade"
+                  }
+                }
+              },
+              "description": {
+                "en_us": "Value in the Google Product Specification",
+                "pt_br": "Valor na especificação de produto do Google"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Specification object",
+            "pt_br": "Obejto da especificação"
+          }
+        },
+        "description": {
+          "en_us": "Attribute to describe the cut of your product",
+          "pt_br": "Atributo para descrever o corte do produto"
+        }
+      },
+      "size_system": {
+        "label": {
+          "en_us": "Size system",
+          "pt_br": "Sistema de tamanho"
+        },
+        "items": {
+          "properties": {
+            "text": {
+              "label": {
+                "en_us": "Text",
+                "pt_br": "Texto"
+              },
+              "description": {
+                "en_us": "Text displayed for the client describing the attribute",
+                "pt_br": "Texto exposto para o cliente descrevendo o atributo"
+              }
+            },
+            "value": {
+              "label": {
+                "en_us": "Value",
+                "pt_br": "Valor"
+              },
+              "enum": {
+                "AU": {
+                  "label": {
+                    "en_us": "AU"
+                  }
+                },
+                "BR": {
+                  "label": {
+                    "en_us": "BR"
+                  }
+                },
+                "CN": {
+                  "label": {
+                    "en_us": "CN"
+                  }
+                },
+                "DE": {
+                  "label": {
+                    "en_us": "DE"
+                  }
+                },
+                "EU": {
+                  "label": {
+                    "en_us": "EU"
+                  }
+                },
+                "FR": {
+                  "label": {
+                    "en_us": "FR"
+                  }
+                },
+                "IT": {
+                  "label": {
+                    "en_us": "IT"
+                  }
+                },
+                "JP": {
+                  "label": {
+                    "en_us": "JP"
+                  }
+                },
+                "MEX": {
+                  "label": {
+                    "en_us": "MEX"
+                  }
+                },
+                "UK": {
+                  "label": {
+                    "en_us": "UK"
+                  }
+                },
+                "US": {
+                  "label": {
+                    "en_us": "US"
+                  }
+                }
+              },
+              "description": {
+                "en_us": "Value in the Google Product Specification",
+                "pt_br": "Valor na especificação de produto do Google"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Specification object",
+            "pt_br": "Objeto da especificação"
+          }
+        },
+        "description": {
+          "en_us": "Which country's sizing system your product uses",
+          "pt_br": "O país do sistema de medida que o produto usa"
+        }
+      },
+      "colors": {
+        "label": {
+          "en_us": "Colors",
+          "pt_br": "Cores"
+        },
+        "items": {
+          "properties": {
+            "text": {
+              "label": {
+                "en_us": "Text",
+                "pt_br": "Texto"
+              },
+              "description": {
+                "en_us": "Color name",
+                "pt_br": "Nome da cor"
+              }
+            },
+            "value": {
+              "label": {
+                "en_us": "Value",
+                "pt_br": "Valor"
+              },
+              "description": {
+                "en_us": "RGB code with #",
+                "pt_br": "Código RGN com #"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Color object",
+            "pt_br": "Obejto da cor"
+          }
+        },
+        "description": {
+          "en_us": "Product color palette, list ordered by importance, starting by main color",
+          "pt_br": "Paleta de cor do produto, começando pela cor principal. Lista ordenada por importância"
+        }
+      }
+    },
+    "patternProperties": {
+      "^{a-z0-9_}{2,30}$": {
+        "items": {
+          "properties": {
+            "text": {
+              "label": {
+                "en_us": "Text",
+                "pt_br": "Texto"
+              },
+              "description": {
+                "en_us": "Text displayed for the client describing the specification",
+                "pt_br": "Texto exposto para o cliente descrevendo a especificação"
+              }
+            },
+            "value": {
+              "label": {
+                "en_us": "Value",
+                "pt_br": "Valor"
+              },
+              "description": {
+                "en_us": "Default normalized value to use in integrations",
+                "pt_br": "Valor padrão normalizado para uso em integrações"
+              }
+            },
+            "external_values": {
+              "label": {
+                "en_us": "External value",
+                "pt_br": "Valor externo"
+              },
+              "description": {
+                "en_us": "Normalized values to use in specific integrations (ID in property)",
+                "pt_br": "Valores normalizados para utilizar em integrações específicas (ID na propriedade)"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Attribute object",
+            "pt_br": "Objeto do atributo"
+          }
+        },
+        "description": {
+          "en_us": "Custom product attributes, grid_id as property name",
+          "pt_br": "Atributos customizados do produto, grid_id como nome da propriedade"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Product attributes and technical specifications",
+      "pt_br": "Atributos do produto e especificações técnicas"
+    }
+  },
+  "pictures": {
+    "label": {
+      "en_us": "Pictures",
+      "pt_br": "Fotografias"
+    },
+    "items": {
+      "properties": {
+        "_id": {
+          "label": {
+            "en_us": "ID"
+          },
+          "description": {
+            "en_us": "Unique ID (ObjectID)",
+            "pt_br": "ID único (ObjetcID)"
+          }
+        },
+        "tag": {
+          "label": {
+            "en_us": "Tag"
+          },
+          "description": {
+            "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
+            "pt_br": "Tag para identificar o objeto. Utilize apenas letras minúsculas, números e sublinhado"
+          }
+        }
+      },
+      "patternProperties": {
+        "^small|normal|big|zoom|custom$": {
+          "properties": {
+            "url": {
+              "label": {
+                "en_us": "URL"
+              },
+              "description": {
+                "en_us": "Image link",
+                "pt_br": "Link da imagem"
+              }
+            },
+            "size": {
+              "label": {
+                "en_us": "Size",
+                "pt_br": "Tamanho"
+              },
+              "description": {
+                "en_us": "Image size (width x height) in px, such as 100x50 (100px width, 50px height)",
+                "pt_br": "Tamanho da imagem (largura x altura) em pixels, como 100x50 (100px de altura, 50px de altura)"
+              }
+            },
+            "alt": {
+              "label": {
+                "en_us": "Alt"
+              },
+              "description": {
+                "en_us": "Alternative text, HTML alt tag (important for SEO)",
+                "pt_br": "Texto alternativo, alt tag HTML (importante para SEO)"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Image size variation",
+            "pt_br": "Variação de tamaho da imagem"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Image object",
+        "pt_br": "Objeto da imagem"
+      }
+    },
+    "description": {
+      "en_us": "List of product images",
+      "pt_br": "Lista de imagem do produto"
+    }
+  },
+  "videos": {
+    "label": {
+      "en_us": "Videos",
+      "pt_br": "Vídeos"
+    },
+    "items": {
+      "properties": {
+        "url": {
+          "label": {
+            "en_us": "URL"
+          },
+          "description": {
+            "en_us": "Video link",
+            "pt_br": "Link do vídeo"
+          }
+        },
+        "title": {
+          "label": {
+            "en_us": "Title",
+            "pt_br": "Título"
+          },
+          "description": {
+            "en_us": "Title describing the video",
+            "pt_br": "Título descrevendo o vídeo"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Video object",
+        "pt_br": "Obejto do vídeo"
+      }
+    },
+    "description": {
+      "en_us": "List of videos related to your product",
+      "pt_br": "Lista de vídeos relacionados ao produto"
+    }
+  },
+  "attachments": {
+    "label": {
+      "en_us": "Attachments",
+      "pt_br": "Anexos"
+    },
+    "items": {
+      "properties": {
+        "url": {
+          "label": {
+            "en_us": "URL"
+          },
+          "description": {
+            "en_us": "Link to file",
+            "pt_br": "Link para o arquivo"
+          }
+        },
+        "title": {
+          "label": {
+            "en_us": "Title",
+            "pt_br": "Título"
+          },
+          "description": {
+            "en_us": "Title describing the file",
+            "pt_br": "Título descrevendo o arquivo"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Attachment (file) object",
+        "pt_br": "Obejto do anexo"
+      }
+    },
+    "description": {
+      "en_us": "List of product's attachments",
+      "pt_br": "Lista de anexos do produto"
+    }
+  },
+  "customizations": {
+    "label": {
+      "en_us": "Customizations",
+      "pt_br": "Customizações"
+    },
+    "items": {
+      "properties": {
+        "_id": {
+          "label": {
+            "en_us": "ID"
+          },
+          "description": {
+            "en_us": "Unique ID (ObjectID)",
+            "pt_br": "ID único"
+          }
+        },
+        "tag": {
+          "label": {
+            "en_us": "Tag"
+          },
+          "description": {
+            "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
+            "pt_br": "Tag para identificação, utilize apenas letras minúsculas, números e sublinhado "
+          }
+        },
+        "label": {
+          "label": {
+            "en_us": "Label",
+            "pt_br": "Rótulo"
+          },
+          "description": {
+            "en_us": "Title for this customization field, can be the grid title",
+            "pt_br": "Título para esse campo de customização, pode ser o nome do grid"
+          }
+        },
+        "grid_id": {
+          "label": {
+            "en_us": "Grid Id",
+            "pt_br": "ID do grid"
+          },
+          "description": {
+            "en_us": "If this field is related to a grid, put the grid_id",
+            "pt_br": "Se esse campo é relacionado a um grid, insira o grid_id"
+          }
+        },
+        "require": {
+          "label": {
+            "en_us": "Require",
+            "pt_br": "Exigido"
+          },
+          "description": {
+            "en_us": "If field is required (true), customer must always choose a value",
+            "pt_br": "Se o campo é exigido, o cliente sempre deve escolher um valor"
+          }
+        },
+        "options": {
+          "label": {
+            "en_us": "Options",
+            "pt_br": "Opções"
+          },
+          "patternProperties": {
+            "^{a-z0-9_}{2,30}$": {
+              "properties": {
+                "text": {
+                  "label": {
+                    "en_us": "Text",
+                    "pt_br": "Texto"
+                  },
+                  "description": {
+                    "en_us": "Option text value displayed for the client",
+                    "pt_br": "Valor textual da opção exibido para o cliente"
+                  }
+                },
+                "colors": {
+                  "label": {
+                    "en_us": "Colors",
+                    "pt_br": "Cores"
+                  },
+                  "items": {
+                    "label": {
+                      "en_us": "Items",
+                      "pt_br": "Itens"
+                    },
+                    "description": {
+                      "en_us": "RGB code with #",
+                      "pt_br": "Código RGB com #"
+                    }
+                  },
+                  "description": {
+                    "en_us": "Option color palette (if the field involves colors), starting by main color",
+                    "pt_br": "Paleta de cores da opção (se o campo envolve cores), começando pela cor principal"
+                  }
+                },
+                "add_to_price": {
+                  "label": {
+                    "en_us": "Add to price",
+                    "pt_br": "Adicionar ao preço"
+                  },
+                  "properties": {
+                    "type": {
+                      "label": {
+                        "en_us": "Type",
+                        "pt_br": "Tipo"
+                      },
+                      "enum": {
+                        "percentage": {
+                          "label": {
+                            "en_us": "Percentage",
+                            "pt_br": "Porcentagem"
+                          }
+                        },
+                        "fixed": {
+                          "label": {
+                            "en_us": "Fixed",
+                            "pt_br": "Fixo"
+                          }
+                        }
+                      },
+                      "description": {
+                        "en_us": "Type of price addition",
+                        "pt_br": "Tipo de adição no preço"
+                      }
+                    },
+                    "addition": {
+                      "label": {
+                        "en_us": "Addition",
+                        "pt_br": "Adição"
+                      },
+                      "description": {
+                        "en_us": "Additional value, could be negative",
+                        "pt_br": "Valor adicional, pode ser negativo"
+                      }
+                    }
+                  },
+                  "description": {
+                    "en_us": "Specific price alteration if customer choose this option",
+                    "pt_br": "Alteração de preço específica caso o cliente escolha esta opção"
+                  }
+                }
+              },
+              "description": {
+                "en_us": "Option object",
+                "pt_br": "Objeto da opção"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Pre-defined options for this customization field, option_id as property name",
+            "pt_br": "Opções pré definidas para este campo, option_id como nome de propriedade"
+          }
+        },
+        "custom_value": {
+          "label": {
+            "en_us": "Custom value",
+            "pt_br": "Valor customizável"
+          },
+          "description": {
+            "en_us": "If this field accept custom value defined by customer",
+            "pt_br": "Se esse campo aceita valores customizáveis definidos pelo cliente"
+          }
+        },
+        "attachment": {
+          "label": {
+            "en_us": "Attachment",
+            "pt_br": "Anexo"
+          },
+          "description": {
+            "en_us": "If this field accept customer file attachment",
+            "pt_br": "Se esse campo aceita anexo do cliente"
+          }
+        },
+        "add_to_price": {
+          "label": {
+            "en_us": "Add to price",
+            "pt_br": "Adicionar ao preço"
+          },
+          "properties": {
+            "type": {
+              "label": {
+                "en_us": "Type",
+                "pt_br": "Tipo"
+              },
+              "enum": {
+                "percentage": {
+                  "label": {
+                    "en_us": "Percentage",
+                    "pt_br": "Porcentagem"
+                  }
+                },
+                "fixed": {
+                  "label": {
+                    "en_us": "Fixed",
+                    "pt_br": "Fixo"
+                  }
+                }
+              },
+              "description": {
+                "en_us": "Type of price addition",
+                "pt_br": "Tipo de preço adicional"
+              }
+            },
+            "addition": {
+              "label": {
+                "en_us": "Addition",
+                "pt_br": "Adição"
+              },
+              "description": {
+                "en_us": "Additional value, could be negative",
+                "pt_br": "Valor adicional, pode ser negativo"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Default (to all options) price alteration if customer use this field",
+            "pt_br": "Alteração padrão de preço, caso o cliente utilize este campo"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Customization field",
+        "pt_br": "Campo de customização"
+      }
+    },
+    "description": {
+      "en_us": "List of product customization fields",
+      "pt_br": "Lista de campos de customização do produto"
+    }
+  },
+  "variations": {
+    "label": {
+      "en_us": "Variations",
+      "pt_br": "Variações"
+    },
+    "items": {
+      "properties": {
+        "_id": {
+          "label": {
+            "en_us": "ID"
+          },
+          "description": {
+            "en_us": "Unique ID (ObjectID)",
+            "pt_br": "ID único"
+          }
+        },
+        "sku": {
+          "label": {
+            "en_us": "SKU"
+          },
+          "description": {
+            "en_us": "Item unique reference code",
+            "pt_br": "Código de referência único do item"
+          }
+        },
+        "name": {
+          "label": {
+            "en_us": "Name",
+            "pt_br": "Nome"
+          },
+          "description": {
+            "en_us": "Product name for this specific variation",
+            "pt_br": "Nome do produto para essa variação"
+          }
+        },
+        "gtin": {
+          "label": {
+            "en_us": "GTIN"
+          },
+          "description": {
+            "en_us": "Global Trade Item Numbers (barcode number): UPC, EAN, JAN, ISBN, ITF-14",
+            "pt_br": "Código de barras do produto (Global Trade Item Numbers): UPC, EAN, JAN, ISBN, ITF-14"
+          }
+        },
+        "mpn": {
+          "label": {
+            "en_us": "Mpn"
+          },
+          "description": {
+            "en_us": "Unique code specified by manufacturer to identify the product",
+            "pt_br": "Código único especificado pelo produtor para identificar o produto"
+          }
+        },
+        "price": {
+          "label": {
+            "en_us": "Price",
+            "pt_br": "Preço"
+          },
+          "description": {
+            "en_us": "Variation sale price, when undefined, product default price should be used",
+            "pt_br": "Preço de venda da variação. Quando indefinido, o preço padrão será utilizado"
+          }
+        },
+        "base_price": {
+          "label": {
+            "en_us": "Base price",
+            "pt_br": "Preço base"
+          },
+          "description": {
+            "en_us": "Variation original sale price, without discounts",
+            "pt_br": "Preço original de venda do produto, sem descontos"
+          }
+        },
+        "cost_price": {
+          "label": {
+            "en_us": "Cost price",
+            "pt_br": "Preço de custo"
+          },
+          "description": {
+            "en_us": "Variation cost price to calculate profit",
+            "pt_br": "Preço de custo da variação para calculo de lucro"
+          }
+        },
+        "installments": {
+          "label": {
+            "en_us": "Installments",
+            "pt_br": "Parcelas"
+          },
+          "properties": {
+            "number": {
+              "label": {
+                "en_us": "Number",
+                "pt_br": "Númber"
+              },
+              "description": {
+                "en_us": "Default number of installments for this product variation",
+                "pt_br": "Número padrão de parcelas para essa variação do produto"
+              }
+            },
+            "value": {
+              "label": {
+                "en_us": "Value",
+                "pt_br": "Valor"
+              },
+              "description": {
+                "en_us": "Installment value",
+                "pt_br": "Valor da parcela"
+              }
+            },
+            "tax": {
+              "label": {
+                "en_us": "Tax",
+                "pt_br": "Taxa"
+              },
+              "description": {
+                "en_us": "Tax applied",
+                "pt_br": "Taxa aplicada"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Default installments option",
+            "pt_br": "Padrão de parcelas da opção"
+          }
+        },
+        "quantity": {
+          "label": {
+            "en_us": "Quantity",
+            "pt_br": "Quantidade"
+          },
+          "description": {
+            "en_us": "Product quantity available to sell, max to put in cart",
+            "pt_br": "Quantidade de produtos disponíveis para venda, máximo possível de adicionar ao carrinho"
+          }
+        },
+        "min_quantity": {
+          "label": {
+            "en_us": "Min quantity",
+            "pt_br": "Quantidade mínima"
+          },
+          "description": {
+            "en_us": "Minimum quantity to put in cart",
+            "pt_br": "Quantidade mínima para colocar no carrinho"
+          }
+        },
+        "production_time": {
+          "label": {
+            "en_us": "Production time",
+            "pt_br": "Tempo de produção"
+          },
+          "properties": {
+            "days": {
+              "label": {
+                "en_us": "Days",
+                "pt_br": "Dias"
+              },
+              "description": {
+                "en_us": "Number of days to post after purchase, deadline for production or handling",
+                "pt_br": "Número de dias para postar o produto após a compra. Prazo para produção e separação"
+              }
+            },
+            "working_days": {
+              "label": {
+                "en_us": "Working days",
+                "pt_br": "Dias úteis"
+              },
+              "description": {
+                "en_us": "If the deadline is calculated in working days",
+                "pt_br": "Se o prazo é calculado em dias úteis"
+              }
+            },
+            "cumulative": {
+              "label": {
+                "en_us": "Cumulative",
+                "pt_br": "Cumulativo"
+              },
+              "description": {
+                "en_us": "If the production time is cumulative per unit",
+                "pt_br": "Se o tempo de produção é cumulatico por unidades"
+              }
+            },
+            "max_time": {
+              "label": {
+                "en_us": "Max time",
+                "pt_br": "TEmpo máximo"
+              },
+              "description": {
+                "en_us": "When cumulative, increase up to this maximum in days",
+                "pt_br": "Quando cumulativo, aumenta o tempo até o máximo em dias"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Deadline for production or handling of pre-ordered product",
+            "pt_br": "Prazo para a produção ou separação do produto"
+          }
+        },
+        "dimensions": {
+          "label": {
+            "en_us": "Dimensions",
+            "pt_br": "Dimensões"
+          },
+          "patternProperties": {
+            "^width|height|length$": {
+              "properties": {
+                "value": {
+                  "label": {
+                    "en_us": "Value",
+                    "pt_br": "Valor"
+                  },
+                  "description": {
+                    "en_us": "Size in specified unit",
+                    "pt_br": "Tamanho na unidade especificada"
+                  }
+                },
+                "unit": {
+                  "label": {
+                    "en_us": "Unit",
+                    "pt_br": "Unidade"
+                  },
+                  "enum": {
+                    "mm": {
+                      "label": {
+                        "en_us": "mm"
+                      }
+                    },
+                    "cm": {
+                      "label": {
+                        "en_us": "cm"
+                      }
+                    },
+                    "m": {
+                      "label": {
+                        "en_us": "m"
+                      }
+                    },
+                    "ft": {
+                      "label": {
+                        "en_us": "ft"
+                      }
+                    },
+                    "in": {
+                      "label": {
+                        "en_us": "in"
+                      }
+                    },
+                    "yd": {
+                      "label": {
+                        "en_us": "yd"
+                      }
+                    },
+                    "mi": {
+                      "label": {
+                        "en_us": "mi"
+                      }
+                    }
+                  },
+                  "description": {
+                    "en_us": "Unit of measurement",
+                    "pt_br": "Unidade de medida"
+                  }
+                }
+              },
+              "description": {
+                "en_us": "Package width, height and length",
+                "pt_br": "Largura, altura e profundidade do pacote"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Product dimensions with packaging for freight calculation",
+            "pt_br": "Dimensões do pacote do produto, para calculo de frete"
+          }
+        },
+        "weight": {
+          "label": {
+            "en_us": "Weight",
+            "pt_br": "Peso"
+          },
+          "properties": {
+            "value": {
+              "label": {
+                "en_us": "Value",
+                "pt_br": "Valor"
+              },
+              "description": {
+                "en_us": "Size in specified unit",
+                "pt_br": "Tamanho na unidade especificada"
+              }
+            },
+            "unit": {
+              "label": {
+                "en_us": "Unit",
+                "pt_br": "Unidade"
+              },
+              "enum": {
+                "mg": {
+                  "label": {
+                    "en_us": "mg"
+                  }
+                },
+                "g": {
+                  "label": {
+                    "en_us": "g"
+                  }
+                },
+                "kg": {
+                  "label": {
+                    "en_us": "kg"
+                  }
+                },
+                "lb": {
+                  "label": {
+                    "en_us": "lb"
+                  }
+                },
+                "oz": {
+                  "label": {
+                    "en_us": "oz"
+                  }
+                }
+              },
+              "description": {
+                "en_us": "Unit of measurement",
+                "pt_br": "Unidade de medida"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Package weight for freight calculation",
+            "pt_br": "Peso do pacote para calculo de frete"
+          }
+        },
+        "specifications": {
+          "label": {
+            "en_us": "Specifications",
+            "pt_br": "Especificações"
+          },
+          "properties": {
+            "material": {
+              "label": {
+                "en_us": "Material"
+              },
+              "items": {
+                "properties": {
+                  "text": {
+                    "label": {
+                      "en_us": "Text",
+                      "pt_br": "Texto"
+                    },
+                    "description": {
+                      "en_us": "Text displayed for the client describing the attribute",
+                      "pt_br": "Texto exibido ao cliente descrevendo o atributo"
+                    }
+                  },
+                  "value": {
+                    "label": {
+                      "en_us": "Value",
+                      "pt_br": "Valor"
+                    },
+                    "description": {
+                      "en_us": "Default normalized value to use on GMC and other integrations",
+                      "pt_br": "Valor normalizado padrão, para uso no GMC e outras integrações"
+                    }
+                  }
+                },
+                "description": {
+                  "en_us": "Specification object",
+                  "pt_br": "Obejto da especificação"
+                }
+              },
+              "description": {
+                "en_us": "Attribute to describe the main fabric or material that your product is made of",
+                "pt_br": "Atributo para descrever a principal matéria prima que o produto é feito"
+              }
+            },
+            "pattern": {
+              "label": {
+                "en_us": "Pattern",
+                "pt_br": "Padrão"
+              },
+              "items": {
+                "properties": {
+                  "text": {
+                    "label": {
+                      "en_us": "Text",
+                      "pt_br": "Texto"
+                    },
+                    "description": {
+                      "en_us": "Text displayed for the client describing the attribute",
+                      "pt_br": "Texto exibido ao cliente descrevendo o atributo"
+                    }
+                  },
+                  "value": {
+                    "label": {
+                      "en_us": "Value",
+                      "pt_br": "Valor"
+                    },
+                    "description": {
+                      "en_us": "Default normalized value to use on GMC and other integrations",
+                      "pt_br": "Valor padrão para utilizar no GMC e outras integrações"
+                    }
+                  }
+                },
+                "description": {
+                  "en_us": "Specification object",
+                  "pt_br": "Objeto da especificação"
+                }
+              },
+              "description": {
+                "en_us": "Attribute to describe the pattern or graphic printed on your product",
+                "pt_br": "Atributo ppara descrever o padrão ou imagem impressa no produto"
+              }
+            },
+            "size": {
+              "label": {
+                "en_us": "Size",
+                "pt_br": "Tamanho"
+              },
+              "items": {
+                "properties": {
+                  "text": {
+                    "label": {
+                      "en_us": "Text",
+                      "pt_br": "Texto"
+                    },
+                    "description": {
+                      "en_us": "Text displayed for the client describing the attribute",
+                      "pt_br": "Texto exibido para o cliente descrevendo o atributo"
+                    }
+                  },
+                  "value": {
+                    "label": {
+                      "en_us": "Value",
+                      "pt_br": "Valor"
+                    },
+                    "description": {
+                      "en_us": "Default normalized value to use on GMC and other integrations",
+                      "pt_br": "Valor padrão para usar no GMC e outras integrações"
+                    }
+                  }
+                },
+                "description": {
+                  "en_us": "Specification object",
+                  "pt_br": "Objeto da especificação"
+                }
+              },
+              "description": {
+                "en_us": "Attribute to describe the standardized size of your product",
+                "pt_br": "Atributo para descrever o tamanho padronizado do produto"
+              }
+            },
+            "colors": {
+              "label": {
+                "en_us": "Colors",
+                "pt_br": "Color"
+              },
+              "items": {
+                "properties": {
+                  "text": {
+                    "label": {
+                      "en_us": "Text",
+                      "pt_br": "Texto"
+                    },
+                    "description": {
+                      "en_us": "Color name",
+                      "pt_br": "Nome da cor"
+                    }
+                  },
+                  "value": {
+                    "label": {
+                      "en_us": "Value",
+                      "pt_br": "Valor"
+                    },
+                    "description": {
+                      "en_us": "RGB code with #",
+                      "pt_br": "Código RGB com #"
+                    }
+                  }
+                },
+                "description": {
+                  "en_us": "Color object",
+                  "pt_br": "Objeto da cor"
+                }
+              },
+              "description": {
+                "en_us": "Variation color palette, list ordered by importance, starting by main color",
+                "pt_br": "Paleta de cor da variação. Lista ordenada pela importancia, começando pela cor principal"
+              }
+            }
+          },
+          "patternProperties": {
+            "^{a-z0-9_}{2,30}$": {
+              "items": {
+                "properties": {
+                  "text": {
+                    "label": {
+                      "en_us": "Text",
+                      "pt_br": "Texto"
+                    },
+                    "description": {
+                      "en_us": "Text displayed for the client describing the specification",
+                      "pt_br": "Texto descrevendo a especificação para o cliente"
+                    }
+                  },
+                  "value": {
+                    "label": {
+                      "en_us": "Value",
+                      "pt_br": "Valor"
+                    },
+                    "description": {
+                      "en_us": "Default normalized value to use in integrations",
+                      "pt_br": "Valor padrão para uso em integrações"
+                    }
+                  },
+                  "external_values": {
+                    "label": {
+                      "en_us": "External values",
+                      "pt_br": "Valores externos"
+                    },
+                    "patternProperties": {
+                      "^{a-z0-9_}{2,30}$": {
+                        "description": {
+                          "en_us": "Attribute text external value",
+                          "pt_br": "Valor externo do texto do atributo"
+                        }
+                      }
+                    },
+                    "description": {
+                      "en_us": "Normalized values to use in specific integrations (ID in property)",
+                      "pt_br": "Valores normalizados para uso em integrações específicas (ID na propriedade)"
+                    }
+                  }
+                },
+                "description": {
+                  "en_us": "Attribute object",
+                  "pt_br": "Objeto do atributo"
+                }
+              },
+              "description": {
+                "en_us": "Custom variation attributes, grid_id as property name",
+                "pt_br": "Atributos customizados da variação, grid_id como nome da propriedade"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Variation attributes and technical specifications",
+            "pt_br": "Atributos e especificações técnicas da variação"
+          }
+        },
+        "picture_id": {
+          "label": {
+            "en_us": "Picture ID",
+            "pt_br": "ID da foto"
+          },
+          "description": {
+            "en_us": "ID of one of the product pictures for this variation",
+            "pt_br": "ID de uma das fotos do produto para essa variação"
+          }
+        },
+        "flags": {
+          "label": {
+            "en_us": "Flags"
+          },
+          "items": {
+            "description": {
+              "en_us": "Flag title",
+              "pt_br": "Título da flag"
+            }
+          },
+          "description": {
+            "en_us": "Flags to associate additional info",
+            "pt_br": "Flags para adicionar informações adicionais"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Variation object",
+        "pt_br": "Objeto da variação"
+      }
+    },
+    "description": {
+      "en_us": "Product variations list",
+      "pt_br": "Lista de variações do produto"
+    }
+  },
+  "other_prices": {
+    "label": {
+      "en_us": "Other prices",
+      "pt_br": "Outros preços"
+    },
+    "items": {
+      "properties": {
+        "_id": {
+          "label": {
+            "en_us": "ID"
+          },
+          "description": {
+            "en_us": "Unique ID (ObjectID)",
+            "pt_br": "ID único"
+          }
+        },
+        "tag": {
+          "label": {
+            "en_us": "Tag"
+          },
+          "description": {
+            "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
+            "pt_br": "Tag para identificar o objeto. Use apenas letras minúsculas, números e sublinhado"
+          }
+        },
+        "description": {
+          "label": {
+            "en_us": "Description",
+            "pt_br": "Descrição"
+          },
+          "description": {
+            "en_us": "Some optional notes to describe for what this price is intended",
+            "pt_br": "Algumas notas opicionais para descrever o propósito deste preço"
+          }
+        },
+        "currency_id": {
+          "label": {
+            "en_us": "Currency ID",
+            "pt_br": "ID da moeda"
+          },
+          "description": {
+            "en_us": "Designator of currency according to ISO 4217 (3 uppercase letters)",
+            "pt_br": "Sigla da moeda, de acordo com o padrão ISO 4217 (3 letras maiúsuclas)"
+          }
+        },
+        "currency_symbol": {
+          "label": {
+            "en_us": "Currency symbol",
+            "pt_br": "Símbolo da moeda"
+          },
+          "description": {
+            "en_us": "Graphic symbol used as a shorthand for currency's name",
+            "pt_br": "Símbolo gráfico usado para abreviar o nome da moeda"
+          }
+        },
+        "price": {
+          "label": {
+            "en_us": "Price",
+            "pt_br": "Preço"
+          },
+          "description": {
+            "en_us": "Product sale price",
+            "pt_br": "Preço de venda do produto"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Price (object)",
+        "pt_br": "Preço (objeto)"
+      }
+    },
+    "description": {
+      "en_us": "Other optional prices used",
+      "pt_br": "Outros preços opcionais usados"
+    }
+  },
+  "price_change_records": {
+    "label": {
+      "en_us": "Price changes records",
+      "pt_br": "Histórico de alteração de preço"
+    },
+    "items": {
+      "properties": {
+        "_id": {
+          "label": {
+            "en_us": "ID"
+          },
+          "description": {
+            "en_us": "Unique ID (ObjectID)",
+            "pt_br": "ID único"
+          }
+        },
+        "date_of_change": {
+          "label": {
+            "en_us": "Date of change",
+            "pt_br": "Data de alteração"
+          },
+          "description": {
+            "en_us": "Date and time when price changed in ISO 8601 standard representation",
+            "pt_br": "Hora e data que o preço foi alterado, no padrão ISO 8601"
+          }
+        },
+        "currency_id": {
+          "label": {
+            "en_us": "Currency ID",
+            "pt_br": "ID da moeda"
+          },
+          "description": {
+            "en_us": "Designator of currency according to ISO 4217 (3 uppercase letters)",
+            "pt_br": "Sigla da moeda, de acordo com o padrão ISO 4217 (3 letras maiúsuclas)"
+          }
+        },
+        "currency_symbol": {
+          "label": {
+            "en_us": "Currency symbol",
+            "pt_br": "Símbolo da moeda"
+          },
+          "description": {
+            "en_us": "Graphic symbol used as a shorthand for currency's name",
+            "pt_br": "Símbolo gráfico usado para encurtar o nome da moeda"
+          }
+        },
+        "price": {
+          "label": {
+            "en_us": "Price",
+            "pt_br": "Preço"
+          },
+          "description": {
+            "en_us": "Product sale price",
+            "pt_br": "Preço de venda do produto"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Historical record",
+        "pt_br": "Histórico"
+      }
+    },
+    "description": {
+      "en_us": "Historical of recent practiced sale prices",
+      "pt_br": "Histórico de preços praticados recentemente"
+    }
+  },
+  "installments": {
+    "label": {
+      "en_us": "Installments",
+      "pt_br": "Parcelas"
+    },
+    "required": {
+      "number": {
+        "label": {
+          "en_us": "Required",
+          "pt_br": "Exigido"
+        }
+      },
+      "value": {
+        "label": {
+          "en_us": "Value",
+          "pt_br": "Valor"
+        }
+      }
+    },
+    "properties": {
+      "payment_method_id": {
+        "label": {
+          "en_us": "Payment method ID",
+          "pt_br": "ID do meio de pagamento"
+        },
+        "description": {
+          "en_us": "Specify ID if this installments option is for an specific payment method",
+          "pt_br": "Define o ID do meio de pagamento, caso  essa opção de parcelamento seja para um específico"
+        }
+      },
+      "number": {
+        "label": {
+          "en_us": "Number",
+          "pt_br": "Número"
+        },
+        "description": {
+          "en_us": "Default number of installments for this product",
+          "pt_br": "Número padrão de parcelas para esse produto"
+        }
+      },
+      "value": {
+        "label": {
+          "en_us": "Value",
+          "pt_br": "Valor"
+        },
+        "description": {
+          "en_us": "Installment value",
+          "pt_br": "Valor das parcelas"
+        }
+      },
+      "tax": {
+        "label": {
+          "en_us": "Tax",
+          "pt_br": "Taxa"
+        },
+        "description": {
+          "en_us": "Tax applied",
+          "pt_br": "Taxa aplicada"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Default installments option",
+      "pt_br": "Opção padrão de parcelamento"
+    }
+  },
+  "discount": {
+    "label": {
+      "en_us": "Discount",
+      "pt_br": "Disconto"
+    },
+    "properties": {
+      "label": {
+        "label": {
+          "en_us": "Label",
+          "pt_br": "Rótulo"
+        },
+        "description": {
+          "en_us": "Name of payment method or other label describing applicable discount",
+          "pt_br": "Nome do meio de pagmento ou outro rótulo que descreba o desconto aplicável"
+        }
+      },
+      "payment_method_id": {
+        "label": {
+          "en_us": "Payment method ID",
+          "pt_br": "ID do meio de pagamento"
+        },
+        "description": {
+          "en_us": "Specify ID if this discount is for an specific payment method",
+          "pt_br": "Especifica o ID do meio de pagamento, caso esse disconto seja para um específico"
+        }
+      },
+      "type": {
+        "label": {
+          "en_us": "Type",
+          "pt_br": "Tipo"
+        },
+        "enum": {
+          "percentage": {
+            "label": {
+              "en_us": "Percentage",
+              "pt_br": "Porcentagem"
+            }
+          },
+          "fixed": {
+            "label": {
+              "en_us": "Fixed",
+              "pt_br": "Fixo"
+            }
+          }
+        },
+        "description": {
+          "en_us": "Discount type",
+          "pt_br": "Tipo de desconto"
+        }
+      },
+      "value": {
+        "label": {
+          "en_us": "Value",
+          "pt_br": "Valor"
+        },
+        "description": {
+          "en_us": "Discount value, percentage or fixed",
+          "pt_br": "Valor do desconto, porcentagem ou fixo"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Default discount option, commonly by payment method",
+      "pt_br": "Opção de ddesconto padrão, comumente por meio de pagamento"
+    }
+  },
+  "progressive_discount": {
+    "label": {
+      "en_us": "Progressive discount",
+      "pt_br": "Disconto progressivo"
+    },
+    "patternProperties": {
+      "^({2-9}|({1-9}{0-9}{1,8}))$": {
+        "description": {
+          "en_us": "Percentage discount",
+          "pt_br": "Disconto em porcentagem"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Progressive discounts options, product quantity as property name",
+      "pt_br": "Opções progressivas de disconto, quantidade do produto como nome da propriedade"
+    }
+  },
+  "other_discounts": {
+    "label": {
+      "en_us": "Other discounts",
+      "pt_br": "Outros discontos"
+    },
+    "items": {
+      "properties": {
+        "_id": {
+          "label": {
+            "en_us": "ID"
+          },
+          "description": {
+            "en_us": "Unique ID (ObjectID)",
+            "pt_br": "ID único"
+          }
+        },
+        "tag": {
+          "label": {
+            "en_us": "Tag"
+          },
+          "description": {
+            "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
+            "pt_br": "Tag para identificar o objeto. Use apenas letras minúsculas dígitos e sublinhado"
+          }
+        },
+        "description": {
+          "label": {
+            "en_us": "Description",
+            "pt_br": "Descrição"
+          },
+          "description": {
+            "en_us": "Some optional notes to describe for what this discount is intended",
+            "pt_br": "Algumas notas opicionais para descrever a inteção deste desconto"
+          }
+        },
+        "type": {
+          "label": {
+            "en_us": "Tye",
+            "pt_br": "Tipo"
+          },
+          "enum": {
+            "percentage": {
+              "label": {
+                "en_us": "Percentage",
+                "pt_br": "Porcentagem"
+              }
+            },
+            "fixed": {
+              "label": {
+                "en_us": "Fixed",
+                "pt_br": "Fixo"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Discount type",
+            "pt_br": "Tipo de desconto"
+          }
+        },
+        "discount": {
+          "label": {
+            "en_us": "Disconto",
+            "pt_br": "Discount"
+          },
+          "description": {
+            "en_us": "Discount value, percentage or fixed",
+            "pt_br": "Valor do desconto, porcentagem ou fixo"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Discount object",
+        "pt_br": "Objeto do disconto"
+      }
+    },
+    "description": {
+      "en_us": "Other discounts for custom applications",
+      "pt_br": "Outros disconto para aplicações customizáveis"
+    }
+  },
+  "buy_together": {
+    "label": {
+      "en_us": "Buy together",
+      "pt_br": "Compre junto"
+    },
+    "items": {
+      "patternProperties": {
+        "^({a-f0-9}{24}|this)$": {
+          "properties": {
+            "quantity": {
+              "label": {
+                "en_us": "Quantity",
+                "pt_br": "Quantidade"
+              },
+              "description": {
+                "en_us": "Product quantity",
+                "pt_br": "Quantidade do produto"
+              }
+            },
+            "discount": {
+              "label": {
+                "en_us": "Discount",
+                "pt_br": "Disconto"
+              },
+              "properties": {
+                "type": {
+                  "label": {
+                    "en_us": "Type",
+                    "pt_br": "Tipo"
+                  },
+                  "enum": {
+                    "percentage": {
+                      "label": {
+                        "en_us": "Percentage",
+                        "pt_br": "Porcentagem"
+                      }
+                    },
+                    "fixed": {
+                      "label": {
+                        "en_us": "Fixed",
+                        "pt_br": "Fixo"
+                      }
+                    }
+                  },
+                  "description": {
+                    "en_us": "Discount type",
+                    "pt_br": "Tipo de desconto"
+                  }
+                },
+                "value": {
+                  "label": {
+                    "en_us": "Value",
+                    "pt_br": "Valor"
+                  },
+                  "description": {
+                    "en_us": "Discount value, percentage or fixed",
+                    "pt_br": "Valor do desconto, porcentagem ou fixo"
+                  }
+                }
+              },
+              "description": {
+                "en_us": "Discount object",
+                "pt_br": "Obejto do desconto"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Product in buy together",
+            "pt_br": "Produto no compre junto"
+          }
+        }
+      },
+      "description": {
+        "en_us": "This product and others composing buy together, product ID as property name",
+        "pt_br": "Esse produto e outros compondo o compre junto, ID do produto como nome da propriedade"
+      }
+    },
+    "description": {
+      "en_us": "Buy together options",
+      "pt_br": "Opções de compre junto"
+    }
+  },
+  "loyalty_points": {
+    "label": {
+      "en_us": "Loyalty points",
+      "pt_br": "Pontos de fidelidade"
+    },
+    "properties": {
+      "name": {
+        "label": {
+          "en_us": "Name",
+          "pt_br": "Nome"
+        },
+        "description": {
+          "en_us": "The name of the loyalty points program",
+          "pt_br": "O nome do programa de fidelidade"
+        }
+      },
+      "program_id": {
+        "label": {
+          "en_us": "Program ID",
+          "pt_br": "ID do programa"
+        },
+        "description": {
+          "en_us": "Unique identifier, program name using only lowercase, numbers and underscore",
+          "pt_br": "Identificador único, nome do produto usando apenas letras minúsculas, números e sublinhado"
+        }
+      },
+      "points_value": {
+        "label": {
+          "en_us": "Points value",
+          "pt_br": "Valor em pontos"
+        },
+        "description": {
+          "en_us": "Number of loyalty points a customer receives when purchasing the product",
+          "pt_br": "Pontos de fidelidade que um cliente recebe ao comprar este produto"
+        }
+      },
+      "ratio": {
+        "label": {
+          "en_us": "Ratio",
+          "pt_br": "Proporção"
+        },
+        "description": {
+          "en_us": "The ratio of a point when converted to currency",
+          "pt_br": "A proporção de pontos convertidos em dinheiro"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Specify how many and what type of loyalty points a customer receives",
+      "pt_br": "Especifica a quantidade e qual tipo de pontos de fidelidade o cliente recebe"
+    }
+  },
+  "payment_methods": {
+    "label": {
+      "en_us": "Payment methods",
+      "pt_br": "Meios de pagamento"
+    },
+    "patternProperties": {
+      "^{a-f0-9}{24}$": {
+        "properties": {
+          "label": {
+            "label": {
+              "en_us": "Label",
+              "pt_br": "Rótulo"
+            },
+            "description": {
+              "en_us": "Name of payment method shown to customers",
+              "pt_br": "Nome do meio de pagamento exibido aos clientes"
+            }
+          },
+          "icon": {
+            "label": {
+              "en_us": "Icon",
+              "pt_br": "Ícone"
+            },
+            "description": {
+              "en_us": "Payment icon image URI",
+              "pt_br": "URI do ícone do meio de pagamento"
+            }
+          },
+          "discount": {
+            "label": {
+              "en_us": "Discount",
+              "pt_br": "Desconto"
+            },
+            "properties": {
+              "type": {
+                "label": {
+                  "en_us": "Type",
+                  "pt_br": "Tipe"
+                },
+                "enum": {
+                  "percentage": {
+                    "label": {
+                      "en_us": "Percentage",
+                      "pt_br": "Porcentagem"
+                    }
+                  },
+                  "fixed": {
+                    "label": {
+                      "en_us": "Fixed",
+                      "pt_br": "Fixo"
+                    }
+                  }
+                },
+                "description": {
+                  "en_us": "Discount type",
+                  "pt_br": "Tipo de dseconto"
+                }
+              },
+              "value": {
+                "label": {
+                  "en_us": "Value",
+                  "pt_br": "Valor"
+                },
+                "description": {
+                  "en_us": "Discount value, percentage or fixed",
+                  "pt_br": "Valor do desconto, porcentagem ou fixo"
+                }
+              }
+            },
+            "description": {
+              "en_us": "Discount object",
+              "pt_br": "Objeto do desconto"
+            }
+          },
+          "installments": {
+            "label": {
+              "en_us": "Installments",
+              "pt_br": "Parcelas"
+            },
+            "patternProperties": {
+              "^({2-9}|({1-9}{0-9}{1,3}))$": {
+                "properties": {
+                  "value": {
+                    "label": {
+                      "en_us": "Value",
+                      "pt_br": "Valor"
+                    },
+                    "description": {
+                      "en_us": "Installment value",
+                      "pt_br": "Valor da parcela"
+                    }
+                  },
+                  "tax": {
+                    "label": {
+                      "en_us": "Tax",
+                      "pt_br": "Taxa"
+                    },
+                    "description": {
+                      "en_us": "Tax applied",
+                      "pt_br": "Taxa aplicada"
+                    }
+                  }
+                },
+                "description": {
+                  "en_us": "Installment option object",
+                  "pt_br": "Objeto da opção de parcela"
+                }
+              }
+            },
+            "description": {
+              "en_us": "Installment options, installments number as property name",
+              "pt_br": "Opções de parcelamento, número de parcelas como nome da propriedade"
+            }
+          }
+        },
+        "description": {
+          "en_us": "Payment option",
+          "pt_br": "Opções de pagamento"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Payment methods for this product, application ID as property name",
+      "pt_br": "Métodos de pagamento para esse produto, application ID como nome da propriedade"
+    }
+  },
+  "shipping_methods": {
+    "label": {
+      "en_us": "Shipping methods",
+      "pt_br": "Meios de frete"
+    },
+    "patternProperties": {
+      "^{a-f0-9}{24}$": {
+        "properties": {
+          "label": {
+            "label": {
+              "en_us": "Label",
+              "pt_br": "Rótulo"
+            },
+            "description": {
+              "en_us": "Name of shipping method shown to customers",
+              "pt_br": "Nome do meio de frete a ser exibido aos clientes"
+            }
+          },
+          "icon": {
+            "label": {
+              "en_us": "Icon",
+              "pt_br": "Ícone"
+            },
+            "description": {
+              "en_us": "Shipping method icon image URI",
+              "pt_br": "URI do ícone do meio de frete"
+            }
+          },
+          "free_shipping": {
+            "label": {
+              "en_us": "Free shipping",
+              "pt_br": "Frete grátis"
+            },
+            "description": {
+              "en_us": "Free shipping with this method",
+              "pt_br": "Frete grátis com esse método"
+            }
+          }
+        },
+        "description": {
+          "en_us": "Shipping method object",
+          "pt_br": "Obejto do meio de frete"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Shipping methods, application ID as property name",
+      "pt_br": "Meios de frete, ID da aplicação como nome da propriedade"
+    }
+  },
+  "gift_wraps": {
+    "label": {
+      "en_us": "Gift wraps",
+      "pt_br": "Embalagem para presente"
+    },
+    "items": {
+      "properties": {
+        "tag": {
+          "label": {
+            "en_us": "Tag"
+          },
+          "description": {
+            "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
+            "pt_br": "Tag para identificar o objeto, use apenas letras minúsculas, dígitos e sublinhado"
+          }
+        },
+        "label": {
+          "label": {
+            "en_us": "Label",
+            "pt_br": "Rótulo"
+          },
+          "description": {
+            "en_us": "Title describing this gift wrap",
+            "pt_br": "Título descrevendo essa embalagem para presentes"
+          }
+        },
+        "add_to_price": {
+          "label": {
+            "en_us": "Add to price",
+            "pt_br": "Adicionar ao preço"
+          },
+          "description": {
+            "en_us": "Additional value for this gift wrap",
+            "pt_br": "Valor adicional para embrulho de presente"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Gift wrap object",
+        "pt_br": "Objeto do embrulho "
+      }
+    },
+    "description": {
+      "en_us": "Default gift wrap options",
+      "pt_br": "Opções padrões de embrulho para presentes"
+    }
+  },
+  "destinations": {
+    "label": {
+      "en_us": "Destinations",
+      "pt_br": "Destinos"
+    },
+    "patternProperties": {
+      "^included|excluded$": {
+        "properties": {
+          "country": {
+            "label": {
+              "en_us": "Contry",
+              "pt_br": "País"
+            },
+            "description": {
+              "en_us": "An ISO 3166-2 country code",
+              "pt_br": "O código do país no padrão ISO 3166-2"
+            }
+          },
+          "zip_codes_range": {
+            "label": {
+              "en_us": "Zip codes range",
+              "pt_br": "Faixa de CEP"
+            },
+            "patternProperties": {
+              "^start|end$": {
+                "description": {
+                  "en_us": "ZIP (CEP, postal...) code",
+                  "pt_br": "Código postal"
+                }
+              }
+            },
+            "description": {
+              "en_us": "ZIP codes range for shipping rules (include or exclude)",
+              "pt_br": "Faixa de CEP para regras de frete (incluindo ou excluindo)"
+            }
+          }
+        },
+        "description": {
+          "en_us": "Available or unavailable destination",
+          "pt_br": "Destino disponível ou indisponível"
+        }
+      }
+    },
+    "description": {
+      "en_us": "List of available shipping destinations",
+      "pt_br": "Lista de destinos de frete disponíveis"
+    }
+  },
+  "location": {
+    "label": {
+      "en_us": "Location",
+      "pt_br": "Localização"
+    },
+    "properties": {
+      "zip_codes": {
+        "label": {
+          "en_us": "Zip code",
+          "pt_br": "CEP"
+        },
+        "items": {
+          "properties": {
+            "tag": {
+              "label": {
+                "en_us": "Tag"
+              },
+              "description": {
+                "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
+                "pt_br": "Tag para identificar o objeto. Utilize apenas letras minúsculas, números e sublinhado"
+              }
+            },
+            "code": {
+              "label": {
+                "en_us": "Code",
+                "pt_br": "Código"
+              },
+              "description": {
+                "en_us": "ZIP (CEP, postal...) code",
+                "pt_br": "Código postal"
+              }
+            }
+          },
+          "description": {
+            "en_us": "Shipping origin, ZIP code and identifier",
+            "pt_br": "Origem do frete, código postal e identificador"
+          }
+        },
+        "description": {
+          "en_us": "Collection of ZIP codes of product origin locations",
+          "pt_br": "Coleção de códigos postais e origens de produtos"
+        }
+      },
+      "country": {
+        "label": {
+          "en_us": "Country",
+          "pt_br": "País"
+        },
+        "description": {
+          "en_us": "An ISO 3166-2 country code",
+          "pt_br": "O código do país no padrão ISO 3166-2"
+        }
+      },
+      "region": {
+        "label": {
+          "en_us": "Region",
+          "pt_br": "Região"
+        },
+        "description": {
+          "en_us": "State, territory or prefecture name",
+          "pt_br": "Estado, território ou cidade"
+        }
+      },
+      "address": {
+        "label": {
+          "en_us": "Address",
+          "pt_br": "Endereço"
+        },
+        "description": {
+          "en_us": "Full address of product location",
+          "pt_br": "Endereço completo da localização do produto"
+        }
+      },
+      "geolocation": {
+        "label": {
+          "en_us": "Geolocation",
+          "pt_br": "Geolocalização"
+        },
+        "properties": {
+          "latitude": {
+            "label": {
+              "en_us": "Latitude"
+            },
+            "description": {
+              "en_us": "Geolocation latitude",
+              "pt_br": "Latitude da localização"
+            }
+          },
+          "longitude": {
+            "label": {
+              "en_us": "Longitude"
+            },
+            "description": {
+              "en_us": "Geolocation longitude",
+              "pt_br": "Longitude da localização"
+            }
+          }
+        },
+        "description": {
+          "en_us": "Geolocation of origin",
+          "pt_br": "Geolocalização da origem"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Product location(s), shipping origin",
+      "pt_br": "Localização do produto, origem do frete"
+    }
+  },
+  "tax": {
+    "label": {
+      "en_us": "Tax",
+      "pt_br": "Taxa"
+    },
+    "items": {
+      "properties": {
+        "rate": {
+          "label": {
+            "en_us": "Rate",
+            "pt_br": "Porcentagem"
+          },
+          "description": {
+            "en_us": "Tax rate as a percentage of the price",
+            "pt_br": "Porcentagem do preço cobrado na taxa"
+          }
+        },
+        "country": {
+          "label": {
+            "en_us": "Country",
+            "pt_br": "País"
+          },
+          "description": {
+            "en_us": "An ISO 3166-2 country code",
+            "pt_br": "O código do país no padrão ISO 3166-2"
+          }
+        },
+        "tax_ship": {
+          "label": {
+            "en_us": "Tax ship",
+            "pt_br": "Taxa de frete"
+          },
+          "description": {
+            "en_us": "Whether you charge tax on shipping",
+            "pt_br": "Se é cobrada uma taxa no transporte"
+          }
+        },
+        "zip_codes_range": {
+          "label": {
+            "en_us": "ZIP code range",
+            "pt_br": "Faixa de CEP"
+          },
+          "patternProperties": {
+            "^start|end$": {
+              "description": {
+                "en_us": "ZIP (CEP, postal...) code",
+                "pt_br": "Código postal"
+              }
+            }
+          },
+          "description": {
+            "en_us": "ZIP codes range defining region to apply tax",
+            "pt_br": "Faixa de CEP definindo a região a ser aplicada a taxa"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Tax object",
+        "pt_br": "Objeto da taxa"
+      }
+    },
+    "description": {
+      "en_us": "List of taxes applied by region",
+      "pt_br": "Lista de taxas alicadas por região"
+    }
+  },
+  "kit_composition": {
+    "label": {
+      "en_us": "Kit composition",
+      "pt_br": "Composição de kit"
+    },
+    "items": {
+      "properties": {
+        "_id": {
+          "label": {
+            "en_us": "ID"
+          },
+          "description": {
+            "en_us": "Product ID",
+            "pt_br": "ID do produto"
+          }
+        },
+        "quantity": {
+          "label": {
+            "en_us": "Quantity",
+            "pt_br": "Quantidade"
+          },
+          "description": {
+            "en_us": "Product quantity",
+            "pt_br": "Quantidade do produto"
+          }
+        },
+        "label": {
+          "label": {
+            "en_us": "Label",
+            "pt_br": "Rótulo"
+          },
+          "description": {
+            "en_us": "Label shown to customer, if you want to use a title other than the product name",
+            "pt_br": "Rótulo exibido ao cliente, se deseja usar um título diferente do nome do produto"
+          }
+        },
+        "has_variations": {
+          "label": {
+            "en_us": "Has variations",
+            "pt_br": "Tem variações"
+          },
+          "description": {
+            "en_us": "If this product has variations",
+            "pt_br": "Se esse produto tem variações"
+          }
+        },
+        "variation_id": {
+          "label": {
+            "en_us": "Variation ID",
+            "pt_br": "ID da variação"
+          },
+          "description": {
+            "en_us": "ID to specify a variation if has_variations is true, it's optional",
+            "pt_br": "ID para especificar a variação se has_variations é verdadeiro"
+          }
+        }
+      },
+      "description": {
+        "en_us": "One of the kit items",
+        "pt_br": "Um dos itens do kit"
+      }
+    },
+    "description": {
+      "en_us": "If this product is a kit, set its composition",
+      "pt_br": "Se o produto é um kit, define a composição"
+    }
+  },
+  "parent_item_id": {
+    "label": {
+      "en_us": "Parent item ID",
+      "pt_br": "ID do item pai"
+    },
+    "description": {
+      "en_us": "Parent product ID, if this product is contained by another (a kit)",
+      "pt_br": "ID do produto pai, se esse prodoto faz parte de um kit"
+    }
+  },
+  "related_products": {
+    "label": {
+      "en_us": "Related products",
+      "pt_br": "Produtos relacionados"
+    },
+    "items": {
+      "properties": {
+        "_id": {
+          "label": {
+            "en_us": "ID"
+          }
+        },
+        "tag": {
+          "label": {
+            "en_us": "Tag"
+          },
+          "description": {
+            "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
+            "pt_br": "Tag para identificar o objeto. Utilize letras minúsculas, números e sublinhado"
+          }
+        },
+        "product_ids": {
+          "label": {
+            "en_us": "Products IDs",
+            "pt_br": "IDs dos produtos"
+          },
+          "items": {
+            "label": {
+              "en_us": "Items",
+              "pt_br": "Itens"
+            },
+            "description": {
+              "en_us": "Product ID",
+              "pt_br": "ID do produto"
+            }
+          },
+          "description": {
+            "en_us": "List of products",
+            "pt_br": "Lista de produtos"
+          }
+        }
+      },
+      "description": {
+        "en_us": "A list with products related to this",
+        "pt_br": "A lista de produtos relacionados a este"
+      }
+    },
+    "description": {
+      "en_us": "Lists of related products",
+      "pt_br": "Lista de produtos relacionados"
+    }
+  },
+  "auto_fill_related_products": {
+    "label": {
+      "en_us": "Auto fill related products",
+      "pt_br": "Preencher automaticamente os produtos relacionados"
+    },
+    "description": {
+      "en_us": "True when related products lists should be created and updated automatically (ML)",
+      "pt_br": "Verdadeiro se a lista de produtos deve ser criada e atualizada de forma automática"
+    }
+  },
+  "gtin": {
+    "label": {
+      "en_us": "GTIN"
+    },
+    "items": {
+      "description": {
+        "en_us": "Global Trade Item Numbers (barcode number): UPC, EAN, JAN, ISBN, ITF-14",
+        "pt_br": "O código de barras do item (Global Trade Item Numbers): UPC, EAN, JAN, ISBN, ITF-14"
+      }
+    },
+    "description": {
+      "en_us": "List of product GTIN codes",
+      "pt_br": "Lista de códigos de barra do produto"
+    }
+  },
+  "mpn": {
+    "label": {
+      "en_us": "MPN"
+    },
+    "items": {
+      "label": {
+        "en_us": "Items",
+        "pt_br": "Itens"
+      },
+      "description": {
+        "en_us": "Unique code specified by manufacturer to identify the product",
+        "pt_br": "Código único especificado pelo fabriante para identificar o produto"
+      }
+    },
+    "description": {
+      "en_us": "List of product MPN codes",
+      "pt_br": "Lista de códigos MPN do produto"
+    }
+  },
+  "seller": {
+    "label": {
+      "en_us": "Seller",
+      "pt_br": "Vendedor"
+    },
+    "properties": {
+      "code": {
+        "label": {
+          "en_us": "Code",
+          "pt_br": "Código"
+        },
+        "description": {
+          "en_us": "Unique reference code to identify this seller",
+          "pt_br": "Código de referência único para identificar o vendedor"
+        }
+      },
+      "name": {
+        "label": {
+          "en_us": "Name",
+          "pt_br": "Nome"
+        },
+        "description": {
+          "en_us": "Seller name",
+          "pt_br": "Nome do vendedor"
+        }
+      },
+      "logo": {
+        "label": {
+          "en_us": "Logo"
+        },
+        "description": {
+          "en_us": "Image link to shop's logo",
+          "pt_br": "Link de imagem para o logo da loja"
+        }
+      },
+      "description": {
+        "label": {
+          "en_us": "Description",
+          "pt_br": "Descrição"
+        },
+        "description": {
+          "en_us": "Short description of shop",
+          "pt_br": "Descrição curta sobre a loja"
+        }
+      },
+      "doc_type": {
+        "label": {
+          "en_us": "Doc type",
+          "pt_br": "Tipo de documento"
+        },
+        "enum": {
+          "CPF": {
+            "label": {
+              "en_us": "CPF"
+            }
+          },
+          "CNPJ": {
+            "label": {
+              "en_us": "CNPJ"
+            }
+          }
+        },
+        "description": {
+          "en_us": "Responsible person or organization document type",
+          "pt_br": "Pessoa responsável ou tipo de documento da organização"
+        }
+      },
+      "doc_number": {
+        "label": {
+          "en_us": "Doc number",
+          "pt_br": "Número do documento"
+        },
+        "description": {
+          "en_us": "Responsible person or organization document number (only numbers)",
+          "pt_br": "Número do documento da pessoa ou organização responsável (apenas números)"
+        }
+      },
+      "inscription_type": {
+        "label": {
+          "en_us": "Inscription type",
+          "pt_br": "Tipo de inscrição"
+        },
+        "enum": {
+          "State": {
+            "label": {
+              "en_us": "State",
+              "pt_br": "Estadual"
+            }
+          },
+          "Municipal": {
+            "label": {
+              "en_us": "Municipal"
+            }
+          }
+        },
+        "description": {
+          "en_us": "Municipal or state registration if exists",
+          "pt_br": "Inscrião municipal ou estadual, se é aplicável"
+        }
+      },
+      "inscription_number": {
+        "label": {
+          "en_us": "Inscription number",
+          "pt_br": "Número da inscrição"
+        },
+        "description": {
+          "en_us": "Municipal or state registration number (with characters) if exists",
+          "pt_br": "Número de regristro municipal ou estadual, com caracteres, se aplicável"
+        }
+      },
+      "corporate_name": {
+        "label": {
+          "en_us": "Corporate name",
+          "pt_br": "Nome corporativo"
+        },
+        "description": {
+          "en_us": "Registered company name or responsible fullname",
+          "pt_br": "Nome completo da empresa ou do responsável"
+        }
+      },
+      "address": {
+        "label": {
+          "en_us": "Address",
+          "pt_br": "Endereço"
+        },
+        "description": {
+          "en_us": "Full registered address of company",
+          "pt_br": "Endereço completo da empresa"
+        }
+      },
+      "phone": {
+        "label": {
+          "en_us": "Phone",
+          "pt_br": "Telefone"
+        },
+        "description": {
+          "en_us": "Contact phone",
+          "pt_br": "Telefone de contato"
+        }
+      },
+      "contact_email": {
+        "label": {
+          "en_us": "Contact email",
+          "pt_br": "Email de contato"
+        },
+        "description": {
+          "en_us": "Public email address for news and general contact",
+          "pt_br": "Endereço de e-mail público para notícias e contato geral"
+        }
+      }
+    },
+    "description": {
+      "en_us": "Whether the product is sold by a third party, usual in marketplaces",
+      "pt_br": "Se o produto é vendido por terceiros, normalmente em marketplaces"
+    }
+  },
+  "metafields": {
+    "label": {
+      "en_us": "Metafields"
+    },
+    "items": {
+      "properties": {
+        "_id": {
+          "label": {
+            "en_us": "ID"
+          }
+        },
+        "namespace": {
+          "label": {
+            "en_us": "Namespace"
+          },
+          "description": {
+            "en_us": "String to help distinguish who (or which app) created and can use the metafield",
+            "pt_br": "String para ajudar a distinguir quem, ou que aplicativo, criou e pode utilizar esse metafield"
+          }
+        },
+        "field": {
+          "label": {
+            "en_us": "Field",
+            "pt_br": "Campo"
+          },
+          "description": {
+            "en_us": "Field name",
+            "pt_br": "Nome do campo"
+          }
+        },
+        "value": {
+          "label": {
+            "en_us": "Value",
+            "pt_br": "Valor"
+          },
+          "description": {
+            "en_us": "Custom property value",
+            "pt_br": "Valor da propriedade customizada"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Custom attribute object",
+        "pt_br": "Obejto do atributo cuztomizado"
+      }
+    },
+    "description": {
+      "en_us": "List of custom attributes",
+      "pt_br": "Lista de atributos customizados"
+    }
+  },
+  "hidden_metafields": {
+    "label": {
+      "en_us": "Hidden metafields",
+      "pt_br": "Metafields escondidos"
+    },
+    "items": {
+      "properties": {
+        "_id": {
+          "label": {
+            "en_us": "ID"
+          }
+        },
+        "namespace": {
+          "label": {
+            "en_us": "Namespace"
+          },
+          "description": {
+            "en_us": "String to help distinguish who (or which app) created and can use the metafield",
+            "pt_br": "String para ajudar a distinguir quem, ou que aplicativo criou e pode utilizar este metafield"
+          }
+        },
+        "field": {
+          "label": {
+            "en_us": "Field",
+            "pt_br": "Campo"
+          },
+          "description": {
+            "en_us": "Field name",
+            "pt_br": "Nome do campo"
+          }
+        },
+        "value": {
+          "label": {
+            "en_us": "Value",
+            "pt_br": "Valor"
+          },
+          "description": {
+            "en_us": "Custom property value",
+            "pt_br": "Valor da propriedade customizada"
+          }
+        }
+      },
+      "description": {
+        "en_us": "Custom attribute object",
+        "pt_br": "Objeto do atributo customizado"
+      }
+    },
+    "description": {
+      "en_us": "List of custom attributes",
+      "pt_br": "Lista de atributos customizados"
+    }
+  },
+  "flags": {
+    "label": {
+      "en_us": "Flags"
+    },
+    "items": {
+      "label": {
+        "en_us": "Items",
+        "pt_br": "Itens"
+      },
+      "description": {
+        "en_us": "Flag title",
+        "pt_br": "Título do Flag"
+      }
+    },
+    "description": {
+      "en_us": "Flags to associate additional info",
+      "pt_br": "Flags para associar informações adicionais"
+    }
+  },
+  "notes": {
+    "label": {
+      "en_us": "Notes",
+      "pt_br": "Notas"
+    },
+    "description": {
+      "en_us": "Optional notes with additional info about this product",
+      "pt_br": "Notas opicionais com informações adicionais sobre esse produto"
     }
   }
 }

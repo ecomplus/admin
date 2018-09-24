@@ -5,8 +5,8 @@
       "pt_br": "Nome"
     },
     "description": {
-      "en_us": "Category full name",
-      "pt_br": "Nome completo da categoria"
+      "en_us": "Brand name",
+      "pt_br": "Nome da Marca"
     }
   },
   "i18n": {
@@ -15,8 +15,8 @@
       "pt_br": "Tradução"
     },
     "description": {
-      "en_us": "Translated full category name",
-      "pt_br": "Nome completo da Categoria traduzido"
+      "en_us": "Translated full brand name",
+      "pt_br": "Nome completo da marca traduzido"
     }
   },
   "subtitle": {
@@ -44,8 +44,8 @@
       "pt_br": "Link permanente"
     },
     "description": {
-      "en_us": "Permanent URL to category page",
-      "pt_br": "URL permanente para a página da categoria"
+      "en_us": "Permanent URL to brand page",
+      "pt_br": "URL permanente para a página da marca"
     }
   },
   "mobile_link": {
@@ -64,28 +64,28 @@
       "pt_br": "Descrição curta"
     },
     "description": {
-      "en_us": "Short category description in plain text",
-      "pt_br": "Descrição da curta da categoria, apenas texto"
+      "en_us": "Short brand description in plain text",
+      "pt_br": "Descrição da curta da marca, apenas texto"
     }
   },
   "body_html": {
     "label": {
-      "en_us": "HTML description",
+      "en_us": "HTML Description",
       "pt_br": "Descrição HTML"
     },
     "description": {
-      "en_us": "Full category description, may use HTML tags",
-      "pt_br": "Descrição da completa da da categoria, é possível usar tags HTML"
+      "en_us": "Full brand description, may use HTML tags",
+      "pt_br": "Descrição da completa da da marca, é possível usar tags HTML"
     }
   },
   "body_text": {
     "label": {
-      "en_us": "Text description",
+      "en_us": "Body text",
       "pt_br": "Descrição em texto"
     },
     "description": {
-      "en_us": "Full category description, plain text only",
-      "pt_br": "Descrição completa da categoria, apenas texo"
+      "en_us": "Full brand description, plain text only",
+      "pt_br": "Descrição da completa da da marca, apenas texo"
     }
   },
   "meta_title": {
@@ -106,144 +106,10 @@
       "pt_br": "Meta description tag da página, importante para SEO"
     }
   },
-  "parent": {
+  "logo": {
     "label": {
-      "en_us": "Parent",
-      "pt_br": "Pai"
-    },
-    "properties": {
-      "_id": {
-        "label": {
-          "en_us": "ID"
-        },
-        "description": {
-          "en_us": "Unique ID (ObjectID)",
-          "pt_br": "ID único (ObjectID)"
-        }
-      },
-      "name": {
-        "label": {
-          "en_us": "Name",
-          "pt_br": "Nome"
-        },
-        "description": {
-          "en_us": "Category name",
-          "pt_br": "Nome da categoria"
-        }
-      },
-      "slug": {
-        "label": {
-          "en_us": "Slug"
-        },
-        "description": {
-          "en_us": "Slug to complete page URL, starting with number or lowercase letter",
-          "pt_br": "Slug para completar a URL da página, deve começar com um número ou letra minúscula"
-        }
-      }
-    },
-    "description": {
-      "en_us": "Parent category, above this category",
-      "pt_br": "Categoria pai, superior a esta"
-    }
-  },
-  "childs": {
-    "label": {
-      "en_us": "Childs",
-      "pt_br": "Filhos"
-    },
-    "items": {
-      "properties": {
-        "_id": {
-          "label": {
-            "en_us": "ID"
-          },
-          "description": {
-            "en_us": "Unique ID (ObjectID)",
-            "pt_br": "ID único (ObjectID)"
-          }
-        },
-        "name": {
-          "label": {
-            "en_us": "Name",
-            "pt_br": "Nome"
-          },
-          "description": {
-            "en_us": "Category name",
-            "pt_br": "Nome da categoria"
-          }
-        },
-        "slug": {
-          "label": {
-            "en_us": "SSlug"
-          },
-          "description": {
-            "en_us": "Slug to complete page URL, starting with number or lowercase letter",
-            "pt_br": "Slug para completar a URL da página, deve começar com um número ou letra minúscula"
-          }
-        }
-      },
-      "description": {
-        "en_us": "Child category, under this category",
-        "pt_br": "Categoria filha, inferior a esta"
-      }
-    },
-    "description": {
-      "en_us": "List of subcategories of this category",
-      "pt_br": "Lista de subcategorias desta categoria"
-    }
-  },
-  "grids": {
-    "label": {
-      "en_us": "Grids"
-    },
-    "patternProperties": {
-      "^[a-z0-9_]{2,30}$": {
-        "properties": {
-          "_id": {
-            "label": {
-              "en_us": "ID"
-            },
-            "description": {
-              "en_us": "Unique ID (ObjectID)",
-              "pt_br": "ID único (ObjectID)"
-            }
-          },
-          "title": {
-            "label": {
-              "en_us": "Title",
-              "pt_br": "Título"
-            },
-            "description": {
-              "en_us": "Grid title",
-              "pt_br": "Título do grid"
-            }
-          },
-          "is_filter": {
-            "label": {
-              "en_us": "Is filter",
-              "pt_br": "É filtro"
-            },
-            "description": {
-              "en_us": "Grid used to results filtering (search aggregations)",
-              "pt_br": "Grid usado para filtrar resultados de busca"
-            }
-          }
-        },
-        "description": {
-          "en_us": "Grid properties",
-          "pt_br": "Propriedades dos grids"
-        }
-      }
-    },
-    "description": {
-      "en_us": "Grids for results filtering and products composition, grid_id as property name",
-      "pt_br": "Grids para composição de produtos e filtros de busca, grid_id como nome da propriedade"
-    }
-  },
-  "icon": {
-    "label": {
-      "en_us": "Icon",
-      "pt_br": "Ícone"
+      "en_us": "Logo",
+      "pt_br": "Logotipo"
     },
     "properties": {
       "url": {
@@ -277,8 +143,8 @@
       }
     },
     "description": {
-      "en_us": "Category icon image",
-      "pt_br": "Ícone da categoria"
+      "en_us": "Brand logo",
+      "pt_br": "Logotipo da marca"
     }
   },
   "pictures": {
@@ -327,7 +193,7 @@
       "alt": {
         "label": {
           "en_us": "Alt",
-          "pt_br": "Texto alternativo"
+          "pt_br": "Alt tag"
         },
         "description": {
           "en_us": "Alternative text, HTML alt tag (important for SEO)",
@@ -340,28 +206,8 @@
       }
     },
     "description": {
-      "en_us": "List of category images",
-      "pt_br": "Lista de imagens da categoria"
-    }
-  },
-  "ml_category_id": {
-    "label": {
-      "en_us": "Mercado Libre category id",
-      "pt_br": "Id da categoria no Mercado Livre"
-    },
-    "description": {
-      "en_us": "Mercado Libre Taxonomy: https://api.mercadolibre.com/sites/MLB/categories",
-      "pt_br": "Taxonomia do Mercado Livre: https://api.mercadolibre.com/sites/MLB/categories"
-    }
-  },
-  "google_product_category_id": {
-    "label": {
-      "en_us": "Google product category id",
-      "pt_br": "Id da categoria no Google"
-    },
-    "description": {
-      "en_us": "Google Taxonomy: https://www.google.com/basepages/producttype/taxonomy-with-ids.pt-BR.txt",
-      "pt_br": "Taxonomia do Google: https://www.google.com/basepages/producttype/taxonomy-with-ids.pt-BR.txt"
+      "en_us": "List of brand images",
+      "pt_br": "Lista de imagens da marca"
     }
   },
   "metafields": {
@@ -372,8 +218,7 @@
       "properties": {
         "_id": {
           "label": {
-            "en_us": "ID",
-            "pt_br": "ID"
+            "en_us": "ID"
           },
           "description": {
             "en_us": "ID único (ObjectID)",
@@ -436,8 +281,8 @@
   },
   "notes": {
     "label": {
-      "en_us": "Notes",
-      "pt_br": "Notas"
+      "en_us": "Value",
+      "pt_br": "Valor"
     },
     "description": {
       "en_us": "Optional notes with additional info about this brand",
