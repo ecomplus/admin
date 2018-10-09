@@ -488,6 +488,7 @@
       })
       // add button
       $li.find('.add-option').click(function () {
+        console.log('add option')
         addOption()
       })
 
@@ -599,6 +600,7 @@
     }
 
     var addGridOption = function ($li, $inputOption, $colorpicker, gridId) {
+      console.log($li, $inputOption, $colorpicker, gridId)
       // add options to grid
       var option = $inputOption.val().trim()
       // clear input
@@ -652,6 +654,7 @@
       }
 
       if (newOption) {
+        console.log('generate variations')
         // grid option(s) added
         generateVariations()
       }
