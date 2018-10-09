@@ -505,6 +505,9 @@ body {
 .ace_editor {
   height: 500px;
 }
+.ace_text-input {
+  position: absolute !important;
+}
 // HTML editor
 .note-toolbar.panel-heading {
   position: relative !important;
