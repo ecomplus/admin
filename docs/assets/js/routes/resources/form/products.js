@@ -226,6 +226,8 @@
       var options = []
       // save grid ID
       var gridId
+      // prevent grid event duplication
+      var gridOnChange
 
       if (gridObject) {
         // preset grid title
@@ -238,6 +240,12 @@
       }
 
       $inputGrid.change(function () {
+        if (gridOnChange) {
+          // event is already running
+          return
+        }
+        gridOnChange = true
+
         var grid = $(this).val().trim()
         if (grid !== '') {
           // save grid ID
@@ -428,10 +436,19 @@
 
         // reset
         optionFocus = true
+        // event done
+        setTimeout(function () {
+          gridOnChange = false
+        }, 100)
       })
+
       .blur(function () {
         // fix for Safari
-        $(this).trigger('change')
+        if (!gridOnChange) {
+          setTimeout(function () {
+            $inputGrid.trigger('change')
+          }, 100)
+        }
       })
 
       .keyup(function () {
@@ -459,9 +476,7 @@
           // tab, enter
           case 9:
           case 13:
-            setTimeout(function () {
-              $inputGrid.trigger('change')
-            }, 100)
+            $inputGrid.trigger('blur')
             break
         }
       })
