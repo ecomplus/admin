@@ -95,6 +95,78 @@
             Grids[grid.grid_id] = grid
           }
         }
+
+        // setup current product variations
+        setTimeout(function () {
+          var variations = Data().variations
+          if (Array.isArray(variations) && variations.length) {
+            // add all options in use
+            var addOptions = function (addOption, gridId) {
+              // delay to wait grid full setup
+              setTimeout(function () {
+                for (var i = 0; i < variations.length; i++) {
+                  var spec = variations[i].specifications[gridId]
+                  if (Array.isArray(spec)) {
+                    for (var ii = 0; ii < spec.length; ii++) {
+                      addOption(spec[ii])
+                    }
+                  }
+                }
+              }, 600)
+            }
+
+            // get grids from first variations
+            var specifications = variations[0].specifications
+            if (specifications) {
+              for (var gridId in specifications) {
+                if (specifications.hasOwnProperty(gridId)) {
+                  // setup new grid
+                  var gridObject
+                  if (Grids.hasOwnProperty(gridId)) {
+                    gridObject = Grids[gridId]
+                  } else {
+                    gridObject = { 'title': gridId }
+                  }
+                  addOptions(addGrid(gridObject), gridId)
+                }
+              }
+            }
+
+            setTimeout(function () {
+              // grid options added
+              // true to skip data commits
+              generateVariations(true)
+
+              setTimeout(function () {
+                // fix variations list
+                var $checkbox = $listVariations.find('input[type="checkbox"]')
+                for (var i = 0; i < variations.length; i++) {
+                  var strValue = ''
+                  var specifications = variations[i].specifications
+                  // merge all specs values to string
+                  for (var gridId in specifications) {
+                    var spec = specifications[gridId]
+                    if (Array.isArray(spec)) {
+                      for (var ii = 0; ii < spec.length; ii++) {
+                        strValue += ',' + spec[ii].value
+                      }
+                    }
+                  }
+
+                  // match variation on list
+                  $checkbox.filter(function () {
+                    return $(this).data('value') === strValue
+                  }).data('checked', true)
+                }
+
+                // unckech variations not in use
+                $checkbox.filter(function () {
+                  return !$(this).data('checked')
+                }).prop('checked', false).trigger('change').removeData('checked')
+              }, 200)
+            }, 800)
+          }
+        }, 100)
       })
     })
 
@@ -236,7 +308,7 @@
 
       // abstraction for add grid option function
       var addOption = function (optionObject) {
-        addGridOption($li, $inputOption, $colorpicker, gridId, optionObject)
+        addGridOption($li, $inputOption, $colorpicker, gridId, Object.assing({}, optionObject))
       }
 
       $inputGrid.change(function () {
@@ -624,7 +696,7 @@
 
     var addGridOption = function ($li, $inputOption, $colorpicker, gridId, optionObject) {
       // add options to grid
-      var option, optionId, newOption
+      var option, optionId, newOption, skipOption
       var handleNewOption = function () {
         // option value not required
         var value
@@ -648,6 +720,13 @@
         // search for an option for the full value string
         // generate option ID
         optionObject = searchGridOption(gridId, normalizeString(option))
+      } else {
+        // preseted option
+        skipOption = true
+        option = optionObject.text
+        if (!optionObject.option_id) {
+          optionObject.option_id = optionObject.value
+        }
       }
 
       if (optionObject) {
@@ -677,7 +756,7 @@
         }
       }
 
-      if (newOption) {
+      if (newOption && !skipOption) {
         // grid option(s) added
         generateVariations()
       }
@@ -758,7 +837,7 @@
       }
     }
 
-    var generateVariations = function () {
+    var generateVariations = function (skipData) {
       // remove empty grids
       var GridsOptions = {}
       var gridId
@@ -773,27 +852,33 @@
       $listVariations.slideUp(400, function () {
         $(this).html('')
         // update product resource data
-        var data = Data()
+        var data
+        if (!skipData) {
+          data = Data()
+        } else {
+          data = {}
+        }
         var i, ii, ln
 
         // create new options matches
-        var variations = getCombinations(GridsOptions)
+        var combinations = getCombinations(GridsOptions)
         // console.log(variations)
-        if (variations.length > 0) {
+        if (combinations.length > 0) {
           var variationsData = []
-          for (i = 0; i < variations.length; i++) {
+          for (i = 0; i < combinations.length; i++) {
             // create variation
-            var variation = variations[i]
+            var combination = combinations[i]
             var label = ''
             // variation name
             // regex to test variations names
             // check if variation name was generated automatically by pattern
             var nameRegex = new RegExp('^' + Name + '(\\s\\/\\s.*)$')
             var name = Name
+            var strValue = ''
             var specifications = {}
-            for (gridId in variation) {
-              if (variation.hasOwnProperty(gridId)) {
-                var option = variation[gridId].text
+            for (gridId in combination) {
+              if (combination.hasOwnProperty(gridId)) {
+                var option = combination[gridId].text
                 name += ' / ' + option
                 label += '<span>' + option + '</span>'
 
@@ -802,7 +887,8 @@
                   text: option
                 }
                 // normalized or RGB (if color) option value
-                var value = variation[gridId].value
+                var value = (combination[gridId].value || combination[gridId].option_id)
+                strValue += ',' + value
                 if (value) {
                   specObject.value = value
                 }
@@ -827,131 +913,136 @@
             var $edit = $li.find('button')
             $edit.click(liVariationEdit($li))
             // handle checkbox to add or remove variation
-            $li.find('input[type="checkbox"]').change(liVariationControl($li, $edit))
+            $li.find('input[type="checkbox"]').data('value', strValue)
+              .change(liVariationControl($li, $edit))
             $listVariations.append($li)
             // show added list element
             $li.slideDown()
 
-            // create new variation object
-            var variationObject = {}
-            // check if current data has this variation
-            if (data.variations) {
-              var variationsIndex = variationsData.length
-              var bestMatchedVariation = {
-                matches: 0,
-                index: null
-              }
+            if (!skipData) {
+              // create new variation object
+              var variationObject = {}
+              // check if current data has this variation
+              if (data.variations) {
+                var variationsIndex = variationsData.length
+                var bestMatchedVariation = {
+                  matches: 0,
+                  index: null
+                }
 
-              for (ii = 0; ii < data.variations.length; ii++) {
-                // compare each specification
-                var specs = data.variations[ii].specifications
-                // count matched specs
-                var matches = 0
+                for (ii = 0; ii < data.variations.length; ii++) {
+                  // compare each specification
+                  var specs = data.variations[ii].specifications
+                  // count matched specs
+                  var matches = 0
 
-                for (var spec in specs) {
-                  if (specs.hasOwnProperty(spec) && specifications.hasOwnProperty(spec)) {
-                    ln = specs[spec].length
-                    var conflict = false
-                    // check each specification elements
-                    if (ln === specifications[spec].length) {
-                      for (var j = 0; j < ln; j++) {
-                        if (specs[spec][j].text !== specifications[spec][j].text) {
-                          conflict = true
-                          break
+                  for (var spec in specs) {
+                    if (specs.hasOwnProperty(spec) && specifications.hasOwnProperty(spec)) {
+                      ln = specs[spec].length
+                      var conflict = false
+                      // check each specification elements
+                      if (ln === specifications[spec].length) {
+                        for (var j = 0; j < ln; j++) {
+                          if (specs[spec][j].text !== specifications[spec][j].text) {
+                            conflict = true
+                            break
+                          }
                         }
+                      } else {
+                        conflict = true
                       }
-                    } else {
-                      conflict = true
-                    }
 
-                    if (!conflict) {
-                      // current specification matches
-                      matches++
-                    } else {
-                      // specification changed
-                      // should to create new variation
-                      matches = 0
+                      if (!conflict) {
+                        // current specification matches
+                        matches++
+                      } else {
+                        // specification changed
+                        // should to create new variation
+                        matches = 0
+                        break
+                      }
+                    }
+                  }
+
+                  if (!(matches < bestMatchedVariation.matches)) {
+                    if (matches === bestMatchedVariation.matches) {
+                      // prefer same or lowest index
+                      if (ii !== variationsIndex) {
+                        continue
+                      } else {
+                        bestMatchedVariation.sameIndex = true
+                      }
+                    }
+                    bestMatchedVariation.index = ii
+                    if (matches === Object.keys(specifications).length && matches === Object.keys(specs).length) {
+                      // all specifications matched
+                      bestMatchedVariation.sameSpecs = true
                       break
                     }
                   }
                 }
 
-                if (!(matches < bestMatchedVariation.matches)) {
-                  if (matches === bestMatchedVariation.matches) {
-                    // prefer same or lowest index
-                    if (ii !== variationsIndex) {
-                      continue
-                    } else {
-                      bestMatchedVariation.sameIndex = true
+                if (bestMatchedVariation.index !== null) {
+                  // copy variation object
+                  variationObject = data.variations[bestMatchedVariation.index]
+                  if (!bestMatchedVariation.sameSpecs) {
+                    // not all specifications matched
+                    delete variationObject._id
+                    delete variationObject.specifications
+                    if (!bestMatchedVariation.sameIndex) {
+                      // not keeping same element index
+                      // also clear SKU if any
+                      delete variationObject.sku
                     }
                   }
-                  bestMatchedVariation.index = ii
-                  if (matches === Object.keys(specifications).length && matches === Object.keys(specs).length) {
-                    // all specifications matched
-                    bestMatchedVariation.sameSpecs = true
-                    break
-                  }
                 }
               }
 
-              if (bestMatchedVariation.index !== null) {
-                // copy variation object
-                variationObject = data.variations[bestMatchedVariation.index]
-                if (!bestMatchedVariation.sameSpecs) {
-                  // not all specifications matched
-                  delete variationObject._id
-                  delete variationObject.specifications
-                  if (!bestMatchedVariation.sameIndex) {
-                    // not keeping same element index
-                    // also clear SKU if any
-                    delete variationObject.sku
+              // push to data
+              if (!variationObject._id) {
+                // new variation ID
+                variationObject._id = objectIdPad(idPad, '' + index)
+                index++
+                variationObject.specifications = specifications
+              }
+              if (!variationObject.name || nameRegex.test(variationObject.name)) {
+                // preset variation name
+                variationObject.name = name
+              }
+              variationsData.push(variationObject)
+            }
+          }
+
+          if (!skipData) {
+            // set variations SKUs
+            if (Sku === '' && typeof firstSku === 'function') {
+              // create random product SKU first
+              firstSku()
+            }
+            // create SKUs automatically for variations
+            ln = variationsData.length
+            for (i = 0; i < ln; i++) {
+              if (!variationsData[i].sku) {
+                // new random code based on product SKU
+                // should be unique
+                var sku = null
+                while (!sku) {
+                  sku = Sku + '-' + randomInt(100, 999) + '-' + (i + 1)
+                  // check if other variation already have same SKU
+                  for (ii = 0; ii < ln.length; ii++) {
+                    if (sku === variationsData[ii].sku) {
+                      sku = null
+                      break
+                    }
                   }
                 }
+                variationsData[i].sku = sku
               }
             }
 
-            // push to data
-            if (!variationObject._id) {
-              // new variation ID
-              variationObject._id = objectIdPad(idPad, '' + index)
-              index++
-              variationObject.specifications = specifications
-            }
-            if (!variationObject.name || nameRegex.test(variationObject.name)) {
-              // preset variation name
-              variationObject.name = name
-            }
-            variationsData.push(variationObject)
+            // set product data variations
+            data.variations = variationsData
           }
-
-          // set variations SKUs
-          if (Sku === '' && typeof firstSku === 'function') {
-            // create random product SKU first
-            firstSku()
-          }
-          // create SKUs automatically for variations
-          ln = variationsData.length
-          for (i = 0; i < ln; i++) {
-            if (!variationsData[i].sku) {
-              // new random code based on product SKU
-              // should be unique
-              var sku = null
-              while (!sku) {
-                sku = Sku + '-' + randomInt(100, 999) + '-' + (i + 1)
-                // check if other variation already have same SKU
-                for (ii = 0; ii < ln.length; ii++) {
-                  if (sku === variationsData[ii].sku) {
-                    sku = null
-                    break
-                  }
-                }
-              }
-              variationsData[i].sku = sku
-            }
-          }
-
-          // set product data variations
-          data.variations = variationsData
         } else {
           // no vatiations
           // unset on product data
@@ -960,8 +1051,10 @@
 
         // show list again
         $(this).slideDown()
-        // commit only to perform reactive actions
-        commit(data, true)
+        if (!skipData) {
+          // commit only to perform reactive actions
+          commit(data, true)
+        }
       })
     }
 
@@ -1441,30 +1534,5 @@
 
     // select variation image from product images
     var $variationImage = $variationFields.find('#t' + tabId + '-variation-image')
-
-    // setup current product variations
-    setTimeout(function () {
-      var variations = Data().variations
-      if (Array.isArray(variations) && variations.length) {
-        // get grids from first variations
-        var specifications = variations[0].specifications
-        if (specifications) {
-          for (var gridId in specifications) {
-            if (specifications.hasOwnProperty(gridId)) {
-              // setup new grid
-              var gridObject
-              if (Grids.hasOwnProperty(gridId)) {
-                gridObject = Grids[gridId]
-              } else {
-                gridObject = { 'title': gridId }
-              }
-              var addOption = addGrid(gridObject)
-
-              // add all options in use
-            }
-          }
-        }
-      }
-    }, 420)
   }
 }())
