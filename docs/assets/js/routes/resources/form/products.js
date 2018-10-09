@@ -224,8 +224,6 @@
       var options = []
       // save grid ID
       var gridId
-      // prevent grid event duplication
-      var gridOnChange
 
       // abstraction for add grid option function
       var addOption = function () {
@@ -233,12 +231,6 @@
       }
 
       $inputGrid.change(function () {
-        if (gridOnChange) {
-          // event is already running
-          return
-        }
-
-        gridOnChange = true
         var grid = $(this).val().trim()
         if (grid !== '') {
           // save grid ID
@@ -422,11 +414,6 @@
             removeGrid($li, gridId)
           }
         }
-
-        // event done
-        setTimeout(function () {
-          gridOnChange = false
-        }, 100)
       })
 
       .keyup(function () {
@@ -454,11 +441,9 @@
           // tab, enter
           case 9:
           case 13:
-            if (!gridOnChange) {
-              setTimeout(function () {
-                $inputGrid.trigger('change')
-              }, 100)
-            }
+            setTimeout(function () {
+              $inputGrid.trigger('change')
+            }, 100)
             break
         }
       })
@@ -488,7 +473,6 @@
       })
       // add button
       $li.find('.add-option').click(function () {
-        console.log('add option')
         addOption()
       })
 
@@ -600,7 +584,6 @@
     }
 
     var addGridOption = function ($li, $inputOption, $colorpicker, gridId) {
-      console.log($li, $inputOption, $colorpicker, gridId)
       // add options to grid
       var option = $inputOption.val().trim()
       // clear input
@@ -654,7 +637,6 @@
       }
 
       if (newOption) {
-        console.log('generate variations')
         // grid option(s) added
         generateVariations()
       }
