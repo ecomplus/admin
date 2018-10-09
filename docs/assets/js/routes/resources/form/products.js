@@ -220,14 +220,21 @@
       var $colorpicker
       // enable option input after grid only
       var optionDisabled = true
+      // auto focus on option input
+      var optionFocus = true
       // predefined options for autocomplete
       var options = []
       // save grid ID
       var gridId
 
+      if (gridObject) {
+        // preset grid title
+        $inputGrid.val(gridObject.title)
+      }
+
       // abstraction for add grid option function
-      var addOption = function () {
-        addGridOption($li, $inputOption, $colorpicker, gridId)
+      var addOption = function (optionObject) {
+        addGridOption($li, $inputOption, $colorpicker, gridId, optionObject)
       }
 
       $inputGrid.change(function () {
@@ -395,16 +402,20 @@
               $panel.addClass('swatches-only').css('top', (-($panel.height() + 8)) + 'px')
             }
 
-            // focus on RGB input
-            $colorpicker.focus()
+            if (optionFocus) {
+              // focus on RGB input
+              $colorpicker.focus()
+            }
           } else {
             if ($colorpicker) {
               // remove colorpicker and reset
               $colorpicker.minicolors('destroy').remove()
               $colorpicker = null
             }
-            // focus on option text input
-            $inputOption.focus()
+            if (optionFocus) {
+              // focus on option text input
+              $inputOption.focus()
+            }
           }
         } else {
           // clear option
@@ -414,6 +425,13 @@
             removeGrid($li, gridId)
           }
         }
+
+        // reset
+        optionFocus = true
+      })
+      .blur(function () {
+        // fix for Safari
+        $(this).trigger('change')
       })
 
       .keyup(function () {
@@ -487,7 +505,12 @@
         if (!gridObject) {
           // new variation
           $inputGrid.focus()
+        } else {
+          // setup preseted grid
+          optionFocus = false
+          $inputGrid.trigger('keyup').trigger('change')
         }
+
         setTimeout(function () {
           // handle options sorting
           // https://github.com/RubaXa/Sortable
@@ -500,13 +523,14 @@
               if (x) {
                 options.splice(e.newIndex, 0, x)
               }
-
               // update variations
               generateVariations()
             }
           })
         }, 200)
       })
+
+      return addOption
     }
 
     var searchGridOption = function (gridId, optionId) {
@@ -583,32 +607,34 @@
       return true
     }
 
-    var addGridOption = function ($li, $inputOption, $colorpicker, gridId) {
+    var addGridOption = function ($li, $inputOption, $colorpicker, gridId, optionObject) {
       // add options to grid
-      var option = $inputOption.val().trim()
-      // clear input
-      $inputOption.typeahead('val', '').attr('placeholder', option).focus()
-      if (!gridId) {
-        // nothing more to do without grid ID
-        return
-      }
-
-      var optionId, optionObject, newOption
+      var option, optionId, newOption
       var handleNewOption = function () {
         // option value not required
         var value
         if (optionObject) {
           // overwrite option ID
           optionId = optionObject.option_id
-          value = optionObject.value
+          value = (optionObject.value || optionObject.option_id)
         }
         // handle new grid option
         return newGridOption($li, $colorpicker, gridId, optionId, value, option)
       }
 
-      // search for an option for the full value string
-      // generate option ID
-      optionObject = searchGridOption(gridId, normalizeString(option))
+      if (!optionObject) {
+        option = $inputOption.val().trim()
+        // clear input
+        $inputOption.typeahead('val', '').attr('placeholder', option).focus()
+        if (!gridId) {
+          // nothing more to do without grid ID
+          return
+        }
+        // search for an option for the full value string
+        // generate option ID
+        optionObject = searchGridOption(gridId, normalizeString(option))
+      }
+
       if (optionObject) {
         // full value string matches with some option
         // single new option
@@ -1027,10 +1053,10 @@
                 if (typeof cb === 'function') {
                   cb()
                 } else {
-                  app.toast({
+                  app.toast(i18n({
                     'en_us': 'There is another product registered with this same SKU',
                     'pt_br': 'Existe outro produto cadastrado com este mesmo SKU'
-                  })
+                  }))
                 }
               }
             }
@@ -1400,5 +1426,30 @@
 
     // select variation image from product images
     var $variationImage = $variationFields.find('#t' + tabId + '-variation-image')
+
+    // setup current product variations
+    setTimeout(function () {
+      var variations = Data().variations
+      if (Array.isArray(variations) && variations.length) {
+        // get grids from first variations
+        var specifications = variations[0].specifications
+        if (specifications) {
+          for (var gridId in specifications) {
+            if (specifications.hasOwnProperty(gridId)) {
+              // setup new grid
+              var gridObject
+              if (Grids.hasOwnProperty(gridId)) {
+                gridObject = Grids[gridId]
+              } else {
+                gridObject = { 'title': gridId }
+              }
+              var addOption = addGrid(gridObject)
+
+              // add all options in use
+            }
+          }
+        }
+      }
+    }, 420)
   }
 }())

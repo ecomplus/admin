@@ -155,6 +155,21 @@ app.ready(function () {
     $('div.toast.reveal').removeClass('reveal')
   }
 
+  // fix toast for objects as param
+  var notification = app.toast
+  app.toast = function (obj) {
+    if (typeof obj !== 'string' && obj) {
+      try {
+        // tro to parse to string
+        obj = JSON.stringify(obj)
+      } catch (err) {
+        console.error(err)
+        return
+      }
+    }
+    notification(obj)
+  }
+
   var apiError = function (json) {
     // handle API error response
     var msg
