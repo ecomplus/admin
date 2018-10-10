@@ -160,9 +160,10 @@
                 }
 
                 // unckech variations not in use
+                // mark as preseted variations
                 $checkbox.filter(function () {
                   return !$(this).data('checked')
-                }).prop('checked', false).trigger('change').removeData('checked')
+                }).data('skip-data', true).prop('checked', false).trigger('change')
               }, 200)
             }, 800)
           }
@@ -796,20 +797,33 @@
       return function () {
         // add or remove variation from data
         var data = Data()
+        var skipData
+        if ($(this).data('skip-data')) {
+          // don't make changes
+          skipData = true
+          // change on next event
+          $(this).removeData('skip-data')
+        }
         // variation index
         var index
 
         if (!$(this).is(':checked')) {
-          index = variationIndexFromList($li)
-          // save variation JSON
-          $(this).data('variation', JSON.stringify(data.variations[index]))
-          // remove variation from data
-          if (data.variations.length > 1) {
-            data.variations.splice(index, 1)
+          if (!skipData) {
+            index = variationIndexFromList($li)
+            // save variation JSON
+            $(this).data('variation', JSON.stringify(data.variations[index]))
+            // remove variation from data
+            if (data.variations.length > 1) {
+              data.variations.splice(index, 1)
+            } else {
+              // last variation
+              delete data.variations
+            }
           } else {
-            // last variation
-            delete data.variations
+            // use original auto-generated variation object
+            $(this).data('variation', $(this).data('original-variation'))
           }
+
           // disable edition
           $li.addClass('disabled')
           $edit.attr('disabled', true)
@@ -817,21 +831,26 @@
           // remove disabled class first
           // li most be enabled to get correct index
           $li.removeClass('disabled')
-          index = variationIndexFromList($li)
-          // add variation again
-          var variation = JSON.parse($(this).data('variation'))
-          if (data.variations) {
-            data.variations.splice(index, 0, variation)
-          } else {
-            // first variation
-            data.variations = [ variation ]
+          if (!skipData) {
+            index = variationIndexFromList($li)
+            // add variation again
+            var variation = JSON.parse($(this).data('variation'))
+            if (data.variations) {
+              data.variations.splice(index, 0, variation)
+            } else {
+              // first variation
+              data.variations = [ variation ]
+            }
           }
+
           // enable edit button again
           $edit.removeAttr('disabled')
         }
 
-        // commit only to perform reactive actions
-        commit(data, true)
+        if (!skipData) {
+          // commit only to perform reactive actions
+          commit(data, true)
+        }
       }
     }
 
@@ -919,104 +938,104 @@
             var $edit = $li.find('button')
             $edit.click(liVariationEdit($li))
             // handle checkbox to add or remove variation
-            $li.find('input[type="checkbox"]').data('value', strValue)
-              .change(liVariationControl($li, $edit))
+            var $checkbox = $li.find('input[type="checkbox"]')
+              .data('value', strValue).change(liVariationControl($li, $edit))
             $listVariations.append($li)
             // show added list element
             $li.slideDown()
 
-            if (!skipData) {
-              // create new variation object
-              var variationObject = {}
-              // check if current data has this variation
-              if (data.variations) {
-                var variationsIndex = variationsData.length
-                var bestMatchedVariation = {
-                  matches: 0,
-                  index: null
-                }
+            // create new variation object
+            var variationObject = {}
+            // check if current data has this variation
+            if (data.variations) {
+              var variationsIndex = variationsData.length
+              var bestMatchedVariation = {
+                matches: 0,
+                index: null
+              }
 
-                for (ii = 0; ii < data.variations.length; ii++) {
-                  // compare each specification
-                  var specs = data.variations[ii].specifications
-                  // count matched specs
-                  var matches = 0
+              for (ii = 0; ii < data.variations.length; ii++) {
+                // compare each specification
+                var specs = data.variations[ii].specifications
+                // count matched specs
+                var matches = 0
 
-                  for (var spec in specs) {
-                    if (specs.hasOwnProperty(spec) && specifications.hasOwnProperty(spec)) {
-                      ln = specs[spec].length
-                      var conflict = false
-                      // check each specification elements
-                      if (ln === specifications[spec].length) {
-                        for (var j = 0; j < ln; j++) {
-                          if (specs[spec][j].text !== specifications[spec][j].text) {
-                            conflict = true
-                            break
-                          }
+                for (var spec in specs) {
+                  if (specs.hasOwnProperty(spec) && specifications.hasOwnProperty(spec)) {
+                    ln = specs[spec].length
+                    var conflict = false
+                    // check each specification elements
+                    if (ln === specifications[spec].length) {
+                      for (var j = 0; j < ln; j++) {
+                        if (specs[spec][j].text !== specifications[spec][j].text) {
+                          conflict = true
+                          break
                         }
-                      } else {
-                        conflict = true
                       }
-
-                      if (!conflict) {
-                        // current specification matches
-                        matches++
-                      } else {
-                        // specification changed
-                        // should to create new variation
-                        matches = 0
-                        break
-                      }
+                    } else {
+                      conflict = true
                     }
-                  }
 
-                  if (!(matches < bestMatchedVariation.matches)) {
-                    if (matches === bestMatchedVariation.matches) {
-                      // prefer same or lowest index
-                      if (ii !== variationsIndex) {
-                        continue
-                      } else {
-                        bestMatchedVariation.sameIndex = true
-                      }
-                    }
-                    bestMatchedVariation.index = ii
-                    if (matches === Object.keys(specifications).length && matches === Object.keys(specs).length) {
-                      // all specifications matched
-                      bestMatchedVariation.sameSpecs = true
+                    if (!conflict) {
+                      // current specification matches
+                      matches++
+                    } else {
+                      // specification changed
+                      // should to create new variation
+                      matches = 0
                       break
                     }
                   }
                 }
 
-                if (bestMatchedVariation.index !== null) {
-                  // copy variation object
-                  variationObject = data.variations[bestMatchedVariation.index]
-                  if (!bestMatchedVariation.sameSpecs) {
-                    // not all specifications matched
-                    delete variationObject._id
-                    delete variationObject.specifications
-                    if (!bestMatchedVariation.sameIndex) {
-                      // not keeping same element index
-                      // also clear SKU if any
-                      delete variationObject.sku
+                if (!(matches < bestMatchedVariation.matches)) {
+                  if (matches === bestMatchedVariation.matches) {
+                    // prefer same or lowest index
+                    if (ii !== variationsIndex) {
+                      continue
+                    } else {
+                      bestMatchedVariation.sameIndex = true
                     }
+                  }
+                  bestMatchedVariation.index = ii
+                  if (matches === Object.keys(specifications).length && matches === Object.keys(specs).length) {
+                    // all specifications matched
+                    bestMatchedVariation.sameSpecs = true
+                    break
                   }
                 }
               }
 
-              // push to data
-              if (!variationObject._id) {
-                // new variation ID
-                variationObject._id = objectIdPad(idPad, '' + index)
-                index++
-                variationObject.specifications = specifications
+              if (bestMatchedVariation.index !== null) {
+                // copy variation object
+                variationObject = data.variations[bestMatchedVariation.index]
+                if (!bestMatchedVariation.sameSpecs) {
+                  // not all specifications matched
+                  delete variationObject._id
+                  delete variationObject.specifications
+                  if (!bestMatchedVariation.sameIndex) {
+                    // not keeping same element index
+                    // also clear SKU if any
+                    delete variationObject.sku
+                  }
+                }
               }
-              if (!variationObject.name || nameRegex.test(variationObject.name)) {
-                // preset variation name
-                variationObject.name = name
-              }
-              variationsData.push(variationObject)
             }
+
+            // push to data
+            if (!variationObject._id) {
+              // new variation ID
+              variationObject._id = objectIdPad(idPad, '' + index)
+              index++
+              variationObject.specifications = specifications
+            }
+            if (!variationObject.name || nameRegex.test(variationObject.name)) {
+              // preset variation name
+              variationObject.name = name
+            }
+            variationsData.push(variationObject)
+            // save variation JSON on checkbox dataset
+            $checkbox.data('original-variation', JSON.stringify(variationObject))
           }
 
           if (!skipData) {
