@@ -308,7 +308,7 @@
 
       // abstraction for add grid option function
       var addOption = function (optionObject) {
-        addGridOption($li, $inputOption, $colorpicker, gridId, Object.assing({}, optionObject))
+        addGridOption($li, $inputOption, $colorpicker, gridId, Object.assign({}, optionObject))
       }
 
       $inputGrid.change(function () {
