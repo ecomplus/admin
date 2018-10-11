@@ -504,6 +504,8 @@
               // format number before set value
               if ($el.data('money')) {
                 $el.val(formatMoney(val))
+              } else if ($el.attr('type') === 'number') {
+                $el.val(val)
               } else {
                 $el.val(numberToString(val, !($el.data('integer'))))
               }

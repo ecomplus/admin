@@ -176,11 +176,11 @@
             avg_price: { avg: { field: 'price' } }
           },
           // results limit
-          size: 28
+          size: 30
         }
 
         // specific load function for products listing
-        load = function (callback, query, page) {
+        load = function (callback, query, sort, page) {
           var cb = function (err, json) {
             if (!err) {
               // set tab JSON data
@@ -199,6 +199,10 @@
             body = Object.assign({ query: query }, Body)
           } else {
             body = Body
+          }
+          if (sort) {
+            // replace sort rule
+            body.sort[4] = sort
           }
           // pagination
           if (page) {

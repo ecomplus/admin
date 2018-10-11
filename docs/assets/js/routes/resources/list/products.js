@@ -40,6 +40,8 @@
     // pagination control
     var page = 0
     var maxResults = 0
+    // results sorting
+    var sort = {}
 
     // JSON data load
     var load = function (loadMore) {
@@ -86,7 +88,7 @@
         page = 0
       }
       // perform search request
-      Tab.load(callback, query, page)
+      Tab.load(callback, query, sort, page)
     }
 
     // handle load more click
@@ -450,6 +452,31 @@
     $search.submit(function () {
       // https://ecomsearch.docs.apiary.io/#reference/items/items-search/complex-search
       term = $searchInput.val().trim()
+      load()
+    })
+
+    // handle sorting
+    $container.find('#order-products a').click(function () {
+      var order
+      if ($(this).hasClass('active')) {
+        // invert order
+        order = 'asc'
+        // replace icon
+        $(this).find('i').removeClass('fa-caret-down text-warning').addClass('fa-caret-up text-info')
+      } else {
+        // defaut is desc
+        order = 'desc'
+        // unmask last active item
+        $(this).parent().children('.active').removeClass('active').find('i').remove()
+        $(this).addClass('active').append($('<i>', {
+          'class': 'ml-1 fa fa-caret-down text-warning'
+        }))
+      }
+
+      // reset sort object
+      sort = {}
+      sort[$(this).data('field')] = { order: order }
+      // reload results
       load()
     })
 
