@@ -252,24 +252,50 @@
           }
         }
 
-        var $item = $('<div />', {
-          'class': 'col',
-          html: '<a href="' + link + '" class="item-picture">' + pictureHtml + '</a>' +
-                '<div class="item-info">' +
-                  '<a href="' + link + '">' + item.name + '</a>' +
-                  '<div class="item-price">' + priceString + '</div>' +
-                  '<div class="item-qnt">' + qntString + '</div>' +
-                '</div>' +
-                '<div class="custom-controls-stacked">' +
-                  '<div class="custom-control custom-checkbox">' +
-                    '<input type="checkbox" class="custom-control-input">' +
-                    '<label class="custom-control-label text-monospace">' +
-                      item.sku +
-                    '</label>' +
-                  '</div>' +
-                '</div>'
+        var $checkbox = $('<input>', {
+          'class': 'custom-control-input',
+          type: 'checkbox'
+        })
+        var $item = $('<div>', {
+          'class': 'col item-product',
+          html: [
+            '<a href="' + link + '" class="item-picture">' + pictureHtml + '</a>' +
+            '<div class="item-info">' +
+              '<a href="' + link + '">' + item.name + '</a>' +
+              '<div class="item-price">' + priceString + '</div>' +
+              '<div class="item-qnt">' + qntString + '</div>' +
+            '</div>',
+            $('<div>', {
+              'class': 'custom-controls-stacked',
+              html: $('<div>', {
+                'class': 'custom-control custom-checkbox',
+                html: [
+                  $checkbox,
+                  $('<label>', {
+                    'class': 'custom-control-label text-monospace',
+                    text: item.sku
+                  })
+                ]
+              })
+            })
+          ]
         })
         $items.push($item)
+
+        // handle select checkbox
+        ;(function (id) {
+          $checkbox.on('change', function () {
+            if ($(this).is(':checked')) {
+              // select item
+              Tab.selectedItems.push(id)
+            } else {
+              // unselect item
+              Tab.selectedItems = $.grep(Tab.selectedItems, function (i) {
+                return i !== id
+              })
+            }
+          })
+        }(item._id))
       }
 
       // fill products list content
@@ -479,6 +505,26 @@
       // reload results
       load()
     })
+
+    // delete event effects
+    Tab.deleteItems = function () {
+      // show loading spinner
+      $container.addClass('ajax')
+      // returns callback for delete end
+      return function (errors) {
+        if (Array.isArray(errors) && !errors.length) {
+          // remove selected items on DOM
+          $list.find('input:checked').closest('.item-product').fadeOut(400, function () {
+            // show content
+            $container.removeClass('ajax')
+          })
+        } else {
+          // errors occurred
+          // reload only
+          load()
+        }
+      }
+    }
 
     // ready
     // show first results

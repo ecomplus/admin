@@ -275,15 +275,20 @@
         var cb = Tab.deleteItems()
         // call API to delete documents
         var done = 0
+        // collect all requests errors
+        var errors = []
+
         var next = function () {
           var id = Tab.selectedItems[done]
-          window.callApi(slug + '/' + id + '.json', 'DELETE', function () {
-            // ignore errors here
+          window.callApi(slug + '/' + id + '.json', 'DELETE', function (err) {
+            if (err) {
+              errors.push(err)
+            }
             done++
             if (done === todo) {
               // end
               if (typeof cb === 'function') {
-                cb()
+                cb(errors)
               }
               // reset selected IDs
               Tab.selectedItems = []
