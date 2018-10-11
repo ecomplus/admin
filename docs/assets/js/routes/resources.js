@@ -167,35 +167,20 @@
             { views: { order: 'desc' } }
           ],
           aggs: {
-            brands: { terms: { field: 'brands.name' } },
-            categories: { terms: { field: 'categories.name' } },
-            // ref.: https://github.com/elastic/elasticsearch/issues/5789
-            specs: {
-              nested: { path: 'specs' },
-              aggs: {
-                grid: {
-                  terms: { field: 'specs.grid', size: 12 },
-                  aggs: { text: { terms: { field: 'specs.text' } } }
-                }
-              }
-            },
+            'brands.name': { terms: { field: 'brands.name' } },
+            'categories.name': { terms: { field: 'categories.name' } },
+            status: { terms: { field: 'status' } },
             // Metric Aggregations
-            min_price: {
-              min: { field: 'price' }
-            },
-            max_price: {
-              max: { field: 'price' }
-            },
-            avg_price: {
-              avg: { field: 'price' }
-            }
+            min_price: { min: { field: 'price' } },
+            max_price: { max: { field: 'price' } },
+            avg_price: { avg: { field: 'price' } }
           },
           // results limit
-          size: limit
+          size: 28
         }
 
         // specific load function for products listing
-        load = function (callback, query) {
+        load = function (callback, query, page) {
           var cb = function (err, json) {
             if (!err) {
               // set tab JSON data
@@ -205,6 +190,7 @@
               callback(null, json)
             }
           }
+
           // body data
           var body
           if (query) {
@@ -213,6 +199,12 @@
             body = Object.assign({ query: query }, Body)
           } else {
             body = Body
+          }
+          // pagination
+          if (page) {
+            body.from = body.size * page
+          } else {
+            body.from = 0
           }
 
           // call Search API

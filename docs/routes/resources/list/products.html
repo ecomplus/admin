@@ -20,7 +20,7 @@
             </div>
           </form>
         </span>
-        <span>
+        <span class="btn-group">
           <a class="btn btn-light" href="#qvx" data-toggle="quickview">
             <i class="fa fa-filter"></i>
             <span class="i18n hidden-sm-down">
@@ -28,11 +28,50 @@
               <span data-lang="pt_br">Filtrar resultados</span>
             </span>
           </a>
+          <button class="btn btn-light" type="button" id="clear-products-filters">
+            <i class="fa fa-eraser"></i>
+          </button>
         </span>
       </div>
 
       <div id="products-list-results"></div>
+      <div class="prev-empty i18n lead">
+        <span data-lang="en_us">No products found</span>
+        <span data-lang="pt_br">Nenhum produto encontrado</span>
+      </div>
     </div>
+
+    <footer class="card-footer">
+      <p id="products-list-info">
+        <span class="lead mr-2">
+          <span class="i18n">
+            <span data-lang="en_us">Showing</span>
+            <span data-lang="pt_br">Mostrando</span>
+          </span>
+          <strong class="text-primary" id="products-list-count">0</strong>
+          <span class="i18n">
+            <span data-lang="en_us">of total</span>
+            <span data-lang="pt_br">do total</span>
+          </span>
+          <strong id="products-list-total">0</strong>
+        </span>
+        <span class="badge badge-lg badge-default">
+          <span class="i18n mr-1 text-muted">
+            <span data-lang="en_us">Avg price</span>
+            <span data-lang="pt_br">Preço médio</span>
+          </span>
+          <span id="products-avg-price"></span>
+        </span>
+      </p>
+
+      <button class="btn btn-light mr-2" id="load-products">
+        <i class="fa fa-refresh"></i>
+        <span class="i18n">
+          <span data-lang="en_us">Load more</span>
+          <span data-lang="pt_br">Carregar mais</span>
+        </span>
+      </button>
+    </footer>
   </div>
 
   <script>

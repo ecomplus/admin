@@ -16,6 +16,8 @@
   var $container = $('#products-list-container')
   // products list div
   var $list = $container.find('#products-list-results')
+  // load more button
+  var $load = $container.find('#load-products')
 
   // var lang = window.lang
   var i18n = window.i18n
@@ -35,9 +37,12 @@
     // search filters
     var term = ''
     var filters = []
+    // pagination control
+    var page = 0
+    var maxResults = 0
 
     // JSON data load
-    var load = function () {
+    var load = function (loadMore) {
       // search query
       var query
       if (term !== '') {
@@ -74,15 +79,25 @@
       }
       // show loading spinner
       $container.addClass('ajax')
+      if (loadMore) {
+        page++
+      } else {
+        // reset pagination
+        page = 0
+      }
       // perform search request
-      Tab.load(callback, query)
+      Tab.load(callback, query, page)
     }
 
+    // handle load more click
+    $load.click(function () {
+      load(true)
+    })
+
     // filters dynamic elements
-    var $customFilters = $('<div />')
-    var $priceRanges = $('<div />')
+    var $customFilters = $('<div>')
     // setup filters form
-    var $filters = $('<form />', {
+    var $filters = $('<form>', {
       action: 'javascript:;',
       submit: load,
       // base form HTML
@@ -95,8 +110,7 @@
         '<label class="i18n">' +
           '<span data-lang="en_us">Price</span>' +
           '<span data-lang="pt_br">Preço</span>' +
-        '</label>',
-        $priceRanges,
+        '</label>' +
         '<div class="flexbox">' +
           '<div class="form-group">' +
             '<input class="form-control" type="tel" name="price" ' +
@@ -114,9 +128,39 @@
               '<span data-lang="pt_br">Máximo</span>' +
             '</small>' +
           '</div>' +
+        '</div>' +
+        '<label class="i18n">' +
+          '<span data-lang="en_us">Quantity</span>' +
+          '<span data-lang="pt_br">Quantidade</span>' +
+        '</label>' +
+        '<div class="flexbox">' +
+          '<div class="form-group">' +
+            '<input class="form-control" type="number" name="quantity" ' +
+            'data-opt="gte" data-filter="range" data-is-number="true"/>' +
+            '<small class="form-text i18n">' +
+              '<span data-lang="en_us">Minimun</span>' +
+              '<span data-lang="pt_br">Mínimo</span>' +
+            '</small>' +
+          '</div>' +
+          '<div class="form-group">' +
+            '<input class="form-control" type="number" name="quantity" ' +
+            'data-opt="lte" data-filter="range" data-is-number="true"/>' +
+            '<small class="form-text i18n">' +
+              '<span data-lang="en_us">Maximum</span>' +
+              '<span data-lang="pt_br">Máximo</span>' +
+            '</small>' +
+          '</div>' +
         '</div>'
       ]
     })
+
+    // clear all filters
+    var clearFilters = function () {
+      // reset
+      filters = []
+      load()
+    }
+    $container.find('#clear-products-filters').click(clearFilters)
 
     // use global dynamic quickview
     var $qv = $('#qvx')
@@ -127,25 +171,44 @@
     // show filters form
     $qv.find('#qvx-body').html($filters)
     // add submit button
-    $qv.find('#qvx-footer').html($('<button />', {
-      'class': 'btn btn-block btn-success',
-      click: function () {
-        // submit filters form
-        load()
-        // close quickview
-        quickview.close($qv)
-      },
-      html: i18n({
-        'en_us': 'Apply filters',
-        'pt_br': 'Aplicar filtros'
+    $qv.find('#qvx-footer').html([
+      $('<button>', {
+        'class': 'btn btn-success mr-2',
+        click: function () {
+          // submit filters form
+          load()
+          // close quickview
+          quickview.close($qv)
+        },
+        html: i18n({
+          'en_us': 'Apply filters',
+          'pt_br': 'Aplicar filtros'
+        })
+      }),
+      $('<button>', {
+        'class': 'btn btn-warning',
+        click: function () {
+          clearFilters()
+          // close quickview
+          quickview.close($qv)
+        },
+        html: i18n({
+          'en_us': 'Clear',
+          'pt_br': 'Limpar'
+        })
       })
-    }))
+    ])
 
     var updateContent = function () {
       // update list content
       // generate grid
       var $items = []
-      for (var i = 0; i < list.length; i++) {
+      var count = list.length
+      var total = data.hits.total
+      // search aggregations results
+      var Aggs = data.aggregations
+
+      for (var i = 0; i < count; i++) {
         var item = list[i]
         // link to edit product
         var link = '/' + window.location.hash + '/' + item._id
@@ -208,63 +271,102 @@
       }
 
       // fill products list content
-      $list.html($('<div />', {
-        'class': 'row row-products',
-        html: $items
-      }))
+      if (page === 0) {
+        if (total > 0) {
+          $list.html($('<div>', {
+            'class': 'row row-products',
+            html: $items
+          }))
+        } else {
+          // clear
+          $list.html('')
+        }
+      } else {
+        // loading more
+        $list.children('.row').append($items)
+      }
+      if (count < total) {
+        // enable load more button
+        $load.removeAttr('disabled')
+        if (page === 0) {
+          // set maximum results
+          maxResults = count
+        }
+      } else {
+        $load.attr('disabled', true)
+      }
+
+      // results metrics
+      var $info = $container.find('#products-list-info')
+      if (total === 0) {
+        $info.hide()
+      } else {
+        $info.show()
+        $info.find('#products-list-count').text((maxResults * page) + count)
+        $info.find('#products-list-total').text(total)
+        // price aggregations
+        $info.find('#products-avg-price').text(
+          formatMoney(Aggs.avg_price.value) + ' (' +
+          formatMoney(Aggs.min_price.value) + ' - ' +
+          formatMoney(Aggs.max_price.value) + ')'
+        )
+      }
 
       // update filters content with aggregations
       // reset div element
       $customFilters.html('')
       var aggs = {
-        brands: {
+        'brands.name': {
           label: i18n({
             'en_us': 'Brands',
             'pt_br': 'Marcas'
           })
         },
-        categories: {
+        'categories.name': {
           label: i18n({
             'en_us': 'Categories',
             'pt_br': 'Categorias'
           })
+        },
+        status: {
+          label: 'Status'
         }
       }
-      // search aggregations results
-      var Aggs = data.aggregations
 
       for (var prop in aggs) {
         if (aggs.hasOwnProperty(prop) && Aggs.hasOwnProperty(prop)) {
           var agg = aggs[prop]
           // create select element for current aggregation field
           var buckets = Aggs[prop].buckets
-          var elOptions = ''
-          for (i = 0; i < buckets.length; i++) {
-            // field value
-            var key = buckets[i].key
-            elOptions += '<option value="' + key + '" data-subtext="(' + buckets[i].doc_count + ')">' +
-                           key +
-                         '</option>'
-          }
+          if (buckets.length) {
+            var elOptions = ''
+            for (i = 0; i < buckets.length; i++) {
+              // field value
+              var key = buckets[i].key
+              elOptions += '<option value="' + key + '" data-subtext="(' + buckets[i].doc_count + ')">' +
+                             key +
+                           '</option>'
+            }
 
-          // render select element with options
-          var $select = $('<select />', {
-            multiple: true,
-            'data-live-search': true,
-            'class': 'form-control',
-            name: prop + '.name',
-            html: elOptions
-          })
-          // add to filters content
-          $customFilters.prepend($('<div />', {
-            'class': 'form-group selectpicker-default',
-            html: $select
-          }))
-          $select.selectpicker({
-            style: 'btn-light',
-            noneSelectedText: agg.label,
-            windowPadding: 70
-          })
+            // render select element with options
+            var $select = $('<select />', {
+              multiple: true,
+              'data-live-search': true,
+              'class': 'form-control',
+              name: prop,
+              html: elOptions
+            })
+            // add to filters content
+            $customFilters.prepend($('<div />', {
+              'class': 'form-group selectpicker-default',
+              html: $select
+            }))
+            $select.selectpicker({
+              style: 'btn-light',
+              noneSelectedText: agg.label,
+              windowPadding: 70
+            })
+          }
         }
       }
 
@@ -289,9 +391,9 @@
           } else {
             // string value
             value = value.trim()
-            if (value === '') {
-              value = null
-            }
+          }
+          if (isNaN(value) || value === '') {
+            value = null
           }
         } else if (!value.length) {
           value = null
