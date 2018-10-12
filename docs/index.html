@@ -676,7 +676,20 @@
             </button>
           </div>
           <div class="modal-body scrollable">
-            <p></p>
+            <p class="lead"></p>
+            <div class="custom-controls-stacked">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="skip-next-confirms" checked />
+                <label class="custom-control-label i18n">
+                  <span data-lang="en_us">
+                    Skip this confirmation for in-stream requests
+                  </span>
+                  <span data-lang="pt_br">
+                    Pular esta confirmação para solicitações em sequência
+                  </span>
+                </label>
+              </div>
+            </div>
           </div>
           <div class="modal-footer" id="api-request-control">
             <button class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal" id="discard-api-request">

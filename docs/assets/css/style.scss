@@ -700,6 +700,11 @@ body {
   cursor: pointer;
 }
 
+// fix for checkbox control
+.custom-control-label {
+  cursor: pointer;
+}
+
 // resources list
 .data-list,
 .data-list > * {
