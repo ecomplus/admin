@@ -624,17 +624,28 @@ app.config({
               // handle JSON objects and arrays
               // select fields ?
               if (Array.isArray(val)) {
-                var list = []
-                for (i = 0; i < val.length; i++) {
-                  var item = val[i]
-                  if (typeof item !== 'string') {
-                    // array of objects
-                    list.push(JSON.stringify(item))
-                  } else {
-                    list.push(item)
+                if (!$el.hasClass('tagsinput')) {
+                  var list = []
+                  for (i = 0; i < val.length; i++) {
+                    var item = val[i]
+                    if (typeof item !== 'string') {
+                      // array of objects
+                      list.push(JSON.stringify(item))
+                    } else {
+                      list.push(item)
+                    }
                   }
+                  $el.val(list)
+                } else {
+                  // add array items with tagsinput plugin
+                  ;(function ($el, val) {
+                    setTimeout(function () {
+                      for (var i = 0; i < val.length; i++) {
+                        $el.tagsinput('add', val[i])
+                      }
+                    }, 400)
+                  }($el, val))
                 }
-                $el.val(list)
               } else if (val !== null) {
                 // JSON object
                 $el.val(JSON.stringify(val))
