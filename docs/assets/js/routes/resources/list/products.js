@@ -13,6 +13,8 @@
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
   */
+
+  // main DOM elements
   var $container = $('#products-list-container')
   // products list div
   var $list = $container.find('#products-list-results')
@@ -532,4 +534,9 @@
   } else {
     // no products
   }
+
+  // timeout to topbar fallback
+  setTimeout(function () {
+    window.unsetSaveAction()
+  }, 200)
 }())
