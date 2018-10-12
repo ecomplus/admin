@@ -1252,10 +1252,17 @@ app.ready(function () {
         // open confirmation modal
         var modal = $('#modal-confirm-request')
         modal.find('#api-request-control').data('request-id', id)
-        modal.find('.modal-body > p').text(msg)
-        // .next('pre').children('code').text(reqText)
         console.log('Confirm request', reqText)
-        modal.modal('show')
+
+        if (skipNextConfirms === null) {
+          // wait user interaction
+          modal.find('.modal-body > p').text(msg)
+          // .next('pre').children('code').text(reqText)
+          modal.modal('show')
+        } else {
+          // automatically cancel or confirm this request
+          requestControl()
+        }
       }, 400)
     }
 
@@ -1276,32 +1283,12 @@ app.ready(function () {
         case 'PUT':
           // continue
           break
-
         case 'DELETE':
-          if (skipNextConfirms === null) {
-            askConfirmation(uri, method, callback, bodyObject, i18n({
-              'en_us': 'You are going to delete a resource permanently, are you sure?',
-              'pt_br': 'Você vai excluir um recurso permanentemente, tem certeza?'
-            }))
-            return
-          } else {
-            // unset confirmation skip on callback
-            var cb = callback
-            callback = function (err, body) {
-              // timeout to next in-stream requests
-              confirmationTimeout = setTimeout(function () {
-                skipNextConfirms = null
-              }, 200)
-              cb(err, body)
-            }
-            // clear old timeout
-            if (confirmationTimeout) {
-              clearTimeout(confirmationTimeout)
-              confirmationTimeout = null
-            }
-          }
-          break
-
+          askConfirmation(uri, method, callback, bodyObject, i18n({
+            'en_us': 'You are going to delete a resource permanently, are you sure?',
+            'pt_br': 'Você vai excluir um recurso permanentemente, tem certeza?'
+          }))
+          return
         default:
           // invalid method
           app.toast(i18n({
@@ -1313,6 +1300,8 @@ app.ready(function () {
 
       if (typeof endpoint === 'string' && endpoint !== '') {
         if (/^\$update\.json/.test(endpoint)) {
+          // ensure confirmation
+          skipNextConfirms = null
           askConfirmation(uri, method, callback, bodyObject, i18n({
             'en_us': 'You are going to do a bulk update, are you sure?',
             'pt_br': 'Você vai fazer uma atualização em massa, tem certeza?'
@@ -1448,20 +1437,51 @@ app.ready(function () {
 
     var skipNextConfirms = null
     var confirmationTimeout
-    var requestControl = function ($el, confirm) {
-      var id = $el.closest('#api-request-control').data('request-id')
+    var requestControl = function (confirm) {
+      // handle request confirmation or rejection
+      var id = $('#api-request-control').data('request-id')
       if (id && confirmRequest.hasOwnProperty(id)) {
-        if (!confirm) {
-          // request rejected
-          var callback = confirmRequest[id].callback
-          if (typeof callback === 'function') {
-            // callback with error
-            callback(new Error('Request rejected'), null)
+        var req = confirmRequest[id]
+
+        // set timeout for in-stream requests
+        var cb = req.callback
+        req.callback = function (err, body) {
+          if (skipNextConfirms !== null) {
+            // reset
+            confirmationTimeout = setTimeout(function () {
+              skipNextConfirms = null
+            }, 500)
+          }
+          if (typeof cb === 'function') {
+            cb(err, body)
+          }
+        }
+        // clear old timeout
+        if (confirmationTimeout) {
+          clearTimeout(confirmationTimeout)
+          confirmationTimeout = null
+        }
+
+        if (confirm !== undefined) {
+          if ($('#skip-next-confirms').is(':checked')) {
+            // skip next requests confirmations
+            skipNextConfirms = confirm
+          } else {
+            skipNextConfirms = null
           }
         } else {
-          // confirmed
-          var req = confirmRequest[id]
+          // get from last saved decision
+          confirm = skipNextConfirms
+        }
 
+        if (!confirm) {
+          // request rejected
+          // callback with error
+          setTimeout(function () {
+            req.callback(new Error('Request rejected'), null)
+          }, 200)
+        } else {
+          // confirmed
           // call API after confirmation
           var options = {
             url: req.uri,
@@ -1469,22 +1489,16 @@ app.ready(function () {
             method: req.method
           }
           addRequest(options, req.bodyObject, req.callback)
-
           delete confirmRequest[id]
-        }
-
-        if ($('#skip-next-confirms').is(':checked')) {
-          // skip in stream requests
-          skipNextConfirms = confirm
         }
       }
     }
 
     $('#confirm-api-request').click(function () {
-      requestControl($(this), true)
+      requestControl(true)
     })
     $('#discard-api-request').click(function () {
-      requestControl($(this), false)
+      requestControl(false)
     })
 
     $(window).on('beforeunload', function (e) {
