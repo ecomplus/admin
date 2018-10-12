@@ -646,7 +646,7 @@
           }
 
           var $el = $('<div/>', {
-            'class': 'select-image scrollable ajax-content',
+            'class': 'select-image scrollable scrollable-x ajax-content',
             html: '<div class="ajax-overlay"><div class="spinner-circle-material"></div></div>' +
                   '<div class="images-list"></div>' +
                   '<p><i class="fa fa-picture-o"></i>&nbsp; ' + text + '</p>',

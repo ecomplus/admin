@@ -153,7 +153,16 @@
 
   window.fixScrollbars = function ($el) {
     // handle scrollbars inside loaded container
-    $el.find('.scrollable').perfectScrollbar({
+    $el.find('.scrollable').each(function () {
+      if ($(this).hasClass('scrollable-x')) {
+        $(this).hover(function () {
+          // force scroll to show scrollbar
+          if (!$(this).find('.ps-scrollbar-x-rail').is(':visible')) {
+            $(this).scrollLeft(1)
+          }
+        })
+      }
+    }).perfectScrollbar({
       wheelPropagation: false,
       wheelSpeed: 0.5
     })

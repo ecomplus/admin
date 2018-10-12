@@ -201,7 +201,11 @@
         var el = $(elCheckbox)
         el.find('input').addClass('checkbox-all').on('change', function () {
           var selector = $(this).is(':checked') ? ':not(:checked)' : ':checked'
-          $grid.find('.data-list-check input' + selector).next().click()
+          // run function async to prevent break with big lists
+          setTimeout(function () {
+            $grid.find('.data-list-check input' + selector).next().click()
+          }, 50)
+          return true
         })
         return el
       },

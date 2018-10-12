@@ -563,12 +563,32 @@ app.ready(function () {
         case 'PUT':
           // continue
           break
+
         case 'DELETE':
-          askConfirmation(uri, method, callback, bodyObject, i18n({
-            'en_us': 'You are going to delete a resource permanently, are you sure?',
-            'pt_br': 'Você vai excluir um recurso permanentemente, tem certeza?'
-          }))
-          return
+          if (skipNextConfirms === null) {
+            askConfirmation(uri, method, callback, bodyObject, i18n({
+              'en_us': 'You are going to delete a resource permanently, are you sure?',
+              'pt_br': 'Você vai excluir um recurso permanentemente, tem certeza?'
+            }))
+            return
+          } else {
+            // unset confirmation skip on callback
+            var cb = callback
+            callback = function (err, body) {
+              // timeout to next in-stream requests
+              confirmationTimeout = setTimeout(function () {
+                skipNextConfirms = null
+              }, 200)
+              cb(err, body)
+            }
+            // clear old timeout
+            if (confirmationTimeout) {
+              clearTimeout(confirmationTimeout)
+              confirmationTimeout = null
+            }
+          }
+          break
+
         default:
           // invalid method
           app.toast(i18n({
@@ -713,6 +733,8 @@ app.ready(function () {
       })
     }
 
+    var skipNextConfirms = null
+    var confirmationTimeout
     var requestControl = function ($el, confirm) {
       var id = $el.closest('#api-request-control').data('request-id')
       if (id && confirmRequest.hasOwnProperty(id)) {
@@ -736,6 +758,11 @@ app.ready(function () {
           addRequest(options, req.bodyObject, req.callback)
 
           delete confirmRequest[id]
+        }
+
+        if ($('#skip-next-confirms').is(':checked')) {
+          // skip in stream requests
+          skipNextConfirms = confirm
         }
       }
     }

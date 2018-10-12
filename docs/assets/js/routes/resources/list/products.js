@@ -335,11 +335,16 @@
         $info.find('#products-list-count').text((maxResults * page) + count)
         $info.find('#products-list-total').text(total)
         // price aggregations
-        $info.find('#products-avg-price').text(
-          formatMoney(Aggs.avg_price.value) + ' (' +
-          formatMoney(Aggs.min_price.value) + ' - ' +
-          formatMoney(Aggs.max_price.value) + ')'
-        )
+        var $price = $info.find('#products-avg-price')
+        if (Aggs.avg_price.value) {
+          $price.text(
+            formatMoney(Aggs.avg_price.value) + ' (' +
+            formatMoney(Aggs.min_price.value) + ' - ' +
+            formatMoney(Aggs.max_price.value) + ')'
+          )
+        } else {
+          $price.text(' ~ ')
+        }
       }
 
       // update filters content with aggregations
@@ -527,6 +532,22 @@
         }
       }
     }
+
+    // checkbox to select all
+    $('#select-all-products').on('change', function () {
+      // check or uncheck all list items
+      var selector = $(this).is(':checked') ? ':not(:checked)' : ':checked'
+      // run function async
+      // select items one by one to prevent no interaction effect
+      $list.find('input[type="checkbox"]' + selector).each(function (index) {
+        var $checkbox = $(this)
+        setTimeout(function () {
+          // click on label
+          $checkbox.next().click()
+        }, index * 20)
+      })
+      return true
+    })
 
     // ready
     // show first results

@@ -79,7 +79,15 @@
     </div>
 
     <footer class="card-footer">
-      <p id="products-list-info">
+      <button class="btn btn-light" id="load-products">
+        <i class="fa fa-refresh"></i>
+        <span class="i18n">
+          <span data-lang="en_us">Load more</span>
+          <span data-lang="pt_br">Carregar mais</span>
+        </span>
+      </button>
+
+      <div class="mt-3" id="products-list-info">
         <span class="lead mr-2">
           <span class="i18n">
             <span data-lang="en_us">Showing</span>
@@ -99,15 +107,16 @@
           </span>
           <span id="products-avg-price"></span>
         </span>
-      </p>
-
-      <button class="btn btn-light mr-2" id="load-products">
-        <i class="fa fa-refresh"></i>
-        <span class="i18n">
-          <span data-lang="en_us">Load more</span>
-          <span data-lang="pt_br">Carregar mais</span>
-        </span>
-      </button>
+        <div class="mt-2 custom-controls-stacked">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="select-all-products"/>
+            <label class="custom-control-label i18n text-muted">
+              <span data-lang="en_us">Select all products</span>
+              <span data-lang="pt_br">Selecionar todos os produtos</span>
+            </label>
+          </div>
+        </div>
+      </div>
     </footer>
   </div>
 
