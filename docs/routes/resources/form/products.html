@@ -357,13 +357,25 @@
 
         <div class="card-content">
           <div class="card-body">
-            <button type="button" class="btn btn-light" data-id="add-spec">
-              <i class="fa fa-filter"></i>
-              <span class="i18n">
-                <span data-lang="en_us">Add spec</span>
-                <span data-lang="pt_br">Adicionar especificação</span>
-              </span>
-            </button>
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Specification grid</span>
+                <span data-lang="pt_br">Grade da especificação</span>
+              </label>
+              <div class="input-group">
+                <input class="form-control" type="text" data-id="spec-name">
+                <span class="input-group-append">
+                  <button type="button" class="btn btn-light" data-id="add-spec">
+                    <i class="fa fa-thumb-tack"></i>
+                    <span class="i18n">
+                      <span data-lang="en_us">Add</span>
+                      <span data-lang="pt_br">Adicionar</span>
+                    </span>
+                  </button>
+                </span>
+              </div>
+            </div>
+            <div data-id="specs-list" class="row"></div>
           </div>
         </div>
       </div>
