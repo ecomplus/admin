@@ -440,4 +440,9 @@
   } else {
     // no resource objects
   }
+
+  // timeout to topbar fallback
+  setTimeout(function () {
+    window.unsetSaveAction()
+  }, 200)
 }())

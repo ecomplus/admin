@@ -2027,6 +2027,18 @@ app.ready(function () {
       }
     }
 
+    window.unsetSaveAction = function () {
+      var tabObj = appTabs[currentTab]
+      if (tabObj) {
+        // no save action
+        tabObj.saveAction = false
+        // discard action callback
+        tabObj.saveCallback = null
+        // update topbar
+        unwatchSave()
+      }
+    }
+
     window.triggerUnsaved = function (tabId) {
       var tabObj = appTabs[tabId]
       if (tabObj) {
