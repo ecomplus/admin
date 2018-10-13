@@ -1603,9 +1603,19 @@
           spec = Grids[gridId].title
         }
 
+        // check if input of this grid already exists
+        var $input = $specs.find('input').filter(function () {
+          return $(this).data('grid') === gridId
+        })
+        if ($input.length) {
+          $input.focus()
+          return
+        }
+
         // create DOM elements for specification grid
-        var $input = $('<input>', {
+        $input = $('<input>', {
           'class': 'form-control',
+          'data-grid': gridId,
           type: 'text'
         })
         var $remove = $('<a>', {
