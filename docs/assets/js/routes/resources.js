@@ -164,7 +164,7 @@
             { available: { order: 'desc' } },
             '_score',
             { ad_relevance: { order: 'desc' } },
-            { views: { order: 'desc' } }
+            { _id: { order: 'desc' } }
           ],
           aggs: {
             'brands.name': { terms: { field: 'brands.name' } },
