@@ -108,7 +108,10 @@
               if (specArray) {
                 // add each spec object
                 for (var i = 0; i < specArray.length; i++) {
-                  addSpec(gridId)(specArray[i].text)
+                  var specValue = addSpec(gridId)
+                  if (specValue) {
+                    specValue(specArray[i].text)
+                  }
                 }
               }
             }
