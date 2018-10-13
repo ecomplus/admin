@@ -886,6 +886,7 @@ ul > li:nth-child(4n+4) > .badges-list li {
 }
 .row-products .item-info {
   line-height: 1.4;
+  margin-bottom: 5px;
 }
 .row-products .item-info > a {
   height: 37px;
@@ -911,6 +912,12 @@ ul > li:nth-child(4n+4) > .badges-list li {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.row-products .item-sku {
+  display: inline-block;
+  font-size: 90%;
+  font-family: $font-monospace;
+  line-height: 1.35;
 }
 
 .masonry-item > a {
