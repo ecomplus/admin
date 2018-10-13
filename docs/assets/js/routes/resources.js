@@ -160,7 +160,6 @@
         // ref: https://github.com/ecomclub/ecomplus-sdk-js/blob/master/main.js
         var Body = {
           sort: [
-            { visible: { order: 'desc' } },
             { available: { order: 'desc' } },
             '_score',
             { ad_relevance: { order: 'desc' } },

@@ -265,7 +265,11 @@
             '<div class="item-info">' +
               '<a href="' + link + '">' + item.name + '</a>' +
               '<div class="item-price">' + priceString + '</div>' +
-              '<div class="item-qnt">' + qntString + '</div>' +
+              '<span class="text-muted">' +
+                '<i class="mr-2 fa fa-' + (item.visible ? 'eye' : 'eye-slash') + '"></i>' +
+                '<i class="mr-2 fa fa-' + (item.available ? 'check' : 'close') + '"></i>' +
+              '</span>' +
+              '<span class="item-qnt">' + qntString + '</span>' +
             '</div>',
             $('<div>', {
               'class': 'custom-controls-stacked',
@@ -274,8 +278,8 @@
                 html: [
                   $checkbox,
                   $('<label>', {
-                    'class': 'custom-control-label text-monospace',
-                    text: item.sku
+                    'class': 'custom-control-label',
+                    html: '<span class="item-sku">' + item.sku + '</span>'
                   })
                 ]
               })
