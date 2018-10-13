@@ -105,13 +105,11 @@
           if (specifications) {
             for (gridId in specifications) {
               var specArray = specifications[gridId]
-              if (specArray) {
-                // add each spec object
-                for (var i = 0; i < specArray.length; i++) {
-                  var specValue = addSpec(gridId)
-                  if (specValue) {
-                    specValue(specArray[i].text)
-                  }
+              if (Array.isArray(specArray)) {
+                // add one spec object per grid only
+                var specValue = addSpec(gridId)
+                if (specValue) {
+                  specValue(specArray[0].text)
                 }
               }
             }
