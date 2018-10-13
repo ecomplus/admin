@@ -491,18 +491,25 @@
     // handle sorting
     $container.find('#order-products a').click(function () {
       var order
+      var iconClass = {
+        desc: 'fa-caret-down text-warning',
+        asc: 'fa-caret-up text-info'
+      }
       if ($(this).hasClass('active')) {
-        // invert order
-        order = 'asc'
-        // replace icon
-        $(this).find('i').removeClass('fa-caret-down text-warning').addClass('fa-caret-up text-info')
+        // invert order and replace icon
+        // check last sort order
+        var lastOrder = $(this).data('sort')
+        order = lastOrder === 'desc' ? 'asc' : 'desc'
+        $(this).data('sort', order).find('i')
+          .removeClass(iconClass[lastOrder]).addClass(iconClass[order])
       } else {
         // defaut is desc
         order = 'desc'
         // unmask last active item
-        $(this).parent().children('.active').removeClass('active').find('i').remove()
-        $(this).addClass('active').append($('<i>', {
-          'class': 'ml-1 fa fa-caret-down text-warning'
+        $(this).parent().children('.active')
+          .removeClass('active').removeData('sort').find('i').remove()
+        $(this).addClass('active').data('sort', order).append($('<i>', {
+          'class': 'ml-1 fa ' + iconClass.desc
         }))
       }
 
