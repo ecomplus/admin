@@ -26,7 +26,28 @@
   var data, list
   var updateData = function () {
     data = Tab.data
-    list = data.result
+    // map deeper objects
+    list = data.result.map(function (doc) {
+      var newDoc = {}
+      for (var prop in doc) {
+        var deepObj = doc[prop]
+        if (typeof deepObj === 'object' && deepObj !== null && !Array.isArray(deepObj)) {
+          // is object
+          // go deeper
+          for (var deepProp in deepObj) {
+            if (deepObj.hasOwnProperty(deepProp)) {
+              // assign to object
+              // using / to separate properties because jsGrid converts dot notation
+              newDoc[prop + '/' + deepProp] = deepObj[deepProp]
+            }
+          }
+        } else {
+          // just keep the original property
+          newDoc[prop] = deepObj
+        }
+      }
+      return newDoc
+    })
   }
   updateData()
 
@@ -230,33 +251,40 @@
     var field, i
     // get from first resource object properties
     var fieldsList = []
-    for (i = 0; i < data.meta.fields.length; i++) {
-      field = data.meta.fields[i]
-      if (field !== '_id') {
-        // check field type
-        for (var ii = 0; ii < list.length; ii++) {
-          switch (typeof list[ii][field]) {
+    for (i = 0; i < list.length; i++) {
+      for (field in list[i]) {
+        if (field !== '_id') {
+          // check field type
+          switch (typeof list[i][field]) {
             case 'undefined':
               // continue and try next list object
               continue
+
             case 'string':
+            case 'number':
               // valid field to grid
-              fieldsList.push(field)
+              // check if it's not already saved on fields list
+              var skip = false
+              for (var ii = 0; ii < fieldsList.length; ii++) {
+                if (fieldsList[ii] === field) {
+                  skip = true
+                  break
+                }
+              }
+              if (!skip) {
+                // add to fields list
+                fieldsList.push(field)
+                fields.push({
+                  name: field,
+                  type: 'text'
+                })
+                // starts with no filtering
+                filters[field] = ''
+              }
               break
           }
-          // exit for loop
-          ii = list.length
         }
       }
-    }
-    for (i = 0; i < fieldsList.length; i++) {
-      field = fieldsList[i]
-      fields.push({
-        name: field,
-        type: 'text'
-      })
-      // starts with no filtering
-      filters[field] = ''
     }
 
     fields.push({
@@ -409,7 +437,22 @@
       // change fields labels
       for (var i = 0; i < fieldsList.length; i++) {
         var field = fieldsList[i]
-        var obj = json[field]
+        var props = field.split('/')
+        var obj
+        if (props.length === 1) {
+          obj = json[field]
+        } else {
+          // navigate the object
+          obj = json[props[0]]
+          for (var ii = 1; ii < props.length; ii++) {
+            if (obj && obj.properties) {
+              obj = obj.properties[props[ii]]
+            } else {
+              obj = null
+              break
+            }
+          }
+        }
         if (obj && obj.label) {
           $grid.jsGrid('fieldOption', field, 'title', i18n(obj.label))
         }
