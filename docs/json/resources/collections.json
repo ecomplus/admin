@@ -5,8 +5,8 @@
       "pt_br": "Nome"
     },
     "description": {
-      "en_us": "Category full name",
-      "pt_br": "Nome completo da categoria"
+      "en_us": "Collection full name",
+      "pt_br": "Nome completo da coleção"
     }
   },
   "i18n": {
@@ -15,8 +15,8 @@
       "pt_br": "Tradução"
     },
     "description": {
-      "en_us": "Translated full category name",
-      "pt_br": "Nome completo da Categoria traduzido"
+      "en_us": "Translated full collection name",
+      "pt_br": "Nome completo da coleção traduzido"
     }
   },
   "subtitle": {
@@ -44,8 +44,8 @@
       "pt_br": "Link permanente"
     },
     "description": {
-      "en_us": "Permanent URL to category page",
-      "pt_br": "URL permanente para a página da categoria"
+      "en_us": "Permanent URL to collection page",
+      "pt_br": "URL permanente para a página da coleção"
     }
   },
   "mobile_link": {
@@ -64,28 +64,28 @@
       "pt_br": "Descrição curta"
     },
     "description": {
-      "en_us": "Short category description in plain text",
-      "pt_br": "Descrição da curta da categoria, apenas texto"
+      "en_us": "Short collection description in plain text",
+      "pt_br": "Descrição da curta da coleção, apenas texto"
     }
   },
   "body_html": {
     "label": {
-      "en_us": "HTML description",
-      "pt_br": "Descrição HTML"
+      "en_us": "Body HTML",
+      "pt_br": "Descrição Completa"
     },
     "description": {
-      "en_us": "Full category description, may use HTML tags",
-      "pt_br": "Descrição da completa da da categoria, é possível usar tags HTML"
+      "en_us": "Full collection description, may use HTML tags",
+      "pt_br": "Descrição da completa da da coleção, é possível usar tags HTML"
     }
   },
   "body_text": {
     "label": {
-      "en_us": "Text description",
-      "pt_br": "Descrição em texto"
+      "en_us": "Body text",
+      "pt_br": "Descrição"
     },
     "description": {
-      "en_us": "Full category description, plain text only",
-      "pt_br": "Descrição completa da categoria, apenas texo"
+      "en_us": "Full collection description, plain text only",
+      "pt_br": "Descrição completa da coleção, apenas texo"
     }
   },
   "meta_title": {
@@ -106,138 +106,20 @@
       "pt_br": "Meta description tag da página, importante para SEO"
     }
   },
-  "parent": {
+  "products": {
     "label": {
-      "en_us": "Parent",
-      "pt_br": "Pai"
-    },
-    "properties": {
-      "_id": {
-        "label": {
-          "en_us": "ID"
-        },
-        "description": {
-          "en_us": "Unique ID (ObjectID)",
-          "pt_br": "ID único (ObjectID)"
-        }
-      },
-      "name": {
-        "label": {
-          "en_us": "Name",
-          "pt_br": "Nome"
-        },
-        "description": {
-          "en_us": "Category name",
-          "pt_br": "Nome da categoria"
-        }
-      },
-      "slug": {
-        "label": {
-          "en_us": "Slug"
-        },
-        "description": {
-          "en_us": "Slug to complete page URL, starting with number or lowercase letter",
-          "pt_br": "Slug para completar a URL da página, deve começar com um número ou letra minúscula"
-        }
-      }
-    },
-    "description": {
-      "en_us": "Parent category, above this category",
-      "pt_br": "Categoria pai, superior a esta"
-    }
-  },
-  "childs": {
-    "label": {
-      "en_us": "Childs",
-      "pt_br": "Filhos"
+      "en_us": "Products",
+      "pt_br": "Produtos"
     },
     "items": {
-      "properties": {
-        "_id": {
-          "label": {
-            "en_us": "ID"
-          },
-          "description": {
-            "en_us": "Unique ID (ObjectID)",
-            "pt_br": "ID único (ObjectID)"
-          }
-        },
-        "name": {
-          "label": {
-            "en_us": "Name",
-            "pt_br": "Nome"
-          },
-          "description": {
-            "en_us": "Category name",
-            "pt_br": "Nome da categoria"
-          }
-        },
-        "slug": {
-          "label": {
-            "en_us": "SSlug"
-          },
-          "description": {
-            "en_us": "Slug to complete page URL, starting with number or lowercase letter",
-            "pt_br": "Slug para completar a URL da página, deve começar com um número ou letra minúscula"
-          }
-        }
-      },
       "description": {
-        "en_us": "Child category, under this category",
-        "pt_br": "Categoria filha, inferior a esta"
+        "en_us": "Product ID",
+        "pt_br": "ID do produto"
       }
     },
     "description": {
-      "en_us": "List of subcategories of this category",
-      "pt_br": "Lista de subcategorias desta categoria"
-    }
-  },
-  "grids": {
-    "label": {
-      "en_us": "Grids"
-    },
-    "patternProperties": {
-      "^[a-z0-9_]{2,30}$": {
-        "properties": {
-          "_id": {
-            "label": {
-              "en_us": "ID"
-            },
-            "description": {
-              "en_us": "Unique ID (ObjectID)",
-              "pt_br": "ID único (ObjectID)"
-            }
-          },
-          "title": {
-            "label": {
-              "en_us": "Title",
-              "pt_br": "Título"
-            },
-            "description": {
-              "en_us": "Grid title",
-              "pt_br": "Título do grid"
-            }
-          },
-          "is_filter": {
-            "label": {
-              "en_us": "Is filter",
-              "pt_br": "É filtro"
-            },
-            "description": {
-              "en_us": "Grid used to results filtering (search aggregations)",
-              "pt_br": "Grid usado para filtrar resultados de busca"
-            }
-          }
-        },
-        "description": {
-          "en_us": "Grid properties",
-          "pt_br": "Propriedades dos grids"
-        }
-      }
-    },
-    "description": {
-      "en_us": "Grids for results filtering and products composition, grid_id as property name",
-      "pt_br": "Grids para composição de produtos e filtros de busca, grid_id como nome da propriedade"
+      "en_us": "List of collection's products",
+      "pt_br": "Lista de produtos da coleção "
     }
   },
   "icon": {
@@ -247,9 +129,6 @@
     },
     "properties": {
       "url": {
-        "label": {
-          "en_us": "URL"
-        },
         "description": {
           "en_us": "Image link",
           "pt_br": "Link da imagem"
@@ -277,8 +156,8 @@
       }
     },
     "description": {
-      "en_us": "Category icon image",
-      "pt_br": "Ícone da categoria"
+      "en_us": "Collection icon image",
+      "pt_br": "Ícone da coleção"
     }
   },
   "pictures": {
@@ -289,7 +168,8 @@
     "properties": {
       "_id": {
         "label": {
-          "en_us": "ID"
+          "en_us": "ID",
+          "pt_br": "ID"
         },
         "description": {
           "en_us": "Unique ID (ObjectID)",
@@ -298,7 +178,8 @@
       },
       "tag": {
         "label": {
-          "en_us": "Tag"
+          "en_us": "Tag",
+          "pt_br": "Tag"
         },
         "description": {
           "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
@@ -307,7 +188,8 @@
       },
       "url": {
         "label": {
-          "en_us": "URL"
+          "en_us": "URL",
+          "pt_br": "URL"
         },
         "description": {
           "en_us": "Image link",
@@ -340,28 +222,8 @@
       }
     },
     "description": {
-      "en_us": "List of category images",
-      "pt_br": "Lista de imagens da categoria"
-    }
-  },
-  "ml_category_id": {
-    "label": {
-      "en_us": "Mercado Libre category id",
-      "pt_br": "Id da categoria no Mercado Livre"
-    },
-    "description": {
-      "en_us": "Mercado Libre Taxonomy: https://api.mercadolibre.com/sites/MLB/categories",
-      "pt_br": "Taxonomia do Mercado Livre: https://api.mercadolibre.com/sites/MLB/categories"
-    }
-  },
-  "google_product_category_id": {
-    "label": {
-      "en_us": "Google product category id",
-      "pt_br": "Id da categoria no Google"
-    },
-    "description": {
-      "en_us": "Google Taxonomy: https://www.google.com/basepages/producttype/taxonomy-with-ids.pt-BR.txt",
-      "pt_br": "Taxonomia do Google: https://www.google.com/basepages/producttype/taxonomy-with-ids.pt-BR.txt"
+      "en_us": "List of colletcion's images",
+      "pt_br": "Lista de imagens da coleção"
     }
   },
   "metafields": {
@@ -382,7 +244,8 @@
         },
         "namespace": {
           "label": {
-            "en_us": "Namespace"
+            "en_us": "Namespace",
+            "pt_br": "Espaço do nome"
           },
           "description": {
             "en_us": "String to help distinguish who (or which app) created and can use the metafield",
@@ -391,7 +254,8 @@
         },
         "field": {
           "label": {
-            "en_us": "Field"
+            "en_us": "Field",
+            "pt_br": "Field"
           },
           "description": {
             "en_us": "Field name",
@@ -421,7 +285,8 @@
   },
   "flags": {
     "label": {
-      "en_us": "Flags"
+      "en_us": "Flags",
+      "pt_br": "Flags"
     },
     "items": {
       "description": {
@@ -436,8 +301,8 @@
   },
   "notes": {
     "label": {
-      "en_us": "Notes",
-      "pt_br": "Notas"
+      "en_us": "Value",
+      "pt_br": "Valor"
     },
     "description": {
       "en_us": "Optional notes with additional info about this brand",
