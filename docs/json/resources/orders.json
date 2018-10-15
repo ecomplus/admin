@@ -1,197 +1,4 @@
 {
-  "definitions": {
-    "address": {
-      "label": {
-        "en_us": "Address",
-        "pt_br": "Endereço"
-      },
-      "properties": {
-        "zip": {
-          "label": {
-            "en_us": "Postal code",
-            "pt_br": "Código postal"
-          },
-          "description": {
-            "en_us": "ZIP (CEP, postal...) code",
-            "pt_br": "CEP, ZIP, postal, etc"
-          }
-        },
-        "street": {
-          "label": {
-            "en_us": "Street",
-            "pt_br": "Rua"
-          },
-          "description": {
-            "en_us": "Street or public place name",
-            "pt_br": "Rua ou ou nome do local"
-          }
-        },
-        "number": {
-          "label": {
-            "en_us": "Number",
-            "pt_br": "Número"
-          },
-          "description": {
-            "en_us": "House or building street number",
-            "pt_br": "Número do edíficio na rua que se encontra"
-          }
-        },
-        "complement": {
-          "label": {
-            "en_us": "Complement",
-            "pt_br": "Complemento"
-          },
-          "description": {
-            "en_us": "Address complement or second line, such as apartment number",
-            "pt_br": "Complemento do endereço, como número de apartamento "
-          }
-        },
-        "borough": {
-          "label": {
-            "en_us": "Borough",
-            "pt_br": "Bairro"
-          },
-          "description": {
-            "en_us": "Borough name",
-            "pt_br": "Nome do bairro"
-          }
-        },
-        "near_to": {
-          "label": {
-            "en_us": "Near to",
-            "pt_br": "Ponto de referência"
-          },
-          "description": {
-            "en_us": "Some optional other reference for this address",
-            "pt_br": "Referência próxima ao endereço"
-          }
-        },
-        "line_address": {
-          "label": {
-            "en_us": "Line address",
-            "pt_br": "Linha de endereço"
-          },
-          "description": {
-            "en_us": "Full in line mailing address, should include street, number and borough",
-            "pt_br": "Endereço completo em linha. Deve conter "
-          }
-        },
-        "city": {
-          "label": {
-            "en_us": "City",
-            "pt_br": "Cidade"
-          },
-          "description": {
-            "en_us": "City name",
-            "pt_br": "Nome da cidade"
-          }
-        },
-        "country": {
-          "label": {
-            "en_us": "Country",
-            "pt_br": "País"
-          },
-          "description": {
-            "en_us":"Country name",
-            "pt_br": "Nome do país"
-          }
-        },
-        "country_code": {
-          "label": {
-            "en_us": "Country code",
-            "pt_br": "Código do páis"
-          },
-          "description": {
-            "en_us": "An ISO 3166-2 country code",
-            "pt_br": "O código do país no padrão ISO 3166-2 "
-          }
-        },
-        "province": {
-          "label": {
-            "en_us": "Province",
-            "pt_br": "Estado"
-          },
-          "description": {
-            "en_us": "Province or state name",
-            "pt_br": "Nome da província ou estado"
-          }
-        },
-        "province_code": {
-          "label": {
-            "en_us": "Province code",
-            "pt_br": "Código do estado"
-          },
-          "description": {
-            "en_us": "The two-letter code for the province or state",
-            "pt_br": "O código de dois dígitos do estado ou província"
-          }
-        },
-        "name": {
-          "label": {
-            "en_us": "Name",
-            "pt_br": "Nome"
-          },
-          "description": {
-            "en_us": "The name of recipient, generally is the customer's name",
-            "pt_br": "Nome do destinatário, normalmente o nome do cliente"
-          }
-        },
-        "last_name": {
-          "label": {
-            "en_us": "Last Name",
-            "pt_br": "Sobrenome"
-          },
-          "description": {
-            "en_us": "The recipient's last name",
-            "pt_br": "Sobrenome do destinatário"
-          }
-        },
-        "phone": {
-          "properties": {
-            "country_code": {
-              "label": {
-                "en_us": "Country code",
-                "pt_br": "Código do país"
-              },
-              "description": {
-                "en_us": "Country calling code (without +), defined by standards E.123 and E.164",
-                "pt_br": "Código de ligação do país (sem o +), definido pelos padrões E.123 e E.164"
-              }
-            },
-            "number": {
-              "label": {
-                "en_us": "Number",
-                "pt_br": "Número"
-              },
-              "description": {
-                "en_us": "The actual phone number, digits only",
-                "pt_br": "Número de telefone do usuário, apenas números"
-              }
-            }
-          },
-          "description": {
-            "en_us": "Customer phone number for this mailing address",
-            "pt_br": "Número de telefone do cliente para este endereço"
-          }
-        },
-        "default": {
-          "label": {
-            "en_us": "Default",
-            "pt_br": "Padrão"
-          },
-          "description": {
-            "en_us": "Indicates whether this address is the default address for the customer",
-            "pt_br": "Indica se esse é o endereço de entrega padrão do cliente"
-          }
-        }
-      },
-      "description": {
-        "en_us": "Address object",
-        "pt_br": "Objeto do endereço"
-      }
-    }
-  },
-  "properties": {
     "checkout_link": {
       "label": {
         "en_us": "Checkout link",
@@ -2407,1124 +2214,360 @@
         "en_us": "List of payment transactions for this order",
         "pt_br": "Lista de transações de pagamento para esse pedido"
       }
-    }
-  },
-  "payments_history": {
-    "label": {
-      "en_us": "Payments history",
-      "pt_br": "Histórico de pagamento"
     },
-    "items": {
-      "properties": {
-        "_id": {
-          "label": {
-            "en_us": "ID"
-          },
-          "description": {
-            "en_us": "Unique ID (ObjectID)",
-            "pt_br": "ID único"
-          }
-        },
-        "transaction_id": {
-          "label": {
-            "en_us": "Transacrion ID",
-            "pt_br": "ID da transação"
-          },
-          "description": {
-            "en_us": "ID of transaction related with this event",
-            "pt_br": "ID da transação relacionada a esse evento"
-          }
-        },
-        "date_time": {
-          "label": {
-            "en_us": "Date time",
-            "pt_br": "Data e hora"
-          },
-          "description": {
-            "en_us": "Date and time of the event, in ISO 8601 standard representation",
-            "pt_br": "Data e hora do evento, no padrão 8601"
-          }
-        },
-        "status": {
-          "label": {
-            "en_us": "Status"
-          },
-          "enum": {
-            "pending": {
-              "label": {
-                "en_us": "Pending",
-                "pt_br": "Pendente"
-              }
-            },
-            "under_analysis": {
-              "label": {
-                "en_us": "Under analysis",
-                "pt_br": "Em análise"
-              }
-            },
-            "authorized": {
-              "label": {
-                "en_us": "Authorized",
-                "pt_br": "Autorizado"
-              }
-            },
-            "paid": {
-              "label": {
-                "en_us": "Paid",
-                "pt_br": "Pago"
-              }
-            },
-            "in_dispute": {
-              "label": {
-                "en_us": "In dispute",
-                "pt_br": "Em disputa"
-              }
-            },
-            "refunded": {
-              "label": {
-                "en_us": "Refunded",
-                "pt_br": "Restituído"
-              }
-            },
-            "voided": {
-              "label": {
-                "en_us": "Voided",
-                "pt_br": "Anulado"
-              }
-            },
-            "unknown": {
-              "label": {
-                "en_us": "Unknown",
-                "pt_br": "Desconhecido"
-              }
-            }
-          },
-          "description":{
-            "en_us": "Payment status",
-            "pt_br": "Status de pagamento"
-          }
-        },
-        "notification_code": {
-          "label": {
-            "en_us": "Notification code",
-            "pt_br": "Código de notificação"
-          },
-          "description": {
-            "en_us": "Code of received notification with this status change",
-            "pt_br": "Código de notificação recebido com essa mudança de status"
-          }
-        },
-        "customer_notified": {
-          "label": {
-            "en_us": "Customer notified",
-            "pt_br": "Cliente notificado"
-          },
-          "description": {
-            "en_us": "If customer was already notified of this event",
-            "pt_br": "Se o cliente já foi notificado desse evento"
-          }
-        },
-        "flags": {
-          "label": {
-            "en_us": "Flags"
-          },
-          "items": {
-            "description": {
-              "en_us": "Flag title",
-              "pt_br": "Título da flag"
-            }
-          },
-          "description":{
-            "en_us": "Flags to associate additional info",
-            "pt_br": "Flags para associar informações adicionais"
-          }
-        }
+    "payments_history": {
+      "label": {
+        "en_us": "Payments history",
+        "pt_br": "Histórico de pagamento"
       },
-      "description":{
-        "en_us": "History record (event)",
-        "pt_br": "Histórico"
-      }
-    },
-    "description":{
-      "en_us": "Historical of payments and financial status changes",
-      "pt_br": "Histórico de pagamentos e mudanças e status"
-    }
-  },
-  "fulfillments": {
-    "label": {
-      "en_us": "Fulfillments",
-      "pt_br": "Cumprimentos"
-    },
-    "items": {
-      "properties": {
-        "_id": {
-          "label": {
-          "en_us": "ID"
-          },
-          "description": {
-            "en_us": "Unique ID (ObjectID)",
-            "pt_br": "ID único (ObjectID)"
-          }
-        },
-        "shipping_line_id": {
-          "label": {
-            "en_us": "Shipping line ID",
-            "pt_br": "ID da linha de transporte"
-          },
-          "description": {
-            "en_us": "ID of shipping line related with this event",
-            "pt_br": "ID da linha de remessa relacionada a este evento"
-          }
-        },
-        "date_time": {
-          "label": {
-            "en_us": "Date time",
-            "pt_br": "Data e hora"
-          },
-          "description": {
-            "en_us": "Date and time of the event, in ISO 8601 standard representation",
-            "pt_br": "Data e hora do evento, no padrão 8601"
-          }
-        },
-        "status": {
-          "label": {
-            "en_us": "Status"
-          },
-          "enum": {
-            "invoice_issued": {
-              "label": {
-                "en_us": "Invoice issued",
-                "pt_br": "Fatura emitida"
-              }
-            },
-            "in_production": {
-              "label": {
-                "en_us": "In production",
-                "pt_br": "Em produção"
-              }
-            },
-            "in_separation": {
-              "label": {
-                "en_us": "In separation",
-                "pt_br": "Em separação"
-              }
-            },
-            "ready_for_shipping": {
-              "label": {
-                "en_us": "Ready for shipping",
-                "pt_br": "Pronto para envio"
-              }
-            },
-            "shipped": {
-              "label": {
-                "en_us": "Shipped",
-                "pt_br": "Enviado"
-              }
-            },
-            "delivered": {
-              "label": {
-                "en_us": "Delivered",
-                "pt_br": "Entregado"
-              }
-            },
-            "returned_for_exchange": {
-              "label": {
-                "en_us": "Returned for exchange",
-                "pt_br": "Devolvido para troca"
-              }
-            },
-            "received_for_exchange": {
-              "label": {
-                "en_us": "Received for exchange",
-                "pt_br": "Recebido para troca"
-              }
-            },
-            "returned": {
-              "label": {
-                "en_us": "Returned",
-                "pt_br": "Devolvido"
-              }
-            }
-          },
-          "description":{
-            "en_us": "Fulfillment status",
-            "pt_br": "Status de entrega"
-          }
-        },
-        "notification_code": {
-          "label": {
-            "en_us": "Notification code",
-            "pt_br": "Código de notificação"
-          },
-          "description": {
-            "en_us": "Code of received notification with this status change",
-            "pt_br": "Código de recebimento de uma notificação com esta mudança de status"
-          }
-        },
-        "customer_notified": {
-          "label": {
-            "en_us": "Customer notified",
-            "pt_br": "Cliente notficado"
-          },
-          "description": {
-            "en_us": "If customer was already notified of this event",
-            "pt_br": "Se o lciente já foi notificado deste evento"
-          }
-        },
-        "flags": {
-          "label": {
-            "en_us": "Flags"
-          },
-          "items": {
-            "description":{
-              "en_us": "Flag title",
-              "pt_br": "Título da flag"
-            }
-          },
-          "description":{
-            "en_us": "Flags to associate additional info",
-            "pt_br": "Flags para associar informações adicionais"
-          }
-        }
-      },
-      "description":{
-        "en_us": "History record (event)",
-        "pt_br": "Histórico"
-      }
-    },
-    "description":{
-      "en_us": "Fulfillment and tracking events",
-      "pt_br": "Eventos de entrega e rastreio"
-    }
-  },
-  "items": {
-    "label": {
-      "en_us": "Items",
-      "pt_br": "Itens"
-    },
-    "items": {
-      "properties": {
-        "_id": {
-          "label": {
-            "en_us": "ID"
-          },
-          "description": {
-            "en_us": "Unique ID (ObjectID)",
-            "pt_br": "ID único (ObjectID)"
-          }
-        },
-        "product_id": {
-          "label": {
-            "en_us": "Product ID",
-            "pt_br": "ID do produto"
-          }
-        },
-        "variation_id": {
-          "label": {
-            "en_us": "Variation ID",
-            "pt_br": "Id da variação"
-          },
-          "description": {
-            "en_us": "ID to specify the variation added to cart, if product has variations",
-            "pt_br": "ID para especificar a variação adicionada no carrinho, se o produto tem variações"
-          }
-        },
-        "sku": {
-          "label": {
-            "en_us": "SKU"
-          },
-          "description": {
-            "en_us": "Product or variation unique reference code",
-            "pt_br": "Código de referência único do produto ou variação"
-          }
-        },
-        "name": {
-          "label": {
-            "en_us": "Name",
-            "pt_br": "Nome"
-          },
-          "description": {
-            "en_us": "Product or variation full name, or other label for this cart item",
-            "pt_br": "Nome completo do produto ou variação, ou outro rótulo para esse item do carrinho"
-          }
-        },
-        "customizations": {
-          "label": {
-            "en_us": "Customizations",
-            "pt_br": "Customizações"
-          },
-          "items": {
-            "properties": {
-              "_id": {
-                "label": {
-                  "en_us": "ID"
-                },
-                "description": {
-                  "en_us": "Customization field ID",
-                  "pt_br": "Campo de customização do ID"
-                }
-              },
-              "label": {
-                "label": {
-                  "en_us": "Label",
-                  "pt_br": "Rótulo"
-                },
-                "description": {
-                  "en_us": "Title for this customization field, can be the grid title",
-                  "pt_br": "Título para essa campo de customização, pode ser o título do grid"
-                }
-              },
-              "option": {
-                "label": {
-                  "en_us": "Option",
-                  "pt_br": "Opção"
-                },
-                "properties": {
-                  "option_id": {
-                    "label": {
-                      "en_us": "Option ID",
-                      "pt_br": "Id da opção"
-                    },
-                    "description": {
-                      "en_us": "Identify option if it was predefined (not custom value created by customer)",
-                      "pt_br": "Identifica a opção se foi predefinida (sem ser valor customizável)"
-                    }
-                  },
-                  "text": {
-                    "label": {
-                      "en_us": "Text",
-                      "pt_br": "Texto"
-                    },
-                    "description": {
-                      "en_us": "Option text value displayed for the client",
-                      "pt_br": "Texto da opção exibido para o cliente"
-                    }
-                  },
-                  "colors": {
-                    "label": {
-                      "en_us": "Colors",
-                      "pt_br": "Cores"
-                    },
-                    "items": {
-                      "description": {
-                        "en_us": "RGB code with #",
-                        "pt_br": "Código RGB com #"
-                      }
-                    },
-                    "description":{
-                      "en_us": "Option color palette (if the field involves colors), starting by main color",
-                      "pt_br": "Paleta de cor opcional (se o campo involve cores), começando pela cor principal"
-                    }
-                  }
-                },
-                "description":{
-                  "en_us": "Option chosen or created by customer",
-                  "pt_br": "Opção escolhida ou criada pelo cliente"
-                }
-              },
-              "attachment": {
-                "label": {
-                  "en_us": "Attachment",
-                  "pt_br": "Anexo"
-                },
-                "description": {
-                  "en_us": "URL of file attached by customer to this field",
-                  "pt_br": "URL do arquivo anexo pelo cliente a este campo"
-                }
-              },
-              "add_to_price": {
-                "label": {
-                  "en_us": "Add to price",
-                  "pt_br": "Adicionar ao preço"
-                },
-                "properties": {
-                  "type": {
-                    "label": {
-                      "en_us": "Type",
-                      "pt_br": "Tipo"
-                    },
-                    "enum": {
-                      "percentage":{
-                        "label": {
-                          "en_us": "Percentage",
-                          "pt_br": "Porcentagem"
-                        }
-                      },
-                      "fixed":{
-                        "label": {
-                          "en_us": "Fixed",
-                          "pt_br": "Fixado"
-                        }
-                      }
-                    },
-                    "description":{
-                      "en_us": "Type of price addition",
-                      "pt_br": "Tipo de adição de preço"
-                    }
-                  },
-                  "addition": {
-                    "label": {
-                      "en_us": "Addition",
-                      "pt_br": "Adicional"
-                    },
-                    "description": {
-                      "en_us": "Additional value, could be negative",
-                      "pt_br": "Valor adicional, pode ser negativo"
-                    }
-                  }
-                },
-                "description":{
-                  "en_us": "Price alteration due to this customization",
-                  "pt_br": "Alteração de preço causado por essa customização"
-                }
-              }
-            },
-            "description":{
-              "en_us": "Customization field",
-              "pt_br": "Campo de customização"
-            }
-          },
-          "description":{
-            "en_us": "Item customization fields",
-            "pt_br": "Campos de customização"
-          }
-        },
-        "gift_wrap": {
-          "label": {
-            "en_us": "Gift wrap",
-            "pt_br": "Embrulhar para presente"
-          },
-          "properties": {
-            "tag": {
-              "label": {
-                "en_us": "Tag"
-              },
-              "description": {
-                "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
-                "pt_br": "Tag para identificar o objeto, usando apenas letras minúsculas, números e sublinhado"
-              }
-            },
-            "label": {
-              "label": {
-                "en_us": "Label",
-                "pt_br": "Rótulo"
-              },
-              "description": {
-                "en_us": "Title describing this gift wrap",
-                "pt_br": "Título descrevendo esse embrúlho para presentes "
-              }
-            },
-            "add_to_price": {
-              "label": {
-                "en_us": "Add to price",
-                "pt_br": "Adicional"
-              },
-              "description": {
-                "en_us": "Additional value due to this gift wrap",
-                "pt_br": "Valor adicional cobrado por embrulhar para presente"
-              }
-            }
-          },
-          "description":{
-            "en_us": "Gift wrap chosen by customer",
-            "pt_br": "Embrulho de presente escolhido pelo cliente"
-          }
-        },
-        "quantity": {
-          "label": {
-            "en_us": "Quantity",
-            "pt_br": "Quantidade"
-          },
-          "description": {
-            "en_us": "Item quantity in cart",
-            "pt_br": "Quantidade do item no carrinho"
-          }
-        },
-        "price": {
-          "label": {
-            "en_us": "Price",
-            "pt_br": "Preço"
-          },
-          "description": {
-            "en_us": "Product sale price specifically for this cart",
-            "pt_br": "Preço de venda do produto especilamente para esse carrinho"
-          }
-        },
-        "final_price": {
-          "label": {
-            "en_us": "Final price",
-            "pt_br": "Preço final"
-          },
-          "description": {
-            "en_us": "Final item price including additions due to customizations and gift wrap",
-            "pt_br": "Preço final do item, incluindo adições devidas a personalizações e embrulho para presente"
-          }
-        },
-        "flags": {
-          "label": {
-            "en_us": "Flags"
-          },
-          "items": {
-            "description":{
-              "en_us": "Flag title",
-              "pt_br": "Título da flag"
-            }
-          },
-          "description":{
-            "en_us": "Flags to associate additional info",
-            "pt_br": "Flags para associar informações adicionais"
-          }
-        }
-      },
-      "description":{
-        "en_us": "One of the order items",
-        "pt_br": "Uma dos itens do pedido"
-      }
-    },
-    "description":{
-      "en_us": "Products composing the order",
-      "pt_br": "Produtos que compõe o pedido"
-    }
-  },
-  "loyalty_points": {
-    "label": {
-      "en_us": "Loyalty points",
-      "pt_br": "Pontos de fidelidade"
-    },
-    "patternProperties": {
-      "^{a-z0-9_}{2,30}$": {
+      "items": {
         "properties": {
+          "_id": {
+            "label": {
+              "en_us": "ID"
+            },
+            "description": {
+              "en_us": "Unique ID (ObjectID)",
+              "pt_br": "ID único"
+            }
+          },
+          "transaction_id": {
+            "label": {
+              "en_us": "Transacrion ID",
+              "pt_br": "ID da transação"
+            },
+            "description": {
+              "en_us": "ID of transaction related with this event",
+              "pt_br": "ID da transação relacionada a esse evento"
+            }
+          },
+          "date_time": {
+            "label": {
+              "en_us": "Date time",
+              "pt_br": "Data e hora"
+            },
+            "description": {
+              "en_us": "Date and time of the event, in ISO 8601 standard representation",
+              "pt_br": "Data e hora do evento, no padrão 8601"
+            }
+          },
+          "status": {
+            "label": {
+              "en_us": "Status"
+            },
+            "enum": {
+              "pending": {
+                "label": {
+                  "en_us": "Pending",
+                  "pt_br": "Pendente"
+                }
+              },
+              "under_analysis": {
+                "label": {
+                  "en_us": "Under analysis",
+                  "pt_br": "Em análise"
+                }
+              },
+              "authorized": {
+                "label": {
+                  "en_us": "Authorized",
+                  "pt_br": "Autorizado"
+                }
+              },
+              "paid": {
+                "label": {
+                  "en_us": "Paid",
+                  "pt_br": "Pago"
+                }
+              },
+              "in_dispute": {
+                "label": {
+                  "en_us": "In dispute",
+                  "pt_br": "Em disputa"
+                }
+              },
+              "refunded": {
+                "label": {
+                  "en_us": "Refunded",
+                  "pt_br": "Restituído"
+                }
+              },
+              "voided": {
+                "label": {
+                  "en_us": "Voided",
+                  "pt_br": "Anulado"
+                }
+              },
+              "unknown": {
+                "label": {
+                  "en_us": "Unknown",
+                  "pt_br": "Desconhecido"
+                }
+              }
+            },
+            "description":{
+              "en_us": "Payment status",
+              "pt_br": "Status de pagamento"
+            }
+          },
+          "notification_code": {
+            "label": {
+              "en_us": "Notification code",
+              "pt_br": "Código de notificação"
+            },
+            "description": {
+              "en_us": "Code of received notification with this status change",
+              "pt_br": "Código de notificação recebido com essa mudança de status"
+            }
+          },
+          "customer_notified": {
+            "label": {
+              "en_us": "Customer notified",
+              "pt_br": "Cliente notificado"
+            },
+            "description": {
+              "en_us": "If customer was already notified of this event",
+              "pt_br": "Se o cliente já foi notificado desse evento"
+            }
+          },
+          "flags": {
+            "label": {
+              "en_us": "Flags"
+            },
+            "items": {
+              "description": {
+                "en_us": "Flag title",
+                "pt_br": "Título da flag"
+              }
+            },
+            "description":{
+              "en_us": "Flags to associate additional info",
+              "pt_br": "Flags para associar informações adicionais"
+            }
+          }
+        },
+        "description":{
+          "en_us": "History record (event)",
+          "pt_br": "Histórico"
+        }
+      },
+      "description":{
+        "en_us": "Historical of payments and financial status changes",
+        "pt_br": "Histórico de pagamentos e mudanças e status"
+      }
+    },
+    "fulfillments": {
+      "label": {
+        "en_us": "Fulfillments",
+        "pt_br": "Cumprimentos"
+      },
+      "items": {
+        "properties": {
+          "_id": {
+            "label": {
+            "en_us": "ID"
+            },
+            "description": {
+              "en_us": "Unique ID (ObjectID)",
+              "pt_br": "ID único (ObjectID)"
+            }
+          },
+          "shipping_line_id": {
+            "label": {
+              "en_us": "Shipping line ID",
+              "pt_br": "ID da linha de transporte"
+            },
+            "description": {
+              "en_us": "ID of shipping line related with this event",
+              "pt_br": "ID da linha de remessa relacionada a este evento"
+            }
+          },
+          "date_time": {
+            "label": {
+              "en_us": "Date time",
+              "pt_br": "Data e hora"
+            },
+            "description": {
+              "en_us": "Date and time of the event, in ISO 8601 standard representation",
+              "pt_br": "Data e hora do evento, no padrão 8601"
+            }
+          },
+          "status": {
+            "label": {
+              "en_us": "Status"
+            },
+            "enum": {
+              "invoice_issued": {
+                "label": {
+                  "en_us": "Invoice issued",
+                  "pt_br": "Fatura emitida"
+                }
+              },
+              "in_production": {
+                "label": {
+                  "en_us": "In production",
+                  "pt_br": "Em produção"
+                }
+              },
+              "in_separation": {
+                "label": {
+                  "en_us": "In separation",
+                  "pt_br": "Em separação"
+                }
+              },
+              "ready_for_shipping": {
+                "label": {
+                  "en_us": "Ready for shipping",
+                  "pt_br": "Pronto para envio"
+                }
+              },
+              "shipped": {
+                "label": {
+                  "en_us": "Shipped",
+                  "pt_br": "Enviado"
+                }
+              },
+              "delivered": {
+                "label": {
+                  "en_us": "Delivered",
+                  "pt_br": "Entregado"
+                }
+              },
+              "returned_for_exchange": {
+                "label": {
+                  "en_us": "Returned for exchange",
+                  "pt_br": "Devolvido para troca"
+                }
+              },
+              "received_for_exchange": {
+                "label": {
+                  "en_us": "Received for exchange",
+                  "pt_br": "Recebido para troca"
+                }
+              },
+              "returned": {
+                "label": {
+                  "en_us": "Returned",
+                  "pt_br": "Devolvido"
+                }
+              }
+            },
+            "description":{
+              "en_us": "Fulfillment status",
+              "pt_br": "Status de entrega"
+            }
+          },
+          "notification_code": {
+            "label": {
+              "en_us": "Notification code",
+              "pt_br": "Código de notificação"
+            },
+            "description": {
+              "en_us": "Code of received notification with this status change",
+              "pt_br": "Código de recebimento de uma notificação com esta mudança de status"
+            }
+          },
+          "customer_notified": {
+            "label": {
+              "en_us": "Customer notified",
+              "pt_br": "Cliente notficado"
+            },
+            "description": {
+              "en_us": "If customer was already notified of this event",
+              "pt_br": "Se o lciente já foi notificado deste evento"
+            }
+          },
+          "flags": {
+            "label": {
+              "en_us": "Flags"
+            },
+            "items": {
+              "description":{
+                "en_us": "Flag title",
+                "pt_br": "Título da flag"
+              }
+            },
+            "description":{
+              "en_us": "Flags to associate additional info",
+              "pt_br": "Flags para associar informações adicionais"
+            }
+          }
+        },
+        "description":{
+          "en_us": "History record (event)",
+          "pt_br": "Histórico"
+        }
+      },
+      "description":{
+        "en_us": "Fulfillment and tracking events",
+        "pt_br": "Eventos de entrega e rastreio"
+      }
+    },
+    "items": {
+      "label": {
+        "en_us": "Items",
+        "pt_br": "Itens"
+      },
+      "items": {
+        "properties": {
+          "_id": {
+            "label": {
+              "en_us": "ID"
+            },
+            "description": {
+              "en_us": "Unique ID (ObjectID)",
+              "pt_br": "ID único (ObjectID)"
+            }
+          },
+          "product_id": {
+            "label": {
+              "en_us": "Product ID",
+              "pt_br": "ID do produto"
+            }
+          },
+          "variation_id": {
+            "label": {
+              "en_us": "Variation ID",
+              "pt_br": "Id da variação"
+            },
+            "description": {
+              "en_us": "ID to specify the variation added to cart, if product has variations",
+              "pt_br": "ID para especificar a variação adicionada no carrinho, se o produto tem variações"
+            }
+          },
+          "sku": {
+            "label": {
+              "en_us": "SKU"
+            },
+            "description": {
+              "en_us": "Product or variation unique reference code",
+              "pt_br": "Código de referência único do produto ou variação"
+            }
+          },
           "name": {
             "label": {
               "en_us": "Name",
               "pt_br": "Nome"
             },
             "description": {
-              "en_us": "The name of the loyalty points program",
-              "pt_br": "O nome do program de fidelidade"
+              "en_us": "Product or variation full name, or other label for this cart item",
+              "pt_br": "Nome completo do produto ou variação, ou outro rótulo para esse item do carrinho"
             }
           },
-          "points_value": {
+          "customizations": {
             "label": {
-              "en_us": "Points value",
-              "pt_br": "Valor dos pontos"
+              "en_us": "Customizations",
+              "pt_br": "Customizações"
             },
-            "description": {
-              "en_us": "Number of loyalty points received",
-              "pt_br": "Número de pontos de fidelidade recebidos"
-            }
-          }
-        },
-        "description":{
-          "en_us": "Loyalty points program object",
-          "pt_br": "Obejeto do programa de fidelidade"
-        }
-      }
-    },
-    "description":{
-      "en_us": "Loyalty points earned by customer due to this order, program_id as property name",
-      "pt_br": "Pontos de fidelidade ganhos pelo cliente por conta deste pedido, program_id é o nome da propriedade"
-    }
-  },
-  "metafields": {
-    "label": {
-      "en_us": "Metafields",
-      "pt_br": "Metafields"
-    },
-    "items": {
-      "properties": {
-        "_id": {
-          "label": {
-            "en_us": "ID"
-          },
-          "description": {
-            "en_us": "ID único (ObjectID)",
-            "pt_br": "Unique ID (ObjectID)"
-          }
-        },
-        "namespace": {
-          "label": {
-            "en_us": "Namespace",
-            "pt_br": "Espaço do nome"
-          },
-          "description": {
-            "en_us": "String to help distinguish who (or which app) created and can use the metafield",
-            "pt_br": "String para ajudar a distinguir quem, (ou qual aplicativo) criou e pode utilizar o metafield"
-          }
-        },
-        "field": {
-          "label": {
-            "en_us": "Field"
-          },
-          "description": {
-            "en_us": "Field name",
-            "pt_br": "Campo de nome"
-          }
-        },
-        "value": {
-          "label": {
-            "en_us": "Value",
-            "pt_br": "Valor"
-          },
-          "description": {
-            "en_us": "Custom property value",
-            "pt_br": "Valor da propriedade customizada"
-          }
-        }
-      },
-      "description": {
-        "en_us": "Custom attribute object",
-        "pt_br": "Objeto do atributo customizado"
-      }
-    },
-    "description": {
-      "en_us": "List of custom attributes",
-      "pt_br": "Lista de objetos customizados"
-    }
-  },
-  "hidden_metafields": {
-    "label": {
-      "en_us": "Hidden metafields",
-      "pt_br": "Metafields ocultos"
-    },
-    "items": {
-      "properties": {
-        "_id": {
-          "label": {
-            "en_us": "ID"
-          },
-          "description": {
-            "en_us": "ID único (ObjectID)",
-            "pt_br": "Unique ID (ObjectID)"
-          }
-        },
-        "namespace": {
-          "label": {
-            "en_us": "Namespace",
-            "pt_br": "Espaço do nome"
-          },
-          "description": {
-            "en_us": "String to help distinguish who (or which app) created and can use the metafield",
-            "pt_br": "String para ajudar a distinguir quem, (ou qual aplicativo) criou e pode utilizar o metafield"
-          }
-        },
-        "field": {
-          "label": {
-            "en_us": "Field"
-          },
-          "description": {
-            "en_us": "Field name",
-            "pt_br": "Campo de nome"
-          }
-        },
-        "value": {
-          "label": {
-            "en_us": "Value",
-            "pt_br": "Valor"
-          },
-          "description": {
-            "en_us": "Custom property value",
-            "pt_br": "Valor da propriedade customizada"
-          }
-        }
-      },
-      "description":{
-        "en_us": "Custom attribute object",
-        "pt_br": "Objeto do atributo customizado"
-      }
-    },
-    "description":{
-      "en_us": "List of custom attributes",
-      "pt_br": "Lista de atributos costomizados"
-    }
-  },
-  "private_metafields": {
-    "label": {
-      "en_us": "Private metafields",
-      "pt_br": "Matafields privados"
-    },
-    "items": {
-      "properties": {
-        "_id": {
-          "label": {
-            "en_us": "ID"
-          },
-          "description": {
-            "en_us": "Unique ID (ObjectID)",
-            "pt_br": "Unique ID (ObjectID)"
-          }
-        },
-        "namespace": {
-          "label": {
-            "en_us": "Namespace"
-          },
-          "description": {
-            "en_us": "String to help distinguish who (or which app) created and can use the metafield",
-            "pt_br": "String para ajudar a distinguir quem (ou qual aplicativo) criou e pode usar o metafield"
-          }
-        },
-        "field": {
-          "label": {
-            "en_us": "Field",
-            "pt_br": "Campo"
-          },
-          "description": {
-            "en_us": "Field name",
-            "pt_br": "Nome do campo"
-          }
-        },
-        "value": {
-          "label": {
-            "en_us": "Value",
-            "pt_br": "Valor"
-          },
-          "description": {
-            "en_us": "Custom property value",
-            "pt_br": "Valor da propriedade customizada"
-          }
-        }
-      },
-      "description":{
-        "en_us": "Custom attribute object",
-        "pt_br": "Objeto do atributo customizado"
-      }
-    },
-    "description":{
-      "en_us": "List of custom attributes, hidden by default, visible for the order buyers",
-      "pt_br": "Lista de atributos customizados, escondidos por padrão, visivel para os compradores"
-    }
-  },
-  "flags": {
-    "label": {
-      "en_us": "Flags"
-    },
-    "items": {
-      "label": {
-        "en_us": "Items",
-        "pt_br": "itens"
-      },
-      "description": {
-        "en_us": "Flag title",
-        "pt_br": "Título da Flag"
-      }
-    },
-    "description":{
-      "en_us": "Flags to associate additional info",
-      "pt_br": "Flags para associar informações adicionais"
-    }
-  },
-  "notes": {
-    "label": {
-      "en_us": "Notes",
-      "pt_br": "Notas"
-    },
-    "description": {
-      "en_us": "Optional notes with additional info about this order",
-      "pt_br": "Notas opcionais com informação adicional sobre esse pedido"
-    }
-  },
-  "staff_notes": {
-    "label": {
-      "en_us": "Staff notes",
-      "pt_br": "Notas do staff"
-    },
-    "description": {
-      "en_us": "Description and notes about this order, available only for shop administrators",
-      "pt_br": "Descrição e notas sobre esse pedido, apenas visível para os administradores da loja"
-    }
-  },
-  "shipping_lines": {
-    "label": {
-      "en_us": "Shipping lines",
-      "pt_br": "Linhas de frete"
-    },
-    "items": {
-      "properties": {
-        "_id": {
-          "label": {
-            "en_us": "ID"
-          },
-          "description": {
-            "en_us": "Unique ID (ObjectID)",
-            "pt_br": "ID único (ObjectID)"
-          }
-        },
-        "from": {
-          "label": {
-            "en_us": "From",
-            "pt_br": "De"
-          },
-          "description": {
-            "en_us": "Sender's address",
-            "pt_br": "Endereço do remetente"
-          }
-        },
-        "to": {
-          "label": {
-            "en_us": "From",
-            "pt_br": "De"
-          },
-          "description": {
-            "en_us": "Sender's address",
-            "pt_br": "Endereço do remetente"
-          }
-        },
-        "package": {
-          "label": {
-            "en_us": "Package",
-            "pt_br": "Encomenda"
-          },
-          "properties": {
-            "dimensions": {
-              "label": {
-                "en_us": "Dimensions",
-                "pt_br": "Dimensões"
-              },
-              "patternProperties": {
-                "^width|height|length$": {
-                  "properties": {
-                    "value": {
-                      "label": {
-                        "en_us": "Value",
-                        "pt_br": "Valor"
-                      },
-                      "description": {
-                        "en_us": "Size in specified unit",
-                        "pt_br": "Tamanho em unidade especifica"
-                      }
-                    },
-                    "unit": {
-                      "label": {
-                        "en_us": "Unit",
-                        "pt_br": "Unidade"
-                      },
-                      "enum": {
-                        "mm":{
-                          "label": {
-                            "en_us": "mm"
-                          }
-                        },
-                        "cm":{
-                          "label": {
-                            "en_us": "cm"
-                          }
-                        },
-                        "m":{
-                          "label": {
-                            "en_us": "m"
-                          }
-                        },
-                        "ft":{
-                          "label": {
-                            "en_us": "ft"
-                          }
-                        },
-                        "in":{
-                          "label": {
-                            "en_us": "in"
-                          }
-                        },
-                        "yd":{
-                          "label": {
-                            "en_us": "yd"
-                          }
-                        },
-                        "mi":{
-                          "label": {
-                            "en_us": "mi"
-                          }
-                        }
-                      },
-                      "description":{
-                        "en_us": "Unit of measurement",
-                        "pt_br": "Unidade de medida"
-                      }
-                    }
-                  },
-                  "description":{
-                    "en_us": "Package width, height and length",
-                    "pt_br": "Largura, altura e profundidade da encomenda"
-                  }
-                }
-              },
-              "description":{
-                "en_us": "Package dimensions",
-                "pt_br": "Dimensões do pacote"
-              }
-            },
-            "weight": {
-              "label": {
-                "en_us": "Weight",
-                "pt_br": "Peso"
-              },
-              "properties": {
-                "value": {
-                  "label": {
-                    "en_us": "Value",
-                    "pt_br": "Valor"
-                  },
-                  "description": {
-                    "en_us": "Size in specified unit",
-                    "pt_br": "Tamanho em unidade especifica"
-                  }
-                },
-                "unit": {
-                  "label": {
-                    "en_us": "Unit",
-                    "pt_br": "Unidade"
-                  },
-                  "enum": {
-                    "mg":{
-                      "label": {
-                        "en_us": "mg"
-                      }
-                    },
-                    "g":{
-                      "label": {
-                        "en_us": "g"
-                      }
-                    },
-                    "kg":{
-                      "label": {
-                        "en_us": "kg"
-                      }
-                    },
-                    "lb":{
-                      "label": {
-                        "en_us": "lb"
-                      }
-                    },
-                    "oz":{
-                      "label": {
-                        "en_us": "oz"
-                      }
-                    }
-                  },
-                  "description":{
-                    "en_us": "Unit of measurement",
-                    "pt_br": "Unidade de medida"
-                  }
-                }
-              },
-              "description":{
-                "en_us": "Package weight for freight calculation",
-                "pt_br": "Peso do pacote, para cálculo de frete"
-              }
-            }
-          },
-          "description":{
-            "en_us": "Shipping object information",
-            "pt_br": "Informações do objeto de entrega"
-          }
-        },
-        "app": {
-          "label": {
-            "en_us": "App",
-            "pt_br": "Aplicativo"
-          },
-          "properties": {
-            "_id": {
-              "label": {
-                "en_us": "ID"
-              },
-              "description": {
-                "en_us": "Application ID",
-                "pt_br": "ID da aplicaçaõ"
-              }
-            },
-            "label": {
-              "label": {
-                "en_us": "Label",
-                "pt_br": "Rótulo"
-              },
-              "description": {
-                "en_us": "Name of shipping method shown to customers",
-                "pt_br": "Nome do meio de envio a ser exibido para os clientes"
-              }
-            },
-            "carrier": {
-              "label": {
-                "en_us": "Carrier",
-                "pt_br": "Transportadora"
-              },
-              "description": {
-                "en_us": "Carrier name",
-                "pt_br": "Nome da transportadora"
-              }
-            },
-            "carrier_doc_number": {
-              "label": {
-                "en_us": "Carrier doc number",
-                "pt_br": "Número do documento da transportadora"
-              },
-              "description": {
-                "en_us": "Carrier document number (only numbers)",
-                "pt_br": "Número do documento da transportadora (apenas números)"
-              }
-            },
-            "service_name": {
-              "label": {
-                "en_us": "Service_name",
-                "pt_br": "Nome do serviço"
-              },
-              "description": {
-                "en_us": "Name of service (shipping method) defined by carrier",
-                "pt_br": "Nome do serviço (meio de frete) efinido pela transportadora"
-              }
-            },
-            "service_code": {
-              "label": {
-                "en_us": "Service code",
-                "pt_br": "Código do serviço"
-              },
-              "description": {
-                "en_us": "Code of service defined by carrier",
-                "pt_br": "Código do serviço definido pela transportadora"
-              }
-            },
-            "contract": {
-              "label": {
-                "en_us": "Contract",
-                "pt_br": "Contrato"
-              },
-              "description": {
-                "en_us": "Contract number of the shop with carrier, if exists",
-                "pt_br": "Número do contrato da loja com a transportadora, caso haja"
-              }
-            },
-            "icon": {
-              "label": {
-                "en_us": "Icon",
-                "pt_br": "Ícone"
-              },
-              "description": {
-                "en_us": "Shipping method icon image URI",
-                "pt_br": "URI da imagem do ícone do meio de frete"
-              }
-            },
-            "tracking_url": {
-              "label": {
-                "en_us": "Tracking URL",
-                "pt_br": "URL de rastreio"
-              },
-              "description": {
-                "en_us": "URI to carrier website to get package tracking status",
-                "pt_br": "URI do site da transportadora para verificar o status de rastreio"
-              }
-            },
-            "rule": {
-              "label": {
-                "en_us": "Rule",
-                "pt_br": "Regra"
-              },
+            "items": {
               "properties": {
                 "_id": {
                   "label": {
                     "en_us": "ID"
                   },
                   "description": {
-                    "en_us": "Rule ID",
-                    "pt_br": "ID da regra"
+                    "en_us": "Customization field ID",
+                    "pt_br": "Campo de customização do ID"
                   }
                 },
                 "label": {
@@ -3533,98 +2576,130 @@
                     "pt_br": "Rótulo"
                   },
                   "description": {
-                    "en_us": "Shipping rule label",
-                    "pt_br": "Rótulo da regra de frete"
+                    "en_us": "Title for this customization field, can be the grid title",
+                    "pt_br": "Título para essa campo de customização, pode ser o título do grid"
+                  }
+                },
+                "option": {
+                  "label": {
+                    "en_us": "Option",
+                    "pt_br": "Opção"
+                  },
+                  "properties": {
+                    "option_id": {
+                      "label": {
+                        "en_us": "Option ID",
+                        "pt_br": "Id da opção"
+                      },
+                      "description": {
+                        "en_us": "Identify option if it was predefined (not custom value created by customer)",
+                        "pt_br": "Identifica a opção se foi predefinida (sem ser valor customizável)"
+                      }
+                    },
+                    "text": {
+                      "label": {
+                        "en_us": "Text",
+                        "pt_br": "Texto"
+                      },
+                      "description": {
+                        "en_us": "Option text value displayed for the client",
+                        "pt_br": "Texto da opção exibido para o cliente"
+                      }
+                    },
+                    "colors": {
+                      "label": {
+                        "en_us": "Colors",
+                        "pt_br": "Cores"
+                      },
+                      "items": {
+                        "description": {
+                          "en_us": "RGB code with #",
+                          "pt_br": "Código RGB com #"
+                        }
+                      },
+                      "description":{
+                        "en_us": "Option color palette (if the field involves colors), starting by main color",
+                        "pt_br": "Paleta de cor opcional (se o campo involve cores), começando pela cor principal"
+                      }
+                    }
+                  },
+                  "description":{
+                    "en_us": "Option chosen or created by customer",
+                    "pt_br": "Opção escolhida ou criada pelo cliente"
+                  }
+                },
+                "attachment": {
+                  "label": {
+                    "en_us": "Attachment",
+                    "pt_br": "Anexo"
+                  },
+                  "description": {
+                    "en_us": "URL of file attached by customer to this field",
+                    "pt_br": "URL do arquivo anexo pelo cliente a este campo"
+                  }
+                },
+                "add_to_price": {
+                  "label": {
+                    "en_us": "Add to price",
+                    "pt_br": "Adicionar ao preço"
+                  },
+                  "properties": {
+                    "type": {
+                      "label": {
+                        "en_us": "Type",
+                        "pt_br": "Tipo"
+                      },
+                      "enum": {
+                        "percentage":{
+                          "label": {
+                            "en_us": "Percentage",
+                            "pt_br": "Porcentagem"
+                          }
+                        },
+                        "fixed":{
+                          "label": {
+                            "en_us": "Fixed",
+                            "pt_br": "Fixado"
+                          }
+                        }
+                      },
+                      "description":{
+                        "en_us": "Type of price addition",
+                        "pt_br": "Tipo de adição de preço"
+                      }
+                    },
+                    "addition": {
+                      "label": {
+                        "en_us": "Addition",
+                        "pt_br": "Adicional"
+                      },
+                      "description": {
+                        "en_us": "Additional value, could be negative",
+                        "pt_br": "Valor adicional, pode ser negativo"
+                      }
+                    }
+                  },
+                  "description":{
+                    "en_us": "Price alteration due to this customization",
+                    "pt_br": "Alteração de preço causado por essa customização"
                   }
                 }
               },
               "description":{
-                "en_us": "Selected shipping rule of this shipping method",
-                "pt_br": "Regra de frete selecionada para esse meio de frete"
+                "en_us": "Customization field",
+                "pt_br": "Campo de customização"
               }
+            },
+            "description":{
+              "en_us": "Item customization fields",
+              "pt_br": "Campos de customização"
             }
           },
-          "description":{
-            "en_us": "Shipping method (by application) chosen by customer",
-            "pt_br": "Meio de frete (por aplicação) escolhido pelo cliente"
-          }
-        },
-        "price": {
-          "label": {
-            "en_us": "Price",
-            "pt_br": "Preço"
-          },
-          "description": {
-            "en_us": "Freight cost for this shipping line, without additionals",
-            "pt_br": "Custo de frete para essa linha de frete, sem adicionais"
-          }
-        },
-        "declared_value": {
-          "label": {
-            "en_us": "Declared value",
-            "pt_br": "Valor declarado"
-          },
-          "description": {
-            "en_us": "The package value declared to carrier, generally the sum of all items prices",
-            "pt_br": "O valor do pacote declarado pela transportadora, geralmente a soma de todos os preços"
-          }
-        },
-        "declared_value_price": {
-          "label": {
-            "en_us": "Declared value price",
-            "pt_br": "Preço declara"
-          },
-          "description": {
-            "en_us": "Cost for the \"declared value\" additional service",
-            "pt_br": "Custo pelo serviço de \"valor declarado\""
-          }
-        },
-        "own_hand": {
-          "label": {
-            "en_us": "Own hand",
-            "pt_br": "Em mãos"
-          },
-          "description": {
-            "en_us": "Whether the package must be delivered with additional service \"own hand\"",
-            "pt_br": "Se o pacote deve ser entregada com o serviço adicional \"em mãos\""
-          }
-        },
-        "own_hand_price": {
-          "label": {
-            "en_us": "Own hand price",
-            "pt_br": "Preço do em mãos"
-          },
-          "description": {
-            "en_us": "Cost for the \"own hand\" additional service",
-            "pt_br": "Custo para o serviço adicional \"em mãos\""
-          }
-        },
-        "receipt": {
-          "label": {
-            "en_us": "Receipt",
-            "pt_br": "Recebimento"
-          },
-          "description": {
-            "en_us": "If the package will be delivered with acknowledgment of receipt",
-            "pt_br": "Se o pacote será entregue com aviso de recebimento"
-          }
-        },
-        "receipt_price": {
-          "label": {
-            "en_us": "Receipt price",
-            "pt_br": "Preço da recepção "
-          },
-          "description": {
-            "en_us": "Cost for the \"acknowledgment of receipt\" additional service",
-            "pt_br": "Custo para o serviço de \"aviso de recebimento\""
-          }
-        },
-        "other_additionals": {
-          "label": {
-            "en_us": "Other additionals",
-            "pt_br": "Outros adicionais"
-          },
-          "items": {
+          "gift_wrap": {
+            "label": {
+              "en_us": "Gift wrap",
+              "pt_br": "Embrulhar para presente"
+            },
             "properties": {
               "tag": {
                 "label": {
@@ -3632,7 +2707,7 @@
                 },
                 "description": {
                   "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
-                  "pt_br": "Tag para identificar o objeto, use apenas letras minúsculas dígitos e sublinhado"
+                  "pt_br": "Tag para identificar o objeto, usando apenas letras minúsculas, números e sublinhado"
                 }
               },
               "label": {
@@ -3641,499 +2716,1230 @@
                   "pt_br": "Rótulo"
                 },
                 "description": {
-                  "en_us": "Name of the additional service",
-                  "pt_br": "Nome do valor adicional do serviço"
+                  "en_us": "Title describing this gift wrap",
+                  "pt_br": "Título descrevendo esse embrúlho para presentes "
                 }
               },
-              "price": {
+              "add_to_price": {
                 "label": {
-                  "en_us": "Price",
-                  "pt_br": "Preço"
+                  "en_us": "Add to price",
+                  "pt_br": "Adicional"
                 },
                 "description": {
-                  "en_us": "Cost for this additional service",
-                  "pt_br": "Custo para esse serviço adicional"
+                  "en_us": "Additional value due to this gift wrap",
+                  "pt_br": "Valor adicional cobrado por embrulhar para presente"
                 }
               }
             },
             "description":{
-              "en_us": "Additional service",
-              "pt_br": "Additional service"
+              "en_us": "Gift wrap chosen by customer",
+              "pt_br": "Embrulho de presente escolhido pelo cliente"
             }
           },
-          "description":{
-            "en_us": "List of other additional services for this shipping line",
-            "pt_br": "Lista de outros serviços adicionais para essa linha de frete"
-          }
-        },
-        "taxes": {
-          "label": {
-            "en_us": "Taxes"
-          },
-          "items": {
-            "properties": {
-              "tag": {
-                "label": {
-                  "en_us": "Tag"
-                },
-                "description": {
-                  "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
-                  "pt_br": "Tag para identificar o objeto, utilize apenas letras minúsculas, dígitos e sublinhado"
-                }
-              },
-              "label": {
-                "label": {
-                  "en_us": "Label",
-                  "pt_br": "Rótulo"
-                },
-                "description": {
-                  "en_us": "Tax title",
-                  "pt_br": "Título da taxa"
-                }
-              },
-              "price": {
-                "label": {
-                  "en_us": "Price",
-                  "pt_br": "Preço"
-                },
-                "description": {
-                  "en_us": "Tax value applied",
-                  "pt_br": "Valor da taxa aplicada"
-                }
-              },
-              "rate": {
-                "label": {
-                  "en_us": "Rate",
-                  "pt_br": "Taxaçaõ"
-                },
-                "description": {
-                  "en_us": "Tax rate as a function of package value",
-                  "pt_br": "Taxa em função do valor do pacote"
-                }
-              }
+          "quantity": {
+            "label": {
+              "en_us": "Quantity",
+              "pt_br": "Quantidade"
             },
-            "description":{
-              "en_us": "Applied tax or additional service",
-              "pt_br": "Taxa aplicada ou adicional do serviço"
+            "description": {
+              "en_us": "Item quantity in cart",
+              "pt_br": "Quantidade do item no carrinho"
             }
           },
-          "description":{
-            "en_us": "List of taxes or other additional services for this shipping line",
-            "pt_br": "Lista das taxas ou outros serviços adicionais para essa linha de frete"
-          }
-        },
-        "discount": {
-          "label": {
-            "en_us": "Discount",
-            "pt_br": "Desconto"
-          },
-          "description": {
-            "en_us": "Discount on shipping price, negative if value was additionated (not discounted)",
-            "pt_br": "Disconto no valor do frete, negativo cas o"
-          }
-        },
-        "total_price": {
-          "label": {
-            "en_us": "Total price",
-            "pt_br": "Preço total"
-          },
-          "description": {
-            "en_us": "Total cost for this shipping line, with additionals and taxes",
-            "pt_br": "Custo total para a linha de frete, com taxas e adicionais "
-          }
-        },
-        "posting_deadline": {
-          "label": {
-            "en_us": "Posting deadline",
-            "pt_br": "Prazo de postagem"
-          },
-          "properties": {
-            "days": {
-              "label": {
-                "en_us": "Days",
-                "pt_br": "Dias"
-              },
-              "description": {
-                "en_us": "Number of days to post the product after purchase",
-                "pt_br": "Número de dias para postar o produto após a compra"
-              }
+          "price": {
+            "label": {
+              "en_us": "Price",
+              "pt_br": "Preço"
             },
-            "working_days": {
-              "label": {
-                "en_us": "Working days",
-                "pt_br": "Dias úteis"
-              },
-              "description": {
-                "en_us": "If the deadline is calculated in working days",
-                "pt_br": "Se o prazo é calculado em dias úteis"
-              }
-            },
-            "after_approval": {
-              "label": {
-                "en_us": "After approval",
-                "pt_br": "Após aprovado"
-              },
-              "description": {
-                "en_us": "Whether days will be counted after payment approval",
-                "pt_br": "Se os dias serão contado após o pagamento ser aprovado"
-              }
+            "description": {
+              "en_us": "Product sale price specifically for this cart",
+              "pt_br": "Preço de venda do produto especilamente para esse carrinho"
             }
           },
-          "description":{
-            "en_us": "Deadline for sending the package",
-            "pt_br": "Prazo para enviar o pedido"
-          }
-        },
-        "delivery_time": {
-          "label": {
-            "en_us": "Delivery time",
-            "pt_br": "Tempo de entrega"
-          },
-          "properties": {
-            "days": {
-              "label": {
-                "en_us": "Days",
-                "pt_br": "Dias"
-              },
-              "description": {
-                "en_us": "Number of days for delivery after shipping",
-                "pt_br": "Número de dias para a entrega após o envio"
-              }
+          "final_price": {
+            "label": {
+              "en_us": "Final price",
+              "pt_br": "Preço final"
             },
-            "working_days": {
-              "label": {
-                "en_us": "Working days",
-                "pt_br": "Dias úteis"
-              },
-              "description": {
-                "en_us": "If the deadline is calculated in working days",
-                "pt_br": "Se o prazo é calculado em dias úteis"
-              }
+            "description": {
+              "en_us": "Final item price including additions due to customizations and gift wrap",
+              "pt_br": "Preço final do item, incluindo adições devidas a personalizações e embrulho para presente"
             }
           },
-          "description":{
-            "en_us": "Estimated delivery time",
-            "pt_br": "Tempo estimado para a entrega"
-          }
-        },
-        "scheduled_delivery": {
-          "label": {
-            "en_us": "Scheduled delivery",
-            "pt_br": "Entrega agendada"
-          },
-          "description": {
-            "en_us": "When delivery will be made on the ISO 8601 date time representation",
-            "pt_br": "Quando a entraga será feita, seguindo o padrão ISO 8601"
-          }
-        },
-        "tracking_codes": {
-          "label": {
-            "en_us": "Tracking codes",
-            "pt_br": "Códigos de rastreio"
-          },
-          "items": {
-            "properties": {
-              "tag": {
-                "label": {
-                  "en_us": "Tag"
-                },
-                "description": {
-                  "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
-                  "pt_br": "Tag para identificar o objeto, utilize apenas letras minúsculas, dígitos e sublinhado"
-                }
-              },
-              "code": {
-                "label": {
-                  "en_us": "Code",
-                  "pt_br": "Código"
-                },
-                "description": {
-                  "en_us": "Tracking code string",
-                  "pt_br": "Linha do código de rastreio"
-                }
-              },
-              "link": {
-                "label": {
-                  "en_us": "Link"
-                },
-                "description": {
-                  "en_us": "URI for carrier website to get the tracking status with this code",
-                  "pt_br": "URI para o website da transportadora, para rastreiar o pedido com este código"
-                }
-              }
+          "flags": {
+            "label": {
+              "en_us": "Flags"
             },
-            "description":{
-              "en_us": "Tracking code object",
-              "pt_br": "Objeto do código de rastreio"
-            }
-          },
-          "description":{
-            "en_us": "List of codes for delivery status follow-up",
-            "pt_br": "Lista de códigos para acompnhar o status de entrega"
-          }
-        },
-        "invoices": {
-          "label": {
-            "en_us": "Invoices",
-            "pt_br": "Faturas"
-          },
-          "items": {
-            "properties": {
-              "issuer_doc_number": {
-                "label": {
-                  "en_us": "Issuer doc number",
-                  "pt_br": "Número do documento do emissor"
-                },
-                "description": {
-                  "en_us": "Company document number (only numbers)",
-                  "pt_br": "Número de documento da empresa (apenas números)"
-                }
-              },
-              "number": {
-                "label": {
-                  "en_us": "Number",
-                  "pt_br": "Número"
-                },
-                "description": {
-                  "en_us": "Invoice number",
-                  "pt_br": "Número da fatura"
-                }
-              },
-              "serial_number": {
-                "label": {
-                  "en_us": "Serial number",
-                  "pt_br": "Número de serie"
-                },
-                "description": {
-                  "en_us": "Invoice serial number",
-                  "pt_br": "Número de série da fatura"
-                }
-              },
-              "issued_at": {
-                "label": {
-                  "en_us": "Issued at",
-                  "pt_br": "Data de emissão"
-                },
-                "description": {
-                  "en_us": "Date and time of issue, in ISO 8601 standard representation",
-                  "pt_br": "Data e hora da emissão, no padrão ISO 8601"
-                }
-              },
-              "link": {
-                "label": {
-                  "en_us": "Link"
-                },
-                "description": {
-                  "en_us": "URI to invoice file",
-                  "pt_br": "URI para o arquivo da fatura"
-                }
-              },
-              "access_key": {
-                "label": {
-                  "en_us": "Access key",
-                  "pt_br": "Chave de acesso"
-                },
-                "description": {
-                  "en_us": "Invoice access key (BR)",
-                  "pt_br": "Chave de acesso da fatura"
-                }
-              },
-              "link_danfe": {
-                "label": {
-                  "en_us": "Link danfe",
-                  "pt_br": "Link para a nota fiscal"
-                },
-                "description": {
-                  "en_us": "URI to DANFE (BR)",
-                  "pt_br": "URI para a DANFE"
-                }
-              }
-            },
-            "description":{
-              "en_us": "Issued invoice",
-              "pt_br": "Fatura emitida"
-            }
-          },
-          "description":{
-            "en_us": "List of invoices",
-            "pt_br": "Lista de faturas"
-          }
-        },
-        "status": {
-          "label": {
-            "en_us": "Status"
-          },
-          "properties": {
-            "updated_at": {
-              "label": {
-                "en_us": "Updated at",
-                "pt_br": "Data de atualização"
-              },
-              "description": {
-                "en_us": "Last status change, date and time in ISO 8601 standard representation",
-                "pt_br": "Última alteração de status, data e hora no padrão ISO 8601"
-              }
-            },
-            "current": {
-              "label": {
-                "en_us": "Current",
-                "pt_br": "Atual"
-              },
-              "enum": {
-                "invoice_issued":{
-                  "label": {
-                    "en_us": "Invoice issued",
-                    "pt_br": "Fatura emitida"
-                  }
-                },
-                "in_production":{
-                  "label": {
-                    "en_us": "In production",
-                    "pt_br": "Em produção"
-                  }
-                },
-                "in_separation":{
-                  "label": {
-                    "en_us": "In separation",
-                    "pt_br": "Em separação"
-                  }
-                },
-                "ready_for_shipping":{
-                  "label": {
-                    "en_us": "Ready for shipping",
-                    "pt_br": "Pronto para entrega"
-                  }
-                },
-                "shipped":{
-                  "label": {
-                    "en_us": "Shipped",
-                    "pt_br": "Enviado"
-                  }
-                },
-                "delivered":{
-                  "label": {
-                    "en_us": "Delivered",
-                    "pt_br": "Entregue"
-                  }
-                },
-                "returned_for_exchange":{
-                  "label": {
-                    "en_us": "Returned for exchange",
-                    "pt_br": "Retornado para a troca"
-                  }
-                },
-                "received_for_exchange":{
-                  "label": {
-                    "en_us": "Received for exchange",
-                    "pt_br": "Recebido para a troca"
-                  }
-                },
-                "returned":{
-                  "label": {
-                    "en_us": "Returned",
-                    "pt_br": "Retornado"
-                  }
-                }
-              },
+            "items": {
               "description":{
-                "en_us": "Shipping status",
-                "pt_br": "Status de entrega"
-              }
-            }
-          },
-          "description":{
-            "en_us": "Fulfillment status and date of change",
-            "pt_br": "Status de entrega e data da alteração"
-          }
-        },
-        "items": {
-          "items": {
-            "label": {
-              "en_us": "Label",
-              "pt_br": "Rótulo"
-            },
-            "description": {
-              "en_us": "Item ID",
-              "pt_br": "ID do item"
-            }
-          },
-          "description":{
-            "en_us": "List of order items related with this shipping line, use only if items are divided",
-            "pt_br": "Lista de itens do pedido relacionados com essa linha de frete, use apenas se os itens são separados"
-          }
-        },
-        "flags": {
-          "items": {
-            "label": {
-              "en_us": "Flag"
-            },
-            "description": {
-              "en_us": "Flag title",
-              "pt_br": "Título da flag"
-            }
-          },
-          "description":{
-            "en_us": "Flags to associate additional info",
-            "pt_br": "Flags para associar informações adicionais"
-          }
-        },
-        "custom_fields": {
-          "label": {
-            "en_us": "Custom fields",
-            "pt_br": "Campos customizáveis"
-          },
-          "items": {
-            "properties": {
-              "field": {
-                "label": {
-                  "en_us": "Field",
-                  "pt_br": "Campo"
-                },
-                "description": {
-                  "en_us": "Field name",
-                  "pt_br": "Nome do campo"
-                }
-              },
-              "value": {
-                "label": {
-                  "en_us": "Value",
-                  "pt_br": "Valor"
-                },
-                "description": {
-                  "en_us": "Field value",
-                  "pt_br": "Valor do campo"
-                }
+                "en_us": "Flag title",
+                "pt_br": "Título da flag"
               }
             },
             "description":{
-              "en_us": "Custom field object",
-              "pt_br": "Objeto do campo customizável"
+              "en_us": "Flags to associate additional info",
+              "pt_br": "Flags para associar informações adicionais"
+            }
+          }
+        },
+        "description":{
+          "en_us": "One of the order items",
+          "pt_br": "Uma dos itens do pedido"
+        }
+      },
+      "description":{
+        "en_us": "Products composing the order",
+        "pt_br": "Produtos que compõe o pedido"
+      }
+    },
+    "loyalty_points": {
+      "label": {
+        "en_us": "Loyalty points",
+        "pt_br": "Pontos de fidelidade"
+      },
+      "patternProperties": {
+        "^{a-z0-9_}{2,30}$": {
+          "properties": {
+            "name": {
+              "label": {
+                "en_us": "Name",
+                "pt_br": "Nome"
+              },
+              "description": {
+                "en_us": "The name of the loyalty points program",
+                "pt_br": "O nome do program de fidelidade"
+              }
+            },
+            "points_value": {
+              "label": {
+                "en_us": "Points value",
+                "pt_br": "Valor dos pontos"
+              },
+              "description": {
+                "en_us": "Number of loyalty points received",
+                "pt_br": "Número de pontos de fidelidade recebidos"
+              }
             }
           },
           "description":{
-            "en_us": "List of custom fields",
-            "pt_br": "Lista de campos customizádos"
-          }
-        },
-        "notes": {
-          "label": {
-            "en_us": "Notes",
-            "pt_br": "Notas"
-          },
-          "description": {
-            "en_us": "Optional notes with additional info about this shipping line",
-            "pt_br": "Notas opcionais com informações adicionais sobre essa linha de frete"
+            "en_us": "Loyalty points program object",
+            "pt_br": "Obejeto do programa de fidelidade"
           }
         }
       },
       "description":{
-        "en_us": "Order shipping method",
-        "pt_br": "Metodo de envio do pedido"
+        "en_us": "Loyalty points earned by customer due to this order, program_id as property name",
+        "pt_br": "Pontos de fidelidade ganhos pelo cliente por conta deste pedido, program_id é o nome da propriedade"
       }
     },
-    "description":{
-      "en_us": "List of shipping methods and address for this order",
-      "pt_br": "Lista de meios de frete e endereços para esse pedido"
+    "metafields": {
+      "label": {
+        "en_us": "Metafields",
+        "pt_br": "Metafields"
+      },
+      "items": {
+        "properties": {
+          "_id": {
+            "label": {
+              "en_us": "ID"
+            },
+            "description": {
+              "en_us": "ID único (ObjectID)",
+              "pt_br": "Unique ID (ObjectID)"
+            }
+          },
+          "namespace": {
+            "label": {
+              "en_us": "Namespace",
+              "pt_br": "Espaço do nome"
+            },
+            "description": {
+              "en_us": "String to help distinguish who (or which app) created and can use the metafield",
+              "pt_br": "String para ajudar a distinguir quem, (ou qual aplicativo) criou e pode utilizar o metafield"
+            }
+          },
+          "field": {
+            "label": {
+              "en_us": "Field"
+            },
+            "description": {
+              "en_us": "Field name",
+              "pt_br": "Campo de nome"
+            }
+          },
+          "value": {
+            "label": {
+              "en_us": "Value",
+              "pt_br": "Valor"
+            },
+            "description": {
+              "en_us": "Custom property value",
+              "pt_br": "Valor da propriedade customizada"
+            }
+          }
+        },
+        "description": {
+          "en_us": "Custom attribute object",
+          "pt_br": "Objeto do atributo customizado"
+        }
+      },
+      "description": {
+        "en_us": "List of custom attributes",
+        "pt_br": "Lista de objetos customizados"
+      }
+    },
+    "hidden_metafields": {
+      "label": {
+        "en_us": "Hidden metafields",
+        "pt_br": "Metafields ocultos"
+      },
+      "items": {
+        "properties": {
+          "_id": {
+            "label": {
+              "en_us": "ID"
+            },
+            "description": {
+              "en_us": "ID único (ObjectID)",
+              "pt_br": "Unique ID (ObjectID)"
+            }
+          },
+          "namespace": {
+            "label": {
+              "en_us": "Namespace",
+              "pt_br": "Espaço do nome"
+            },
+            "description": {
+              "en_us": "String to help distinguish who (or which app) created and can use the metafield",
+              "pt_br": "String para ajudar a distinguir quem, (ou qual aplicativo) criou e pode utilizar o metafield"
+            }
+          },
+          "field": {
+            "label": {
+              "en_us": "Field"
+            },
+            "description": {
+              "en_us": "Field name",
+              "pt_br": "Campo de nome"
+            }
+          },
+          "value": {
+            "label": {
+              "en_us": "Value",
+              "pt_br": "Valor"
+            },
+            "description": {
+              "en_us": "Custom property value",
+              "pt_br": "Valor da propriedade customizada"
+            }
+          }
+        },
+        "description":{
+          "en_us": "Custom attribute object",
+          "pt_br": "Objeto do atributo customizado"
+        }
+      },
+      "description":{
+        "en_us": "List of custom attributes",
+        "pt_br": "Lista de atributos costomizados"
+      }
+    },
+    "private_metafields": {
+      "label": {
+        "en_us": "Private metafields",
+        "pt_br": "Matafields privados"
+      },
+      "items": {
+        "properties": {
+          "_id": {
+            "label": {
+              "en_us": "ID"
+            },
+            "description": {
+              "en_us": "Unique ID (ObjectID)",
+              "pt_br": "Unique ID (ObjectID)"
+            }
+          },
+          "namespace": {
+            "label": {
+              "en_us": "Namespace"
+            },
+            "description": {
+              "en_us": "String to help distinguish who (or which app) created and can use the metafield",
+              "pt_br": "String para ajudar a distinguir quem (ou qual aplicativo) criou e pode usar o metafield"
+            }
+          },
+          "field": {
+            "label": {
+              "en_us": "Field",
+              "pt_br": "Campo"
+            },
+            "description": {
+              "en_us": "Field name",
+              "pt_br": "Nome do campo"
+            }
+          },
+          "value": {
+            "label": {
+              "en_us": "Value",
+              "pt_br": "Valor"
+            },
+            "description": {
+              "en_us": "Custom property value",
+              "pt_br": "Valor da propriedade customizada"
+            }
+          }
+        },
+        "description":{
+          "en_us": "Custom attribute object",
+          "pt_br": "Objeto do atributo customizado"
+        }
+      },
+      "description":{
+        "en_us": "List of custom attributes, hidden by default, visible for the order buyers",
+        "pt_br": "Lista de atributos customizados, escondidos por padrão, visivel para os compradores"
+      }
+    },
+    "flags": {
+      "label": {
+        "en_us": "Flags"
+      },
+      "items": {
+        "label": {
+          "en_us": "Items",
+          "pt_br": "itens"
+        },
+        "description": {
+          "en_us": "Flag title",
+          "pt_br": "Título da Flag"
+        }
+      },
+      "description":{
+        "en_us": "Flags to associate additional info",
+        "pt_br": "Flags para associar informações adicionais"
+      }
+    },
+    "notes": {
+      "label": {
+        "en_us": "Notes",
+        "pt_br": "Notas"
+      },
+      "description": {
+        "en_us": "Optional notes with additional info about this order",
+        "pt_br": "Notas opcionais com informação adicional sobre esse pedido"
+      }
+    },
+    "staff_notes": {
+      "label": {
+        "en_us": "Staff notes",
+        "pt_br": "Notas do staff"
+      },
+      "description": {
+        "en_us": "Description and notes about this order, available only for shop administrators",
+        "pt_br": "Descrição e notas sobre esse pedido, apenas visível para os administradores da loja"
+      }
+    },
+    "shipping_lines": {
+      "label": {
+        "en_us": "Shipping lines",
+        "pt_br": "Linhas de frete"
+      },
+      "items": {
+        "properties": {
+          "_id": {
+            "label": {
+              "en_us": "ID"
+            },
+            "description": {
+              "en_us": "Unique ID (ObjectID)",
+              "pt_br": "ID único (ObjectID)"
+            }
+          },
+          "from": {
+            "label": {
+              "en_us": "From",
+              "pt_br": "De"
+            },
+            "description": {
+              "en_us": "Sender's address",
+              "pt_br": "Endereço do remetente"
+            }
+          },
+          "to": {
+            "label": {
+              "en_us": "From",
+              "pt_br": "De"
+            },
+            "description": {
+              "en_us": "Sender's address",
+              "pt_br": "Endereço do remetente"
+            }
+          },
+          "package": {
+            "label": {
+              "en_us": "Package",
+              "pt_br": "Encomenda"
+            },
+            "properties": {
+              "dimensions": {
+                "label": {
+                  "en_us": "Dimensions",
+                  "pt_br": "Dimensões"
+                },
+                "patternProperties": {
+                  "^width|height|length$": {
+                    "properties": {
+                      "value": {
+                        "label": {
+                          "en_us": "Value",
+                          "pt_br": "Valor"
+                        },
+                        "description": {
+                          "en_us": "Size in specified unit",
+                          "pt_br": "Tamanho em unidade especifica"
+                        }
+                      },
+                      "unit": {
+                        "label": {
+                          "en_us": "Unit",
+                          "pt_br": "Unidade"
+                        },
+                        "enum": {
+                          "mm":{
+                            "label": {
+                              "en_us": "mm"
+                            }
+                          },
+                          "cm":{
+                            "label": {
+                              "en_us": "cm"
+                            }
+                          },
+                          "m":{
+                            "label": {
+                              "en_us": "m"
+                            }
+                          },
+                          "ft":{
+                            "label": {
+                              "en_us": "ft"
+                            }
+                          },
+                          "in":{
+                            "label": {
+                              "en_us": "in"
+                            }
+                          },
+                          "yd":{
+                            "label": {
+                              "en_us": "yd"
+                            }
+                          },
+                          "mi":{
+                            "label": {
+                              "en_us": "mi"
+                            }
+                          }
+                        },
+                        "description":{
+                          "en_us": "Unit of measurement",
+                          "pt_br": "Unidade de medida"
+                        }
+                      }
+                    },
+                    "description":{
+                      "en_us": "Package width, height and length",
+                      "pt_br": "Largura, altura e profundidade da encomenda"
+                    }
+                  }
+                },
+                "description":{
+                  "en_us": "Package dimensions",
+                  "pt_br": "Dimensões do pacote"
+                }
+              },
+              "weight": {
+                "label": {
+                  "en_us": "Weight",
+                  "pt_br": "Peso"
+                },
+                "properties": {
+                  "value": {
+                    "label": {
+                      "en_us": "Value",
+                      "pt_br": "Valor"
+                    },
+                    "description": {
+                      "en_us": "Size in specified unit",
+                      "pt_br": "Tamanho em unidade especifica"
+                    }
+                  },
+                  "unit": {
+                    "label": {
+                      "en_us": "Unit",
+                      "pt_br": "Unidade"
+                    },
+                    "enum": {
+                      "mg":{
+                        "label": {
+                          "en_us": "mg"
+                        }
+                      },
+                      "g":{
+                        "label": {
+                          "en_us": "g"
+                        }
+                      },
+                      "kg":{
+                        "label": {
+                          "en_us": "kg"
+                        }
+                      },
+                      "lb":{
+                        "label": {
+                          "en_us": "lb"
+                        }
+                      },
+                      "oz":{
+                        "label": {
+                          "en_us": "oz"
+                        }
+                      }
+                    },
+                    "description":{
+                      "en_us": "Unit of measurement",
+                      "pt_br": "Unidade de medida"
+                    }
+                  }
+                },
+                "description":{
+                  "en_us": "Package weight for freight calculation",
+                  "pt_br": "Peso do pacote, para cálculo de frete"
+                }
+              }
+            },
+            "description":{
+              "en_us": "Shipping object information",
+              "pt_br": "Informações do objeto de entrega"
+            }
+          },
+          "app": {
+            "label": {
+              "en_us": "App",
+              "pt_br": "Aplicativo"
+            },
+            "properties": {
+              "_id": {
+                "label": {
+                  "en_us": "ID"
+                },
+                "description": {
+                  "en_us": "Application ID",
+                  "pt_br": "ID da aplicaçaõ"
+                }
+              },
+              "label": {
+                "label": {
+                  "en_us": "Label",
+                  "pt_br": "Rótulo"
+                },
+                "description": {
+                  "en_us": "Name of shipping method shown to customers",
+                  "pt_br": "Nome do meio de envio a ser exibido para os clientes"
+                }
+              },
+              "carrier": {
+                "label": {
+                  "en_us": "Carrier",
+                  "pt_br": "Transportadora"
+                },
+                "description": {
+                  "en_us": "Carrier name",
+                  "pt_br": "Nome da transportadora"
+                }
+              },
+              "carrier_doc_number": {
+                "label": {
+                  "en_us": "Carrier doc number",
+                  "pt_br": "Número do documento da transportadora"
+                },
+                "description": {
+                  "en_us": "Carrier document number (only numbers)",
+                  "pt_br": "Número do documento da transportadora (apenas números)"
+                }
+              },
+              "service_name": {
+                "label": {
+                  "en_us": "Service_name",
+                  "pt_br": "Nome do serviço"
+                },
+                "description": {
+                  "en_us": "Name of service (shipping method) defined by carrier",
+                  "pt_br": "Nome do serviço (meio de frete) efinido pela transportadora"
+                }
+              },
+              "service_code": {
+                "label": {
+                  "en_us": "Service code",
+                  "pt_br": "Código do serviço"
+                },
+                "description": {
+                  "en_us": "Code of service defined by carrier",
+                  "pt_br": "Código do serviço definido pela transportadora"
+                }
+              },
+              "contract": {
+                "label": {
+                  "en_us": "Contract",
+                  "pt_br": "Contrato"
+                },
+                "description": {
+                  "en_us": "Contract number of the shop with carrier, if exists",
+                  "pt_br": "Número do contrato da loja com a transportadora, caso haja"
+                }
+              },
+              "icon": {
+                "label": {
+                  "en_us": "Icon",
+                  "pt_br": "Ícone"
+                },
+                "description": {
+                  "en_us": "Shipping method icon image URI",
+                  "pt_br": "URI da imagem do ícone do meio de frete"
+                }
+              },
+              "tracking_url": {
+                "label": {
+                  "en_us": "Tracking URL",
+                  "pt_br": "URL de rastreio"
+                },
+                "description": {
+                  "en_us": "URI to carrier website to get package tracking status",
+                  "pt_br": "URI do site da transportadora para verificar o status de rastreio"
+                }
+              },
+              "rule": {
+                "label": {
+                  "en_us": "Rule",
+                  "pt_br": "Regra"
+                },
+                "properties": {
+                  "_id": {
+                    "label": {
+                      "en_us": "ID"
+                    },
+                    "description": {
+                      "en_us": "Rule ID",
+                      "pt_br": "ID da regra"
+                    }
+                  },
+                  "label": {
+                    "label": {
+                      "en_us": "Label",
+                      "pt_br": "Rótulo"
+                    },
+                    "description": {
+                      "en_us": "Shipping rule label",
+                      "pt_br": "Rótulo da regra de frete"
+                    }
+                  }
+                },
+                "description":{
+                  "en_us": "Selected shipping rule of this shipping method",
+                  "pt_br": "Regra de frete selecionada para esse meio de frete"
+                }
+              }
+            },
+            "description":{
+              "en_us": "Shipping method (by application) chosen by customer",
+              "pt_br": "Meio de frete (por aplicação) escolhido pelo cliente"
+            }
+          },
+          "price": {
+            "label": {
+              "en_us": "Price",
+              "pt_br": "Preço"
+            },
+            "description": {
+              "en_us": "Freight cost for this shipping line, without additionals",
+              "pt_br": "Custo de frete para essa linha de frete, sem adicionais"
+            }
+          },
+          "declared_value": {
+            "label": {
+              "en_us": "Declared value",
+              "pt_br": "Valor declarado"
+            },
+            "description": {
+              "en_us": "The package value declared to carrier, generally the sum of all items prices",
+              "pt_br": "O valor do pacote declarado pela transportadora, geralmente a soma de todos os preços"
+            }
+          },
+          "declared_value_price": {
+            "label": {
+              "en_us": "Declared value price",
+              "pt_br": "Preço declara"
+            },
+            "description": {
+              "en_us": "Cost for the \"declared value\" additional service",
+              "pt_br": "Custo pelo serviço de \"valor declarado\""
+            }
+          },
+          "own_hand": {
+            "label": {
+              "en_us": "Own hand",
+              "pt_br": "Em mãos"
+            },
+            "description": {
+              "en_us": "Whether the package must be delivered with additional service \"own hand\"",
+              "pt_br": "Se o pacote deve ser entregada com o serviço adicional \"em mãos\""
+            }
+          },
+          "own_hand_price": {
+            "label": {
+              "en_us": "Own hand price",
+              "pt_br": "Preço do em mãos"
+            },
+            "description": {
+              "en_us": "Cost for the \"own hand\" additional service",
+              "pt_br": "Custo para o serviço adicional \"em mãos\""
+            }
+          },
+          "receipt": {
+            "label": {
+              "en_us": "Receipt",
+              "pt_br": "Recebimento"
+            },
+            "description": {
+              "en_us": "If the package will be delivered with acknowledgment of receipt",
+              "pt_br": "Se o pacote será entregue com aviso de recebimento"
+            }
+          },
+          "receipt_price": {
+            "label": {
+              "en_us": "Receipt price",
+              "pt_br": "Preço da recepção "
+            },
+            "description": {
+              "en_us": "Cost for the \"acknowledgment of receipt\" additional service",
+              "pt_br": "Custo para o serviço de \"aviso de recebimento\""
+            }
+          },
+          "other_additionals": {
+            "label": {
+              "en_us": "Other additionals",
+              "pt_br": "Outros adicionais"
+            },
+            "items": {
+              "properties": {
+                "tag": {
+                  "label": {
+                    "en_us": "Tag"
+                  },
+                  "description": {
+                    "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
+                    "pt_br": "Tag para identificar o objeto, use apenas letras minúsculas dígitos e sublinhado"
+                  }
+                },
+                "label": {
+                  "label": {
+                    "en_us": "Label",
+                    "pt_br": "Rótulo"
+                  },
+                  "description": {
+                    "en_us": "Name of the additional service",
+                    "pt_br": "Nome do valor adicional do serviço"
+                  }
+                },
+                "price": {
+                  "label": {
+                    "en_us": "Price",
+                    "pt_br": "Preço"
+                  },
+                  "description": {
+                    "en_us": "Cost for this additional service",
+                    "pt_br": "Custo para esse serviço adicional"
+                  }
+                }
+              },
+              "description":{
+                "en_us": "Additional service",
+                "pt_br": "Additional service"
+              }
+            },
+            "description":{
+              "en_us": "List of other additional services for this shipping line",
+              "pt_br": "Lista de outros serviços adicionais para essa linha de frete"
+            }
+          },
+          "taxes": {
+            "label": {
+              "en_us": "Taxes"
+            },
+            "items": {
+              "properties": {
+                "tag": {
+                  "label": {
+                    "en_us": "Tag"
+                  },
+                  "description": {
+                    "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
+                    "pt_br": "Tag para identificar o objeto, utilize apenas letras minúsculas, dígitos e sublinhado"
+                  }
+                },
+                "label": {
+                  "label": {
+                    "en_us": "Label",
+                    "pt_br": "Rótulo"
+                  },
+                  "description": {
+                    "en_us": "Tax title",
+                    "pt_br": "Título da taxa"
+                  }
+                },
+                "price": {
+                  "label": {
+                    "en_us": "Price",
+                    "pt_br": "Preço"
+                  },
+                  "description": {
+                    "en_us": "Tax value applied",
+                    "pt_br": "Valor da taxa aplicada"
+                  }
+                },
+                "rate": {
+                  "label": {
+                    "en_us": "Rate",
+                    "pt_br": "Taxaçaõ"
+                  },
+                  "description": {
+                    "en_us": "Tax rate as a function of package value",
+                    "pt_br": "Taxa em função do valor do pacote"
+                  }
+                }
+              },
+              "description":{
+                "en_us": "Applied tax or additional service",
+                "pt_br": "Taxa aplicada ou adicional do serviço"
+              }
+            },
+            "description":{
+              "en_us": "List of taxes or other additional services for this shipping line",
+              "pt_br": "Lista das taxas ou outros serviços adicionais para essa linha de frete"
+            }
+          },
+          "discount": {
+            "label": {
+              "en_us": "Discount",
+              "pt_br": "Desconto"
+            },
+            "description": {
+              "en_us": "Discount on shipping price, negative if value was additionated (not discounted)",
+              "pt_br": "Disconto no valor do frete, negativo cas o"
+            }
+          },
+          "total_price": {
+            "label": {
+              "en_us": "Total price",
+              "pt_br": "Preço total"
+            },
+            "description": {
+              "en_us": "Total cost for this shipping line, with additionals and taxes",
+              "pt_br": "Custo total para a linha de frete, com taxas e adicionais "
+            }
+          },
+          "posting_deadline": {
+            "label": {
+              "en_us": "Posting deadline",
+              "pt_br": "Prazo de postagem"
+            },
+            "properties": {
+              "days": {
+                "label": {
+                  "en_us": "Days",
+                  "pt_br": "Dias"
+                },
+                "description": {
+                  "en_us": "Number of days to post the product after purchase",
+                  "pt_br": "Número de dias para postar o produto após a compra"
+                }
+              },
+              "working_days": {
+                "label": {
+                  "en_us": "Working days",
+                  "pt_br": "Dias úteis"
+                },
+                "description": {
+                  "en_us": "If the deadline is calculated in working days",
+                  "pt_br": "Se o prazo é calculado em dias úteis"
+                }
+              },
+              "after_approval": {
+                "label": {
+                  "en_us": "After approval",
+                  "pt_br": "Após aprovado"
+                },
+                "description": {
+                  "en_us": "Whether days will be counted after payment approval",
+                  "pt_br": "Se os dias serão contado após o pagamento ser aprovado"
+                }
+              }
+            },
+            "description":{
+              "en_us": "Deadline for sending the package",
+              "pt_br": "Prazo para enviar o pedido"
+            }
+          },
+          "delivery_time": {
+            "label": {
+              "en_us": "Delivery time",
+              "pt_br": "Tempo de entrega"
+            },
+            "properties": {
+              "days": {
+                "label": {
+                  "en_us": "Days",
+                  "pt_br": "Dias"
+                },
+                "description": {
+                  "en_us": "Number of days for delivery after shipping",
+                  "pt_br": "Número de dias para a entrega após o envio"
+                }
+              },
+              "working_days": {
+                "label": {
+                  "en_us": "Working days",
+                  "pt_br": "Dias úteis"
+                },
+                "description": {
+                  "en_us": "If the deadline is calculated in working days",
+                  "pt_br": "Se o prazo é calculado em dias úteis"
+                }
+              }
+            },
+            "description":{
+              "en_us": "Estimated delivery time",
+              "pt_br": "Tempo estimado para a entrega"
+            }
+          },
+          "scheduled_delivery": {
+            "label": {
+              "en_us": "Scheduled delivery",
+              "pt_br": "Entrega agendada"
+            },
+            "description": {
+              "en_us": "When delivery will be made on the ISO 8601 date time representation",
+              "pt_br": "Quando a entraga será feita, seguindo o padrão ISO 8601"
+            }
+          },
+          "tracking_codes": {
+            "label": {
+              "en_us": "Tracking codes",
+              "pt_br": "Códigos de rastreio"
+            },
+            "items": {
+              "properties": {
+                "tag": {
+                  "label": {
+                    "en_us": "Tag"
+                  },
+                  "description": {
+                    "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
+                    "pt_br": "Tag para identificar o objeto, utilize apenas letras minúsculas, dígitos e sublinhado"
+                  }
+                },
+                "code": {
+                  "label": {
+                    "en_us": "Code",
+                    "pt_br": "Código"
+                  },
+                  "description": {
+                    "en_us": "Tracking code string",
+                    "pt_br": "Linha do código de rastreio"
+                  }
+                },
+                "link": {
+                  "label": {
+                    "en_us": "Link"
+                  },
+                  "description": {
+                    "en_us": "URI for carrier website to get the tracking status with this code",
+                    "pt_br": "URI para o website da transportadora, para rastreiar o pedido com este código"
+                  }
+                }
+              },
+              "description":{
+                "en_us": "Tracking code object",
+                "pt_br": "Objeto do código de rastreio"
+              }
+            },
+            "description":{
+              "en_us": "List of codes for delivery status follow-up",
+              "pt_br": "Lista de códigos para acompnhar o status de entrega"
+            }
+          },
+          "invoices": {
+            "label": {
+              "en_us": "Invoices",
+              "pt_br": "Faturas"
+            },
+            "items": {
+              "properties": {
+                "issuer_doc_number": {
+                  "label": {
+                    "en_us": "Issuer doc number",
+                    "pt_br": "Número do documento do emissor"
+                  },
+                  "description": {
+                    "en_us": "Company document number (only numbers)",
+                    "pt_br": "Número de documento da empresa (apenas números)"
+                  }
+                },
+                "number": {
+                  "label": {
+                    "en_us": "Number",
+                    "pt_br": "Número"
+                  },
+                  "description": {
+                    "en_us": "Invoice number",
+                    "pt_br": "Número da fatura"
+                  }
+                },
+                "serial_number": {
+                  "label": {
+                    "en_us": "Serial number",
+                    "pt_br": "Número de serie"
+                  },
+                  "description": {
+                    "en_us": "Invoice serial number",
+                    "pt_br": "Número de série da fatura"
+                  }
+                },
+                "issued_at": {
+                  "label": {
+                    "en_us": "Issued at",
+                    "pt_br": "Data de emissão"
+                  },
+                  "description": {
+                    "en_us": "Date and time of issue, in ISO 8601 standard representation",
+                    "pt_br": "Data e hora da emissão, no padrão ISO 8601"
+                  }
+                },
+                "link": {
+                  "label": {
+                    "en_us": "Link"
+                  },
+                  "description": {
+                    "en_us": "URI to invoice file",
+                    "pt_br": "URI para o arquivo da fatura"
+                  }
+                },
+                "access_key": {
+                  "label": {
+                    "en_us": "Access key",
+                    "pt_br": "Chave de acesso"
+                  },
+                  "description": {
+                    "en_us": "Invoice access key (BR)",
+                    "pt_br": "Chave de acesso da fatura"
+                  }
+                },
+                "link_danfe": {
+                  "label": {
+                    "en_us": "Link danfe",
+                    "pt_br": "Link para a nota fiscal"
+                  },
+                  "description": {
+                    "en_us": "URI to DANFE (BR)",
+                    "pt_br": "URI para a DANFE"
+                  }
+                }
+              },
+              "description":{
+                "en_us": "Issued invoice",
+                "pt_br": "Fatura emitida"
+              }
+            },
+            "description":{
+              "en_us": "List of invoices",
+              "pt_br": "Lista de faturas"
+            }
+          },
+          "status": {
+            "label": {
+              "en_us": "Status"
+            },
+            "properties": {
+              "updated_at": {
+                "label": {
+                  "en_us": "Updated at",
+                  "pt_br": "Data de atualização"
+                },
+                "description": {
+                  "en_us": "Last status change, date and time in ISO 8601 standard representation",
+                  "pt_br": "Última alteração de status, data e hora no padrão ISO 8601"
+                }
+              },
+              "current": {
+                "label": {
+                  "en_us": "Current",
+                  "pt_br": "Atual"
+                },
+                "enum": {
+                  "invoice_issued":{
+                    "label": {
+                      "en_us": "Invoice issued",
+                      "pt_br": "Fatura emitida"
+                    }
+                  },
+                  "in_production":{
+                    "label": {
+                      "en_us": "In production",
+                      "pt_br": "Em produção"
+                    }
+                  },
+                  "in_separation":{
+                    "label": {
+                      "en_us": "In separation",
+                      "pt_br": "Em separação"
+                    }
+                  },
+                  "ready_for_shipping":{
+                    "label": {
+                      "en_us": "Ready for shipping",
+                      "pt_br": "Pronto para entrega"
+                    }
+                  },
+                  "shipped":{
+                    "label": {
+                      "en_us": "Shipped",
+                      "pt_br": "Enviado"
+                    }
+                  },
+                  "delivered":{
+                    "label": {
+                      "en_us": "Delivered",
+                      "pt_br": "Entregue"
+                    }
+                  },
+                  "returned_for_exchange":{
+                    "label": {
+                      "en_us": "Returned for exchange",
+                      "pt_br": "Retornado para a troca"
+                    }
+                  },
+                  "received_for_exchange":{
+                    "label": {
+                      "en_us": "Received for exchange",
+                      "pt_br": "Recebido para a troca"
+                    }
+                  },
+                  "returned":{
+                    "label": {
+                      "en_us": "Returned",
+                      "pt_br": "Retornado"
+                    }
+                  }
+                },
+                "description":{
+                  "en_us": "Shipping status",
+                  "pt_br": "Status de entrega"
+                }
+              }
+            },
+            "description":{
+              "en_us": "Fulfillment status and date of change",
+              "pt_br": "Status de entrega e data da alteração"
+            }
+          },
+          "items": {
+            "items": {
+              "label": {
+                "en_us": "Label",
+                "pt_br": "Rótulo"
+              },
+              "description": {
+                "en_us": "Item ID",
+                "pt_br": "ID do item"
+              }
+            },
+            "description":{
+              "en_us": "List of order items related with this shipping line, use only if items are divided",
+              "pt_br": "Lista de itens do pedido relacionados com essa linha de frete, use apenas se os itens são separados"
+            }
+          },
+          "flags": {
+            "items": {
+              "label": {
+                "en_us": "Flag"
+              },
+              "description": {
+                "en_us": "Flag title",
+                "pt_br": "Título da flag"
+              }
+            },
+            "description":{
+              "en_us": "Flags to associate additional info",
+              "pt_br": "Flags para associar informações adicionais"
+            }
+          },
+          "custom_fields": {
+            "label": {
+              "en_us": "Custom fields",
+              "pt_br": "Campos customizáveis"
+            },
+            "items": {
+              "properties": {
+                "field": {
+                  "label": {
+                    "en_us": "Field",
+                    "pt_br": "Campo"
+                  },
+                  "description": {
+                    "en_us": "Field name",
+                    "pt_br": "Nome do campo"
+                  }
+                },
+                "value": {
+                  "label": {
+                    "en_us": "Value",
+                    "pt_br": "Valor"
+                  },
+                  "description": {
+                    "en_us": "Field value",
+                    "pt_br": "Valor do campo"
+                  }
+                }
+              },
+              "description":{
+                "en_us": "Custom field object",
+                "pt_br": "Objeto do campo customizável"
+              }
+            },
+            "description":{
+              "en_us": "List of custom fields",
+              "pt_br": "Lista de campos customizádos"
+            }
+          },
+          "notes": {
+            "label": {
+              "en_us": "Notes",
+              "pt_br": "Notas"
+            },
+            "description": {
+              "en_us": "Optional notes with additional info about this shipping line",
+              "pt_br": "Notas opcionais com informações adicionais sobre essa linha de frete"
+            }
+          }
+        },
+        "description":{
+          "en_us": "Order shipping method",
+          "pt_br": "Metodo de envio do pedido"
+        }
+      },
+      "description":{
+        "en_us": "List of shipping methods and address for this order",
+        "pt_br": "Lista de meios de frete e endereços para esse pedido"
+      }
     }
   }
-}
