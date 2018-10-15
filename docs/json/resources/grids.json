@@ -1,0 +1,299 @@
+{
+    "title": {
+      "label": {
+        "en_us": "Title",
+        "pt_br": "Título"
+      },
+      "description": {
+        "en_us": "Grid title",
+        "pt_br": "Título do grid"
+      }
+    },
+    "i18n": {
+      "label": {
+        "en_us": "Translation",
+        "pt_br": "Tradução"
+      },
+      "description": {
+        "en_us": "Translated full grid name",
+        "pt_br": "Nome completo do grid traduzido"
+      }
+    },
+    "grid_id": {
+      "label": {
+        "en_us": "Grid id",
+        "pt_br": "Id do grid"
+      },
+      "description": {
+        "en_us": "Unique grid identifier using only lowercase, numbers and underscore",
+        "pt_br": "Identificador único do grid, usando apenas letras minúsculas, números e sublinhado"
+      }
+    },
+    "options": {
+      "label": {
+        "en_us": "Options",
+        "pt_br": "Opções"
+      },
+      "items": {
+        "properties": {
+          "_id": {
+            "label": {
+              "en_us": "ID"
+            },
+            "description": {
+              "en_us": "Unique ID (ObjectID)",
+              "pt_br": "ID único (Object ID)"
+            }
+          },
+          "option_id": {
+            "label": {
+              "en_us": "Option ID",
+              "pt_br": "ID da opção"
+            },
+            "description": {
+              "en_us": "Unique identifier, option name using only lowercase, numbers and underscore",
+              "pt_br": "Identificador único, nome da marca utilizando letras minúsculas, números e sublinhado"
+            }
+          },
+          "text": {
+            "label": {
+              "en_us": "Text",
+              "pt_br": "Texto"
+            },
+            "description": {
+              "en_us": "Option text value displayed for the client",
+              "pt_br": "Texto da opção a ser exibido para o cliente"
+            }
+          },
+          "value": {
+            "label": {
+              "en_us": "Value",
+              "pt_br": "Valor"
+            },
+            "description": {
+              "en_us": "Default normalized value to use in integrations",
+              "pt_br": "Valor padrão para uso em integrações"
+            }
+          },
+          "external_values": {
+            "label": {
+              "en_us": "Value",
+              "pt_br": "Valor"
+            },
+            "description": {
+              "en_us": "Normalized values to use in specific integrations (ID in property)",
+              "pt_br": "Valor padrão para uso em integrações específicas (ID in property)"
+            }
+          },
+          "colors": {
+            "label": {
+              "en_us": "Colors",
+              "pt_br": "Cores"
+            },
+            "items": {
+              "description": {
+                "en_us": "RGB code with #",
+                "pt_br": "Código RGB com #"
+              }
+            },
+            "description": {
+              "en_us": "Option color palette (if the grid involves colors), starting by main color",
+              "pt_br": "Paleta de cor da opção (se a opção envolve cores), começando pela cor principal"
+            }
+          },
+          "add_to_price": {
+            "label": {
+              "en_us": "Add to price",
+              "pt_br": "Adicionar ao preço"
+            },
+            "properties": {
+              "type": {
+                "label": {
+                  "en_us": "Type",
+                  "pt_br": "Tipo"
+                },
+                "enum":{
+                  "percentage": {
+                    "en_us": "Percentage",
+                    "pt_br": "Porcentagem"
+                  },
+                  "fixed": {
+                    "en_us": "Fixed",
+                    "pt_br": "Fixo"
+                  }
+                },
+                "description": {
+                  "en_us": "Type of price addition",
+                  "pt_br": "Tipo de adição de preço"
+                }
+              },
+              "addition": {
+                "label": {
+                  "en_us": "Addition",
+                  "pt_br": "Adição"
+                },
+                "description": {
+                  "en_us": "Additional value, could be negative",
+                  "pt_br": "Valor adicional, pode ser negativo"
+                }
+              }
+            },
+            "description":{
+              "en_us": "Default price alteration for product with this option for customization or variations",
+              "pt_br": "Alteração de preço padrão para produtos com essa opção como customização ou variação"
+            }
+          }
+        },
+        "description": {
+          "en_us": "Option object",
+          "pt_br": "Opjeto da opção"
+        }
+      },
+      "description":{
+        "en_us": "Pre-defined options for this grid, used in specifications, customization and variations",
+        "pt_br": "Opções pré definidas para esse grid, usadas em especificações, customizações e variações "
+      }
+    },
+    "custom_value": {
+      "label": {
+        "en_us": "Custom value",
+        "pt_br": "Valor customizável"
+      },
+      "description": {
+        "en_us": "If this grid accept custom value defined by customer (product customization)",
+        "pt_br": "Se esse grid aceita valores customizáveis definidos pelo cliente (customização do produto)"
+      }
+    },
+    "attachment": {
+      "label": {
+        "en_us": "Attachment",
+        "pt_br": "Anexo"
+      },
+      "description": {
+        "en_us": "If this grid accept customer file attachment",
+        "pt_br": "Se esse grid aceita arquivos em anexo"
+      }
+    },
+    "add_to_price": {
+      "label": {
+        "en_us": "Add to price",
+        "pt_br": "Adicionar ao preço"
+      },
+      "properties": {
+        "type": {
+          "label": {
+            "en_us": "Type",
+            "pt_br": "Tipo"
+          },
+          "enum":{
+            "percentage": {
+              "en_us": "Percentage",
+              "pt_br": "Porcentagem"
+            },
+            "fixed": {
+              "en_us": "Fixed",
+              "pt_br": "Fixo"
+            }
+          },
+          "description": {
+            "en_us": "Type of price addition",
+            "pt_br": "Tipo de adição de preço"
+          }
+        },
+        "addition": {
+          "label": {
+            "en_us": "Addition",
+            "pt_br": "Adição"
+          },
+          "description": {
+            "en_us": "Additional value, could be negative",
+            "pt_br": "Valor adicional, pode ser negativo"
+          }
+        }
+      },
+      "description":{
+        "en_us": "Default price alteration for product with this option for customization or variations",
+        "pt_br": "Alteração de preço padrão para produtos com essa opção como customização ou variação"
+      }
+    },
+    "metafields": {
+      "label": {
+        "en_us": "Metafields"
+      },
+      "items": {
+        "properties": {
+          "_id": {
+            "label": {
+              "en_us": "ID"
+            },
+            "description": {
+              "en_us": "ID único (ObjectID)",
+              "pt_br": "Unique ID (ObjectID)"
+            }
+          },
+          "namespace": {
+            "label": {
+              "en_us": "Namespace",
+              "pt_br": "Espaço do nome"
+            },
+            "description": {
+              "en_us": "String to help distinguish who (or which app) created and can use the metafield",
+              "pt_br": "String para ajudar a distinguir quem, (ou qual aplicativo) criou e pode utilizar o metafield"
+            }
+          },
+          "field": {
+            "label": {
+              "en_us": "Field"
+            },
+            "description": {
+              "en_us": "Field name",
+              "pt_br": "Campo de nome"
+            }
+          },
+          "value": {
+            "label": {
+              "en_us": "Value",
+              "pt_br": "Valor"
+            },
+            "description": {
+              "en_us": "Custom property value",
+              "pt_br": "Valor da propriedade customizada"
+            }
+          }
+        },
+        "description": {
+          "en_us": "Custom attribute object",
+          "pt_br": "Objeto do atributo customizado"
+        }
+      },
+      "description": {
+        "en_us": "List of custom attributes",
+        "pt_br": "Lista de objetos customizados"
+      }
+    },
+    "flags": {
+      "label": {
+        "en_us": "Flags"
+      },
+      "items": {
+        "description": {
+          "en_us": "Flag title",
+          "pt_br": "Título da flag"
+        }
+      },
+      "description":{
+        "en_us": "Flags to associate additional info",
+        "pt_br": "Flags para associar informações adicionais"
+      }
+    },
+    "notes": {
+      "label": {
+        "en_us": "Value",
+        "pt_br": "Valor"
+      },
+      "description": {
+        "en_us": "Optional notes with additional info about this brand",
+        "pt_br": "Notas com com informações adicionais sobre a marca"
+      }
+    }
+  }
