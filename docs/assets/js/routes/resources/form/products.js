@@ -1745,12 +1745,14 @@
     }
 
     // handle spec submit with button and enter
-    $('#t' + tabId + '-add-spec').click(addSpec)
+    $('#t' + tabId + '-add-spec').click(function () { addSpec() })
     $inputSpec.keydown(function (e) {
       switch (e.which) {
         // enter
         case 13:
           addSpec()
+          // do not submit form
+          e.preventDefault()
           break
       }
     })
