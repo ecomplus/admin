@@ -2195,10 +2195,6 @@
               "en_us": "Creditor fees",
               "pt_br": "Taxas do credor"
             },
-            "total": {
-              "label": {
-                "en_us": "Total"
-              },
             "properties": {
               "installment": {
                 "label": {
@@ -4139,6 +4135,5 @@
       "en_us": "List of shipping methods and address for this order",
       "pt_br": "Lista de meios de frete e endereços para esse pedido"
     }
-  }
   }
 }
