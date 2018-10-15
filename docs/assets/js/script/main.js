@@ -1446,7 +1446,7 @@ app.ready(function () {
       'customers': {
         'label': {
           'en_us': 'Customers',
-          'pt_br': 'Clentes'
+          'pt_br': 'Clientes'
         },
         'icon': 'users'
       },
