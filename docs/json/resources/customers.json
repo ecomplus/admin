@@ -1467,6 +1467,15 @@
       },
       "items": {
         "properties": {
+          "_id": {
+            "label": {
+              "en_us": "ID"
+            },
+            "description": {
+              "en_us": "ID único (ObjectID)",
+              "pt_br": "Unique ID (ObjectID)"
+            }
+          },
           "holder_name": {
             "label": {
               "en_us": "Holder name",
@@ -1504,31 +1513,21 @@
               "pt_br": "Últimos dígitos do número do cartão de crédito"
             }
           },
+          "token": {
+            "label": {
+              "en_us": "token"
+            },
+            "description": {
+              "en_us": "Unique credit card token",
+              "pt_br": "Token único do cartão de crédito"
+            }
+          },
           "intermediator": {
             "label": {
               "en_us": "Intermediator",
               "pt_br": "Intermediador"
             },
             "properties": {
-              "name": {
-                "label": {
-                  "en_us": "Name",
-                  "pt_br": "Nome"
-                },
-                "description": {
-                  "en_us": "Name of payment intermediator",
-                  "pt_br": "Nome do indermediador de pagamentos"
-                }
-              },
-              "link": {
-                "label": {
-                  "en_us": "Link"
-                },
-                "description": {
-                  "en_us": "URI to intermediator website",
-                  "pt_br": "URI para o website do intermediador"
-                }
-              },
               "code": {
                 "label": {
                   "en_us": "Code",
@@ -1547,16 +1546,6 @@
                 "description": {
                   "en_us": "ID of customer account in the intermediator",
                   "pt_br": "ID da conta do cliente no intermediador"
-                }
-              },
-              "credit_card_id": {
-                "label": {
-                  "en_us": "Credit card id",
-                  "pt_br": "Id do cartão de crédito"
-                },
-                "description": {
-                  "en_us": "ID of current credit card in the intermediator",
-                  "pt_br": "ID do cartão de crédito mo intermediador"
                 }
               }
             },
