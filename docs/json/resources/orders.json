@@ -3685,14 +3685,66 @@
             },
             "items": {
               "properties": {
-                "issuer_doc_number": {
-                  "label": {
-                    "en_us": "Issuer doc number",
-                    "pt_br": "Número do documento do emissor"
+                "issuer": {
+                  "properties": {
+                    "doc_number": {
+                      "label": {
+                        "en_us": "Issuer doc number",
+                        "pt_br": "Número do documento do emissor"
+                      },
+                      "description": {
+                        "en_us": "Company document number (only numbers)",
+                        "pt_br": "Número de documento da empresa (apenas números)"
+                      }
+                    },
+                    "inscription_type": {
+                      "label": {
+                        "en_us": "Incription type",
+                        "pt_br": "Tipo de inscrição"
+                      },
+                      "enum": {
+                        "State":{
+                          "label": {
+                            "en_us": "State",
+                            "pt_br": "Estadual"
+                          }
+                        },
+                        "Municipal":{
+                          "label": {
+                            "en_us": "Municipal",
+                            "pt_br": "Municipal"
+                          }
+                        }
+                      },
+                      "description": {
+                        "en_us": "Municipal or state registration if exists",
+                        "pt_br": "Inscrição estadual ou municipal se existir"
+                      }
+                    },
+                    "inscription_number": {
+                      "label": {
+                        "en_us": "Inscription number",
+                        "pt_br": "Número de inscrição"
+                      },
+                      "description": {
+                        "en_us": "Municipal or state registration number (with characters) if exists",
+                        "pt_br": "Número de inscrição caso exista"
+                      }
+                    },
+                    "corporate_name": {
+                      "label": {
+                        "en_us": "Corporate name",
+                        "pt_br": "Nome corporativo"
+                      },
+                      "description": {
+                        "en_us": "Registered company name or responsible fullname",
+                        "pt_br": "Razão social da empresa ou nome completo do responsável"
+                      }
+                    }
                   },
                   "description": {
-                    "en_us": "Company document number (only numbers)",
-                    "pt_br": "Número de documento da empresa (apenas números)"
+                    "en_us": "Company that issued this invoice, usually the store company",
+                    "pt_br": "Empresa que gerou esta fatura, normalmente a loja"
                   }
                 },
                 "number": {
