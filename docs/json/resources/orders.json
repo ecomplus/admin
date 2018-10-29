@@ -1519,6 +1519,182 @@
               "pt_br": "Objeto do meio de pagamento"
             }
           },
+          "payer": {
+            "label": {
+              "en_us": "Payer",
+              "pt_br": "Pagador"
+            },
+            "properties": {
+              "fullname": {
+                "label": {
+                  "en_us": "Billing address",
+                  "pt_br": "Endereço de cobrança"
+                },
+                "description": {
+                  "en_us": "Payer full name or company corporate name",
+                  "pt_br": "Nome completo ou razão social do pagador"
+                }
+              },
+              "birth_date": {
+                "label": {
+                  "en_us": "Birth date",
+                  "pt_br": "Data de nascimento"
+                },
+                "properties": {
+                  "day": {
+                    "label": {
+                      "en_us": "Day",
+                      "pt_br": "Dia"
+                    },
+                    "description": {
+                      "en_us": "Day of birth",
+                      "pt_br": "Dia de nascimento"
+                    }
+                  },
+                  "month": {
+                    "label": {
+                      "en_us": "Month",
+                      "pt_br": "Mês"
+                    },
+                    "description": {
+                      "en_us": "Number of month of birth",
+                      "pt_br": "Número do mês de nascimento"
+                    }
+                  },
+                  "year": {
+                    "label": {
+                      "en_us": "Year",
+                      "pt_br": "Ano"
+                    },
+                    "description": {
+                      "en_us": "Year of birth",
+                      "pt_br": "Ano de nascimento"
+                    }
+                  }
+                },
+                "description": {
+                  "en_us": "Date of payer birth",
+                  "pt_br": "Data de nascimento do pagador"
+                }
+              },
+              "phone": {
+                "label": {
+                  "en_us": "Phone",
+                  "pt_br": "Telefone"
+                },
+                "properties": {
+                  "country_code": {
+                    "label": {
+                      "en_us": "Country code",
+                      "pt_br": "Código do país"
+                    },
+                    "description": {
+                      "en_us": "Country calling code (without +), defined by standards E.123 and E.164",
+                      "pt_br": "Código de chamada do país (sem o +), definido pelos padrões E.123 e E.164"
+                    }
+                  },
+                  "number": {
+                    "label": {
+                      "en_us": "Number",
+                      "pt_br": "Número"
+                    },
+                    "description": {
+                      "en_us": "The actual phone number, digits only",
+                      "pt_br": "Número de telefone apenas com dígitos"
+                    }
+                  },
+                  "type": {
+                    "label": {
+                      "en_us": "Type",
+                      "pt_br": "Tipo"
+                    },
+                    "enum": {
+                      "home":{
+                        "label": {
+                          "en_us": "Home",
+                          "pt_br": "Casa"
+                        }
+                      },
+                      "personal":{
+                        "label": {
+                          "en_us": "Personal",
+                          "pt_br": "Pessoal"
+                        }
+                      },
+                      "work":{
+                        "label": {
+                          "en_us": "Work",
+                          "pt_br": "Trabalho"
+                        }
+                      },
+                      "other":{
+                        "label": {
+                          "en_us": "Other",
+                          "pt_br": "Outro"
+                        }
+                      }
+                    },
+                    "description": {
+                      "en_us": "The type of phone",
+                      "pt_br": "Tipo de telefone"
+                    }
+                  }
+                },
+                "description": {
+                  "en_us": "Payer contact phone",
+                  "pt_br": "Telefone de contato no cliente"
+                }
+              },
+              "registry_type": {
+                "label": {
+                  "en_us": "Registry type",
+                  "pt_br": "Tipo de registro"
+                },
+                "enum": {
+                  "p":{
+                    "label": {
+                      "en_us": "P",
+                      "pt_br": "Pf"
+                    }
+                  },
+                  "j":{
+                    "label": {
+                      "en_us": "J",
+                      "pt_br": "PJ"
+                    }
+                  }
+                },
+                "description": {
+                  "en_us": "Physical or juridical (company) person",
+                  "pt_br": "Cliente é pessoa física ou jurídica"
+                }
+              },
+              "doc_country": {
+                "label": {
+                  "en_us": "Doc country",
+                  "pt_br": "País do documento"
+                },
+                "description": {
+                  "en_us": "Country of document origin, an ISO 3166-2 code",
+                  "pt_br": "País de origem do documento, um código ISO 3166-2"
+                }
+              },
+              "doc_number": {
+                "label": {
+                  "en_us": "Doc numeber",
+                  "pt_br": "Número do documento"
+                },
+                "description": {
+                  "en_us": "Responsible person or organization document number (only numbers)",
+                  "pt_br": "Número do documento da empresa ou pessoa responsável (apenas números)"
+                }
+              }
+            },
+            "description": {
+              "en_us": "Transation payer info",
+              "pt_br": "Informações do pagador"
+            }
+          },
           "billing_address": {
             "label": {
               "en_us": "Billing address",
@@ -1588,7 +1764,17 @@
                       "en_us": "URI to intermediator website",
                       "pt_br": "URI para o site do intermediador"
                     }
-                  }
+                  },
+                  "code": {
+                    "label": {
+                      "en_us": "Code",
+                      "pt_br": "Código"
+                    },
+                    "description": {
+                      "en_us": "Gateway name standardized as identification code",
+                      "pt_br": "Nome do gateway padronisado como código de identificação"
+                    }
+                  },
                 },
                 "description":{
                   "en_us": "Payment intermediator",
@@ -1701,6 +1887,16 @@
               "pt_br": "Cartão de crédito"
             },
             "properties": {
+              "holder_name": {
+                "label": {
+                  "en_us": "Holder name",
+                  "pt_br": "Nome do portador"
+                },
+                "description": {
+                  "en_us": "Full name of the holder, as it is on the credit card",
+                  "pt_br": "Nome completo do portador, como está escrito no cartão"
+                }
+              },
               "avs_result_code": {
                 "label": {
                   "en_us": "AVS result code",
@@ -1755,8 +1951,8 @@
                   "en_us": "Token"
                 },
                 "description": {
-                  "en_us": "Unique credit card token",
-                  "pt_br": "Token único do cartão de crédito"
+                  "en_us": "Unique credit card encrypted hash",
+                  "pt_br": "Hash encriptado único do cartão de crédito"
                 }
               },
               "error_code": {
@@ -3686,6 +3882,10 @@
             "items": {
               "properties": {
                 "issuer": {
+                  "label": {
+                    "en_us": "Issuer",
+                    "pt_br": "Emissor"
+                  },
                   "properties": {
                     "doc_number": {
                       "label": {
