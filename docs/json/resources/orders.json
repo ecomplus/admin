@@ -1519,6 +1519,16 @@
               "pt_br": "Objeto do meio de pagamento"
             }
           },
+          "payment_link": {
+            "label": {
+              "en_us": "Payment link",
+              "pt_br": "Link de pagamento"
+            },
+            "description": {
+              "en_us": "Direct link to pay current transaction",
+              "pt_br": "Link direto para pagarr esta transação"
+            }
+          },
           "payer": {
             "label": {
               "en_us": "Payer",
