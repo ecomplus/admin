@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Responsive admin dashboard and web application ui kit. A card is a flexible and extensible content container. It includes options for headers and footers, a wide variety of content, contextual background colors, and powerful display options.">
+    <meta name="keywords" content="card, panel">
+
+    <title>Orders &mdash; TheAdmin</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,300i" rel="stylesheet">
+
+    <!-- Styles -->
+    <link href="../assets/css/core.min.css" rel="stylesheet">
+    <link href="../assets/css/app.min.css" rel="stylesheet">
+    <link href="../assets/css/style.min.css" rel="stylesheet">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+    <link rel="icon" href="../assets/img/favicon.png">
+  </head>
+
+  <body>
+
+    <!-- Preloader -->
+
+    <!-- Main container -->
+    <main class="main-container">
+      <div class="main-content">
+        <div class="row">
+
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title"><strong>Itens</strong></h5>
+              <button class="btn btn-primary no-radius">Adicionar item</button>
+            </div>
+
+            <table class="table table-hover table-has-action">
+              <thead>
+                <tr>
+                  <th>SKU</th>
+                  <th>
+                    <span data-lang="en_us">Product</span>
+                    <span data-lang="pt_br">Produto</span>
+                  </th>
+                  <th class="text-center i18n">
+                    <span data-lang="en_us">Quantity</span>
+                    <span data-lang="pt_br">Quantidade</span>
+                  </th>
+                  <th>Total</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>153</td>
+                  <td>iPhone</td>
+                  <td class="text-center">2</td>
+                  <td><span class="label label-pill label-default">$699</span></td>
+                </tr>
+                <tr>
+                  <td>435</td>
+                  <td>iPad pro</td>
+                  <td class="text-center">1</td>
+                  <td><span class="label label-pill label-default">$849</span></td>
+                </tr>
+                <tr>
+                  <td>653</td>
+                  <td>Microsoft surface</td>
+                  <td class="text-center">6</td>
+                  <td><span class="label label-pill label-info">$1,699</span></td>
+                </tr>
+                <tr>
+                  <td>345</td>
+                  <td>Galaxy S7 edge</td>
+                  <td class="text-center">1</td>
+                  <td><span class="label label-pill label-danger">$729</span></td>
+                </tr>
+                <tr>
+                  <td>906</td>
+                  <td>128G SD Card</td>
+                  <td class="text-center">1</td>
+                  <td><span class="label label-pill label-success">$43</span></td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+          <div class="card">
+            <h4 class="card-title"><strong>Status do pedido</strong></h4>
+
+            <div class="card-body">
+              <div data-provide="wizard">
+                <ul class="nav nav-process nav-process-iconic">
+                  <li class="nav-item complete">
+                    <span class="nav-title">Personal info</span>
+                    <a class="nav-link" href="#"><i class="fa fa-user"></i></a>
+                  </li>
+                  <li class="nav-item processing">
+                    <span class="nav-title">Billing info</span>
+                    <a class="nav-link" href="#"><i class="fa fa-credit-card"></i></a>
+                  </li>
+                  <li class="nav-item">
+                    <span class="nav-title">Login info</span>
+                    <a class="nav-link" href="#"><i class="fa fa-key"></i></a>
+                  </li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane fade active show" id="wizard-basic-1">
+                    <p class="my-2">Professionally harness user friendly e-business through sticky human capital. Intrinsicly enable installed base infrastructures with client-centered opportunities. Collaboratively synergize reliable niches via resource.</p>
+                  </div>
+
+
+
+                  <div class="tab-pane fade" id="wizard-basic-2">
+                    <p class="my-2">Continually underwhelm value-added infrastructures whereas inexpensive architectures. Dramatically whiteboard economically sound total linkage vis-a-vis client-based technology.</p>
+                  </div>
+
+
+
+                  <div class="tab-pane fade" id="wizard-basic-3">
+                    <p class="my-2">Dynamically extend collaborative deliverables whereas collaborative human capital. Professionally reinvent distinctive communities without parallel alignments. Authoritatively network top-line best practices.</p>
+                  </div>
+
+
+
+                  <div class="tab-pane fade" id="wizard-basic-4">
+                    <p class="my-2">Holisticly facilitate parallel value without leading-edge solutions. Uniquely innovate equity invested content through revolutionary best practices. Quickly negotiate an expanded array.</p>
+                  </div>
+                </div>
+
+                <hr>
+
+                <div class="flexbox">
+                  <button class="btn btn-secondary disabled" data-wizard="prev">Back</button>
+                  <button class="btn btn-secondary" data-wizard="next">Next</button>
+                  <button class="btn btn-primary d-none hidden" data-wizard="finish">Finish</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <header class="card-header">
+              <h4 class="card-title i18n">
+                <span data-lang="en_us">Your notes</span>
+                <span data-lang="pt_br">Suas anotações</span>
+              </h4>
+              <ul class="card-controls">
+                <li>
+                  <a class="card-btn-slide" href="#"></a>
+                </li>
+              </ul>
+            </header>
+            <div class="card-content">
+              <div class="card-body">
+                <textarea class="form-control" rows="3" name="short_description"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <header class="card-header">
+              <h4 class="card-title i18n">
+                <span data-lang="en_us">Buyer observation</span>
+                <span data-lang="pt_br">Observação do comprador</span>
+              </h4>
+              <ul class="card-controls">
+                <li>
+                  <a class="card-btn-slide" href="#"></a>
+                </li>
+              </ul>
+            </header>
+            <div class="card-content">
+              <div class="card-body">
+                <textarea class="form-control" rows="3" name="short_description"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+          <!--
+          |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
+          | Title and subtitle
+          |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
+          !-->
+          <div class="col-lg-4">
+            <!--
+            |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
+            | client info
+            |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
+            !-->
+            <div class="card">
+              <div class="card-body">
+                  <h4 class="i18n">
+                    <span data-lang="en_us">Informações do cliente</span>
+                    <span data-lang="pt_br">Buyer info</span>
+                  </h4>
+                <div class="form-group">
+                  <label class="i18n require">
+                    <span data-lang="en_us">Name</span>
+                    <span data-lang="pt_br">Nome</span>
+                  </label>
+                  <input placeholder="Nome do cliente" type="text" class="form-control action-title" name="name" maxlength="255" required />
+                </div>
+
+                  <div>
+
+                    <div class="form-group">
+                      <label class="i18n">
+                        <span data-lang="en_us">E-mail</span>
+                      </label>
+                      <input type="tel" class="form-control" name="price"
+                        data-is-number="true" data-money="true"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="i18n">
+                        <span data-lang="en_us">Doc number</span>
+                        <span data-lang="pt_br">CPF/CNPJ</span>
+                      </label>
+                      <input type="tel" class="form-control" name="base_price"
+                        data-is-number="true" data-money="true"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="i18n">
+                        <span data-lang="en_us">Phone number</span>
+                        <span data-lang="pt_br">Telefone</span>
+                      </label>
+                      <input type="tel" class="form-control" name="cost_price"
+                        data-is-number="true" data-money="true"/>
+                    </div>
+                  </div>
+
+              </div>
+            </div>
+            <!--
+            |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
+            | shipping info
+            |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
+            !-->
+            <div class="card">
+              <div class="card-body">
+                <h4 class="i18n">
+                  <span data-lang="en_us">Shipping info</span>
+                  <span data-lang="pt_br">Informações de entrega</span>
+                </h4>
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Status</span>
+                  </label>
+                  <select class="form-control" name="commodity_type">
+                    <option value="physical"
+                      data-content="&lt;span class=&apos;i18n&apos;&gt;
+                      &lt;span data-lang=&apos;en_us&apos;&gt;Physical&lt;/span&gt;
+                      &lt;span data-lang=&apos;pt_br&apos;&gt;Físico&lt;/span&gt;
+                      &lt;/span&gt;">
+                      Enviado
+                    </option>
+                    <option value="digital">Embalado</option>
+                    <option value="digital">Entregue</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Address</span>
+                    <span data-lang="pt_br">Endereço</span>
+                  </label>
+                  <input type="tel" class="form-control" name="cost_price"
+                    data-is-number="true" data-money="true"/>
+                </div>
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">ZIP</span>
+                    <span data-lang="pt_br">CEP</span>
+                  </label>
+                  <input type="tel" class="form-control" name="base_price"
+                    data-is-number="true" data-money="true"/>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label class="i18n">
+                        <span data-lang="en_us">Burgh</span>
+                        <span data-lang="pt_br">Bairro</span>
+                      </label>
+                      <input type="tel" class="form-control" name="cost_price"
+                        data-is-number="true" data-money="true"/>
+                    </div>
+                  </div>
+                  <div class="col-md-5">
+                    <div class="form-group">
+                      <label class="i18n">
+                        <span data-lang="en_us">City</span>
+                        <span data-lang="pt_br">Cidade</span>
+                      </label>
+                      <input type="tel" class="form-control" name="cost_price"
+                        data-is-number="true" data-money="true"/>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label class="i18n">
+                        <span data-lang="en_us"></span>
+                        <span data-lang="pt_br">Estado</span>
+                      </label>
+                      <input type="tel" class="form-control" name="cost_price"
+                        data-is-number="true" data-money="true"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="i18n require">
+                    <span data-lang="en_us">Name</span>
+                    <span data-lang="pt_br">Nome</span>
+                  </label>
+                  <input placeholder="Nome do cliente" type="text" class="form-control action-title" name="name" maxlength="255" required />
+                </div>
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">E-mail</span>
+                  </label>
+                  <input type="tel" class="form-control" name="price"
+                    data-is-number="true" data-money="true"/>
+                </div>
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Phone number</span>
+                    <span data-lang="pt_br">Telefone</span>
+                  </label>
+                  <input type="tel" class="form-control" name="cost_price"
+                    data-is-number="true" data-money="true"/>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="card">
+              <header class="card-header">
+                <h4 class="card-title"> <small class="subtitle">Valor pago</small> <strong class="color-primary">R$ 367,55</strong> </h4>
+                <button class="btn no-radius">Editar</button>
+              </header>
+              <div class="card-body">
+                <p>Descontos:<strong> R$ 65,66</strong></p>
+                <p>Total dos intens:<strong> R$ 421,33</strong></p>
+                <p>Frete:<strong> R$ 32,55</strong></p>
+              </div>
+              <footer class="card-footer text-right">
+                <button class="btn btn-secondary">Cancelar</button>
+                <button class="btn btn-primary">Salvar</button>
+              </footer>
+            </div>
+              <div class="card">
+                <h4 class="card-title">
+                  <strong>
+                    <span data-lang="en_us">Timeline</span>
+                    <span data-lang="pt_br">Linha do tempo</span>
+                  </strong>
+                </h4>
+
+
+                <ol class="timeline timeline-activity timeline-point-sm timeline-content-right w-100 py-20 pr-20">
+                  <li class="timeline-block">
+                    <div class="timeline-point">
+                      <span class="badge badge-dot badge-lg badge-danger"></span>
+                    </div>
+                    <div class="timeline-content">
+                      <time datetime="2017">Just now</time>
+                      <p>Finish writing Grunt tasks.</p>
+                    </div>
+                  </li>
+
+                  <li class="timeline-block">
+                    <div class="timeline-point">
+                      <span class="badge badge-dot badge-lg badge-info"></span>
+                    </div>
+                    <div class="timeline-content">
+                      <time datetime="2017">42 mins ago</time>
+                      <p>Called <a href="#">a customer</a> to take a survey.</p>
+                    </div>
+                  </li>
+
+                  <li class="timeline-block">
+                    <div class="timeline-point">
+                      <span class="badge badge-dot badge-lg badge-success"></span>
+                    </div>
+                    <div class="timeline-content">
+                      <time datetime="2017">1 hour ago</time>
+                      <p>Prepare for the presentation.</p>
+                    </div>
+                  </li>
+
+                  <li class="timeline-block">
+                    <div class="timeline-point">
+                      <span class="badge badge-dot badge-lg badge-purple"></span>
+                    </div>
+                    <div class="timeline-content">
+                      <time datetime="2017">Ontem as 16:08</time>
+                      <p><a href="#">Maryam</a> assigned task <a href="#">prototype design</a> to you.</p>
+                    </div>
+                  </li>
+
+                  <li class="timeline-block">
+                    <div class="timeline-point">
+                      <span class="badge badge-dot badge-lg badge-dark"></span>
+                    </div>
+                    <div class="timeline-content">
+                      <time datetime="2017">21/10/18 as 10:40</time>
+                      <p>Meeting with the leader to talk about vacation.</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+          </div>
+        </div>
+      </div><!--/.main-content -->
+    </main>
+    <!-- END Main container -->
+
+
+
+    <!-- Global quickview -->
+    <div id="qv-global" class="quickview" data-url="../assets/data/quickview-global.html">
+      <div class="spinner-linear">
+        <div class="line"></div>
+      </div>
+    </div>
+    <!-- END Global quickview -->
+
+
+
+    <!-- Scripts -->
+    <script src="../assets/js/core.min.js"></script>
+    <script src="../assets/js/app.min.js"></script>
+    <script src="../assets/js/script.min.js"></script>
+
+  </body>
+</html>
