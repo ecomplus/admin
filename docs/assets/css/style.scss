@@ -669,6 +669,21 @@ body {
 .select-image span.selected {
   border-color: $color-text;
 }
+.select-image span.selected {
+  font: normal normal normal 14px/1 FontAwesome;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 22px;
+}
+.select-image span.selected::after {
+  content: "\f058";
+  display: block;
+  color: $color-success;
+  position: absolute;
+  top: 3px;
+  left: 6px;
+}
 .select-image span > img {
   height: 88px;
   width: auto;
