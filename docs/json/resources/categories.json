@@ -1,8 +1,8 @@
 {
   "name": {
     "label": {
-      "en_us": "Category",
-      "pt_br": "Categoria"
+      "en_us": "Name",
+      "pt_br": "Nome"
     },
     "description": {
       "en_us": "Category full name",
