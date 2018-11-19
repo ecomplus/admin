@@ -1,8 +1,8 @@
 {
   "name": {
     "label": {
-      "en_us": "Name",
-      "pt_br": "Nome"
+      "en_us": "Category",
+      "pt_br": "Categoria"
     },
     "description": {
       "en_us": "Category full name",
@@ -123,8 +123,8 @@
       },
       "name": {
         "label": {
-          "en_us": "Name",
-          "pt_br": "Nome"
+          "en_us": "Parent category",
+          "pt_br": "Categoria pai"
         },
         "description": {
           "en_us": "Category name",
@@ -164,8 +164,8 @@
         },
         "name": {
           "label": {
-            "en_us": "Name",
-            "pt_br": "Nome"
+            "en_us": "Children categories",
+            "pt_br": "Categorias filhas"
           },
           "description": {
             "en_us": "Category name",
