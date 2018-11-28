@@ -130,14 +130,14 @@
     "properties": {
       "url": {
         "description": {
-          "en_us": "Image link",
-          "pt_br": "Link da imagem"
+          "en_us": "Icon link",
+          "pt_br": "Link do ícone"
         }
       },
       "size": {
         "label": {
-          "en_us": "Size",
-          "pt_br": "Tamanho"
+          "en_us": "Icon size",
+          "pt_br": "Tamanho do ícone"
         },
         "description": {
           "en_us": "Image size (width x height) in px, such as 100x50 (100px width, 50px height)",
@@ -146,8 +146,8 @@
       },
       "alt": {
         "label": {
-          "en_us": "Alt",
-          "pt_br": "Texto alternativo"
+          "en_us": "Icon Alt",
+          "pt_br": "Alt do ícone"
         },
         "description": {
           "en_us": "Alternative text, HTML alt tag (important for SEO)",
@@ -168,8 +168,8 @@
     "properties": {
       "_id": {
         "label": {
-          "en_us": "ID",
-          "pt_br": "ID"
+          "en_us": "Picture ID",
+          "pt_br": "ID da foto"
         },
         "description": {
           "en_us": "Unique ID (ObjectID)",
@@ -178,8 +178,8 @@
       },
       "tag": {
         "label": {
-          "en_us": "Tag",
-          "pt_br": "Tag"
+          "en_us": "Picture tag",
+          "pt_br": "Tag da foto"
         },
         "description": {
           "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
@@ -188,8 +188,8 @@
       },
       "url": {
         "label": {
-          "en_us": "URL",
-          "pt_br": "URL"
+          "en_us": "Photo URL",
+          "pt_br": "URL da foto"
         },
         "description": {
           "en_us": "Image link",
@@ -198,8 +198,8 @@
       },
       "size": {
         "label": {
-          "en_us": "Size",
-          "pt_br": "Tamanho"
+          "en_us": "Photo size",
+          "pt_br": "Tamanho da foto"
         },
         "description": {
           "en_us": "Image size (width x height) in px, such as 100x50 (100px width, 50px height)",
@@ -208,8 +208,8 @@
       },
       "alt": {
         "label": {
-          "en_us": "Alt",
-          "pt_br": "Texto alternativo"
+          "en_us": "Photo alt",
+          "pt_br": "Alt da foto"
         },
         "description": {
           "en_us": "Alternative text, HTML alt tag (important for SEO)",
@@ -234,8 +234,8 @@
       "properties": {
         "_id": {
           "label": {
-            "en_us": "ID",
-            "pt_br": "ID"
+            "en_us": "Metafield ID",
+            "pt_br": "ID do metafield"
           },
           "description": {
             "en_us": "ID único (ObjectID)",
@@ -244,8 +244,7 @@
         },
         "namespace": {
           "label": {
-            "en_us": "Namespace",
-            "pt_br": "Espaço do nome"
+            "en_us": "Namespace"
           },
           "description": {
             "en_us": "String to help distinguish who (or which app) created and can use the metafield",
@@ -254,8 +253,7 @@
         },
         "field": {
           "label": {
-            "en_us": "Field",
-            "pt_br": "Field"
+            "en_us": "Field"
           },
           "description": {
             "en_us": "Field name",
@@ -301,8 +299,8 @@
   },
   "notes": {
     "label": {
-      "en_us": "Value",
-      "pt_br": "Valor"
+      "en_us": "Notes",
+      "pt_br": "Notas"
     },
     "description": {
       "en_us": "Optional notes with additional info about this brand",
