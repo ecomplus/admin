@@ -55,7 +55,7 @@
     "properties": {
       "source": {
         "label": {
-          "en_us": "Source"
+          "en_us": "Source UTM"
         },
         "description": {
           "en_us": "Parameter \"utm_source\", the referrer: (e.g. google, newsletter)",
@@ -64,7 +64,7 @@
       },
       "medium": {
         "label": {
-          "en_us": "Medium"
+          "en_us": "Medium UTM"
         },
         "description": {
           "en_us": "Parameter \"utm_medium\", the marketing medium: (e.g. cpc, banner, email)",
@@ -73,7 +73,7 @@
       },
       "campaign": {
         "label": {
-          "en_us": "Campaign"
+          "en_us": "Campaign UTM"
         },
         "description": {
           "en_us": "Parameter \"utm_campaign\", the product, promo code, or slogan (e.g. spring_sale)",
@@ -82,7 +82,7 @@
       },
       "term": {
         "label": {
-          "en_us": "Term"
+          "en_us": "Term UTM"
         },
         "description": {
           "en_us": "Parameter \"utm_term\", identifies the paid keywords",
@@ -91,7 +91,7 @@
       },
       "content": {
         "label": {
-          "en_us": "Content"
+          "en_us": "Content UTM"
         },
         "description": {
           "en_us": "Parameter \"utm_content\", used to differentiate ads",
@@ -161,11 +161,16 @@
     }
   },
   "items": {
+    "label": {
+      "en_us": "Items",
+      "pt_br": "Itens"
+    },
     "items": {
       "properties": {
         "_id": {
           "label": {
-            "en_us": "ID"
+            "en_us": "Item ID",
+            "pt_br": "ID do item"
           },
           "description": {
             "en_us": "Unique ID (ObjectID)",
@@ -190,7 +195,8 @@
         },
         "sku": {
           "label": {
-            "en_us": "SKU"
+            "en_us": "Item SKU",
+            "pt_br": "SKU do item"
           },
           "description": {
             "en_us": "Product or variation unique reference code",
@@ -199,8 +205,8 @@
         },
         "name": {
           "label": {
-            "en_us": "Name",
-            "pt_br": "Nome"
+            "en_us": "Product's name",
+            "pt_br": "Nome do produto"
           },
           "description": {
             "en_us": "Product or variation full name, or other label for this cart item",
@@ -209,25 +215,26 @@
         },
         "picture": {
           "label": {
-            "en_us": "Picture",
-            "pt_br": "Fotografia"
+            "en_us": "Item's picture",
+            "pt_br": "Fotografia do item"
           },
           "patternProperties": {
             "^small|normal|big|zoom|custom$": {
               "properties": {
                 "url": {
                   "label": {
-                    "en_us": "URL"
+                    "en_us": "Item's picture URL",
+                    "pt_br": "URL da foto do item"
                   },
                   "description": {
                     "en_us": "Image link",
-                    "pt_br": "Link da imagem"
+                    "pt_br": "Link da foto"
                   }
                 },
                 "size": {
                   "label": {
-                    "en_us": "Size",
-                    "pt_br": "Tamanho"
+                    "en_us": "Item's picture size",
+                    "pt_br": "Tamanho da foto do item"
                   },
                   "description": {
                     "en_us": "Image size (width x height) in px, such as 100x50 (100px width, 50px height)",
@@ -236,8 +243,8 @@
                 },
                 "alt": {
                   "label": {
-                    "en_us": "Alt",
-                    "pt_br": "Texto alternativo"
+                    "en_us": "Item's picture alt",
+                    "pt_br": "Alt da foto do item"
                   },
                   "description": {
                     "en_us": "Alternative text, HTML alt tag (important for SEO)",
@@ -258,14 +265,15 @@
         },
         "customizations": {
           "label": {
-            "en_us": "Customizations",
-            "pt_br": "Customizações"
+            "en_us": "Item's customizations",
+            "pt_br": "Customizações do item"
           },
           "items": {
             "properties": {
               "_id": {
                 "label": {
-                  "en_us": "ID"
+                  "en_us": "Customization ID",
+                  "pt_br": "ID da customização"
                 },
                 "description": {
                   "en_us": "Customization field ID",
@@ -274,8 +282,8 @@
               },
               "label": {
                 "label": {
-                  "en_us": "Label",
-                  "pt_br": "Rótulo"
+                  "en_us": "Customization label",
+                  "pt_br": "Rótulo da customização"
                 },
                 "description": {
                   "en_us": "Title for this customization field, can be the grid title",
@@ -284,8 +292,8 @@
               },
               "option": {
                 "label": {
-                  "en_us": "Option",
-                  "pt_br": "Opção"
+                  "en_us": "Customization option",
+                  "pt_br": "Opção da customização"
                 },
                 "properties": {
                   "option_id": {
@@ -300,8 +308,8 @@
                   },
                   "text": {
                     "label": {
-                      "en_us": "Text",
-                      "pt_br": "Texto"
+                      "en_us": "Option text",
+                      "pt_br": "Texto da opção"
                     },
                     "description": {
                       "en_us": "Option text value displayed for the client",
@@ -310,8 +318,8 @@
                   },
                   "colors": {
                     "label": {
-                      "en_us": "Colors",
-                      "pt_br": "Cores"
+                      "en_us": "Option colors",
+                      "pt_br": "Cores da opção"
                     },
                     "items": {
                       "description": {
@@ -332,8 +340,8 @@
               },
               "attachment": {
                 "label": {
-                  "en_us": "Attachment",
-                  "pt_br": "Anexo"
+                  "en_us": "Item attachment",
+                  "pt_br": "Anexo do item"
                 },
                 "description": {
                   "en_us": "URL of file attached by customer to this field",
@@ -342,8 +350,8 @@
               },
               "add_to_price": {
                 "label": {
-                  "en_us": "Add to price",
-                  "pt_br": "Adicionar ao preço"
+                  "en_us": "Customization add to price",
+                  "pt_br": "Adição ao preço pela customização"
                 },
                 "properties": {
                   "type": {
@@ -401,7 +409,8 @@
           "properties": {
             "tag": {
               "label": {
-                "en_us": "Tag"
+                "en_us": "Gift wrap tag",
+                "pt_br": "Tag do embrulho"
               },
               "description": {
                 "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
@@ -410,8 +419,8 @@
             },
             "label": {
               "label": {
-                "en_us": "Label",
-                "pt_br": "Rótulo"
+                "en_us": "Gift wrap label",
+                "pt_br": "Rótulo do embrulho"
               },
               "description": {
                 "en_us": "Title describing this gift wrap",
@@ -420,8 +429,8 @@
             },
             "add_to_price": {
               "label": {
-                "en_us": "Add to price",
-                "pt_br": "Adicional"
+                "en_us": "Gift wrap add to price",
+                "pt_br": "Adicional do embrulho"
               },
               "description": {
                 "en_us": "Additional value due to this gift wrap",
@@ -436,8 +445,8 @@
         },
         "quantity": {
           "label": {
-            "en_us": "Quantity",
-            "pt_br": "Quantidade"
+            "en_us": "Item quantity",
+            "pt_br": "Quantidade do item"
           },
           "description": {
             "en_us": "Item quantity in cart",
@@ -446,8 +455,8 @@
         },
         "min_quantity": {
           "label": {
-            "en_us": "Min quantity",
-            "pt_br": "Quantidade mínima"
+            "en_us": "Min item quantity",
+            "pt_br": "Quantidade mínima do item"
           },
           "description": {
             "en_us": "Minimum item quantity for this cart",
@@ -456,8 +465,8 @@
         },
         "max_quantity": {
           "label": {
-            "en_us": "Max quantity",
-            "pt_br": "Quantidade máxima"
+            "en_us": "Max item quantity",
+            "pt_br": "Quantidade máxima do item"
           },
           "description": {
             "en_us": "Maximum item quantity for this cart",
@@ -476,8 +485,8 @@
         },
         "currency_id": {
           "label": {
-            "en_us": "Currency ID",
-            "pt_br": "ID da moeda"
+            "en_us": "Item currency ID",
+            "pt_br": "ID da moeda do item"
           },
           "description": {
             "en_us": "Designator of currency according to ISO 4217 (3 uppercase letters)",
@@ -486,8 +495,8 @@
         },
         "currency_symbol": {
           "label": {
-            "en_us": "Currency symbol",
-            "pt_br": "Símbolo da moeda"
+            "en_us": "Item currency symbol",
+            "pt_br": "Símbolo da moeda do item"
           },
           "description": {
             "en_us": "Graphic symbol used as a shorthand for currency's name",
@@ -567,8 +576,8 @@
     "properties": {
       "apply_at": {
         "label": {
-          "en_us": "Apply at",
-          "pt_br": "Se aplica ao"
+          "en_us": "Discount apply at",
+          "pt_br": "Desconto se aplica ao"
         },
         "enum": {
           "total": {
@@ -596,8 +605,8 @@
       },
       "type": {
         "label": {
-          "en_us": "Type",
-          "pt_br": "Tipo"
+          "en_us": "Discount type",
+          "pt_br": "Tipo de desconto"
         },
         "enum": {
           "percentage": {
@@ -620,8 +629,8 @@
       },
       "value": {
         "label": {
-          "en_us": "Value",
-          "pt_br": "Valor"
+          "en_us": "Discount value",
+          "pt_br": "Valor do desconto"
         },
         "description": {
           "en_us": "Discount value, percentage or fixed",
@@ -636,10 +645,14 @@
   },
   "orders": {
     "label": {
-      "en_us": "Orders",
-      "pt_br": "Pedidos"
+      "en_us": "Completed orders IDs",
+      "pt_br": "IDs de pedidos concluídos"
     },
     "items": {
+      "label": {
+        "en_us": "Order ID",
+        "pt_br": "Id do pedido"
+      },
       "description": {
         "en_us": "Order ID",
         "pt_br": "Id do pedido"
