@@ -38,7 +38,8 @@
         "properties": {
           "_id": {
             "label": {
-              "en_us": "ID"
+              "en_us": "Option ID",
+              "pt_br": "ID da Opção"
             },
             "description": {
               "en_us": "Unique ID (ObjectID)",
@@ -57,8 +58,8 @@
           },
           "text": {
             "label": {
-              "en_us": "Text",
-              "pt_br": "Texto"
+              "en_us": "Option text",
+              "pt_br": "Texto da opção"
             },
             "description": {
               "en_us": "Option text value displayed for the client",
@@ -67,8 +68,8 @@
           },
           "value": {
             "label": {
-              "en_us": "Value",
-              "pt_br": "Valor"
+              "en_us": "Option default value",
+              "pt_br": "Valor padrão da opção"
             },
             "description": {
               "en_us": "Default normalized value to use in integrations",
@@ -77,8 +78,8 @@
           },
           "external_values": {
             "label": {
-              "en_us": "Value",
-              "pt_br": "Valor"
+              "en_us": "Option external value",
+              "pt_br": "Valor externo da opção"
             },
             "description": {
               "en_us": "Normalized values to use in specific integrations (ID in property)",
@@ -87,8 +88,8 @@
           },
           "colors": {
             "label": {
-              "en_us": "Colors",
-              "pt_br": "Cores"
+              "en_us": "Option colors",
+              "pt_br": "Cores da opção"
             },
             "items": {
               "description": {
@@ -103,34 +104,40 @@
           },
           "add_to_price": {
             "label": {
-              "en_us": "Add to price",
-              "pt_br": "Adicionar ao preço"
+              "en_us": "Option add to price",
+              "pt_br": "Adicional ao preço da opção"
             },
             "properties": {
               "type": {
                 "label": {
-                  "en_us": "Type",
-                  "pt_br": "Tipo"
+                  "en_us": "Add Type",
+                  "pt_br": "Tipo de adição"
                 },
                 "enum":{
                   "percentage": {
-                    "en_us": "Percentage",
-                    "pt_br": "Porcentagem"
+                    "label": {
+                      "en_us": "Percentage",
+                      "pt_br": "Porcentagem"
+                    }
                   },
                   "fixed": {
-                    "en_us": "Fixed",
-                    "pt_br": "Fixo"
+                    "label": {
+                      "en_us": "Fixed",
+                      "pt_br": "Fixo"
+                    }
                   }
                 },
                 "description": {
-                  "en_us": "Type of price addition",
-                  "pt_br": "Tipo de adição de preço"
+                  "label": {
+                    "en_us": "Type of price addition",
+                    "pt_br": "Tipo de adição de preço"
+                  }
                 }
               },
               "addition": {
                 "label": {
-                  "en_us": "Addition",
-                  "pt_br": "Adição"
+                  "en_us": "Option addition",
+                  "pt_br": "Adicional da opção"
                 },
                 "description": {
                   "en_us": "Additional value, could be negative",
@@ -182,8 +189,8 @@
       "properties": {
         "type": {
           "label": {
-            "en_us": "Type",
-            "pt_br": "Tipo"
+            "en_us": "Type of add",
+            "pt_br": "Tipo de adicional"
           },
           "enum":{
             "percentage": {
@@ -224,7 +231,8 @@
         "properties": {
           "_id": {
             "label": {
-              "en_us": "ID"
+              "en_us": "Metafield ID",
+              "pt_br": "ID do metafield"
             },
             "description": {
               "en_us": "ID único (ObjectID)",
@@ -233,8 +241,7 @@
           },
           "namespace": {
             "label": {
-              "en_us": "Namespace",
-              "pt_br": "Espaço do nome"
+              "en_us": "Metafield namespace"
             },
             "description": {
               "en_us": "String to help distinguish who (or which app) created and can use the metafield",
@@ -288,8 +295,8 @@
     },
     "notes": {
       "label": {
-        "en_us": "Value",
-        "pt_br": "Valor"
+        "en_us": "Notes",
+        "pt_br": "Notas"
       },
       "description": {
         "en_us": "Optional notes with additional info about this brand",
