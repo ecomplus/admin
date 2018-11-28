@@ -10,6 +10,10 @@
         }
       },
       "state": {
+        "label": {
+          "en_us": "State",
+          "pt_br": "Estado"
+        },
         "enum": {
           "inactive":{
             "label": {
@@ -47,8 +51,7 @@
       },
       "slug": {
         "label": {
-          "en_us": "Value",
-          "pt_br": "Valor"
+          "en_us": "Slug"
         },
         "description": {
           "en_us": "App unique slug, only lowercase letters, numbers and hyphen",
@@ -250,7 +253,7 @@
       "load_events": {
         "label": {
           "en_us": "Load events",
-          "pt_br": "Esconder"
+          "pt_br": "Carregar eventos"
         },
         "items": {
           "label": {
@@ -279,7 +282,7 @@
       "github_repository": {
         "label": {
           "en_us": "GitHub repository",
-          "pt_br": "Repositório ni GitHub"
+          "pt_br": "Repositório no GitHub"
         },
         "description": {
           "en_us": "Link to GitHub repository",
@@ -308,8 +311,8 @@
       },
       "auth_callback_uri": {
         "label": {
-          "en_us": "Addition",
-          "pt_br": "Adição"
+          "en_us": "Auth callback uri",
+          "pt_br": "URI de callback da autenticação"
         },
         "description": {
           "en_us": "Endpoint that receives POST back with authentication credentials, must be https",
@@ -317,6 +320,10 @@
         }
       },
       "auth_scope": {
+        "label": {
+          "en_us": "Auth scope",
+          "pt_br": "Scopo de autenticação"
+        },
         "patternProperties": {
           "^({$}?(?!app|aut|upd)({a-z}{1,60}))$": {
             "items": {
@@ -386,8 +393,8 @@
       },
       "notes": {
         "label": {
-          "en_us": "Value",
-          "pt_br": "Valor"
+          "en_us": "Notes",
+          "pt_br": "Notas"
         },
         "description": {
           "en_us": "Optional notes with additional info about this brand",
