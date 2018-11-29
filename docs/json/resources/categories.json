@@ -108,13 +108,14 @@
   },
   "parent": {
     "label": {
-      "en_us": "Parent",
-      "pt_br": "Pai"
+      "en_us": "Parent category",
+      "pt_br": "categoria superior"
     },
     "properties": {
       "_id": {
         "label": {
-          "en_us": "ID"
+          "en_us": "Parent category ID",
+          "pt_br": "ID da categoria superior"
         },
         "description": {
           "en_us": "Unique ID (ObjectID)",
@@ -133,7 +134,8 @@
       },
       "slug": {
         "label": {
-          "en_us": "Slug"
+          "en_us": "Parent category slug",
+          "pt_br": "Slug da categoria pai"
         },
         "description": {
           "en_us": "Slug to complete page URL, starting with number or lowercase letter",
@@ -155,7 +157,8 @@
       "properties": {
         "_id": {
           "label": {
-            "en_us": "ID"
+            "en_us": "Child category ID",
+            "pt_br": "ID da categoria inferior"
           },
           "description": {
             "en_us": "Unique ID (ObjectID)",
@@ -201,7 +204,8 @@
         "properties": {
           "_id": {
             "label": {
-              "en_us": "ID"
+              "en_us": "Grid ID",
+              "pt_br": "ID do grid"
             },
             "description": {
               "en_us": "Unique ID (ObjectID)",
@@ -210,8 +214,8 @@
           },
           "title": {
             "label": {
-              "en_us": "Title",
-              "pt_br": "Título"
+              "en_us": "Grid title",
+              "pt_br": "Título do grid"
             },
             "description": {
               "en_us": "Grid title",
@@ -220,8 +224,8 @@
           },
           "is_filter": {
             "label": {
-              "en_us": "Is filter",
-              "pt_br": "É filtro"
+              "en_us": "Grid is filter",
+              "pt_br": "Grid é filtro"
             },
             "description": {
               "en_us": "Grid used to results filtering (search aggregations)",
@@ -248,7 +252,8 @@
     "properties": {
       "url": {
         "label": {
-          "en_us": "URL"
+          "en_us": "Icon URL",
+          "pt_br": "URL do ícone"
         },
         "description": {
           "en_us": "Image link",
@@ -257,8 +262,8 @@
       },
       "size": {
         "label": {
-          "en_us": "Size",
-          "pt_br": "Tamanho"
+          "en_us": "Icon size",
+          "pt_br": "Tamanho do ícone"
         },
         "description": {
           "en_us": "Image size (width x height) in px, such as 100x50 (100px width, 50px height)",
@@ -267,8 +272,8 @@
       },
       "alt": {
         "label": {
-          "en_us": "Alt",
-          "pt_br": "Texto alternativo"
+          "en_us": "Icon Alt",
+          "pt_br": "Alt do ícone"
         },
         "description": {
           "en_us": "Alternative text, HTML alt tag (important for SEO)",
@@ -289,7 +294,8 @@
     "properties": {
       "_id": {
         "label": {
-          "en_us": "ID"
+          "en_us": "Picture ID",
+          "pt_br": "ID da foto"
         },
         "description": {
           "en_us": "Unique ID (ObjectID)",
@@ -298,7 +304,8 @@
       },
       "tag": {
         "label": {
-          "en_us": "Tag"
+          "en_us": "Picture Tag",
+          "pt_br": "Tag da foto"
         },
         "description": {
           "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
@@ -307,7 +314,8 @@
       },
       "url": {
         "label": {
-          "en_us": "URL"
+          "en_us": "Picture URL",
+          "pt_br": "URL da foto"
         },
         "description": {
           "en_us": "Image link",
@@ -316,8 +324,8 @@
       },
       "size": {
         "label": {
-          "en_us": "Size",
-          "pt_br": "Tamanho"
+          "en_us": "Picture size",
+          "pt_br": "Tamanho da foto"
         },
         "description": {
           "en_us": "Image size (width x height) in px, such as 100x50 (100px width, 50px height)",
@@ -326,8 +334,8 @@
       },
       "alt": {
         "label": {
-          "en_us": "Alt",
-          "pt_br": "Texto alternativo"
+          "en_us": "Picture alt",
+          "pt_br": "Alt da foto"
         },
         "description": {
           "en_us": "Alternative text, HTML alt tag (important for SEO)",
@@ -372,8 +380,8 @@
       "properties": {
         "_id": {
           "label": {
-            "en_us": "ID",
-            "pt_br": "ID"
+            "en_us": "Metafield ID",
+            "pt_br": "ID do metafield"
           },
           "description": {
             "en_us": "ID único (ObjectID)",
