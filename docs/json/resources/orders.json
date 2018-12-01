@@ -46,7 +46,7 @@
       "properties": {
         "source": {
           "label": {
-            "en_us": "Source"
+            "en_us": "UTM source"
           },
           "description": {
             "en_us": "Parameter \"utm_source\", the referrer: (e.g. google, newsletter)",
@@ -55,7 +55,7 @@
         },
         "medium": {
           "label": {
-            "en_us": "Medium"
+            "en_us": "UTM medium"
           },
           "description": {
             "en_us": "Parameter \"utm_medium\", the marketing medium: (e.g. cpc, banner, email)",
@@ -64,7 +64,7 @@
         },
         "campaign": {
           "label": {
-            "en_us": "Campaign"
+            "en_us": "UTM campaign"
           },
           "description": {
             "en_us": "Parameter \"utm_campaign\", the product, promo code, or slogan (e.g. spring_sale)",
@@ -73,7 +73,7 @@
         },
         "term": {
           "label": {
-            "en_us": "Term"
+            "en_us": "UTM Term"
           },
           "description": {
             "en_us": "Parameter \"utm_term\", identifies the paid keywords",
@@ -82,7 +82,7 @@
         },
         "content": {
           "label": {
-            "en_us": "Content"
+            "en_us": "UTM Content"
           },
           "description": {
             "en_us": "Parameter \"utm_content\", used to differentiate ads",
@@ -164,8 +164,7 @@
         },
         "pdv":{
           "label": {
-            "en_us": "PDV",
-            "pt_br": "PDV"
+            "en_us": "PDV"
           }
         },
         "button":{
@@ -339,8 +338,8 @@
       "properties": {
         "updated_at": {
           "label": {
-            "en_us": "Updated at",
-            "pt_br": "Atualizado em"
+            "en_us": "Financial updated date",
+            "pt_br": "Data de atualização do status financeiro"
           },
           "description": {
             "en_us": "Last status change, date and time in ISO 8601 standard representation",
@@ -349,8 +348,8 @@
         },
         "current": {
           "label": {
-            "en_us": "Current",
-            "pt_br": "Atual"
+            "en_us": "Current financial status",
+            "pt_br": "Estado financeiro atual"
           },
           "enum": {
             "pending":{
@@ -433,8 +432,8 @@
       "properties": {
         "updated_at": {
           "label": {
-            "en_us": "Updated at",
-            "pt_br": "Atualizado em"
+            "en_us": "Fulfillment status date",
+            "pt_br": "Data de atualização da entrega"
           },
           "description": {
             "en_us": "Last status change, date and time in ISO 8601 standard representation",
@@ -443,8 +442,8 @@
         },
         "current": {
           "label": {
-            "en_us": "Current",
-            "pt_br": "Atual"
+            "en_us": "Current fulfillment status",
+            "pt_br": "Status de entrega atual "
           },
           "enum": {
             "invoice_issued":{
@@ -651,8 +650,8 @@
           },
           "locale": {
             "label": {
-              "en_us": "Locale",
-              "pt_br": "Localidade"
+              "en_us": "Buyer locale",
+              "pt_br": "Localidade do cliente"
             },
             "description": {
               "en_us": "Customer language two letters code, sometimes with region, eg.: pt_br, fr, en_us",
@@ -661,8 +660,8 @@
           },
           "main_email": {
             "label": {
-              "en_us": "Main e-mail",
-              "pt_br": "E-mail principal"
+              "en_us": "Buyer main e-mail",
+              "pt_br": "E-mail principal do cliente"
             },
             "description": {
               "en_us": "Customer main email address",
@@ -677,8 +676,8 @@
               "properties": {
                 "address": {
                   "label": {
-                    "en_us": "Address",
-                    "pt_br": "Endereço"
+                    "en_us": "E-mail address",
+                    "pt_br": "Endereço de e-mail"
                   },
                   "description": {
                     "en_us": "The actual email address",
@@ -744,8 +743,8 @@
           },
           "display_name": {
             "label": {
-              "en_us": "Display name",
-              "pt_br": "Nome de exibição"
+              "en_us": "Buyers display name",
+              "pt_br": "Nome de exibição do cliente"
             },
             "description": {
               "en_us": "The name of this Customer, suitable for display",
@@ -754,14 +753,14 @@
           },
           "name": {
             "label": {
-              "en_us": "Name",
-              "pt_br": "Nome"
+              "en_us": "Buyer name",
+              "pt_br": "Nome do cliente"
             },
             "properties": {
               "family_name": {
                 "label": {
-                  "en_us": "Family name",
-                  "pt_br": "Nome da família"
+                  "en_us": "Buyers family name",
+                  "pt_br": "Sobrenome do cliente"
                 },
                 "description": {
                   "en_us": "The family name of this user, or \"last name\"",
@@ -770,8 +769,8 @@
               },
               "given_name": {
                 "label": {
-                  "en_us": "Given name",
-                  "pt_br": "Primeiro nome"
+                  "en_us": "Buyer given name",
+                  "pt_br": "Primeiro nome do cliente"
                 },
                 "description": {
                   "en_us": "The \"first name\" of this user",
@@ -780,8 +779,8 @@
               },
               "middle_name": {
                 "label": {
-                  "en_us": "Middle name",
-                  "pt_br": "Nome do meio"
+                  "en_us": "Buyer middle name",
+                  "pt_br": "Nome do meio do cliente"
                 },
                 "description": {
                   "en_us": "The middle name(s) of this user",
@@ -796,8 +795,8 @@
           },
           "gender": {
             "label": {
-              "en_us": "Gender",
-              "pt_br": "Gênero"
+              "en_us": "Buyer gender",
+              "pt_br": "Gênero do cliente"
             },
             "description":{
               "en_us": "Customer gender, female, male or third gender (X)",
@@ -806,8 +805,8 @@
           },
           "photos": {
             "label": {
-              "en_us": "Photos",
-              "pt_br": "Fotos"
+              "en_us": "Buyer photos",
+              "pt_br": "Fotos do cliente"
             },
             "items": {
               "description": {
@@ -822,15 +821,15 @@
           },
           "phones": {
             "label": {
-              "en_us": "Phones",
-              "pt_br": "Telefones"
+              "en_us": "Buyer phones",
+              "pt_br": "Telefones do cliente"
             },
             "items": {
               "properties": {
                 "country_code": {
                   "label": {
-                    "en_us": "Country code",
-                    "pt_br": "Código do país"
+                    "en_us": "Phone country code",
+                    "pt_br": "Código de telefone do país"
                   },
                   "description": {
                     "en_us": "Country calling code (without +), defined by standards E.123 and E.164",
@@ -839,8 +838,8 @@
                 },
                 "number": {
                   "label": {
-                    "en_us": "Number",
-                    "pt_br": "Número"
+                    "en_us": "Phone number",
+                    "pt_br": "Número de telefone"
                   },
                   "description": {
                     "en_us": "The actual phone number, digits only",
@@ -849,8 +848,8 @@
                 },
                 "type": {
                   "label": {
-                    "en_us": "Type",
-                    "pt_br": "meta_description"
+                    "en_us": "Phone type",
+                    "pt_br": "Tipo de telefone"
                   },
                   "enum": {
                     "home":{
@@ -896,8 +895,8 @@
           },
           "registry_type": {
             "label": {
-              "en_us": "Registry type",
-              "pt_br": "Tipo de registro"
+              "en_us": "Buyer registry type",
+              "pt_br": "Tipo de registro do cliente"
             },
             "enum": {
               "p":{
@@ -920,8 +919,8 @@
           },
           "doc_country": {
             "label": {
-              "en_us": "Doc country",
-              "pt_br": "País do documento"
+              "en_us": "Buyer doc country",
+              "pt_br": "País do documento do cliente"
             },
             "description": {
               "en_us": "Country of document origin, an ISO 3166-2 code",
@@ -930,7 +929,7 @@
           },
           "doc_number": {
             "label": {
-              "en_us": "Doc numeber",
+              "en_us": "Buyer doc number",
               "pt_br": "Número do documento"
             },
             "description": {
@@ -940,8 +939,8 @@
           },
           "inscription_type": {
             "label": {
-              "en_us": "Incription type",
-              "pt_br": "Tipo de inscrição"
+              "en_us": "Buyer incription type",
+              "pt_br": "Tipo de inscrição do comprador"
             },
             "enum": {
               "State":{
@@ -964,8 +963,8 @@
           },
           "inscription_number": {
             "label": {
-              "en_us": "Inscription number",
-              "pt_br": "Número de inscrição"
+              "en_us": "Buyer inscription number",
+              "pt_br": "Número de inscrição do comprador"
             },
             "description": {
               "en_us": "Municipal or state registration number (with characters) if exists",
@@ -974,8 +973,8 @@
           },
           "corporate_name": {
             "label": {
-              "en_us": "Corporate name",
-              "pt_br": "Nome corporativo"
+              "en_us": "Buyer corporate name",
+              "pt_br": "Nome corporativo do comprador"
             },
             "description": {
               "en_us": "Registered company name or responsible fullname",
@@ -1001,15 +1000,15 @@
       "items": {
         "properties": {
           "_id": {
-            "description": {
+            "label": {
               "en_us": "Customer ID",
               "pt_br": "ID do cliente"
             }
           },
           "locale": {
             "label": {
-              "en_us": "Locale",
-              "pt_br": "Local"
+              "en_us": "Customer Locale",
+              "pt_br": "Localidade do cliente"
             },
             "description": {
               "en_us": "Customer language two letter code, sometimes with region, eg.: pt_br, fr, en_us",
@@ -1018,8 +1017,8 @@
           },
           "main_email": {
             "label": {
-              "en_us": "Main e-mail",
-              "pt_br": "E-mail principal"
+              "en_us": "Customer main e-mail",
+              "pt_br": "E-mail principal do cliente"
             },
             "description": {
               "en_us": "Customer main e-mail address",
@@ -1028,14 +1027,15 @@
           },
           "emails": {
             "label": {
-              "en_us": "E-mails"
+              "en_us": "Customer E-mails",
+              "pt_br": "E-mails do cliente"
             },
             "items": {
               "properties": {
                 "address": {
                   "label": {
-                    "en_us": "Address",
-                    "pt_br": "Endereço"
+                    "en_us": "Buyer email address",
+                    "pt_br": "Endereço de email do cliente"
                   },
                   "description": {
                     "en_us": "The actual email address",
@@ -1044,8 +1044,8 @@
                 },
                 "type": {
                   "label": {
-                    "en_us": "Type",
-                    "pt_br": "Tipo"
+                    "en_us": "Email Type",
+                    "pt_br": "Tipo do email"
                   },
                   "enum": {
                     "home":{
@@ -1080,8 +1080,8 @@
                 },
                 "verified": {
                   "label": {
-                    "en_us": "Verified",
-                    "pt_br": "Verificado"
+                    "en_us": "E-mail verified",
+                    "pt_br": "E-mail verificado"
                   },
                   "description": {
                     "en_us": "States whether or not the email address has been verified",
@@ -1101,8 +1101,8 @@
           },
           "display_name": {
             "label": {
-              "en_us": "Display name",
-              "pt_br": "Nome de exibição"
+              "en_us": "Buyer display name",
+              "pt_br": "Nome de exibição do comprador"
             },
             "description": {
               "en_us": "The name of this Customer, suitable for display",
@@ -1111,14 +1111,14 @@
           },
           "name": {
             "label": {
-              "en_us": "Name",
-              "pt_br": "Nome"
+              "en_us": "Buyer name",
+              "pt_br": "Nome do cliente"
             },
             "properties": {
               "family_name": {
                 "label": {
-                  "en_us": "Family name",
-                  "pt_br": "Sobrenome"
+                  "en_us": "Buyer family name",
+                  "pt_br": "Sobrenome do comprador"
                 },
                 "description": {
                   "en_us": "The family name of this user, or \"last name\"",
@@ -1127,8 +1127,8 @@
               },
               "given_name": {
                 "label": {
-                  "en_us": "Given name",
-                  "pt_br": "Primeiro nome"
+                  "en_us": "Buyer given name",
+                  "pt_br": "Primeiro nome do comprador"
                 },
                 "description": {
                   "en_us": "The \"first name\" of this user",
@@ -1137,8 +1137,8 @@
               },
               "middle_name": {
                 "label": {
-                  "en_us": "Middle name",
-                  "pt_br": "Nome do meio"
+                  "en_us": "Buyer middle name",
+                  "pt_br": "Nome do meio do cliente"
                 },
                 "description": {
                   "en_us": "The middle name(s) of this user",
@@ -1153,8 +1153,8 @@
           },
           "gender": {
             "label": {
-              "en_us": "Gender",
-              "pt_br": "Gênero"
+              "en_us": "Buyer gender",
+              "pt_br": "Gênero do cliente"
             },
             "enum": {
               "f":{
@@ -1180,11 +1180,11 @@
           },
           "photos": {
             "label": {
-              "en_us": "Photos",
-              "pt_br": "Fotos"
+              "en_us": "Buyer photos",
+              "pt_br": "Fotos do cliente"
             },
             "items": {
-              "description":{
+              "label":{
                 "en_us": "Image URL",
                 "pt_br": "URL da imagem"
               }
@@ -1196,8 +1196,8 @@
           },
           "phones": {
             "label": {
-              "en_us": "Phones",
-              "pt_br": "Telefones"
+              "en_us": "Buyer phones",
+              "pt_br": "Telefones do cliente"
             },
             "items": {
               "properties": {
@@ -1213,8 +1213,8 @@
                 },
                 "number": {
                   "label": {
-                    "en_us": "Number",
-                    "pt_br": "Número"
+                    "en_us": "Phone number",
+                    "pt_br": "Número de telefone"
                   },
                   "description": {
                     "en_us": "The actual phone number, digits only",
@@ -1223,8 +1223,8 @@
                 },
                 "type": {
                   "label": {
-                    "en_us": "Type",
-                    "pt_br": "Tipo"
+                    "en_us": "Phone type",
+                    "pt_br": "Tipo de fone"
                   },
                   "enum": {
                     "home":{
@@ -1276,8 +1276,8 @@
             "properties": {
               "title": {
                 "label": {
-                  "en_us": "Title",
-                  "pt_br": "Título"
+                  "en_us": "Gift list title",
+                  "pt_br": "Título da lista de presentes"
                 },
                 "description": {
                   "en_us": "Title for the gifts list, generally defined by the customer",
@@ -1286,8 +1286,8 @@
               },
               "description": {
                 "label": {
-                  "en_us": "Description",
-                  "pt_br": "Descrição"
+                  "en_us": "Gift list description",
+                  "pt_br": "Descrição da lista de clientes"
                 },
                 "description": {
                   "en_us": "Short text description for the gifts list",
@@ -1296,8 +1296,8 @@
               },
               "permalink": {
                 "label": {
-                  "en_us": "Permalink",
-                  "pt_br": "Link permanente"
+                  "en_us": "Gift list permalink",
+                  "pt_br": "Link permanente pra lista de presentes"
                 },
                 "description": {
                   "en_us": "Permanent URL to gifts list page",
@@ -1306,8 +1306,8 @@
               },
               "event_date": {
                 "label": {
-                  "en_us": "Event date",
-                  "pt_br": "Data do evento"
+                  "en_us": "Gift list event date",
+                  "pt_br": "Data do evento da lista de presentes"
                 },
                 "description": {
                   "en_us": "Date and time of the event in ISO 8601 standard representation",
@@ -1316,8 +1316,8 @@
               },
               "valid_thru": {
                 "label": {
-                  "en_us": "Valid thru",
-                  "pt_br": "Validade"
+                  "en_us": "Gift list valid thru",
+                  "pt_br": "Validade da lista de clientes"
                 },
                 "description": {
                   "en_us": "Validity of the list, until this date the gifts can be bought",
@@ -1326,13 +1326,13 @@
               },
               "authors": {
                 "label": {
-                  "en_us": "Authors",
-                  "pt_br": "Autores"
+                  "en_us": "Gift list authors",
+                  "pt_br": "Autores da lista de clientes"
                 },
                 "items": {
-                  "description": {
-                    "en_us": "Author's names",
-                    "pt_br": "Nome(s) do(s) autor(es)"
+                  "label": {
+                    "en_us": "List Author's names",
+                    "pt_br": "Nome do autor da lista"
                   }
                 },
                 "description": {
@@ -1342,8 +1342,8 @@
               },
               "notification_email": {
                 "label": {
-                  "en_us": "Notification email",
-                  "pt_br": "E-mail de notificações"
+                  "en_us": "Gift list notification email",
+                  "pt_br": "E-mail de notificações da lista de presentes"
                 },
                 "description": {
                   "en_us": "Email address to be notified after gift purchase",
@@ -1352,8 +1352,8 @@
               },
               "contact": {
                 "label": {
-                  "en_us": "Contact",
-                  "pt_br": "Contato"
+                  "en_us": "List owner contact",
+                  "pt_br": "Contato da lista"
                 },
                 "description": {
                   "en_us": "Email address or phone number to contact list owners",
@@ -1396,7 +1396,8 @@
         "properties": {
           "_id": {
             "label": {
-              "en_us": "ID"
+              "en_us": "Transaction ID",
+              "pt_br": "ID da transação"
             },
             "description": {
               "en_us": "Unique ID (ObjectID)",
@@ -1405,8 +1406,8 @@
           },
           "created_at": {
             "label": {
-              "en_us": "Created at",
-              "pt_br": "Criado em"
+              "en_us": "Transaction creation date",
+              "pt_br": "Criação da transação"
             },
             "description": {
               "en_us": "Date and time of transaction creation, in ISO 8601 standard representation",
@@ -1415,8 +1416,8 @@
           },
           "type": {
             "label": {
-              "en_us": "Type",
-              "pt_br": "Tipo"
+              "en_us": "Transaction type",
+              "pt_br": "Tipo de transação"
             },
             "enum": {
               "payment":{
@@ -1445,8 +1446,8 @@
             "properties": {
               "code": {
                 "label": {
-                  "en_us": "Code",
-                  "pt_br": "Código"
+                  "en_us": "Payment method Code",
+                  "pt_br": "Código do meio de pagamento"
                 },
                 "enum": {
                   "credit_card":{
@@ -1505,8 +1506,8 @@
               },
               "name": {
                 "label": {
-                  "en_us": "Name",
-                  "pt_br": "Nome"
+                  "en_us": "Payment method name",
+                  "pt_br": "Nome do meio de pagamento"
                 },
                 "description": {
                   "en_us": "Short description for payment method",
@@ -1531,14 +1532,14 @@
           },
           "payer": {
             "label": {
-              "en_us": "Payer",
-              "pt_br": "Pagador"
+              "en_us": "Transaction payer",
+              "pt_br": "Pagador da transação"
             },
             "properties": {
               "fullname": {
                 "label": {
-                  "en_us": "Billing address",
-                  "pt_br": "Endereço de cobrança"
+                  "en_us": "Payer billing address",
+                  "pt_br": "Endereço de cobrança do pagador"
                 },
                 "description": {
                   "en_us": "Payer full name or company corporate name",
@@ -1547,13 +1548,13 @@
               },
               "birth_date": {
                 "label": {
-                  "en_us": "Birth date",
-                  "pt_br": "Data de nascimento"
+                  "en_us": "Payer Birth date",
+                  "pt_br": "Data de nascimento do pagador"
                 },
                 "properties": {
                   "day": {
                     "label": {
-                      "en_us": "Day",
+                      "en_us": "Birth day",
                       "pt_br": "Dia"
                     },
                     "description": {
@@ -1563,8 +1564,8 @@
                   },
                   "month": {
                     "label": {
-                      "en_us": "Month",
-                      "pt_br": "Mês"
+                      "en_us": "Birth month",
+                      "pt_br": "Mês de nascimento"
                     },
                     "description": {
                       "en_us": "Number of month of birth",
@@ -1573,8 +1574,8 @@
                   },
                   "year": {
                     "label": {
-                      "en_us": "Year",
-                      "pt_br": "Ano"
+                      "en_us": "Birth year",
+                      "pt_br": "Ano de nascimento"
                     },
                     "description": {
                       "en_us": "Year of birth",
@@ -1589,14 +1590,14 @@
               },
               "phone": {
                 "label": {
-                  "en_us": "Phone",
-                  "pt_br": "Telefone"
+                  "en_us": "Buyer phone",
+                  "pt_br": "Telefone do pagador"
                 },
                 "properties": {
                   "country_code": {
                     "label": {
-                      "en_us": "Country code",
-                      "pt_br": "Código do país"
+                      "en_us": "Phone country code",
+                      "pt_br": "Código telefônico do país"
                     },
                     "description": {
                       "en_us": "Country calling code (without +), defined by standards E.123 and E.164",
@@ -1605,8 +1606,8 @@
                   },
                   "number": {
                     "label": {
-                      "en_us": "Number",
-                      "pt_br": "Número"
+                      "en_us": "Phone number",
+                      "pt_br": "Número de telefone"
                     },
                     "description": {
                       "en_us": "The actual phone number, digits only",
@@ -1615,8 +1616,8 @@
                   },
                   "type": {
                     "label": {
-                      "en_us": "Type",
-                      "pt_br": "Tipo"
+                      "en_us": "Phone type",
+                      "pt_br": "Tipo do telefone"
                     },
                     "enum": {
                       "home":{
@@ -1657,8 +1658,8 @@
               },
               "registry_type": {
                 "label": {
-                  "en_us": "Registry type",
-                  "pt_br": "Tipo de registro"
+                  "en_us": "Payer registry type",
+                  "pt_br": "Tipo de registro do pagador"
                 },
                 "enum": {
                   "p":{
@@ -1667,7 +1668,7 @@
                       "pt_br": "Pf"
                     }
                   },
-                  "j":{
+                  "j": {
                     "label": {
                       "en_us": "J",
                       "pt_br": "PJ"
@@ -1681,8 +1682,8 @@
               },
               "doc_country": {
                 "label": {
-                  "en_us": "Doc country",
-                  "pt_br": "País do documento"
+                  "en_us": "Payer Doc country",
+                  "pt_br": "País do documento do comprador"
                 },
                 "description": {
                   "en_us": "Country of document origin, an ISO 3166-2 code",
@@ -1691,8 +1692,8 @@
               },
               "doc_number": {
                 "label": {
-                  "en_us": "Doc numeber",
-                  "pt_br": "Número do documento"
+                  "en_us": "Payer doc numeber",
+                  "pt_br": "Número do documento do comprador"
                 },
                 "description": {
                   "en_us": "Responsible person or organization document number (only numbers)",
@@ -1707,8 +1708,8 @@
           },
           "billing_address": {
             "label": {
-              "en_us": "Billing address",
-              "pt_br": "Endereço de cobrança"
+              "en_us": "Transaction billing address",
+              "pt_br": "Endereço de cobrança da entrega"
             },
             "description": {
               "en_us": "The mailing address associated with the payment method",
@@ -1717,13 +1718,14 @@
           },
           "app": {
             "label": {
-              "en_us": "App",
-              "pt_br": "Aplicativo"
+              "en_us": "Transaction app",
+              "pt_br": "App da transação "
             },
             "properties": {
               "_id": {
                 "label": {
-                  "en_us": "ID"
+                  "en_us": "Transaction app ID",
+                  "pt_br": "Transaction app da transação "
                 },
                 "description": {
                   "en_us": "Application ID",
@@ -1732,8 +1734,8 @@
               },
               "label": {
                 "label": {
-                  "en_us": "Label",
-                  "pt_br": "Rótulo"
+                  "en_us": "App Label",
+                  "pt_br": "Rótulo do app"
                 },
                 "description": {
                   "en_us": "Name of payment method shown to customers",
@@ -1742,8 +1744,8 @@
               },
               "icon": {
                 "label": {
-                  "en_us": "Icon",
-                  "pt_br": "Ícone"
+                  "en_us": "App icon",
+                  "pt_br": "Ícone do app"
                 },
                 "description": {
                   "en_us": "Payment icon image URI",
@@ -1752,14 +1754,14 @@
               },
               "intermediator": {
                 "label": {
-                  "en_us": "Intermediator",
-                  "pt_br": "Intermediador"
+                  "en_us": "App intermediator",
+                  "pt_br": "App Intermediador"
                 },
                 "properties": {
                   "name": {
                     "label": {
-                      "en_us": "Name",
-                      "pt_br": "Nome"
+                      "en_us": "Intermediator name",
+                      "pt_br": "Nome do intermediador"
                     },
                     "description": {
                       "en_us": "Name of payment intermediator",
@@ -1768,7 +1770,8 @@
                   },
                   "link": {
                     "label": {
-                      "en_us": "Link"
+                      "en_us": "Intermediator link",
+                      "pt_br": "Link do intermediador"
                     },
                     "description": {
                       "en_us": "URI to intermediator website",
@@ -1777,8 +1780,8 @@
                   },
                   "code": {
                     "label": {
-                      "en_us": "Code",
-                      "pt_br": "Código"
+                      "en_us": "Intermediator code",
+                      "pt_br": "Código do intermediador"
                     },
                     "description": {
                       "en_us": "Gateway name standardized as identification code",
@@ -1793,8 +1796,8 @@
               },
               "payment_url": {
                 "label": {
-                  "en_us": "Payment URL",
-                  "pt_br": "URL de pagamento"
+                  "en_us": "App payment URL",
+                  "pt_br": "URL de pagamento do app"
                 },
                 "description": {
                   "en_us": "Base URI to payments",
@@ -1809,14 +1812,14 @@
           },
           "intermediator": {
             "label": {
-              "en_us": "Intermediator",
-              "pt_br": "Intermediador"
+              "en_us": "Transaction intermediator",
+              "pt_br": "Intermediador da transação"
             },
             "properties": {
               "transaction_id": {
                 "label": {
-                  "en_us": "Transaction ID",
-                  "pt_br": "ID da transação"
+                  "en_us": "Transaction ID in the intermediator",
+                  "pt_br": "ID da transação no intermediador"
                 },
                 "description": {
                   "en_us": "Transaction ID in the intermediator",
@@ -1825,8 +1828,8 @@
               },
               "transaction_code": {
                 "label": {
-                  "en_us": "Transaction code",
-                  "pt_br": "Código da transação"
+                  "en_us": "Intermediator transaction code",
+                  "pt_br": "Código da transação do intermediador"
                 },
                 "description": {
                   "en_us": "Transaction code in the intermediator",
@@ -1851,8 +1854,8 @@
                 "properties": {
                   "code": {
                     "label": {
-                      "en_us": "Code",
-                      "pt_br": "Código"
+                      "en_us": "Payment metohd code",
+                      "pt_br": "Código do método de pagamento"
                     },
                     "description": {
                       "en_us": "Payment method code",
@@ -1861,8 +1864,8 @@
                   },
                   "name": {
                     "label": {
-                      "en_us": "Name",
-                      "pt_br": "Nome"
+                      "en_us": "Intermediator payment method",
+                      "pt_br": "Método de pagamento do intermediador"
                     },
                     "description": {
                       "en_us": "Short description for payment method",
@@ -1877,8 +1880,8 @@
               },
               "buyer_id": {
                 "label": {
-                  "en_us": "Buyer ID",
-                  "pt_br": "ID do cliente"
+                  "en_us": "Intermediator buyer ID",
+                  "pt_br": "ID do cliente no intermediador"
                 },
                 "description": {
                   "en_us": "ID of customer account in the intermediator",
@@ -1899,7 +1902,7 @@
             "properties": {
               "holder_name": {
                 "label": {
-                  "en_us": "Holder name",
+                  "en_us": "Card holder name",
                   "pt_br": "Nome do portador"
                 },
                 "description": {
@@ -1929,7 +1932,8 @@
               },
               "bin": {
                 "label": {
-                  "en_us": "BIN"
+                  "en_us": "Card BIN",
+                  "pt_br": "BIN do cartão"
                 },
                 "description": {
                   "en_us": "Issuer identification number (IIN), known as bank identification number (BIN)",
@@ -1938,8 +1942,8 @@
               },
               "company": {
                 "label": {
-                  "en_us": "Company",
-                  "pt_br": "Empresa"
+                  "en_us": "Card company",
+                  "pt_br": "Emissor do cartão"
                 },
                 "description": {
                   "en_us": "Credit card issuer name, eg.: Visa, American Express, MasterCard",
@@ -1948,8 +1952,8 @@
               },
               "last_digits": {
                 "label": {
-                  "en_us": "Last digits",
-                  "pt_br": "últimos dígitos"
+                  "en_us": "Card last digits",
+                  "pt_br": "últimos dígitos do cartão"
                 },
                 "description": {
                   "en_us": "Last digits (up to 4) of credit card number",
@@ -1958,7 +1962,8 @@
               },
               "token": {
                 "label": {
-                  "en_us": "Token"
+                  "en_us": "Card token",
+                  "pt_br": "Token d cartão"
                 },
                 "description": {
                   "en_us": "Unique credit card encrypted hash",
@@ -1967,8 +1972,8 @@
               },
               "error_code": {
                 "label": {
-                  "en_us": "Error code",
-                  "pt_br": "Código de erro"
+                  "en_us": "Card rrror code",
+                  "pt_br": "Código de erro do cartão"
                 },
                 "enum": {
                   "incorrect_number":{
@@ -2063,8 +2068,8 @@
             "properties": {
               "code": {
                 "label": {
-                  "en_us": "Code",
-                  "pt_br": "Código"
+                  "en_us": "Billet Code",
+                  "pt_br": "Código do boleto"
                 },
                 "description": {
                   "en_us": "Ticket code, generally a barcode number",
@@ -2073,8 +2078,8 @@
               },
               "valid_thru": {
                 "label": {
-                  "en_us": "Valid thru",
-                  "pt_br": "Vencimento"
+                  "en_us": "Billet valid thru",
+                  "pt_br": "Vencimento do boleto"
                 },
                 "description": {
                   "en_us": "Date and time of expiration, in ISO 8601 standard representation",
@@ -2083,8 +2088,8 @@
               },
               "text_lines": {
                 "label": {
-                  "en_us": "Text lines",
-                  "pt_br": "Linhas de texto"
+                  "en_us": "Billet text lines",
+                  "pt_br": "Texto do boleto"
                 },
                 "items": {
                   "description": {
@@ -2099,7 +2104,8 @@
               },
               "link": {
                 "label": {
-                  "en_us": "Link"
+                  "en_us": "Billet link",
+                  "pt_br": "Link do boleto"
                 },
                 "description": {
                   "en_us": "Direct link (URI) to banking billet",
@@ -2160,8 +2166,8 @@
             "properties": {
               "number": {
                 "label": {
-                  "en_us": "Number",
-                  "pt_br": "Número"
+                  "en_us": "Number of installments",
+                  "pt_br": "Número de parcelas"
                 },
                 "description": {
                   "en_us": "Number of installments",
@@ -2170,8 +2176,8 @@
               },
               "value": {
                 "label": {
-                  "en_us": "Value",
-                  "pt_br": "Valor"
+                  "en_us": "Installment Value",
+                  "pt_br": "Valor da parcela"
                 },
                 "description": {
                   "en_us": "Installment value",
@@ -2190,7 +2196,8 @@
               },
               "total": {
                 "label": {
-                  "en_us": "Total"
+                  "en_us": "Installments total",
+                  "pt_br": "Total das parcelas"
                 },
                 "description": {
                   "en_us": "Total value, sum of all plots",
@@ -2211,8 +2218,8 @@
             "properties": {
               "installment": {
                 "label": {
-                  "en_us": "Installment",
-                  "pt_br": "Parcela"
+                  "en_us": "Installment fee",
+                  "pt_br": "Taxa da parcela"
                 },
                 "description": {
                   "en_us": "Installment fee",
@@ -2221,7 +2228,8 @@
               },
               "operational": {
                 "label": {
-                  "en_us": "Operational"
+                  "en_us": "Operational fee",
+                  "pt_br": "Taxa operacional"
                 },
                 "description": {
                   "en_us": "Operation fee",
@@ -2230,8 +2238,8 @@
               },
               "intermediation": {
                 "label": {
-                  "en_us": "Intermediation",
-                  "pt_br": "Intermediação"
+                  "en_us": "Intermediation fee",
+                  "pt_br": "Taxa de intermediação"
                 },
                 "description": {
                   "en_us": "Intermediation fee, if transaction have an intermediary",
@@ -2240,8 +2248,8 @@
               },
               "other": {
                 "label": {
-                  "en_us": "Other",
-                  "pt_br": "Outro"
+                  "en_us": "Other fee",
+                  "pt_br": "Outra taxa"
                 },
                 "description": {
                   "en_us": "Sum of other transaction rates",
@@ -2256,13 +2264,14 @@
           },
           "status": {
             "label": {
-              "en_us": "Status"
+              "en_us": "Transaction status",
+              "pt_br": "Estado da transação"
             },
             "properties": {
               "updated_at": {
                 "label": {
-                  "en_us": "Updated at",
-                  "pt_br": "Atualizado em"
+                  "en_us": "Transaction update",
+                  "pt_br": "Atualização da transaçao"
                 },
                 "description": {
                   "en_us": "Last status change, date and time in ISO 8601 standard representation",
@@ -2271,8 +2280,8 @@
               },
               "current": {
                 "label": {
-                  "en_us": "Current",
-                  "pt_br": "Atual"
+                  "en_us": "Transaction current status",
+                  "pt_br": "Estado atual da transação"
                 },
                 "enum": {
                   "pending":{
@@ -2338,8 +2347,8 @@
           "items": {
             "items": {
               "description": {
-                "en_us": "Item ID",
-                "pt_br": "Id do item"
+                "en_us": "Transaction atems IDs",
+                "pt_br": "IDs dos itens da transação"
               }
             },
             "description": {
@@ -2349,7 +2358,8 @@
           },
           "flags": {
             "label": {
-              "en_us": "Flags"
+              "en_us": "Transaction flags",
+              "pt_br": "Flag da transação"
             },
             "items": {
               "description":{
@@ -2364,8 +2374,8 @@
           },
           "custom_fields": {
             "label": {
-              "en_us": "Custom fields",
-              "pt_br": "Campos customizados"
+              "en_us": "Transaction custom fields",
+              "pt_br": "Campos customizados da transação"
             },
             "items": {
               "properties": {
@@ -2430,7 +2440,8 @@
         "properties": {
           "_id": {
             "label": {
-              "en_us": "ID"
+              "en_us": "Payment ID",
+              "pt_br": "ID do pagamento"
             },
             "description": {
               "en_us": "Unique ID (ObjectID)",
@@ -2449,8 +2460,8 @@
           },
           "date_time": {
             "label": {
-              "en_us": "Date time",
-              "pt_br": "Data e hora"
+              "en_us": "Payment date",
+              "pt_br": "Data do pagamento"
             },
             "description": {
               "en_us": "Date and time of the event, in ISO 8601 standard representation",
@@ -2459,7 +2470,8 @@
           },
           "status": {
             "label": {
-              "en_us": "Status"
+              "en_us": "Payment status",
+              "pt_br": "Estado do pagamento"
             },
             "enum": {
               "pending": {
@@ -2518,8 +2530,8 @@
           },
           "notification_code": {
             "label": {
-              "en_us": "Notification code",
-              "pt_br": "Código de notificação"
+              "en_us": "Payment notification code",
+              "pt_br": "Código de notificação do pagamento"
             },
             "description": {
               "en_us": "Code of received notification with this status change",
@@ -2538,7 +2550,8 @@
           },
           "flags": {
             "label": {
-              "en_us": "Flags"
+              "en_us": "Payment flags",
+              "pt_br": "Flag do pagamento"
             },
             "items": {
               "description": {
@@ -2571,7 +2584,8 @@
         "properties": {
           "_id": {
             "label": {
-            "en_us": "ID"
+            "en_us": "Fulfillment ID",
+            "pt_br": "ID do cumprimento"
             },
             "description": {
               "en_us": "Unique ID (ObjectID)",
@@ -2590,8 +2604,8 @@
           },
           "date_time": {
             "label": {
-              "en_us": "Date time",
-              "pt_br": "Data e hora"
+              "en_us": "Fulfillment date",
+              "pt_br": "Data do cumprimento"
             },
             "description": {
               "en_us": "Date and time of the event, in ISO 8601 standard representation",
@@ -2600,7 +2614,8 @@
           },
           "status": {
             "label": {
-              "en_us": "Status"
+              "en_us": "Fulfillment status",
+              "pt_br": "Status de cumprimento"
             },
             "enum": {
               "invoice_issued": {
@@ -2665,8 +2680,8 @@
           },
           "notification_code": {
             "label": {
-              "en_us": "Notification code",
-              "pt_br": "Código de notificação"
+              "en_us": "Fulfillment notification code",
+              "pt_br": "Código de notificação do cumprimento"
             },
             "description": {
               "en_us": "Code of received notification with this status change",
@@ -2685,7 +2700,8 @@
           },
           "flags": {
             "label": {
-              "en_us": "Flags"
+              "en_us": "Fulfillment flags",
+              "pt_br": "Flag do cumprimento"
             },
             "items": {
               "description":{
@@ -2711,14 +2727,15 @@
     },
     "items": {
       "label": {
-        "en_us": "Items",
-        "pt_br": "Itens"
+        "en_us": "Products",
+        "pt_br": "Produtos"
       },
       "items": {
         "properties": {
           "_id": {
             "label": {
-              "en_us": "ID"
+              "en_us": "Order product ID",
+              "pt_br": "ID do produto do pedido"
             },
             "description": {
               "en_us": "Unique ID (ObjectID)",
@@ -2743,7 +2760,8 @@
           },
           "sku": {
             "label": {
-              "en_us": "SKU"
+              "en_us": "Product SKU",
+              "pt_br": "SKU do produto"
             },
             "description": {
               "en_us": "Product or variation unique reference code",
@@ -2752,8 +2770,8 @@
           },
           "name": {
             "label": {
-              "en_us": "Name",
-              "pt_br": "Nome"
+              "en_us": "Product name",
+              "pt_br": "Nome do produto"
             },
             "description": {
               "en_us": "Product or variation full name, or other label for this cart item",
@@ -2769,7 +2787,8 @@
               "properties": {
                 "_id": {
                   "label": {
-                    "en_us": "ID"
+                    "en_us": "Customization ID",
+                    "pt_br": "ID da customização"
                   },
                   "description": {
                     "en_us": "Customization field ID",
@@ -2778,8 +2797,8 @@
                 },
                 "label": {
                   "label": {
-                    "en_us": "Label",
-                    "pt_br": "Rótulo"
+                    "en_us": "Customization label",
+                    "pt_br": "Rótulo da customização"
                   },
                   "description": {
                     "en_us": "Title for this customization field, can be the grid title",
@@ -2788,8 +2807,8 @@
                 },
                 "option": {
                   "label": {
-                    "en_us": "Option",
-                    "pt_br": "Opção"
+                    "en_us": "Customization option",
+                    "pt_br": "Opção da customização"
                   },
                   "properties": {
                     "option_id": {
@@ -2804,8 +2823,8 @@
                     },
                     "text": {
                       "label": {
-                        "en_us": "Text",
-                        "pt_br": "Texto"
+                        "en_us": "Option text",
+                        "pt_br": "Texto da opção"
                       },
                       "description": {
                         "en_us": "Option text value displayed for the client",
@@ -2814,8 +2833,8 @@
                     },
                     "colors": {
                       "label": {
-                        "en_us": "Colors",
-                        "pt_br": "Cores"
+                        "en_us": "Option colors",
+                        "pt_br": "Cores da opção"
                       },
                       "items": {
                         "description": {
@@ -2836,8 +2855,8 @@
                 },
                 "attachment": {
                   "label": {
-                    "en_us": "Attachment",
-                    "pt_br": "Anexo"
+                    "en_us": "Customization attachment",
+                    "pt_br": "Anexo da customização"
                   },
                   "description": {
                     "en_us": "URL of file attached by customer to this field",
@@ -2846,14 +2865,14 @@
                 },
                 "add_to_price": {
                   "label": {
-                    "en_us": "Add to price",
-                    "pt_br": "Adicionar ao preço"
+                    "en_us": "Customization add to price",
+                    "pt_br": "Adição ao preço da customização"
                   },
                   "properties": {
                     "type": {
                       "label": {
-                        "en_us": "Type",
-                        "pt_br": "Tipo"
+                        "en_us": "Type of add",
+                        "pt_br": "Tipo de adicional"
                       },
                       "enum": {
                         "percentage":{
@@ -2876,8 +2895,8 @@
                     },
                     "addition": {
                       "label": {
-                        "en_us": "Addition",
-                        "pt_br": "Adicional"
+                        "en_us": "Customization addition",
+                        "pt_br": "Adicional da customização"
                       },
                       "description": {
                         "en_us": "Additional value, could be negative",
@@ -2909,7 +2928,8 @@
             "properties": {
               "tag": {
                 "label": {
-                  "en_us": "Tag"
+                  "en_us": "Gift wrap tag",
+                  "pt_br": "Tag do embrulhar para presente"
                 },
                 "description": {
                   "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
@@ -2918,8 +2938,8 @@
               },
               "label": {
                 "label": {
-                  "en_us": "Label",
-                  "pt_br": "Rótulo"
+                  "en_us": "Gift wrap label",
+                  "pt_br": "Rótulo do embrulho"
                 },
                 "description": {
                   "en_us": "Title describing this gift wrap",
@@ -2928,8 +2948,8 @@
               },
               "add_to_price": {
                 "label": {
-                  "en_us": "Add to price",
-                  "pt_br": "Adicional"
+                  "en_us": "Gift wrap add to price",
+                  "pt_br": "Adicional do embrulho"
                 },
                 "description": {
                   "en_us": "Additional value due to this gift wrap",
@@ -2944,8 +2964,8 @@
           },
           "quantity": {
             "label": {
-              "en_us": "Quantity",
-              "pt_br": "Quantidade"
+              "en_us": "Item quantity",
+              "pt_br": "Quantidade do item"
             },
             "description": {
               "en_us": "Item quantity in cart",
@@ -2954,8 +2974,8 @@
           },
           "price": {
             "label": {
-              "en_us": "Price",
-              "pt_br": "Preço"
+              "en_us": "Item price",
+              "pt_br": "Preço do item"
             },
             "description": {
               "en_us": "Product sale price specifically for this cart",
@@ -2974,7 +2994,8 @@
           },
           "flags": {
             "label": {
-              "en_us": "Flags"
+              "en_us": "Item flags",
+              "pt_br": "Flag do item"
             },
             "items": {
               "description":{
@@ -3008,12 +3029,12 @@
           "properties": {
             "name": {
               "label": {
-                "en_us": "Name",
-                "pt_br": "Nome"
+                "en_us": "Loyalty points program name",
+                "pt_br": "Nome do programa de fidelidade"
               },
               "description": {
                 "en_us": "The name of the loyalty points program",
-                "pt_br": "O nome do program de fidelidade"
+                "pt_br": "O nome do programa de fidelidade"
               }
             },
             "points_value": {
@@ -3047,7 +3068,7 @@
         "properties": {
           "_id": {
             "label": {
-              "en_us": "ID"
+              "en_us": "Metafield ID"
             },
             "description": {
               "en_us": "ID único (ObjectID)",
@@ -3103,7 +3124,8 @@
         "properties": {
           "_id": {
             "label": {
-              "en_us": "ID"
+              "en_us": "Hidden metafields ID",
+              "pt_br": "ID do metafield oculto"
             },
             "description": {
               "en_us": "ID único (ObjectID)",
@@ -3159,7 +3181,8 @@
         "properties": {
           "_id": {
             "label": {
-              "en_us": "ID"
+              "en_us": "Private metafields ID",
+              "pt_br": "ID do matafield privado"
             },
             "description": {
               "en_us": "Unique ID (ObjectID)",
@@ -3254,7 +3277,8 @@
         "properties": {
           "_id": {
             "label": {
-              "en_us": "ID"
+              "en_us": "Shipping line ID",
+              "pt_br": "ID da forma frete"
             },
             "description": {
               "en_us": "Unique ID (ObjectID)",
@@ -3277,8 +3301,8 @@
               "pt_br": "De"
             },
             "description": {
-              "en_us": "Sender's address",
-              "pt_br": "Endereço do remetente"
+              "en_us": "Recipient's address",
+              "pt_br": "Endereço do destinatário"
             }
           },
           "package": {
@@ -3289,16 +3313,16 @@
             "properties": {
               "dimensions": {
                 "label": {
-                  "en_us": "Dimensions",
-                  "pt_br": "Dimensões"
+                  "en_us": "Package dimensions",
+                  "pt_br": "Dimensões do pacote"
                 },
                 "patternProperties": {
                   "^width|height|length$": {
                     "properties": {
                       "value": {
                         "label": {
-                          "en_us": "Value",
-                          "pt_br": "Valor"
+                          "en_us": "Dimensions value",
+                          "pt_br": "Valor da dimensão"
                         },
                         "description": {
                           "en_us": "Size in specified unit",
@@ -3307,7 +3331,7 @@
                       },
                       "unit": {
                         "label": {
-                          "en_us": "Unit",
+                          "en_us": "Dimensions unit",
                           "pt_br": "Unidade"
                         },
                         "enum": {
@@ -3366,14 +3390,14 @@
               },
               "weight": {
                 "label": {
-                  "en_us": "Weight",
-                  "pt_br": "Peso"
+                  "en_us": "Package weight",
+                  "pt_br": "Peso do pacote"
                 },
                 "properties": {
                   "value": {
                     "label": {
-                      "en_us": "Value",
-                      "pt_br": "Valor"
+                      "en_us": "Weight value",
+                      "pt_br": "Valor do peso"
                     },
                     "description": {
                       "en_us": "Size in specified unit",
@@ -3382,8 +3406,8 @@
                   },
                   "unit": {
                     "label": {
-                      "en_us": "Unit",
-                      "pt_br": "Unidade"
+                      "en_us": "Weight unit",
+                      "pt_br": "Unidade do peso"
                     },
                     "enum": {
                       "mg":{
@@ -3437,7 +3461,7 @@
             "properties": {
               "_id": {
                 "label": {
-                  "en_us": "ID"
+                  "en_us": "App ID"
                 },
                 "description": {
                   "en_us": "Application ID",
@@ -3446,8 +3470,8 @@
               },
               "label": {
                 "label": {
-                  "en_us": "Label",
-                  "pt_br": "Rótulo"
+                  "en_us": "App Label",
+                  "pt_br": "Rótulo do app"
                 },
                 "description": {
                   "en_us": "Name of shipping method shown to customers",
@@ -3506,8 +3530,8 @@
               },
               "icon": {
                 "label": {
-                  "en_us": "Icon",
-                  "pt_br": "Ícone"
+                  "en_us": "App icon",
+                  "pt_br": "Ícone do app"
                 },
                 "description": {
                   "en_us": "Shipping method icon image URI",
@@ -3532,7 +3556,8 @@
                 "properties": {
                   "_id": {
                     "label": {
-                      "en_us": "ID"
+                      "en_us": "Rule ID",
+                      "pt_br": "ID da regra"
                     },
                     "description": {
                       "en_us": "Rule ID",
@@ -3541,8 +3566,8 @@
                   },
                   "label": {
                     "label": {
-                      "en_us": "Label",
-                      "pt_br": "Rótulo"
+                      "en_us": "Rule label",
+                      "pt_br": "Rótulo da regra"
                     },
                     "description": {
                       "en_us": "Shipping rule label",
@@ -3563,8 +3588,8 @@
           },
           "price": {
             "label": {
-              "en_us": "Price",
-              "pt_br": "Preço"
+              "en_us": "Freight price",
+              "pt_br": "Preço do frete"
             },
             "description": {
               "en_us": "Freight cost for this shipping line, without additionals",
@@ -3574,7 +3599,7 @@
           "declared_value": {
             "label": {
               "en_us": "Declared value",
-              "pt_br": "Valor declarado"
+              "pt_br": "Declaração de conteúdo"
             },
             "description": {
               "en_us": "The package value declared to carrier, generally the sum of all items prices",
@@ -3584,7 +3609,7 @@
           "declared_value_price": {
             "label": {
               "en_us": "Declared value price",
-              "pt_br": "Preço declara"
+              "pt_br": "Preço declarado"
             },
             "description": {
               "en_us": "Cost for the \"declared value\" additional service",
@@ -3593,8 +3618,8 @@
           },
           "own_hand": {
             "label": {
-              "en_us": "Own hand",
-              "pt_br": "Em mãos"
+              "en_us": "Delivery in hands",
+              "pt_br": "Entrega em mãos"
             },
             "description": {
               "en_us": "Whether the package must be delivered with additional service \"own hand\"",
@@ -3614,7 +3639,7 @@
           "receipt": {
             "label": {
               "en_us": "Receipt",
-              "pt_br": "Recebimento"
+              "pt_br": "Aviso de recebimento"
             },
             "description": {
               "en_us": "If the package will be delivered with acknowledgment of receipt",
@@ -3624,7 +3649,7 @@
           "receipt_price": {
             "label": {
               "en_us": "Receipt price",
-              "pt_br": "Preço da recepção "
+              "pt_br": "Preço do aviso de recepção"
             },
             "description": {
               "en_us": "Cost for the \"acknowledgment of receipt\" additional service",
@@ -3640,7 +3665,8 @@
               "properties": {
                 "tag": {
                   "label": {
-                    "en_us": "Tag"
+                    "en_us": "Additional tag",
+                    "pt_br": "Tag para identificar o adicional"
                   },
                   "description": {
                     "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
@@ -3649,8 +3675,8 @@
                 },
                 "label": {
                   "label": {
-                    "en_us": "Label",
-                    "pt_br": "Rótulo"
+                    "en_us": "Additional label",
+                    "pt_br": "Rótulo do adicional"
                   },
                   "description": {
                     "en_us": "Name of the additional service",
@@ -3659,8 +3685,8 @@
                 },
                 "price": {
                   "label": {
-                    "en_us": "Price",
-                    "pt_br": "Preço"
+                    "en_us": "Additional price",
+                    "pt_br": "Preço do adicional"
                   },
                   "description": {
                     "en_us": "Cost for this additional service",
@@ -3680,13 +3706,15 @@
           },
           "taxes": {
             "label": {
-              "en_us": "Taxes"
+              "en_us": "Taxes",
+              "pt_br": "Taxas"
             },
             "items": {
               "properties": {
                 "tag": {
                   "label": {
-                    "en_us": "Tag"
+                    "en_us": "Taxes tag",
+                    "pt_br": "Tag taxas "
                   },
                   "description": {
                     "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
@@ -3695,8 +3723,8 @@
                 },
                 "label": {
                   "label": {
-                    "en_us": "Label",
-                    "pt_br": "Rótulo"
+                    "en_us": "Taxes label",
+                    "pt_br": "Rótulo da taxa"
                   },
                   "description": {
                     "en_us": "Tax title",
@@ -3705,8 +3733,8 @@
                 },
                 "price": {
                   "label": {
-                    "en_us": "Price",
-                    "pt_br": "Preço"
+                    "en_us": "Tax Price",
+                    "pt_br": "Preço da taxa"
                   },
                   "description": {
                     "en_us": "Tax value applied",
@@ -3715,7 +3743,7 @@
                 },
                 "rate": {
                   "label": {
-                    "en_us": "Rate",
+                    "en_us": "Tax Rate",
                     "pt_br": "Taxaçaõ"
                   },
                   "description": {
@@ -3736,8 +3764,8 @@
           },
           "discount": {
             "label": {
-              "en_us": "Discount",
-              "pt_br": "Desconto"
+              "en_us": "Shipping discount",
+              "pt_br": "Desconto no frente"
             },
             "description": {
               "en_us": "Discount on shipping price, negative if value was additionated (not discounted)",
@@ -3746,8 +3774,8 @@
           },
           "total_price": {
             "label": {
-              "en_us": "Total price",
-              "pt_br": "Preço total"
+              "en_us": "Total shipping price",
+              "pt_br": "Preço total do frete"
             },
             "description": {
               "en_us": "Total cost for this shipping line, with additionals and taxes",
@@ -3762,8 +3790,8 @@
             "properties": {
               "days": {
                 "label": {
-                  "en_us": "Days",
-                  "pt_br": "Dias"
+                  "en_us": "Days to post",
+                  "pt_br": "Dias para postar"
                 },
                 "description": {
                   "en_us": "Number of days to post the product after purchase",
@@ -3782,8 +3810,8 @@
               },
               "after_approval": {
                 "label": {
-                  "en_us": "After approval",
-                  "pt_br": "Após aprovado"
+                  "en_us": "Deadline after approval",
+                  "pt_br": "Prazo após aprovado"
                 },
                 "description": {
                   "en_us": "Whether days will be counted after payment approval",
@@ -3804,8 +3832,8 @@
             "properties": {
               "days": {
                 "label": {
-                  "en_us": "Days",
-                  "pt_br": "Dias"
+                  "en_us": "Days to deliver",
+                  "pt_br": "Dias para entrega"
                 },
                 "description": {
                   "en_us": "Number of days for delivery after shipping",
@@ -3814,8 +3842,8 @@
               },
               "working_days": {
                 "label": {
-                  "en_us": "Working days",
-                  "pt_br": "Dias úteis"
+                  "en_us": "Deliver deadline in working days",
+                  "pt_br": "Prazo de entrega em dias úteis"
                 },
                 "description": {
                   "en_us": "If the deadline is calculated in working days",
@@ -3847,7 +3875,8 @@
               "properties": {
                 "tag": {
                   "label": {
-                    "en_us": "Tag"
+                    "en_us": "Tracking codes tag",
+                    "pt_br": "Tag do código de rastreio"
                   },
                   "description": {
                     "en_us": "Tag to identify object, use only lowercase letters, digits and underscore",
@@ -3856,8 +3885,8 @@
                 },
                 "code": {
                   "label": {
-                    "en_us": "Code",
-                    "pt_br": "Código"
+                    "en_us": "Tracking code",
+                    "pt_br": "Código de rastreio"
                   },
                   "description": {
                     "en_us": "Tracking code string",
@@ -3866,7 +3895,8 @@
                 },
                 "link": {
                   "label": {
-                    "en_us": "Link"
+                    "en_us": "Tracking link",
+                    "pt_br": "Link de rastreio"
                   },
                   "description": {
                     "en_us": "URI for carrier website to get the tracking status with this code",
@@ -3893,8 +3923,8 @@
               "properties": {
                 "issuer": {
                   "label": {
-                    "en_us": "Issuer",
-                    "pt_br": "Emissor"
+                    "en_us": "Invoice issuer",
+                    "pt_br": "Emissor da fatura"
                   },
                   "properties": {
                     "doc_number": {
@@ -3909,8 +3939,8 @@
                     },
                     "inscription_type": {
                       "label": {
-                        "en_us": "Incription type",
-                        "pt_br": "Tipo de inscrição"
+                        "en_us": "Invoice issuer isncription type",
+                        "pt_br": "Tipo de inscrição do emissor da fatura"
                       },
                       "enum": {
                         "State":{
@@ -3933,8 +3963,8 @@
                     },
                     "inscription_number": {
                       "label": {
-                        "en_us": "Inscription number",
-                        "pt_br": "Número de inscrição"
+                        "en_us": "Invoice issuer inscription number",
+                        "pt_br": "Número de inscrição do emissor da fatura"
                       },
                       "description": {
                         "en_us": "Municipal or state registration number (with characters) if exists",
@@ -3943,8 +3973,8 @@
                     },
                     "corporate_name": {
                       "label": {
-                        "en_us": "Corporate name",
-                        "pt_br": "Nome corporativo"
+                        "en_us": "Invoice issuer corporate name",
+                        "pt_br": "Nome corporativo do emissor da fatura"
                       },
                       "description": {
                         "en_us": "Registered company name or responsible fullname",
@@ -3959,8 +3989,8 @@
                 },
                 "number": {
                   "label": {
-                    "en_us": "Number",
-                    "pt_br": "Número"
+                    "en_us": "Invoice number",
+                    "pt_br": "Número da fatura"
                   },
                   "description": {
                     "en_us": "Invoice number",
@@ -3969,8 +3999,8 @@
                 },
                 "serial_number": {
                   "label": {
-                    "en_us": "Serial number",
-                    "pt_br": "Número de serie"
+                    "en_us": "Invoice serial number",
+                    "pt_br": "Número de série da fatura"
                   },
                   "description": {
                     "en_us": "Invoice serial number",
@@ -3979,8 +4009,8 @@
                 },
                 "issued_at": {
                   "label": {
-                    "en_us": "Issued at",
-                    "pt_br": "Data de emissão"
+                    "en_us": "Invoice issue date",
+                    "pt_br": "Data de emissão da fatura"
                   },
                   "description": {
                     "en_us": "Date and time of issue, in ISO 8601 standard representation",
@@ -3989,7 +4019,8 @@
                 },
                 "link": {
                   "label": {
-                    "en_us": "Link"
+                    "en_us": "Invoice link",
+                    "pt_br": "Link da fatura"
                   },
                   "description": {
                     "en_us": "URI to invoice file",
@@ -3998,8 +4029,8 @@
                 },
                 "access_key": {
                   "label": {
-                    "en_us": "Access key",
-                    "pt_br": "Chave de acesso"
+                    "en_us": "Invoice access key",
+                    "pt_br": "Chave de acesso da fatura"
                   },
                   "description": {
                     "en_us": "Invoice access key (BR)",
@@ -4029,13 +4060,14 @@
           },
           "status": {
             "label": {
-              "en_us": "Status"
+              "en_us": "Shipping status",
+              "pt_br": "Estado de entrega"
             },
             "properties": {
               "updated_at": {
                 "label": {
-                  "en_us": "Updated at",
-                  "pt_br": "Data de atualização"
+                  "en_us": "Shipping status update date",
+                  "pt_br": "Data de atualização do estado de entrega"
                 },
                 "description": {
                   "en_us": "Last status change, date and time in ISO 8601 standard representation",
@@ -4044,8 +4076,8 @@
               },
               "current": {
                 "label": {
-                  "en_us": "Current",
-                  "pt_br": "Atual"
+                  "en_us": "Shipping current status",
+                  "pt_br": "Estado atual do frete"
                 },
                 "enum": {
                   "invoice_issued":{
@@ -4115,10 +4147,14 @@
             }
           },
           "items": {
+            "label": {
+              "en_us": "Shipping line items",
+              "pt_br": "Itens nesse pacote"
+            },
             "items": {
               "label": {
-                "en_us": "Label",
-                "pt_br": "Rótulo"
+                "en_us": "Item ID",
+                "pt_br": "ID do item"
               },
               "description": {
                 "en_us": "Item ID",
@@ -4133,11 +4169,12 @@
           "flags": {
             "items": {
               "label": {
-                "en_us": "Flag"
+                "en_us": "Shipping line flag",
+                "pt_br": "Título da flag"
               },
               "description": {
-                "en_us": "Flag title",
-                "pt_br": "Título da flag"
+                "en_us": "Shipping flag",
+                "pt_br": "Flag do frete"
               }
             },
             "description":{
@@ -4147,8 +4184,8 @@
           },
           "custom_fields": {
             "label": {
-              "en_us": "Custom fields",
-              "pt_br": "Campos customizáveis"
+              "en_us": "Shipping custom fields",
+              "pt_br": "Campos customizáveis do frete"
             },
             "items": {
               "properties": {
