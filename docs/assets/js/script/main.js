@@ -2179,14 +2179,28 @@ app.ready(function () {
       })
 
       $(document).click(function (e) {
+        var t = e.target
+        // set global next and prev routes
+        var $item = $(t).closest('.col,tr,li')
+        var pages = [ 'prev', 'next' ]
+        for (var i = 0; i < pages.length; i++) {
+          var page = pages[i]
+          var $nearLink = $item[page]().find('a').filter(function () {
+            // check if it is a valid route link
+            var href = $(this).attr('href')
+            return href && href.startsWith('/#')
+          })
+          window[page + 'ItemHref'] = $nearLink.length ? $nearLink.attr('href') : null
+        }
+
+        // handle new tab routes
         if (targetBlank === true) {
           // prevent loop
           targetBlank = false
 
           // click with target blank
           // if is changing route, prevent default event and open new tab
-          var t, el
-          t = e.target
+          var el
           while (t && el === undefined) {
             switch (t.nodeName) {
               case 'A':
