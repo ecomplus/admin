@@ -107,6 +107,23 @@
       windowPadding: 70
     })
 
+    // handle manual action topbar toggle
+    $('#topbar-action-toggle').click(function () {
+      var $topbar = $('#topbar-action')
+      if (!$topbar.hasClass('h-auto')) {
+        // hide
+        $topbar.slideUp(200, function () {
+          $(this).find('#topbar-action-body').addClass('hidden')
+          $(this).addClass('h-auto').fadeIn()
+        })
+      } else {
+        // show
+        $topbar.hide().removeClass('h-auto').slideDown(200, function () {
+          $(this).find('#topbar-action-body').hide().removeClass('hidden').fadeIn()
+        })
+      }
+    })
+
     /* jQuery addons */
 
     // https://gist.github.com/beiyuu/2029907
