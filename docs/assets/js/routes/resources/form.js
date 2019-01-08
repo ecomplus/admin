@@ -278,7 +278,7 @@
                 } else {
                   Object.assign(data[prop], obj)
                 }
-              } else if ((obj === null || isNaN(obj)) && data.hasOwnProperty(prop)) {
+              } else if (obj === null || isNaN(obj)) {
                 // empty, remove property
                 remove()
               } else {
