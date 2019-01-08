@@ -473,6 +473,22 @@ body {
   color: rgba($white, .75);
   white-space: nowrap;
 }
+#topbar-action-toggle {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -15px;
+  margin-right: 0 !important;
+}
+#topbar-action.h-auto #topbar-action-toggle i::before {
+  content: "\e64b";
+}
+#topbar-action-body.hidden > div {
+  display: none;
+}
+#topbar-action-body,
 #topbar-action .topbar-left {
   height: 100%;
 }
@@ -993,6 +1009,9 @@ ul > li:nth-child(4n+4) > .badges-list li {
 // utilities
 .fs-200 {
   font-size: 200px;
+}
+.h-auto {
+  height: auto;
 }
 .hidden {
   display: none;

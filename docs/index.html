@@ -81,34 +81,40 @@
     </header>
 
     <header class="topbar topbar-inverse bg-purple" id="topbar-action">
-      <div class="topbar-left">
-        <h4 id="action-title"></h4>
+      <div id="topbar-action-body">
+        <div class="topbar-left">
+          <h4 id="action-title"></h4>
+        </div>
+
+        <div class="topbar-right">
+          <div id="action-todo">
+            <button class="btn btn-secondary i18n previous-route">
+              <span data-lang="en_us">Cancel</span>
+              <span data-lang="pt_br">Cancelar</span>
+            </button>
+            <button class="btn btn-label btn-success" id="action-save">
+              <label>
+                <i class="ti-check"></i>
+              </label>
+              <span class="i18n">
+                <span data-lang="en_us">Save</span>
+                <span data-lang="pt_br">Salvar</span>
+              </span>
+            </button>
+          </div>
+          <div id="action-done">
+            <i class="ti-check-box"></i>
+            <span class="i18n">
+              <span data-lang="en_us">Saved</span>
+              <span data-lang="pt_br">Salvo</span>
+            </span>
+          </div>
+        </div>
       </div>
 
-      <div class="topbar-right">
-        <div id="action-todo">
-          <button class="btn btn-secondary i18n previous-route">
-            <span data-lang="en_us">Cancel</span>
-            <span data-lang="pt_br">Cancelar</span>
-          </button>
-          <button class="btn btn-label btn-success" id="action-save">
-            <label>
-              <i class="ti-check"></i>
-            </label>
-            <span class="i18n">
-              <span data-lang="en_us">Save</span>
-              <span data-lang="pt_br">Salvar</span>
-            </span>
-          </button>
-        </div>
-        <div id="action-done">
-          <i class="ti-check-box"></i>
-          <span class="i18n">
-            <span data-lang="en_us">Saved</span>
-            <span data-lang="pt_br">Salvo</span>
-          </span>
-        </div>
-      </div>
+      <button id="topbar-action-toggle" class="btn btn-xs btn-primary">
+        <i class="ti-angle-up"></i>
+      </button>
     </header>
     <!-- END Topbar -->
 
