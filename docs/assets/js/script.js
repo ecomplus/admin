@@ -1760,8 +1760,11 @@ app.ready(function () {
           /*
           data: {},
           commit: function () {},
-          load: function () {}
+          load: function () {},
+          pagination: function () {},
           */
+          // keep info from parent route if any
+          parentRoute: window.Tabs[currentTab] ? window.Tabs[currentTab].parentRoute : undefined
         }
 
         if (!internal) {
