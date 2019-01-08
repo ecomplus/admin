@@ -2399,9 +2399,21 @@ app.ready(function () {
         }
       }
 
+      var checkKeyTarget = function (e) {
+        // check keyboard event target to handle shortcuts
+        switch (e.target.nodeName) {
+          case 'BODY':
+          case 'A':
+          case 'BUTTON':
+            return true
+          default:
+            return false
+        }
+      }
+
       $(document).keydown(function (e) {
         // console.log(e.target.nodeName)
-        if (e.target.nodeName !== 'BODY' && e.target.nodeName !== 'A') {
+        if (!checkKeyTarget(e)) {
           if (e.keyCode === 27) {
             // esc
             // focus on document
@@ -2425,7 +2437,7 @@ app.ready(function () {
           return true
         }
       }).keyup(function (e) {
-        if (e.target.nodeName !== 'BODY' && e.target.nodeName !== 'A') {
+        if (!checkKeyTarget(e)) {
           // focus is not on body
           return true
         }
