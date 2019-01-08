@@ -1034,7 +1034,7 @@ app.ready(function () {
           pagination: function () {},
           */
           // keep info from parent route if any
-          parentRoute: window.Tabs[currentTab] ? window.Tabs[currentTab].parentRoute : undefined
+          parentRoute: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {}
         }
 
         if (!internal) {
