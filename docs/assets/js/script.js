@@ -3131,7 +3131,7 @@ app.ready(function () {
 
       $(document).keydown(function (e) {
         // console.log(e.target.nodeName)
-        if (e.target.nodeName !== 'BODY') {
+        if (e.target.nodeName !== 'BODY' && e.target.nodeName !== 'A') {
           if (e.keyCode === 27) {
             // esc
             // focus on document
@@ -3155,7 +3155,7 @@ app.ready(function () {
           return true
         }
       }).keyup(function (e) {
-        if (e.target.nodeName !== 'BODY') {
+        if (e.target.nodeName !== 'BODY' && e.target.nodeName !== 'A') {
           // focus is not on body
           return true
         }
