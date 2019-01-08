@@ -242,7 +242,19 @@
           }
 
           if (!checkbox) {
+            // prefer value from data or get default input value property
             var val = $input.data('value') || $input.val()
+            if ($input.hasClass('colorpicker')) {
+              // test RGB string value
+              if (!/^#[a-f0-9]{6}$/.test(val) && val !== '') {
+                // force delayed change event to recheck value after minicolors handler
+                setTimeout(function () {
+                  $input.trigger('change')
+                }, 200)
+                return
+              }
+            }
+
             var obj
             if (typeof val === 'string') {
               if ($input.data('is-number')) {
