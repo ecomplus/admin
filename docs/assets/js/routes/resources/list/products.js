@@ -97,6 +97,10 @@
     $load.click(function () {
       load(true)
     })
+    // global tab pagination handler
+    Tab.pagination = function (prev) {
+      load(!prev)
+    }
 
     // filters dynamic elements
     var $customFilters = $('<div>')
