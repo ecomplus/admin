@@ -1033,8 +1033,7 @@ app.ready(function () {
           load: function () {},
           pagination: function () {},
           */
-          // keep info from parent route if any
-          parentRoute: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {}
+          state: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {}
         }
 
         if (!internal) {
