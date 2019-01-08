@@ -137,6 +137,10 @@
     })
     // preset buttons states
     paginationControls()
+    // global tab pagination handler
+    Tab.pagination = function (prev) {
+      increasePage(prev ? -1 : 1)
+    }
 
     // change max number of results
     $('#t' + tabId + '-page-size').change(function () {
