@@ -1798,6 +1798,14 @@ app.ready(function () {
       })
     }
 
+    var contentPagination = function (prev) {
+      // handle pagination inside current tab content if any
+      var pagination = window.Tabs[currentTab].pagination
+      if (typeof pagination === 'function') {
+        pagination(prev)
+      }
+    }
+
     // general function to render DOM elements IDs based on current tab ID
     window.renderContentIds = function (el) {
       // current tab ID
@@ -2909,20 +2917,6 @@ app.ready(function () {
       })
 
       $(document).click(function (e) {
-        var t = e.target
-        // set global next and prev routes
-        var $item = $(t).closest('.col,tr,li')
-        var pages = [ 'prev', 'next' ]
-        for (var i = 0; i < pages.length; i++) {
-          var page = pages[i]
-          var $nearLink = $item[page]().find('a').filter(function () {
-            // check if it is a valid route link
-            var href = $(this).attr('href')
-            return href && href.startsWith('/#')
-          })
-          window[page + 'ItemHref'] = $nearLink.length ? $nearLink.attr('href') : null
-        }
-
         // handle new tab routes
         if (targetBlank === true) {
           // prevent loop
@@ -2930,7 +2924,8 @@ app.ready(function () {
 
           // click with target blank
           // if is changing route, prevent default event and open new tab
-          var el
+          var t, el
+          t = e.target
           while (t && el === undefined) {
             switch (t.nodeName) {
               case 'A':
@@ -3032,6 +3027,16 @@ app.ready(function () {
                 // m
                 // open or close Mony
                 dock.toggleMinimize('#dock-chat')
+                break
+              case 74:
+                // j
+                // go to previous route pagination
+                contentPagination(true)
+                break
+              case 75:
+                // k
+                // go to next route pagination
+                contentPagination()
                 break
             }
             break
