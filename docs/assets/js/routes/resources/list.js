@@ -27,8 +27,8 @@
   var updateData = function () {
     data = Tab.data
     // map deeper objects
-    list = data.result.map(function (doc) {
-      var newDoc = {}
+    list = data.result.map(function (doc, index) {
+      var newDoc = { _index: index }
       for (var prop in doc) {
         var deepObj = doc[prop]
         if (typeof deepObj === 'object' && deepObj !== null && !Array.isArray(deepObj)) {
@@ -160,7 +160,7 @@
     // control request queue
     var loading = false
     var waiting = false
-    var load = function () {
+    var load = function (callback) {
       if (!loading) {
         loading = true
         var $loading = $grid.find('.loading')
@@ -187,22 +187,24 @@
           }
         }
 
-        var callback = function (err) {
-          // request queue
-          loading = false
-          $loading.fadeOut()
-          if (waiting) {
-            // update params and run again
-            load()
-            waiting = false
-          }
-          if (!err) {
-            updateData()
-            dataUpdated = true
-            // update jsGrid
-            $grid.jsGrid('loadData')
-            // update pagination controls
-            paginationControls()
+        if (typeof callback !== 'function') {
+          callback = function (err) {
+            // request queue
+            loading = false
+            $loading.fadeOut()
+            if (waiting) {
+              // update params and run again
+              load()
+              waiting = false
+            }
+            if (!err) {
+              updateData()
+              dataUpdated = true
+              // update jsGrid
+              $grid.jsGrid('loadData')
+              // update pagination controls
+              paginationControls()
+            }
           }
         }
         Tab.load(callback, params)
@@ -257,7 +259,7 @@
     var fieldsList = []
     for (i = 0; i < list.length; i++) {
       for (field in list[i]) {
-        if (field !== '_id') {
+        if (field[0] !== '_') {
           // check field type
           switch (typeof list[i][field]) {
             case 'undefined':
@@ -370,8 +372,27 @@
         }
 
         // clicked on item row
+        var item = args.item
+        var baseHash = '/' + window.location.hash + '/'
         // go to 'edit' route with resource ID
-        window.location = '/' + window.location.hash + '/' + args.item._id
+        window.location = baseHash + item._id
+
+        // pass item pagination function to new route
+        offset = item._index
+        limit = 1
+        Tab.state.pagination = function (prev) {
+          // handle prev or next item
+          offset += prev ? -1 : 1
+          if (offset > -1) {
+            load(function () {
+              var result = Tab.data.result
+              if (result && result.length) {
+                // redirect to resultant item edit route
+                window.location = baseHash + result[0]._id
+              }
+            })
+          }
+        }
       },
 
       controller: {
