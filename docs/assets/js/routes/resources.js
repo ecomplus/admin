@@ -216,8 +216,15 @@
       } else {
         // generic resource listing
         endpoint = slug + '.json'
-        // default query string for results limit only
+        // default query string
         params = 'limit=' + limit
+        if (slug !== 'grids') {
+          params += '&fields=_id,name,slug'
+          if (slug === 'categories') {
+            // also returns parent category name
+            params += ',parent.name'
+          }
+        }
       }
     } else {
       // specific resource document
