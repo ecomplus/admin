@@ -179,7 +179,7 @@
         }
 
         // specific load function for products listing
-        load = function (callback, query, sort, page) {
+        load = function (callback, query, sort, page, size) {
           var cb = function (err, json) {
             if (!err) {
               // set tab JSON data
@@ -201,9 +201,16 @@
           }
           if (sort) {
             // replace sort rule
-            body.sort[4] = sort
+            if (body.sort.length > 4) {
+              body.sort[2] = sort
+            } else {
+              body.sort.splice(2, 0, sort)
+            }
           }
           // pagination
+          if (size) {
+            body.size = size
+          }
           if (page) {
             body.from = body.size * page
           } else {

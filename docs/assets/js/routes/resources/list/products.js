@@ -36,61 +36,77 @@
   updateData()
 
   if (list.length) {
+    var baseHash = '/' + window.location.hash + '/'
     // search filters
     var term = ''
     var filters = []
     // pagination control
     var page = 0
+    var index = -1
     var maxResults = 0
     // results sorting
     var sort = {}
 
     // JSON data load
-    var load = function (loadMore) {
-      // search query
-      var query
-      if (term !== '') {
-        query = {
-          bool: {
-            must: {
-              multi_match: {
-                query: term,
-                fields: [
-                  'name',
-                  'keywords'
-                ]
+    var loading = false
+    var load = function (loadMore, size, cb) {
+      if (!loading) {
+        // search query
+        var query
+        if (term !== '') {
+          query = {
+            bool: {
+              must: {
+                multi_match: {
+                  query: term,
+                  fields: [
+                    'name',
+                    'keywords'
+                  ]
+                }
               }
             }
           }
-        }
-        if (filters.length) {
-          query.bool.filter = filters
-        }
-      } else if (filters.length) {
-        // no search term
-        // filters only
-        query = {
-          bool: {
-            filter: filters
+          if (filters.length) {
+            query.bool.filter = filters
+          }
+        } else if (filters.length) {
+          // no search term
+          // filters only
+          query = {
+            bool: {
+              filter: filters
+            }
           }
         }
-      }
 
-      // run a new search request and update data
-      var callback = function () {
-        updateData()
-        updateContent()
+        // run a new search request and update data
+        var callback = function () {
+          // request queue
+          loading = false
+          if (typeof cb !== 'function') {
+            updateData()
+            updateContent()
+          } else {
+            cb()
+          }
+        }
+        if (!cb) {
+          // show loading spinner
+          $container.addClass('ajax')
+        }
+
+        if (loadMore) {
+          page++
+        } else {
+          // reset pagination
+          page = 0
+          index = -1
+        }
+        // perform search request
+        loading = true
+        Tab.load(callback, query, sort, page, size)
       }
-      // show loading spinner
-      $container.addClass('ajax')
-      if (loadMore) {
-        page++
-      } else {
-        // reset pagination
-        page = 0
-      }
-      // perform search request
-      Tab.load(callback, query, sort, page)
     }
 
     // handle load more click
@@ -207,6 +223,41 @@
       })
     ])
 
+    var setupItemElement = function (id, index, $item, $checkbox) {
+      $checkbox.on('change', function () {
+        if ($(this).is(':checked')) {
+          // select item
+          Tab.selectedItems.push(id)
+        } else {
+          // unselect item
+          Tab.selectedItems = $.grep(Tab.selectedItems, function (i) {
+            return i !== id
+          })
+        }
+      })
+
+      $item.click(function () {
+        // pass item pagination function to new route
+        Tab.state.page = index
+        Tab.state.pagination = function (prev) {
+          // handle prev or next item
+          index += (prev ? -1 : 1)
+          if (index > -1) {
+            Tab.state.page = index
+            // load more adds one to page int
+            page = index - 1
+            load(true, 1, function () {
+              var item = Tab.data.hits.hits[0]
+              if (item) {
+                // redirect to resultant item edit route
+                window.location = baseHash + item._id
+              }
+            })
+          }
+        }
+      })
+    }
+
     var updateContent = function () {
       // update list content
       // generate grid
@@ -217,9 +268,10 @@
       var Aggs = data.aggregations
 
       for (var i = 0; i < count; i++) {
+        index++
         var item = list[i]
         // link to edit product
-        var link = '/' + window.location.hash + '/' + item._id
+        var link = baseHash + item._id
 
         // render item price and quantity
         var priceString, qntString
@@ -291,21 +343,8 @@
           ]
         })
         $items.push($item)
-
-        // handle select checkbox
-        ;(function (id) {
-          $checkbox.on('change', function () {
-            if ($(this).is(':checked')) {
-              // select item
-              Tab.selectedItems.push(id)
-            } else {
-              // unselect item
-              Tab.selectedItems = $.grep(Tab.selectedItems, function (i) {
-                return i !== id
-              })
-            }
-          })
-        }(item._id))
+        // handle select checkbox and item click
+        setupItemElement(item._id, index, $item, $checkbox)
       }
 
       // fill products list content
