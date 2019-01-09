@@ -15,10 +15,11 @@
   // var lang = window.lang
   var i18n = window.i18n
 
+  var baseHash = '/' + window.location.hash + '/'
   // create button
   $('#t' + tabId + '-create').click(function () {
     // go to 'new' route
-    window.location = '/' + window.location.hash + '/new'
+    window.location = baseHash + 'new'
   })
 
   // resource list data
@@ -262,11 +263,13 @@
     var field, i
     // get from first resource object properties
     var fieldsList = []
+    var addLink = true
     for (i = 0; i < list.length; i++) {
       for (field in list[i]) {
         if (field[0] !== '_') {
           // check field type
-          switch (typeof list[i][field]) {
+          var fieldType = typeof list[i][field]
+          switch (fieldType) {
             case 'undefined':
               // continue and try next list object
               continue
@@ -285,10 +288,20 @@
               if (!skip) {
                 // add to fields list
                 fieldsList.push(field)
-                fields.push({
+                var fieldObj = {
                   name: field,
                   type: 'text'
-                })
+                }
+                if (addLink && fieldType === 'string') {
+                  fieldObj.itemTemplate = function (_, item) {
+                    return $('<a>', {
+                      text: item[field],
+                      href: baseHash + item._id
+                    })
+                  }
+                  addLink = false
+                }
+                fields.push(fieldObj)
                 // starts with no filtering
                 filters[field] = ''
               }
@@ -378,7 +391,6 @@
 
         // clicked on item row
         var item = args.item
-        var baseHash = '/' + window.location.hash + '/'
         // go to 'edit' route with resource ID
         window.location = baseHash + item._id
 
