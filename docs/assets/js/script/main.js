@@ -1313,7 +1313,7 @@ app.ready(function () {
                 tabObj.actionTitle = title
                 $('#action-title').text(title)
               }
-              elTitle.focus().change(function () {
+              elTitle.change(function () {
                 updateTopbarTitle($(this).val())
               })
               // reset topbar title with current input val

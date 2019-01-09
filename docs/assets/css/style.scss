@@ -621,6 +621,24 @@ body {
   border-color: $color-yellow;
 }
 
+// document pagination
+.pagination-arrows {
+  margin-left: 50px;
+  margin-right: auto;
+  display: none;
+}
+.pagination-arrows i {
+  cursor: pointer;
+  color: $color-purple;
+}
+.pagination-arrows i:not(:last-child) {
+  margin-right: 15px;
+}
+.pagination-arrows i.disabled {
+  opacity: .4;
+  cursor: default;
+}
+
 // dropzone progress bar is confused
 .dz-progress .dz-upload {
   max-width: 93% !important;
@@ -993,6 +1011,11 @@ ul > li:nth-child(4n+4) > .badges-list li {
   .topbar-divider,
   .breadcrumb {
     display: none;
+  }
+
+  .pagination-arrows {
+    margin-right: 0;
+    margin-left: auto;
   }
 }
 
