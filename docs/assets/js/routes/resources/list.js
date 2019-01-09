@@ -160,11 +160,14 @@
     // control request queue
     var loading = false
     var waiting = false
-    var load = function (callback) {
+    var load = function (cb) {
       if (!loading) {
         loading = true
-        var $loading = $grid.find('.loading')
-        $loading.show()
+        var $loading
+        if (!cb) {
+          $loading = $grid.find('.loading')
+          $loading.show()
+        }
 
         // mount API request query string
         // https://ecomstore.docs.apiary.io/#introduction/overview/url-params
@@ -187,10 +190,10 @@
           }
         }
 
-        if (typeof callback !== 'function') {
-          callback = function (err) {
-            // request queue
-            loading = false
+        var callback = function (err) {
+          // request queue
+          loading = false
+          if (typeof cb !== 'function') {
             $loading.fadeOut()
             if (waiting) {
               // update params and run again
@@ -205,6 +208,8 @@
               // update pagination controls
               paginationControls()
             }
+          } else {
+            cb()
           }
         }
         Tab.load(callback, params)
@@ -378,12 +383,13 @@
         window.location = baseHash + item._id
 
         // pass item pagination function to new route
-        offset = item._index
         limit = 1
+        Tab.state.page = offset + item._index
         Tab.state.pagination = function (prev) {
           // handle prev or next item
-          offset += prev ? -1 : 1
+          offset = Tab.state.page + (prev ? -1 : 1)
           if (offset > -1) {
+            Tab.state.page = offset
             load(function () {
               var result = Tab.data.result
               if (result && result.length) {
