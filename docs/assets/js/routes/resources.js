@@ -222,6 +222,25 @@
     } else {
       // specific resource document
       endpoint = slug + '/' + resourceId + '.json'
+
+      // handle pagination buttons
+      if (Tab.state.pagination) {
+        var $next = $('#t' + tabId + '-pagination-next')
+        var $prev = $('#t' + tabId + '-pagination-prev')
+        if (Tab.state.page === 0) {
+          $prev.addClass('disabled')
+        }
+        // global tab pagination handler
+        Tab.pagination = Tab.state.pagination
+        $prev.click(function () {
+          $(this).addClass('disabled')
+          Tab.pagination(true)
+        })
+        $next.click(function () {
+          $(this).addClass('disabled')
+          Tab.pagination()
+        }).closest('.pagination-arrows').fadeIn()
+      }
     }
 
     if (!load) {
