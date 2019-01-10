@@ -111,41 +111,30 @@ app.config({
   'use strict'
 
   window.startMony = function (store, user, session) {
-    var credentials = false
-    var storeId = store.store_id
-    var storeName = store.name
-    // first user name
-    var name = user.name.split(' ')
-    name = name[0]
-    var email = user.email
-    // authentication
-    var userId = user._id
-    var token = session.access_token
-
-    var callback = function (response) {
-      // response callback
-      writeMsg(response)
-
-      if (credentials === false) {
-        // reset
-        $('#mony').html('')
-        credentials = true
-        var date = new Date()
-        var hours = date.getHours()
-
-        // greetings
-        var msg
-        if (hours < 13) {
-          msg = 'Bom dia'
-        } else if (hours >= 13 && hours < 18) {
-          msg = 'Boa tarde'
-        } else if (hours >= 18) {
-          msg = 'Boa noite'
-        }
-        msg += ' ' + name + ', em que posso te ajudar?'
-        writeMsg(msg)
-      }
+    // https://github.com/ecomclub/mony
+    var params = {
+      storeId: store.store_id,
+      storeName: store.name,
+      domain: null,
+      // first user name
+      name: user.name.split(' ')[0],
+      gender: null,
+      email: user.email,
+      // authentication
+      myId: user._id,
+      lang: window.lang
     }
+
+    // setup client
+    window.Mony.init(params, session.access_token, function (err, html) {
+      // response callback
+      if (!err) {
+        writeMsg(html)
+      } else {
+        // @TODO
+        console.error(err)
+      }
+    })
 
     var writeMsg = function (msg, reverse) {
       if (msg && msg !== '') {
@@ -164,9 +153,6 @@ app.config({
         $('#mony').append(html).scrollTop(9999)
       }
     }
-
-    // https://github.com/ecomclub/mony
-    window.Mony.init(storeId, storeName, null, name, null, email, userId, null, token, userId, callback)
 
     var sendQuestion = function () {
       var el = $('#dock-chat .publisher-input')
@@ -3029,6 +3015,7 @@ app.ready(function () {
                 // m
                 // open or close Mony
                 dock.toggleMinimize('#dock-chat')
+                $('#mony-publish input').focus()
                 break
               case 74:
                 // j
