@@ -2299,6 +2299,7 @@ app.ready(function () {
                 // m
                 // open or close Mony
                 dock.toggleMinimize('#dock-chat')
+                $('#mony-publish input').focus()
                 break
               case 74:
                 // j
