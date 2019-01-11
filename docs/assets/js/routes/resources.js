@@ -227,8 +227,7 @@
         // specify fields to return by resource slug
         switch (slug) {
           case 'brands':
-          case 'collections':
-            params += '&fields=_id,name,slug'
+            params += '&fields=_id,name,slug,logo.url'
             break
           case 'categories':
             params += '&fields=_id,name,slug,parent.name'
