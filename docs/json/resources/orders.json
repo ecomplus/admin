@@ -1787,7 +1787,7 @@
                       "en_us": "Gateway name standardized as identification code",
                       "pt_br": "Nome do gateway padronisado como código de identificação"
                     }
-                  },
+                  }
                 },
                 "description":{
                   "en_us": "Payment intermediator",
