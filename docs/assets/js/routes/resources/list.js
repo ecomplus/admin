@@ -285,6 +285,7 @@
                   break
                 }
               }
+
               if (!skip) {
                 // add to fields list
                 fieldsList.push(field)
@@ -301,6 +302,19 @@
                     })
                   }
                   addLink = false
+                } else {
+                  fieldObj.itemTemplate = function (text) {
+                    if (/https?:\/\/\S+$/.test(text)) {
+                      // it is a link
+                      var ln = text.length
+                      return $('<a>', {
+                        text: (ln > 32 ? text.substr(0, 12) + '...' + text.substr(ln - 20) : text),
+                        href: text,
+                        target: '_blank'
+                      })
+                    }
+                    return text
+                  }
                 }
                 fields.push(fieldObj)
                 // starts with no filtering
@@ -384,6 +398,7 @@
               case 'INPUT':
               case 'DIV':
               case 'SELECT':
+              case 'A':
                 // skip
                 return
             }
