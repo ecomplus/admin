@@ -290,7 +290,8 @@
                 fieldsList.push(field)
                 var fieldObj = {
                   name: field,
-                  type: 'text'
+                  type: 'text',
+                  title: ' '
                 }
                 if (addLink && fieldType === 'string') {
                   fieldObj.itemTemplate = function (_, item) {
