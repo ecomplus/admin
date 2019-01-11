@@ -150,8 +150,6 @@
     if (resourceId === undefined) {
       // disable edition
       editor.setReadOnly(true)
-      // default list results limit
-      var limit = 60
 
       if (slug === 'products') {
         // ELS Request Body Search
@@ -224,13 +222,17 @@
         // generic resource listing
         endpoint = slug + '.json'
         // default query string
-        params = 'limit=' + limit
-        if (slug !== 'grids') {
-          params += '&fields=_id,name,slug'
-          if (slug === 'categories') {
-            // also returns parent category name
-            params += ',parent.name'
-          }
+        // limit up to 60 results by default
+        params = 'limit=60'
+        // specify fields to return by resource slug
+        switch (slug) {
+          case 'brands':
+          case 'collections':
+            params += '&fields=_id,name,slug'
+            break
+          case 'categories':
+            params += '&fields=_id,name,slug,parent.name'
+            break
         }
       }
     } else {
