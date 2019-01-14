@@ -26,11 +26,11 @@
 
     var writeMsg = function (msg, reverse) {
       if (msg && msg !== '') {
-        var classes
+        var classes = 'media media-chat '
         if (reverse) {
-          classes = 'media media-chat media-chat-reverse'
+          classes += 'media-chat-reverse'
         } else {
-          classes = 'media media-chat'
+          classes += 'media-chat-default'
         }
         // mount chat message HTML block
         var html = '<div class="' + classes + '">' +
