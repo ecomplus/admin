@@ -1,0 +1,39 @@
+{
+  "headers": {
+    "_general": {
+      "name": {
+        "en_us": "Name",
+        "pt_br": "Nome"
+      },
+      "slug": {
+        "en_us": "Slug"
+      }
+    },
+    "brands": {
+      "logo/url": {
+        "en_us": "Logo URL",
+        "pt_br": "URL do logo"
+      }
+    },
+    "categories": {
+      "parent/name": {
+        "en_us": "Parent category",
+        "pt_br": "Categoria pai"
+      }
+    },
+    "collections": {},
+    "grids": {
+      "title": {
+        "en_us": "Grid title",
+        "pt_br": "Título do grid"
+      },
+      "grid_id": {
+        "en_us": "Grid ID",
+        "pt_br": "ID do grid"
+      }
+    },
+    "orders": {},
+    "customers": {},
+    "carts": {}
+  }
+}

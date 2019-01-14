@@ -21,8 +21,8 @@
     },
     "grid_id": {
       "label": {
-        "en_us": "Grid id",
-        "pt_br": "Id do grid"
+        "en_us": "Grid ID",
+        "pt_br": "ID do grid"
       },
       "description": {
         "en_us": "Unique grid identifier using only lowercase, numbers and underscore",
