@@ -53,12 +53,18 @@ window.Mony = (function () {
 
     // successful response handler
     .then(function (response) {
-      if (Debug) console.info(response)
+      if (Debug) {
+        console.info(response)
+      }
       var text = response.result.fulfillment.speech.trim()
       if (text && text !== '') {
         // parse to HTML and callback
         var html = text.replace(/(https?:[\S]+)/g, '<a href="$1" target="_blank">$1</a>')
-        ResponseCallback(null, html)
+        // split message for each double line break
+        var parts = html.split('\n\n')
+        for (var i = 0; i < parts.length; i++) {
+          ResponseCallback(null, parts[i].replace(/\n/g, '<br>'))
+        }
       } else {
         // empty callback
         ResponseCallback()
@@ -67,15 +73,17 @@ window.Mony = (function () {
 
     // Dialogflow server error handler
     .catch(function (error) {
-      if (Debug) console.info(error)
+      if (Debug) {
+        console.info(error)
+      }
       ResponseCallback(error)
     })
   }
 
   methods.sendRoute = function (hash) {
     // mock to send current admin panel route (page)
-    // eg.: "$route:/#/home"
-    methods.sendMessage('$route:/' + hash)
+    // eg.: "/#/home"
+    methods.sendMessage('/' + hash)
   }
 
   methods.init = function (params, accessToken, responseCallback, debug) {
@@ -84,28 +92,54 @@ window.Mony = (function () {
       ResponseCallback = responseCallback
     }
     Debug = debug
-    if (Debug) console.info('debugging Mony responses')
+    if (Debug) {
+      console.info('debugging Mony responses')
+    }
 
     // init conversation on Dialogflow setting up some parameters
-    var paramsList = [ 'storeId', 'storeName', 'domain', 'name', 'gender', 'email', 'myId', 'lang', 'hour' ]
+    var paramsList = [ 'name', 'gender', 'email', 'hour', 'language' ]
     var msg = ''
     params = params || {}
     // send current local hour
     params.hour = new Date().getHours()
+
+    // mount message with received params
     for (var i = 0; i < paramsList.length; i++) {
       var param = paramsList[i]
-      msg += '$' + param + ':"' + (params[param] || '') + '" '
+      var val
+      switch (typeof params[param]) {
+        case 'string':
+          // does not accept strings with spaces
+          val = params[param].split(' ')[0]
+          if (val === '') {
+            val = '-'
+          }
+          break
+        case 'number':
+          val = params[param]
+          break
+        default:
+          val = '-'
+      }
+      msg += param + ' ' + val + ' '
     }
     // send the first message
     methods.sendMessage(msg)
+
+    // setup Store ID if defined
+    if (params.storeId) {
+      methods.sendMessage('1#storeId ' + params.storeId)
+    }
   }
 
   /* global jQuery */
   if (typeof jQuery === 'function') {
     // autosync current route with mony
-    jQuery(window).on('hashchange', function () {
+    var updateRoute = function () {
       methods.sendRoute(window.location.hash)
-    })
+    }
+    jQuery(window).on('hashchange', updateRoute)
+    updateRoute()
   }
 
   return methods
