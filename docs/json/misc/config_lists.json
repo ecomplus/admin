@@ -7,6 +7,10 @@
       },
       "slug": {
         "en_us": "Slug"
+      },
+      "title": {
+        "en_us": "Title",
+        "pt_br": "Título"
       }
     },
     "brands": {
@@ -23,13 +27,9 @@
     },
     "collections": {},
     "grids": {
-      "title": {
-        "en_us": "Grid title",
-        "pt_br": "Título do grid"
-      },
       "grid_id": {
         "en_us": "Grid ID",
-        "pt_br": "ID do grid"
+        "pt_br": "ID da grade"
       }
     },
     "orders": {},
