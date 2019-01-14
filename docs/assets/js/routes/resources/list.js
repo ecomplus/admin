@@ -260,248 +260,218 @@
     }]
 
     // setup resource specific fields
-    var field, i
     // get from first resource object properties
     var fieldsList = []
-    var addLink = true
-    for (i = 0; i < list.length; i++) {
-      for (field in list[i]) {
-        if (field[0] !== '_') {
-          // check field type
-          var fieldType = typeof list[i][field]
-          switch (fieldType) {
-            case 'undefined':
-              // continue and try next list object
-              continue
 
-            case 'string':
-            case 'number':
-              // valid field to grid
-              // check if it's not already saved on fields list
-              var skip = false
-              for (var ii = 0; ii < fieldsList.length; ii++) {
-                if (fieldsList[ii] === field) {
-                  skip = true
-                  break
-                }
-              }
-
-              if (!skip) {
-                // add to fields list
-                fieldsList.push(field)
-                var fieldObj = {
-                  name: field,
-                  type: 'text',
-                  title: ' '
-                }
-                if (addLink && fieldType === 'string') {
-                  fieldObj.itemTemplate = function (_, item) {
-                    return $('<a>', {
-                      text: item[field],
-                      href: baseHash + item._id
-                    })
-                  }
-                  addLink = false
-                } else {
-                  fieldObj.itemTemplate = function (text) {
-                    if (/https?:\/\/\S+$/.test(text)) {
-                      // it is a link
-                      var ln = text.length
-                      return $('<a>', {
-                        text: (ln > 32 ? text.substr(0, 12) + '...' + text.substr(ln - 20) : text),
-                        href: text,
-                        target: '_blank'
-                      })
-                    }
-                    return text
-                  }
-                }
-                fields.push(fieldObj)
-                // starts with no filtering
-                filters[field] = ''
-              }
-              break
+    // load lists configuration JSON
+    $.getJSON('json/misc/config_lists.json', function (json) {
+      var config = json[resourceSlug]
+      if (config) {
+        for (var i = 0; i < config._fields.length; i++) {
+          var field = config._fields[i]
+          var fieldOpts = config[field]
+          // add to fields list
+          fieldsList.push(field)
+          var fieldObj = {
+            name: field,
+            type: 'text',
+            title: i18n(fieldOpts ? fieldOpts.label : json._labels[field])
           }
-        }
-      }
-    }
 
-    fields.push({
-      // last cell
-      // control filters
-      css: 'data-list-control',
-      filtering: false,
-      sorting: false,
-      title: '#',
-
-      // filter buttons
-      filterTemplate: function () {
-        var el = $('<div />', {
-          class: 'data-list-control-buttons',
-          html: [
-            $('<i />', {
-              class: 'fa fa-search',
-              click: function () {
-                // reload data with current filters
-                $grid.jsGrid('loadData')
+          if (i === 0) {
+            // first column
+            // link to edit resource
+            fieldObj.itemTemplate = function (text, item) {
+              if (text && item) {
+                return $('<a>', {
+                  text: text,
+                  href: baseHash + item._id
+                })
               }
-            }),
-            $('<i />', {
-              class: 'fa fa-filter',
-              click: function () {
-                // clear filters and reload
-                $grid.jsGrid('clearFilter')
+            }
+          } else if (fieldOpts && fieldOpts.type === 'link') {
+            fieldObj.itemTemplate = function (text) {
+              if (text) {
+                // parse to HTML link
+                var ln = text.length
+                return $('<a>', {
+                  text: (ln > 32 ? text.substr(0, 12) + '...' + text.substr(ln - 20) : text),
+                  href: text,
+                  target: '_blank'
+                })
               }
-            })
-          ]
-        })
-        return el
-      },
-
-      // count grid rows
-      itemTemplate: function () {
-        row++
-        return '#' + (offset + row)
-      }
-    })
-
-    $grid.jsGrid({
-      // http://js-grid.com/docs/
-      autoload: true,
-      filtering: true,
-      sorting: true,
-      confirmDeleting: false,
-      pageLoading: true,
-      pageSize: limit,
-
-      // treat click on row
-      // select item or redirect to document edit page
-      rowClick: function (args) {
-        var event = args.event.originalEvent || args.event
-        if (event) {
-          // check clicked element
-          var elClicked = event.target
-          if (elClicked) {
-            switch (elClicked.nodeName) {
-              case 'TD':
-                // check if is the first cell (delete)
-                for (var i = 0; i < elClicked.classList.length; i++) {
-                  if (elClicked.classList[i] === 'data-list-check') {
-                    // click on checkbox
-                    $(elClicked).find('label').click()
-                    return
-                  }
-                }
-                break
-
-              case 'LABEL':
-              case 'INPUT':
-              case 'DIV':
-              case 'SELECT':
-              case 'A':
-                // skip
-                return
             }
           }
+          fields.push(fieldObj)
+          // starts with no filtering
+          filters[field] = ''
         }
+      }
 
-        // clicked on item row
-        var item = args.item
-        // go to 'edit' route with resource ID
-        window.location = baseHash + item._id
+      fields.push({
+        // last cell
+        // control filters
+        css: 'data-list-control',
+        filtering: false,
+        sorting: false,
+        title: '#',
 
-        // pass item pagination function to new route
-        limit = 1
-        Tab.state.page = offset + item._index
-        Tab.state.pagination = function (prev) {
-          // handle prev or next item
-          offset = Tab.state.page + (prev ? -1 : 1)
-          if (offset > -1) {
-            Tab.state.page = offset
-            load(function () {
-              var result = Tab.data.result
-              if (result && result.length) {
-                // redirect to resultant item edit route
-                window.location = baseHash + result[0]._id
+        // filter buttons
+        filterTemplate: function () {
+          var el = $('<div />', {
+            class: 'data-list-control-buttons',
+            html: [
+              $('<i />', {
+                class: 'fa fa-search',
+                click: function () {
+                  // reload data with current filters
+                  $grid.jsGrid('loadData')
+                }
+              }),
+              $('<i />', {
+                class: 'fa fa-filter',
+                click: function () {
+                  // clear filters and reload
+                  $grid.jsGrid('clearFilter')
+                }
+              })
+            ]
+          })
+          return el
+        },
+
+        // count grid rows
+        itemTemplate: function () {
+          row++
+          return '#' + (offset + row)
+        }
+      })
+
+      $grid.jsGrid({
+        // http://js-grid.com/docs/
+        autoload: true,
+        filtering: true,
+        sorting: true,
+        confirmDeleting: false,
+        pageLoading: true,
+        pageSize: limit,
+
+        // treat click on row
+        // select item or redirect to document edit page
+        rowClick: function (args) {
+          var event = args.event.originalEvent || args.event
+          if (event) {
+            // check clicked element
+            var elClicked = event.target
+            if (elClicked) {
+              switch (elClicked.nodeName) {
+                case 'TD':
+                  // check if is the first cell (delete)
+                  for (var i = 0; i < elClicked.classList.length; i++) {
+                    if (elClicked.classList[i] === 'data-list-check') {
+                      // click on checkbox
+                      $(elClicked).find('label').click()
+                      return
+                    }
+                  }
+                  break
+
+                case 'LABEL':
+                case 'INPUT':
+                case 'DIV':
+                case 'SELECT':
+                case 'A':
+                  // skip
+                  return
               }
-            })
+            }
           }
-        }
-      },
 
-      controller: {
-        // load data from API
-        // resource list
-        // work with pagination and filtering
-        loadData: function (query) {
-          if (!dataUpdated) {
-            if (!forceReload) {
-              // check if filters has been changed
-              var changed = false
+          // clicked on item row
+          var item = args.item
+          // go to 'edit' route with resource ID
+          window.location = baseHash + item._id
 
-              for (var field in filters) {
-                if (filters.hasOwnProperty(field) && query[field] !== filters[field]) {
-                  filters[field] = query[field]
+          // pass item pagination function to new route
+          limit = 1
+          Tab.state.page = offset + item._index
+          Tab.state.pagination = function (prev) {
+            // handle prev or next item
+            offset = Tab.state.page + (prev ? -1 : 1)
+            if (offset > -1) {
+              Tab.state.page = offset
+              load(function () {
+                var result = Tab.data.result
+                if (result && result.length) {
+                  // redirect to resultant item edit route
+                  window.location = baseHash + result[0]._id
+                }
+              })
+            }
+          }
+        },
+
+        controller: {
+          // load data from API
+          // resource list
+          // work with pagination and filtering
+          loadData: function (query) {
+            if (!dataUpdated) {
+              if (!forceReload) {
+                // check if filters has been changed
+                var changed = false
+
+                for (var field in filters) {
+                  if (filters.hasOwnProperty(field) && query[field] !== filters[field]) {
+                    filters[field] = query[field]
+                    if (!changed) {
+                      changed = true
+                    }
+                  }
+                }
+                // check current order
+                if (query.sortField) {
+                  if (sort.field !== query.sortField || sort.order !== query.sortOrder) {
+                    sort.field = query.sortField
+                    sort.order = query.sortOrder
+                    if (!changed) {
+                      changed = true
+                    }
+                  }
+                } else if (sort.field) {
+                  // no sorting
+                  sort.field = sort.order = null
                   if (!changed) {
                     changed = true
                   }
                 }
-              }
-              // check current order
-              if (query.sortField) {
-                if (sort.field !== query.sortField || sort.order !== query.sortOrder) {
-                  sort.field = query.sortField
-                  sort.order = query.sortOrder
-                  if (!changed) {
-                    changed = true
-                  }
-                }
-              } else if (sort.field) {
-                // no sorting
-                sort.field = sort.order = null
-                if (!changed) {
-                  changed = true
-                }
-              }
 
-              if (changed) {
-                // reload data with different filters
+                if (changed) {
+                  // reload data with different filters
+                  load()
+                }
+              } else {
+                // force reload data
                 load()
               }
             } else {
-              // force reload data
-              load()
+              // reset data status
+              dataUpdated = false
             }
-          } else {
-            // reset data status
-            dataUpdated = false
+
+            return {
+              data: list,
+              itemsCount: list.length
+            }
           }
+        },
+        onRefreshing: function () {
+          // reset current row
+          row = 0
+        },
 
-          return {
-            data: list,
-            itemsCount: list.length
-          }
-        }
-      },
-      onRefreshing: function () {
-        // reset current row
-        row = 0
-      },
-
-      fields: fields
-    })
-
-    $.getJSON('json/misc/config_lists.json', function (json) {
-      // successful
-      // change fields labels
-      for (var i = 0; i < fieldsList.length; i++) {
-        var field = fieldsList[i]
-        var headers = json.headers
-        var label = headers[resourceSlug][field] || headers._general[field]
-        if (label) {
-          $grid.jsGrid('fieldOption', field, 'title', i18n(label))
-        }
-      }
+        fields: fields
+      })
     })
 
     // select items from list to delete and edit

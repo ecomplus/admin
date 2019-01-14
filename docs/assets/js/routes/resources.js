@@ -224,15 +224,6 @@
         // default query string
         // limit up to 60 results by default
         params = 'limit=60'
-        // specify fields to return by resource slug
-        switch (slug) {
-          case 'brands':
-            params += '&fields=_id,name,slug,logo.url'
-            break
-          case 'categories':
-            params += '&fields=_id,name,slug,parent.name'
-            break
-        }
       }
     } else {
       // specific resource document

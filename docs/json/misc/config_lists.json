@@ -1,39 +1,38 @@
 {
-  "headers": {
-    "_general": {
-      "name": {
-        "en_us": "Name",
-        "pt_br": "Nome"
-      },
-      "slug": {
-        "en_us": "Slug"
-      },
-      "title": {
-        "en_us": "Title",
-        "pt_br": "Título"
-      }
+  "_labels": {
+    "name": {
+      "en_us": "Name",
+      "pt_br": "Nome"
     },
-    "brands": {
-      "logo/url": {
+    "slug": {
+      "en_us": "Slug"
+    },
+    "title": {
+      "en_us": "Title",
+      "pt_br": "Título"
+    }
+  },
+  "brands": {
+    "_fields": [ "name", "slug", "logo/url" ],
+    "logo/url": {
+      "label": {
         "en_us": "Logo URL",
         "pt_br": "URL do logo"
-      }
-    },
-    "categories": {
-      "parent/name": {
-        "en_us": "Parent category",
-        "pt_br": "Categoria pai"
-      }
-    },
-    "collections": {},
-    "grids": {
-      "grid_id": {
-        "en_us": "Grid ID",
-        "pt_br": "ID da grade"
-      }
-    },
-    "orders": {},
-    "customers": {},
-    "carts": {}
+      },
+      "type": "link"
+    }
+  },
+  "categories": {
+    "_fields": [ "name", "slug", "parent/name" ],
+    "parent/name": {
+      "en_us": "Parent category",
+      "pt_br": "Categoria pai"
+    }
+  },
+  "collections": {
+    "_fields": [ "name", "slug" ]
+  },
+  "grids": {
+    "_fields": [ "title", "grid_id" ]
   }
 }
