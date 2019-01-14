@@ -6,7 +6,7 @@
       },
       "description": {
         "en_us": "Grid title",
-        "pt_br": "Título do grid"
+        "pt_br": "Título da grade"
       }
     },
     "i18n": {
@@ -22,7 +22,7 @@
     "grid_id": {
       "label": {
         "en_us": "Grid ID",
-        "pt_br": "ID do grid"
+        "pt_br": "ID da grade"
       },
       "description": {
         "en_us": "Unique grid identifier using only lowercase, numbers and underscore",

@@ -491,29 +491,15 @@
       fields: fields
     })
 
-    $.getJSON('json/resources/' + resourceSlug + '.json', function (json) {
+    $.getJSON('json/misc/config_lists.json', function (json) {
       // successful
       // change fields labels
       for (var i = 0; i < fieldsList.length; i++) {
         var field = fieldsList[i]
-        var props = field.split('/')
-        var obj
-        if (props.length === 1) {
-          obj = json[field]
-        } else {
-          // navigate the object
-          obj = json[props[0]]
-          for (var ii = 1; ii < props.length; ii++) {
-            if (obj && obj.properties) {
-              obj = obj.properties[props[ii]]
-            } else {
-              obj = null
-              break
-            }
-          }
-        }
-        if (obj && obj.label) {
-          $grid.jsGrid('fieldOption', field, 'title', i18n(obj.label))
+        var headers = json.headers
+        var label = headers[resourceSlug][field] || headers._general[field]
+        if (label) {
+          $grid.jsGrid('fieldOption', field, 'title', i18n(label))
         }
       }
     })
