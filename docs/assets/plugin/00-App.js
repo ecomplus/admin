@@ -56,7 +56,8 @@ window.Mony = (function () {
       if (Debug) {
         console.info(response)
       }
-      var text = response.result.fulfillment.speech.trim()
+      var res = response.result.fulfillment
+      var text = (res.messages && res.messages.length ? res.messages[0] : res).speech.trim()
       if (text && text !== '') {
         // parse to HTML and callback
         var html = text.replace(/(https?:[\S]+)/g, '<a href="$1" target="_blank">$1</a>')
