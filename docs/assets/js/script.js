@@ -114,15 +114,12 @@ app.config({
     // https://github.com/ecomclub/mony
     var params = {
       storeId: store.store_id,
-      storeName: store.name,
-      domain: null,
-      // first user name
-      name: user.name.split(' ')[0],
+      name: user.name,
       gender: null,
       email: user.email,
+      language: window.lang === 'pt_br' ? 'Português' : 'English',
       // authentication
-      myId: user._id,
-      lang: window.lang
+      myId: user._id
     }
 
     // setup client
