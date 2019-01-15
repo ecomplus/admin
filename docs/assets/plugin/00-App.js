@@ -83,8 +83,10 @@ window.Mony = (function () {
 
   methods.sendRoute = function (hash) {
     // mock to send current admin panel route (page)
-    // eg.: "/#/home"
-    methods.sendMessage('/' + hash)
+    if (typeof hash === 'string' && hash.slice(0, 3) === '/#/') {
+      // eg.: "/#/home"
+      methods.sendMessage('/' + hash)
+    }
   }
 
   methods.init = function (params, accessToken, responseCallback, debug) {
@@ -131,6 +133,10 @@ window.Mony = (function () {
     if (params.storeId) {
       methods.sendMessage('1#storeId ' + params.storeId)
     }
+    // save current dashboard route (URL)
+    setTimeout(function () {
+      updateRoute()
+    }, 400)
   }
 
   /* global jQuery */
@@ -140,7 +146,6 @@ window.Mony = (function () {
       methods.sendRoute(window.location.hash)
     }
     jQuery(window).on('hashchange', updateRoute)
-    updateRoute()
   }
 
   return methods
