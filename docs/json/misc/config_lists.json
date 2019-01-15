@@ -34,5 +34,15 @@
   },
   "grids": {
     "_fields": [ "title", "grid_id" ]
+  },
+  "orders": {
+    "_fields": [
+      "number",
+      "status",
+      "amount/subtotal",
+      "amount/total",
+      "financial_status/current",
+      "fulfillment_status/current"
+    ]
   }
 }
