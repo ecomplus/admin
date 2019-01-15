@@ -11,7 +11,7 @@
       "en_us": "Title",
       "pt_br": "Título"
     },
-    "update_at": {
+    "updated_at": {
       "en_us": "Update",
       "pt_br": "Atualização"
     }
@@ -29,8 +29,10 @@
   "categories": {
     "_fields": [ "name", "slug", "parent/name" ],
     "parent/name": {
-      "en_us": "Parent category",
-      "pt_br": "Categoria pai"
+      "label": {
+        "en_us": "Parent category",
+        "pt_br": "Categoria pai"
+      }
     }
   },
   "collections": {
