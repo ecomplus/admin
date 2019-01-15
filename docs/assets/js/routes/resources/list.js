@@ -314,7 +314,10 @@
         // default list order
         name: 'updated_at',
         type: 'text',
-        title: i18n(json._labels.updated_at)
+        title: i18n(json._labels.updated_at),
+        itemTemplate: function (dateString) {
+          return (dateString ? formatDate(dateString) : dateString)
+        }
       }, {
         // last cell
         // control filters

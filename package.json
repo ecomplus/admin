@@ -28,6 +28,7 @@
       "keyIsNumber",
       "fixScrollbars",
       "formatMoney",
+      "formatDate",
       "stringToNumber",
       "numberToString",
       "newTabLink",

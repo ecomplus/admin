@@ -244,6 +244,21 @@ app.config({
 
   /* utilities */
 
+  var parseLang = function (lang) {
+    if (!lang) {
+      // try to get global lang variable
+      lang = window.lang
+    }
+    if (lang) {
+      // format pt-BR, en-US
+      lang = lang.replace('_', '-')
+    } else {
+      // default lang
+      lang = 'pt-BR'
+    }
+    return lang
+  }
+
   window.keyIsNumber = function (e) {
     if (e.which !== 13 && e.which !== 8) {
       var charCode = (e.which) ? e.which : e.keyCode
@@ -282,18 +297,7 @@ app.config({
       // default currency, Reais
       currency = 'BRL'
     }
-    if (!lang) {
-      // try to get global lang variable
-      lang = window.lang
-    }
-    if (lang) {
-      // format pt-BR, en-US
-      lang = lang.replace('_', '-')
-    } else {
-      // default lang
-      lang = 'pt-BR'
-    }
-
+    lang = parseLang(lang)
     var priceString
     try {
       priceString = price.toLocaleString(lang, { style: 'currency', currency: currency })
@@ -302,6 +306,20 @@ app.config({
       priceString = price
     }
     return priceString
+  }
+
+  window.formatDate = function (dateString, lang) {
+    lang = parseLang(lang)
+    var date = new Date(dateString)
+    if (date && !isNaN(date.getTime())) {
+      try {
+        return date.toLocaleDateString(lang) + ' ' + date.toLocaleTimeString(lang)
+      } catch (e) {
+        // ignore
+      }
+    }
+    // fallback
+    return dateString
   }
 
   window.stringToNumber = function (str) {
