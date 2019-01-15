@@ -10,6 +10,10 @@
     "title": {
       "en_us": "Title",
       "pt_br": "Título"
+    },
+    "update_at": {
+      "en_us": "Update",
+      "pt_br": "Atualização"
     }
   },
   "brands": {
