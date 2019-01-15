@@ -786,7 +786,7 @@ body {
   -ms-flex-positive: 1;
   -webkit-flex-grow: 1;
   flex-grow: 1;
-  width: 50px !important;
+  // width: 50px !important;
   border-left: none !important;
   border-bottom: none !important;
   box-sizing: border-box;
@@ -797,10 +797,14 @@ body {
   font-family: $font-monospace;
 }
 .data-list tr > .data-list-check,
-.data-list tr > .data-list-control {
+.data-list tr > .data-list-control,
+.data-list tr > .data-list-fixed {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
+}
+.data-list tr > .data-list-check {
+  width: 50px !important;
 }
 .data-list tr > .data-list-control {
   width: 90px !important;
