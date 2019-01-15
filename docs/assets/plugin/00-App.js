@@ -89,6 +89,11 @@ window.Mony = (function () {
     }
   }
 
+  var updateRoute = function () {
+    // send current URL hash
+    methods.sendRoute(window.location.hash)
+  }
+
   methods.init = function (params, accessToken, responseCallback, debug) {
     // set global callback function and debug option
     if (typeof responseCallback === 'function') {
@@ -134,17 +139,12 @@ window.Mony = (function () {
       methods.sendMessage('1#storeId ' + params.storeId)
     }
     // save current dashboard route (URL)
-    setTimeout(function () {
-      updateRoute()
-    }, 400)
+    updateRoute()
   }
 
   /* global jQuery */
   if (typeof jQuery === 'function') {
     // autosync current route with mony
-    var updateRoute = function () {
-      methods.sendRoute(window.location.hash)
-    }
     jQuery(window).on('hashchange', updateRoute)
   }
 
