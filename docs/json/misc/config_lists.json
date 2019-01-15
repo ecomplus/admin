@@ -11,6 +11,9 @@
       "en_us": "Title",
       "pt_br": "Título"
     },
+    "status": {
+      "en_us": "Status"
+    },
     "updated_at": {
       "en_us": "Update",
       "pt_br": "Atualização"
@@ -49,6 +52,37 @@
       "amount/total",
       "financial_status/current",
       "fulfillment_status/current"
-    ]
+    ],
+    "number": {
+      "label": {
+        "en_us": "No",
+        "pt_br": "Nº"
+      },
+      "width": 90
+    },
+    "amount/subtotal": {
+      "label": {
+        "en_us": "Subtotal"
+      },
+      "width": 120
+    },
+    "amount/total": {
+      "label": {
+        "en_us": "Total"
+      },
+      "width": 120
+    },
+    "financial_status/current": {
+      "label": {
+        "en_us": "Payment",
+        "pt_br": "Pagamento"
+      }
+    },
+    "fulfillment_status/current": {
+      "label": {
+        "en_us": "Shipping",
+        "pt_br": "Entrega"
+      }
+    }
   }
 }

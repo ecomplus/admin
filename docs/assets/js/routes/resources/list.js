@@ -303,6 +303,11 @@
               }
             }
           }
+          if (fieldOpts && fieldOpts.width) {
+            fieldObj.css = 'data-list-fixed'
+            fieldObj.width = fieldOpts.width
+          }
+
           fields.push(fieldObj)
           // starts with no filtering
           filters[field] = ''
