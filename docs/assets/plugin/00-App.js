@@ -83,7 +83,7 @@ window.Mony = (function () {
 
   methods.sendRoute = function (hash) {
     // mock to send current admin panel route (page)
-    if (typeof hash === 'string' && hash.slice(0, 3) === '/#/') {
+    if (typeof hash === 'string' && hash.slice(0, 2) === '#/') {
       // eg.: "/#/home"
       methods.sendMessage('/' + hash)
     }
