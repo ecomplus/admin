@@ -223,7 +223,7 @@
         endpoint = slug + '.json'
         // default query string
         // limit up to 60 results by default
-        params = 'limit=60'
+        params = 'limit=60&sort=-updated_at'
       }
     } else {
       // specific resource document
