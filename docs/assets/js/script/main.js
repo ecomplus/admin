@@ -368,48 +368,48 @@ app.ready(function () {
             'pass_md5_hash': password
           })
         })
-        .done(function (json) {
-          console.log('Logged')
-          // keep store ID
-          var storeId = json.store_id
-          localStorage.setItem('store_id', storeId)
-
-          // authenticate
-          $.ajax({
-            url: 'https://api.e-com.plus/v1/_authenticate.json',
-            method: 'POST',
-            dataType: 'json',
-            contentType: 'application/json; charset=UTF-8',
-            headers: {
-              'X-Store-ID': storeId
-            },
-            data: JSON.stringify({
-              '_id': json._id,
-              'api_key': json.api_key
-            })
-          })
           .done(function (json) {
-            // authenticated
-            // store authentication on browser session
-            // loss data when browser tab is closed
-            sessionStorage.setItem('my_id', json.my_id)
-            sessionStorage.setItem('access_token', json.access_token)
-            sessionStorage.setItem('expires', json.expires)
-            sessionStorage.setItem('username', username)
+            console.log('Logged')
+            // keep store ID
+            var storeId = json.store_id
+            localStorage.setItem('store_id', storeId)
 
-            // redirect to dashboard
-            var goTo = sessionStorage.getItem('go_to')
-            if (goTo) {
-              sessionStorage.removeItem('go_to')
-            } else {
-              // redirect to index
-              goTo = '/'
-            }
-            window.location = goTo
+            // authenticate
+            $.ajax({
+              url: 'https://api.e-com.plus/v1/_authenticate.json',
+              method: 'POST',
+              dataType: 'json',
+              contentType: 'application/json; charset=UTF-8',
+              headers: {
+                'X-Store-ID': storeId
+              },
+              data: JSON.stringify({
+                '_id': json._id,
+                'api_key': json.api_key
+              })
+            })
+              .done(function (json) {
+                // authenticated
+                // store authentication on browser session
+                // loss data when browser tab is closed
+                sessionStorage.setItem('my_id', json.my_id)
+                sessionStorage.setItem('access_token', json.access_token)
+                sessionStorage.setItem('expires', json.expires)
+                sessionStorage.setItem('username', username)
+
+                // redirect to dashboard
+                var goTo = sessionStorage.getItem('go_to')
+                if (goTo) {
+                  sessionStorage.removeItem('go_to')
+                } else {
+                  // redirect to index
+                  goTo = '/'
+                }
+                window.location = goTo
+              })
+              .fail(authFail)
           })
           .fail(authFail)
-        })
-        .fail(authFail)
       }
     })
 
@@ -704,22 +704,22 @@ app.ready(function () {
         // timeout in 6s
         timeout: 6000
       })
-      .done(function (html) {
-        // successful response
-        // put HTML content
-        el.html(html).fadeIn()
-      })
-      .fail(function (jqXHR, textStatus, err) {
-        app.toast(i18n({
-          'en_us': jqXHR.status + ' error, cannot load HTML content',
-          'pt_br': 'Erro ' + jqXHR.status + ', não foi possível carregar o conteúdo HTML'
-        }))
-      })
-      .always(function () {
-        setTimeout(function () {
-          parent.removeClass('ajax')
-        }, 400)
-      })
+        .done(function (html) {
+          // successful response
+          // put HTML content
+          el.html(html).fadeIn()
+        })
+        .fail(function (jqXHR, textStatus, err) {
+          app.toast(i18n({
+            'en_us': jqXHR.status + ' error, cannot load HTML content',
+            'pt_br': 'Erro ' + jqXHR.status + ', não foi possível carregar o conteúdo HTML'
+          }))
+        })
+        .always(function () {
+          setTimeout(function () {
+            parent.removeClass('ajax')
+          }, 400)
+        })
     }
 
     var skipNextConfirms = null
@@ -1015,59 +1015,59 @@ app.ready(function () {
         // timeout in 10s
         timeout: 10000
       })
-      .done(function (html) {
-        // successful response
-        var elTab = $('#app-tab-' + currentTab)
-        // global to identify tab on route scripts
-        window.tabId = currentTab
-        window.elTab = elTab
+        .done(function (html) {
+          // successful response
+          var elTab = $('#app-tab-' + currentTab)
+          // global to identify tab on route scripts
+          window.tabId = currentTab
+          window.elTab = elTab
 
-        // store data when necessary
-        // commit changes on tab data globally
-        // get tab JSON data globally
-        // improve reactivity
-        window.Tabs[currentTab] = {
-          /*
-          data: {},
-          commit: function () {},
-          load: function () {},
-          pagination: function () {},
-          */
-          state: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {}
-        }
-
-        if (!internal) {
-          // have to force routeReady call after 10s
-          routeReadyTimeout = setTimeout(function () {
-            router('408', true)
-          }, 10000)
-        }
-        // put HTML content
-        elTab.html(html)
-      })
-      .fail(function (jqXHR, textStatus, err) {
-        if (jqXHR.status === 404) {
-          // not found
-          // internal rewrite
-          window.e404()
-        } else {
-          // do internal route to error page
-          var eNum
-          switch (textStatus) {
-            case 'abort':
-              eNum = '400'
-              break
-            case 'timeout':
-              eNum = '504'
-              break
-            default:
-              // unexpected status
-              console.error(err)
-              eNum = '500'
+          // store data when necessary
+          // commit changes on tab data globally
+          // get tab JSON data globally
+          // improve reactivity
+          window.Tabs[currentTab] = {
+            /*
+            data: {},
+            commit: function () {},
+            load: function () {},
+            pagination: function () {},
+            */
+            state: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {}
           }
-          router(eNum, true)
-        }
-      })
+
+          if (!internal) {
+            // have to force routeReady call after 10s
+            routeReadyTimeout = setTimeout(function () {
+              router('408', true)
+            }, 10000)
+          }
+          // put HTML content
+          elTab.html(html)
+        })
+        .fail(function (jqXHR, textStatus, err) {
+          if (jqXHR.status === 404) {
+            // not found
+            // internal rewrite
+            window.e404()
+          } else {
+            // do internal route to error page
+            var eNum
+            switch (textStatus) {
+              case 'abort':
+                eNum = '400'
+                break
+              case 'timeout':
+                eNum = '504'
+                break
+              default:
+                // unexpected status
+                console.error(err)
+                eNum = '500'
+            }
+            router(eNum, true)
+          }
+        })
     }
 
     var contentPagination = function (prev) {
@@ -2314,7 +2314,7 @@ app.ready(function () {
             }
             break
 
-          /* multiple keys shortcuts */
+            /* multiple keys shortcuts */
 
           case 2:
             // second key
