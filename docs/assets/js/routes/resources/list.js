@@ -290,17 +290,43 @@
                 })
               }
             }
-          } else if (fieldOpts && fieldOpts.type === 'link') {
-            fieldObj.itemTemplate = function (text) {
-              if (text) {
-                // parse to HTML link
-                var ln = text.length
-                return $('<a>', {
-                  text: (ln > 32 ? text.substr(0, 12) + '...' + text.substr(ln - 20) : text),
-                  href: text,
-                  target: '_blank'
-                })
-              }
+          } else if (fieldOpts) {
+            // custom item template by field type
+            switch (fieldOpts.type) {
+              case 'link':
+                fieldObj.itemTemplate = function (text) {
+                  if (text) {
+                    // parse to HTML link
+                    var ln = text.length
+                    return $('<a>', {
+                      text: (ln > 32 ? text.substr(0, 12) + '...' + text.substr(ln - 20) : text),
+                      href: text,
+                      target: '_blank'
+                    })
+                  }
+                }
+                break
+
+              case 'badge':
+                fieldObj.itemTemplate = (function (enumValues) {
+                  // parse to badge with class by each value defined from field options
+                  return function (value) {
+                    if (value) {
+                      var valueObj = enumValues[value] || {}
+                      return $('<span>', {
+                        'class': 'badge badge-' + (valueObj.class || 'light'),
+                        text: i18n(valueObj.text) || value
+                      })
+                    }
+                  }
+                }(fieldOpts.enum))
+                break
+
+              case 'money':
+                fieldObj.itemTemplate = fieldObj.itemTemplate = function (text) {
+                  return formatMoney(text)
+                }
+                break
             }
           }
           if (fieldOpts && fieldOpts.width) {
