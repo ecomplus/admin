@@ -308,18 +308,26 @@
                 break
 
               case 'badge':
-                fieldObj.itemTemplate = (function (enumValues) {
+              case 'bold':
+                fieldObj.itemTemplate = (function (type, enumValues) {
                   // parse to badge with class by each value defined from field options
                   return function (value) {
                     if (value) {
                       var valueObj = enumValues[value] || {}
+                      var className = type + ' '
+                      if (type === 'badge') {
+                        className += type + '-' + (valueObj.class || 'primary')
+                      } else {
+                        // colored bold text
+                        className += 'text-' + (valueObj.class || 'muted')
+                      }
                       return $('<span>', {
-                        'class': 'badge badge-' + (valueObj.class || 'light'),
+                        'class': className,
                         text: i18n(valueObj.text) || value
                       })
                     }
                   }
-                }(fieldOpts.enum))
+                }(fieldOpts.type, fieldOpts.enum))
                 break
 
               case 'money':
