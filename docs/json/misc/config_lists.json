@@ -60,28 +60,209 @@
       },
       "width": 90
     },
+    "status": {
+      "type": "bold",
+      "enum": {
+        "open": {
+          "text": {
+            "en_us": "Open",
+            "pt_br": "Aberto"
+          }
+        },
+        "closed": {
+          "class": "success",
+          "text": {
+            "en_us": "Closed",
+            "pt_br": "Fechado"
+          }
+        },
+        "cancelled": {
+          "class": "danger",
+          "text": {
+            "en_us": "Cancelled",
+            "pt_br": "Cancelado"
+          }
+        }
+      }
+    },
     "amount/subtotal": {
       "label": {
         "en_us": "Subtotal"
       },
+      "type": "money",
       "width": 120
     },
     "amount/total": {
       "label": {
         "en_us": "Total"
       },
+      "type": "money",
       "width": 120
     },
     "financial_status/current": {
       "label": {
         "en_us": "Payment",
         "pt_br": "Pagamento"
+      },
+      "type": "badge",
+      "enum": {
+        "pending": {
+          "text": {
+            "en_us": "Pending",
+            "pt_br": "Pendente"
+          }
+        },
+        "under_analysis": {
+          "class": "warning",
+          "text": {
+            "en_us": "Under analysis",
+            "pt_br": "Em análise"
+          }
+        },
+        "authorized": {
+          "class": "info",
+          "text": {
+            "en_us": "Authorized",
+            "pt_br": "Autorizado"
+          }
+        },
+        "unauthorized": {
+          "class": "warning",
+          "text": {
+            "en_us": "Unauthorized",
+            "pt_br": "Não autorizado"
+          }
+        },
+        "partially_paid": {
+          "class": "info",
+          "text": {
+            "en_us": "Partially paid",
+            "pt_br": "Parcialmente pago"
+          }
+        },
+        "paid": {
+          "class": "success",
+          "text": {
+            "en_us": "Paid",
+            "pt_br": "Pago"
+          }
+        },
+        "in_dispute": {
+          "class": "dark",
+          "text": {
+            "en_us": "In dispute",
+            "pt_br": "Disputa"
+          }
+        },
+        "partially_refunded": {
+          "class": "dark",
+          "text": {
+            "en_us": "Partially refunded",
+            "pt_br": "Parcialmente devolvido"
+          }
+        },
+        "refunded": {
+          "class": "danger",
+          "text": {
+            "en_us": "Refunded",
+            "pt_br": "Devolvido"
+          }
+        },
+        "voided": {
+          "class": "danger",
+          "text": {
+            "en_us": "Voided",
+            "pt_br": "Cancelado"
+          }
+        },
+        "unknown": {
+          "text": {
+            "en_us": "Unknown",
+            "pt_br": "Desconnhecido"
+          }
+        }
       }
     },
     "fulfillment_status/current": {
       "label": {
         "en_us": "Shipping",
         "pt_br": "Entrega"
+      },
+      "type": "bold",
+      "enum": {
+        "invoice_issued": {
+          "text": {
+            "en_us": "Invoice issued",
+            "pt_br": "Desconnhecido"
+          }
+        },
+        "in_production": {
+          "text": {
+            "en_us": "In production",
+            "pt_br": "Em produção"
+          }
+        },
+        "in_separation": {
+          "text": {
+            "en_us": "In separation",
+            "pt_br": "Em separação"
+          }
+        },
+        "ready_for_shipping": {
+          "text": {
+            "en_us": "Ready for shipping",
+            "pt_br": "Pronto para envio"
+          }
+        },
+        "partially_shipped": {
+          "class": "info",
+          "text": {
+            "en_us": "Partially shipped",
+            "pt_br": "Parcialmente enviado"
+          }
+        },
+        "shipped": {
+          "class": "info",
+          "text": {
+            "en_us": "Shipped",
+            "pt_br": "Enviado"
+          }
+        },
+        "partially_delivered": {
+          "class": "info",
+          "text": {
+            "en_us": "Partially delivered",
+            "pt_br": "Parcialmente entregue"
+          }
+        },
+        "delivered": {
+          "class": "success",
+          "text": {
+            "en_us": "Delivered",
+            "pt_br": "Entregue"
+          }
+        },
+        "returned_for_exchange": {
+          "class": "warning",
+          "text": {
+            "en_us": "Returned for exchange",
+            "pt_br": "Retornando para troca"
+          }
+        },
+        "received_for_exchange": {
+          "class": "dark",
+          "text": {
+            "en_us": "Received for exchange",
+            "pt_br": "Recebido para troca"
+          }
+        },
+        "returned": {
+          "class": "danger",
+          "text": {
+            "en_us": "Returned",
+            "pt_br": "Devolvido"
+          }
+        }
       }
     }
   }
