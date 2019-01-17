@@ -354,6 +354,7 @@
         name: 'updated_at',
         type: 'text',
         title: i18n(json._labels.updated_at),
+        filtering: false,
         itemTemplate: function (dateString) {
           return (dateString ? formatDate(dateString) : dateString)
         }
