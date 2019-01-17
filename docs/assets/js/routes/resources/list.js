@@ -85,6 +85,10 @@
 
     // control pagination
     var updatePage = function (page) {
+      if (typeof page !== 'number' || isNaN(page) || page < 1) {
+        // fix page number
+        page = 1
+      }
       offset = (page - 1) * limit
       // reload data
       load()
@@ -334,6 +338,7 @@
                 fieldObj.itemTemplate = fieldObj.itemTemplate = function (text) {
                   return formatMoney(text)
                 }
+                // filter with min and max
                 break
             }
           }
