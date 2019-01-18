@@ -171,7 +171,6 @@
 
     var dataUpdated = false
     var forceReload = false
-    var skipReload
     // control request queue
     var loading = false
     var waiting = false
@@ -480,54 +479,49 @@
           // resource list
           // work with pagination and filtering
           loadData: function (query) {
-            if (!skipReload) {
-              if (!dataUpdated) {
-                if (!forceReload) {
-                  // check if filters has been changed
-                  var changed = false
+            if (!dataUpdated) {
+              if (!forceReload) {
+                // check if filters has been changed
+                var changed = false
 
-                  for (var field in filters) {
-                    if (filters.hasOwnProperty(field) && query[field] !== filters[field]) {
-                      filters[field] = query[field]
-                      if (!changed) {
-                        changed = true
-                      }
-                    }
-                  }
-                  // check current order
-                  if (query.sortField) {
-                    if (sort.field !== query.sortField || sort.order !== query.sortOrder) {
-                      sort.field = query.sortField
-                      sort.order = query.sortOrder
-                      if (!changed) {
-                        changed = true
-                      }
-                    }
-                  } else {
-                    // default sorting
-                    sort.field = 'updated_at'
-                    sort.order = 'desc'
+                for (var field in filters) {
+                  if (filters.hasOwnProperty(field) && query[field] !== filters[field]) {
+                    filters[field] = query[field]
                     if (!changed) {
                       changed = true
                     }
                   }
-
-                  if (changed) {
-                    resetPagination()
-                    // reload data with different filters
-                    load()
+                }
+                // check current order
+                if (query.sortField) {
+                  if (sort.field !== query.sortField || sort.order !== query.sortOrder) {
+                    sort.field = query.sortField
+                    sort.order = query.sortOrder
+                    if (!changed) {
+                      changed = true
+                    }
                   }
                 } else {
-                  // force reload data
+                  // default sorting
+                  sort.field = 'updated_at'
+                  sort.order = 'desc'
+                  if (!changed) {
+                    changed = true
+                  }
+                }
+
+                if (changed) {
+                  resetPagination()
+                  // reload data with different filters
                   load()
                 }
               } else {
-                // reset data status
-                dataUpdated = false
+                // force reload data
+                load()
               }
             } else {
-              // avoid skipping next reload
-              skipReload = false
+              // reset data status
+              dataUpdated = false
             }
 
             return {
@@ -543,9 +537,6 @@
 
         fields: fields
       })
-      // set default sorting
-      skipReload = true
-      $grid.jsGrid('sort', 'updated_at', 'desc')
     })
 
     // select items from list to delete and edit
