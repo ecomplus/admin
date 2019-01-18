@@ -127,6 +127,15 @@
       } else {
         $page.removeAttr('disabled')
       }
+      // set current page input value
+      $page.val(Math.ceil(offset / limit) + 1)
+    }
+
+    var resetPagination = function () {
+      // back to page 1
+      offset = 0
+      // update pagination controls
+      paginationControls()
     }
 
     // pagination input and buttons
@@ -373,17 +382,17 @@
 
         // filter buttons
         filterTemplate: function () {
-          var el = $('<div />', {
+          var el = $('<div>', {
             class: 'data-list-control-buttons',
             html: [
-              $('<i />', {
+              $('<i>', {
                 class: 'fa fa-search',
                 click: function () {
                   // reload data with current filters
                   $grid.jsGrid('loadData')
                 }
               }),
-              $('<i />', {
+              $('<i>', {
                 class: 'fa fa-filter',
                 click: function () {
                   // clear filters and reload
@@ -494,15 +503,17 @@
                         changed = true
                       }
                     }
-                  } else if (sort.field) {
-                    // no sorting
-                    sort.field = sort.order = null
+                  } else {
+                    // default sorting
+                    sort.field = 'updated_at'
+                    sort.order = 'desc'
                     if (!changed) {
                       changed = true
                     }
                   }
 
                   if (changed) {
+                    resetPagination()
                     // reload data with different filters
                     load()
                   }
