@@ -282,13 +282,13 @@
       if (config) {
         for (var i = 0; i < config._fields.length; i++) {
           var field = config._fields[i]
-          var fieldOpts = config[field]
+          var fieldOpts = config[field] || {}
           // add to fields list
           fieldsList.push(field)
           var fieldObj = {
             name: field,
             type: 'text',
-            title: i18n(fieldOpts ? fieldOpts.label : json._labels[field])
+            title: i18n(fieldOpts.label || json._labels[field])
           }
 
           if (i === 0) {
@@ -302,7 +302,7 @@
                 })
               }
             }
-          } else if (fieldOpts) {
+          } else {
             // custom item template by field type
             switch (fieldOpts.type) {
               case 'link':
@@ -350,7 +350,7 @@
                 break
             }
           }
-          if (fieldOpts && fieldOpts.width) {
+          if (fieldOpts.width) {
             fieldObj.css = 'data-list-fixed'
             fieldObj.width = fieldOpts.width
           }
