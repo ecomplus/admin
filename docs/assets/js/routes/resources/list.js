@@ -194,13 +194,13 @@
           if (sort.order === 'desc') {
             params += '-'
           }
-          params += sort.field
+          params += sort.field.replace('/', '.')
         }
         // object properties
         for (var i = 0; i < fieldsList.length; i++) {
           var field = fieldsList[i]
           if (filters.hasOwnProperty(field) && filters[field] !== '') {
-            params += '&' + field + '=' + filters[field]
+            params += '&' + field.replace('/', '.') + '=' + filters[field]
           }
         }
 
