@@ -312,22 +312,30 @@
             this.filterControl = $hidden
 
             // inputs for min and max values
-            var $min = $('<input>', {
+            var inputsOpts = {
+              keydown: function (e) {
+                switch (e.which) {
+                  // enter
+                  case 13:
+                    $(this).trigger('change')
+                    break
+                }
+              },
               change: setValue,
               type: 'tel',
               placeholder: i18n({
                 'en_us': 'min',
                 'pt_br': 'mín'
               })
-            })
-            var $max = $('<input>', {
-              change: setValue,
-              type: 'tel',
+            }
+            var $min = $('<input>', inputsOpts)
+            var $max = $('<input>', Object.assign(inputsOpts, {
               placeholder: i18n({
-                'en_us': 'max',
-                'pt_br': 'máx'
+                'en_us': 'min',
+                'pt_br': 'mín'
               })
-            })
+            }))
+
             if (isMoney) {
               // mask currency inputs
               // true to keep original placeholders
