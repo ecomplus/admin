@@ -58,7 +58,8 @@
         "en_us": "No",
         "pt_br": "Nº"
       },
-      "width": 90
+      "width": 90,
+      "range": true
     },
     "status": {
       "type": "bold",
