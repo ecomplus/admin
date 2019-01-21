@@ -77,10 +77,12 @@
     }
     // current list filters
     var filters = {}
-    // start with no sorting
+    // start default sorting
+    var defaultSortField = 'updated_at'
+    var defaultSortOrder = 'desc'
     var sort = {
-      field: null,
-      order: null
+      field: defaultSortField,
+      order: defaultSortOrder
     }
 
     // control pagination
@@ -319,27 +321,60 @@
                 }
                 break
 
-              case 'badge':
               case 'bold':
-                fieldObj.itemTemplate = (function (type, enumValues) {
-                  // parse to badge with class by each value defined from field options
-                  return function (value) {
+                (function (field, type, enumValues) {
+                  // parse to bold text with class by each value defined from field options
+                  var genElement = function (value) {
+                    var valueObj = enumValues[value] || {}
+                    // colored bold text
+                    var className = type + ' text-' + (valueObj.class || 'muted')
+                    return $('<span>', {
+                      'class': className,
+                      text: i18n(valueObj.text) || value
+                    })
+                  }
+                  fieldObj.itemTemplate = function (value) {
                     if (value) {
-                      var valueObj = enumValues[value] || {}
-                      var className = type + ' '
-                      if (type === 'badge') {
-                        className += type + '-' + (valueObj.class || 'primary')
-                      } else {
-                        // colored bold text
-                        className += 'text-' + (valueObj.class || 'muted')
-                      }
-                      return $('<span>', {
-                        'class': className,
-                        text: i18n(valueObj.text) || value
-                      })
+                      return genElement(value)
                     }
                   }
-                }(fieldOpts.type, fieldOpts.enum))
+
+                  // render select element for filtering
+                  fieldObj.filterTemplate = function () {
+                    var $options = [
+                      $('<option>', {
+                        text: '--',
+                        value: '',
+                        selected: true
+                      })
+                    ]
+                    // render an option element for each possible value
+                    for (var value in enumValues) {
+                      if (enumValues.hasOwnProperty(value)) {
+                        $options.push($('<option>', {
+                          text: value,
+                          value: value,
+                          'data-content': genElement(value).prop('outerHTML')
+                        }))
+                      }
+                    }
+
+                    // create and return the select element
+                    var $select = $('<select>', {
+                      'class': 'hidden',
+                      html: $options
+                    })
+                    this.filterControl = $select
+                    setTimeout(function () {
+                      $select.selectpicker({
+                        noneSelectedText: '--',
+                        windowPadding: 70,
+                        container: elContainer
+                      })
+                    }, 200)
+                    return $select
+                  }
+                }(field, fieldOpts.type, fieldOpts.enum))
                 break
 
               case 'money':
@@ -493,18 +528,14 @@
                   }
                 }
                 // check current order
-                if (query.sortField) {
-                  if (sort.field !== query.sortField || sort.order !== query.sortOrder) {
-                    sort.field = query.sortField
-                    sort.order = query.sortOrder
-                    if (!changed) {
-                      changed = true
-                    }
-                  }
-                } else {
+                if (!query.sortField) {
                   // default sorting
-                  sort.field = 'updated_at'
-                  sort.order = 'desc'
+                  query.sortField = defaultSortField
+                  query.sortOrder = defaultSortOrder
+                }
+                if (sort.field !== query.sortField || sort.order !== query.sortOrder) {
+                  sort.field = query.sortField
+                  sort.order = query.sortOrder
                   if (!changed) {
                     changed = true
                   }
