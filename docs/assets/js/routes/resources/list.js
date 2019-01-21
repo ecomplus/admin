@@ -376,7 +376,11 @@
                     // create and return the select element
                     var $select = $('<select>', {
                       'class': 'hidden',
-                      html: $options
+                      html: $options,
+                      change: function () {
+                        // reload data with new filter value
+                        $grid.jsGrid('loadData')
+                      }
                     })
                     this.filterControl = $select
                     setTimeout(function () {
@@ -415,17 +419,27 @@
                 var min = $min.val().trim()
                 var max = $max.val().trim()
                 $hidden.val(min !== '' || max !== '' ? min + '>>' + max : '')
+                // reload data with new filter value
+                $grid.jsGrid('loadData')
               }
               this.filterControl = $hidden
 
               // inputs for min and max values
               var $min = $('<input>', {
                 change: setValue,
-                type: 'tel'
+                type: 'tel',
+                placeholder: i18n({
+                  'en_us': 'min',
+                  'pt_br': 'mín'
+                })
               })
               var $max = $('<input>', {
                 change: setValue,
-                type: 'tel'
+                type: 'tel',
+                placeholder: i18n({
+                  'en_us': 'max',
+                  'pt_br': 'máx'
+                })
               })
               return $('<div>', { html: [ $min, $max ] })
             }
