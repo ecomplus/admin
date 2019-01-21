@@ -131,6 +131,28 @@
         }
       }
     }
+
+    // https://github.com/plentz/jquery-maskmoney
+    $.fn.inputMoney = function (skipPlaceholder) {
+      // mask inputs with currency pattern
+      var money = formatMoney(0)
+      if (!skipPlaceholder) {
+        $(this).attr('placeholder', money)
+      }
+
+      // currency symbol as prefix
+      var maskOptions = {
+        prefix: money.replace(/0.*/, ''),
+        allowNegative: true,
+        decimal: decimalPoint
+      }
+      if (decimalPoint === '.') {
+        maskOptions.thousands = ','
+      } else {
+        maskOptions.thousands = '.'
+      }
+      $(this).maskMoney(maskOptions)
+    }
   }
 
   /* utilities */
@@ -447,25 +469,8 @@
 
     /* input masking */
 
-    var $money = $form.find('input[data-money]')
-    if ($money.length) {
-      var money = formatMoney(0)
-      $money.attr('placeholder', money)
-
-      // mask inputs with currency pattern
-      // currency symbol as prefix
-      var maskOptions = {
-        prefix: money.replace(/0.*/, ''),
-        allowNegative: true,
-        decimal: decimalPoint
-      }
-      if (decimalPoint === '.') {
-        maskOptions.thousands = ','
-      } else {
-        maskOptions.thousands = '.'
-      }
-      $money.maskMoney(maskOptions)
-    }
+    // mask currency
+    $form.find('input[data-money]').inputMoney()
 
     $form.find('input[type="number"]').keydown(function (e) {
       // allow: backspace, delete, tab, escape, enter
