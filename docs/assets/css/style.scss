@@ -565,6 +565,9 @@ body {
   border-width: 0 .16em .16em 0;
 }
 */
+.bootstrap-select.bs-container .dropdown-menu {
+  z-index: 994;
+}
 
 // colorpicker
 .minicolors-panel {
@@ -815,6 +818,15 @@ body {
 }
 .data-list td > .spinner-circle-shadow {
   margin-top: 3px;
+}
+.data-list td > .bootstrap-select {
+  width: 100% !important;
+}
+.data-list td > .bootstrap-select .btn,
+.data-list td input {
+  font-size: 14px;
+  line-height: 20px;
+  padding: 5px 7px;
 }
 .data-list-control-buttons {
   text-align: center;

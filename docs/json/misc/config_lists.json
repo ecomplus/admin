@@ -104,7 +104,7 @@
         "en_us": "Payment",
         "pt_br": "Pagamento"
       },
-      "type": "badge",
+      "type": "bold",
       "enum": {
         "pending": {
           "text": {
