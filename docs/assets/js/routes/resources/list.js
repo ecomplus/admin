@@ -198,11 +198,25 @@
           }
           params += sort.field.replace('/', '.')
         }
+
         // object properties
         for (var i = 0; i < fieldsList.length; i++) {
           var field = fieldsList[i]
-          if (filters.hasOwnProperty(field) && filters[field] !== '') {
-            params += '&' + field.replace('/', '.') + '=' + filters[field]
+          var value = filters[field]
+          if (value && value !== '') {
+            var prop = field.replace('/', '.')
+            if (/([0-9]+)?>>([0-9]+)?/.test(value)) {
+              // query by range
+              value = value.split('>>')
+              if (value[0] !== '') {
+                params += '&' + prop + '>=' + value[0]
+              }
+              if (value[1] !== '') {
+                params += '&' + prop + '<=' + value[1]
+              }
+            } else {
+              params += '&' + prop + '=' + value
+            }
           }
         }
 
@@ -381,13 +395,40 @@
                 fieldObj.itemTemplate = fieldObj.itemTemplate = function (text) {
                   return formatMoney(text)
                 }
-                // filter with min and max
                 break
             }
           }
+
           if (fieldOpts.width) {
+            // set fixed width
             fieldObj.css = 'data-list-fixed'
             fieldObj.width = fieldOpts.width
+          }
+
+          if (fieldOpts.range) {
+            // filter by range
+            // for numbers only
+            fieldObj.filterTemplate = function () {
+              // hidden input to handle jsGrid hardcoded filterControl property
+              var $hidden = $('<input>', { type: 'hidden' })
+              var setValue = function () {
+                var min = $min.val().trim()
+                var max = $max.val().trim()
+                $hidden.val(min !== '' || max !== '' ? min + '>>' + max : '')
+              }
+              this.filterControl = $hidden
+
+              // inputs for min and max values
+              var $min = $('<input>', {
+                change: setValue,
+                type: 'tel'
+              })
+              var $max = $('<input>', {
+                change: setValue,
+                type: 'tel'
+              })
+              return $('<div>', { html: [ $min, $max ] })
+            }
           }
 
           fields.push(fieldObj)
