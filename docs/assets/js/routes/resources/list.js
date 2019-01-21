@@ -296,6 +296,48 @@
     $.getJSON('json/misc/config_lists.json', function (json) {
       var config = json[resourceSlug]
       if (config) {
+        var filterRange = function (fieldObj, isMoney) {
+          // handle filter by range
+          // for numbers only
+          fieldObj.filterTemplate = function () {
+            // hidden input to handle jsGrid hardcoded filterControl property
+            var $hidden = $('<input>', { type: 'hidden' })
+            var setValue = function () {
+              var min = stringToNumber($min.val()) || ''
+              var max = stringToNumber($max.val()) || ''
+              $hidden.val(min !== '' || max !== '' ? min + '>>' + max : '')
+              // reload data with new filter value
+              $grid.jsGrid('loadData')
+            }
+            this.filterControl = $hidden
+
+            // inputs for min and max values
+            var $min = $('<input>', {
+              change: setValue,
+              type: 'tel',
+              placeholder: i18n({
+                'en_us': 'min',
+                'pt_br': 'mín'
+              })
+            })
+            var $max = $('<input>', {
+              change: setValue,
+              type: 'tel',
+              placeholder: i18n({
+                'en_us': 'max',
+                'pt_br': 'máx'
+              })
+            })
+            if (isMoney) {
+              // mask currency inputs
+              // true to keep original placeholders
+              $min.inputMoney(true)
+              $max.inputMoney(true)
+            }
+            return $('<div>', { html: [ $min, $max ] })
+          }
+        }
+
         for (var i = 0; i < config._fields.length; i++) {
           var field = config._fields[i]
           var fieldOpts = config[field] || {}
@@ -399,6 +441,9 @@
                 fieldObj.itemTemplate = fieldObj.itemTemplate = function (text) {
                   return formatMoney(text)
                 }
+                // filter by money value range
+                // isMoney = true
+                filterRange(fieldObj, true)
                 break
             }
           }
@@ -408,43 +453,10 @@
             fieldObj.css = 'data-list-fixed'
             fieldObj.width = fieldOpts.width
           }
-
           if (fieldOpts.range) {
-            // filter by range
-            // for numbers only
-            fieldObj.filterTemplate = function () {
-              // hidden input to handle jsGrid hardcoded filterControl property
-              var $hidden = $('<input>', { type: 'hidden' })
-              var setValue = function () {
-                var min = $min.val().trim()
-                var max = $max.val().trim()
-                $hidden.val(min !== '' || max !== '' ? min + '>>' + max : '')
-                // reload data with new filter value
-                $grid.jsGrid('loadData')
-              }
-              this.filterControl = $hidden
-
-              // inputs for min and max values
-              var $min = $('<input>', {
-                change: setValue,
-                type: 'tel',
-                placeholder: i18n({
-                  'en_us': 'min',
-                  'pt_br': 'mín'
-                })
-              })
-              var $max = $('<input>', {
-                change: setValue,
-                type: 'tel',
-                placeholder: i18n({
-                  'en_us': 'max',
-                  'pt_br': 'máx'
-                })
-              })
-              return $('<div>', { html: [ $min, $max ] })
-            }
+            // filter by number range
+            filterRange(fieldObj)
           }
-
           fields.push(fieldObj)
           // starts with no filtering
           filters[field] = ''
