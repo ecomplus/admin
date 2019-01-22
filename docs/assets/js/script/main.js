@@ -405,22 +405,28 @@ app.ready(function () {
                 })
 
                   .always(function () {
-                    // store authentication on browser session
-                    // loss data when browser tab is closed
-                    sessionStorage.setItem('my_id', json.my_id)
-                    sessionStorage.setItem('access_token', json.access_token)
-                    sessionStorage.setItem('expires', json.expires)
-                    sessionStorage.setItem('username', username)
-
-                    // redirect to dashboard
-                    var goTo = sessionStorage.getItem('go_to')
-                    if (goTo) {
-                      sessionStorage.removeItem('go_to')
+                    var extService = window.location.search.split('?service=')[1]
+                    if (extService && extService !== '') {
+                      // redirect to external E-Com Plus service
+                      window.location = 'https://' + extService + '.e-com.plus'
                     } else {
-                      // redirect to index
-                      goTo = '/'
+                      // store authentication on browser session
+                      // loss data when browser tab is closed
+                      sessionStorage.setItem('my_id', json.my_id)
+                      sessionStorage.setItem('access_token', json.access_token)
+                      sessionStorage.setItem('expires', json.expires)
+                      sessionStorage.setItem('username', username)
+
+                      // redirect to dashboard
+                      var goTo = sessionStorage.getItem('go_to')
+                      if (goTo) {
+                        sessionStorage.removeItem('go_to')
+                      } else {
+                        // redirect to index
+                        goTo = '/'
+                      }
+                      window.location = goTo
                     }
-                    window.location = goTo
                   })
               })
               .fail(authFail)
