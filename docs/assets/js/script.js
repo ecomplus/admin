@@ -1137,6 +1137,9 @@ app.ready(function () {
                     'X-Store-ID': storeId,
                     'X-My-ID': json.my_id,
                     'X-Access-Token': json.access_token
+                  },
+                  xhrFields: {
+                    withCredentials: true
                   }
                 })
 
