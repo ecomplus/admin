@@ -368,6 +368,7 @@ app.ready(function () {
             'pass_md5_hash': password
           })
         })
+
           .done(function (json) {
             console.log('Logged')
             // keep store ID
@@ -388,24 +389,39 @@ app.ready(function () {
                 'api_key': json.api_key
               })
             })
+
               .done(function (json) {
                 // authenticated
-                // store authentication on browser session
-                // loss data when browser tab is closed
-                sessionStorage.setItem('my_id', json.my_id)
-                sessionStorage.setItem('access_token', json.access_token)
-                sessionStorage.setItem('expires', json.expires)
-                sessionStorage.setItem('username', username)
+                // create a new E-Com Plus admin session
+                $.ajax({
+                  url: 'https://admin.e-com.plus/session/new',
+                  method: 'PUT',
+                  contentType: 'application/json; charset=UTF-8',
+                  headers: {
+                    'X-Store-ID': storeId,
+                    'X-My-ID': json.my_id,
+                    'X-Access-Token': json.access_token
+                  }
+                })
 
-                // redirect to dashboard
-                var goTo = sessionStorage.getItem('go_to')
-                if (goTo) {
-                  sessionStorage.removeItem('go_to')
-                } else {
-                  // redirect to index
-                  goTo = '/'
-                }
-                window.location = goTo
+                  .always(function () {
+                    // store authentication on browser session
+                    // loss data when browser tab is closed
+                    sessionStorage.setItem('my_id', json.my_id)
+                    sessionStorage.setItem('access_token', json.access_token)
+                    sessionStorage.setItem('expires', json.expires)
+                    sessionStorage.setItem('username', username)
+
+                    // redirect to dashboard
+                    var goTo = sessionStorage.getItem('go_to')
+                    if (goTo) {
+                      sessionStorage.removeItem('go_to')
+                    } else {
+                      // redirect to index
+                      goTo = '/'
+                    }
+                    window.location = goTo
+                  })
               })
               .fail(authFail)
           })
