@@ -285,26 +285,28 @@
       window.location = '/' + window.location.hash + '/new'
     })
 
-    // handle delete list items
+    // handle delete and edit list items
     Tab.selectedItems = []
-    Tab.deleteItems = function () {
-      // returns callback for delete end
+    Tab.editItemsCallback = function () {
+      // returns callback for bulk action end
       return function () {}
     }
+    Tab.editItems = function (bodyObject) {
+      bulkAction('PATCH', bodyObject)
+    }
 
-    // show delete button
-    $('#t' + tabId + '-delete').fadeIn().click(function () {
+    // handle bulk items edit or delete
+    var bulkAction = function (method, bodyObject) {
       var todo = Tab.selectedItems.length
       if (todo > 0) {
-        var cb = Tab.deleteItems()
+        var cb = Tab.editItemsCallback()
         // call API to delete documents
         var done = 0
         // collect all requests errors
         var errors = []
 
         var next = function () {
-          var id = Tab.selectedItems[done]
-          window.callApi(slug + '/' + id + '.json', 'DELETE', function (err) {
+          var callback = function (err) {
             if (err) {
               errors.push(err)
             }
@@ -319,16 +321,23 @@
             } else {
               next()
             }
-          })
+          }
+          var id = Tab.selectedItems[done]
+          window.callApi(slug + '/' + id + '.json', method, callback, bodyObject)
         }
         next()
       } else if (!resourceId) {
         // nothing to do, alert
         app.toast(i18n({
-          'en_us': 'No items selected to delete',
-          'pt_br': 'Nenhum item selecionado para deletar'
+          'en_us': 'No items selected',
+          'pt_br': 'Nenhum item selecionado'
         }))
       }
+    }
+
+    // show delete button
+    $('#t' + tabId + '-delete').fadeIn().click(function () {
+      bulkAction('DELETE')
     })
 
     // preload data, then load HTML content

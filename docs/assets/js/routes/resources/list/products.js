@@ -568,7 +568,7 @@
     })
 
     // delete event effects
-    Tab.deleteItems = function () {
+    Tab.editItemsCallback = function () {
       // show loading spinner
       $container.addClass('ajax')
       // returns callback for delete end
