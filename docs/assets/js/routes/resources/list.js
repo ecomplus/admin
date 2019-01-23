@@ -248,6 +248,59 @@
       }
     }
 
+    // select items from list to delete and edit
+    var editing = false
+    var selectItem = function (id) {
+      Tab.selectedItems.push(id)
+      if (!editing) {
+        editing = true
+        toggleEditing()
+      }
+    }
+    var unselectItem = function (id) {
+      Tab.selectedItems = $.grep(Tab.selectedItems, function (i) {
+        return i !== id
+      })
+      // disable edit if there are no more items selected
+      if (!Tab.selectedItems.length && editing) {
+        editing = false
+        toggleEditing()
+      }
+    }
+
+    // icon to search with filters or edit selected items
+    var $filtersIcon = $('<i>', {
+      click: function () {
+        // reload data with current filters
+        $grid.jsGrid('loadData')
+      }
+    })
+    var toggleEditing = function () {
+      $filtersIcon.attr('class', 'fa fa-' + (!editing ? 'search' : 'pencil text-primary'))
+      // disable range filters when editing
+      $grid.find('.data-list-range').attr('disabled', editing)
+    }
+    toggleEditing()
+
+    // delete and edit event effects
+    Tab.editItemsCallback = function () {
+      // show spinner and let it to fade out after list reload
+      $grid.find('.loading').show()
+      // returns callback for delete or edit end
+      return function () {
+        // reload list
+        forceReload = true
+        // reset data status
+        dataUpdated = false
+        $grid.jsGrid('loadData')
+        // unckeck if checked
+        $grid.find('.checkbox-all:checked').next().click()
+        // disable editing state
+        editing = false
+        toggleEditing()
+      }
+    }
+
     // http://js-grid.com/docs/#grid-fields
     var fields = [{
       // first cell
@@ -284,7 +337,12 @@
       itemTemplate: function (_, item) {
         var el = $(elCheckbox)
         var id = item._id
-        el.find('input').on('change', function () {
+        var $checkbox = el.find('input')
+        if ($.inArray(id, Tab.selectedItems) > -1) {
+          // item already selected
+          $checkbox.prop('checked', true)
+        }
+        $checkbox.on('change', function () {
           $(this).is(':checked') ? selectItem(id) : unselectItem(id)
         })
         return el
@@ -294,6 +352,7 @@
     // setup resource specific fields
     // get from first resource object properties
     var fieldsList = []
+    var bulkEditFields = []
 
     // load lists configuration JSON
     $.getJSON('json/misc/config_lists.json', function (json) {
@@ -316,6 +375,7 @@
 
             // inputs for min and max values
             var inputsOpts = {
+              'class': 'data-list-range',
               keydown: function (e) {
                 switch (e.which) {
                   // enter
@@ -334,8 +394,8 @@
             var $min = $('<input>', inputsOpts)
             var $max = $('<input>', Object.assign(inputsOpts, {
               placeholder: i18n({
-                'en_us': 'min',
-                'pt_br': 'mín'
+                'en_us': 'max',
+                'pt_br': 'máx'
               })
             }))
 
@@ -467,6 +527,9 @@
           if (fieldOpts.range) {
             // filter by number range
             filterRange(fieldObj)
+          } else {
+            // enable bulk edit for current field
+            bulkEditFields.push(field)
           }
           fields.push(fieldObj)
           // starts with no filtering
@@ -497,13 +560,7 @@
           var el = $('<div>', {
             class: 'data-list-control-buttons',
             html: [
-              $('<i>', {
-                class: 'fa fa-search',
-                click: function () {
-                  // reload data with current filters
-                  $grid.jsGrid('loadData')
-                }
-              }),
+              $filtersIcon,
               $('<i>', {
                 class: 'fa fa-filter',
                 click: function () {
@@ -596,15 +653,43 @@
               if (!forceReload) {
                 // check if filters has been changed
                 var changed = false
+                var field
 
-                for (var field in filters) {
-                  if (filters.hasOwnProperty(field) && query[field] !== filters[field]) {
-                    filters[field] = query[field]
-                    if (!changed) {
-                      changed = true
+                if (!editing) {
+                  for (field in filters) {
+                    if (filters.hasOwnProperty(field) && query[field] !== filters[field]) {
+                      filters[field] = query[field]
+                      if (!changed) {
+                        changed = true
+                      }
                     }
                   }
+                } else {
+                  // handle bulk items edit
+                  var data = {}
+                  for (var i = 0; i < bulkEditFields.length; i++) {
+                    field = bulkEditFields[i]
+                    if (query[field] !== '') {
+                      var paths = field.split('/')
+                      var prop = paths[0]
+                      if (paths.length > 1) {
+                        // parse to nested objects
+                        data[prop] = {}
+                        var ii = 1
+                        var nested = data[prop]
+                        while (ii < paths.length - 1) {
+                          nested[paths[ii]] = {}
+                          ii++
+                        }
+                        nested[paths[ii]] = query[field]
+                      } else {
+                        data[prop] = query[field]
+                      }
+                    }
+                  }
+                  Tab.editItems(data)
                 }
+
                 // check current order
                 if (!query.sortField) {
                   // default sorting
@@ -627,6 +712,7 @@
               } else {
                 // force reload data
                 load()
+                forceReload = false
               }
             } else {
               // reset data status
@@ -647,32 +733,6 @@
         fields: fields
       })
     })
-
-    // select items from list to delete and edit
-    var selectItem = function (id) {
-      Tab.selectedItems.push(id)
-    }
-    var unselectItem = function (id) {
-      Tab.selectedItems = $.grep(Tab.selectedItems, function (i) {
-        return i !== id
-      })
-    }
-
-    // delete event effects
-    Tab.deleteItems = function () {
-      // show spinner and let it to fade out after list reload
-      $grid.find('.loading').show()
-      // returns callback for delete end
-      return function () {
-        // reload list
-        forceReload = true
-        // reset data status
-        dataUpdated = false
-        $grid.jsGrid('loadData')
-        // unckeck if checked
-        $grid.find('.checkbox-all:checked').next().click()
-      }
-    }
   } else {
     // no resource objects
   }
