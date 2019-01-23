@@ -264,8 +264,11 @@
         el.find('input').addClass('checkbox-all').on('change', function () {
           var selector = $(this).is(':checked') ? ':not(:checked)' : ':checked'
           // run function async to prevent break with big lists
+          var $loading = $grid.find('.loading')
+          $loading.show()
           setTimeout(function () {
             $grid.find('.data-list-check input' + selector).next().click()
+            $loading.hide()
           }, 50)
           return true
         })
