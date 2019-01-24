@@ -796,25 +796,28 @@ body {
   overflow: hidden;
   list-style: none;
 }
-.data-list-control {
-  font-family: $font-monospace;
-}
 .data-list tr > .data-list-check,
-.data-list tr > .data-list-control,
 .data-list tr > .data-list-fixed {
   -webkit-box-flex: 0;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
 }
 .data-list tr > .data-list-check {
-  width: 50px !important;
+  width: 70px !important;
 }
-.data-list tr > .data-list-control {
-  width: 90px !important;
+.data-list td > .data-list-control {
+  position: relative;
 }
-.data-list td > .loading {
+.data-list td > .data-list-control .loading {
   margin: 0 auto;
   display: none;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: 0;
+  left: 50%;
+  margin: -4px 0 0 -20px;
+  background: #fcfcfc !important;
 }
 .data-list td > .spinner-circle-shadow {
   margin-top: 3px;
@@ -844,7 +847,7 @@ body {
 .data-list-control i:hover {
   color: $color-primary;
 }
-.data-list tr > .data-list-control i:last-child {
+.data-list-control-buttons i:last-child {
   margin-right: 0;
 }
 .data-list-check .custom-controls-stacked {

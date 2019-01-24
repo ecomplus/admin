@@ -328,9 +328,27 @@
         return el
       },
 
-      // loading spinner
+      // filter buttons and loading spinner
       filterTemplate: function () {
-        return '<div class="spinner-circle-shadow loading"></div>'
+        var $filter = $('<div>', {
+          class: 'data-list-control-buttons',
+          html: [
+            $filtersIcon,
+            $('<i>', {
+              class: 'fa fa-filter',
+              click: function () {
+                // clear filters and reload
+                $grid.jsGrid('clearFilter')
+              }
+            })
+          ]
+        })
+        // simple loading spinner
+        var $loading = '<div class="spinner-circle-shadow loading"></div>'
+        return $('<div>', {
+          class: 'data-list-control',
+          html: [ $filter, $loading ]
+        })
       },
 
       // checkbox to select current row item
@@ -342,6 +360,8 @@
           // item already selected
           $checkbox.prop('checked', true)
         }
+        row++
+        el.attr('title', '#' + (offset + row))
         $checkbox.on('change', function () {
           $(this).is(':checked') ? selectItem(id) : unselectItem(id)
         })
@@ -509,7 +529,7 @@
                 break
 
               case 'money':
-                fieldObj.itemTemplate = fieldObj.itemTemplate = function (text) {
+                fieldObj.itemTemplate = function (text) {
                   return formatMoney(text)
                 }
                 // filter by money value range
@@ -524,6 +544,18 @@
             fieldObj.css = 'data-list-fixed'
             fieldObj.width = fieldOpts.width
           }
+          if (fieldOpts.cutString) {
+            // max chars of string to fill well inside column
+            fieldObj.itemTemplate = (function (maxLength) {
+              return function (text) {
+                if (text.length <= maxLength) {
+                  return text
+                } else {
+                  return '<abbr title="' + text + '">' + cutString(text, maxLength) + '</abbr>'
+                }
+              }
+            }(fieldOpts.cutString))
+          }
           if (fieldOpts.range) {
             // filter by number range
             filterRange(fieldObj)
@@ -531,6 +563,7 @@
             // enable bulk edit for current field
             bulkEditFields.push(field)
           }
+
           fields.push(fieldObj)
           // starts with no filtering
           filters[field] = ''
@@ -568,39 +601,7 @@
       // updated at with resumed date and time info
       // bold = true
       var updatedAt = dateField('updated_at', [ 'day', 'month', 'hour', 'minute' ], true)
-
-      fields.push(createdAt, updatedAt, {
-        // last cell
-        // control filters
-        css: 'data-list-control',
-        filtering: false,
-        sorting: false,
-        title: '#',
-
-        // filter buttons
-        filterTemplate: function () {
-          var el = $('<div>', {
-            class: 'data-list-control-buttons',
-            html: [
-              $filtersIcon,
-              $('<i>', {
-                class: 'fa fa-filter',
-                click: function () {
-                  // clear filters and reload
-                  $grid.jsGrid('clearFilter')
-                }
-              })
-            ]
-          })
-          return el
-        },
-
-        // count grid rows
-        itemTemplate: function () {
-          row++
-          return '#' + (offset + row)
-        }
-      })
+      fields.push(createdAt, updatedAt)
 
       $grid.jsGrid({
         // http://js-grid.com/docs/
