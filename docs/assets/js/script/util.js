@@ -221,20 +221,18 @@
     return priceString
   }
 
-  window.formatDate = function (dateString, resumed, lang) {
+  window.formatDate = function (dateString, list, format, lang) {
     lang = parseLang(lang)
     var date = new Date(dateString)
     if (date && !isNaN(date.getTime())) {
       try {
-        var list, format
-        if (resumed) {
-          // show less date info
-          list = [ 'day', 'month', 'year', 'hour', 'minute' ]
+        if (!list) {
+          // returns date without time by default
+          list = [ 'day', 'month', 'year' ]
+        }
+        if (!format) {
+          // resumed by default with 2-digit format instead of numeric
           format = '2-digit'
-        } else {
-          // complete date and time format
-          list = [ 'day', 'month', 'year', 'hour', 'minute', 'second' ]
-          format = 'numeric'
         }
         var options = {}
         for (var i = 0; i < list.length; i++) {
