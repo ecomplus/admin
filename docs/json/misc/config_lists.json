@@ -51,6 +51,7 @@
   "orders": {
     "_fields": [
       "number",
+      "source_name",
       "status",
       "amount/subtotal",
       "amount/total",
@@ -64,6 +65,14 @@
       },
       "width": 90,
       "range": true
+    },
+    "source_name": {
+      "label": {
+        "en_us": "Source",
+        "pt_br": "Origem"
+      },
+      "width": 100,
+      "cut_string": 10
     },
     "status": {
       "type": "bold",
