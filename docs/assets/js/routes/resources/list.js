@@ -545,15 +545,20 @@
           title: i18n(json._labels[field]),
           filtering: false,
           css: 'data-list-fixed',
-          width: 90,
+          // larger col when text is bold
+          width: bold ? 110 : 90,
           itemTemplate: function (dateString) {
-            return (dateString ? formatDate(dateString, list) : dateString)
+            var text = dateString ? formatDate(dateString, list) : dateString
+            if (bold) {
+              // greater font weight
+              return $('<span>', {
+                text: text,
+                class: 'fw-400'
+              })
+            } else {
+              return text
+            }
           }
-        }
-        if (bold) {
-          // bold text and larger col
-          fieldOpts.css += ' bold'
-          fieldOpts.width = 110
         }
         return fieldOpts
       }
