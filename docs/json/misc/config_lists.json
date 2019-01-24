@@ -198,7 +198,7 @@
         "invoice_issued": {
           "text": {
             "en_us": "Invoice issued",
-            "pt_br": "Desconnhecido"
+            "pt_br": "NF emitida"
           }
         },
         "in_production": {
