@@ -67,6 +67,7 @@
     },
     "status": {
       "type": "bold",
+      "width": 100,
       "enum": {
         "open": {
           "text": {
@@ -141,8 +142,8 @@
         "partially_paid": {
           "class": "info",
           "text": {
-            "en_us": "Partially paid",
-            "pt_br": "Parcialmente pago"
+            "en_us": "Part paid",
+            "pt_br": "Parte pago"
           }
         },
         "paid": {
@@ -162,8 +163,8 @@
         "partially_refunded": {
           "class": "dark",
           "text": {
-            "en_us": "Partially refunded",
-            "pt_br": "Parcialmente devolvido"
+            "en_us": "Part refunded",
+            "pt_br": "Parte devolvido"
           }
         },
         "refunded": {
@@ -222,8 +223,8 @@
         "partially_shipped": {
           "class": "info",
           "text": {
-            "en_us": "Partially shipped",
-            "pt_br": "Parcialmente enviado"
+            "en_us": "Part shipped",
+            "pt_br": "Parte enviado"
           }
         },
         "shipped": {
@@ -236,8 +237,8 @@
         "partially_delivered": {
           "class": "info",
           "text": {
-            "en_us": "Partially delivered",
-            "pt_br": "Parcialmente entregue"
+            "en_us": "Part delivered",
+            "pt_br": "Parte entregue"
           }
         },
         "delivered": {
@@ -250,15 +251,15 @@
         "returned_for_exchange": {
           "class": "warning",
           "text": {
-            "en_us": "Returned for exchange",
-            "pt_br": "Retornando para troca"
+            "en_us": "Return to exchange",
+            "pt_br": "Retorno e troca"
           }
         },
         "received_for_exchange": {
           "class": "dark",
           "text": {
-            "en_us": "Received for exchange",
-            "pt_br": "Recebido para troca"
+            "en_us": "Waiting exchange",
+            "pt_br": "Aguardando troca"
           }
         },
         "returned": {
