@@ -537,17 +537,34 @@
         }
       }
 
-      fields.push({
-        // updated at date
-        // default list order
-        name: 'updated_at',
-        type: 'text',
-        title: i18n(json._labels.updated_at),
-        filtering: false,
-        itemTemplate: function (dateString) {
-          return (dateString ? formatDate(dateString) : dateString)
+      var dateField = function (field, list, bold) {
+        // handle created and updated at date
+        var fieldOpts = {
+          name: field,
+          type: 'text',
+          title: i18n(json._labels[field]),
+          filtering: false,
+          css: 'data-list-fixed',
+          width: 90,
+          itemTemplate: function (dateString) {
+            return (dateString ? formatDate(dateString, list) : dateString)
+          }
         }
-      }, {
+        if (bold) {
+          // bold text and larger col
+          fieldOpts.css += ' bold'
+          fieldOpts.width = 110
+        }
+        return fieldOpts
+      }
+
+      // created at with date only
+      var createdAt = dateField('created_at')
+      // updated at with resumed date and time info
+      // bold = true
+      var updatedAt = dateField('updated_at', [ 'day', 'month', 'hour', 'minute' ], true)
+
+      fields.push(createdAt, updatedAt, {
         // last cell
         // control filters
         css: 'data-list-control',
