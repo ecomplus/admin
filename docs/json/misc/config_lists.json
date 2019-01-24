@@ -14,6 +14,10 @@
     "status": {
       "en_us": "Status"
     },
+    "created_at": {
+      "en_us": "Creation",
+      "pt_br": "Criação"
+    },
     "updated_at": {
       "en_us": "Update",
       "pt_br": "Atualização"
