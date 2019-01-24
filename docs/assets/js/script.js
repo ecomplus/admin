@@ -330,12 +330,26 @@ app.config({
     return priceString
   }
 
-  window.formatDate = function (dateString, lang) {
+  window.formatDate = function (dateString, resumed, lang) {
     lang = parseLang(lang)
     var date = new Date(dateString)
     if (date && !isNaN(date.getTime())) {
       try {
-        return date.toLocaleDateString(lang) + ' ' + date.toLocaleTimeString(lang)
+        var list, format
+        if (resumed) {
+          // show less date info
+          list = [ 'day', 'month', 'hour', 'minute' ]
+          format = '2-digit'
+        } else {
+          // complete date and time format
+          list = [ 'day', 'month', 'year', 'hour', 'minute', 'second' ]
+          format = 'numeric'
+        }
+        var options = {}
+        for (var i = 0; i < list.length; i++) {
+          options[list[i]] = format
+        }
+        return date.toLocaleDateString(lang, options)
       } catch (e) {
         // ignore
       }
