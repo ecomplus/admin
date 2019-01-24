@@ -338,7 +338,7 @@ app.config({
         var list, format
         if (resumed) {
           // show less date info
-          list = [ 'day', 'month', 'hour', 'minute' ]
+          list = [ 'day', 'month', 'year', 'hour', 'minute' ]
           format = '2-digit'
         } else {
           // complete date and time format
