@@ -58,6 +58,8 @@
       "financial_status/current",
       "fulfillment_status/current"
     ],
+    "_hidden_fields": [
+    ],
     "number": {
       "label": {
         "en_us": "No",

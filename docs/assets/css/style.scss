@@ -858,6 +858,32 @@ body {
 .data-list-check .custom-controls-stacked .custom-control {
   margin-bottom: 0;
 }
+.data-list-accordion {
+  display: none;
+  width: 100%;
+  padding: .7rem;
+  border-top: 1px solid $color-purple-light;
+  background: rgba($color-pale-purple, .2);
+}
+.data-list-extend {
+  position: relative;
+}
+.data-list-extend .custom-controls-stacked {
+  margin: 0;
+}
+.data-list-extend > i {
+  position: absolute;
+  top: -6px;
+  right: -2px;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 5px;
+  color: $color-purple;
+  transition: 0.2s linear;
+}
+.data-list-extend > i:hover {
+  color: $color-primary;
+}
 .list-pagination *:disabled {
   opacity: .25;
   cursor: not-allowed;
