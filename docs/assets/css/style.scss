@@ -865,6 +865,13 @@ body {
   border-top: 1px solid $color-purple-light;
   background: rgba($color-pale-purple, .2);
 }
+.data-list-accordion span {
+  display: inline-block;
+  margin-right: 18px;
+}
+.data-list-accordion span:last-child {
+  margin-right: 0;
+}
 .data-list-extend {
   position: relative;
 }

@@ -59,7 +59,37 @@
       "fulfillment_status/current"
     ],
     "_hidden_fields": [
+      "channel_id",
+      "code",
+      "payment_method_label",
+      "shipping_method_label",
+      "buyers",
+      "items"
     ],
+    "channel_id": {
+      "label": {
+        "en_us": "Channel ID",
+        "pt_br": "ID do canal"
+      }
+    },
+    "code": {
+      "label": {
+        "en_us": "Code",
+        "pt_br": "Código"
+      }
+    },
+    "payment_method_label": {
+      "label": {
+        "en_us": "Payment method",
+        "pt_br": "Forma de pagamento"
+      }
+    },
+    "shipping_method_label": {
+      "label": {
+        "en_us": "Shipping method",
+        "pt_br": "Forma de envio"
+      }
+    },
     "number": {
       "label": {
         "en_us": "No",
