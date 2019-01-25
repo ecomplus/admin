@@ -302,73 +302,7 @@
     }
 
     // http://js-grid.com/docs/#grid-fields
-    var fields = [{
-      // first cell
-      // checkbox to trigger row selection
-      // bulk edition and deletion
-      align: 'center',
-      css: 'data-list-check',
-      filtering: false,
-      sorting: false,
-
-      // checkbox to select all
-      headerTemplate: function () {
-        var el = $(elCheckbox)
-        el.find('input').addClass('checkbox-all').on('change', function () {
-          var selector = $(this).is(':checked') ? ':not(:checked)' : ':checked'
-          // run function async to prevent break with big lists
-          var $loading = $grid.find('.loading')
-          $loading.show()
-          setTimeout(function () {
-            $grid.find('.data-list-check input' + selector).next().click()
-            $loading.hide()
-          }, 50)
-          return true
-        })
-        return el
-      },
-
-      // filter buttons and loading spinner
-      filterTemplate: function () {
-        var $filter = $('<div>', {
-          class: 'data-list-control-buttons',
-          html: [
-            $filtersIcon,
-            $('<i>', {
-              class: 'fa fa-filter',
-              click: function () {
-                // clear filters and reload
-                $grid.jsGrid('clearFilter')
-              }
-            })
-          ]
-        })
-        // simple loading spinner
-        var $loading = '<div class="spinner-circle-shadow loading"></div>'
-        return $('<div>', {
-          class: 'data-list-control',
-          html: [ $filter, $loading ]
-        })
-      },
-
-      // checkbox to select current row item
-      itemTemplate: function (_, item) {
-        var el = $(elCheckbox)
-        var id = item._id
-        var $checkbox = el.find('input')
-        if ($.inArray(id, Tab.selectedItems) > -1) {
-          // item already selected
-          $checkbox.prop('checked', true)
-        }
-        row++
-        el.attr('title', '#' + (offset + row))
-        $checkbox.on('change', function () {
-          $(this).is(':checked') ? selectItem(id) : unselectItem(id)
-        })
-        return el
-      }
-    }]
-
+    var fields = []
     // setup resource specific fields
     // get from first resource object properties
     var fieldsList = []
@@ -378,6 +312,97 @@
     $.getJSON('json/misc/config_lists.json', function (json) {
       var config = json[resourceSlug]
       if (config) {
+        fields.push({
+          // first cell
+          // checkbox to trigger row selection
+          // bulk edition and deletion
+          align: 'center',
+          css: 'data-list-check',
+          filtering: false,
+          sorting: false,
+
+          // checkbox to select all
+          headerTemplate: function () {
+            var el = $(elCheckbox)
+            el.find('input').addClass('checkbox-all').on('change', function () {
+              var selector = $(this).is(':checked') ? ':not(:checked)' : ':checked'
+              // run function async to prevent break with big lists
+              var $loading = $grid.find('.loading')
+              $loading.show()
+              setTimeout(function () {
+                $grid.find('.data-list-check input' + selector).next().click()
+                $loading.hide()
+              }, 50)
+              return true
+            })
+            return el
+          },
+
+          // filter buttons and loading spinner
+          filterTemplate: function () {
+            var $filter = $('<div>', {
+              class: 'data-list-control-buttons',
+              html: [
+                $filtersIcon,
+                $('<i>', {
+                  class: 'fa fa-filter',
+                  click: function () {
+                    // clear filters and reload
+                    $grid.jsGrid('clearFilter')
+                  }
+                })
+              ]
+            })
+            // simple loading spinner
+            var $loading = '<div class="spinner-circle-shadow loading"></div>'
+            return $('<div>', {
+              class: 'data-list-control',
+              html: [ $filter, $loading ]
+            })
+          },
+
+          // checkbox to select current row item
+          itemTemplate: function (_, item) {
+            var el = $(elCheckbox)
+            var id = item._id
+            var $checkbox = el.find('input')
+            if ($.inArray(id, Tab.selectedItems) > -1) {
+              // item already selected
+              $checkbox.prop('checked', true)
+            }
+            row++
+            el.attr('title', '#' + (offset + row))
+            $checkbox.on('change', function () {
+              $(this).is(':checked') ? selectItem(id) : unselectItem(id)
+            })
+
+            if (config._hidden_fields) {
+              // add accordion for hidden fields
+              var $hidden = $('<div>', {
+                'class': 'data-list-accordion',
+                text: 'TETETETE'
+              })
+              return $('<div>', {
+                'class': 'data-list-extend',
+                html: [
+                  el,
+                  $('<i>', {
+                    'class': 'ti-angle-down'
+                  }).one('click', function () {
+                    $(this).closest('tr').append($hidden)
+                  }).click(function (e) {
+                    // prevent redirect
+                    e.stopPropagation()
+                    $hidden.slideToggle()
+                  })
+                ]
+              })
+            } else {
+              return el
+            }
+          }
+        })
+
         var filterRange = function (fieldObj, isMoney) {
           // handle filter by range
           // for numbers only
