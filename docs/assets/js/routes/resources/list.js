@@ -376,30 +376,64 @@
               $(this).is(':checked') ? selectItem(id) : unselectItem(id)
             })
 
-            if (config._hidden_fields) {
-              // add accordion for hidden fields
-              var $hidden = $('<div>', {
-                'class': 'data-list-accordion',
-                text: 'TETETETE'
-              })
-              return $('<div>', {
-                'class': 'data-list-extend',
-                html: [
-                  el,
-                  $('<i>', {
-                    'class': 'ti-angle-down'
-                  }).one('click', function () {
-                    $(this).closest('tr').append($hidden)
-                  }).click(function (e) {
-                    // prevent redirect
-                    e.stopPropagation()
-                    $hidden.slideToggle()
-                  })
-                ]
-              })
-            } else {
+            var hiddenFields = config._hidden_fields
+            if (!hiddenFields) {
+              // no hidden info
+              // create the column with checkbox only
               return el
             }
+
+            // add accordion for hidden fields
+            var hiddenEls = []
+            for (var i = 0; i < hiddenFields.length; i++) {
+              var field = hiddenFields[i]
+              if (item[field]) {
+                if (Array.isArray(item[field])) {
+                  // handle nested objects
+                  var $nested = $('<table>')
+                  for (var ii = 0; ii < item[field].length; ii++) {
+                    var nested = item[field][ii]
+                    hiddenEls.push($nested)
+                    for (var prop in nested) {
+                      if (nested.hasOwnProperty(prop)) {
+                      }
+                    }
+                  }
+                } else {
+                  // simple string or number field
+                  hiddenEls.push($('<span>', {
+                    text: i18n(config[field].label) + ': ' + item[field]
+                  }))
+                }
+              }
+            }
+
+            // setup hidden div
+            var $hidden = $('<div>', {
+              'class': 'data-list-accordion',
+              html: hiddenEls
+            })
+
+            return $('<div>', {
+              'class': 'data-list-extend',
+              html: [
+                el,
+                // icon to toggle accordion with extended row info
+                $('<i>', {
+                  'class': 'ti-angle-down'
+                }).one('click', function () {
+                  $(this).closest('tr').append($hidden)
+                }).click(function (e) {
+                  // prevent redirect
+                  e.stopPropagation()
+                  var $i = $(this)
+                  $hidden.slideToggle(400, function () {
+                    // update icon
+                    $i.attr('class', $(this).is(':visible') ? 'ti-angle-up' : 'ti-angle-down')
+                  })
+                })
+              ]
+            })
           }
         })
 
