@@ -389,20 +389,35 @@
               var field = hiddenFields[i]
               if (item[field]) {
                 if (Array.isArray(item[field])) {
-                  // handle nested objects
-                  var $nested = $('<table>')
-                  for (var ii = 0; ii < item[field].length; ii++) {
-                    var nested = item[field][ii]
-                    hiddenEls.push($nested)
-                    for (var prop in nested) {
-                      if (nested.hasOwnProperty(prop)) {
+                  if (config[field] && config[field].template) {
+                    // handle nested objects
+                    for (var ii = 0; ii < item[field].length; ii++) {
+                      var nested = item[field][ii]
+                      var template = config[field].template
+                      for (var prop in nested) {
+                        if (nested.hasOwnProperty(prop)) {
+                          // replace variables on string HTML template
+                          var regex = new RegExp('{{' + prop + '}}', 'g')
+                          template = template.replace(regex, nested[prop])
+                        }
                       }
+
+                      // replace variables not matched
+                      template = template.replace(/{{\S+}}/g, ' - ')
+                      // add parsed template to hidden elements
+                      hiddenEls.push($('<div>', {
+                        html: template
+                      }))
                     }
                   }
                 } else {
                   // simple string or number field
+                  var text = item[field]
+                  if (config[field].type === 'money') {
+                    text = formatMoney(text)
+                  }
                   hiddenEls.push($('<span>', {
-                    text: i18n(config[field].label) + ': ' + item[field]
+                    text: i18n(config[field].label) + ': ' + text
                   }))
                 }
               }
