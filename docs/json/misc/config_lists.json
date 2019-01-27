@@ -63,6 +63,8 @@
       "code",
       "payment_method_label",
       "shipping_method_label",
+      "amount/discount",
+      "amount/freight",
       "buyers",
       "items"
     ],
@@ -89,6 +91,12 @@
         "en_us": "Shipping method",
         "pt_br": "Forma de envio"
       }
+    },
+    "buyers": {
+      "template": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a> (<a href='mailto:{{main_email}}' target='_blank'>{{main_email}}</a>)"
+    },
+    "items": {
+      "template": "{{quantity}}x <a href='#/resources/products/{{product_id}}'>{{name}}</a> ({{sku}})"
     },
     "number": {
       "label": {
@@ -145,6 +153,20 @@
       },
       "type": "money",
       "width": 120
+    },
+    "amount/discount": {
+      "label": {
+        "en_us": "Discount",
+        "pt_br": "Desconto"
+      },
+      "type": "money"
+    },
+    "amount/freight": {
+      "label": {
+        "en_us": "Freight",
+        "pt_br": "Frete"
+      },
+      "type": "money"
     },
     "financial_status/current": {
       "label": {
