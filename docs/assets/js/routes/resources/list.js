@@ -452,15 +452,15 @@
           }
         })
 
-        var filterRange = function (fieldObj, isMoney) {
+        var filterRange = function (fieldObj, inputMask) {
           // handle filter by range
           // for numbers only
           fieldObj.filterTemplate = function () {
             // hidden input to handle jsGrid hardcoded filterControl property
             var $hidden = $('<input>', { type: 'hidden' })
             var setValue = function () {
-              var min = stringToNumber($min.val()) || ''
-              var max = stringToNumber($max.val()) || ''
+              var min = $min.data('value') || $min.val() || ''
+              var max = $max.data('value') || $max.val() || ''
               $hidden.val(min !== '' || max !== '' ? min + '>>' + max : '')
               // reload data with new filter value
               $grid.jsGrid('loadData')
@@ -478,7 +478,6 @@
                     break
                 }
               },
-              change: setValue,
               type: 'tel',
               placeholder: i18n({
                 'en_us': 'min',
@@ -493,12 +492,14 @@
               })
             }))
 
-            if (isMoney) {
-              // mask currency inputs
-              // true to keep original placeholders
-              $min.inputMoney(true)
-              $max.inputMoney(true)
+            if (typeof inputMask === 'function') {
+              // setup custom mask or pickers for inputs
+              inputMask($min, 0)
+              inputMask($max, 1)
             }
+            // set hidden input value on range inputs change events
+            $min.change(setValue)
+            $max.change(setValue)
             return $('<div>', { html: [ $min, $max ] })
           }
         }
@@ -607,8 +608,15 @@
                   return formatMoney(text)
                 }
                 // filter by money value range
-                // isMoney = true
-                filterRange(fieldObj, true)
+                filterRange(fieldObj, function ($input) {
+                  // mask currency inputs
+                  // true to keep original placeholders
+                  $input.inputMoney(true)
+                  // add change event handler to parse input value to number
+                  $input.change(function () {
+                    $(this).data('value', stringToNumber($(this).val()))
+                  })
+                })
                 break
             }
           }
@@ -644,16 +652,21 @@
         }
       }
 
+      // setup date fields common to all resources lists
       var dateField = function (field, list, bold) {
+        // add to fields list and filter object
+        filters[field] = ''
+        fieldsList.push(field)
+
         // handle created and updated at date
         var fieldOpts = {
           name: field,
           type: 'text',
           title: i18n(json._labels[field]),
-          filtering: false,
           css: 'data-list-fixed',
           // larger col when text is bold
           width: bold ? 110 : 90,
+          // show formatted date possibly with time
           itemTemplate: function (dateString) {
             var text = dateString ? formatDate(dateString, list) : dateString
             if (bold) {
@@ -667,6 +680,37 @@
             }
           }
         }
+
+        // filter by date range
+        filterRange(fieldOpts, function ($input, index) {
+          // add change event handler to parse value to date and time UTC string
+          $input.change(function () {
+            var date = new Date($(this).val())
+            if (date && !isNaN(date.getTime())) {
+              // valid date
+              if (index === 1) {
+                // range max
+                // set time to end of day
+                date.setHours(23, 59, 59)
+              }
+              $(this).data('value', date.toISOString())
+            }
+          })
+          if (index === 0) {
+            // ignore the first input to render both once only
+            return
+          }
+
+          // delay to setup picker after element added to DOM
+          setTimeout(function () {
+            var $parent = $input.parent()
+            // setup datepicker
+            $parent.datepicker({
+              // config date range with two inputs
+              inputs: $parent.children('input')
+            })
+          }, 300)
+        })
         return fieldOpts
       }
 
