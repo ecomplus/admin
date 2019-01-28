@@ -77,6 +77,9 @@
       $.getScript('/assets/vendor/summernote/lang/summernote-pt-BR.js', function () {
         $.summernote.options.lang = 'pt-BR'
       })
+      $.getScript('/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js', function () {
+        $.fn.datepicker.defaults.language = 'pt-BR'
+      })
       decimalPoint = ','
     } else {
       // default en-US
