@@ -292,7 +292,7 @@
         forceReload = true
         // reset data status
         dataUpdated = false
-        $grid.jsGrid('loadData')
+        $grid.jsGrid(editing ? 'clearFilter' : 'loadData')
         // unckeck if checked
         $grid.find('.checkbox-all:checked').next().click()
         // disable editing state
@@ -827,7 +827,10 @@
                       }
                     }
                   }
-                  Tab.editItems(data)
+
+                  if (Object.keys(data).length) {
+                    Tab.editItems(data)
+                  }
                 }
 
                 // check current order
