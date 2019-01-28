@@ -685,7 +685,7 @@
         filterRange(fieldOpts, function ($input, index) {
           // add change event handler to parse value to date and time UTC string
           $input.change(function () {
-            var date = new Date($(this).val())
+            var date = $(this).datepicker('getDate')
             if (date && !isNaN(date.getTime())) {
               // valid date
               if (index === 1) {
@@ -696,20 +696,19 @@
               $(this).data('value', date.toISOString())
             }
           })
-          if (index === 0) {
-            // ignore the first input to render both once only
-            return
-          }
 
-          // delay to setup picker after element added to DOM
-          setTimeout(function () {
-            var $parent = $input.parent()
-            // setup datepicker
-            $parent.datepicker({
-              // config date range with two inputs
-              inputs: $parent.children('input')
-            })
-          }, 300)
+          // ignore the first input to setup picker for both once only
+          if (index === 1) {
+            // delay to setup picker after element added to DOM
+            setTimeout(function () {
+              var $parent = $input.parent()
+              // setup datepicker
+              $parent.datepicker({
+                // config date range with two inputs
+                inputs: $parent.children('input')
+              })
+            }, 300)
+          }
         })
         return fieldOpts
       }
