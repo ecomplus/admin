@@ -793,6 +793,7 @@
               if (!forceReload) {
                 // check if filters has been changed
                 var changed = false
+                var edited = false
                 var field
 
                 if (!editing) {
@@ -828,8 +829,10 @@
                     }
                   }
 
+                  // check if there are modifications and call API
                   if (Object.keys(data).length) {
                     Tab.editItems(data)
+                    edited = true
                   }
                 }
 
@@ -851,6 +854,12 @@
                   resetPagination()
                   // reload data with different filters
                   load()
+                } else if (editing && !edited) {
+                  // click on pencil icon without any changed input (?)
+                  app.toast(i18n({
+                    'en_us': 'Edit the header fields to modify the selected items',
+                    'pt_br': 'Edite os campos no cabeçalho para alterar os itens selecionados'
+                  }))
                 }
               } else {
                 // force reload data
