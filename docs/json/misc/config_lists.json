@@ -143,9 +143,41 @@
       "state",
       "enabled",
       "login",
-      "orders_count",
+      "accepts_marketing",
+      "orders_count"
+    ],
+    "_hidden_fields": [
+      "status",
       "orders_total_value"
     ],
+    "status": {
+      "label": {
+        "en_us": "Custom status",
+        "pt_br": "Status customizado"
+      }
+    },
+    "accepts_marketing": {
+      "label": {
+        "en_us": "News"
+      },
+      "type": "bold",
+      "width": 80,
+      "enum": {
+        "true": {
+          "class": "success",
+          "text": {
+            "en_us": "Accepts",
+            "pt_br": "Aceito"
+          }
+        },
+        "false": {
+          "text": {
+            "en_us": "No",
+            "pt_br": "Não"
+          }
+        }
+      }
+    },
     "display_name": {
       "width": 125,
       "cut_string": 16,
@@ -243,15 +275,15 @@
         "en_us": "Orders",
         "pt_br": "Pedidos"
       },
-      "width": 75,
+      "width": 90,
       "range": true
     },
     "orders_total_value": {
       "label": {
-        "en_us": "Total"
+        "en_us": "Orders total value",
+        "pt_br": "Valor total dos pedidos"
       },
-      "type": "money",
-      "width": 115
+      "type": "money"
     }
   },
   "orders": {
