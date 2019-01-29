@@ -58,6 +58,12 @@
       "status",
       "permalink"
     ],
+    "_hidden_fields": [
+      "items"
+    ],
+    "items": {
+      "template": "{{quantity}}x <a href='#/resources/products/{{product_id}}'>{{name}}</a> ({{sku}})"
+    },
     "subtotal": {
       "label": {
         "en_us": "Subtotal"
