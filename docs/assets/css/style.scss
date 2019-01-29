@@ -1139,6 +1139,11 @@ ul > li:nth-child(4n+4) > .badges-list li {
     display: none;
   }
 }
+@media (min-width: 992px) {
+  .hidden-lg-up {
+    display: none;
+  }
+}
 @media (min-width: 768px) {
   .hidden-md-up {
     display: none;
@@ -1177,4 +1182,7 @@ ul > li:nth-child(4n+4) > .badges-list li {
 }
 .btn-pure.btn-light:disabled {
   opacity: .25;
+}
+.btn-warning:disabled {
+  color: $white;
 }
