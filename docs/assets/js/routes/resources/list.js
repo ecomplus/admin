@@ -518,13 +518,32 @@
           if (i === 0) {
             // first column
             // link to edit resource
-            fieldObj.itemTemplate = function (text, item) {
-              if (text && item) {
-                return $('<a>', {
-                  text: text,
-                  href: baseHash + item._id
-                })
+            if (field !== '_id') {
+              fieldObj.itemTemplate = function (text, item) {
+                if (text && item) {
+                  return $('<a>', {
+                    text: text,
+                    href: baseHash + item._id
+                  })
+                }
               }
+            } else {
+              // show row counter
+              fieldObj.itemTemplate = function (id) {
+                if (id) {
+                  return $('<a>', {
+                    text: '#' + row,
+                    href: baseHash + id
+                  })
+                }
+              }
+
+              // simple header for counter row
+              fieldObj.title = '#'
+              fieldObj.filtering = false
+              fieldObj.sorting = false
+              // force specific col width
+              fieldOpts.width = 60
             }
           } else {
             // custom item template by field type
@@ -556,8 +575,8 @@
                     })
                   }
                   fieldObj.itemTemplate = function (value) {
-                    if (value) {
-                      return genElement(value)
+                    if (value !== undefined) {
+                      return genElement(typeof value === 'string' ? value : value.toString())
                     }
                   }
 
@@ -811,6 +830,17 @@
                   for (var i = 0; i < bulkEditFields.length; i++) {
                     field = bulkEditFields[i]
                     if (query[field] !== '') {
+                      // parse boolean values
+                      switch (query[field]) {
+                        case 'true':
+                          query[field] = true
+                          break
+                        case 'false':
+                          query[field] = false
+                          break
+                      }
+
+                      // check for nested properties
                       var paths = field.split('/')
                       var prop = paths[0]
                       if (paths.length > 1) {
