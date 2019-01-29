@@ -412,7 +412,10 @@ app.config({
       // trim the string to the maximum length plus one char (space)
       var trimmed = str.substr(0, maxLength + 1)
       // re-trim if we are in the middle of a word
-      trimmed = trimmed.substr(0, trimmed.lastIndexOf(' '))
+      var space = trimmed.lastIndexOf(' ')
+      if (space > -1) {
+        trimmed = trimmed.substr(0, space)
+      }
       if (suffix) {
         return trimmed + suffix
       } else {
