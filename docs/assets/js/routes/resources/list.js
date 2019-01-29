@@ -555,7 +555,7 @@
                     var ln = text.length
                     return $('<a>', {
                       text: (ln > 32 ? text.substr(0, 12) + '...' + text.substr(ln - 20) : text),
-                      href: text,
+                      href: text.indexOf('@') === -1 ? text : 'mailto:' + text,
                       target: '_blank'
                     })
                   }
@@ -637,23 +637,31 @@
                   })
                 })
                 break
-
-              default:
-                if (fieldOpts.cut_string) {
-                  // max chars of string to fill well inside column
-                  (function (maxLength) {
-                    fieldObj.itemTemplate = function (text) {
-                      if (text) {
-                        if (text.length <= maxLength) {
-                          return text
-                        } else {
-                          return '<abbr title="' + text + '">' + cutString(text, maxLength) + '</abbr>'
-                        }
-                      }
-                    }
-                  }(fieldOpts.cut_string))
-                }
             }
+          }
+
+          if (fieldOpts.cut_string) {
+            // max chars of string to fill well inside column
+            (function (maxLength) {
+              var templateFn = fieldObj.itemTemplate
+              fieldObj.itemTemplate = function (text, item) {
+                if (text) {
+                  // call previous item template function if any
+                  var out = typeof templateFn === 'function' ? templateFn(text, item) : text
+                  if (text.length >= maxLength) {
+                    var abbr = '<abbr title="' + text + '">' + cutString(text, maxLength) + '</abbr>'
+                    if (typeof out !== 'string') {
+                      // jQuery object
+                      // update element HTML content
+                      out.html(abbr)
+                    } else {
+                      out.replace(text, abbr)
+                    }
+                  }
+                  return out
+                }
+              }
+            }(fieldOpts.cut_string))
           }
 
           if (fieldOpts.width) {
@@ -779,6 +787,7 @@
                 case 'DIV':
                 case 'SELECT':
                 case 'A':
+                case 'ABBR':
                   // skip
                   return
               }

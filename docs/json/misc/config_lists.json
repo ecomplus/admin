@@ -136,6 +136,124 @@
       "type": "link"
     }
   },
+  "customers": {
+    "_fields": [
+      "display_name",
+      "main_email",
+      "state",
+      "enabled",
+      "login",
+      "orders_count",
+      "orders_total_value"
+    ],
+    "display_name": {
+      "width": 125,
+      "cut_string": 16,
+      "label": {
+        "en_us": "Name",
+        "pt_br": "Nome"
+      }
+    },
+    "main_email": {
+      "label": {
+        "en_us": "Email",
+        "pt_br": "E-mail"
+      },
+      "type": "link",
+      "cut_string": 23
+    },
+    "state": {
+      "label": {
+        "en_us": "State",
+        "pt_br": "Estado"
+      },
+      "type": "bold",
+      "width": 100,
+      "enum": {
+        "invited": {
+          "text": {
+            "en_us": "Invited",
+            "pt_br": "Convidado"
+          }
+        },
+        "registered": {
+          "class": "success",
+          "text": {
+            "en_us": "Registered",
+            "pt_br": "Registrado"
+          }
+        },
+        "declined": {
+          "class": "danger",
+          "text": {
+            "en_us": "Declined",
+            "pt_br": "Recusado"
+          }
+        }
+      }
+    },
+    "enabled": {
+      "type": "bold",
+      "width": 110,
+      "label": {
+        "en_us": "Shop",
+        "pt_br": "Compras"
+      },
+      "enum": {
+        "true": {
+          "class": "success",
+          "text": {
+            "en_us": "Enabled",
+            "pt_br": "Habilitado"
+          }
+        },
+        "false": {
+          "class": "warning",
+          "text": {
+            "en_us": "Disabled",
+            "pt_br": "Desabilitado"
+          }
+        }
+      }
+    },
+    "login": {
+      "type": "bold",
+      "width": 100,
+      "label": {
+        "en_us": "Login"
+      },
+      "enum": {
+        "true": {
+          "text": {
+            "en_us": "Active",
+            "pt_br": "Ativado"
+          }
+        },
+        "false": {
+          "class": "black",
+          "text": {
+            "en_us": "Inactive",
+            "pt_br": "Desativado"
+          }
+        }
+      }
+    },
+    "orders_count": {
+      "label": {
+        "en_us": "Orders",
+        "pt_br": "Pedidos"
+      },
+      "width": 75,
+      "range": true
+    },
+    "orders_total_value": {
+      "label": {
+        "en_us": "Total"
+      },
+      "type": "money",
+      "width": 115
+    }
+  },
   "orders": {
     "_fields": [
       "number",
@@ -335,7 +453,7 @@
         "unknown": {
           "text": {
             "en_us": "Unknown",
-            "pt_br": "Desconnhecido"
+            "pt_br": "Desconhecido"
           }
         }
       }
