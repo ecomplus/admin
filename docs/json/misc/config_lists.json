@@ -48,6 +48,88 @@
   "grids": {
     "_fields": [ "title", "grid_id" ]
   },
+  "carts": {
+    "_fields": [
+      "_id",
+      "subtotal",
+      "discount",
+      "available",
+      "completed",
+      "status",
+      "permalink"
+    ],
+    "subtotal": {
+      "label": {
+        "en_us": "Subtotal"
+      },
+      "type": "money",
+      "width": 110
+    },
+    "discount": {
+      "label": {
+        "en_us": "Discount",
+        "pt_br": "Desconto"
+      },
+      "type": "money",
+      "width": 100
+    },
+    "available": {
+      "type": "bold",
+      "width": 105,
+      "label": {
+        "en_us": "Avail.",
+        "pt_br": "Disp."
+      },
+      "enum": {
+        "true": {
+          "class": "success",
+          "text": {
+            "en_us": "Available",
+            "pt_br": "Disponível"
+          }
+        },
+        "false": {
+          "class": "danger",
+          "text": {
+            "en_us": "Unavailable",
+            "pt_br": "Indisponível"
+          }
+        }
+      }
+    },
+    "completed": {
+      "type": "bold",
+      "width": 105,
+      "label": {
+        "en_us": "Comp."
+      },
+      "enum": {
+        "true": {
+          "class": "success",
+          "text": {
+            "en_us": "Completed",
+            "pt_br": "Completado"
+          }
+        },
+        "false": {
+          "text": {
+            "en_us": "Open",
+            "pt_br": "Aberto"
+          }
+        }
+      }
+    },
+    "status": {
+      "width": 100,
+      "cut_string": 10
+    },
+    "permalink": {
+      "label": {
+        "en_us": "Link"
+      },
+      "type": "link"
+    }
+  },
   "orders": {
     "_fields": [
       "number",
