@@ -670,8 +670,10 @@
           }
 
           fields.push(fieldObj)
-          // starts with no filtering
-          filters[field] = ''
+          if (fieldObj.filtering !== false) {
+            // starts with no filtering
+            filters[field] = ''
+          }
         }
       }
 
