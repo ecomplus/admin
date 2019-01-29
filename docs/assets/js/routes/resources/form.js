@@ -325,6 +325,11 @@
         if (!creating) {
           // fill form fields with current data
           setupInputValues($form, Data())
+        } else {
+          // preset for checkbox fields with default values
+          setTimeout(function () {
+            $form.find('[type="checkbox"]').trigger('change')
+          }, 100)
         }
 
         // setup inputs plugins

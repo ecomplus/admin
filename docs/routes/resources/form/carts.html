@@ -1,0 +1,49 @@
+<form action="javascript:;" data-id="cart-form" class="ajax-cards ajax-form ajax mb-30">
+  <div class="spinner-linear">
+    <div class="line"></div>
+  </div>
+  <div class="ajax-overlay"></div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <div class="custom-controls-stacked">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="staff_signature" checked />
+                <label class="custom-control-label i18n">
+                  <span data-lang="en_us">Created by admin</span>
+                  <span data-lang="pt_br">Criado pelo administrador</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="i18n">
+          <span data-lang="en_us">Additional notes</span>
+          <span data-lang="pt_br">Notas adicionais</span>
+        </label>
+        <textarea class="form-control" rows="3" name="notes"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="bt-1 pt-20">
+    <button class="btn btn-success i18n mr-10">
+      <span data-lang="en_us">Save cart</span>
+      <span data-lang="pt_br">Salvar carrinho</span>
+    </button>
+    <button type="button" class="btn btn-danger i18n delete-resource hidden">
+      <span data-lang="en_us">Delete</span>
+      <span data-lang="pt_br">Deletar</span>
+    </button>
+  </div>
+
+  <script>
+    $.getScript('/assets/js/routes/resources/form.min.js')
+  </script>
+</form>
