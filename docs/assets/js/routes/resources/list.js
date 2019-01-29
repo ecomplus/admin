@@ -637,6 +637,22 @@
                   })
                 })
                 break
+
+              default:
+                if (fieldOpts.cut_string) {
+                  // max chars of string to fill well inside column
+                  (function (maxLength) {
+                    fieldObj.itemTemplate = function (text) {
+                      if (text) {
+                        if (text.length <= maxLength) {
+                          return text
+                        } else {
+                          return '<abbr title="' + text + '">' + cutString(text, maxLength) + '</abbr>'
+                        }
+                      }
+                    }
+                  }(fieldOpts.cut_string))
+                }
             }
           }
 
@@ -644,18 +660,6 @@
             // set fixed width
             fieldObj.css = 'data-list-fixed'
             fieldObj.width = fieldOpts.width
-          }
-          if (fieldOpts.cutString) {
-            // max chars of string to fill well inside column
-            fieldObj.itemTemplate = (function (maxLength) {
-              return function (text) {
-                if (text.length <= maxLength) {
-                  return text
-                } else {
-                  return '<abbr title="' + text + '">' + cutString(text, maxLength) + '</abbr>'
-                }
-              }
-            }(fieldOpts.cutString))
           }
           if (fieldOpts.range) {
             // filter by number range
