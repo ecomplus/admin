@@ -73,17 +73,39 @@
           </button>
         </span>
 
-        <button class="btn btn-success" disabled type="button" id="products-bulk-action">
-          <i class="fa fa-pencil"></i>
-          <span class="i18n">
-            <span data-lang="en_us">
-              Edit <span class="hidden-md-down">selected</span>
+        <div class="dropdown" id="products-bulk-action">
+          <button class="btn btn-success" disabled type="button" data-toggle="dropdown">
+            <i class="fa fa-pencil"></i>
+            <span class="i18n">
+              <span data-lang="en_us">
+                Edit <span class="hidden-md-down">selected</span>
+              </span>
+              <span data-lang="pt_br">
+                Editar <span class="hidden-md-down">selecionados</span>
+              </span>
             </span>
-            <span data-lang="pt_br">
-              Editar <span class="hidden-md-down">selecionados</span>
-            </span>
-          </span>
-        </button>
+          </button>
+          <div class="dropdown-menu">
+            <a href="javascript:;" class="dropdown-item">
+              <span class="i18n">
+                <span data-lang="en_us">Stock and prices</span>
+                <span data-lang="pt_br">Estoque e preços</span>
+              </span>
+            </a>
+            <a href="javascript:;" class="dropdown-item">
+              <span class="i18n">
+                <span data-lang="en_us">Collections</span>
+                <span data-lang="pt_br">Coleções</span>
+              </span>
+            </a>
+            <a href="javascript:;" class="dropdown-item">
+              <span class="i18n">
+                <span data-lang="en_us">Categories</span>
+                <span data-lang="pt_br">Categorias</span>
+              </span>
+            </a>
+          </div>
+        </div>
       </div>
 
       <div id="products-list-results"></div>
