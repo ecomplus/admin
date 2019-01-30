@@ -4,30 +4,81 @@
   </div>
   <div class="ajax-overlay"></div>
 
-  <div class="card">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="form-group">
-            <div class="custom-controls-stacked">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="staff_signature" checked />
-                <label class="custom-control-label i18n">
-                  <span data-lang="en_us">Created by admin</span>
-                  <span data-lang="pt_br">Criado pelo administrador</span>
-                </label>
+  <div class="row">
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-body">
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Control</span>
+            <span data-lang="pt_br">Controle</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="form-group">
+              <div class="custom-controls-stacked">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" name="staff_signature" checked />
+                  <label class="custom-control-label i18n">
+                    <span data-lang="en_us">Created by admin</span>
+                    <span data-lang="pt_br">Criado pelo administrador</span>
+                  </label>
+                </div>
+              </div>
+              <div class="custom-controls-stacked">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" name="available" checked />
+                  <label class="custom-control-label i18n">
+                    <span data-lang="en_us">Available to checkout</span>
+                    <span data-lang="pt_br">Disponível para compra</span>
+                  </label>
+                </div>
+              </div>
+              <div class="custom-controls-stacked">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" name="completed"/>
+                  <label class="custom-control-label i18n">
+                    <span data-lang="en_us">Completed (purchase completed)</span>
+                    <span data-lang="pt_br">Completado (compra finalizada)</span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="form-group">
-        <label class="i18n">
-          <span data-lang="en_us">Additional notes</span>
-          <span data-lang="pt_br">Notas adicionais</span>
-        </label>
-        <textarea class="form-control" rows="3" name="notes"></textarea>
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Additional notes</span>
+            <span data-lang="pt_br">Notas adicionais</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <textarea class="form-control" rows="3" name="notes"></textarea>
+          </div>
+        </div>
       </div>
     </div>
   </div>
