@@ -1127,7 +1127,8 @@ ul > li:nth-child(4n+4) > .badges-list li {
 .inline-childs > *:last-child {
   margin-right: none;
 }
-table.table-center td {
+.table-center td,
+.table-center th {
   vertical-align: middle;
 }
 @media (max-width: 543px) {
