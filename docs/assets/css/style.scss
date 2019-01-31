@@ -1009,7 +1009,8 @@ ul > li:nth-child(4n+4) > .badges-list li {
 .row-products .item-price {
   font-weight: 500;
 }
-.row-products .item-picture {
+.row-products .item-picture,
+.cart-item-picture {
   height: 102px;
   width: 102px;
   display: block;
@@ -1018,8 +1019,14 @@ ul > li:nth-child(4n+4) > .badges-list li {
   border-radius: 2px;
   border: $card-internal-border;
   position: relative;
+  overflow: hidden;
 }
-.row-products .item-picture img {
+.cart-item-picture {
+  height: 62px;
+  width: 62px;
+}
+.row-products .item-picture img,
+.cart-item-picture img {
   position: absolute;
   top: 50%;
   left: 50%;
