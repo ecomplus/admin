@@ -31,6 +31,12 @@
         "pt_br": "URL do logo"
       },
       "type": "link"
+    },
+    "name": {
+      "width": 200
+    },
+    "slug": {
+      "width": 200
     }
   },
   "categories": {
@@ -46,7 +52,13 @@
     "_fields": [ "name", "slug" ]
   },
   "grids": {
-    "_fields": [ "title", "grid_id" ]
+    "_fields": [ "title", "grid_id" ],
+    "grid_id": {
+      "label": {
+        "en_us": "Grid ID",
+        "pt_br": "ID do grid"
+      }
+    }
   },
   "carts": {
     "_fields": [
