@@ -4,15 +4,76 @@
   </div>
   <div class="ajax-overlay"></div>
 
-  <div class="row">
-    <div class="col-md-7">
-      <div class="card">
-        <div class="card-body">
+  <div class="card">
+    <header class="card-header">
+      <h4 class="card-title i18n">
+        <span data-lang="en_us">Cart items</span>
+        <span data-lang="pt_br">Itens do carrinho</span>
+      </h4>
+      <ul class="card-controls">
+        <li>
+          <a class="card-btn-slide" href="#"></a>
+        </li>
+      </ul>
+    </header>
+
+    <div class="card-content">
+      <div class="card-body">
+        <div class="form-group">
+          <div class="input-group">
+            <input type="text" class="form-control" data-id="new-cart-item"/>
+            <span class="input-group-append">
+              <button type="button" class="btn btn-light" data-id="add-cart-item">
+                <i class="fa fa-tag"></i>
+                <span class="i18n">
+                  <span data-lang="en_us">Add</span>
+                  <span data-lang="pt_br">Adicionar</span>
+                </span>
+              </button>
+            </span>
+          </div>
         </div>
+
+        <table class="table table-striped table-center">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>SKU</th>
+              <th>Qnt.</th>
+              <th class="i18n">
+                <span data-lang="en_us">Price</span>
+                <span data-lang="pt_br">Preço</span>
+              </th>
+              <th class="i18n">
+                <span data-lang="en_us">Name</span>
+                <span data-lang="pt_br">Nome</span>
+              </th>
+              <th class="i18n">
+                <span data-lang="en_us">Image</span>
+                <span data-lang="pt_br">Imagem</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-id="cart-items">
+            <!--
+            <tr>
+              <th scope="row">1</th>
+              <td><input type="number" class="form-control w-100px" name="quantity"
+                min="0" max="9999999" step="any"/></td>
+              <td><input type="tel" class="form-control w-160px" name="final_price"
+                data-is-number="true" data-money="true"/></td>
+              <td>AJKKJN1213</td>
+              <td>Namd jncnjk wi ein</td>
+            </tr>
+            -->
+          </tbody>
+        </table>
       </div>
     </div>
+  </div>
 
-    <div class="col-md-5">
+  <div class="row">
+    <div class="col-sm-6">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
@@ -56,11 +117,21 @@
                   </label>
                 </div>
               </div>
+
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Custom status</span>
+                  <span data-lang="pt_br">Status customizado</span>
+                </label>
+                <input type="text" class="form-control" name="status"/>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
+    <div class="col-sm-6">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
@@ -95,6 +166,10 @@
   </div>
 
   <script>
-    $.getScript('/assets/js/routes/resources/form.min.js')
+    // wait for second script loading before form setup
+    window.Tabs[window.tabId].wait = true
+    $.getScript('/assets/js/routes/resources/form/carts.min.js', function () {
+      $.getScript('/assets/js/routes/resources/form.min.js')
+    })
   </script>
 </form>
