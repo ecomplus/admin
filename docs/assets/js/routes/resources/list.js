@@ -387,7 +387,7 @@
             var hiddenEls = []
             for (var i = 0; i < hiddenFields.length; i++) {
               var field = hiddenFields[i]
-              if (item[field]) {
+              if (item[field] !== undefined) {
                 if (Array.isArray(item[field])) {
                   if (config[field] && config[field].template) {
                     // handle nested objects
@@ -401,9 +401,9 @@
                           template = template.replace(regex, nested[prop])
                         }
                       }
-
                       // replace variables not matched
                       template = template.replace(/{{\S+}}/g, ' - ')
+
                       // add parsed template to hidden elements
                       hiddenEls.push($('<div>', {
                         html: template
@@ -415,7 +415,12 @@
                   var text = item[field]
                   if (config[field].type === 'money') {
                     text = formatMoney(text)
+                  } else if (typeof text === 'boolean') {
+                    // parse to 'yes' or 'no'
+                    text = i18n(text)
                   }
+
+                  // add span element with text content
                   hiddenEls.push($('<span>', {
                     text: i18n(config[field].label) + ': ' + text
                   }))
