@@ -75,6 +75,21 @@ app.ready(function () {
   })
 
   var i18n = function (label) {
+    if (typeof label === 'boolean') {
+      // parse boolean to 'yes' or 'no' string
+      if (label) {
+        label = {
+          'en_us': 'Yes',
+          'pt_br': 'Sim'
+        }
+      } else {
+        label = {
+          'en_us': 'No',
+          'pt_br': 'Não'
+        }
+      }
+    }
+
     if (typeof label === 'object' && label !== null) {
       if (label.hasOwnProperty('en_us')) {
         // object with languages options
