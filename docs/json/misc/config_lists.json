@@ -139,11 +139,11 @@
   "customers": {
     "_fields": [
       "display_name",
-      "main_email",
       "state",
-      "enabled",
       "login",
+      "main_email",
       "accepts_marketing",
+      "enabled",
       "orders_count"
     ],
     "_hidden_fields": [
