@@ -50,6 +50,10 @@
       })
 
       // input for item final price (price)
+      if (item.final_price === undefined) {
+        // price is required
+        item.final_price = item.price
+      }
       var $price = $('<input>', {
         'class': 'form-control w-160px',
         name: 'final_price',
@@ -59,11 +63,11 @@
       })
 
       // add new table row for item
-      $items.append($('<tr>', {
+      var $tr = $('<tr>', {
         html: [
           // row count
           '<th scope="row">' + (i + 1) + '</th>',
-          '<td>' + item.sku + '</td>',
+          '<td>' + (item.sku || '') + '</td>',
           // inputs
           $('<td>', { html: $qnt }),
           $('<td>', { html: $price }),
@@ -71,7 +75,12 @@
           $('<td>', { html: $Link(item.name) }),
           $('<td>', { html: $img })
         ]
-      }))
+      })
+      $items.append($tr)
+
+      // setup quantity and price inputs
+      handleInputs($tr, function () {})
+      setupInputValues($tr, item)
     }
 
     // list current items on table element
