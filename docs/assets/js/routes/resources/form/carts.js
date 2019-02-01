@@ -33,10 +33,12 @@
         var items = data.items
         var count = 0
         var subtotal = 0
-        for (var i = 0; i < items.length; i++) {
-          var item = items[i]
-          count += item.quantity
-          subtotal += item[(item.final_price !== undefined ? 'final_price' : 'price')] * item.quantity
+        if (items) {
+          for (var i = 0; i < items.length; i++) {
+            var item = items[i]
+            count += item.quantity
+            subtotal += item[(item.final_price !== undefined ? 'final_price' : 'price')] * item.quantity
+          }
         }
         // update respective elements HTML
         $count.text(count)
@@ -153,7 +155,47 @@
       for (var i = 0; i < items.length; i++) {
         addItem(items[i], i)
       }
+      updateSubtotal()
     }
-    updateSubtotal()
+
+    // handle items search
+    var source = function (term, _, add) {
+      // search by products and variations
+      // ELS URI Search
+      // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-uri-request.html
+      // https://developers.e-com.plus/docs/api/#/search/items/items-search
+      // query by name or SKU
+      var query = 'name:' + term + ' OR sku:' + term + ' OR variation.sku:' + term
+      var url = 'items.json?q=' + encodeURIComponent(query)
+
+      // run search API request
+      window.callSearchApi(url, 'GET', function (err, data) {
+        if (!err && data.hits) {
+          for (var i = 0; i < data.hits.hits.length; i++) {
+            var item = data.hits.hits[i]._source
+            // add product to matches
+            add([ item.name + ' (' + item.sku + ')' ])
+            if (item.variations) {
+              // also list product variations
+              for (var ii = 0; ii < item.variations.length; ii++) {
+                var variation = item.variations[i]
+                add([ '  / ' + variation.name + ' (' + variation.sku + ')' ])
+              }
+            }
+          }
+        }
+      })
+    }
+
+    // setup new item input
+    // autocomplete with typeahead addon
+    $form.find('#t' + tabId + '-new-cart-item').typeahead({
+      hint: true,
+      highlight: true,
+      minLength: 3
+    }, {
+      name: 'items',
+      source: source
+    })
   }
 }())
