@@ -1063,6 +1063,16 @@ ul > li:nth-child(4n+4) > .badges-list li {
   display: none;
 }
 
+// generic remove icon
+.remove {
+  color: $color-red;
+  cursor: pointer;
+  transition: 0.2s linear;
+}
+.remove:hover {
+  color: $color-dark;
+}
+
 @media (max-width: 400px) {
   .masonry-grid {
     column-count: 2;
