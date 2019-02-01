@@ -16,8 +16,13 @@
   }
 
   Tab.continue = function () {
+    // setup and show form first
+    Tab.formSetup()
+    // get form element from global Tab object
+    var $form = Tab.$form
+
     // render cart items on table
-    var $items = $('#t' + tabId + '-cart-items')
+    var $items = $form.find('#t' + tabId + '-cart-items')
     var addItem = function (item) {
       var $Link = function (html) {
         // link to edit product
@@ -42,7 +47,7 @@
       // input for item quantity
       var $qnt = $('<input>', {
         'class': 'form-control w-80px',
-        name: 'quantity',
+        name: 'items.quantity',
         type: 'number',
         min: 0,
         max: 9999999,
@@ -51,7 +56,7 @@
       // simple text input for item name
       var $name = $('<input>', {
         'class': 'form-control',
-        name: 'name',
+        name: 'items.name',
         type: 'text'
       })
 
@@ -62,14 +67,14 @@
       }
       var $price = $('<input>', {
         'class': 'form-control w-120px',
-        name: 'final_price',
+        name: 'items.final_price',
         type: 'tel',
         'data-is-number': 'true',
         'data-money': 'true'
       })
 
       // icon to handle item remove
-      var $remove = $('<i>', { 'class': 'mr-10 remove fa fa-trash' })
+      var $remove = $('<i>', { 'class': 'py-10 pr-10 remove fa fa-trash' })
 
       // add new table row for item
       var $tr = $('<tr>', {
@@ -91,9 +96,10 @@
       })
       $items.append($tr)
 
-      // setup quantity and price inputs
-      handleInputs($tr, function () {})
-      setupInputValues($tr, item)
+      // setup quantity, name and price inputs
+      $tr.find('input').data('object-id', item._id)
+      handleInputs($tr, Tab.inputToData)
+      setupInputValues($tr, item, 'items.')
     }
 
     // list current items on table element
@@ -103,8 +109,5 @@
         addItem(items[i])
       }
     }
-
-    // ready to setup and show form
-    Tab.formSetup()
   }
 }())
