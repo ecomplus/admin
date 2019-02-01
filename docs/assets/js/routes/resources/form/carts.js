@@ -23,7 +23,35 @@
 
     // render cart items on table
     var $items = $form.find('#t' + tabId + '-cart-items')
-    var addItem = function (item) {
+    var $count = $form.find('#t' + tabId + '-cart-items-count')
+    var $subtotal = $form.find('#t' + tabId + '-cart-subtotal')
+
+    var updateSubtotal = function () {
+      setTimeout(function () {
+        // update items count and subtotal from current cart items list
+        var data = Data()
+        var items = data.items
+        var count = 0
+        var subtotal = 0
+        for (var i = 0; i < items.length; i++) {
+          var item = items[i]
+          count += item.quantity
+          subtotal += item[(item.final_price !== undefined ? 'final_price' : 'price')] * item.quantity
+        }
+        // update respective elements HTML
+        $count.text(count)
+        $subtotal.text(formatMoney(subtotal))
+
+        // update subtotal on data object if needed
+        if (data.subtotal !== subtotal) {
+          data.subtotal = subtotal
+          // commit only to perform reactive actions
+          commit(data, true)
+        }
+      }, 150)
+    }
+
+    var addItem = function (item, index) {
       var objectId = item._id
       var $Link = function (html) {
         // link to edit product
@@ -45,7 +73,8 @@
         }
       }
 
-      // input for item quantity
+      // inputs for item quantity and price
+      // must update cart subtotal on change
       var $qnt = $('<input>', {
         'class': 'form-control w-80px',
         name: 'items.quantity',
@@ -53,21 +82,16 @@
         min: 0,
         max: 9999999,
         step: 'any'
-      })
-      // simple text input for item name
-      var $name = $('<input>', {
-        'class': 'form-control',
-        name: 'items.name',
-        type: 'text'
-      })
-      // input for item price
+      }).change(updateSubtotal)
+      // money input for item price
       var $price = $('<input>', {
         'class': 'form-control w-120px',
-        name: 'items.price',
+        // watch final price if defined
+        name: 'items.' + (item.final_price !== undefined ? 'final_price' : 'price'),
         type: 'tel',
         'data-is-number': 'true',
         'data-money': 'true'
-      })
+      }).change(updateSubtotal)
 
       // icon to handle item remove
       var $remove = $('<i>', {
@@ -82,6 +106,7 @@
             items.splice(i, 1)
             // commit only to perform reactive actions
             commit(data, true)
+            updateSubtotal()
             break
           }
         }
@@ -95,14 +120,21 @@
           // row count
           $('<th>', {
             scope: 'row',
-            html: [ $remove, (i + 1) ]
+            html: [ $remove, (index + 1) ]
           }),
           // product or variation SKU with link to edit page
           $('<td>', { html: $Link(item.sku || '') }),
           // inputs
           $('<td>', { html: $qnt }),
           $('<td>', { html: $price }),
-          $('<td>', { html: $name }),
+          // simple text input for item name
+          $('<td>', {
+            html: $('<input>', {
+              'class': 'form-control',
+              name: 'items.name',
+              type: 'text'
+            })
+          }),
           // item picture with link to edit
           $('<td>', { html: $img })
         ]
@@ -119,8 +151,9 @@
     var items = Data().items
     if (items && items.length) {
       for (var i = 0; i < items.length; i++) {
-        addItem(items[i])
+        addItem(items[i], i)
       }
     }
+    updateSubtotal()
   }
 }())
