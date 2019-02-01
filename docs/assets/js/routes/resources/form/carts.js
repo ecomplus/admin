@@ -9,7 +9,7 @@
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
   // edit JSON document
-  // var commit = Tab.commit
+  var commit = Tab.commit
   var Data = function () {
     // current data from global variable
     return Tab.data
@@ -24,6 +24,7 @@
     // render cart items on table
     var $items = $form.find('#t' + tabId + '-cart-items')
     var addItem = function (item) {
+      var objectId = item._id
       var $Link = function (html) {
         // link to edit product
         return $('<a>', {
@@ -59,22 +60,34 @@
         name: 'items.name',
         type: 'text'
       })
-
-      // input for item final price (price)
-      if (item.final_price === undefined) {
-        // price is required
-        item.final_price = item.price
-      }
+      // input for item price
       var $price = $('<input>', {
         'class': 'form-control w-120px',
-        name: 'items.final_price',
+        name: 'items.price',
         type: 'tel',
         'data-is-number': 'true',
         'data-money': 'true'
       })
 
       // icon to handle item remove
-      var $remove = $('<i>', { 'class': 'py-10 pr-10 remove fa fa-trash' })
+      var $remove = $('<i>', {
+        'class': 'py-10 pr-10 remove fa fa-trash'
+      }).click(function () {
+        var data = Data()
+        var items = data.items
+        for (var i = 0; i < items.length; i++) {
+          var item = items[i]
+          if (item && item._id === objectId) {
+            // remove item from list
+            items.splice(i, 1)
+            // commit only to perform reactive actions
+            commit(data, true)
+            break
+          }
+        }
+        // remove table row
+        $tr.remove()
+      })
 
       // add new table row for item
       var $tr = $('<tr>', {
@@ -97,7 +110,7 @@
       $items.append($tr)
 
       // setup quantity, name and price inputs
-      $tr.find('input').data('object-id', item._id)
+      $tr.find('input').data('object-id', objectId)
       handleInputs($tr, Tab.inputToData)
       setupInputValues($tr, item, 'items.')
     }
