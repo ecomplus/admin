@@ -177,13 +177,14 @@
           searchResults = data.hits.hits
           for (var i = 0; i < searchResults.length; i++) {
             var item = searchResults[i]._source
-            // add product to matches
-            add([ item.name + ' (' + item.sku + ')' ])
-            if (item.variations) {
-              // also list product variations
+            if (!item.variations || !item.variations.length) {
+              // add product to matches
+              add([ item.name + ' (' + item.sku + ')' ])
+            } else {
+              // add variations only
               for (var ii = 0; ii < item.variations.length; ii++) {
                 var variation = item.variations[ii]
-                add([ '  / ' + variation.name + ' (' + variation.sku + ')' ])
+                add([ variation.name + ' (' + variation.sku + ')' ])
               }
             }
           }
