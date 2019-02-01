@@ -35,7 +35,6 @@ app.config({
     'summernote',
     'dropzone',
     'typeahead',
-    'bloodhound',
     'tagsinput',
     'selectpicker',
     'colorpicker',
