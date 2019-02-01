@@ -159,28 +159,30 @@
     }
 
     // handle items search
+    var searchResults = []
     var source = function (term, _, add) {
-      // search by products and variations
+      // query by name or SKU
+      // search and process resultant hits
       // ELS URI Search
       // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-uri-request.html
       // https://developers.e-com.plus/docs/api/#/search/items/items-search
-      // query by name or SKU
       // remove invalid chars from term string
-      term = term.replace(/[()/]/g, '').replace(/(^|\s)(AND|OR)(\s|$)/g, ' ')
-      var query = 'name:' + term + ' OR sku:' + term + ' OR variation.sku:' + term
+      term = term.replace(/([()])/g, '\\$1').replace(/(^|\s)(AND|OR|\/)(\s|$)/g, ' ')
+      var query = 'sku:' + term + ' OR name:' + term
       var url = 'items.json?q=' + encodeURIComponent(query)
 
       // run search API request
       window.callSearchApi(url, 'GET', function (err, data) {
         if (!err && data.hits) {
-          for (var i = 0; i < data.hits.hits.length; i++) {
-            var item = data.hits.hits[i]._source
+          searchResults = data.hits.hits
+          for (var i = 0; i < searchResults.length; i++) {
+            var item = searchResults[i]._source
             // add product to matches
             add([ item.name + ' (' + item.sku + ')' ])
             if (item.variations) {
               // also list product variations
               for (var ii = 0; ii < item.variations.length; ii++) {
-                var variation = item.variations[i]
+                var variation = item.variations[ii]
                 add([ '  / ' + variation.name + ' (' + variation.sku + ')' ])
               }
             }
@@ -191,13 +193,122 @@
 
     // setup new item input
     // autocomplete with typeahead addon
-    $form.find('#t' + tabId + '-new-cart-item').typeahead({
+    var $newInput = $form.find('#t' + tabId + '-new-cart-item')
+    $newInput.typeahead({
       hint: true,
       highlight: true,
       minLength: 3
     }, {
       name: 'items',
       source: source
+    })
+
+    // handle new cart item
+    var newItem = function () {
+      // get the item SKU from input value
+      var match = $newInput.val().match(/^.*\s\((.*)\)$/)
+      if (match) {
+        var sku = match[1]
+        if (sku && searchResults.length) {
+          // get product and variation info from search results array
+          var product, variation
+
+          for (var i = 0; i < searchResults.length; i++) {
+            var hit = searchResults[i]
+            var src = hit._source
+            if (src.sku !== sku) {
+              // test variations
+              if (src.variations) {
+                for (var ii = 0; ii < src.variations.length; ii++) {
+                  if (src.variations[ii].sku === sku) {
+                    // variation matched
+                    variation = src.variations[ii]
+                    break
+                  }
+                }
+              }
+              if (!variation) {
+                // not matched
+                // next product
+                continue
+              }
+            }
+            // product matched
+            product = src
+            product._id = hit._id
+            break
+          }
+
+          if (product) {
+            // create item object
+            var item = {
+              _id: randomObjectId(),
+              sku: sku,
+              product_id: product._id
+            }
+            // copy optional fields from product source
+            if (product.currency_symbol) {
+              item.currency_symbol = product.currency_symbol
+            }
+            if (product.currency_id) {
+              item.currency_id = product.currency_id
+            }
+
+            // check if variation was selected
+            if (variation) {
+              // check for variation specific picture
+              if (variation.picture_id && product.pictures) {
+                for (i = 0; i < product.pictures.length; i++) {
+                  var picture = product.pictures[i]
+                  if (picture._id === variation.picture_id) {
+                    variation.pictures = [ picture ]
+                    break
+                  }
+                }
+              }
+              // add variation
+              item.variation_id = variation._id
+              product = Object.assign(product, variation)
+            }
+
+            // properties from matched product or variation
+            item.price = product.price
+            item.quantity = product.quantity
+            item.name = product.name
+            if (product.pictures && product.pictures.length) {
+              // use the first image from list and remove ID
+              item.picture = product.pictures[0]
+              delete item.picture._id
+            }
+
+            // add the new item to cart data
+            var data = Data()
+            var items = data.items
+            if (!items) {
+              items = data.items = []
+            }
+            var index = items.length
+            items[index] = item
+            commit(data)
+            // add item to table
+            addItem(item, index)
+            updateSubtotal()
+          }
+        }
+      }
+    }
+
+    // watch add item button and enter on new item input
+    $form.find('#t' + tabId + '-add-cart-item').click(newItem)
+    $newInput.keydown(function (e) {
+      switch (e.which) {
+        // enter
+        case 13:
+          // do not submit form
+          e.preventDefault()
+          newItem()
+          break
+      }
     })
   }
 }())
