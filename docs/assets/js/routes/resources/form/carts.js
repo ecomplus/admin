@@ -41,12 +41,18 @@
 
       // input for item quantity
       var $qnt = $('<input>', {
-        'class': 'form-control w-100px',
+        'class': 'form-control w-80px',
         name: 'quantity',
         type: 'number',
         min: 0,
         max: 9999999,
         step: 'any'
+      })
+      // simple text input for item name
+      var $name = $('<input>', {
+        'class': 'form-control',
+        name: 'name',
+        type: 'text'
       })
 
       // input for item final price (price)
@@ -55,24 +61,31 @@
         item.final_price = item.price
       }
       var $price = $('<input>', {
-        'class': 'form-control w-160px',
+        'class': 'form-control w-120px',
         name: 'final_price',
         type: 'tel',
         'data-is-number': 'true',
         'data-money': 'true'
       })
 
+      // icon to handle item remove
+      var $remove = $('<i>', { 'class': 'mr-10 remove fa fa-trash' })
+
       // add new table row for item
       var $tr = $('<tr>', {
         html: [
           // row count
-          '<th scope="row">' + (i + 1) + '</th>',
-          '<td>' + (item.sku || '') + '</td>',
+          $('<th>', {
+            scope: 'row',
+            html: [ $remove, (i + 1) ]
+          }),
+          // product or variation SKU with link to edit page
+          $('<td>', { html: $Link(item.sku || '') }),
           // inputs
           $('<td>', { html: $qnt }),
           $('<td>', { html: $price }),
-          // product name and picture with link to edit page
-          $('<td>', { html: $Link(item.name) }),
+          $('<td>', { html: $name }),
+          // item picture with link to edit
           $('<td>', { html: $img })
         ]
       })
