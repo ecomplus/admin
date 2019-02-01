@@ -166,7 +166,7 @@
       // https://developers.e-com.plus/docs/api/#/search/items/items-search
       // query by name or SKU
       // remove invalid chars from term string
-      term = term.replace(/[()/]/g, '').replace(/(AND|OR)/g, ' ')
+      term = term.replace(/[()/]/g, '').replace(/(^|\s)(AND|OR)(\s|$)/g, ' ')
       var query = 'name:' + term + ' OR sku:' + term + ' OR variation.sku:' + term
       var url = 'items.json?q=' + encodeURIComponent(query)
 
