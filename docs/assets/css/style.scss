@@ -1022,8 +1022,9 @@ ul > li:nth-child(4n+4) > .badges-list li {
   overflow: hidden;
 }
 .cart-item-picture {
-  height: 62px;
-  width: 62px;
+  height: 36px;
+  width: 60px;
+  margin-bottom: 0;
 }
 .row-products .item-picture img,
 .cart-item-picture img {
