@@ -3,7 +3,130 @@
     <div class="line"></div>
   </div>
   <div class="ajax-overlay"></div>
-  <div class="row" data-id="order-fields">
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-3 col-md-5 col-sm-6">
+          <div class="form-group">
+            <label class="i18n">
+              <span data-lang="en_us">Order number</span>
+              <span data-lang="pt_br">Número do pedido</span>
+            </label>
+            <input type="number" min="0" max="999999999"
+              class="form-control action-title text-monospace" name="number"/>
+          </div>
+          <div class="form-group">
+            <label class="i18n">
+              <span data-lang="en_us">Source name</span>
+              <span data-lang="pt_br">Origem</span>
+            </label>
+            <input type="text" class="form-control" name="source_name" placeholder="Web"/>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="form-group">
+            <label class="i18n">
+              <span data-lang="en_us">Main status</span>
+              <span data-lang="pt_br">Status principal</span>
+            </label>
+            <select class="form-control" name="status" title="">
+              <option value="open"
+                data-content="&lt;span class=&apos;i18n&apos;&gt;
+                &lt;span data-lang=&apos;en_us&apos;&gt;Open&lt;/span&gt;
+                &lt;span data-lang=&apos;pt_br&apos;&gt;Aberto&lt;/span&gt;
+                &lt;/span&gt;">
+                Open
+              </option>
+              <option value="closed"
+                data-content="&lt;span class=&apos;i18n&apos;&gt;
+                &lt;span data-lang=&apos;en_us&apos;&gt;Closed&lt;/span&gt;
+                &lt;span data-lang=&apos;pt_br&apos;&gt;Fechado&lt;/span&gt;
+                &lt;/span&gt;">
+                Closed
+              </option>
+              <option value="cancelled"
+                data-content="&lt;span class=&apos;i18n&apos;&gt;
+                &lt;span data-lang=&apos;en_us&apos;&gt;Cancelled&lt;/span&gt;
+                &lt;span data-lang=&apos;pt_br&apos;&gt;Cancelado&lt;/span&gt;
+                &lt;/span&gt;">
+                Cancelled
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <header class="card-header">
+      <h4 class="card-title i18n">
+        <span data-lang="en_us">Order items</span>
+        <span data-lang="pt_br">Itens do pedido</span>
+      </h4>
+      <ul class="card-controls">
+        <li>
+          <a class="card-btn-slide" href="#"></a>
+        </li>
+      </ul>
+    </header>
+
+    <div class="card-content">
+      <div class="card-body">
+        <div class="form-group">
+          <div class="input-group">
+            <input type="text" class="form-control" data-id="new-cart-item"/>
+            <span class="input-group-append">
+              <button type="button" class="btn btn-light" data-id="add-cart-item">
+                <i class="fa fa-tag"></i>
+                <span class="i18n">
+                  <span data-lang="en_us">Add</span>
+                  <span data-lang="pt_br">Adicionar</span>
+                </span>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <table class="table table-striped table-center">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>SKU</th>
+              <th>Qnt.</th>
+              <th class="i18n">
+                <span data-lang="en_us">Price</span>
+                <span data-lang="pt_br">Preço</span>
+              </th>
+              <th class="i18n">
+                <span data-lang="en_us">Name</span>
+                <span data-lang="pt_br">Nome</span>
+              </th>
+              <th class="i18n">
+                <span data-lang="en_us">Image</span>
+                <span data-lang="pt_br">Imagem</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody data-id="cart-items">
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">#</th>
+              <th>Subtotal</th>
+              <td data-id="cart-items-count">0</td>
+              <td data-id="cart-subtotal">R$ 0,00</td>
+              <td> - </td>
+              <td> - </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-lg-8">
       <div class="card">
         <div class="card-header">
@@ -341,6 +464,10 @@
   </div>
 
   <script>
-    $.getScript('/assets/js/routes/resources/form.min.js')
+    // wait for second script loading before form setup
+    window.Tabs[window.tabId].wait = true
+    $.getScript('/assets/js/routes/resources/form/carts.js', function () {
+      $.getScript('/assets/js/routes/resources/form.min.js')
+    })
   </script>
 </form>
