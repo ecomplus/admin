@@ -4,55 +4,219 @@
   </div>
   <div class="ajax-overlay"></div>
 
-  <div class="card">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-lg-3 col-md-5 col-sm-6">
-          <div class="form-group">
-            <label class="i18n">
-              <span data-lang="en_us">Order number</span>
-              <span data-lang="pt_br">Número do pedido</span>
-            </label>
-            <input type="number" min="0" max="999999999"
-              class="form-control action-title text-monospace" name="number"/>
-          </div>
-          <div class="form-group">
-            <label class="i18n">
-              <span data-lang="en_us">Source name</span>
-              <span data-lang="pt_br">Origem</span>
-            </label>
-            <input type="text" class="form-control" name="source_name" placeholder="Web"/>
+  <div class="row">
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-body">
+          <p data-id="order-dates hidden">
+            Created at 12/08/2018 | Updated at 13/08/2018
+          </p>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Order number</span>
+                  <span data-lang="pt_br">Número do pedido</span>
+                </label>
+                <input type="number" min="0" max="999999999"
+                  class="form-control action-title text-monospace" name="number"/>
+              </div>
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Order status</span>
+                  <span data-lang="pt_br">Status do pedido</span>
+                </label>
+                <select class="form-control" name="status">
+                  <option value="open"
+                    data-content="&lt;span class=&apos;i18n&apos;&gt;
+                    &lt;span data-lang=&apos;en_us&apos;&gt;Open&lt;/span&gt;
+                    &lt;span data-lang=&apos;pt_br&apos;&gt;Aberto&lt;/span&gt;
+                    &lt;/span&gt;">
+                    Open
+                  </option>
+                  <option value="closed"
+                    data-content="&lt;span class=&apos;i18n&apos;&gt;
+                    &lt;span data-lang=&apos;en_us&apos;&gt;Closed&lt;/span&gt;
+                    &lt;span data-lang=&apos;pt_br&apos;&gt;Fechado&lt;/span&gt;
+                    &lt;/span&gt;">
+                    Closed
+                  </option>
+                  <option value="cancelled"
+                    data-content="&lt;span class=&apos;i18n&apos;&gt;
+                    &lt;span data-lang=&apos;en_us&apos;&gt;Cancelled&lt;/span&gt;
+                    &lt;span data-lang=&apos;pt_br&apos;&gt;Cancelado&lt;/span&gt;
+                    &lt;/span&gt;">
+                    Cancelled
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Source name</span>
+                  <span data-lang="pt_br">Origem</span>
+                </label>
+                <input type="text" class="form-control" name="source_name" placeholder="Web"/>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <h4 class="i18n">
+                <span data-lang="en_us">Payment</span>
+                <span data-lang="pt_br">Pagamento</span>
+              </h4>
+
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Payment method</span>
+                  <span data-lang="pt_br">Forma de pagamento</span>
+                </label>
+                <input type="text" class="form-control" name="payment_method_label"/>
+              </div>
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Financial status</span>
+                  <span data-lang="pt_br">Status financeiro</span>
+                </label>
+                <select class="form-control" name="financial_status.current">
+                </select>
+              </div>
+
+              <h4 class="i18n">
+                <span data-lang="en_us">Shipping</span>
+                <span data-lang="pt_br">Entrega</span>
+              </h4>
+
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Shipping method</span>
+                  <span data-lang="pt_br">Forma de envio</span>
+                </label>
+                <input type="text" class="form-control" name="shipping_method_label"/>
+              </div>
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Fulfillment status</span>
+                  <span data-lang="pt_br">Status da entrega</span>
+                </label>
+                <select class="form-control" name="fulfillment_status.current">
+                </select>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-md-7">
-          <div class="form-group">
-            <label class="i18n">
-              <span data-lang="en_us">Main status</span>
-              <span data-lang="pt_br">Status principal</span>
-            </label>
-            <select class="form-control" name="status" title="">
-              <option value="open"
-                data-content="&lt;span class=&apos;i18n&apos;&gt;
-                &lt;span data-lang=&apos;en_us&apos;&gt;Open&lt;/span&gt;
-                &lt;span data-lang=&apos;pt_br&apos;&gt;Aberto&lt;/span&gt;
-                &lt;/span&gt;">
-                Open
-              </option>
-              <option value="closed"
-                data-content="&lt;span class=&apos;i18n&apos;&gt;
-                &lt;span data-lang=&apos;en_us&apos;&gt;Closed&lt;/span&gt;
-                &lt;span data-lang=&apos;pt_br&apos;&gt;Fechado&lt;/span&gt;
-                &lt;/span&gt;">
-                Closed
-              </option>
-              <option value="cancelled"
-                data-content="&lt;span class=&apos;i18n&apos;&gt;
-                &lt;span data-lang=&apos;en_us&apos;&gt;Cancelled&lt;/span&gt;
-                &lt;span data-lang=&apos;pt_br&apos;&gt;Cancelado&lt;/span&gt;
-                &lt;/span&gt;">
-                Cancelled
-              </option>
-            </select>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Order value</span>
+            <span data-lang="pt_br">Valor do pedido</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="fw-500 require">Total</label>
+                  <input type="tel" class="form-control fw-500" name="amount.total"
+                    data-is-number="true" data-money="true" readonly />
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Subtotal</label>
+                  <input type="tel" class="form-control" name="amount.subtotal"
+                    data-is-number="true" data-money="true"/>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Freight</span>
+                    <span data-lang="pt_br">Frete</span>
+                  </label>
+                  <input type="tel" class="form-control" name="amount.freight"
+                    data-is-number="true" data-money="true"/>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Discount</span>
+                    <span data-lang="pt_br">Desconto</span>
+                  </label>
+                  <input type="tel" class="form-control" name="amount.discount"
+                    data-is-number="true" data-money="true"/>
+                </div>
+              </div>
+            </div>
+
+            <div data-id="extra-amount">
+              <a href="javascript:;" class="i18n">
+                <span data-lang="en_us">+ Extra costs</span>
+                <span data-lang="pt_br">+ Custos extra</span>
+              </a>
+              <div class="row hidden">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Tax</span>
+                      <span data-lang="pt_br">Impostos e taxas</span>
+                    </label>
+                    <input type="tel" class="form-control" name="amount.tax"
+                      data-is-number="true" data-money="true"/>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Additional cost</span>
+                      <span data-lang="pt_br">Custo adicional</span>
+                    </label>
+                    <input type="tel" class="form-control" name="amount.extra"
+                      data-is-number="true" data-money="true"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Buyer</span>
+            <span data-lang="pt_br">Comprador</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Name</span>
+                <span data-lang="pt_br">Nome</span>
+              </label>
+              <input type="text" class="form-control" name="buyers[].name"/>
+            </div>
           </div>
         </div>
       </div>
