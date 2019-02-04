@@ -8,9 +8,31 @@
     <div class="col-md-5">
       <div class="card">
         <div class="card-body">
-          <p data-id="order-dates hidden">
-            Created at 12/08/2018 | Updated at 13/08/2018
+          <p data-id="order-dates" class="text-muted">
+            Created at <strong>12/08/2018</strong> |
+            Updated at <strong>13/08/2018</strong>
           </p>
+
+          <div class="form-group">
+            <div class="custom-controls-stacked">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="staff_signature" checked />
+                <label class="custom-control-label i18n">
+                  <span data-lang="en_us">Created by admin</span>
+                  <span data-lang="pt_br">Criado pelo administrador</span>
+                </label>
+              </div>
+            </div>
+            <div class="custom-controls-stacked">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="budget_only"/>
+                <label class="custom-control-label i18n">
+                  <span data-lang="en_us">Budget only</span>
+                  <span data-lang="pt_br">Apenas orçamento</span>
+                </label>
+              </div>
+            </div>
+          </div>
 
           <div class="row">
             <div class="col-md-6">
