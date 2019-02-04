@@ -245,7 +245,7 @@
     </div>
   </div>
 
-  <div class="card">
+  <div class="card" data-id="items-container">
     <header class="card-header">
       <h4 class="card-title i18n">
         <span data-lang="en_us">Order items</span>
@@ -650,10 +650,7 @@
   </div>
 
   <script>
-    // wait for second script loading before form setup
-    window.Tabs[window.tabId].wait = true
-    $.getScript('/assets/js/routes/resources/form/carts.js', function () {
-      $.getScript('/assets/js/routes/resources/form.min.js')
-    })
+    $.getScript('/assets/js/routes/resources/form.min.js')
+    $.getScript('/assets/js/routes/resources/form/carts.min.js')
   </script>
 </form>
