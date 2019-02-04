@@ -72,7 +72,7 @@
   </div>
 
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-md-5">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
@@ -109,6 +109,15 @@
               </div>
               <div class="custom-controls-stacked">
                 <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" name="other_customers" checked />
+                  <label class="custom-control-label i18n">
+                    <span data-lang="en_us">Available to any customer</span>
+                    <span data-lang="pt_br">Disponível para qualquer cliente</span>
+                  </label>
+                </div>
+              </div>
+              <div class="custom-controls-stacked">
+                <div class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" name="completed"/>
                   <label class="custom-control-label i18n">
                     <span data-lang="en_us">Completed (purchase completed)</span>
@@ -124,13 +133,20 @@
                 </label>
                 <input type="text" class="form-control" name="status"/>
               </div>
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Permalink</span>
+                  <span data-lang="pt_br">Link permanente</span>
+                </label>
+                <input type="text" class="form-control" name="permalink"/>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="col-sm-6">
+    <div class="col-md-7">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
@@ -147,6 +163,90 @@
         <div class="card-content">
           <div class="card-body">
             <textarea class="form-control" rows="3" name="notes"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">Campaign and tracking</span>
+            <span data-lang="pt_br">Campanha e rastreamento</span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit UTM parameters</span>
+                <span data-lang="pt_br">Editar Parâmetros UTM</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Source</span>
+                    <span data-lang="pt_br">Origem</span>
+                  </label>
+                  <input type="text" class="form-control" name="utm.source" placeholder="Google"/>
+                  <span class="i18n">
+                    <small data-lang="en_us" class="form-text">
+                      The referrer
+                    </small>
+                    <small data-lang="pt_br" class="form-text">
+                      O referenciador
+                    </small>
+                  </span>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Marketing medium</span>
+                    <span data-lang="pt_br">Meio de marketing</span>
+                  </label>
+                  <input type="text" class="form-control" name="utm.medium" placeholder="CPC"/>
+                  <span class="i18n">
+                    <small data-lang="en_us" class="form-text">
+                      Ad type
+                    </small>
+                    <small data-lang="pt_br" class="form-text">
+                      Tipo de anúncio
+                    </small>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Campaign name</span>
+                    <span data-lang="pt_br">Nome da campanha</span>
+                  </label>
+                  <input type="text" class="form-control" name="utm.campaign"/>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label>Keywords</label>
+                  <input type="text" class="form-control" name="utm.term"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Campaign content</span>
+                <span data-lang="pt_br">Conteúdo da campanha</span>
+              </label>
+              <textarea class="form-control" rows="2" name="utm.content"></textarea>
+            </div>
           </div>
         </div>
       </div>
