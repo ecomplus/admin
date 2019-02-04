@@ -72,7 +72,7 @@
   </div>
 
   <div class="row">
-    <div class="col-md-5">
+    <div class="col-lg-5 col-sm-6">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
@@ -133,6 +133,25 @@
                 </label>
                 <input type="text" class="form-control" name="status"/>
               </div>
+              <div class="callout callout-info" role="alert">
+                <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+                  <span>×</span>
+                </button>
+                <p class="i18n">
+                  <span data-lang="en_us">
+                    The cart link will be
+                    <span class="text-info">generated automatically</span>,
+                    to insert a custom link make sure that the URL
+                    will work for the cart.
+                  </span>
+                  <span data-lang="pt_br">
+                    O link do carrinho será
+                    <span class="text-info">gerado automaticamente</span>,
+                    para inserir um link personalizado certifique-se de que o URL
+                    funcionará para o respectivo carrinho.
+                  </span>
+                </p>
+              </div>
               <div class="form-group">
                 <label class="i18n">
                   <span data-lang="en_us">Permalink</span>
@@ -146,7 +165,7 @@
       </div>
     </div>
 
-    <div class="col-md-7">
+    <div class="col-lg-7 col-sm-6">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
@@ -170,8 +189,14 @@
       <div class="card card-slided-up">
         <header class="card-header">
           <h6 class="card-title i18n">
-            <span data-lang="en_us">Campaign and tracking</span>
-            <span data-lang="pt_br">Campanha e rastreamento</span>
+            <span data-lang="en_us">
+              Campaign
+              <span class="hidden-md-down">and tracking</span>
+            </span>
+            <span data-lang="pt_br">
+              Campanha
+              <span class="hidden-md-down">e rastreamento</span>
+            </span>
           </h6>
           <ul class="card-controls">
             <li>
