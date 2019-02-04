@@ -4,14 +4,11 @@
   </div>
   <div class="ajax-overlay"></div>
 
-  <div class="row">
+  <div class="row" data-id="order-base">
     <div class="col-md-5">
       <div class="card">
         <div class="card-body">
-          <p data-id="order-dates" class="text-muted">
-            Created at <strong>12/08/2018</strong> |
-            Updated at <strong>13/08/2018</strong>
-          </p>
+          <p data-id="order-dates" class="text-muted hidden"></p>
 
           <div class="form-group">
             <div class="custom-controls-stacked">
@@ -651,6 +648,7 @@
 
   <script>
     $.getScript('/assets/js/routes/resources/form.min.js')
+    $.getScript('/assets/js/routes/resources/form/orders.min.js')
     $.getScript('/assets/js/routes/resources/form/carts.min.js')
   </script>
 </form>

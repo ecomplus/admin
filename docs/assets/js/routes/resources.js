@@ -261,6 +261,17 @@
         window.callApi(uri, 'GET', function (err, json) {
           if (!err) {
             if (resourceId !== undefined) {
+              // editing
+              // show modification timestamps
+              if (json.created_at) {
+                var dateList = [ 'day', 'month', 'year', 'hour', 'minute', 'second' ]
+                if (json.updated_at) {
+                  $('#t' + tabId + '-updated-at').text(formatDate(json.updated_at, dateList))
+                }
+                $('#t' + tabId + '-created-at').text(formatDate(json.created_at, dateList))
+                  .closest('.document-dates').fadeIn()
+              }
+
               // remove common immutable data
               delete json._id
               delete json.store_id
@@ -270,6 +281,7 @@
             // set tab JSON data
             commit(json)
           }
+
           if (typeof callback === 'function') {
             callback(null, json)
           }
