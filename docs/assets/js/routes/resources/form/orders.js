@@ -18,5 +18,16 @@
   // setup basic order data
   var data = Data()
   var $orderBase = $('#t' + tabId + '-order-base')
-  console.log(data, $orderBase)
+
+  // handle amount extra fields collapse
+  var $amountExtra = $orderBase.find('#t' + tabId + '-extra-amount')
+  var toggleAmountExtra = function () {
+    $amountExtra.children('div').slideToggle()
+  }
+  $amountExtra.children('a').click(toggleAmountExtra)
+  if (data.amount) {
+    if (data.amount.tax || data.amount.extra) {
+      toggleAmountExtra()
+    }
+  }
 }())
