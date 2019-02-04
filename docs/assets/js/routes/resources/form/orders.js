@@ -33,7 +33,7 @@
       if (amount.extra) {
         total += amount.extra
       }
-      $total.val(formatMoney(total)).trigger('change')
+      $total.val(formatMoney(total >= 0 ? total : 0)).trigger('change')
     }, 150)
   })
 
