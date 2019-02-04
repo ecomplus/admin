@@ -20,6 +20,8 @@
   var $items = $itemsContainer.find('#t' + tabId + '-cart-items')
   var $count = $itemsContainer.find('#t' + tabId + '-cart-items-count')
   var $subtotal = $itemsContainer.find('#t' + tabId + '-cart-subtotal')
+  var $subtotalInput = $itemsContainer.closest('form')
+    .find('input[name="subtotal"],input[name="amount.subtotal"]')
 
   var updateSubtotal = function () {
     setTimeout(function () {
@@ -37,7 +39,9 @@
       }
       // update respective elements HTML
       $count.text(count)
-      $subtotal.text(formatMoney(subtotal))
+      var subtotalMoney = formatMoney(subtotal)
+      $subtotal.text(subtotalMoney)
+      $subtotalInput.val(subtotalMoney).trigger('change')
 
       // update subtotal on data object if needed
       if (data.subtotal !== subtotal) {
