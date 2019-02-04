@@ -637,17 +637,43 @@ body {
   margin-left: 50px;
   margin-right: auto;
   display: none;
+
+  i {
+    cursor: pointer;
+    color: $color-purple;
+
+    &:not(:last-child) {
+      margin-right: 15px;
+    }
+
+    &.disabled {
+      opacity: .4;
+      cursor: default;
+    }
+  }
 }
-.pagination-arrows i {
-  cursor: pointer;
-  color: $color-purple;
-}
-.pagination-arrows i:not(:last-child) {
-  margin-right: 15px;
-}
-.pagination-arrows i.disabled {
-  opacity: .4;
-  cursor: default;
+
+// document modification date and time info
+.document-dates {
+  display: none;
+  margin-right: auto;
+  color: $color-text-light;
+  background: rgba($color-pale-purple, .4);
+  padding: 3px 10px;
+  border-radius: 2px;
+
+  @media (max-width: 870px) {
+    display: none !important;
+  }
+
+  i {
+    margin-right: 6px;
+    color: $color-text-disable;
+
+    &:not(:first-of-type) {
+      margin-left: 12px;
+    }
+  }
 }
 
 // dropzone progress bar is confused
@@ -1089,14 +1115,19 @@ ul > li:nth-child(4n+4) > .badges-list li {
     min-width: 34px;
   }
 
-  .topbar-divider,
-  .breadcrumb {
+  .topbar-divider {
     display: none;
   }
 
   .pagination-arrows {
     margin-right: 0;
     margin-left: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .breadcrumb {
+    display: none;
   }
 }
 
