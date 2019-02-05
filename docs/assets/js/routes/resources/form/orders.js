@@ -5,6 +5,9 @@
 (function () {
   'use strict'
 
+  // var lang = window.lang
+  var i18n = window.i18n
+
   // current tab ID
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
@@ -133,6 +136,44 @@
       $buyerInfo.append($div)
       $div.slideDown()
     }
+
+    // reuse order status enum and respective colors from lists configuration JSON
+    $.getJSON('json/misc/config_lists.json', function (json) {
+      // order status string fields
+      var fields = [
+        'status',
+        'financial_status/current',
+        'fulfillment_status/current'
+      ]
+      for (var i = 0; i < fields.length; i++) {
+        var field = fields[i]
+        var prop = field.replace('/', '.')
+        var html = []
+        var opts = json.orders[field].enum
+
+        // add options to HTML string
+        for (var status in opts) {
+          if (opts.hasOwnProperty(status)) {
+            html.push($('<option>', {
+              value: status,
+              text: status,
+              'data-content': '<span class="text-' + opts[status].class + '">' +
+                i18n(opts[status].text) + '</span>'
+            }))
+          }
+        }
+
+        // update select element
+        var $select = $orderBase.find('select[name="' + prop + '"]')
+        $select.html(html)
+        var value = getFromDotNotation(Data(), prop)
+        if (value) {
+          // set selected value
+          $select.val(value)
+        }
+        $select.selectpicker('refresh')
+      }
+    })
   }
 
   // wait for the form to be ready
