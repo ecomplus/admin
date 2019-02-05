@@ -6,6 +6,7 @@ $files = array(
   'promise/es6-promise.auto.min.js',
   'maskmoney/dist/jquery.maskMoney.min.js',
   'sortable/sortable.min.js',
+  'mustache/mustache.min.js',
   'dialogflow/ApiAi.min.js',
   'mony/index.js'
 );
