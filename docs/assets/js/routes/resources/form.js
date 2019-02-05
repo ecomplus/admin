@@ -740,11 +740,14 @@
         $form.removeClass('ajax ajax-cards')
       }
 
+      // form element ready
+      Tab.$form = $form
+      // trigger custom event
+      $(document).trigger('form-' + tabId)
       // wait for async handling
       if (!Tab.wait) {
         setTimeout(formSetup, 200)
       } else {
-        Tab.$form = $form
         Tab.formSetup = function () {
           setTimeout(formSetup, 100)
         }
