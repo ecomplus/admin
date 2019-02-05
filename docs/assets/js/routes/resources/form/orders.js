@@ -101,8 +101,14 @@
 
       // render list of phone numbers
       if (buyer.phones) {
+        if (buyer.phones.length) {
+          html += '<br>'
+        }
         for (var i = 0; i < buyer.phones.length; i++) {
-          html += '<br><span class="text-muted">' + buyer.phones[i].number + '</span>'
+          if (i > 0) {
+            html += ' / '
+          }
+          html += '<span class="text-muted">' + buyer.phones[i].number + '</span>'
         }
       }
 
@@ -136,6 +142,73 @@
       $buyerInfo.append($div)
       $div.slideDown()
     }
+
+    // handle new buyer
+    var $newBuyer = $orderBase.find('#t' + tabId + '-new-buyer')
+    var $addBuyerInput = $newBuyer.find('input')
+
+    var addBuyer = function () {
+      // show loading spinner
+      $newBuyer.addClass('ajax')
+      // search customer by main e-mail address
+      // call Store API
+      var uri = 'customers.json?main_email=' + encodeURIComponent($addBuyerInput.val().trim())
+      // specify properties to return
+      uri += '&fields=_id,main_email,name,display_name,phones'
+
+      window.callApi(uri, 'GET', function (err, json) {
+        // hide spinner
+        $newBuyer.removeClass('ajax')
+        if (!err) {
+          var buyer = json.result[0]
+          if (buyer) {
+            // check if same customer is not already in buyers list
+            var data = Data()
+            var buyers = data.buyers
+            for (var i = 0; i < buyers.length; i++) {
+              if (buyers[i]._id === buyer._id) {
+                app.toast(i18n({
+                  'en_us': 'This customer has already been added',
+                  'pt_br': 'Este cliente já foi adicionado'
+                }))
+                return
+              }
+            }
+
+            // add customer to buyers
+            buyers.push(buyer)
+            // commit only to perform reactive actions
+            commit(data, true)
+            showBuyer(buyer)
+          } else {
+            // any customer found with email from input
+            app.toast(i18n({
+              'en_us': 'No customers found with this email',
+              'pt_br': 'Nenhum cliente encontrado com este e-mail'
+            }))
+          }
+        }
+      })
+    }
+
+    $addBuyerInput.click(function () {
+      $(this).select()
+    }).keydown(function (e) {
+      switch (e.which) {
+        // enter
+        case 13:
+          // do not submit form
+          e.preventDefault()
+          addBuyer()
+          break
+      }
+    })
+    $newBuyer.find('button').click(addBuyer)
+    $orderBase.find('#t' + tabId + '-add-buyer').click(function () {
+      // clear the input and show new buyer block
+      $addBuyerInput.val('')
+      $newBuyer.slideToggle()
+    })
 
     // reuse order status enum and respective colors from lists configuration JSON
     $.getJSON('json/misc/config_lists.json', function (json) {
