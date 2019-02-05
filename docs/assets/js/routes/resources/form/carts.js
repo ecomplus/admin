@@ -304,7 +304,9 @@
 
     // watch add item button and enter on new item input
     $itemsContainer.find('#t' + tabId + '-add-cart-item').click(newItem)
-    $newInput.keydown(function (e) {
+    $newInput.click(function () {
+      $(this).select()
+    }).keydown(function (e) {
       switch (e.which) {
         // enter
         case 13:
