@@ -5,11 +5,11 @@
   <div class="ajax-overlay"></div>
 
   <div class="row" data-id="order-base">
-    <div class="col-md-6">
+    <div class="col-lg-6 col-md-4">
       <div class="card">
         <div class="card-body">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-6 col-md-12 col-sm-6">
               <div class="form-group">
                 <label class="i18n">
                   <span data-lang="en_us">Order number</span>
@@ -77,7 +77,7 @@
               </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-lg-6 col-md-12 col-sm-6">
               <div class="form-group">
                 <label class="i18n">
                   <span data-lang="en_us">Payment method</span>
@@ -115,7 +115,7 @@
       </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-lg-3 col-md-4 col-sm-6">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
@@ -131,41 +131,31 @@
 
         <div class="card-content">
           <div class="card-body" data-id="order-amount">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label class="fw-500 require">Total</label>
-                  <input type="tel" class="form-control fw-500" name="amount.total"
-                    data-is-number="true" data-money="true" readonly />
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>Subtotal</label>
-                  <input type="tel" class="form-control" name="amount.subtotal"
-                    data-is-number="true" data-money="true"/>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label class="i18n">
-                    <span data-lang="en_us">Freight</span>
-                    <span data-lang="pt_br">Frete</span>
-                  </label>
-                  <input type="tel" class="form-control" name="amount.freight"
-                    data-is-number="true" data-money="true"/>
-                </div>
-              </div>
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label class="i18n">
-                    <span data-lang="en_us">Discount</span>
-                    <span data-lang="pt_br">Desconto</span>
-                  </label>
-                  <input type="tel" class="form-control" name="amount.discount"
-                    data-is-number="true" data-money="true"/>
-                </div>
-              </div>
+            <div class="form-group">
+              <label class="fw-500 require">Total</label>
+              <input type="tel" class="form-control fw-500" name="amount.total"
+                data-is-number="true" data-money="true" readonly />
+            </div>
+            <div class="form-group">
+              <label>Subtotal</label>
+              <input type="tel" class="form-control" name="amount.subtotal"
+                data-is-number="true" data-money="true"/>
+            </div>
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Freight</span>
+                <span data-lang="pt_br">Frete</span>
+              </label>
+              <input type="tel" class="form-control" name="amount.freight"
+                data-is-number="true" data-money="true"/>
+            </div>
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Discount</span>
+                <span data-lang="pt_br">Desconto</span>
+              </label>
+              <input type="tel" class="form-control" name="amount.discount"
+                data-is-number="true" data-money="true"/>
             </div>
 
             <div data-id="extra-amount">
@@ -173,26 +163,22 @@
                 <span data-lang="en_us">+ Extra costs</span>
                 <span data-lang="pt_br">+ Custos extra</span>
               </a>
-              <div class="row hidden">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Tax</span>
-                      <span data-lang="pt_br">Impostos e taxas</span>
-                    </label>
-                    <input type="tel" class="form-control" name="amount.tax"
-                      data-is-number="true" data-money="true"/>
-                  </div>
+              <div class="hidden">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Tax</span>
+                    <span data-lang="pt_br">Impostos e taxas</span>
+                  </label>
+                  <input type="tel" class="form-control" name="amount.tax"
+                    data-is-number="true" data-money="true"/>
                 </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Additional cost</span>
-                      <span data-lang="pt_br">Custo adicional</span>
-                    </label>
-                    <input type="tel" class="form-control" name="amount.extra"
-                      data-is-number="true" data-money="true"/>
-                  </div>
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Additional cost</span>
+                    <span data-lang="pt_br">Custo adicional</span>
+                  </label>
+                  <input type="tel" class="form-control" name="amount.extra"
+                    data-is-number="true" data-money="true"/>
                 </div>
               </div>
             </div>
@@ -201,7 +187,7 @@
       </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-lg-3 col-md-4 col-sm-6">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
