@@ -42,11 +42,14 @@
         $count.text(count)
         var subtotalMoney = formatMoney(subtotal)
         $subtotal.text(subtotalMoney)
-        $subtotalInput.val(subtotalMoney).trigger('change')
 
         // update subtotal on data object if needed
         if (data.subtotal !== subtotal) {
-          data.subtotal = subtotal
+          if ($subtotalInput.length) {
+            $subtotalInput.val(subtotalMoney).trigger('change')
+          } else {
+            data.subtotal = subtotal
+          }
           // commit only to perform reactive actions
           commit(data, true)
         }
