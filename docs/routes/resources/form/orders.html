@@ -5,30 +5,9 @@
   <div class="ajax-overlay"></div>
 
   <div class="row" data-id="order-base">
-    <div class="col-md-5">
+    <div class="col-md-6">
       <div class="card">
         <div class="card-body">
-          <div class="form-group">
-            <div class="custom-controls-stacked">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="staff_signature" checked />
-                <label class="custom-control-label i18n">
-                  <span data-lang="en_us">Created by admin</span>
-                  <span data-lang="pt_br">Criado pelo administrador</span>
-                </label>
-              </div>
-            </div>
-            <div class="custom-controls-stacked">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="budget_only"/>
-                <label class="custom-control-label i18n">
-                  <span data-lang="en_us">Budget only</span>
-                  <span data-lang="pt_br">Apenas orçamento</span>
-                </label>
-              </div>
-            </div>
-          </div>
-
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
@@ -75,14 +54,30 @@
                 </label>
                 <input type="text" class="form-control" name="source_name" placeholder="Web"/>
               </div>
+
+              <div class="form-group">
+                <div class="custom-controls-stacked">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="staff_signature" checked />
+                    <label class="custom-control-label i18n">
+                      <span data-lang="en_us">Created by admin</span>
+                      <span data-lang="pt_br">Criado pelo administrador</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="custom-controls-stacked">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="budget_only"/>
+                    <label class="custom-control-label i18n">
+                      <span data-lang="en_us">Budget only</span>
+                      <span data-lang="pt_br">Apenas orçamento</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="col-md-6">
-              <h4 class="i18n">
-                <span data-lang="en_us">Payment</span>
-                <span data-lang="pt_br">Pagamento</span>
-              </h4>
-
               <div class="form-group">
                 <label class="i18n">
                   <span data-lang="en_us">Payment method</span>
@@ -98,11 +93,6 @@
                 <select class="form-control" name="financial_status.current">
                 </select>
               </div>
-
-              <h4 class="i18n">
-                <span data-lang="en_us">Shipping</span>
-                <span data-lang="pt_br">Entrega</span>
-              </h4>
 
               <div class="form-group">
                 <label class="i18n">
@@ -211,7 +201,7 @@
       </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
@@ -227,7 +217,7 @@
 
         <div class="card-content">
           <div class="card-body" data-id="order-buyers">
-            <div class="hidden" data-id="buyer-info"></div>
+            <div data-id="buyer-info"></div>
           </div>
         </div>
       </div>
