@@ -226,13 +226,64 @@
         </header>
 
         <div class="card-content">
-          <div class="card-body">
-            <div class="form-group">
-              <label class="i18n">
-                <span data-lang="en_us">Name</span>
-                <span data-lang="pt_br">Nome</span>
-              </label>
-              <input type="text" class="form-control" name="buyers[].name"/>
+          <div class="card-body" data-id="order-buyers">
+            <div class="hidden" data-id="buyer-info">
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Email</span>
+                  <span data-lang="pt_br">E-mail</span>
+                </label>
+                <input type="email" class="form-control" name="buyers.main_email"/>
+              </div>
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Name</span>
+                  <span data-lang="pt_br">Nome</span>
+                </label>
+                <input type="text" class="form-control" maxlength="255" data-id="buyer-name"/>
+              </div>
+
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Gender</span>
+                      <span data-lang="pt_br">Gênero</span>
+                    </label>
+                    <select class="form-control" name="buyers.gender">
+                      <option value="" selected >--</option>
+                      <option value="f">F</option>
+                      <option value="m">M</option>
+                      <option value="x">X</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Registry</span>
+                      <span data-lang="pt_br">Registro</span>
+                    </label>
+                    <select class="form-control" name="buyers.registry_type">
+                      <option value="" selected >--</option>
+                      <option value="p"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Physical&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;PF&lt;/span&gt;
+                        &lt;/span&gt;">
+                        P
+                      </option>
+                      <option value="j"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Juridical&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;PJ&lt;/span&gt;
+                        &lt;/span&gt;">
+                        J
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

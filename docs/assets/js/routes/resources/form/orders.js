@@ -33,6 +33,7 @@
       if (amount.extra) {
         total += amount.extra
       }
+      // update amount total input value
       $total.val(formatMoney(total >= 0 ? total : 0)).trigger('change')
     }, 150)
   })
@@ -47,5 +48,22 @@
     if (data.amount.tax || data.amount.extra) {
       toggleAmountExtra()
     }
+  }
+
+  // render buyers block
+  var $buyers = $orderBase.find('#t' + tabId + '-order-buyers')
+  var $buyerInfo = $buyers.find('#t' + tabId + '-buyer-info')
+  var showBuyer = function (index) {
+    // show specific buyer info from buyers list
+    var buyer = Data().buyers[index]
+    var objectId = buyer._id
+    $buyerInfo.find('input').data('object-id', objectId)
+    $buyerInfo.slideDown()
+    setupInputValues($buyerInfo, buyer, 'buyers.')
+  }
+
+  // show the first buyer if any
+  if (data.buyers && data.buyers.length) {
+    showBuyer(0)
   }
 }())
