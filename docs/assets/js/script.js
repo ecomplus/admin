@@ -359,6 +359,37 @@ app.config({
     return dateString
   }
 
+  window.formatPhone = function (phoneObj, lang) {
+    if (phoneObj.country_code) {
+      // international phone number
+      return '+' + phoneObj.country_code + ' ' + phoneObj.number
+    }
+
+    // try to format by current lang
+    var phoneStr = phoneObj.number
+    if ((lang || window.lang) === 'pt_br') {
+      var ln = phoneStr.length
+      // 8888-9999 ~ (31) 8888-9999 ~ (31) 9 8888-9999
+      if (ln >= 8 && ln <= 11) {
+        // parse to BR phone number formats
+        var phoneBr = ''
+        if (ln > 9) {
+          // first two digits make up the region code
+          phoneBr = '(' + phoneStr.slice(0, 2) + ') '
+        }
+        // split phone string into two parts
+        var start = ln - 8
+        var middle = start + 4
+        if (ln === 9 || ln === 11) {
+          // cellphone ninth digit
+          phoneBr += phoneStr.slice(start - 1, start) + ' '
+        }
+        return phoneBr + phoneStr.substring(start, middle) + '-' + phoneStr.substring(middle)
+      }
+    }
+    return phoneStr
+  }
+
   window.stringToNumber = function (str) {
     // parse value to number
     if (decimalPoint !== '.') {

@@ -109,7 +109,11 @@
           if (i > 0) {
             html += ' / '
           }
-          html += '<span class="text-muted">' + buyer.phones[i].number + '</span>'
+          // parse phone number object to string
+          var phone = formatPhone(buyer.phones[i])
+          // digits only for link
+          var tel = phone.replace(/\D/g, '')
+          html += '<a class="text-muted" href="tel:' + tel + '" target="_blank">' + phone + '</a>'
         }
       }
 
