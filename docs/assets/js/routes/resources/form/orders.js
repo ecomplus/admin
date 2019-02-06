@@ -75,8 +75,9 @@
       var objectId = buyer._id
       // basic info only: email, name, phone numbers
       var html = ''
-      if (buyer.main_email) {
-        html += '<a href="mailto:' + buyer.main_email + '" target="_blank">' + buyer.main_email + '</a>'
+      var email = buyer.main_email
+      if (email) {
+        html += '<a href="mailto:' + email + '" target="_blank">' + email + '</a>'
       }
 
       // full name and nickname
@@ -112,9 +113,18 @@
         }
       }
 
+      // link to edit customer
+      var $edit = $('<a>', {
+        href: '#/resources/customers/' + objectId,
+        html: '<i class="fa fa-pencil"></i> ' + i18n({
+          'en_us': 'edit registration',
+          'pt_br': 'editar cadastro'
+        })
+      })
+
       // icon to handle buyer delete from list
       var $remove = $('<i>', {
-        'class': 'py-10 pr-10 remove fa fa-trash'
+        'class': 'p-10 remove fa fa-trash'
       }).click(function () {
         var data = Data()
         var buyers = data.buyers
@@ -136,8 +146,8 @@
 
       // create buyer block, append and show
       var $div = $('<div>', {
-        'class': 'hidden mb-3',
-        html: [ $remove, html ]
+        'class': 'hidden mb-3 nested-block',
+        html: [ $remove, '<div>' + html + '</div>', $edit ]
       })
       $buyerInfo.append($div)
       $div.slideDown()
