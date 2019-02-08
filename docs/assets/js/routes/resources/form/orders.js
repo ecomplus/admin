@@ -249,6 +249,10 @@
             }))
           }
         }
+        if (field !== 'status') {
+          // add empty option
+          html.unshift('<option value="" selected > -- </option>')
+        }
 
         // update select element
         var $select = $orderBase.find('select[name="' + prop + '"]')
