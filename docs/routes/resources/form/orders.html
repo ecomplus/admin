@@ -24,27 +24,6 @@
                   <span data-lang="pt_br">Status do pedido</span>
                 </label>
                 <select class="form-control" name="status">
-                  <option value="open"
-                    data-content="&lt;span class=&apos;i18n&apos;&gt;
-                    &lt;span data-lang=&apos;en_us&apos;&gt;Open&lt;/span&gt;
-                    &lt;span data-lang=&apos;pt_br&apos;&gt;Aberto&lt;/span&gt;
-                    &lt;/span&gt;">
-                    Open
-                  </option>
-                  <option value="closed"
-                    data-content="&lt;span class=&apos;i18n&apos;&gt;
-                    &lt;span data-lang=&apos;en_us&apos;&gt;Closed&lt;/span&gt;
-                    &lt;span data-lang=&apos;pt_br&apos;&gt;Fechado&lt;/span&gt;
-                    &lt;/span&gt;">
-                    Closed
-                  </option>
-                  <option value="cancelled"
-                    data-content="&lt;span class=&apos;i18n&apos;&gt;
-                    &lt;span data-lang=&apos;en_us&apos;&gt;Cancelled&lt;/span&gt;
-                    &lt;span data-lang=&apos;pt_br&apos;&gt;Cancelado&lt;/span&gt;
-                    &lt;/span&gt;">
-                    Cancelled
-                  </option>
                 </select>
               </div>
               <div class="form-group">
@@ -302,140 +281,12 @@
   </div>
 
   <div class="row">
-    <div class="col-lg-8">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="card-title fs-18"><strong>Detalhes do pedido</strong></h5>
-          <ul class="card-controls">
-            <select class="form-control btn-secondary" name="commodity_type">
-              <option value="physical"
-                data-content="&lt;span class=&apos;i18n&apos;&gt;
-                &lt;span data-lang=&apos;en_us&apos;&gt;Physical&lt;/span&gt;
-                &lt;span data-lang=&apos;pt_br&apos;&gt;Físico&lt;/span&gt;
-                &lt;/span&gt;">
-                Aguardando pagamento
-              </option>
-              <option value="digital">Embalado</option>
-              <option value="digital">Enviado</option>
-              <option value="digital">Entregue</option>
-            </select>
-          </ul>
-        </div>
-        <table class="table table-hover table-has-action table-separated">
-          <thead>
-            <tr>
-              <th>SKU</th>
-              <th>
-                <span data-lang="en_us">Product</span>
-                <span data-lang="pt_br">Produto</span>
-              </th>
-              <th>
-                <span data-lang="en_us">Price</span>
-                <span data-lang="pt_br">Preço</span>
-              </th>
-              <th class="i18n">
-                <span data-lang="en_us">Quantity</span>
-                <span data-lang="pt_br">Quantidade</span>
-              </th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>153</td>
-              <td>iPhone</td>
-              <td><span class="label label-pill label-default">R$349</span></td>
-              <td>2</td>
-              <td><span class="label label-pill label-default">R$699</span></td>
-            </tr>
-            <tr>
-              <td>435</td>
-              <td>iPad pro</td>
-              <td><span class="label label-pill label-default">R$849</span></td>
-              <td>1</td>
-              <td><span class="label label-pill label-default">R$849</span></td>
-            </tr>
-            <tr class="br-3 border-success">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td class="fs-18">Total em produtos</td>
-              <td><span class="label label-pill label-success fs-18">R$3643</span></td>
-            </tr>
-            <tr class="br-3 border-danger">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td class="fs-18">Descontos</td>
-              <td><span class="label label-pill label-success fs-18">R$853</span></td>
-            </tr>
-            <tr class="br-3 border-danger">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td class="fs-18">Frete</td>
-              <td><span class="label label-pill label-success fs-18">R$143</span></td>
-            </tr>
-            <tr class="br-3 border-success">
-              <td></td>
-              <td></td>
-              <td></td>
-              <td class="fw-500 fs-20">Total</td>
-              <td><span class="label label-pill label-success fs-20 fw-500">R$2843</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="card">
-        <h4 class="card-title"><strong>Status do pedido</strong></h4>
-        <div class="card-body">
-          <div data-provide="wizard">
-            <ul class="nav nav-process nav-process-iconic">
-              <li class="nav-item complete">
-                <span class="nav-title">Personal info</span>
-                <a class="nav-link" href="#"><i class="fa fa-user"></i></a>
-              </li>
-              <li class="nav-item processing">
-                <span class="nav-title">Billing info</span>
-                <a class="nav-link" href="#"><i class="fa fa-credit-card"></i></a>
-              </li>
-              <li class="nav-item">
-                <span class="nav-title">Login info</span>
-                <a class="nav-link" href="#"><i class="fa fa-key"></i></a>
-              </li>
-              <li class="nav-item">
-                <span class="nav-title">Login info</span>
-                <a class="nav-link" href="#"><i class="fas fa-check"></i></a>
-              </li>
-            </ul>
-            <div class="tab-content">
-              <div class="tab-pane fade active show" id="wizard-basic-1">
-                <p class="my-2">Professionally harness user friendly e-business through sticky human capital. Intrinsicly enable installed base infrastructures with client-centered opportunities. Collaboratively synergize reliable niches via resource.</p>
-              </div>
-              <div class="tab-pane fade" id="wizard-basic-2">
-                <p class="my-2">Continually underwhelm value-added infrastructures whereas inexpensive architectures. Dramatically whiteboard economically sound total linkage vis-a-vis client-based technology.</p>
-              </div>
-              <div class="tab-pane fade" id="wizard-basic-3">
-                <p class="my-2">Dynamically extend collaborative deliverables whereas collaborative human capital. Professionally reinvent distinctive communities without parallel alignments. Authoritatively network top-line best practices.</p>
-              </div>
-              <div class="tab-pane fade" id="wizard-basic-4">
-                <p class="my-2">Holisticly facilitate parallel value without leading-edge solutions. Uniquely innovate equity invested content through revolutionary best practices. Quickly negotiate an expanded array.</p>
-              </div>
-            </div>
-            <hr>
-            <div class="flexbox">
-              <button class="btn btn-secondary disabled" data-wizard="prev">Back</button>
-              <button class="btn btn-secondary" data-wizard="next">Next</button>
-              <button class="btn btn-primary d-none hidden" data-wizard="finish">Finish</button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="col-lg-7 col-sm-6">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
-            <span data-lang="en_us">Your notes</span>
-            <span data-lang="pt_br">Suas anotações</span>
+            <span data-lang="en_us">Transactions</span>
+            <span data-lang="pt_br">Transações</span>
           </h4>
           <ul class="card-controls">
             <li>
@@ -443,17 +294,113 @@
             </li>
           </ul>
         </header>
+
         <div class="card-content">
-          <div class="card-body">
-            <textarea class="form-control" rows="3" name="short_description"></textarea>
+          <div class="card-body" data-id="order-payment">
+            <form action="javascript:;">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Transaction type</span>
+                      <span data-lang="pt_br">Tipo de transação</span>
+                    </label>
+                    <select class="form-control" name="transactions.type">
+                      <option value="" selected >--</option>
+                      <option value="open"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Payment&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Pagamento&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Payment
+                      </option>
+                      <option value="closed"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Recurrence&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Recorrência&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Recurrence
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <div class="form-group">
+                    <label class="i18n require">
+                      <span data-lang="en_us">Payment method</span>
+                      <span data-lang="pt_br">Meio de pagamento</span>
+                    </label>
+                    <select class="form-control" name="transactions.payment_method.code" required >
+                      <option value="credit_card"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Credit card&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Cartão de cartão&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Credit card
+                      </option>
+                      <option value="banking_billet"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Banking billet&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Boleto bancário&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Banking billet
+                      </option>
+                      <option value="online_debit"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Online debit&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Débito online&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Online debit
+                      </option>
+                      <option value="account_deposit"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Account deposit&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Depósito em conta&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Account deposit
+                      </option>
+                      <option value="debit_card"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Debit card&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Cartão de débito&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Debit card
+                      </option>
+                      <option value="balance_on_intermediary"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Balance on intermediary&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Saldo no intermediador&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Balance on intermediary
+                      </option>
+                      <option value="loyalty_points"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Loyalty points&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Pontos de fidelidade&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Loyalty points
+                      </option>
+                      <option value="other"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Other&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Outro&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Other
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
+
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
-            <span data-lang="en_us">Buyer observation</span>
-            <span data-lang="pt_br">Observação do comprador</span>
+            <span data-lang="en_us">Shipping</span>
+            <span data-lang="pt_br">Entrega</span>
           </h4>
           <ul class="card-controls">
             <li>
@@ -461,171 +408,121 @@
             </li>
           </ul>
         </header>
+
+        <div class="card-content">
+          <div class="card-body" data-id="order-shipping">
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">
+              Campaign
+              <span class="hidden-md-down">and tracking</span>
+            </span>
+            <span data-lang="pt_br">
+              Campanha
+              <span class="hidden-md-down">e rastreamento</span>
+            </span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit UTM parameters</span>
+                <span data-lang="pt_br">Editar Parâmetros UTM</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+
         <div class="card-content">
           <div class="card-body">
-            <textarea class="form-control" rows="3" name="short_description"></textarea>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Source</span>
+                    <span data-lang="pt_br">Origem</span>
+                  </label>
+                  <input type="text" class="form-control" name="utm.source" placeholder="Google"/>
+                  <span class="i18n">
+                    <small data-lang="en_us" class="form-text">
+                      The referrer
+                    </small>
+                    <small data-lang="pt_br" class="form-text">
+                      O referenciador
+                    </small>
+                  </span>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Marketing medium</span>
+                    <span data-lang="pt_br">Meio de marketing</span>
+                  </label>
+                  <input type="text" class="form-control" name="utm.medium" placeholder="CPC"/>
+                  <span class="i18n">
+                    <small data-lang="en_us" class="form-text">
+                      Ad type
+                    </small>
+                    <small data-lang="pt_br" class="form-text">
+                      Tipo de anúncio
+                    </small>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Campaign name</span>
+                    <span data-lang="pt_br">Nome da campanha</span>
+                  </label>
+                  <input type="text" class="form-control" name="utm.campaign"/>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label>Keywords</label>
+                  <input type="text" class="form-control" name="utm.term"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Campaign content</span>
+                <span data-lang="pt_br">Conteúdo da campanha</span>
+              </label>
+              <textarea class="form-control" rows="2" name="utm.content"></textarea>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="col-lg-4">
-
-        <!--
-        |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-        | Customer info
-        |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-        !-->
+    <div class="col-lg-5 col-sm-6">
       <div class="card">
-        <div class="card-body">
-          <h4 class="i18n">
-            <span data-lang="en_us">Buyer info</span>
-            <span data-lang="pt_br">Informações do cliente</span>
-          </h4>
-          <div class="form-group">
-            <label class="i18n require">
-              <span data-lang="en_us">Name</span>
-              <span data-lang="pt_br">Nome</span>
-            </label>
-            <input placeholder="Nome do cliente" type="text" class="form-control action-title" name="name" maxlength="255" required />
-          </div>
-          <div class="form-group">
-            <label class="i18n">
-              <span data-lang="en_us">E-mail</span>
-              <span data-lang="pt_br">E-mail</span>
-            </label>
-            <input type="tel" class="form-control" name="buyers.main_email" data-is-email="true"/>
-          </div>
-          <div class="form-group">
-            <label class="i18n">
-              <span data-lang="en_us">Doc number</span>
-              <span data-lang="pt_br">CPF/CNPJ</span>
-            </label>
-            <input type="tel" class="form-control" name="base_price" data-is-number="true"/>
-          </div>
-          <div class="form-group">
-            <label class="i18n">
-              <span data-lang="en_us">Phone number</span>
-              <span data-lang="pt_br">Telefone</span>
-            </label>
-            <input type="tel" class="form-control" name="cost_price" data-is-number="true"/>
-          </div>
-        </div>
-      </div>
-        <!--
-        |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-        | shipping info
-        |‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒‒
-        !-->
-      <div class="card">
-        <div class="card-body">
-          <h4 class="i18n">
-            <span data-lang="en_us">Shipping info</span>
-            <span data-lang="pt_br">Informações de entrega</span>
-          </h4>
-          <div class="form-group">
-            <label class="i18n">
-              <span data-lang="en_us">Address</span>
-              <span data-lang="pt_br">Endereço</span>
-            </label>
-            <input type="tel" class="form-control" name="cost_price"/>
-          </div>
-          <div class="form-group">
-            <label class="i18n">
-              <span data-lang="en_us">ZIP</span>
-              <span data-lang="pt_br">CEP</span>
-            </label>
-            <input type="tel" class="form-control" name="base_price" data-is-number="true"/>
-          </div>
-          <div class="row">
-            <div class="col-md-4">
-              <div class="form-group">
-                <label class="i18n">
-                  <span data-lang="en_us">Burgh</span>
-                  <span data-lang="pt_br">Bairro</span>
-                </label>
-                <input type="tel" class="form-control" name="cost_price" />
-              </div>
-            </div>
-            <div class="col-md-5">
-              <div class="form-group">
-                <label class="i18n">
-                  <span data-lang="en_us">City</span>
-                  <span data-lang="pt_br">Cidade</span>
-                </label>
-                <input type="tel" class="form-control" name="cost_price"/>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="form-group">
-                <label class="i18n">
-                  <span data-lang="en_us">State</span>
-                  <span data-lang="pt_br">Estado</span>
-                </label>
-                <input type="tel" class="form-control" name="cost_price"/>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <h4 class="card-title">
-          <strong>
-            <span data-lang="en_us">Timeline</span>
-            <span data-lang="pt_br">Linha do tempo</span>
-          </strong>
-        </h4>
+        <h4 class="card-title"><strong>Colored dots</strong></h4>
         <ol class="timeline timeline-activity timeline-point-sm timeline-content-right w-100 py-20 pr-20">
           <li class="timeline-block">
             <div class="timeline-point">
               <span class="badge badge-dot badge-lg badge-danger"></span>
             </div>
             <div class="timeline-content">
-              <time datetime="2017">Just now</time>
-                <p>Finish writing Grunt tasks.</p>
-            </div>
-          </li>
-          <li class="timeline-block">
-            <div class="timeline-point">
-              <span class="badge badge-dot badge-lg badge-info"></span>
-            </div>
-            <div class="timeline-content">
-              <time datetime="2017">42 mins ago</time>
-                <p>Called <a href="#">a customer</a> to take a survey.</p>
-            </div>
-          </li>
-          <li class="timeline-block">
-            <div class="timeline-point">
-              <span class="badge badge-dot badge-lg badge-success"></span>
-            </div>
-            <div class="timeline-content">
-              <time datetime="2017">1 hour ago</time>
-              <p>Prepare for the presentation.</p>
-            </div>
-          </li>
-          <li class="timeline-block">
-            <div class="timeline-point">
-              <span class="badge badge-dot badge-lg badge-purple"></span>
-            </div>
-            <div class="timeline-content">
-              <time datetime="2017">Ontem as 16:08</time>
-              <p><a href="#">Maryam</a> assigned task <a href="#">prototype design</a> to you.</p>
-            </div>
-          </li>
-          <li class="timeline-block">
-            <div class="timeline-point">
-              <span class="badge badge-dot badge-lg badge-dark"></span>
-            </div>
-            <div class="timeline-content">
-              <time datetime="2017">21/10/18 as 10:40</time>
-              <p>Meeting with the leader to talk about vacation.</p>
+              <time datetime="2018">Just now</time>
+              <p>Finish writing Grunt tasks.</p>
             </div>
           </li>
         </ol>
       </div>
     </div>
   </div>
-
 
   <div class="bt-1 pt-20">
     <button class="btn btn-success i18n mr-10">
