@@ -281,12 +281,12 @@
   </div>
 
   <div class="row">
-    <div class="col-lg-7 col-md-8">
+    <div class="col-lg-8 col-md-7">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
-            <span data-lang="en_us">Transactions</span>
-            <span data-lang="pt_br">Transações</span>
+            <span data-lang="en_us">Transaction</span>
+            <span data-lang="pt_br">Transação</span>
           </h4>
           <ul class="card-controls">
             <li>
@@ -324,7 +324,27 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-lg-5 col-md-7">
+
+                <div class="col-lg-4 col-md-7">
+                  <div class="form-group">
+                    <label class="i18n require">
+                      <span data-lang="en_us">Amount</span>
+                      <span data-lang="pt_br">Montante</span>
+                    </label>
+                    <input type="tel" class="form-control" name="transactions.amount"
+                      data-is-number="true" data-money="true" required />
+                    <span class="i18n">
+                      <small data-lang="en_us" class="form-text">
+                        Without installment rates
+                      </small>
+                      <small data-lang="pt_br" class="form-text">
+                        Sem taxas de parcelamento
+                      </small>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-5">
                   <div class="form-group">
                     <label class="i18n require">
                       <span data-lang="en_us">Payment method</span>
@@ -388,6 +408,120 @@
                         Other
                       </option>
                     </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <h4 class="i18n">
+                    <span data-lang="en_us">
+                      Details
+                    </span>
+                    <span data-lang="pt_br">
+                      Detalhes
+                    </span>
+                  </h4>
+
+                  <div data-update="type">
+                    <div class="hidden" data-type="banking_billet">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Billet code</span>
+                          <span data-lang="pt_br">Código do boleto</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="transactions.banking_billet.code"/>
+                      </div>
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Valid thru</span>
+                          <span data-lang="pt_br">Vencimento</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="transactions.banking_billet.valid_thru"/>
+                      </div>
+                    </div>
+
+                    <div data-type="credit_card">
+                      <div class="row">
+                        <div class="col-lg-5 col-sm-5">
+                          <div class="form-group">
+                            <label class="i18n">
+                              <span data-lang="en_us">Installments</span>
+                              <span data-lang="pt_br">Parcelas</span>
+                            </label>
+                            <input type="number" class="form-control" min="0" max="999" step="1"
+                              name="transactions.installments.number"/>
+                          </div>
+                        </div>
+                        <div class="col-lg-7 col-sm-7">
+                          <div class="form-group">
+                            <label class="i18n">
+                              <span data-lang="en_us">Installment value</span>
+                              <span data-lang="pt_br">Valor da parcela</span>
+                            </label>
+                            <input type="tel" class="form-control" name="transactions.installments.value"
+                              data-is-number="true" data-money="true"/>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">CC brand</span>
+                          <span data-lang="pt_br">Bandeira</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="transactions.installments.credit_card.company"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <h4 class="i18n">
+                    <span data-lang="en_us">
+                      Intermediary
+                    </span>
+                    <span data-lang="pt_br">
+                      Intermediário
+                    </span>
+                  </h4>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Transaction code</span>
+                          <span data-lang="pt_br">Código da transação</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="transactions.intermediator.transaction_code"/>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Gateway</label>
+                        <input type="text" class="form-control" name="transactions.intermediator.name"/>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Payment link</span>
+                      <span data-lang="pt_br">Link de pagamento</span>
+                    </label>
+                    <input type="text" class="form-control" name="transactions.payment_link"/>
+                    <span class="i18n">
+                      <small data-lang="en_us" class="form-text">
+                        Direct link to payment
+                      </small>
+                      <small data-lang="pt_br" class="form-text">
+                        Link direto para pagamento
+                      </small>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -506,7 +640,7 @@
       </div>
     </div>
 
-    <div class="col-lg-5 col-md-4">
+    <div class="col-lg-4 col-md-5">
       <div class="card">
         <h4 class="card-title"><strong>Colored dots</strong></h4>
         <ol class="timeline timeline-activity timeline-point-sm timeline-content-right w-100 py-20 pr-20">
