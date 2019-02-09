@@ -5,11 +5,11 @@
   <div class="ajax-overlay"></div>
 
   <div class="row" data-id="order-base">
-    <div class="col-lg-6 col-md-4">
+    <div class="col-xl-6 col-md-4">
       <div class="card">
         <div class="card-body">
           <div class="row">
-            <div class="col-lg-6 col-md-12 col-sm-6">
+            <div class="col-xl-6 col-md-12 col-sm-6">
               <div class="form-group">
                 <label class="i18n">
                   <span data-lang="en_us">Order number</span>
@@ -56,7 +56,7 @@
               </div>
             </div>
 
-            <div class="col-lg-6 col-md-12 col-sm-6">
+            <div class="col-xl-6 col-md-12 col-sm-6">
               <div class="form-group">
                 <label class="i18n">
                   <span data-lang="en_us">Payment method</span>
@@ -94,7 +94,7 @@
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-4 col-sm-6">
+    <div class="col-xl-3 col-md-4 col-sm-6">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
@@ -166,7 +166,7 @@
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-4 col-sm-6">
+    <div class="col-xl-3 col-md-4 col-sm-6">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
@@ -299,7 +299,7 @@
           <div class="card-body" data-id="order-payment">
             <form action="javascript:;">
               <div class="row">
-                <div class="col-lg-4 col-md-5">
+                <div class="col-xl-4 col-sm-5">
                   <div class="form-group">
                     <label class="i18n">
                       <span data-lang="en_us">Transaction type</span>
@@ -325,26 +325,7 @@
                   </div>
                 </div>
 
-                <div class="col-lg-4 col-md-7">
-                  <div class="form-group">
-                    <label class="i18n require">
-                      <span data-lang="en_us">Amount</span>
-                      <span data-lang="pt_br">Montante</span>
-                    </label>
-                    <input type="tel" class="form-control" name="transactions.amount"
-                      data-is-number="true" data-money="true" required />
-                    <span class="i18n">
-                      <small data-lang="en_us" class="form-text">
-                        Without installment rates
-                      </small>
-                      <small data-lang="pt_br" class="form-text">
-                        Sem taxas de parcelamento
-                      </small>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="col-lg-4 col-md-5">
+                <div class="col-xl-4 col-sm-7">
                   <div class="form-group">
                     <label class="i18n require">
                       <span data-lang="en_us">Payment method</span>
@@ -410,10 +391,29 @@
                     </select>
                   </div>
                 </div>
+
+                <div class="col-xl-4 col-sm-8">
+                  <div class="form-group">
+                    <label class="i18n require">
+                      <span data-lang="en_us">Amount</span>
+                      <span data-lang="pt_br">Montante</span>
+                    </label>
+                    <input type="tel" class="form-control" name="transactions.amount"
+                      data-is-number="true" data-money="true" required />
+                    <span class="i18n">
+                      <small data-lang="en_us" class="form-text">
+                        Without installment rates
+                      </small>
+                      <small data-lang="pt_br" class="form-text">
+                        Sem taxas de parcelamento
+                      </small>
+                    </span>
+                  </div>
+                </div>
               </div>
 
               <div class="row">
-                <div class="col-lg-6">
+                <div class="col-xl-6">
                   <h4 class="i18n">
                     <span data-lang="en_us">
                       Details
@@ -445,7 +445,7 @@
 
                     <div data-type="credit_card">
                       <div class="row">
-                        <div class="col-lg-5 col-sm-5">
+                        <div class="col-xl-5 col-lg-3 col-sm-5">
                           <div class="form-group">
                             <label class="i18n">
                               <span data-lang="en_us">Installments</span>
@@ -455,7 +455,7 @@
                               name="transactions.installments.number"/>
                           </div>
                         </div>
-                        <div class="col-lg-7 col-sm-7">
+                        <div class="col-xl-7 col-lg-5 col-sm-7">
                           <div class="form-group">
                             <label class="i18n">
                               <span data-lang="en_us">Installment value</span>
@@ -465,21 +465,23 @@
                               data-is-number="true" data-money="true"/>
                           </div>
                         </div>
-                      </div>
 
-                      <div class="form-group">
-                        <label class="i18n">
-                          <span data-lang="en_us">CC brand</span>
-                          <span data-lang="pt_br">Bandeira</span>
-                        </label>
-                        <input type="text" class="form-control"
-                          name="transactions.installments.credit_card.company"/>
+                        <div class="col-xl-8 col-lg-4 col-sm-8">
+                          <div class="form-group">
+                            <label class="i18n">
+                              <span data-lang="en_us">CC brand</span>
+                              <span data-lang="pt_br">Bandeira</span>
+                            </label>
+                            <input type="text" class="form-control"
+                              name="transactions.installments.credit_card.company"/>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="col-lg-6">
+                <div class="col-xl-6">
                   <h4 class="i18n">
                     <span data-lang="en_us">
                       Intermediary
@@ -490,7 +492,7 @@
                   </h4>
 
                   <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                       <div class="form-group">
                         <label class="i18n">
                           <span data-lang="en_us">Transaction code</span>
@@ -500,7 +502,7 @@
                           name="transactions.intermediator.transaction_code"/>
                       </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                       <div class="form-group">
                         <label>Gateway</label>
                         <input type="text" class="form-control" name="transactions.intermediator.name"/>
