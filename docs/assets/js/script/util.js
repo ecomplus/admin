@@ -454,6 +454,36 @@
     }
   }
 
+  var toggleBlocksByValue = function ($form, $ref, updateInputs) {
+    // show or hide blocks based on selected value
+    var currentValue = $ref.val()
+    $form.find('div[data-update="' + $ref.attr('name') + '"] > *').each(function () {
+      var refValue = $(this).data('value')
+      if (refValue === currentValue) {
+        $(this).slideDown()
+      } else {
+        // hide block and clear nested inputs
+        $(this).slideUp()
+        if (updateInputs) {
+          $(this).find('input,select,textarea').each(function () {
+            $(this).val($(this).data('default') || '')
+          }).trigger('change')
+        }
+
+        if (!refValue) {
+          // default block
+          // show when no block matched current value
+          var $default = $(this)
+          setTimeout(function () {
+            if (!$default.siblings(':visible').length) {
+              $default.slideDown()
+            }
+          }, 500)
+        }
+      }
+    })
+  }
+
   window.handleInputs = function ($form, toData) {
     /*
       default form setup
@@ -509,6 +539,12 @@
           val = val.substr(0, parseInt(maxLength, 10))
         }
         $input.val(val).trigger('change')
+      }
+
+      // toggle related blocks based on current value
+      if ($(this).data('toggle-update')) {
+        // updateInputs = true
+        toggleBlocksByValue($form, $(this), true)
       }
     })
 
@@ -575,6 +611,10 @@
             case 'string':
               if ($el.attr('type') !== 'radio') {
                 $el.val(val)
+                // toggle related blocks based on current value
+                if ($el.data('toggle-update')) {
+                  toggleBlocksByValue($form, $el)
+                }
               } else {
                 // check respective radio input
                 $el.filter(function () { return $(this).val() === val }).click()
