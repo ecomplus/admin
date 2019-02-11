@@ -571,13 +571,15 @@ app.config({
       if (refValue === currentValue) {
         $(this).slideDown()
       } else {
-        // hide block and clear nested inputs
+        // hide block
         $(this).slideUp()
+        /* clear nested inputs
         if (updateInputs) {
           $(this).find('input,select,textarea').each(function () {
             $(this).val($(this).data('default') || '')
           }).trigger('change')
         }
+        */
 
         if (!refValue) {
           // default block
