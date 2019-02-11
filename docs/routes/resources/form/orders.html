@@ -330,12 +330,13 @@
                     <span data-lang="en_us">Payment method</span>
                     <span data-lang="pt_br">Meio de pagamento</span>
                   </label>
-                  <select class="form-control" name="transactions.payment_method.code" required >
+                  <select class="form-control" name="transactions.payment_method.code"
+                    data-toggle-update="true" data-id="payment-method-code" required >
                     <option value="credit_card"
                       data-content="&lt;span class=&apos;i18n&apos;&gt;
                       &lt;span data-lang=&apos;en_us&apos;&gt;Credit card&lt;/span&gt;
-                      &lt;span data-lang=&apos;pt_br&apos;&gt;Cartão de cartão&lt;/span&gt;
-                      &lt;/span&gt;">
+                      &lt;span data-lang=&apos;pt_br&apos;&gt;Cartão de crédito&lt;/span&gt;
+                      &lt;/span&gt;" selected >
                       Credit card
                     </option>
                     <option value="banking_billet"
@@ -422,27 +423,8 @@
                   </span>
                 </h4>
 
-                <div data-update="type">
-                  <div class="hidden" data-type="banking_billet">
-                    <div class="form-group">
-                      <label class="i18n">
-                        <span data-lang="en_us">Billet code</span>
-                        <span data-lang="pt_br">Código do boleto</span>
-                      </label>
-                      <input type="text" class="form-control"
-                        name="transactions.banking_billet.code"/>
-                    </div>
-                    <div class="form-group">
-                      <label class="i18n">
-                        <span data-lang="en_us">Valid thru</span>
-                        <span data-lang="pt_br">Vencimento</span>
-                      </label>
-                      <input type="text" class="form-control"
-                        name="transactions.banking_billet.valid_thru"/>
-                    </div>
-                  </div>
-
-                  <div data-type="credit_card">
+                <div data-update="transactions.payment_method.code">
+                  <div data-value="credit_card">
                     <div class="row">
                       <div class="col-xl-5 col-lg-3 col-sm-5">
                         <div class="form-group">
@@ -451,7 +433,7 @@
                             <span data-lang="pt_br">Parcelas</span>
                           </label>
                           <input type="number" class="form-control" min="0" max="999" step="1"
-                            name="transactions.installments.number"/>
+                            name="transactions.installments.number" data-default="1" value="1"/>
                         </div>
                       </div>
                       <div class="col-xl-7 col-lg-5 col-sm-7">
@@ -475,6 +457,36 @@
                             name="transactions.installments.credit_card.company"/>
                         </div>
                       </div>
+                    </div>
+                  </div>
+
+                  <div class="hidden" data-value="banking_billet">
+                    <div class="form-group">
+                      <label class="i18n">
+                        <span data-lang="en_us">Billet code</span>
+                        <span data-lang="pt_br">Código do boleto</span>
+                      </label>
+                      <input type="text" class="form-control"
+                        name="transactions.banking_billet.code"/>
+                    </div>
+                    <div class="form-group">
+                      <label class="i18n">
+                        <span data-lang="en_us">Valid thru</span>
+                        <span data-lang="pt_br">Vencimento</span>
+                      </label>
+                      <input type="text" class="form-control"
+                        name="transactions.banking_billet.valid_thru"/>
+                    </div>
+                  </div>
+
+                  <div class="hidden">
+                    <div class="form-group">
+                      <label class="i18n">
+                        <span data-lang="en_us">Notes</span>
+                        <span data-lang="pt_br">Observações</span>
+                      </label>
+                      <textarea class="form-control" rows="3"
+                        name="transactions.notes"></textarea>
                     </div>
                   </div>
                 </div>
@@ -504,7 +516,8 @@
                   <div class="col-sm-6">
                     <div class="form-group">
                       <label>Gateway</label>
-                      <input type="text" class="form-control" name="transactions.intermediator.name"/>
+                      <input type="text" class="form-control"
+                        name="transactions.intermediator.name" readonly />
                     </div>
                   </div>
                 </div>

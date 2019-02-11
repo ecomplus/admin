@@ -5,7 +5,7 @@
 (function () {
   'use strict'
 
-  // var lang = window.lang
+  var lang = window.lang
   var i18n = window.i18n
 
   // current tab ID
@@ -290,13 +290,35 @@
     var nestedForm = function ($form, obj, prop) {
       // setup input values with current nested object from list
       var objectId = obj._id
-      $form.find('input,select').data('object-id', objectId)
+      $form.find('input,select,textarea').data('object-id', objectId)
       setupInputValues($form, obj, prop + '.')
     }
 
     // setup current transaction(s)
     var $payment = $('#t' + tabId + '-order-payment')
     handleNestedObjects($payment, 'transactions')
+    $payment.find('#t' + tabId + '-payment-method-code').change(function () {
+      // update payment method name string
+      var html = $(this).find('[selected]').data('content')
+      if (html) {
+        var transactionId = $(this).data('object-id')
+
+        // set new label by current lang
+        var label = $(html).children('[data-lang="' + lang + '"]').text()
+        if (label) {
+          var data = Data()
+          for (var i = 0; i < data.transactions.length; i++) {
+            var transaction = data.transactions[i]
+            if (transaction._id === transactionId) {
+              transaction.payment_method.name = label
+              // commit only to perform reactive actions
+              commit(data, true)
+              break
+            }
+          }
+        }
+      }
+    })
   }
 
   // wait for the form to be ready
