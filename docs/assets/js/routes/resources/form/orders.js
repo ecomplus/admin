@@ -265,6 +265,38 @@
         $select.selectpicker('refresh')
       }
     })
+
+    // setup blocks for nested objects
+    // shipping lines and transactions
+    var handleNestedObjects = function ($block, prop) {
+      var data = Data()
+      var list = data[prop]
+      var obj
+      if (list && list.length) {
+        // show the first object
+        obj = list[0]
+        if (list.length > 1) {
+          // TODO: handle pagination on card footer
+        }
+      } else {
+        // create new object
+        obj = { _id: randomObjectId() }
+        list = data[prop] = [ obj ]
+      }
+      // setup form
+      nestedForm($block, obj, prop)
+    }
+
+    var nestedForm = function ($form, obj, prop) {
+      // setup input values with current nested object from list
+      var objectId = obj._id
+      $form.find('input,select').data('object-id', objectId)
+      setupInputValues($form, obj, prop + '.')
+    }
+
+    // setup current transaction(s)
+    var $payment = $('#t' + tabId + '-order-payment')
+    handleNestedObjects($payment, 'transactions')
   }
 
   // wait for the form to be ready
