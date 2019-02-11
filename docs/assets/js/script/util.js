@@ -586,6 +586,12 @@
         e.preventDefault()
       }
     })
+
+    /* minor additional effects */
+
+    $('input[readonly]').click(function () {
+      $(this).select()
+    })
   }
 
   window.setupInputValues = function ($form, data, prefix, objectId) {
