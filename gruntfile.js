@@ -130,6 +130,11 @@ module.exports = function (grunt) {
         files: [
           { expand: true, cwd: 'src/', src: ['**'], dest: 'dist' }
         ]
+      },
+      public: {
+        files: [
+          { expand: true, cwd: 'public/', src: ['**'], dest: 'dist' }
+        ]
       }
     },
 
@@ -211,10 +216,13 @@ module.exports = function (grunt) {
   grunt.registerTask('build',
     [
       'clean:dist',
+      /*
       'sass',
       'css',
       'js',
+      */
       'copy:dist',
+      'copy:public',
       'clean:dist_copied'
     ]
   )
