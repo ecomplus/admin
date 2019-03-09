@@ -114,9 +114,12 @@ module.exports = function (grunt) {
         'dist/assets/css/sass/',
         'dist/assets/scss/',
         'dist/assets/sass/',
-        'dist/assets/js/*',
+        'dist/assets/js/*.js',
+        'dist/assets/js/script/',
+        'dist/assets/js/routes/**/*.js',
         '!dist/assets/css/*.min.css',
-        '!dist/assets/js/*.min.js'
+        '!dist/assets/js/*.min.js',
+        '!dist/assets/js/routes/**/*.min.js'
       ]
     },
 
