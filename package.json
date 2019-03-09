@@ -1,6 +1,6 @@
 {
-  "name": "ecomplus-admin",
-  "description": "E-Com Plus Admin dashboard, jQuery SPA PWA",
+  "name": "@ecomplus/admin",
+  "description": "E-Com Plus Admin dashboard PWA",
   "version": "0.1.0",
   "homepage": "http://app.e-com.plus",
   "author": "E-Com Club",
