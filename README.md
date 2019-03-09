@@ -1,7 +1,7 @@
 # ecomplus-admin
 E-Com Plus Admin dashboard, jQuery SPA PWA
 
-### Current version
+### Development version
 https://app-current.e-com.plus
 
 ### Production

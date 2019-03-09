@@ -47,7 +47,7 @@ module.exports = function(grunt) {
           outputStyle: 'expanded'
         },
         files: {
-          'docs/assets/css/style.css': 'docs/assets/css/style.scss'
+          'src/assets/css/style.css': 'src/assets/css/style.scss'
         }
       },
 
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
           outputStyle: 'compressed'
         },
         files: {
-          'docs/assets/css/style.min.css': 'docs/assets/css/style.scss'
+          'src/assets/css/style.min.css': 'src/assets/css/style.scss'
         }
       }
 
@@ -72,23 +72,23 @@ module.exports = function(grunt) {
     //
     watch: {
       sass: {
-        files: ['docs/assets/css/**/*.scss'],
+        files: ['src/assets/css/**/*.scss'],
         tasks: ['sass:compressed']
       },
       css: {
-        files: ['docs/assets/css/*.css', '!docs/assets/css/*.min.css'],
+        files: ['src/assets/css/*.css', '!src/assets/css/*.min.css'],
         tasks: ['css']
       },
       js: {
-        files: ['docs/assets/js/*.js', '!docs/assets/js/*.min.js'],
+        files: ['src/assets/js/*.js', '!src/assets/js/*.min.js'],
         tasks: ['js']
       },
       script_dir: {
-        files: ['docs/assets/js/script/*.js', 'docs/assets/js/script/**/*.js'],
+        files: ['src/assets/js/script/*.js', 'src/assets/js/script/**/*.js'],
         tasks: ['neuter:js']
       },
       routes_scripts: {
-        files: ['docs/assets/js/routes/**/*.js', '!docs/assets/js/routes/**/*.min.js'],
+        files: ['src/assets/js/routes/**/*.js', '!src/assets/js/routes/**/*.min.js'],
         tasks: ['uglify:min']
       },
     },
@@ -103,14 +103,14 @@ module.exports = function(grunt) {
       dev: {
         bsFiles: {
           src : [
-            'docs/assets/css/*.min.css',
-            'docs/assets/js/*.min.js',
-            'docs/**/*.html'
+            'src/assets/css/*.min.css',
+            'src/assets/js/*.min.js',
+            'src/**/*.html'
           ]
         },
         options: {
           watchTask: true,
-          server: "docs",
+          server: "src",
           port: 3040
         }
       }
@@ -147,7 +147,7 @@ module.exports = function(grunt) {
 
       dist: {
         files: [
-          {expand: true, cwd: 'docs/', src: ['**'], dest: 'dist'}
+          {expand: true, cwd: 'src/', src: ['**'], dest: 'dist'}
         ],
       },
 
@@ -165,8 +165,8 @@ module.exports = function(grunt) {
         template: "{%= src %}"
       },
       js: {
-        src: 'docs/assets/js/script/main.js',
-        dest: 'docs/assets/js/script.js'
+        src: 'src/assets/js/script/main.js',
+        dest: 'src/assets/js/script.js'
       },
     },
 
@@ -183,11 +183,11 @@ module.exports = function(grunt) {
         // banner: '<%= banner %>'
       },
       script: {
-        src:  'docs/assets/js/script.js',
-        dest: 'docs/assets/js/script.min.js'
+        src:  'src/assets/js/script.js',
+        dest: 'src/assets/js/script.min.js'
       },
       min: {
-        files: grunt.file.expandMapping(['docs/assets/js/routes/**/*.js', '!docs/assets/js/routes/**/*.min.js'], '', {
+        files: grunt.file.expandMapping(['src/assets/js/routes/**/*.js', '!src/assets/js/routes/**/*.min.js'], '', {
           rename: function(destBase, destPath) {
             return destBase+destPath.replace('.js', '.min.js');
           }
@@ -208,7 +208,7 @@ module.exports = function(grunt) {
         ]
       },
       style: {
-        src: 'docs/assets/css/style.min.css'
+        src: 'src/assets/css/style.min.css'
       },
     },
 
@@ -224,8 +224,8 @@ module.exports = function(grunt) {
         advanced:  false
       },
       core: {
-        src:  'docs/assets/css/style.css',
-        dest: 'docs/assets/css/style.min.css'
+        src:  'src/assets/css/style.css',
+        dest: 'src/assets/css/style.min.css'
       }
     },
 
