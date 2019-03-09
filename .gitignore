@@ -1,3 +1,6 @@
+# Ignore production builded files
+dist
+
 # Template
 # gruntfile.js
 */assets/css/app.css
