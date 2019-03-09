@@ -1,10 +1,12 @@
+'use strict'
 
-module.exports = function(grunt) {
-  'use strict';
+module.exports = function (grunt) {
+  if (!grunt || !grunt.initConfig) {
+    return
+  }
 
-  const sass = require('node-sass');
-
-  var autoprefixer = require('autoprefixer')({
+  const sass = require('node-sass')
+  const autoprefixer = require('autoprefixer')({
     browsers: [
       'Chrome >= 45',
       'Firefox >= 40',
@@ -16,30 +18,25 @@ module.exports = function(grunt) {
       'Android >= 4',
       'Opera >= 30'
     ]
-  });
+  })
 
-
-  // Project configuration.
+  // project configuration
   grunt.initConfig({
-
-    // Metadata.
+    // metadata
     pkg: grunt.file.readJSON('package.json'),
     /*
     banner: '/*!\n' +
-            // ' * <%= pkg.banner_name %> v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
+            ' * <%= pkg.banner_name %> v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
             ' * Copyright <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
             ' *',
     */
 
-
     // Task configuration
     // -------------------------------------------------------------------------------
-
 
     // Complile SCSS
     //
     sass: {
-
       expanded: {
         options: {
           implementation: sass,
@@ -61,12 +58,7 @@ module.exports = function(grunt) {
           'src/assets/css/style.min.css': 'src/assets/css/style.scss'
         }
       }
-
     },
-
-
-
-
 
     // Watch on SCSS and JS files
     //
@@ -90,19 +82,15 @@ module.exports = function(grunt) {
       routes_scripts: {
         files: ['src/assets/js/routes/**/*.js', '!src/assets/js/routes/**/*.min.js'],
         tasks: ['uglify:min']
-      },
+      }
     },
-
-
-
-
 
     // Browser Sync
     //
     browserSync: {
       dev: {
         bsFiles: {
-          src : [
+          src: [
             'src/assets/css/*.min.css',
             'src/assets/js/*.min.js',
             'src/**/*.html'
@@ -110,21 +98,16 @@ module.exports = function(grunt) {
         },
         options: {
           watchTask: true,
-          server: "src",
+          server: 'src',
           port: 3040
         }
       }
     },
 
-
-
-
-
     // Clean files and directories
     //
     clean: {
       dist: ['dist'],
-
       dist_copied: [
         'dist/assets/css/*',
         'dist/assets/css/scss/',
@@ -133,70 +116,52 @@ module.exports = function(grunt) {
         'dist/assets/sass/',
         'dist/assets/js/*',
         '!dist/assets/css/*.min.css',
-        '!dist/assets/js/*.min.js',
+        '!dist/assets/js/*.min.js'
       ]
     },
-
-
-
-
 
     // Copy files
     //
     copy: {
-
       dist: {
         files: [
-          {expand: true, cwd: 'src/', src: ['**'], dest: 'dist'}
-        ],
-      },
-
+          { expand: true, cwd: 'src/', src: ['**'], dest: 'dist' }
+        ]
+      }
     },
-
-
-
-
-
 
     // Import file for script.js
     //
     neuter: {
       options: {
-        template: "{%= src %}"
+        template: '{%= src %}'
       },
       js: {
         src: 'src/assets/js/script/main.js',
         dest: 'src/assets/js/script.js'
-      },
+      }
     },
-
-
-
-
 
     // Uglify JS files
     //
     uglify: {
       options: {
         mangle: true,
-        preserveComments: /^!|@preserve|@license|@cc_on/i,
+        preserveComments: /^!|@preserve|@license|@cc_on/i
         // banner: '<%= banner %>'
       },
       script: {
-        src:  'src/assets/js/script.js',
+        src: 'src/assets/js/script.js',
         dest: 'src/assets/js/script.min.js'
       },
       min: {
         files: grunt.file.expandMapping(['src/assets/js/routes/**/*.js', '!src/assets/js/routes/**/*.min.js'], '', {
-          rename: function(destBase, destPath) {
-            return destBase+destPath.replace('.js', '.min.js');
+          rename: function (destBase, destPath) {
+            return destBase + destPath.replace('.js', '.min.js')
           }
         })
       }
     },
-
-
-
 
     // Do some post processing on CSS files
     //
@@ -209,45 +174,35 @@ module.exports = function(grunt) {
       },
       style: {
         src: 'src/assets/css/style.min.css'
-      },
+      }
     },
-
-
-
-
 
     // Minify CSS files
     //
     cssmin: {
       options: {
         sourceMap: false,
-        advanced:  false
+        advanced: false
       },
       core: {
-        src:  'src/assets/css/style.css',
+        src: 'src/assets/css/style.css',
         dest: 'src/assets/css/style.min.css'
       }
-    },
-
-
+    }
 
     // -------------------------------------------------------------------------------
     // END Task configuration
-
-  });
-
+  })
 
   // These plugins provide necessary tasks.
-  require('load-grunt-tasks')(grunt, { scope: 'devDependencies', pattern: ['grunt-*'] });
-  require('autoprefixer')(grunt);
-  //require('time-grunt')(grunt);
-
+  require('load-grunt-tasks')(grunt, { scope: 'devDependencies', pattern: ['grunt-*'] })
+  require('autoprefixer')(grunt)
+  // require('time-grunt')(grunt)
 
   // Run "grunt" to watch SCSS and JS files as well as running browser-sync
-  grunt.registerTask('default', ['serve']);
-  grunt.registerTask('dist', ['build']);
-  grunt.registerTask('serve', ['browserSync', 'watch']);
-
+  grunt.registerTask('default', ['serve'])
+  grunt.registerTask('dist', ['build'])
+  grunt.registerTask('serve', ['browserSync', 'watch'])
 
   // Run "grunt build" to publish the template in a ./dist folder
   grunt.registerTask('build',
@@ -259,11 +214,9 @@ module.exports = function(grunt) {
       'copy:dist',
       'clean:dist_copied'
     ]
-  );
+  )
 
-  grunt.registerTask( 'css', ['cssmin', 'postcss'] );
+  grunt.registerTask('css', ['cssmin', 'postcss'])
 
-  grunt.registerTask( 'js', ['neuter:js', 'uglify:script'] );
-
-
-};
+  grunt.registerTask('js', ['neuter:js', 'uglify:script'])
+}
