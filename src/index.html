@@ -7,11 +7,6 @@
 
     <title>Dashboard · E-Com Plus</title>
 
-    <!-- Styles -->
-    <link href="/assets/css/core.min.css" rel="stylesheet">
-    <link href="/assets/css/app.min.css" rel="stylesheet">
-    <link href="/assets/css/style.min.css" rel="stylesheet">
-
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
     <link rel="icon" href="/assets/img/favicon.png">
@@ -24,6 +19,15 @@
     <meta property="og:image" content="/assets/img/og-img.png">
     <meta property="og:url" content="https://app.e-com.plus/">
     <meta name="twitter:card" content="summary_large_image">
+
+    <script type="text/javascript">
+      if (!sessionStorage.getItem('my_id')) window.location = '/pages/login.html';
+    </script>
+
+    <!-- Styles -->
+    <link href="/assets/css/core.min.css" rel="stylesheet">
+    <link href="/assets/css/app.min.css" rel="stylesheet">
+    <link href="/assets/css/style.min.css" rel="stylesheet">
   </head>
 
   <body class="sidebar-folded" data-provide="pace" id="dashboard">
