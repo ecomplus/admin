@@ -250,13 +250,14 @@
               sku: sku,
               product_id: product._id
             }
-            // copy optional fields from product source
+            /* copy optional fields from product source
             if (product.currency_symbol) {
               item.currency_symbol = product.currency_symbol
             }
             if (product.currency_id) {
               item.currency_id = product.currency_id
             }
+            */
 
             // check if variation was selected
             if (variation) {
