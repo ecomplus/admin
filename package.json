@@ -50,7 +50,7 @@
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
-    "autoprefixer": "^9.4.7",
+    "autoprefixer": "^9.4.10",
     "grunt": "^1.0.3",
     "grunt-browser-sync": "^2.2.0",
     "grunt-contrib-clean": "^1.1.0",
