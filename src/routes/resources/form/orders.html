@@ -282,15 +282,22 @@
 
   <div class="row">
     <div class="col-lg-8 col-md-7">
-      <div class="card">
+      <div class="card card-slided-up">
         <header class="card-header">
-          <h4 class="card-title i18n">
-            <span data-lang="en_us">Transaction</span>
-            <span data-lang="pt_br">Transação</span>
-          </h4>
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">
+              Transactions
+            </span>
+            <span data-lang="pt_br">
+              Transações
+            </span>
+          </h6>
           <ul class="card-controls">
             <li>
-              <a class="card-btn-slide" href="#"></a>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit payment details</span>
+                <span data-lang="pt_br">Editar detalhes de pagamento</span>
+              </a>
             </li>
           </ul>
         </header>
@@ -580,22 +587,73 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card card-slided-up">
         <header class="card-header">
-          <h4 class="card-title i18n">
-            <span data-lang="en_us">Shipping</span>
-            <span data-lang="pt_br">Entrega</span>
-          </h4>
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">
+              Shipping
+            </span>
+            <span data-lang="pt_br">
+              Entrega
+            </span>
+          </h6>
           <ul class="card-controls">
             <li>
-              <a class="card-btn-slide" href="#"></a>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit dispatch and fulfillment</span>
+                <span data-lang="pt_br">Editar envio e atendimento</span>
+              </a>
             </li>
           </ul>
         </header>
 
         <div class="card-content">
-          <div class="card-body" data-id="order-shipping">
+          <div class="card-body">
+            <div class="i18n">
+              <span data-lang="en_us">
+                This order does not have shipping method saved.
+                <br><a href="javascript:;">Add shipping</a>
+              </span>
+              <span data-lang="pt_br">
+                Este pedido não possui forma de envio salva.
+                <br><a href="javascript:;">Adicionar envio</a>
+              </span>
+            </div>
+
+            <div data-id="order-shipping">
+              <h4 class="i18n">
+                <span data-lang="en_us">
+                  Delivery address
+                </span>
+                <span data-lang="pt_br">
+                  Endereço de entrega
+                </span>
+              </h4>
+            </div>
           </div>
+
+          <footer class="card-footer">
+            <div class="btn-toolbar">
+              <div class="btn-group mr-2">
+                <button type="button" class="btn btn-light i18n" data-id="add-shipping">
+                  <span data-lang="en_us">Add</span>
+                  <span data-lang="pt_br">Adicionar</span>
+                </button>
+                <button type="button" class="btn btn-light" data-id="delete-shipping">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+              <div class="btn-group">
+                <button type="button" class="btn btn-light" data-id="next-shipping">
+                  <i class="fa fa-angle-double-right"></i>
+                  <span class="i18n">
+                    <span data-lang="en_us">Next</span>
+                    <span data-lang="pt_br">Próximo</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </footer>
         </div>
       </div>
 
@@ -615,7 +673,7 @@
             <li>
               <a class="card-btn-slide i18n" href="#">
                 <span data-lang="en_us">Edit UTM parameters</span>
-                <span data-lang="pt_br">Editar Parâmetros UTM</span>
+                <span data-lang="pt_br">Editar parâmetros UTM</span>
               </a>
             </li>
           </ul>
