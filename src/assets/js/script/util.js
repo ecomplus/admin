@@ -459,7 +459,7 @@
     var currentValue = $ref.val()
     $form.find('div[data-update="' + $ref.attr('name') + '"] > *').each(function () {
       var refValue = $(this).data('value')
-      if (refValue === currentValue) {
+      if (!refValue || refValue === currentValue) {
         $(this).slideDown()
       } else {
         // hide block
