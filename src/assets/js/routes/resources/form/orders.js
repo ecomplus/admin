@@ -266,37 +266,123 @@
       }
     })
 
-    // setup blocks for nested objects
-    // shipping lines and transactions
-    var handleNestedObjects = function ($block, prop) {
-      var data = Data()
-      var list = data[prop]
-      var obj
-      if (list && list.length) {
-        // show the first object
-        obj = list[0]
-        if (list.length > 1) {
-          // TODO: handle pagination on card footer
-        }
-      } else {
-        // create new object
-        obj = { _id: randomObjectId() }
-        list = data[prop] = [ obj ]
-      }
-      // setup form
-      nestedForm($block, obj, prop)
-    }
-
     var nestedForm = function ($form, obj, prop) {
       // setup input values with current nested object from list
       var objectId = obj._id
-      $form.find('input,select,textarea').data('object-id', objectId)
+      // reset input values
+      $form.find('input,select,textarea').data('object-id', objectId).val('')
       setupInputValues($form, obj, prop + '.')
+      // fix select fields
+      $form.find('select').selectpicker('refresh')
+    }
+
+    // setup blocks for nested objects
+    // shipping lines and transactions
+    var handleNestedObjects = function ($block, $add, $remove, $next, prop, index) {
+      var isFormHidden = true
+      var toggleHidden = function (list) {
+        if (list && list.length) {
+          if (isFormHidden) {
+            // show the form and hide empty message
+            $block.slideDown().prev().slideUp()
+            isFormHidden = false
+          }
+        } else if (!isFormHidden) {
+          // empty list
+          // hide the form and show empty message
+          $block.slideUp().prev().slideDown()
+          isFormHidden = true
+        }
+      }
+
+      var toggleForm = function (list) {
+        // set form up with current object from list
+        if (list && list.length) {
+          if (typeof index !== 'number' || index < 0 || list.length <= index) {
+            // first object
+            index = 0
+          }
+          nestedForm($block, list[index], prop)
+        }
+      }
+
+      var toggleButtons = function (list) {
+        // toggle next and remove buttons based on list length
+        if (list && list.length) {
+          $remove.removeAttr('disabled')
+          if (list.length > 1) {
+            $next.removeAttr('disabled')
+            return
+          }
+        } else {
+          // empty list
+          $remove.attr('disabled', true)
+        }
+        $next.attr('disabled', true)
+      }
+
+      var toggleAll = function (list) {
+        if (!list) {
+          list = Data()[prop]
+        }
+        // toggle form visibility if needed
+        toggleHidden(list)
+        // setup form fields
+        toggleForm(list)
+        // enable or disable control buttons
+        toggleButtons(list)
+      }
+      toggleAll()
+
+      $add.click(function () {
+        var data = Data()
+        var list = data[prop]
+        // create new object
+        var obj = { _id: randomObjectId() }
+        if (!list) {
+          list = []
+        }
+        list.push(obj)
+        index = list.length - 1
+        // setup new object on form
+        toggleAll(list)
+        // commit only to perform reactive actions
+        commit(data, true)
+      })
+
+      // handle link to create transaction (when empty)
+      $block.prev().find('a').click(function () {
+        $add.click()
+      })
+
+      $remove.click(function () {
+        var data = Data()
+        var list = data[prop]
+        // remove current index from list
+        list.splice(index, 1)
+        // update form and buttons
+        toggleAll(list)
+        // commit only to perform reactive actions
+        commit(data, true)
+      })
+
+      $next.click(function () {
+        // next object on list
+        index++
+        toggleAll()
+      })
     }
 
     // setup current transaction(s)
     var $payment = $('#t' + tabId + '-order-payment')
-    handleNestedObjects($payment, 'transactions')
+    handleNestedObjects(
+      $payment,
+      $('#t' + tabId + '-add-transaction'),
+      $('#t' + tabId + '-delete-transaction'),
+      $('#t' + tabId + '-next-transaction'),
+      'transactions'
+    )
+
     $payment.find('#t' + tabId + '-payment-method-code').change(function () {
       // update payment method name string
       var html = $(this).find('[selected]').data('content')
