@@ -1,3 +1,3 @@
-[submodule "docs/assets/plugin/mony"]
-	path = docs/assets/plugin/mony
-	url = https://github.com/ecomclub/mony.git
+[submodule "src/assets/plugin/mony"]
+	path = src/assets/plugin/mony
+	url = git@github.com:ecomclub/mony
