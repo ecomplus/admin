@@ -297,7 +297,18 @@
 
         <div class="card-content">
           <div class="card-body">
-            <div class="" data-id="order-payment">
+            <div class="i18n">
+              <span data-lang="en_us">
+                This order does not have transactions saved.
+                <br><a href="javascript:;">Add a transaction</a>
+              </span>
+              <span data-lang="pt_br">
+                Este pedido não possui transação salva.
+                <br><a href="javascript:;">Adicione uma transação</a>
+              </span>
+            </div>
+
+            <div class="hidden" data-id="order-payment">
               <div class="row">
                 <div class="col-xl-4 col-sm-5">
                   <div class="form-group">
@@ -556,11 +567,12 @@
                 </button>
               </div>
               <div class="btn-group">
-                <button type="button" class="btn btn-light" data-id="previous-transaction">
-                  <i class="fa fa-chevron-left"></i>
-                </button>
                 <button type="button" class="btn btn-light" data-id="next-transaction">
-                  <i class="fa fa-chevron-right"></i>
+                  <i class="fa fa-angle-double-right"></i>
+                  <span class="i18n">
+                    <span data-lang="en_us">Next</span>
+                    <span data-lang="pt_br">Próximo</span>
+                  </span>
                 </button>
               </div>
             </div>
