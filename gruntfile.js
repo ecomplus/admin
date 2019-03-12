@@ -20,8 +20,6 @@ module.exports = function (grunt) {
     ]
   })
 
-  grunt.loadNpmTasks('grunt-http')
-
   // project configuration
   grunt.initConfig({
     // metadata
@@ -140,15 +138,6 @@ module.exports = function (grunt) {
       }
     },
 
-    http: {
-      your_service: {
-        options: {
-          url: 'https://e-com.plus/api/v1/segments.json'
-        },
-        dest: 'public/ecom-segments.json'
-      }
-    },
-
     // Import file for script.js
     //
     neuter: {
@@ -233,7 +222,6 @@ module.exports = function (grunt) {
       'js',
       */
       'copy:dist',
-      'http',
       'copy:public',
       'clean:dist_copied'
     ]
