@@ -145,7 +145,7 @@ module.exports = function (grunt) {
         options: {
           url: 'https://e-com.plus/api/v1/segments.json'
         },
-        dest: 'public/segments.json'
+        dest: 'public/ecom-segments.json'
       }
     },
 
