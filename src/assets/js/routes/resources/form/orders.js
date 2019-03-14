@@ -336,12 +336,12 @@
 
       $add.click(function () {
         var data = Data()
+        if (!data[prop]) {
+          data[prop] = []
+        }
         var list = data[prop]
         // create new object
         var obj = { _id: randomObjectId() }
-        if (!list) {
-          list = []
-        }
         list.push(obj)
         index = list.length - 1
         // setup new object on form
@@ -405,6 +405,16 @@
         }
       }
     })
+
+    // setup current transaction(s)
+    var $shipping = $('#t' + tabId + '-order-shipping')
+    handleNestedObjects(
+      $shipping,
+      $('#t' + tabId + '-add-shipping'),
+      $('#t' + tabId + '-delete-shipping'),
+      $('#t' + tabId + '-next-shipping'),
+      'shipping_lines'
+    )
   }
 
   // wait for the form to be ready
