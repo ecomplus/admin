@@ -637,8 +637,8 @@
                       <span data-lang="en_us">ZIP code</span>
                       <span data-lang="pt_br">CEP</span>
                     </label>
-                    <input type="tel" class="form-control" name="shipping_lines.to.zip"
-                      required />
+                    <input type="tel" class="form-control" data-mask="zip"
+                      name="shipping_lines.to.zip" required />
                   </div>
                 </div>
                 <div class="col-xl-3 col-sm-6">
@@ -720,7 +720,8 @@
                       <span data-lang="en_us">Phone number</span>
                       <span data-lang="pt_br">Telefone</span>
                     </label>
-                    <input type="tel" class="form-control" name="shipping_lines.to.phone.number"/>
+                    <input type="tel" class="form-control" data-mask="tel"
+                      data-is-number="true" name="shipping_lines.to.phone.number"/>
                   </div>
                 </div>
               </div>
