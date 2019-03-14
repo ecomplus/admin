@@ -530,10 +530,12 @@ app.ready(function () {
           if (typeof callback === 'function') {
             callback(err, json)
           }
-          apiError(json)
-          if (jqXHR.status >= 500) {
-            console.log('API request with internal error response:')
-            console.log(jqXHR)
+          if (req.skipError !== true) {
+            apiError(json)
+            if (jqXHR.status >= 500) {
+              console.log('API request with internal error response:')
+              console.log(jqXHR)
+            }
           }
         })
       } else {
@@ -542,7 +544,7 @@ app.ready(function () {
       }
     }
 
-    var addRequest = function (options, bodyObject, callback) {
+    var addRequest = function (options, bodyObject, callback, skipError) {
       if (bodyObject) {
         options.data = JSON.stringify(bodyObject)
       }
@@ -550,7 +552,8 @@ app.ready(function () {
       // add request to queue
       apiQueue.push({
         'options': options,
-        'callback': callback
+        'callback': callback,
+        'skipError': skipError
       })
       if (!requestsRunning) {
         // starts running the queue
@@ -593,7 +596,7 @@ app.ready(function () {
       }, 400)
     }
 
-    var callApi = function (endpoint, method, callback, bodyObject) {
+    var callApi = function (endpoint, method, callback, bodyObject, skipError) {
       // reset notification toast
       hideToastr()
       // E-Com Plus Store API
@@ -649,7 +652,7 @@ app.ready(function () {
         headers: authHeaders,
         method: method
       }
-      addRequest(options, bodyObject, callback)
+      addRequest(options, bodyObject, callback, skipError)
     }
 
     var callMainApi = function (endpoint, method, callback, bodyObject) {
