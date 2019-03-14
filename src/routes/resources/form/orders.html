@@ -620,7 +620,7 @@
               </span>
             </div>
 
-            <div data-id="order-shipping">
+            <div class="hidden" data-id="order-shipping">
               <h4 class="i18n">
                 <span data-lang="en_us">
                   Delivery address
@@ -637,7 +637,7 @@
                       <span data-lang="en_us">ZIP code</span>
                       <span data-lang="pt_br">CEP</span>
                     </label>
-                    <input type="tel" class="form-control" name="shipping_lines.zip"
+                    <input type="tel" class="form-control" name="shipping_lines.to.zip"
                       required />
                   </div>
                 </div>
@@ -647,7 +647,7 @@
                       <span data-lang="en_us">Country</span>
                       <span data-lang="pt_br">País</span>
                     </label>
-                    <input type="text" class="form-control" name="shipping_lines.country"/>
+                    <input type="text" class="form-control" name="shipping_lines.to.country"/>
                   </div>
                 </div>
                 <div class="col-xl-6 col-sm-8">
@@ -656,7 +656,7 @@
                       <span data-lang="en_us">Street</span>
                       <span data-lang="pt_br">Rua</span>
                     </label>
-                    <input type="text" class="form-control" name="shipping_lines.street"/>
+                    <input type="text" class="form-control" name="shipping_lines.to.street"/>
                   </div>
                 </div>
                 <div class="col-xl-3 col-sm-4">
@@ -665,7 +665,7 @@
                       <span data-lang="en_us">Number</span>
                       <span data-lang="pt_br">Número</span>
                     </label>
-                    <input type="number" class="form-control" name="shipping_lines.number"
+                    <input type="number" class="form-control" name="shipping_lines.to.number"
                       min="1" max="9999999"/>
                   </div>
                 </div>
@@ -675,7 +675,7 @@
                       <span data-lang="en_us">Province code</span>
                       <span data-lang="pt_br">Estado (UF)</span>
                     </label>
-                    <input type="text" class="form-control" name="shipping_lines.province_code"/>
+                    <input type="text" class="form-control" name="shipping_lines.to.province_code"/>
                   </div>
                 </div>
                 <div class="col-xl-6 col-sm-8">
@@ -684,7 +684,7 @@
                       <span data-lang="en_us">City</span>
                       <span data-lang="pt_br">Cidade</span>
                     </label>
-                    <input type="text" class="form-control" name="shipping_lines.city"/>
+                    <input type="text" class="form-control" name="shipping_lines.to.city"/>
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-12 col-sm-6">
@@ -693,7 +693,7 @@
                       <span data-lang="en_us">Borough</span>
                       <span data-lang="pt_br">Bairro</span>
                     </label>
-                    <input type="text" class="form-control" name="shipping_lines.borough"/>
+                    <input type="text" class="form-control" name="shipping_lines.to.borough"/>
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-12 col-sm-6">
@@ -702,7 +702,25 @@
                       <span data-lang="en_us">Near to</span>
                       <span data-lang="pt_br">Referência</span>
                     </label>
-                    <input type="text" class="form-control" name="shipping_lines.near_to"/>
+                    <input type="text" class="form-control" name="shipping_lines.to.near_to"/>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-12 col-sm-6">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Recipient</span>
+                      <span data-lang="pt_br">Destinatário</span>
+                    </label>
+                    <input type="text" class="form-control" name="shipping_lines.to.name"/>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-6">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Phone number</span>
+                      <span data-lang="pt_br">Telefone</span>
+                    </label>
+                    <input type="tel" class="form-control" name="shipping_lines.to.phone.number"/>
                   </div>
                 </div>
               </div>
