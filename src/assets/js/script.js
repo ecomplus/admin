@@ -668,6 +668,29 @@ app.config({
     // mask currency
     $form.find('input[data-money]').inputMoney()
 
+    // custom masks with inputmask plugin
+    // https://github.com/RobinHerbots/Inputmask
+    $form.find('input[data-mask]').each(function () {
+      switch ($(this).data('mask')) {
+        case 'tel':
+          $(this).inputmask([
+            // array of phone number formats
+            '(99) 9999-9999',
+            '(99) 9 9999-9999',
+            // generic for international phone numbers
+            '99999[9{1,10}]'
+          ])
+          break
+
+        case 'zip':
+          if (window.lang === 'pt_br') {
+            // brazilian CEP format
+            $(this).inputmask('99999-999')
+          }
+          break
+      }
+    })
+
     $form.find('input[type="number"]').keydown(function (e) {
       // allow: backspace, delete, tab, escape, enter
       var allowed = [46, 8, 9, 27, 13]
