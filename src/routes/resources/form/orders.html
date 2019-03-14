@@ -641,16 +641,17 @@
                       name="shipping_lines.to.zip" required />
                   </div>
                 </div>
-                <div class="col-xl-3 col-sm-6">
+                <div class="col-xl-4 col-sm-6">
                   <div class="form-group">
                     <label class="i18n">
                       <span data-lang="en_us">Country</span>
                       <span data-lang="pt_br">País</span>
                     </label>
-                    <input type="text" class="form-control" name="shipping_lines.to.country"/>
+                    <input type="text" class="form-control"
+                      name="shipping_lines.to.country" placeholder="Brasil"/>
                   </div>
                 </div>
-                <div class="col-xl-6 col-sm-8">
+                <div class="col-xl-6">
                   <div class="form-group">
                     <label class="i18n">
                       <span data-lang="en_us">Street</span>
@@ -672,13 +673,23 @@
                 <div class="col-xl-3 col-sm-4">
                   <div class="form-group">
                     <label class="i18n">
+                      <span data-lang="en_us">Complement</span>
+                      <span data-lang="pt_br">Complemento</span>
+                    </label>
+                    <input type="text" class="form-control" name="shipping_lines.to.complement"/>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-sm-4">
+                  <div class="form-group">
+                    <label class="i18n">
                       <span data-lang="en_us">Province code</span>
                       <span data-lang="pt_br">Estado (UF)</span>
                     </label>
-                    <input type="text" class="form-control" name="shipping_lines.to.province_code"/>
+                    <input type="text" class="form-control" name="shipping_lines.to.province_code"
+                      placeholder="MG"/>
                   </div>
                 </div>
-                <div class="col-xl-6 col-sm-8">
+                <div class="col-xl-6">
                   <div class="form-group">
                     <label class="i18n">
                       <span data-lang="en_us">City</span>
@@ -722,6 +733,37 @@
                     </label>
                     <input type="tel" class="form-control" data-mask="tel"
                       data-is-number="true" name="shipping_lines.to.phone.number"/>
+                  </div>
+                </div>
+              </div>
+
+              <h4 class="i18n">
+                <span data-lang="en_us">
+                  Sender
+                </span>
+                <span data-lang="pt_br">
+                  Remetente
+                </span>
+              </h4>
+
+              <div class="row">
+                <div class="col-xl-3 col-sm-6">
+                  <div class="form-group">
+                    <label class="i18n require">
+                      <span data-lang="en_us">ZIP code</span>
+                      <span data-lang="pt_br">CEP</span>
+                    </label>
+                    <input type="tel" class="form-control" data-mask="zip"
+                      name="shipping_lines.from.zip" required />
+                  </div>
+                </div>
+                <div class="col-xl-9">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Full address</span>
+                      <span data-lang="pt_br">Endereço completo</span>
+                    </label>
+                    <input type="text" class="form-control" name="shipping_lines.from.line_address"/>
                   </div>
                 </div>
               </div>
