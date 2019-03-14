@@ -239,12 +239,14 @@
       // async GET the customer addresses to use as default on shipping lines
       // call Store API
       var uri = 'customers/' + data.buyers[0]._id + '.json'
-      window.callApi(uri, 'GET', function (err, json) {
+      var skipError = true
+      var callback = function (err, json) {
         if (!err) {
           // save customer addresses list (if defined)
           buyerAdresses = json.addresses || []
         }
-      })
+      }
+      window.callApi(uri, 'GET', callback, null, skipError)
     }
 
     // reuse order status enum and respective colors from lists configuration JSON
