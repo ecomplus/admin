@@ -415,6 +415,14 @@
       $('#t' + tabId + '-next-shipping'),
       'shipping_lines'
     )
+
+    // handle collapse for payment address and shipping from address
+    $('div[data-link-collapse]').each(function () {
+      var $block = $(this)
+      $block.children('a').click(function () {
+        $block.children('div').slideToggle('slow')
+      })
+    })
   }
 
   // wait for the form to be ready
