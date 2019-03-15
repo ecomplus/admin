@@ -1279,10 +1279,10 @@ app.ready(function () {
                 })
 
                   .always(function () {
-                    var extService = window.location.search.split('?service=')[1]
-                    if (extService && extService !== '') {
+                    var ssoUrl = window.location.search.split('sso_url=')[1]
+                    if (ssoUrl && ssoUrl !== '') {
                       // redirect to external E-Com Plus service
-                      window.location = 'https://' + extService + '.e-com.plus'
+                      window.location = 'https://admin.e-com.plus' + decodeURIComponent(ssoUrl)
                     } else {
                       // store authentication on browser session
                       // loss data when browser tab is closed
