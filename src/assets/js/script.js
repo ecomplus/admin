@@ -668,6 +668,29 @@ app.config({
     // mask currency
     $form.find('input[data-money]').inputMoney()
 
+    // custom masks with inputmask plugin
+    // https://github.com/RobinHerbots/Inputmask
+    $form.find('input[data-mask]').each(function () {
+      switch ($(this).data('mask')) {
+        case 'tel':
+          $(this).inputmask([
+            // array of phone number formats
+            '(99) 9999-9999',
+            '(99) 9 9999-9999',
+            // generic for international phone numbers
+            '99999[9{1,10}]'
+          ])
+          break
+
+        case 'zip':
+          if (window.lang === 'pt_br') {
+            // brazilian CEP format
+            $(this).inputmask('99999-999')
+          }
+          break
+      }
+    })
+
     $form.find('input[type="number"]').keydown(function (e) {
       // allow: backspace, delete, tab, escape, enter
       var allowed = [46, 8, 9, 27, 13]
@@ -1256,10 +1279,10 @@ app.ready(function () {
                 })
 
                   .always(function () {
-                    var extService = window.location.search.split('?service=')[1]
-                    if (extService && extService !== '') {
+                    var ssoUrl = window.location.search.split('sso_url=')[1]
+                    if (ssoUrl && ssoUrl !== '') {
                       // redirect to external E-Com Plus service
-                      window.location = 'https://' + extService + '.e-com.plus'
+                      window.location = 'https://admin.e-com.plus' + decodeURIComponent(ssoUrl)
                     } else {
                       // store authentication on browser session
                       // loss data when browser tab is closed
@@ -1363,10 +1386,12 @@ app.ready(function () {
           if (typeof callback === 'function') {
             callback(err, json)
           }
-          apiError(json)
-          if (jqXHR.status >= 500) {
-            console.log('API request with internal error response:')
-            console.log(jqXHR)
+          if (req.skipError !== true) {
+            apiError(json)
+            if (jqXHR.status >= 500) {
+              console.log('API request with internal error response:')
+              console.log(jqXHR)
+            }
           }
         })
       } else {
@@ -1375,7 +1400,7 @@ app.ready(function () {
       }
     }
 
-    var addRequest = function (options, bodyObject, callback) {
+    var addRequest = function (options, bodyObject, callback, skipError) {
       if (bodyObject) {
         options.data = JSON.stringify(bodyObject)
       }
@@ -1383,7 +1408,8 @@ app.ready(function () {
       // add request to queue
       apiQueue.push({
         'options': options,
-        'callback': callback
+        'callback': callback,
+        'skipError': skipError
       })
       if (!requestsRunning) {
         // starts running the queue
@@ -1426,7 +1452,7 @@ app.ready(function () {
       }, 400)
     }
 
-    var callApi = function (endpoint, method, callback, bodyObject) {
+    var callApi = function (endpoint, method, callback, bodyObject, skipError) {
       // reset notification toast
       hideToastr()
       // E-Com Plus Store API
@@ -1482,7 +1508,7 @@ app.ready(function () {
         headers: authHeaders,
         method: method
       }
-      addRequest(options, bodyObject, callback)
+      addRequest(options, bodyObject, callback, skipError)
     }
 
     var callMainApi = function (endpoint, method, callback, bodyObject) {
