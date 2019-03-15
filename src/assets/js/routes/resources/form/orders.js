@@ -395,6 +395,10 @@
         // add object to list
         list.push(obj)
         index = list.length - 1
+        // fix input names before handling form
+        $block.find('input[data-name]').each(function () {
+          $(this).attr('name', $(this).data('name'))
+        })
         // setup new object on form
         toggleAll(list)
         // focus on required text input (if any)
