@@ -560,11 +560,11 @@
                 </div>
               </div>
 
-              <div data-link-collapse="true">
+              <div class="bt-1 mt-3 pt-3" data-link-collapse="true">
                 <a href="javascript:;">
-                  <h5 class="mt-3">
+                  <span class="fs-16 text-muted">
                     <small><i class="ti-exchange-vertical text-primary mr-1"></i></small>
-                    <span class="i18n text-muted">
+                    <span class="i18n">
                       <span data-lang="en_us">
                         Billing address
                       </span>
@@ -572,10 +572,10 @@
                         Endereço de cobrança
                       </span>
                     </span>
-                  </h5>
+                  </span>
                 </a>
 
-                <div class="hidden">
+                <div class="hidden mt-3">
                   <div class="callout callout-info" role="alert">
                     <button type="button" class="close" data-dismiss="callout" aria-label="Close">
                       <span>×</span>
@@ -769,6 +769,63 @@
             </div>
 
             <div class="hidden" data-id="order-shipping">
+              <div class="row">
+                <div class="col-xl-4 col-sm-8">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Freight</span>
+                      <span data-lang="pt_br">Frete</span>
+                    </label>
+                    <input type="tel" class="form-control" name="shipping_lines.total_price"
+                      data-is-number="true" data-money="true"/>
+                    <span class="i18n">
+                      <small data-lang="en_us" class="form-text">
+                        Including additional and taxes
+                      </small>
+                      <small data-lang="pt_br" class="form-text">
+                        Incluindo adicionais e impostos
+                      </small>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-sm-8">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Posting deadline</span>
+                      <span data-lang="pt_br">Prazo de postagem</span>
+                    </label>
+                    <input type="number" class="form-control" min="1" max="9999999"
+                      name="shipping_lines.posting_deadline.days"/>
+                    <span class="i18n">
+                      <small data-lang="en_us" class="form-text">
+                        Working days
+                      </small>
+                      <small data-lang="pt_br" class="form-text">
+                        Dias úteis
+                      </small>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-sm-8">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Delivery time</span>
+                      <span data-lang="pt_br">Estimativa de entrega</span>
+                    </label>
+                    <input type="number" class="form-control" min="1" max="9999999"
+                      name="shipping_lines.delivery_time.days"/>
+                    <span class="i18n">
+                      <small data-lang="en_us" class="form-text">
+                        Working days
+                      </small>
+                      <small data-lang="pt_br" class="form-text">
+                        Dias úteis
+                      </small>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
               <h4 class="i18n">
                 <span data-lang="en_us">
                   Delivery address
@@ -885,11 +942,11 @@
                 </div>
               </div>
 
-              <div data-link-collapse="true">
+              <div class="bt-1 mt-3 pt-3" data-link-collapse="true">
                 <a href="javascript:;">
-                  <h5 class="mt-3">
+                  <span class="fs-16 text-muted">
                     <small><i class="ti-exchange-vertical text-primary mr-1"></i></small>
-                    <span class="i18n text-muted">
+                    <span class="i18n">
                       <span data-lang="en_us">
                         Departure address
                       </span>
@@ -897,10 +954,10 @@
                         Endereço de partida
                       </span>
                     </span>
-                  </h5>
+                  </span>
                 </a>
 
-                <div class="hidden">
+                <div class="hidden mt-3">
                   <div class="row">
                     <div class="col-xl-3 col-sm-6">
                       <div class="form-group">
