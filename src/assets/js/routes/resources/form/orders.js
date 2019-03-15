@@ -160,6 +160,7 @@
     // handle new buyer
     var $newBuyer = $orderBase.find('#t' + tabId + '-new-buyer')
     var $addBuyerInput = $newBuyer.find('input')
+    var buyerAdresses = []
 
     var addBuyer = function () {
       // show loading spinner
@@ -168,7 +169,7 @@
       // call Store API
       var uri = 'customers.json?main_email=' + encodeURIComponent($addBuyerInput.val().trim())
       // specify properties to return
-      uri += '&fields=_id,main_email,name,display_name,phones'
+      uri += '&fields=_id,main_email,name,display_name,phones,addresses'
 
       window.callApi(uri, 'GET', function (err, json) {
         // hide spinner
@@ -178,6 +179,9 @@
           if (buyer) {
             // check if same customer is not already in buyers list
             var data = Data()
+            if (!data.buyers) {
+              data.buyers = []
+            }
             var buyers = data.buyers
             for (var i = 0; i < buyers.length; i++) {
               if (buyers[i]._id === buyer._id) {
@@ -188,6 +192,13 @@
                 return
               }
             }
+
+            // save customer addresses list
+            if (!buyerAdresses.length && buyer.addresses) {
+              buyerAdresses = buyer.addresses
+            }
+            // remove addresses from buyer object
+            delete buyer.addresses
 
             // add customer to buyers
             buyers.push(buyer)
@@ -220,9 +231,23 @@
     $newBuyer.find('button').click(addBuyer)
     $orderBase.find('#t' + tabId + '-add-buyer').click(function () {
       // clear the input and show new buyer block
-      $addBuyerInput.val('')
-      $newBuyer.slideToggle()
+      $newBuyer.slideToggle().find('input')
+      $addBuyerInput.val('').focus()
     })
+
+    if (data.buyers && data.buyers.length) {
+      // async GET the customer addresses to use as default on shipping lines
+      // call Store API
+      var uri = 'customers/' + data.buyers[0]._id + '.json'
+      var skipError = true
+      var callback = function (err, json) {
+        if (!err) {
+          // save customer addresses list (if defined)
+          buyerAdresses = json.addresses || []
+        }
+      }
+      window.callApi(uri, 'GET', callback, null, skipError)
+    }
 
     // reuse order status enum and respective colors from lists configuration JSON
     $.getJSON('json/misc/config_lists.json', function (json) {
@@ -334,7 +359,7 @@
       }
       toggleAll()
 
-      $add.click(function () {
+      var add = function () {
         var data = Data()
         if (!data[prop]) {
           data[prop] = []
@@ -342,13 +367,42 @@
         var list = data[prop]
         // create new object
         var obj = { _id: randomObjectId() }
+
+        if (prop === 'shipping_lines') {
+          // preset a required (and hidden) from.zip field value
+          obj.from = { zip: '00000000' }
+          // preset shipping address with buyer address if defined
+          var address
+          if (buyerAdresses.length) {
+            for (var i = 0; i < buyerAdresses.length; i++) {
+              if (buyerAdresses[i].default) {
+                // customer default shipping address
+                address = buyerAdresses[i]
+                break
+              }
+            }
+            // use the first address on list
+            if (!address) {
+              address = buyerAdresses[0]
+            }
+          }
+          obj.to = Object.assign({}, address)
+          // remove excedent properties
+          delete obj.to.default
+          delete obj.to._id
+        }
+
+        // add object to list
         list.push(obj)
         index = list.length - 1
         // setup new object on form
         toggleAll(list)
+        // focus on required text input (if any)
+        $block.find('input[required]').first().focus()
         // commit only to perform reactive actions
         commit(data, true)
-      })
+      }
+      $add.click(add)
 
       // handle link to create transaction (when empty)
       $block.prev().find('a').click(function () {
@@ -371,6 +425,10 @@
         index++
         toggleAll()
       })
+
+      /* return function to manually add object to list
+      return add
+      */
     }
 
     // setup current transaction(s)
@@ -415,6 +473,14 @@
       $('#t' + tabId + '-next-shipping'),
       'shipping_lines'
     )
+
+    // handle collapse for payment address and shipping from address
+    $('div[data-link-collapse]').each(function () {
+      var $block = $(this)
+      $block.children('a').click(function () {
+        $block.children('div').slideToggle('slow')
+      })
+    })
   }
 
   // wait for the form to be ready

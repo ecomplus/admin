@@ -559,6 +559,154 @@
                   </div>
                 </div>
               </div>
+
+              <div class="bt-1 mt-3 pt-3" data-link-collapse="true">
+                <a href="javascript:;">
+                  <span class="fs-16 text-muted">
+                    <small><i class="ti-exchange-vertical text-primary mr-1"></i></small>
+                    <span class="i18n">
+                      <span data-lang="en_us">
+                        Billing address
+                      </span>
+                      <span data-lang="pt_br">
+                        Endereço de cobrança
+                      </span>
+                    </span>
+                  </span>
+                </a>
+
+                <div class="hidden mt-3">
+                  <div class="callout callout-info" role="alert">
+                    <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+                      <span>×</span>
+                    </button>
+                    <p class="i18n">
+                      <span data-lang="en_us">
+                        By default, if the billing address is empty, the
+                        <span class="text-info">delivery address</span>
+                        will also be used for billing.
+                      </span>
+                      <span data-lang="pt_br">
+                        Por padrão, se o endereço de cobrança estiver vazio, o
+                        <span class="text-info">endereço de entrega</span>
+                        também será utilizado para cobrança.
+                      </span>
+                    </p>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-xl-3 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n require">
+                          <span data-lang="en_us">ZIP code</span>
+                          <span data-lang="pt_br">CEP</span>
+                        </label>
+                        <input type="tel" class="form-control" data-mask="zip"
+                          name="transactions.billing_address.zip" required />
+                      </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Country</span>
+                          <span data-lang="pt_br">País</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="transactions.billing_address.country" placeholder="Brasil"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Street</span>
+                          <span data-lang="pt_br">Rua</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="transactions.billing_address.street"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-4">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Number</span>
+                          <span data-lang="pt_br">Número</span>
+                        </label>
+                        <input type="number" class="form-control"
+                          name="transactions.billing_address.number" min="1" max="9999999"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-4">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Complement</span>
+                          <span data-lang="pt_br">Complemento</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="transactions.billing_address.complement"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-4">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Province code</span>
+                          <span data-lang="pt_br">Estado (UF)</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="transactions.billing_address.province_code" placeholder="MG"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">City</span>
+                          <span data-lang="pt_br">Cidade</span>
+                        </label>
+                        <input type="text" class="form-control" name="transactions.billing_address.city"/>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Borough</span>
+                          <span data-lang="pt_br">Bairro</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="transactions.billing_address.borough"/>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Near to</span>
+                          <span data-lang="pt_br">Referência</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="transactions.billing_address.near_to"/>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Sender</span>
+                          <span data-lang="pt_br">Remetente</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="transactions.billing_address.name"/>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Phone number</span>
+                          <span data-lang="pt_br">Telefone</span>
+                        </label>
+                        <input type="tel" class="form-control" data-mask="tel"
+                          data-is-number="true" name="transactions.billing_address.phone.number"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -621,6 +769,63 @@
             </div>
 
             <div class="hidden" data-id="order-shipping">
+              <div class="row">
+                <div class="col-xl-4 col-sm-8">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Freight</span>
+                      <span data-lang="pt_br">Frete</span>
+                    </label>
+                    <input type="tel" class="form-control" name="shipping_lines.total_price"
+                      data-is-number="true" data-money="true"/>
+                    <span class="i18n">
+                      <small data-lang="en_us" class="form-text">
+                        Including additional and taxes
+                      </small>
+                      <small data-lang="pt_br" class="form-text">
+                        Incluindo adicionais e impostos
+                      </small>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-sm-8">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Posting deadline</span>
+                      <span data-lang="pt_br">Prazo de postagem</span>
+                    </label>
+                    <input type="number" class="form-control" min="1" max="9999999"
+                      name="shipping_lines.posting_deadline.days"/>
+                    <span class="i18n">
+                      <small data-lang="en_us" class="form-text">
+                        Working days
+                      </small>
+                      <small data-lang="pt_br" class="form-text">
+                        Dias úteis
+                      </small>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-xl-4 col-sm-8">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Delivery time</span>
+                      <span data-lang="pt_br">Estimativa de entrega</span>
+                    </label>
+                    <input type="number" class="form-control" min="1" max="9999999"
+                      name="shipping_lines.delivery_time.days"/>
+                    <span class="i18n">
+                      <small data-lang="en_us" class="form-text">
+                        Working days
+                      </small>
+                      <small data-lang="pt_br" class="form-text">
+                        Dias úteis
+                      </small>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
               <h4 class="i18n">
                 <span data-lang="en_us">
                   Delivery address
@@ -637,20 +842,21 @@
                       <span data-lang="en_us">ZIP code</span>
                       <span data-lang="pt_br">CEP</span>
                     </label>
-                    <input type="tel" class="form-control" name="shipping_lines.to.zip"
-                      required />
+                    <input type="tel" class="form-control" data-mask="zip"
+                      name="shipping_lines.to.zip" required />
                   </div>
                 </div>
-                <div class="col-xl-3 col-sm-6">
+                <div class="col-xl-4 col-sm-6">
                   <div class="form-group">
                     <label class="i18n">
                       <span data-lang="en_us">Country</span>
                       <span data-lang="pt_br">País</span>
                     </label>
-                    <input type="text" class="form-control" name="shipping_lines.to.country"/>
+                    <input type="text" class="form-control"
+                      name="shipping_lines.to.country" placeholder="Brasil"/>
                   </div>
                 </div>
-                <div class="col-xl-6 col-sm-8">
+                <div class="col-xl-6">
                   <div class="form-group">
                     <label class="i18n">
                       <span data-lang="en_us">Street</span>
@@ -672,13 +878,23 @@
                 <div class="col-xl-3 col-sm-4">
                   <div class="form-group">
                     <label class="i18n">
+                      <span data-lang="en_us">Complement</span>
+                      <span data-lang="pt_br">Complemento</span>
+                    </label>
+                    <input type="text" class="form-control" name="shipping_lines.to.complement"/>
+                  </div>
+                </div>
+                <div class="col-xl-3 col-sm-4">
+                  <div class="form-group">
+                    <label class="i18n">
                       <span data-lang="en_us">Province code</span>
                       <span data-lang="pt_br">Estado (UF)</span>
                     </label>
-                    <input type="text" class="form-control" name="shipping_lines.to.province_code"/>
+                    <input type="text" class="form-control" name="shipping_lines.to.province_code"
+                      placeholder="MG"/>
                   </div>
                 </div>
-                <div class="col-xl-6 col-sm-8">
+                <div class="col-xl-6">
                   <div class="form-group">
                     <label class="i18n">
                       <span data-lang="en_us">City</span>
@@ -720,7 +936,134 @@
                       <span data-lang="en_us">Phone number</span>
                       <span data-lang="pt_br">Telefone</span>
                     </label>
-                    <input type="tel" class="form-control" name="shipping_lines.to.phone.number"/>
+                    <input type="tel" class="form-control" data-mask="tel"
+                      data-is-number="true" name="shipping_lines.to.phone.number"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bt-1 mt-3 pt-3" data-link-collapse="true">
+                <a href="javascript:;">
+                  <span class="fs-16 text-muted">
+                    <small><i class="ti-exchange-vertical text-primary mr-1"></i></small>
+                    <span class="i18n">
+                      <span data-lang="en_us">
+                        Departure address
+                      </span>
+                      <span data-lang="pt_br">
+                        Endereço de partida
+                      </span>
+                    </span>
+                  </span>
+                </a>
+
+                <div class="hidden mt-3">
+                  <div class="row">
+                    <div class="col-xl-3 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n require">
+                          <span data-lang="en_us">ZIP code</span>
+                          <span data-lang="pt_br">CEP</span>
+                        </label>
+                        <input type="tel" class="form-control" data-mask="zip"
+                          name="shipping_lines.from.zip" required />
+                      </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Country</span>
+                          <span data-lang="pt_br">País</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="shipping_lines.from.country" placeholder="Brasil"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Street</span>
+                          <span data-lang="pt_br">Rua</span>
+                        </label>
+                        <input type="text" class="form-control" name="shipping_lines.from.street"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-4">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Number</span>
+                          <span data-lang="pt_br">Número</span>
+                        </label>
+                        <input type="number" class="form-control" name="shipping_lines.from.number"
+                          min="1" max="9999999"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-4">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Complement</span>
+                          <span data-lang="pt_br">Complemento</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="shipping_lines.from.complement"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-4">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Province code</span>
+                          <span data-lang="pt_br">Estado (UF)</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="shipping_lines.from.province_code" placeholder="MG"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">City</span>
+                          <span data-lang="pt_br">Cidade</span>
+                        </label>
+                        <input type="text" class="form-control" name="shipping_lines.from.city"/>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Borough</span>
+                          <span data-lang="pt_br">Bairro</span>
+                        </label>
+                        <input type="text" class="form-control" name="shipping_lines.from.borough"/>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Near to</span>
+                          <span data-lang="pt_br">Referência</span>
+                        </label>
+                        <input type="text" class="form-control" name="shipping_lines.from.near_to"/>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Sender</span>
+                          <span data-lang="pt_br">Remetente</span>
+                        </label>
+                        <input type="text" class="form-control" name="shipping_lines.from.name"/>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Phone number</span>
+                          <span data-lang="pt_br">Telefone</span>
+                        </label>
+                        <input type="tel" class="form-control" data-mask="tel"
+                          data-is-number="true" name="shipping_lines.from.phone.number"/>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
