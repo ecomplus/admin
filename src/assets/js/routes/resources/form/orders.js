@@ -369,7 +369,7 @@
         // create new object
         var obj = { _id: randomObjectId() }
         if (typeof handleObj === 'function') {
-          obj = handleObj(obj)
+          handleObj(obj)
         }
 
         // add object to list
@@ -474,8 +474,6 @@
       // remove excedent properties
       delete obj.to.default
       delete obj.to._id
-      // return the shipping line object fixed
-      return obj
     }
 
     handleNestedObjects(
@@ -490,9 +488,29 @@
     // handle collapse for payment address and shipping from address
     $('div[data-link-collapse]').each(function () {
       var $block = $(this)
+      var $form = $block.children('div')
+      var $em = $block.children('em')
+
+      var resumeContent = function () {
+        // show resumed content on text line
+        var content = ''
+        $form.find('input').each(function () {
+          var text = $(this).val()
+          if ((typeof text === 'string' && text.trim() !== '') || typeof text === 'number') {
+            content += text + ', '
+          }
+        })
+        // slice content to remove the last ', '
+        $em.text(content.slice(0, -2))
+      }
+
       $block.children('a').click(function () {
-        $block.children('div').slideToggle('slow')
+        $form.slideToggle('slow')
+        resumeContent()
+        $em.slideToggle()
       })
+      // start the resumed content on em tag
+      resumeContent()
     })
   }
 
