@@ -303,7 +303,8 @@
 
     // setup blocks for nested objects
     // shipping lines and transactions
-    var handleNestedObjects = function ($block, $add, $remove, $next, prop, index) {
+    var handleNestedObjects = function ($block, $add, $remove, $next, prop, handleObj) {
+      var index
       var isFormHidden = true
       var toggleHidden = function (list) {
         if (list && list.length) {
@@ -367,29 +368,8 @@
         var list = data[prop]
         // create new object
         var obj = { _id: randomObjectId() }
-
-        if (prop === 'shipping_lines') {
-          // preset a required (and hidden) from.zip field value
-          obj.from = { zip: '00000000' }
-          // preset shipping address with buyer address if defined
-          var address
-          if (buyerAdresses.length) {
-            for (var i = 0; i < buyerAdresses.length; i++) {
-              if (buyerAdresses[i].default) {
-                // customer default shipping address
-                address = buyerAdresses[i]
-                break
-              }
-            }
-            // use the first address on list
-            if (!address) {
-              address = buyerAdresses[0]
-            }
-          }
-          obj.to = Object.assign({}, address)
-          // remove excedent properties
-          delete obj.to.default
-          delete obj.to._id
+        if (typeof handleObj === 'function') {
+          obj = handleObj(obj)
         }
 
         // add object to list
@@ -470,12 +450,41 @@
 
     // setup current transaction(s)
     var $shipping = $('#t' + tabId + '-order-shipping')
+    var handleShippingObj = function (obj) {
+      // preset a required (and hidden) from.zip field value
+      obj.from = { zip: '00000000' }
+
+      // preset shipping address with buyer address if defined
+      var address
+      if (buyerAdresses.length) {
+        for (var i = 0; i < buyerAdresses.length; i++) {
+          if (buyerAdresses[i].default) {
+            // customer default shipping address
+            address = buyerAdresses[i]
+            break
+          }
+        }
+        // use the first address on list
+        if (!address) {
+          address = buyerAdresses[0]
+        }
+      }
+      obj.to = Object.assign({ zip: '00000000' }, address)
+
+      // remove excedent properties
+      delete obj.to.default
+      delete obj.to._id
+      // return the shipping line object fixed
+      return obj
+    }
+
     handleNestedObjects(
       $shipping,
       $('#t' + tabId + '-add-shipping'),
       $('#t' + tabId + '-delete-shipping'),
       $('#t' + tabId + '-next-shipping'),
-      'shipping_lines'
+      'shipping_lines',
+      handleShippingObj
     )
 
     // handle collapse for payment address and shipping from address
