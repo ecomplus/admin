@@ -1074,6 +1074,19 @@ ul > li:nth-child(4n+4) > .badges-list li {
   line-height: 1.35;
 }
 
+// cart items table
+.cart-items-list {
+  overflow-x: auto;
+  width: 100%;
+}
+.cart-items-list > table {
+  min-width: 800px;
+  max-width: none;
+}
+.cart-items-list:last-child > table {
+  margin-bottom: 0;
+}
+
 .masonry-item > a {
   display: inline-block;
   border: $card-internal-border;
