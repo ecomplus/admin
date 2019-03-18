@@ -4,12 +4,81 @@
   </div>
   <div class="ajax-overlay"></div>
 
-  <div class="row" data-id="order-base">
-    <div class="col-xl-6 col-md-4">
-      <div class="card">
+  <div class="card" data-id="items-container">
+    <header class="card-header">
+      <h4 class="card-title i18n">
+        <span data-lang="en_us">Order items</span>
+        <span data-lang="pt_br">Itens do pedido</span>
+      </h4>
+      <ul class="card-controls">
+        <li>
+          <a class="card-btn-slide" href="#"></a>
+        </li>
+      </ul>
+    </header>
+
+    <div class="card-content">
+      <div class="card-body">
+        <div class="form-group">
+          <div class="input-group">
+            <input type="text" class="form-control" data-id="new-cart-item"/>
+            <span class="input-group-append">
+              <button type="button" class="btn btn-light" data-id="add-cart-item">
+                <i class="fa fa-tag"></i>
+                <span class="i18n">
+                  <span data-lang="en_us">Add</span>
+                  <span data-lang="pt_br">Adicionar</span>
+                </span>
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="cart-items-list">
+          <table class="table table-striped table-center">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>SKU</th>
+                <th>Qnt.</th>
+                <th class="i18n">
+                  <span data-lang="en_us">Price</span>
+                  <span data-lang="pt_br">Preço</span>
+                </th>
+                <th class="i18n">
+                  <span data-lang="en_us">Name</span>
+                  <span data-lang="pt_br">Nome</span>
+                </th>
+                <th class="i18n">
+                  <span data-lang="en_us">Image</span>
+                  <span data-lang="pt_br">Imagem</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody data-id="cart-items">
+            </tbody>
+            <tfoot>
+              <tr>
+                <th scope="row">#</th>
+                <th>Subtotal</th>
+                <td data-id="cart-items-count">0</td>
+                <td data-id="cart-subtotal">R$ 0,00</td>
+                <td> - </td>
+                <td> - </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8 col-md-7">
+      <div class="card" data-id="order-base">
         <div class="card-body">
           <div class="row">
-            <div class="col-xl-6 col-md-12 col-sm-6">
+            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
               <div class="form-group">
                 <label class="i18n">
                   <span data-lang="en_us">Order number</span>
@@ -56,7 +125,7 @@
               </div>
             </div>
 
-            <div class="col-xl-6 col-md-12 col-sm-6">
+            <div class="col-xl-4 col-lg-6 col-md-12 col-sm-6">
               <div class="form-group">
                 <label class="i18n">
                   <span data-lang="en_us">Payment method</span>
@@ -89,199 +158,125 @@
                 </select>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-xl-3 col-md-4 col-sm-6">
-      <div class="card">
-        <header class="card-header">
-          <h4 class="card-title i18n">
+            <div class="col-xl-4">
+              <h4 class="i18n">
+                <span data-lang="en_us">Buyer</span>
+                <span data-lang="pt_br">Comprador</span>
+              </h4>
+
+              <div data-id="order-buyers">
+                <div data-id="buyer-info"></div>
+                <p class="prev-empty text-muted i18n">
+                  <span data-lang="en_us">No customer added</span>
+                  <span data-lang="pt_br">Nenhum cliente adicionado</span>
+                </p>
+                <button type="button" class="btn btn-light" data-id="add-buyer">
+                  <i class="fa fa-user-plus"></i>
+                  <span class="i18n">
+                    <span data-lang="en_us">Add customer</span>
+                    <span data-lang="pt_br">Adicionar cliente</span>
+                  </span>
+                </button>
+                <div class="hidden mt-3 ajax-form" data-id="new-buyer">
+                  <div class="ajax-overlay">
+                    <div class="spinner-circle-material"></div>
+                  </div>
+                  <label class="i18n">
+                    <span data-lang="en_us">Customer's email</span>
+                    <span data-lang="pt_br">E-mail do cliente</span>
+                  </label>
+                  <div class="input-group">
+                    <input type="email" class="form-control" placeholder="mail@email.com"/>
+                    <span class="input-group-append">
+                      <button type="button" class="btn btn-light">
+                        <i class="fa fa-check"></i>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="i18n mt-30">
             <span data-lang="en_us">Order value</span>
             <span data-lang="pt_br">Valor do pedido</span>
           </h4>
-          <ul class="card-controls">
-            <li>
-              <a class="card-btn-slide" href="#"></a>
-            </li>
-          </ul>
-        </header>
 
-        <div class="card-content">
-          <div class="card-body" data-id="order-amount">
-            <div class="form-group">
-              <label class="fw-500 require">Total</label>
-              <input type="tel" class="form-control fw-500" name="amount.total"
-                data-is-number="true" data-money="true" readonly />
-            </div>
-            <div class="form-group">
-              <label>Subtotal</label>
-              <input type="tel" class="form-control" name="amount.subtotal"
-                data-is-number="true" data-money="true"/>
-            </div>
-            <div class="form-group">
-              <label class="i18n">
-                <span data-lang="en_us">Freight</span>
-                <span data-lang="pt_br">Frete</span>
-              </label>
-              <input type="tel" class="form-control" name="amount.freight"
-                data-is-number="true" data-money="true"/>
-            </div>
-            <div class="form-group">
-              <label class="i18n">
-                <span data-lang="en_us">Discount</span>
-                <span data-lang="pt_br">Desconto</span>
-              </label>
-              <input type="tel" class="form-control" name="amount.discount"
-                data-is-number="true" data-money="true"/>
-            </div>
+          <div data-id="order-amount">
+            <div class="row">
+              <div class="col-lg-4 col-sm-6">
+                <div class="form-group">
+                  <label class="fw-500 require">Total</label>
+                  <input type="tel" class="form-control fw-500" name="amount.total"
+                    data-is-number="true" data-money="true" readonly />
+                </div>
+                <div class="form-group">
+                  <label>Subtotal</label>
+                  <input type="tel" class="form-control" name="amount.subtotal"
+                    data-is-number="true" data-money="true"/>
+                </div>
+              </div>
 
-            <div data-id="extra-amount">
-              <a href="javascript:;" class="i18n">
-                <span data-lang="en_us">+ Extra costs</span>
-                <span data-lang="pt_br">+ Custos extra</span>
-              </a>
-              <div class="hidden">
+              <div class="col-lg-4 col-sm-6">
                 <div class="form-group">
                   <label class="i18n">
-                    <span data-lang="en_us">Tax</span>
-                    <span data-lang="pt_br">Impostos e taxas</span>
+                    <span data-lang="en_us">Freight</span>
+                    <span data-lang="pt_br">Frete</span>
                   </label>
-                  <input type="tel" class="form-control" name="amount.tax"
+                  <input type="tel" class="form-control" name="amount.freight"
                     data-is-number="true" data-money="true"/>
                 </div>
                 <div class="form-group">
                   <label class="i18n">
-                    <span data-lang="en_us">Additional cost</span>
-                    <span data-lang="pt_br">Custo adicional</span>
+                    <span data-lang="en_us">Discount</span>
+                    <span data-lang="pt_br">Desconto</span>
                   </label>
-                  <input type="tel" class="form-control" name="amount.extra"
+                  <input type="tel" class="form-control" name="amount.discount"
                     data-is-number="true" data-money="true"/>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="col-xl-3 col-md-4 col-sm-6">
-      <div class="card">
-        <header class="card-header">
-          <h4 class="card-title i18n">
-            <span data-lang="en_us">Buyer</span>
-            <span data-lang="pt_br">Comprador</span>
-          </h4>
-          <ul class="card-controls">
-            <li>
-              <a class="card-btn-slide" href="#"></a>
-            </li>
-          </ul>
-        </header>
-
-        <div class="card-content">
-          <div class="card-body" data-id="order-buyers">
-            <div data-id="buyer-info"></div>
-            <button type="button" class="btn btn-light" data-id="add-buyer">
-              <i class="fa fa-user-plus"></i>
-              <span class="i18n">
-                <span data-lang="en_us">Add customer</span>
-                <span data-lang="pt_br">Adicionar cliente</span>
-              </span>
-            </button>
-            <div class="hidden mt-3 ajax-form" data-id="new-buyer">
-              <div class="ajax-overlay">
-                <div class="spinner-circle-material"></div>
-              </div>
-              <label class="i18n">
-                <span data-lang="en_us">Customer's email</span>
-                <span data-lang="pt_br">E-mail do cliente</span>
-              </label>
-              <div class="input-group">
-                <input type="email" class="form-control" placeholder="mail@email.com"/>
-                <span class="input-group-append">
-                  <button type="button" class="btn btn-light">
-                    <i class="fa fa-check"></i>
-                  </button>
-                </span>
+              <div class="col-lg-4">
+                <div class="row">
+                  <div class="col-lg-12 col-sm-6">
+                    <div class="form-group">
+                      <label class="i18n">
+                        <span data-lang="en_us">Tax</span>
+                        <span data-lang="pt_br">Impostos e taxas</span>
+                      </label>
+                      <input type="tel" class="form-control" name="amount.tax"
+                        data-is-number="true" data-money="true"/>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 col-sm-6">
+                    <div class="form-group">
+                      <label class="i18n">
+                        <span data-lang="en_us">Additional cost</span>
+                        <span data-lang="pt_br">Custo adicional</span>
+                      </label>
+                      <input type="tel" class="form-control" name="amount.extra"
+                        data-is-number="true" data-money="true"/>
+                    </div>
+                  </div>
+                </div>
+                <!--
+                <div data-id="extra-amount">
+                  <a href="javascript:;" class="i18n">
+                    <span data-lang="en_us">+ Extra costs</span>
+                    <span data-lang="pt_br">+ Custos extra</span>
+                  </a>
+                  <div class="hidden">
+                  </div>
+                </div>
+                -->
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="card" data-id="items-container">
-    <header class="card-header">
-      <h4 class="card-title i18n">
-        <span data-lang="en_us">Order items</span>
-        <span data-lang="pt_br">Itens do pedido</span>
-      </h4>
-      <ul class="card-controls">
-        <li>
-          <a class="card-btn-slide" href="#"></a>
-        </li>
-      </ul>
-    </header>
-
-    <div class="card-content">
-      <div class="card-body">
-        <div class="form-group">
-          <div class="input-group">
-            <input type="text" class="form-control" data-id="new-cart-item"/>
-            <span class="input-group-append">
-              <button type="button" class="btn btn-light" data-id="add-cart-item">
-                <i class="fa fa-tag"></i>
-                <span class="i18n">
-                  <span data-lang="en_us">Add</span>
-                  <span data-lang="pt_br">Adicionar</span>
-                </span>
-              </button>
-            </span>
-          </div>
-        </div>
-
-        <table class="table table-striped table-center">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>SKU</th>
-              <th>Qnt.</th>
-              <th class="i18n">
-                <span data-lang="en_us">Price</span>
-                <span data-lang="pt_br">Preço</span>
-              </th>
-              <th class="i18n">
-                <span data-lang="en_us">Name</span>
-                <span data-lang="pt_br">Nome</span>
-              </th>
-              <th class="i18n">
-                <span data-lang="en_us">Image</span>
-                <span data-lang="pt_br">Imagem</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody data-id="cart-items">
-          </tbody>
-          <tfoot>
-            <tr>
-              <th scope="row">#</th>
-              <th>Subtotal</th>
-              <td data-id="cart-items-count">0</td>
-              <td data-id="cart-subtotal">R$ 0,00</td>
-              <td> - </td>
-              <td> - </td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-8 col-md-7">
       <div class="card card-slided-up">
         <header class="card-header">
           <h6 class="card-title i18n">
@@ -574,6 +569,7 @@
                     </span>
                   </span>
                 </a>
+                <br><em></em>
 
                 <div class="hidden mt-3">
                   <div class="callout callout-info" role="alert">
@@ -770,174 +766,251 @@
 
             <div class="hidden" data-id="order-shipping">
               <div class="row">
-                <div class="col-xl-4 col-sm-8">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Freight</span>
-                      <span data-lang="pt_br">Frete</span>
-                    </label>
-                    <input type="tel" class="form-control" name="shipping_lines.total_price"
-                      data-is-number="true" data-money="true"/>
-                    <span class="i18n">
-                      <small data-lang="en_us" class="form-text">
-                        Including additional and taxes
-                      </small>
-                      <small data-lang="pt_br" class="form-text">
-                        Incluindo adicionais e impostos
-                      </small>
-                    </span>
+                <div class="col-xl-4">
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-6 col-sm-5">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Freight</span>
+                          <span data-lang="pt_br">Frete</span>
+                        </label>
+                        <input type="tel" class="form-control" name="shipping_lines.total_price"
+                          data-is-number="true" data-money="true"/>
+                        <span class="i18n hidden-md-down">
+                          <small data-lang="en_us" class="form-text">
+                            Including additional and taxes
+                          </small>
+                          <small data-lang="pt_br" class="form-text">
+                            Incluindo adicionais e impostos
+                          </small>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-6 col-sm-7">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Tracking code</span>
+                          <span data-lang="pt_br">Código de rastreamento</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="shipping_lines.tracking_codes[].0.code"/>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="col-xl-4 col-sm-8">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Posting deadline</span>
-                      <span data-lang="pt_br">Prazo de postagem</span>
-                    </label>
-                    <input type="number" class="form-control" min="1" max="9999999"
-                      name="shipping_lines.posting_deadline.days"/>
-                    <span class="i18n">
-                      <small data-lang="en_us" class="form-text">
-                        Working days
-                      </small>
-                      <small data-lang="pt_br" class="form-text">
-                        Dias úteis
-                      </small>
-                    </span>
+
+                <div class="col-xl-4 col-lg-5">
+                  <div class="row">
+                    <div class="col-lg-12 col-sm-7">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Posting deadline</span>
+                          <span data-lang="pt_br">Prazo de postagem</span>
+                        </label>
+                        <input type="number" class="form-control w-120px" min="1" max="9999999"
+                          name="shipping_lines.posting_deadline.days"/>
+                      </div>
+                      <div class="form-group">
+                        <div class="custom-controls-stacked">
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input"
+                              data-name="shipping_lines.posting_deadline.working_days" checked />
+                            <label class="custom-control-label i18n">
+                              <span data-lang="en_us">Working days</span>
+                              <span data-lang="pt_br">Dias úteis</span>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="custom-controls-stacked">
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input"
+                              data-name="shipping_lines.posting_deadline.after_approval" checked />
+                            <label class="custom-control-label i18n">
+                              <span data-lang="en_us">After approval</span>
+                              <span data-lang="pt_br">Após aprovação do pagamento</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-sm-5 order-sm-first">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Delivery time</span>
+                          <span data-lang="pt_br">Prazo de entrega</span>
+                        </label>
+                        <input type="number" class="form-control w-120px" min="1" max="9999999"
+                          name="shipping_lines.delivery_time.days"/>
+                      </div>
+                      <div class="form-group">
+                        <div class="custom-controls-stacked">
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input"
+                              data-name="shipping_lines.delivery_time.working_days" checked />
+                            <label class="custom-control-label i18n">
+                              <span data-lang="en_us">Working days</span>
+                              <span data-lang="pt_br">Dias úteis</span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="col-xl-4 col-sm-8">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Delivery time</span>
-                      <span data-lang="pt_br">Estimativa de entrega</span>
-                    </label>
-                    <input type="number" class="form-control" min="1" max="9999999"
-                      name="shipping_lines.delivery_time.days"/>
-                    <span class="i18n">
-                      <small data-lang="en_us" class="form-text">
-                        Working days
-                      </small>
-                      <small data-lang="pt_br" class="form-text">
-                        Dias úteis
-                      </small>
+
+                <div class="col-xl-4 col-lg-7">
+                  <h4 class="i18n">
+                    <span data-lang="en_us">
+                      Invoice
                     </span>
+                    <span data-lang="pt_br">
+                      Nota fiscal
+                    </span>
+                  </h4>
+                  <div class="row">
+                    <div class="col-lg-12 col-sm-5">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Number</span>
+                          <span data-lang="pt_br">Número</span>
+                        </label>
+                        <input type="tel" class="form-control"
+                          name="shipping_lines.invoices[].0.number"/>
+                      </div>
+                    </div>
+                    <div class="col-lg-12 col-sm-7">
+                      <div class="form-group">
+                        <label>Link</label>
+                        <input type="text" class="form-control"
+                          name="shipping_lines.invoices[].0.link"/>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <h4 class="i18n">
-                <span data-lang="en_us">
-                  Delivery address
-                </span>
-                <span data-lang="pt_br">
-                  Endereço de entrega
-                </span>
-              </h4>
+              <div class="bt-1 mt-3 pt-3" data-link-collapse="true">
+                <a href="javascript:;">
+                  <span class="fs-16 text-muted">
+                    <small><i class="ti-exchange-vertical text-primary mr-1"></i></small>
+                    <span class="i18n">
+                      <span data-lang="en_us">
+                        Delivery address
+                      </span>
+                      <span data-lang="pt_br">
+                        Endereço de entrega
+                      </span>
+                    </span>
+                  </span>
+                </a>
+                <br><em></em>
 
-              <div class="row">
-                <div class="col-xl-3 col-sm-6">
-                  <div class="form-group">
-                    <label class="i18n require">
-                      <span data-lang="en_us">ZIP code</span>
-                      <span data-lang="pt_br">CEP</span>
-                    </label>
-                    <input type="tel" class="form-control" data-mask="zip"
-                      name="shipping_lines.to.zip" required />
-                  </div>
-                </div>
-                <div class="col-xl-4 col-sm-6">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Country</span>
-                      <span data-lang="pt_br">País</span>
-                    </label>
-                    <input type="text" class="form-control"
-                      name="shipping_lines.to.country" placeholder="Brasil"/>
-                  </div>
-                </div>
-                <div class="col-xl-6">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Street</span>
-                      <span data-lang="pt_br">Rua</span>
-                    </label>
-                    <input type="text" class="form-control" name="shipping_lines.to.street"/>
-                  </div>
-                </div>
-                <div class="col-xl-3 col-sm-4">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Number</span>
-                      <span data-lang="pt_br">Número</span>
-                    </label>
-                    <input type="number" class="form-control" name="shipping_lines.to.number"
-                      min="1" max="9999999"/>
-                  </div>
-                </div>
-                <div class="col-xl-3 col-sm-4">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Complement</span>
-                      <span data-lang="pt_br">Complemento</span>
-                    </label>
-                    <input type="text" class="form-control" name="shipping_lines.to.complement"/>
-                  </div>
-                </div>
-                <div class="col-xl-3 col-sm-4">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Province code</span>
-                      <span data-lang="pt_br">Estado (UF)</span>
-                    </label>
-                    <input type="text" class="form-control" name="shipping_lines.to.province_code"
-                      placeholder="MG"/>
-                  </div>
-                </div>
-                <div class="col-xl-6">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">City</span>
-                      <span data-lang="pt_br">Cidade</span>
-                    </label>
-                    <input type="text" class="form-control" name="shipping_lines.to.city"/>
-                  </div>
-                </div>
-                <div class="col-lg-6 col-md-12 col-sm-6">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Borough</span>
-                      <span data-lang="pt_br">Bairro</span>
-                    </label>
-                    <input type="text" class="form-control" name="shipping_lines.to.borough"/>
-                  </div>
-                </div>
-                <div class="col-lg-6 col-md-12 col-sm-6">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Near to</span>
-                      <span data-lang="pt_br">Referência</span>
-                    </label>
-                    <input type="text" class="form-control" name="shipping_lines.to.near_to"/>
-                  </div>
-                </div>
-                <div class="col-lg-6 col-md-12 col-sm-6">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Recipient</span>
-                      <span data-lang="pt_br">Destinatário</span>
-                    </label>
-                    <input type="text" class="form-control" name="shipping_lines.to.name"/>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-12 col-sm-6">
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Phone number</span>
-                      <span data-lang="pt_br">Telefone</span>
-                    </label>
-                    <input type="tel" class="form-control" data-mask="tel"
-                      data-is-number="true" name="shipping_lines.to.phone.number"/>
+                <div class="hidden mt-3">
+                  <div class="row">
+                    <div class="col-xl-3 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n require">
+                          <span data-lang="en_us">ZIP code</span>
+                          <span data-lang="pt_br">CEP</span>
+                        </label>
+                        <input type="tel" class="form-control" data-mask="zip"
+                          name="shipping_lines.to.zip" required />
+                      </div>
+                    </div>
+                    <div class="col-xl-4 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Country</span>
+                          <span data-lang="pt_br">País</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="shipping_lines.to.country" placeholder="Brasil"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Street</span>
+                          <span data-lang="pt_br">Rua</span>
+                        </label>
+                        <input type="text" class="form-control" name="shipping_lines.to.street"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-4">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Number</span>
+                          <span data-lang="pt_br">Número</span>
+                        </label>
+                        <input type="number" class="form-control" name="shipping_lines.to.number"
+                          min="1" max="9999999"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-4">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Complement</span>
+                          <span data-lang="pt_br">Complemento</span>
+                        </label>
+                        <input type="text" class="form-control" name="shipping_lines.to.complement"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-sm-4">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Province code</span>
+                          <span data-lang="pt_br">Estado (UF)</span>
+                        </label>
+                        <input type="text" class="form-control" name="shipping_lines.to.province_code"
+                          placeholder="MG"/>
+                      </div>
+                    </div>
+                    <div class="col-xl-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">City</span>
+                          <span data-lang="pt_br">Cidade</span>
+                        </label>
+                        <input type="text" class="form-control" name="shipping_lines.to.city"/>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Borough</span>
+                          <span data-lang="pt_br">Bairro</span>
+                        </label>
+                        <input type="text" class="form-control" name="shipping_lines.to.borough"/>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Near to</span>
+                          <span data-lang="pt_br">Referência</span>
+                        </label>
+                        <input type="text" class="form-control" name="shipping_lines.to.near_to"/>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Recipient</span>
+                          <span data-lang="pt_br">Destinatário</span>
+                        </label>
+                        <input type="text" class="form-control" name="shipping_lines.to.name"/>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Phone number</span>
+                          <span data-lang="pt_br">Telefone</span>
+                        </label>
+                        <input type="tel" class="form-control" data-mask="tel"
+                          data-is-number="true" name="shipping_lines.to.phone.number"/>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -956,6 +1029,7 @@
                     </span>
                   </span>
                 </a>
+                <br><em></em>
 
                 <div class="hidden mt-3">
                   <div class="row">
@@ -1094,24 +1168,61 @@
           </footer>
         </div>
       </div>
+    </div>
+
+    <div class="col-lg-4 col-md-5">
+      <div class="card hidden">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">
+              Timeline
+            </span>
+            <span data-lang="pt_br">
+              Linha do tempo
+            </span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <ol class="timeline timeline-activity timeline-point-sm timeline-content-right w-100 py-20 pr-20"
+              data-id="order-timeline">
+              <!--
+              <li class="timeline-block">
+                <div class="timeline-point">
+                  <span class="badge badge-dot badge-lg badge-danger"></span>
+                </div>
+                <div class="timeline-content">
+                  <time datetime="2018">Just now</time>
+                  <p>Finish writing Grunt tasks.</p>
+                </div>
+              </li>
+              -->
+            </ol>
+          </div>
+        </div>
+      </div>
 
       <div class="card card-slided-up">
         <header class="card-header">
           <h6 class="card-title i18n">
             <span data-lang="en_us">
-              Campaign
-              <span class="hidden-md-down">and tracking</span>
+              Notes
             </span>
             <span data-lang="pt_br">
-              Campanha
-              <span class="hidden-md-down">e rastreamento</span>
+              Anotações
             </span>
           </h6>
           <ul class="card-controls">
             <li>
               <a class="card-btn-slide i18n" href="#">
-                <span data-lang="en_us">Edit UTM parameters</span>
-                <span data-lang="pt_br">Editar parâmetros UTM</span>
+                <span data-lang="en_us">Edit comments</span>
+                <span data-lang="pt_br">Editar comentários</span>
               </a>
             </li>
           </ul>
@@ -1119,8 +1230,53 @@
 
         <div class="card-content">
           <div class="card-body">
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Comments on the order</span>
+                <span data-lang="pt_br">Comentários do pedido</span>
+              </label>
+              <textarea class="form-control" rows="4" name="notes"></textarea>
+              <span class="i18n">
+                <small data-lang="en_us" class="form-text">
+                  Comments visible to the buyer
+                </small>
+                <small data-lang="pt_br" class="form-text">
+                  Comentários visíveis ao comprador
+                </small>
+              </span>
+            </div>
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Private staff notes</span>
+                <span data-lang="pt_br">Notas privadas da administração</span>
+              </label>
+              <textarea class="form-control" rows="4" name="staff_notes"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">
+              UTM campaign
+            </span>
+            <span data-lang="pt_br">
+              Campanha UTM
+            </span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide text-primary" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
             <div class="row">
-              <div class="col-sm-6">
+              <div class="col-xl-6 col-md-12 col-sm-6">
                 <div class="form-group">
                   <label class="i18n">
                     <span data-lang="en_us">Source</span>
@@ -1137,7 +1293,7 @@
                   </span>
                 </div>
               </div>
-              <div class="col-sm-6">
+              <div class="col-xl-6 col-md-12 col-sm-6">
                 <div class="form-group">
                   <label class="i18n">
                     <span data-lang="en_us">Marketing medium</span>
@@ -1154,10 +1310,7 @@
                   </span>
                 </div>
               </div>
-            </div>
-
-            <div class="row">
-              <div class="col-sm-6">
+              <div class="col-md-12 col-sm-6">
                 <div class="form-group">
                   <label class="i18n">
                     <span data-lang="en_us">Campaign name</span>
@@ -1166,7 +1319,7 @@
                   <input type="text" class="form-control" name="utm.campaign"/>
                 </div>
               </div>
-              <div class="col-sm-6">
+              <div class="col-md-12 col-sm-6">
                 <div class="form-group">
                   <label>Keywords</label>
                   <input type="text" class="form-control" name="utm.term"/>
@@ -1179,27 +1332,78 @@
                 <span data-lang="en_us">Campaign content</span>
                 <span data-lang="pt_br">Conteúdo da campanha</span>
               </label>
-              <textarea class="form-control" rows="2" name="utm.content"></textarea>
+              <textarea class="form-control" rows="3" name="utm.content"></textarea>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="col-lg-4 col-md-5">
-      <div class="card">
-        <h4 class="card-title"><strong>Colored dots</strong></h4>
-        <ol class="timeline timeline-activity timeline-point-sm timeline-content-right w-100 py-20 pr-20">
-          <li class="timeline-block">
-            <div class="timeline-point">
-              <span class="badge badge-dot badge-lg badge-danger"></span>
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">
+              Identification and affiliates
+            </span>
+            <span data-lang="pt_br">
+              Identificação e afiliados
+            </span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide text-primary" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Order code</span>
+                <span data-lang="pt_br">Código do pedido</span>
+              </label>
+              <input type="text" class="form-control" name="code"/>
+              <span class="i18n">
+                <small data-lang="en_us" class="form-text">
+                  Extra identification code, should be unique
+                </small>
+                <small data-lang="pt_br" class="form-text">
+                  Código de identificação extra, deve ser único
+                </small>
+              </span>
             </div>
-            <div class="timeline-content">
-              <time datetime="2018">Just now</time>
-              <p>Finish writing Grunt tasks.</p>
+
+            <div class="row">
+              <div class="col-xl-6 col-md-12 col-sm-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Affiliate code</span>
+                    <span data-lang="pt_br">Código de afiliado</span>
+                  </label>
+                  <input type="text" class="form-control" name="affiliate_code"/>
+                </div>
+              </div>
+              <div class="col-xl-6 col-md-12 col-sm-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Referring site</span>
+                    <span data-lang="pt_br">Site de referência</span>
+                  </label>
+                  <input type="text" class="form-control" name="referring_site"/>
+                </div>
+              </div>
+              <div class="col-md-12 col-sm-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Site domain</span>
+                    <span data-lang="pt_br">Domínio do site</span>
+                  </label>
+                  <input type="text" class="form-control" name="domain"/>
+                </div>
+              </div>
             </div>
-          </li>
-        </ol>
+          </div>
+        </div>
       </div>
     </div>
   </div>

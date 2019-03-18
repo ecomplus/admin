@@ -42,7 +42,7 @@
       }, 150)
     })
 
-    // handle amount extra fields collapse
+    /* handle amount extra fields collapse
     var $amountExtra = $amount.find('#t' + tabId + '-extra-amount')
     var toggleAmountExtra = function () {
       $amountExtra.children('div').slideToggle()
@@ -53,6 +53,7 @@
         toggleAmountExtra()
       }
     }
+    */
 
     // render buyers blocks
     var $buyers, $buyerInfo
@@ -252,16 +253,20 @@
     // reuse order status enum and respective colors from lists configuration JSON
     $.getJSON('json/misc/config_lists.json', function (json) {
       // order status string fields
+      var financialStatus = 'financial_status/current'
+      var fulfillmentStatus = 'fulfillment_status/current'
       var fields = [
         'status',
-        'financial_status/current',
-        'fulfillment_status/current'
+        financialStatus,
+        fulfillmentStatus
       ]
+      var opts
+
       for (var i = 0; i < fields.length; i++) {
         var field = fields[i]
         var prop = field.replace('/', '.')
         var html = []
-        var opts = json.orders[field].enum
+        opts = json.orders[field].enum
 
         // add options to HTML string
         for (var status in opts) {
@@ -289,6 +294,82 @@
         }
         $select.selectpicker('refresh')
       }
+
+      // setup order timeline
+      var $timeline = $('#t' + tabId + '-order-timeline')
+      var events = []
+      var eventTypes = {
+        'payments_history': financialStatus,
+        'fulfillments': fulfillmentStatus
+      }
+
+      // merge payment and fulfillment status changes
+      for (var eventType in eventTypes) {
+        if (eventTypes.hasOwnProperty(eventType) && data[eventType]) {
+          // get enum from JSON to set color and text by event
+          opts = json.orders[eventTypes[eventType]].enum
+          data[eventType].forEach(function (entry) {
+            var eventObj
+            for (var status in opts) {
+              if (opts.hasOwnProperty(status) && status === entry.status) {
+                // status found
+                eventObj = opts[status]
+                break
+              }
+            }
+            eventObj.date_time = entry.date_time
+            eventObj.type = eventType
+            events.push(eventObj)
+          })
+        }
+      }
+
+      if (events.length) {
+        // order events by date
+        events.sort(function (a, b) {
+          if (a.date_time > b.date_time) {
+            return 1
+          }
+          if (a.date_time < b.date_time) {
+            return -1
+          }
+          // a must be equal to b
+          return 0
+        })
+
+        // update timeline element
+        // show full timestamp of each event
+        var dateList = [ 'day', 'month', 'year', 'hour', 'minute', 'second' ]
+        events.forEach(function (eventObj) {
+          // color by status
+          var badgeColor = eventObj.class || 'default'
+          // setup timeline block content
+          var blockContent = ''
+          if (eventObj.date_time) {
+            blockContent += '<time datetime="' + eventObj.date_time + '">' +
+              formatDate(eventObj.date_time, dateList) + '</time>'
+          }
+          blockContent += '<p>' + i18n(eventObj.text) + '</p>'
+
+          // add block to timeline element
+          $timeline.append($('<li>', {
+            'class': 'timeline-block',
+            html: [
+              $('<div>', {
+                'class': 'timeline-point',
+                html: '<span class="badge badge-dot badge-lg badge-' + badgeColor + '"></span>'
+              }),
+              $('<div>', {
+                'class': 'timeline-content',
+                html: blockContent
+              })
+            ]
+          }))
+        })
+
+        // show timeline element on DOM
+        $timeline.closest('.hidden').slideDown()
+      }
     })
 
     var nestedForm = function ($form, obj, prop) {
@@ -303,7 +384,8 @@
 
     // setup blocks for nested objects
     // shipping lines and transactions
-    var handleNestedObjects = function ($block, $add, $remove, $next, prop, index) {
+    var handleNestedObjects = function ($block, $add, $remove, $next, prop, handleObj) {
+      var index
       var isFormHidden = true
       var toggleHidden = function (list) {
         if (list && list.length) {
@@ -367,34 +449,17 @@
         var list = data[prop]
         // create new object
         var obj = { _id: randomObjectId() }
-
-        if (prop === 'shipping_lines') {
-          // preset a required (and hidden) from.zip field value
-          obj.from = { zip: '00000000' }
-          // preset shipping address with buyer address if defined
-          var address
-          if (buyerAdresses.length) {
-            for (var i = 0; i < buyerAdresses.length; i++) {
-              if (buyerAdresses[i].default) {
-                // customer default shipping address
-                address = buyerAdresses[i]
-                break
-              }
-            }
-            // use the first address on list
-            if (!address) {
-              address = buyerAdresses[0]
-            }
-          }
-          obj.to = Object.assign({}, address)
-          // remove excedent properties
-          delete obj.to.default
-          delete obj.to._id
+        if (typeof handleObj === 'function') {
+          handleObj(obj)
         }
 
         // add object to list
         list.push(obj)
         index = list.length - 1
+        // fix input names before handling form
+        $block.find('input[data-name]').each(function () {
+          $(this).attr('name', $(this).data('name'))
+        })
         // setup new object on form
         toggleAll(list)
         // focus on required text input (if any)
@@ -466,20 +531,67 @@
 
     // setup current transaction(s)
     var $shipping = $('#t' + tabId + '-order-shipping')
+    var handleShippingObj = function (obj) {
+      // preset a required (and hidden) from.zip field value
+      obj.from = { zip: '00000000' }
+
+      // preset shipping address with buyer address if defined
+      var address
+      if (buyerAdresses.length) {
+        for (var i = 0; i < buyerAdresses.length; i++) {
+          if (buyerAdresses[i].default) {
+            // customer default shipping address
+            address = buyerAdresses[i]
+            break
+          }
+        }
+        // use the first address on list
+        if (!address) {
+          address = buyerAdresses[0]
+        }
+      }
+      obj.to = Object.assign({ zip: '00000000' }, address)
+
+      // remove excedent properties
+      delete obj.to.default
+      delete obj.to._id
+    }
+
     handleNestedObjects(
       $shipping,
       $('#t' + tabId + '-add-shipping'),
       $('#t' + tabId + '-delete-shipping'),
       $('#t' + tabId + '-next-shipping'),
-      'shipping_lines'
+      'shipping_lines',
+      handleShippingObj
     )
 
     // handle collapse for payment address and shipping from address
     $('div[data-link-collapse]').each(function () {
       var $block = $(this)
+      var $form = $block.children('div')
+      var $em = $block.children('em')
+
+      var resumeContent = function () {
+        // show resumed content on text line
+        var content = ''
+        $form.find('input').each(function () {
+          var text = $(this).val()
+          if ((typeof text === 'string' && text.trim() !== '') || typeof text === 'number') {
+            content += text + ', '
+          }
+        })
+        // slice content to remove the last ', '
+        $em.text(content.slice(0, -2))
+      }
+
       $block.children('a').click(function () {
-        $block.children('div').slideToggle('slow')
+        $form.slideToggle('slow')
+        resumeContent()
+        $em.slideToggle()
       })
+      // start the resumed content on em tag
+      resumeContent()
     })
   }
 
