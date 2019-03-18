@@ -798,6 +798,14 @@ body {
   height: auto !important;
   overflow: hidden !important;
 }
+@media (max-width: 1199px) {
+  .data-list > * {
+    min-width: 1080px !important;
+  }
+  .data-list {
+    overflow-x: auto !important;
+  }
+}
 .data-list table,
 .data-list tbody {
   display: block;
@@ -1064,6 +1072,19 @@ ul > li:nth-child(4n+4) > .badges-list li {
   font-size: 90%;
   font-family: $font-monospace;
   line-height: 1.35;
+}
+
+// cart items table
+.cart-items-list {
+  overflow-x: auto;
+  width: 100%;
+}
+.cart-items-list > table {
+  min-width: 800px;
+  max-width: none;
+}
+.cart-items-list:last-child > table {
+  margin-bottom: 0;
 }
 
 .masonry-item > a {

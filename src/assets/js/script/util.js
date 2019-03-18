@@ -706,14 +706,20 @@
         }
       } else if (typeof val === 'object' && val !== null) {
         // recursive
-        var nextPrefix = prefix + prop + '.'
+        var nextPrefix = prefix + prop
         if (!Array.isArray(val)) {
+          nextPrefix += '.'
           // nested object
           setupInputValues($form, val, nextPrefix)
-        } else if (val[0] && typeof val[0] === 'object' && val[0]._id) {
+        } else if (val[0] && typeof val[0] === 'object') {
           // array of nested objects
           for (i = 0; i < val.length; i++) {
-            setupInputValues($form, val[i], nextPrefix, val[i]._id)
+            var arrayPrefix = nextPrefix
+            if (!val[0]._id) {
+              arrayPrefix += '[].' + i
+            }
+            arrayPrefix += '.'
+            setupInputValues($form, val[i], arrayPrefix, val[i]._id)
           }
         }
       }
