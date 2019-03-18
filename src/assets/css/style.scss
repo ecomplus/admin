@@ -798,6 +798,14 @@ body {
   height: auto !important;
   overflow: hidden !important;
 }
+@media (max-width: 1199px) {
+  .data-list > * {
+    min-width: 1080px !important;
+  }
+  .data-list {
+    overflow-x: auto !important;
+  }
+}
 .data-list table,
 .data-list tbody {
   display: block;
