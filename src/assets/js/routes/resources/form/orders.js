@@ -42,7 +42,7 @@
       }, 150)
     })
 
-    // handle amount extra fields collapse
+    /* handle amount extra fields collapse
     var $amountExtra = $amount.find('#t' + tabId + '-extra-amount')
     var toggleAmountExtra = function () {
       $amountExtra.children('div').slideToggle()
@@ -53,6 +53,7 @@
         toggleAmountExtra()
       }
     }
+    */
 
     // render buyers blocks
     var $buyers, $buyerInfo
