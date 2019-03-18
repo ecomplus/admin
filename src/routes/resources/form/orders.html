@@ -1171,19 +1171,41 @@
     </div>
 
     <div class="col-lg-4 col-md-5">
-      <div class="card">
-        <h4 class="card-title"><strong>Colored dots</strong></h4>
-        <ol class="timeline timeline-activity timeline-point-sm timeline-content-right w-100 py-20 pr-20">
-          <li class="timeline-block">
-            <div class="timeline-point">
-              <span class="badge badge-dot badge-lg badge-danger"></span>
-            </div>
-            <div class="timeline-content">
-              <time datetime="2018">Just now</time>
-              <p>Finish writing Grunt tasks.</p>
-            </div>
-          </li>
-        </ol>
+      <div class="card hidden">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">
+              Timeline
+            </span>
+            <span data-lang="pt_br">
+              Linha do tempo
+            </span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <ol class="timeline timeline-activity timeline-point-sm timeline-content-right w-100 py-20 pr-20"
+              data-id="order-timeline">
+              <!--
+              <li class="timeline-block">
+                <div class="timeline-point">
+                  <span class="badge badge-dot badge-lg badge-danger"></span>
+                </div>
+                <div class="timeline-content">
+                  <time datetime="2018">Just now</time>
+                  <p>Finish writing Grunt tasks.</p>
+                </div>
+              </li>
+              -->
+            </ol>
+          </div>
+        </div>
       </div>
 
       <div class="card card-slided-up">
