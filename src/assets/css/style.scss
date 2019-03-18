@@ -24,6 +24,9 @@ $color-purple-lighter: lighten($color-purple, 35%);
 .toast {
   background-color: $color-orange;
 }
+.toast.fix-reveal {
+  transform: translateX(-50%) translateY(0);
+}
 
 // checkbox switch
 .switch input:checked ~ .switch-indicator {
