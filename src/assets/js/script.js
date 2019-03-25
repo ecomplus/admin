@@ -1037,7 +1037,7 @@ app.ready(function () {
   app.toast = function (obj) {
     if (typeof obj !== 'string' && obj) {
       try {
-        // tro to parse to string
+        // try to parse to string
         obj = JSON.stringify(obj)
       } catch (err) {
         console.error(err)
@@ -1045,6 +1045,15 @@ app.ready(function () {
       }
     }
     notification(obj)
+
+    // keep toast while mouse is over the element
+    setTimeout(function () {
+      $('div.toast').one('mouseenter', function () {
+        $(this).addClass('fix-reveal').one('mouseleave', function () {
+          $(this).removeClass('fix-reveal')
+        })
+      })
+    }, 30)
   }
 
   var apiError = function (json) {
