@@ -722,12 +722,17 @@
                   // save action callback
                   cb(tabId)
                 }
+                if (typeof Tab.saveCallback === 'function') {
+                  // additional route especific callback
+                  Tab.saveCallback(json)
+                }
                 if (creating && json._id) {
                   // document created
                   // redirect to resource edit page
                   window.location = '/#/resources/' + slug + '/' + json._id
                 }
               }
+
               callApi(endpoint, method, callback, data)
             }, 200)
           })
