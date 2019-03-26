@@ -18,6 +18,12 @@
   // var lang = window.lang
   var i18n = window.i18n
 
+  Tab.saveCallback = function (json) {
+    if (json) {
+
+    }
+  }
+
   Tab.continue = function () {
     // get form element from global Tab object
     var $form = Tab.$form
