@@ -579,11 +579,7 @@
             $(this).inputmask('99999-999')
           }
           break
-      }
-    })
-
-    $form.find('input[data-mask]').each(function () {
-      switch ($(this).data('mask')) {
+          
         case 'birth':
           if (window.lang === 'pt_br') {
             // brazilian birth date
@@ -591,11 +587,12 @@
           }
           if (window.lang === 'en_us') {
             // american birth date
-            $(this).inputmask('9999/99/99')
+            $(this).inputmask('9999-99-99')
           }
           break
       }
     })
+
     $form.find('input[type="number"]').keydown(function (e) {
       // allow: backspace, delete, tab, escape, enter
       var allowed = [46, 8, 9, 27, 13]
