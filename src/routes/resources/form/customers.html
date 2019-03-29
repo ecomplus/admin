@@ -22,7 +22,6 @@
             </label>
             <input type="text" class="form-control" data-id="full-name"/>
           </div>
-
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group">
@@ -117,11 +116,158 @@
         </div>
       </div>
     </div>
-
     <div class="col-md-6">
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Additional Customer Info</span>
+            <span data-lang="pt_br">Informação Adicional Cliente</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label class="i18n require">
+                  <span data-lang="en_us">Type of Customer</span>
+                  <span data-lang="pt_br">Tipo de Pessoa</span>
+                </label>
+                <select class="form-control" name="registry_type">
+                  <option value="p"
+                    data-content="&lt;span class=&apos;i18n&apos;&gt;
+                    &lt;span data-lang=&apos;en_us&apos;&gt;Physical&lt;/span&gt;
+                    &lt;span data-lang=&apos;pt_br&apos;&gt;Física&lt;/span&gt;
+                    &lt;/span&gt;">
+                    Física
+                  </option>
+                  <option value="j"
+                    data-content="&lt;span class=&apos;i18n&apos;&gt;
+                    &lt;span data-lang=&apos;en_us&apos;&gt;Juridical&lt;/span&gt;
+                    &lt;span data-lang=&apos;pt_br&apos;&gt;Jurídica&lt;/span&gt;
+                    &lt;/span&gt;">
+                    Jurídica
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                  <label class="i18n require">
+                    <span data-lang="en_us">CPF</span>
+                    <span data-lang="pt_br">CPF</span>/
+                    <span data-lang="en_us" class="hidden">CNPJ</span>
+                    <span data-lang="pt_br" class="hidden">CNPJ</span>
+                  </label>
+                  <input type="number" class="form-control" data-id="doc_number" data-mask="birth" required/>
+              </div>
+            </div>
+            </div>
+            <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label class="i18n require">
+                  <span data-lang="en_us">Type of number</span>
+                  <span data-lang="pt_br">Tipo de número</span>
+                </label>
+                <select class="form-control" name="phones">
+                  <option value="home"
+                    data-content="&lt;span class=&apos;i18n&apos;&gt;
+                    &lt;span data-lang=&apos;en_us&apos;&gt;Home&lt;/span&gt;
+                    &lt;span data-lang=&apos;pt_br&apos;&gt;Casa&lt;/span&gt;
+                    &lt;/span&gt;">
+                    Casa
+                  </option>
+                  <option value="personal"
+                    data-content="&lt;span class=&apos;i18n&apos;&gt;
+                    &lt;span data-lang=&apos;en_us&apos;&gt;Personal&lt;/span&gt;
+                    &lt;span data-lang=&apos;pt_br&apos;&gt;Pessoal&lt;/span&gt;
+                    &lt;/span&gt;">
+                    Pessoal
+                  </option>
+                  <option value="work"
+                    data-content="&lt;span class=&apos;i18n&apos;&gt;
+                    &lt;span data-lang=&apos;en_us&apos;&gt;Work&lt;/span&gt;
+                    &lt;span data-lang=&apos;pt_br&apos;&gt;Trabalho&lt;/span&gt;
+                    &lt;/span&gt;">
+                    Trabalho
+                  </option>
+                  <option value="other"
+                    data-content="&lt;span class=&apos;i18n&apos;&gt;
+                    &lt;span data-lang=&apos;en_us&apos;&gt;Other&lt;/span&gt;
+                    &lt;span data-lang=&apos;pt_br&apos;&gt;Outros&lt;/span&gt;
+                    &lt;/span&gt;">
+                    Outros
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                  <label class="i18n require">
+                    <span data-lang="en_us">Number</span>
+                    <span data-lang="pt_br">Número</span>
+                  </label>
+                  <input type="number" class="form-control" data-id="phones" data-mask="tel" required/>
+              </div>
+            </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Gender</span>
+                    <span data-lang="pt_br">Gênero</span>
+                  </label>
+                  <select class="form-control" name="gender">
+                    <option value="f"
+                      data-content="&lt;span class=&apos;i18n&apos;&gt;
+                      &lt;span data-lang=&apos;en_us&apos;&gt;Female&lt;/span&gt;
+                      &lt;span data-lang=&apos;pt_br&apos;&gt;Feminino&lt;/span&gt;
+                      &lt;/span&gt;">
+                      Feminino
+                    </option>
+                    <option value="m"
+                      data-content="&lt;span class=&apos;i18n&apos;&gt;
+                      &lt;span data-lang=&apos;en_us&apos;&gt;Male&lt;/span&gt;
+                      &lt;span data-lang=&apos;pt_br&apos;&gt;Masculino&lt;/span&gt;
+                      &lt;/span&gt;">
+                      Masculino
+                    </option>
+                    <option value="x"
+                      data-content="&lt;span class=&apos;i18n&apos;&gt;
+                      &lt;span data-lang=&apos;en_us&apos;&gt;Others&lt;/span&gt;
+                      &lt;span data-lang=&apos;pt_br&apos;&gt;Outros&lt;/span&gt;
+                      &lt;/span&gt;">
+                      Outros
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Birth Date</span>
+                    <span data-lang="pt_br">Data de Nascimento</span>
+                  </label>
+                  <input type="number" class="form-control" data-id="birth_date" data-mask="birth"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </div>
-
   <div class="bt-1 pt-20">
     <button class="btn btn-success i18n mr-10">
       <span data-lang="en_us">Save customer</span>
@@ -135,5 +281,6 @@
 
   <script>
     $.getScript('/assets/js/routes/resources/form.min.js')
+    $.getScript('/assets/js/routes/resources/form/customers.min.js')
   </script>
 </form>
