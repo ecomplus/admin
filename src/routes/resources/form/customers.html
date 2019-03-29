@@ -24,7 +24,7 @@
           </div>
 
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-6">
               <div class="form-group">
                 <label class="i18n require">
                   <span data-lang="en_us">Display name</span>
@@ -32,10 +32,47 @@
                 </label>
                 <input type="text" class="form-control" name="display_name" required />
               </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">State</span>
+                  <span data-lang="pt_br">Estado</span>
+                </label>
+                <select class="form-control" name="state">
+                  <option value="registered"
+                    data-content="&lt;span class=&apos;i18n&apos;&gt;
+                    &lt;span data-lang=&apos;en_us&apos;&gt;Registered&lt;/span&gt;
+                    &lt;span data-lang=&apos;pt_br&apos;&gt;Registrado&lt;/span&gt;
+                    &lt;/span&gt;">
+                    Registered
+                  </option>
+                  <option value="invited"
+                    data-content="&lt;span class=&apos;i18n&apos;&gt;
+                    &lt;span data-lang=&apos;en_us&apos;&gt;Invited&lt;/span&gt;
+                    &lt;span data-lang=&apos;pt_br&apos;&gt;Convidado&lt;/span&gt;
+                    &lt;/span&gt;">
+                    Invited
+                  </option>
+                  <option value="declined"
+                    data-content="&lt;span class=&apos;i18n&apos;&gt;
+                    &lt;span data-lang=&apos;en_us&apos;&gt;Declined&lt;/span&gt;
+                    &lt;span data-lang=&apos;pt_br&apos;&gt;Recusado&lt;/span&gt;
+                    &lt;/span&gt;">
+                    Declined
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-xl-6">
               <div class="form-group">
                 <div class="custom-controls-stacked">
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="staff_signature" checked />
+                    <input type="checkbox" class="custom-control-input"
+                      name="staff_signature" checked />
                     <label class="custom-control-label i18n">
                       <span data-lang="en_us">Created by admin</span>
                       <span data-lang="pt_br">Criado pelo administrador</span>
@@ -51,6 +88,10 @@
                     </label>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="col-xl-6">
+              <div class="form-group">
                 <div class="custom-controls-stacked">
                   <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" name="enabled" checked />
@@ -60,11 +101,24 @@
                     </label>
                   </div>
                 </div>
+                <div class="custom-controls-stacked">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input"
+                      name="accepts_marketing" />
+                    <label class="custom-control-label i18n">
+                      <span data-lang="en_us">Receive newsletter</span>
+                      <span data-lang="pt_br">Receber e-mail marketing</span>
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="col-md-6">
     </div>
   </div>
 
