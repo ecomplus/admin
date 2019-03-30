@@ -579,13 +579,12 @@
             $(this).inputmask('99999-999')
           }
           break
-          
+
         case 'birth':
           if (window.lang === 'pt_br') {
             // brazilian birth date
             $(this).inputmask('99/99/9999')
-          }
-          if (window.lang === 'en_us') {
+          } else {
             // american birth date
             $(this).inputmask('9999-99-99')
           }
