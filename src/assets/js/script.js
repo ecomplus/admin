@@ -689,7 +689,7 @@ app.config({
           }
           break
 
-        case 'birth':
+        case 'date':
           if (window.lang === 'pt_br') {
             // brazilian birth date
             $(this).inputmask('99/99/9999')
