@@ -139,31 +139,33 @@
                   <span data-lang="en_us">Type of Register</span>
                   <span data-lang="pt_br">Tipo de Registro</span>
                 </label><br>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="registry_type" id="physical" value="p">
-                  <label class="form-check-label i18n" for="physical">
-                    <span data-lang="en_us">Physical</span>
-                    <span data-lang="pt_br">Física</span>
-                  </label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="registry_type" id="juridical" value="j">
-                  <label class="form-check-label i18n" for="juridical">
-                    <span data-lang="en_us">Juridical</span>
-                    <span data-lang="pt_br">Jurídica</span>
-                  </label>
+                <div class="custom-controls-stacked" data-id="registry-type">
+                  <div class="custom-control custom-radio d-inline">
+                    <input type="radio" class="custom-control-input" name="registry_type" value="p" />
+                    <label class="custom-control-label i18n pr-15">
+                      <span data-lang="en_us">Physical</span>
+                      <span data-lang="pt_br">Física</span>
+                    </label>
+                  </div>
+                  <div class="custom-control custom-radio d-inline" data-id="registry-type">
+                    <input type="radio" class="custom-control-input" name="registry_type" value="j" />
+                    <label class="custom-control-label i18n">
+                      <span data-lang="en_us">Juridical</span>
+                      <span data-lang="pt_br">Jurídica</span>
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="col-lg-6">
-              <div class="form-group cpf">
+              <div class="form-group" data-id="physical">
                   <label class="i18n require">
                     <span data-lang="en_us">CPF</span>
                     <span data-lang="pt_br">CPF</span>
                   </label>
                   <input type="number" class="form-control" name="doc_number" data-id="doc-number" data-mask="cpf" required/>
               </div>
-              <div class="form-group cnpj" style="display: none">
+              <div class="form-group" data-id="juridical" style="display: none">
                   <label class="i18n require">
                     <span data-lang="en_us">CNPJ</span>
                     <span data-lang="pt_br">CNPJ</span>
@@ -172,54 +174,34 @@
               </div>
             </div>
             </div>
-            <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group cnpj" style="display:none">
-                <label class="i18n">
-                  <span data-lang="en_us">Type of Inscription</span>
-                  <span data-lang="pt_br">Tipo de Inscrição</span>
-                </label><br>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="inscription_type" value="State">
-                  <label class="form-check-label i18n" for="State">
-                    <span data-lang="en_us">State</span>
-                    <span data-lang="pt_br">Estadual</span>
-                  </label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="inscription_type" value="Municipal">
-                  <label class="form-check-label i18n" for="Municipal">
-                    <span data-lang="en_us">Municipal</span>
-                    <span data-lang="pt_br">Municipal</span>
-                  </label>
+            <div class="row" data-id="inscription-number" style="display: none">
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">State Inscription</span>
+                      <span data-lang="pt_br">Inscrição Estadual</span>
+                    </label>
+                    <input type="number" class="form-control" name="inscription_number" maxlength="50"/>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group state cnpj state">
-                  <label class="i18n">
-                    <span data-lang="en_us">State</span>
-                    <span data-lang="pt_br">Estadual</span>
-                  </label>
-                  <input type="number" class="form-control" name="inscription_number" data-id="inscription-number" maxlength="50"/>
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Municipal Inscription</span>
+                      <span data-lang="pt_br">Inscrição Municipal</span>
+                    </label>
+                    <input type="number" class="form-control" name="inscription-number" maxlength="50"/>
+                </div>
               </div>
-              <div class="form-group municipal municipal" style="display:none">
-                  <label class="i18n">
-                    <span data-lang="en_us">Municipal</span>
-                    <span data-lang="pt_br">Municipal</span>
-                  </label>
-                  <input type="number" class="form-control" data-id="inscription-number" name="inscription-number" maxlength="50"/>
-              </div>
-            </div>
             </div>
             <div class="row">
               <div class="col-lg-6">
-                <div class="form-group">
+                <div class="form-group" data-id="birth-date">
                   <label class="i18n">
                     <span data-lang="en_us">Birth Date</span>
                     <span data-lang="pt_br">Data de Nascimento</span>
                   </label>
-                  <input type="number" class="form-control" name="birth_date" data-id="birth-date" data-mask="date"/>
+                  <input type="number" class="form-control" name="birth_date" data-mask="date"/>
                 </div>
               </div>
             <div class="col-lg-6">
@@ -240,24 +222,24 @@
                     <span data-lang="en_us">Gender</span>
                     <span data-lang="pt_br">Gênero</span>
                   </label><br>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" id="physical" value="f" >
-                    <label class="form-check-label i18n" for="gender">
+                  <div class="custom-control custom-radio d-inline">
+                    <input type="radio" class="custom-control-input" name="gender" value="f" />
+                    <label class="custom-control-label i18n pr-15">
                       <span data-lang="en_us">Female</span>
                       <span data-lang="pt_br">Feminino</span>
                     </label>
                   </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" value="m">
-                    <label class="form-check-label i18n" for="gender">
+                  <div class="custom-control custom-radio d-inline">
+                    <input type="radio" class="custom-control-input" name="gender" value="m" />
+                    <label class="custom-control-label i18n pr-15">
                       <span data-lang="en_us">Male</span>
                       <span data-lang="pt_br">Masculino</span>
                     </label>
                   </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" value="x">
-                    <label class="form-check-label i18n" for="gender">
-                      <span data-lang="en_us">Other</span>
+                  <div class="custom-control custom-radio d-inline">
+                    <input type="radio" class="custom-control-input" name="gender" value="x" />
+                    <label class="custom-control-label i18n">
+                      <span data-lang="en_us">Others</span>
                       <span data-lang="pt_br">Outros</span>
                     </label>
                   </div>
