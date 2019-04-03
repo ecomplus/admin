@@ -163,14 +163,15 @@
                     <span data-lang="en_us">CPF</span>
                     <span data-lang="pt_br">CPF</span>
                   </label>
-                  <input type="number" class="form-control" name="doc_number" data-id="doc-number" data-mask="cpf" required/>
+                  <input type="number" class="form-control" name="doc_number" data-mask="cpf" required/>
               </div>
               <div class="form-group" data-id="juridical" style="display: none">
                   <label class="i18n require">
                     <span data-lang="en_us">CNPJ</span>
                     <span data-lang="pt_br">CNPJ</span>
                   </label>
-                  <input type="number" class="form-control" name="doc_number" data-id="doc-number" data-mask="cnpj" required/>
+                  <span data-id="erro" style="display: none">CNPJ inválido</span>
+                  <input type="number" class="form-control" name="doc_number" data-mask="cnpj" required/>
               </div>
             </div>
             </div>
