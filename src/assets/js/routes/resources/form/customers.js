@@ -24,8 +24,9 @@
     var $juridical = $infoCustomer.find('#t' + tabId + '-juridical')
     var $inscriptionType = $infoCustomer.find('#t' + tabId + '-inscription-number')
     var $birth = $infoCustomer.find('#t' + tabId + '-birth-date')
-    var $birthDate = $birth.find('input[name="birth_date"]')
-    var $cnpj = $juridical.find('input[name="doc_number"]')
+    var $birthDate = $birth.find('#t' + tabId + '-birth')
+    var $personal = $('#t' + tabId + '-info-personal')
+    var $fullName = $personal.find('#t' + tabId + '-full-name')
 
     // Show cnpj if is juridical
     $registryType.change(function () {
@@ -37,98 +38,70 @@
         $physical.hide()
         $juridical.show()
         $inscriptionType.show()
-        $cnpj = $cnpj.val()
-        console.log($cnpj)
-        cnpj()
       }
     })
 
-    function cnpj () {
-      if (!validCNPJ($cnpj)) {
-        $juridical.find('#t' + tabId + '-erro').show()
-        setTimeout(function () {
-          $cnpj.val(' ')
-          $juridical.find('#t' + tabId + '-erro').hide()
-        }, 12000)
+    // separate name
+    $fullName.change(function () {
+      var data = Data()
+      var nameFull = $fullName.val().split(' ')
+      var nameLength = nameFull.length
+      if (nameLength > 0) {
+        var firstName = nameFull[0]
+        var lastName = nameFull[nameLength - 1]
+        var middleName = ' '
+        for (var c = 1; c < nameFull.length - 1; c++) {
+          middleName += nameFull[c] + ' '
+        }
+        data.name.given_name = firstName
+        data.name.family_name = lastName
+        data.name.middle_name = middleName
+        commit(data, true)
+      } else {
+        data.name.given_name = ' '
+        data.name.family_name = ' '
+        data.name.middle_name = ' '
+        commit(data, true)
       }
-    }
+    })
+
+    // write current full name
+    // $fullName.change(function () {
+    //  var data = Data()
+    //  if (data.name) {
+    //    var fullName = data.name.given_name + ' ' + data.name.middle_name + ' ' + data.name.family_name
+    //  }
+    //  console.log(fullName)
+    //  $fullName.val(fullName)
+    // })
 
     // birth date treatement of data
     $birthDate.change(function () {
-      console.log($birthDate.val())
-      var $newDate = $birthDate.val().replace(/(\d{2})(\d{2})(\d{4})/, '$1.$2.$3')
-      console.log($newDate)
-      var $date = parseInt($newDate.split('.'))
-      console.log($date)
+      var data = Data()
+      var newDate = $birthDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/)
+      console.log(newDate)
+      var dateNew = newDate.filter(String)
+      var day = parseInt(dateNew[0])
+      console.log(day)
+      var month = parseInt(dateNew[1])
+      console.log(month)
+      var year = parseInt(dateNew[2])
+      console.log(year)
+      data.birth_date.day = day
+      data.birth_date.month = month
+      data.birth_date.year = year
+      commit(data, true)
     })
 
     // mask input
-    var toggleBlocksByValue = function ($form) {
-      Tab.$form.find('input[data-mask]').each(function () {
-        switch ($(this).data('mask')) {
-          case 'cpf':
-            $(this).inputmask('999.999.999-99')
-            break
+    $juridical.find('#t' + tabId + '-cpf').inputmask('999.999.999-99')
+    $physical.find('#t' + tabId + '-cnpj').inputmask('99.999.999/9999-99')
 
-          case 'cnpj':
-            $(this).inputmask('99.999.999/9999-99')
-            break
-        }
-      })
-    }
-  }
-
-  function validCNPJ ($cnpj) {
-    if ($cnpj === '') {
-      return false
-    }
-    if ($cnpj.length !== 14) {
-      return false
-    }
-    // Elimina CNPJs invalidos conhecidos
-    if ($cnpj === '00000000000000' ||
-            $cnpj === '11111111111111' ||
-            $cnpj === '22222222222222' ||
-            $cnpj === '33333333333333' ||
-            $cnpj === '44444444444444' ||
-            $cnpj === '55555555555555' ||
-            $cnpj === '66666666666666' ||
-            $cnpj === '77777777777777' ||
-            $cnpj === '88888888888888' ||
-            $cnpj === '99999999999999') {
-      return false
-    }
-    // Valida DVs
-    var tamanho = $cnpj.length - 2
-    var numeros = $cnpj.substring(0, tamanho)
-    var digitos = $cnpj.substring(tamanho)
-    var soma = 0
-    var pos = tamanho - 7
-    for (var i = tamanho; i >= 1; i--) {
-      soma += numeros.charAt(tamanho - i) * pos--
-      if (pos < 2) {
-        pos = 9
-      }
-    }
-    var resultado = soma % 11 < 2 ? 0 : 11 - soma % 11
-    if (resultado !== digitos.charAt(0)) {
-      return false
-    }
-    tamanho = tamanho + 1
-    numeros = $cnpj.substring(0, tamanho)
-    soma = 0
-    pos = tamanho - 7
-    for (var a = tamanho; a >= 1; a--) {
-      soma += numeros.charAt(tamanho - a) * pos--
-      if (pos < 2) {
-        pos = 9
-      }
-    }
-    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11
-    if (resultado !== digitos.charAt(1)) {
-      return false
-    }
-    return true
+    // write current birth date
+    // var data = Data()
+    // if (data.birth_date) {
+    //  var date = formatDate(eventObj.date_time, dateList)
+    // }
   }
 
   // wait for the form to be ready
