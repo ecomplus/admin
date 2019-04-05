@@ -623,7 +623,7 @@ app.config({
       }
     })
 
-    $form.find('input[type="text"],select,textarea').change(function () {
+    $form.find('input[type="text"],input[type="email"],select,textarea').change(function () {
       toData($(this))
 
       // check if other input field is filled based on this
