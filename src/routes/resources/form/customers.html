@@ -20,7 +20,7 @@
               <span data-lang="en_us">Full name</span>
               <span data-lang="pt_br">Nome completo</span>
             </label>
-            <input type="text" class="form-control" data-id="full-name" name="name.given_name"/>
+            <input type="text" class="form-control" data-id="full-name"/>
           </div>
           <div class="row">
             <div class="col-lg-6">
@@ -163,14 +163,14 @@
                     <span data-lang="en_us">CPF</span>
                     <span data-lang="pt_br">CPF</span>
                   </label>
-                  <input type="number" class="form-control" name="doc_number" data-id="cpf"/>
+                  <input type="tel" class="form-control" name="doc_number" data-id="cpf"/>
               </div>
               <div class="form-group" data-id="juridical" style="display: none">
                   <label class="i18n">
                     <span data-lang="en_us">CNPJ</span>
                     <span data-lang="pt_br">CNPJ</span>
                   </label>
-                  <input type="number" class="form-control" name="doc_number" data-id="cnpj"/>
+                  <input type="tel" class="form-control" name="doc_number" data-id="cnpj"/>
               </div>
             </div>
             </div>
@@ -201,7 +201,7 @@
                     <span data-lang="en_us">Birth Date</span>
                     <span data-lang="pt_br">Data de Nascimento</span>
                   </label>
-                  <input type="tel" class="form-control" data-mask="date" name="birth_date" data-id="birth"/>
+                  <input type="tel" class="form-control" data-mask="date" data-id="birth"/>
                 </div>
               </div>
             <div class="col-lg-6">
@@ -210,7 +210,26 @@
                     <span data-lang="en_us">Number</span>
                     <span data-lang="pt_br">Número</span>
                   </label>
-                  <input type="tel" class="form-control" data-mask="tel"/>
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <label class="custom-control-label" for="cc-1"></label>
+                          </div>
+                        </span>
+                      </div>
+                      <input type="text" class="form-control" data-id="telephone" data-mask="tel"/>
+                  </div>
+                  <div class="btn-group pt-10">
+                    <button type="button" class="btn btn-light i18n" data-id="add-option">
+                      <span data-lang="en_us"><i class="fa fa-plus"></i></span>
+                      <span data-lang="pt_br"><i class="fa fa-plus"></i></span>
+                    </button>
+                    <button type="button" class="btn btn-light" data-id="delete-options">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </div>
               </div>
             </div>
             </div>

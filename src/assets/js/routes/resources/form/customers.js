@@ -27,6 +27,20 @@
     var $birthDate = $birth.find('#t' + tabId + '-birth')
     var $personal = $('#t' + tabId + '-info-personal')
     var $fullName = $personal.find('#t' + tabId + '-full-name')
+    var $telephone = $infoCustomer.find('#t' + tabId + '-telephone')
+    var $cpf = $physical.find('#t' + tabId + '-cpf')
+    var $cnpj = $juridical.find('#t' + tabId + '-cnpj')
+    // var liOption = '<div class="input-group"> ' +
+    //               '  <div class="input-group-prepend"> ' +
+    //               '    <span class="input-group-text"> ' +
+    //               '    <div class="custom-control custom-checkbox"> ' +
+    //               '      <input type="checkbox" class="custom-control-input"> ' +
+    //               '      <label class="custom-control-label" for="cc-1"></label> ' +
+    //               '    </div> ' +
+    //               '    </span> ' +
+    //               '  </div> ' +
+    //               '      <input type="text" class="form-control" data-id="telephone" data-mask="tel"/> ' +
+    //               '</div>'
 
     // Show cnpj if is juridical
     $registryType.change(function () {
@@ -41,6 +55,24 @@
       }
     })
 
+    // save doc number physical person
+    $cpf.change(function () {
+      var data = Data()
+      var docNumber = $cpf.val().replace(/(\d{3}).(\d{3}).(\d{3})-(\d{2})/, '$1$2$3$4')
+      console.log(docNumber)
+      data.doc_number = docNumber
+      commit(data, true)
+    })
+
+    // save doc number juridical person
+    $cnpj.change(function () {
+      var data = Data()
+      var docNumber = $cnpj.val().replace(/(\d{2}).(\d{3}).(\d{3})\/(\d{4})-(\d{2})/, '$1$2$3$4$5')
+      console.log(docNumber)
+      data.doc_number = docNumber
+      commit(data, true)
+    })
+
     // separate name
     $fullName.change(function () {
       var data = Data()
@@ -49,32 +81,73 @@
       if (nameLength > 0) {
         var firstName = nameFull[0]
         var lastName = nameFull[nameLength - 1]
-        var middleName = ' '
+        var middleName = ''
         for (var c = 1; c < nameFull.length - 1; c++) {
-          middleName += nameFull[c] + ' '
+          if (middleName !== '') {
+            middleName += ' '
+          }
+          middleName += nameFull[c]
+        }
+        if (!data.hasOwnProperty('name')) {
+          data.name = {}
         }
         data.name.given_name = firstName
         data.name.family_name = lastName
         data.name.middle_name = middleName
         commit(data, true)
       } else {
-        data.name.given_name = ' '
-        data.name.family_name = ' '
-        data.name.middle_name = ' '
+        // unset name
+        data.name = {}
         commit(data, true)
       }
     })
 
     // write current full name
-    // $fullName.change(function () {
-    //  var data = Data()
-    //  if (data.name) {
-    //    var fullName = data.name.given_name + ' ' + data.name.middle_name + ' ' + data.name.family_name
-    //  }
-    //  console.log(fullName)
-    //  $fullName.val(fullName)
-    // })
 
+    var data = Data()
+    if (data.name) {
+      var fullName = data.name.given_name + ' ' + data.name.middle_name + ' ' + data.name.family_name
+      $fullName.val(fullName)
+    }
+
+    // write current birth date
+
+    if (data.birth_date) {
+      var date = data.birth_date.day + '/' + data.birth_date.month + '/' + data.birth_date.year
+      $birthDate.val(date)
+    }
+    // get phones by client
+    if (data.phones) {
+      var phonesCustomer = data.phones
+      var phone = []
+      for (var d = 0; d < phonesCustomer.length; d++) {
+        phone.push(phonesCustomer[d].number)
+      }
+      var lengthPhone = phone.length
+      if (lengthPhone > 1) {
+        var phoneArray = phone[lengthPhone - 1]
+        $telephone.val(phoneArray)
+      }
+      if (lengthPhone === 1) {
+        var phoneArray1 = phone[lengthPhone - 1]
+        $telephone.val(phoneArray1)
+      }
+    }
+
+    // save phone number
+    $telephone.change(function () {
+      var data = Data()
+      var numb = data.phones.length
+      var numberPhone = $telephone.val()
+      var numberPhoneStr = numberPhone.replace('(', '').replace(')', '').replace('-', '').replace(' ', '').replace(' ', '')
+      if (numb === 0) {
+        data.phones[0].number = numberPhoneStr
+        commit(data, true)
+      } if (numb > 0) {
+        data.phones[numb].number = numberPhoneStr
+        commit(data, true)
+      }
+    })
     // birth date treatement of data
     $birthDate.change(function () {
       var data = Data()
@@ -94,14 +167,8 @@
     })
 
     // mask input
-    $juridical.find('#t' + tabId + '-cpf').inputmask('999.999.999-99')
-    $physical.find('#t' + tabId + '-cnpj').inputmask('99.999.999/9999-99')
-
-    // write current birth date
-    // var data = Data()
-    // if (data.birth_date) {
-    //  var date = formatDate(eventObj.date_time, dateList)
-    // }
+    $physical.find('#t' + tabId + '-cpf').inputmask('999.999.999-99')
+    $juridical.find('#t' + tabId + '-cnpj').inputmask('99.999.999/9999-99')
   }
 
   // wait for the form to be ready
