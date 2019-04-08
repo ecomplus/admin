@@ -30,20 +30,30 @@
     var $telephone = $infoCustomer.find('#t' + tabId + '-telephone')
     var $cpf = $physical.find('#t' + tabId + '-cpf')
     var $cnpj = $juridical.find('#t' + tabId + '-cnpj')
-    // var liOption = '<div class="input-group"> ' +
-    //               '  <div class="input-group-prepend"> ' +
-    //               '    <span class="input-group-text"> ' +
-    //               '    <div class="custom-control custom-checkbox"> ' +
-    //               '      <input type="checkbox" class="custom-control-input"> ' +
-    //               '      <label class="custom-control-label" for="cc-1"></label> ' +
-    //               '    </div> ' +
-    //               '    </span> ' +
-    //               '  </div> ' +
-    //               '      <input type="text" class="form-control" data-id="telephone" data-mask="tel"/> ' +
-    //               '</div>'
+    var $divPhones = $infoCustomer.find('#t' + tabId + '-groupPhones')
+    var phonesList = '<div class="input-group"> ' +
+                   '  <div class="input-group-prepend"> ' +
+                   '    <span class="input-group-text"> ' +
+                   '    <div class="custom-control custom-checkbox"> ' +
+                   '      <input type="checkbox" class="custom-control-input"> ' +
+                   '      <label class="custom-control-label" for="cc-1"></label> ' +
+                   '    </div> ' +
+                   '    </span> ' +
+                   '  </div> ' +
+                   '      <input type="tel" class="form-control" data-id="phone" name="phones.number" data-mask="tel"/> ' +
+                   '</div>'
 
+    var addOption = function (phones) {
+      // add input element
+      var $input = $('<div />', {
+        html: phonesList
+      })
+      $divPhones.after($input)
+      handleInputs($input, Tab.inputToData)
+    }
     // Show cnpj if is juridical
     $registryType.change(function () {
+      // check which type and show his input
       if (this.value === 'p') {
         $physical.show()
         $juridical.hide()
@@ -76,8 +86,10 @@
     // separate name
     $fullName.change(function () {
       var data = Data()
+      // receive full name and separate
       var nameFull = $fullName.val().split(' ')
       var nameLength = nameFull.length
+      // if there is a name
       if (nameLength > 0) {
         var firstName = nameFull[0]
         var lastName = nameFull[nameLength - 1]
@@ -116,21 +128,14 @@
       var date = data.birth_date.day + '/' + data.birth_date.month + '/' + data.birth_date.year
       $birthDate.val(date)
     }
+
     // get phones by client
     if (data.phones) {
       var phonesCustomer = data.phones
       var phone = []
       for (var d = 0; d < phonesCustomer.length; d++) {
         phone.push(phonesCustomer[d].number)
-      }
-      var lengthPhone = phone.length
-      if (lengthPhone > 1) {
-        var phoneArray = phone[lengthPhone - 1]
-        $telephone.val(phoneArray)
-      }
-      if (lengthPhone === 1) {
-        var phoneArray1 = phone[lengthPhone - 1]
-        $telephone.val(phoneArray1)
+        addOption()
       }
     }
 
@@ -148,18 +153,15 @@
         commit(data, true)
       }
     })
+
     // birth date treatement of data
     $birthDate.change(function () {
       var data = Data()
       var newDate = $birthDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/)
-      console.log(newDate)
       var dateNew = newDate.filter(String)
       var day = parseInt(dateNew[0])
-      console.log(day)
       var month = parseInt(dateNew[1])
-      console.log(month)
       var year = parseInt(dateNew[2])
-      console.log(year)
       data.birth_date.day = day
       data.birth_date.month = month
       data.birth_date.year = year
@@ -169,6 +171,11 @@
     // mask input
     $physical.find('#t' + tabId + '-cpf').inputmask('999.999.999-99')
     $juridical.find('#t' + tabId + '-cnpj').inputmask('99.999.999/9999-99')
+
+    // create input of phones
+    $('#t' + tabId + '-add-option').click(function () {
+      addOption()
+    })
   }
 
   // wait for the form to be ready
