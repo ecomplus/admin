@@ -31,25 +31,48 @@
     var $cpf = $physical.find('#t' + tabId + '-cpf')
     var $cnpj = $juridical.find('#t' + tabId + '-cnpj')
     var $divPhones = $infoCustomer.find('#t' + tabId + '-groupPhones')
-    var phonesList = '<div class="input-group"> ' +
-                   '  <div class="input-group-prepend"> ' +
-                   '    <span class="input-group-text"> ' +
-                   '    <div class="custom-control custom-checkbox"> ' +
-                   '      <input type="checkbox" class="custom-control-input"> ' +
-                   '      <label class="custom-control-label" for="cc-1"></label> ' +
-                   '    </div> ' +
-                   '    </span> ' +
-                   '  </div> ' +
-                   '      <input type="tel" class="form-control" data-id="phone" name="phones.number" data-mask="tel"/> ' +
-                   '</div>'
-
+    var optionsIndex = 0
     var addOption = function (phones) {
       // add input element
       var $input = $('<div />', {
-        html: phonesList
+        'class': 'input-group',
+        html: [
+          $('<div />', {
+            'class': 'input-group-prepend',
+            html: [
+              $('<span>', {
+                'class': 'input-group-text',
+                html: [
+                  $('<div />', {
+                    'class': 'custom-control custom-checkbox',
+                    html: [
+                      $('<input>', {
+                        'class': 'custom-control-input',
+                        type: 'checkbox'
+                      }),
+                      $('<label>', {
+                        'class': 'custom-control-label',
+                        'for': 'cc-1'
+                      })
+                    ]
+                  })
+                ]
+              })
+            ]
+          }),
+          $('<input>', {
+            'class': 'form-control',
+            type: 'tel',
+            name: 'phones[].' + optionsIndex + '.number',
+            'data-mask': 'tel',
+            'data-numeric-string': 'true'
+          })
+        ]
       })
       $divPhones.after($input)
+      optionsIndex++
       handleInputs($input, Tab.inputToData)
+      setupInputValues($input, phonesCustomer[d].number, 'phones.')
     }
     // Show cnpj if is juridical
     $registryType.change(function () {
@@ -83,7 +106,7 @@
       commit(data, true)
     })
 
-    // separate name
+    // separate fullname
     $fullName.change(function () {
       var data = Data()
       // receive full name and separate
@@ -132,9 +155,7 @@
     // get phones by client
     if (data.phones) {
       var phonesCustomer = data.phones
-      var phone = []
       for (var d = 0; d < phonesCustomer.length; d++) {
-        phone.push(phonesCustomer[d].number)
         addOption()
       }
     }

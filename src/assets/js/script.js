@@ -660,6 +660,9 @@ app.config({
     })
 
     $form.find('input[type="tel"],input[type="number"]').change(function () {
+      if ($(this).data('numeric-string')) {
+        $(this).data('value', $(this).val().replace(/\D/g, ''))
+      }
       toData($(this))
     })
 
