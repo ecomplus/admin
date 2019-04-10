@@ -27,7 +27,6 @@
     var $birthDate = $birth.find('#t' + tabId + '-birth')
     var $personal = $('#t' + tabId + '-info-personal')
     var $fullName = $personal.find('#t' + tabId + '-full-name')
-    var $telephone = $infoCustomer.find('#t' + tabId + '-telephone')
     var $cpf = $physical.find('#t' + tabId + '-cpf')
     var $cnpj = $juridical.find('#t' + tabId + '-cnpj')
     var $divPhones = $infoCustomer.find('#t' + tabId + '-groupPhones')
@@ -35,33 +34,29 @@
     var addOption = function (phones) {
       // add input element
       var $input = $('<div />', {
-        'class': 'input-group',
+        'class': 'input-group pb-10',
         html: [
           $('<div />', {
             'class': 'input-group-prepend',
             html: [
-              $('<span>', {
-                'class': 'input-group-text',
+              $('<button>', {
+                'class': 'btn btn-light delete-options',
                 html: [
-                  $('<div />', {
-                    'class': 'custom-control custom-checkbox',
-                    html: [
-                      $('<input>', {
-                        'class': 'custom-control-input',
-                        type: 'checkbox'
-                      }),
-                      $('<label>', {
-                        'class': 'custom-control-label',
-                        'for': 'cc-1'
-                      })
-                    ]
+                  $('<i />', {
+                    'class': 'fa fa-trash'
                   })
                 ]
               })
             ]
           }),
           $('<input>', {
-            'class': 'form-control',
+            'class': 'form-control country-code',
+            type: 'tel',
+            name: 'phones[].' + optionsIndex + '.country_code',
+            'data-is-number': 'true'
+          }),
+          $('<input>', {
+            'class': 'form-control w-120px',
             type: 'tel',
             name: 'phones[].' + optionsIndex + '.number',
             'data-mask': 'tel',
@@ -69,7 +64,7 @@
           })
         ]
       })
-      $divPhones.after($input)
+      $divPhones.append($input)
       optionsIndex++
       handleInputs($input, Tab.inputToData)
       setupInputValues($input, phonesCustomer[d].number, 'phones.')
@@ -160,21 +155,6 @@
       }
     }
 
-    // save phone number
-    $telephone.change(function () {
-      var data = Data()
-      var numb = data.phones.length
-      var numberPhone = $telephone.val()
-      var numberPhoneStr = numberPhone.replace('(', '').replace(')', '').replace('-', '').replace(' ', '').replace(' ', '')
-      if (numb === 0) {
-        data.phones[0].number = numberPhoneStr
-        commit(data, true)
-      } if (numb > 0) {
-        data.phones[numb].number = numberPhoneStr
-        commit(data, true)
-      }
-    })
-
     // birth date treatement of data
     $birthDate.change(function () {
       var data = Data()
@@ -192,10 +172,29 @@
     // mask input
     $physical.find('#t' + tabId + '-cpf').inputmask('999.999.999-99')
     $juridical.find('#t' + tabId + '-cnpj').inputmask('99.999.999/9999-99')
+    $divPhones.find('.country-code').inputmask('+99')
 
     // create input of phones
     $('#t' + tabId + '-add-option').click(function () {
       addOption()
+    })
+
+    // delete input phones
+    $divPhones.find('.delete-options').click(function () {
+      var data = Data()
+      if (data.phones) {
+        for (var i = 0; i < data.phones.length; i++) {
+          if (data.phones[i]) {
+            delete data.phones.splice(1, i)
+          }
+        }
+      }
+      // remove list element
+      $(this).closest('button').parent().parent().slideUp(400, function () {
+        $(this).remove()
+      })
+      // commit only to perform reactive actions
+      commit(data, true)
     })
   }
 
