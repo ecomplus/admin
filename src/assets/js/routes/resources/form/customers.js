@@ -32,7 +32,7 @@
     var $divPhones = $infoCustomer.find('#t' + tabId + '-groupPhones')
     var optionsIndex = 0
     var addOption = function (phones) {
-      // add input element
+      // add input element for new telephones
       var $input = $('<div />', {
         'class': 'input-group pb-10',
         html: [
@@ -66,10 +66,12 @@
       })
       $divPhones.append($input)
       optionsIndex++
+      // Insert mask into new inputs
       handleInputs($input, Tab.inputToData)
+      // Set pre-values into inputs
       setupInputValues($input, phonesCustomer[d].number, 'phones.')
     }
-    // Show cnpj if is juridical
+    // On change, show if it's a person or juridical type with his inputs
     $registryType.change(function () {
       // check which type and show his input
       if (this.value === 'p') {
@@ -143,7 +145,16 @@
     // write current birth date
 
     if (data.birth_date) {
-      var date = data.birth_date.day + '/' + data.birth_date.month + '/' + data.birth_date.year
+      var day = data.birth_date.day
+      var month = data.birth_date.month
+      // if the number of day or month are less than 10, add 0 at start of them
+      if (data.birth_date.day < 10) {
+        day = '0' + data.birth_date.day
+      }
+      if (data.birth_date.month < 10) {
+        month = '0' + data.birth_date.month
+      }
+      var date = day + '/' + month + '/' + data.birth_date.year
       $birthDate.val(date)
     }
 
@@ -195,6 +206,68 @@
       })
       // commit only to perform reactive actions
       commit(data, true)
+    })
+    var $address = $('#t' + tabId + '-order-shipping')
+    var handleShippingObj = function (obj) {
+      // preset address if defined
+      var addressNew
+      var data = Data()
+      if (data.addresses) {
+        for (var i = 0; i < data.addresses.length; i++) {
+          if (data.addresses[i].default) {
+            // customer default shipping address
+            addressNew = data.addresses[i]
+            break
+          }
+          // use the first address on list
+          if (!addressNew) {
+            addressNew = data.addresses[0]
+          }
+        }
+      }
+      obj.zip = Object.assign({ zip: '00000000' }, addressNew)
+
+      // remove excedent properties
+      delete obj.zip.default
+      delete obj.zip._id
+    }
+    handleNestedObjects(
+      Data,
+      commit,
+      $address,
+      $('#t' + tabId + '-add-shipping'),
+      $('#t' + tabId + '-delete-shipping'),
+      $('#t' + tabId + '-next-shipping'),
+      'addresses',
+      handleShippingObj()
+    )
+
+    // handle collapse for shipping address
+    $('div[data-link-collapse]').each(function () {
+      var $block = $(this)
+      var $form = $block.children('div')
+      var $em = $block.children('em')
+
+      var resumeContent = function () {
+        // show resumed content on text line
+        var content = ''
+        $form.find('input').each(function () {
+          var text = $(this).val()
+          if ((typeof text === 'string' && text.trim() !== '') || typeof text === 'number') {
+            content += text + ', '
+          }
+        })
+        // slice content to remove the last ', '
+        $em.text(content.slice(0, -2))
+      }
+
+      $block.children('a').click(function () {
+        $form.slideToggle('slow')
+        resumeContent()
+        $em.slideToggle()
+      })
+      // start the resumed content on em tag
+      resumeContent()
     })
   }
 
