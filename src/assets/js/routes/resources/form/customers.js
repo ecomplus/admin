@@ -4,7 +4,8 @@
 
 (function () {
   'use strict'
-
+  // lang of page
+  var lang = window.lang
   // current tab ID
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
@@ -31,6 +32,11 @@
     var $cnpj = $juridical.find('#t' + tabId + '-cnpj')
     var $divPhones = $infoCustomer.find('#t' + tabId + '-groupPhones')
     var optionsIndex = 0
+    var $staffNotes = $('#t' + tabId + '-staff-notes')
+    var $note = $staffNotes.find('#t' + tabId + '-note')
+    var $abstract = $('#t' + tabId + '-abstract')
+    var $abstractText = $abstract.find('#t' + tabId + '-personalAbs')
+    var $abstractStatistic = $abstract.find('#t' + tabId + '-statisAbs')
     var addOption = function (phones) {
       // add input element for new telephones
       var $input = $('<div />', {
@@ -147,6 +153,7 @@
     if (data.birth_date) {
       var day = data.birth_date.day
       var month = data.birth_date.month
+      console.log(data.locale)
       // if the number of day or month are less than 10, add 0 at start of them
       if (data.birth_date.day < 10) {
         day = '0' + data.birth_date.day
@@ -154,8 +161,13 @@
       if (data.birth_date.month < 10) {
         month = '0' + data.birth_date.month
       }
-      var date = day + '/' + month + '/' + data.birth_date.year
-      $birthDate.val(date)
+      if (lang === 'pt_br') {
+        var date = day + '/' + month + '/' + data.birth_date.year
+        $birthDate.val(date)
+      } else {
+        date = month + '/' + day + '/' + data.birth_date.year
+        $birthDate.val(date)
+      }
     }
 
     // get phones by client
@@ -166,17 +178,32 @@
       }
     }
 
+    // get preset note and show
+    if (data.staff_notes) {
+      $note.val(data.staff_notes)
+    }
+
     // birth date treatement of data
     $birthDate.change(function () {
       var data = Data()
       var newDate = $birthDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/)
       var dateNew = newDate.filter(String)
-      var day = parseInt(dateNew[0])
-      var month = parseInt(dateNew[1])
-      var year = parseInt(dateNew[2])
-      data.birth_date.day = day
-      data.birth_date.month = month
-      data.birth_date.year = year
+      if (lang === 'pt_br') {
+        var day = parseInt(dateNew[0])
+        var month = parseInt(dateNew[1])
+        var year = parseInt(dateNew[2])
+        data.birth_date.day = day
+        data.birth_date.month = month
+        data.birth_date.year = year
+      } else {
+        day = parseInt(dateNew[1])
+        month = parseInt(dateNew[0])
+        year = parseInt(dateNew[2])
+        data.birth_date.day = day
+        data.birth_date.month = month
+        data.birth_date.year = year
+      }
+
       commit(data, true)
     })
 
@@ -239,7 +266,7 @@
       $('#t' + tabId + '-delete-shipping'),
       $('#t' + tabId + '-next-shipping'),
       'addresses',
-      handleShippingObj()
+      handleShippingObj
     )
 
     // handle collapse for shipping address
@@ -269,6 +296,68 @@
       // start the resumed content on em tag
       resumeContent()
     })
+
+    // Get and save value of staff notes
+    $note.change(function () {
+      var data = Data()
+      var note = $note.val()
+      data.staff_notes = note
+      commit(data, true)
+    })
+
+    // get gender value
+    if (data.gender === 'f') {
+      var gender = '<span class="i18n"> ' +
+      '      <span data-lang="en_us">Female</span> ' +
+      '      <span data-lang="pt_br">Feminino</span>' +
+      '      </span> '
+    } else if (data.gender === 'm') {
+      gender = '<span class="i18n"> ' +
+      '      <span data-lang="en_us">Male</span> ' +
+      '      <span data-lang="pt_br">Masculino</span>' +
+      '      </span> '
+    }
+    if (data.gender === 'x') {
+      gender = '<span class="i18n"> ' +
+      '      <span data-lang="en_us">Others</span> ' +
+      '      <span data-lang="pt_br">Outros</span>' +
+      '      </span> '
+    }
+    // create and show all information about the costumer
+    $abstractText.append(
+      '<span class="i18n"> ' +
+                  '      <span data-lang="en_us">Name</span> ' +
+                  '      <span data-lang="pt_br">Nome</span>' +
+                  '      </span>: ' + fullName + '<br>' +
+                  '<span class="i18n"> ' +
+                  '      <span data-lang="en_us">Birth Date</span> ' +
+                  '      <span data-lang="pt_br">Data de Nascimento</span>' +
+                  '      </span>: ' + date + '<br>' +
+                  '<span class="i18n"> ' +
+                  '      <span data-lang="en_us">Gender</span> ' +
+                  '      <span data-lang="pt_br">Gênero</span>' +
+                  '      </span>: ' + gender + '<br>' +
+                  '<span class="i18n"> ' +
+                  '      <span data-lang="en_us">CPF/CNPJ</span> ' +
+                  '      <span data-lang="pt_br">CPF/CNPJ</span>' +
+                  '      </span>: ' + data.doc_number)
+    $abstractStatistic.append(
+      '<span class="i18n"> ' +
+                  '      <span data-lang="en_us">Number of orders</span> ' +
+                  '      <span data-lang="pt_br">Quantidade de pedidos</span>' +
+                  '      </span>: ' + data.orders_count + '<br>' +
+                  '<span class="i18n"> ' +
+                              '      <span data-lang="en_us">Amount of money in order: $</span> ' +
+                              '      <span data-lang="pt_br">Valor total de pedidos: R$</span>' +
+                              '      </span>' + data.orders_total_value + '<br>' +
+                              '<span class="i18n"> ' +
+                                          '      <span data-lang="en_us">Amount of money spent: $</span> ' +
+                                          '      <span data-lang="pt_br">Valor total de pedidos aprovados: R$</span>' +
+                                          '      </span>' + data.total_spent + '<br>' +
+                                          '<span class="i18n"> ' +
+                                                      '      <span data-lang="en_us">Amount of money cancelled: $</span> ' +
+                                                      '      <span data-lang="pt_br">Valor total de pedidos cancelados: R$</span>' +
+                                                      '      </span>' + data.total_cancelled)
   }
 
   // wait for the form to be ready
