@@ -153,7 +153,6 @@
     if (data.birth_date) {
       var day = data.birth_date.day
       var month = data.birth_date.month
-      console.log(data.locale)
       // if the number of day or month are less than 10, add 0 at start of them
       if (data.birth_date.day < 10) {
         day = '0' + data.birth_date.day
@@ -187,24 +186,32 @@
     $birthDate.change(function () {
       var data = Data()
       var newDate = $birthDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/)
+      console.log(newDate)
       var dateNew = newDate.filter(String)
-      if (lang === 'pt_br') {
-        var day = parseInt(dateNew[0])
-        var month = parseInt(dateNew[1])
-        var year = parseInt(dateNew[2])
-        data.birth_date.day = day
-        data.birth_date.month = month
-        data.birth_date.year = year
+      console.log(dateNew)
+      if (!data.hasOwnProperty('birth_date')) {
+        data.birth_date = {}
+        if (lang === 'pt_br') {
+          var day = parseInt(dateNew[0])
+          var month = parseInt(dateNew[1])
+          var year = parseInt(dateNew[2])
+          data.birth_date.day = day
+          data.birth_date.month = month
+          data.birth_date.year = year
+          commit(data, true)
+        } else {
+          day = parseInt(dateNew[1])
+          month = parseInt(dateNew[0])
+          year = parseInt(dateNew[2])
+          data.birth_date.day = day
+          data.birth_date.month = month
+          data.birth_date.year = year
+          commit(data, true)
+        }
       } else {
-        day = parseInt(dateNew[1])
-        month = parseInt(dateNew[0])
-        year = parseInt(dateNew[2])
-        data.birth_date.day = day
-        data.birth_date.month = month
-        data.birth_date.year = year
+        data.birth_date = {}
+        commit(data, true)
       }
-
-      commit(data, true)
     })
 
     // mask input
@@ -234,7 +241,7 @@
       // commit only to perform reactive actions
       commit(data, true)
     })
-    var $address = $('#t' + tabId + '-order-shipping')
+    var $address = $('#t' + tabId + '-customer-shipping')
     var handleShippingObj = function (obj) {
       // preset address if defined
       var addressNew
@@ -301,63 +308,70 @@
     $note.change(function () {
       var data = Data()
       var note = $note.val()
-      data.staff_notes = note
-      commit(data, true)
+      if (!data.hasOwnProperty('staff_notes')) {
+        data.staff_notes = {}
+        data.staff_notes = note
+        commit(data, true)
+      } else {
+        data.staff_notes = {}
+      }
     })
 
+    if (data.gender) {
     // get gender value
-    if (data.gender === 'f') {
-      var gender = '<span class="i18n"> ' +
-      '      <span data-lang="en_us">Female</span> ' +
-      '      <span data-lang="pt_br">Feminino</span>' +
-      '      </span> '
-    } else if (data.gender === 'm') {
-      gender = '<span class="i18n"> ' +
-      '      <span data-lang="en_us">Male</span> ' +
-      '      <span data-lang="pt_br">Masculino</span>' +
-      '      </span> '
+      if (data.gender === 'f') {
+        var gender = '<span class="i18n"> ' +
+        '      <span data-lang="en_us">Female</span> ' +
+        '      <span data-lang="pt_br">Feminino</span>' +
+        '      </span> '
+      } else if (data.gender === 'm') {
+        gender = '<span class="i18n"> ' +
+        '      <span data-lang="en_us">Male</span> ' +
+        '      <span data-lang="pt_br">Masculino</span>' +
+        '      </span> '
+      }
+      if (data.gender === 'x') {
+        gender = '<span class="i18n"> ' +
+        '      <span data-lang="en_us">Others</span> ' +
+        '      <span data-lang="pt_br">Outros</span>' +
+        '      </span> '
+      }
+      // create and show all information about the costumer
+      $abstractText.append(
+        '<span class="i18n"> ' +
+                    '      <span data-lang="en_us">Name</span> ' +
+                    '      <span data-lang="pt_br">Nome</span>' +
+                    '      </span>: ' + fullName + '<br>' +
+                    '<span class="i18n"> ' +
+                    '      <span data-lang="en_us">Birth Date</span> ' +
+                    '      <span data-lang="pt_br">Data de Nascimento</span>' +
+                    '      </span>: ' + date + '<br>' +
+                    '<span class="i18n"> ' +
+                    '      <span data-lang="en_us">Gender</span> ' +
+                    '      <span data-lang="pt_br">Gênero</span>' +
+                    '      </span>: ' + gender + '<br>' +
+                    '<span class="i18n"> ' +
+                    '      <span data-lang="en_us">CPF/CNPJ</span> ' +
+                    '      <span data-lang="pt_br">CPF/CNPJ</span>' +
+                    '      </span>: ' + data.doc_number)
+      $abstractStatistic.append(
+        '<span class="i18n"> ' +
+                    '      <span data-lang="en_us">Number of orders</span> ' +
+                    '      <span data-lang="pt_br">Quantidade de pedidos</span>' +
+                    '      </span>: ' + data.orders_count + '<br>' +
+                    '<span class="i18n"> ' +
+                                '      <span data-lang="en_us">Amount of money in order: $</span> ' +
+                                '      <span data-lang="pt_br">Valor total de pedidos: R$</span>' +
+                                '      </span>' + data.orders_total_value + '<br>' +
+                                '<span class="i18n"> ' +
+                                            '      <span data-lang="en_us">Amount of money spent: $</span> ' +
+                                            '      <span data-lang="pt_br">Valor total de pedidos aprovados: R$</span>' +
+                                            '      </span>' + data.total_spent + '<br>' +
+                                            '<span class="i18n"> ' +
+                                                        '      <span data-lang="en_us">Amount of money cancelled: $</span> ' +
+                                                        '      <span data-lang="pt_br">Valor total de pedidos cancelados: R$</span>' +
+                                                        '      </span>' + data.total_cancelled)
     }
-    if (data.gender === 'x') {
-      gender = '<span class="i18n"> ' +
-      '      <span data-lang="en_us">Others</span> ' +
-      '      <span data-lang="pt_br">Outros</span>' +
-      '      </span> '
-    }
-    // create and show all information about the costumer
-    $abstractText.append(
-      '<span class="i18n"> ' +
-                  '      <span data-lang="en_us">Name</span> ' +
-                  '      <span data-lang="pt_br">Nome</span>' +
-                  '      </span>: ' + fullName + '<br>' +
-                  '<span class="i18n"> ' +
-                  '      <span data-lang="en_us">Birth Date</span> ' +
-                  '      <span data-lang="pt_br">Data de Nascimento</span>' +
-                  '      </span>: ' + date + '<br>' +
-                  '<span class="i18n"> ' +
-                  '      <span data-lang="en_us">Gender</span> ' +
-                  '      <span data-lang="pt_br">Gênero</span>' +
-                  '      </span>: ' + gender + '<br>' +
-                  '<span class="i18n"> ' +
-                  '      <span data-lang="en_us">CPF/CNPJ</span> ' +
-                  '      <span data-lang="pt_br">CPF/CNPJ</span>' +
-                  '      </span>: ' + data.doc_number)
-    $abstractStatistic.append(
-      '<span class="i18n"> ' +
-                  '      <span data-lang="en_us">Number of orders</span> ' +
-                  '      <span data-lang="pt_br">Quantidade de pedidos</span>' +
-                  '      </span>: ' + data.orders_count + '<br>' +
-                  '<span class="i18n"> ' +
-                              '      <span data-lang="en_us">Amount of money in order: $</span> ' +
-                              '      <span data-lang="pt_br">Valor total de pedidos: R$</span>' +
-                              '      </span>' + data.orders_total_value + '<br>' +
-                              '<span class="i18n"> ' +
-                                          '      <span data-lang="en_us">Amount of money spent: $</span> ' +
-                                          '      <span data-lang="pt_br">Valor total de pedidos aprovados: R$</span>' +
-                                          '      </span>' + data.total_spent + '<br>' +
-                                          '<span class="i18n"> ' +
-                                                      '      <span data-lang="en_us">Amount of money cancelled: $</span> ' +
-                                                      '      <span data-lang="pt_br">Valor total de pedidos cancelados: R$</span>' +
-                                                      '      </span>' + data.total_cancelled)
   }
 
   // wait for the form to be ready
