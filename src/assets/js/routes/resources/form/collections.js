@@ -166,13 +166,18 @@
           if (product) {
             // create item object
             var data = Data()
+            console.log(data.products)
             var eachproducts
-            for (var ii = 0; ii < data.products.length; ii++) {
-              if (product._id === data.products[ii]) {
-                eachproducts = null
-                break
-              } else {
-                eachproducts = product._id
+            if (data.products === undefined) {
+              eachproducts = product._id
+            } else {
+              for (var ii = 0; ii < data.products.length; ii++) {
+                if (product._id === data.products[ii]) {
+                  eachproducts = null
+                  break
+                } else {
+                  eachproducts = product._id
+                }
               }
             }
             // add the new item to cart data
