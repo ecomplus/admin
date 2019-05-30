@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import EcDashboard from '@/components/templates/EcDashboard.vue'
+import EcDashboard from '@/components/templates/EcDashboard/App.vue'
 export default {
   name: 'home',
   components: {
