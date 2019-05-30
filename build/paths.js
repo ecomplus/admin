@@ -6,7 +6,7 @@ const { resolve, join } = require('path')
 // input directories and files
 const src = resolve(process.cwd(), 'src')
 const pub = resolve(process.cwd(), 'public')
-const script = join(src, 'index.js')
+const script = join(src, 'js', 'index.js')
 const styles = join(src, 'scss', 'styles.scss')
 const template = join(src, 'views', 'index.ejs')
 
