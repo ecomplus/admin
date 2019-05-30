@@ -1,0 +1,42 @@
+{
+  "name": "@ecomplus/admin",
+  "version": "0.1.0",
+  "homepage": "http://app.e-com.plus",
+  "description": "E-Com Plus Admin dashboard PWA",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecomclub/ecomplus-admin.git"
+  },
+  "keywords": [
+    "ecomplus",
+    "headless-ecommerce",
+    "ecommerce",
+    "ecommerce-cms",
+    "ecommerce-platform",
+    "ecommerce-dashboard",
+    "pwa",
+    "jamstack"
+  ],
+  "author": "E-Com Club <ti@e-com.club>",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ecomclub/ecomplus-admin/issues"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "not dead"
+  ],
+  "standard": {
+    "parser": "babel-eslint"
+  }
+}
