@@ -3,6 +3,7 @@ deprecated
 
 # Ignore production builded files
 dist
+test
 
 # Logs
 logs
