@@ -1,9 +1,10 @@
 # Ignore old version sources
-deprecated
+/deprecated
+/tmp
 
 # Ignore production builded files
-dist
-test
+/dist
+/test
 
 # Logs
 logs
