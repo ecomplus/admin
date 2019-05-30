@@ -77,3 +77,6 @@ workbox.routing.registerRoute('/', new workbox.strategies.NetworkFirst())
 
 // login
 workbox.routing.registerRoute('/pages/login.html', new workbox.strategies.NetworkFirst())
+
+// partials
+workbox.routing.registerRoute(/\/routes\//, new workbox.strategies.NetworkFirst())
