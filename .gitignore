@@ -1,6 +1,8 @@
 # Ignore old version sources
 /deprecated
 /tmp
+/src/scss/tmp
+/src/js/tmp
 
 # Ignore production builded files
 /dist
