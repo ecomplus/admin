@@ -1,11 +1,14 @@
+# Old template files
 /deprecated
 /tmp
+/src/scss/tmp
+/src/js/tmp
 
 .DS_Store
 node_modules
 /dist
 
-# local env files
+# Local env files
 .env.local
 .env.*.local
 
