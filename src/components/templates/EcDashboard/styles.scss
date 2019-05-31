@@ -1,22 +1,4 @@
 @import "../../../scss/variables";
 
 .ec-dashboard {
-  position: relative;
-
-  &__aside {
-    width: 5rem;
-    height: 100%;
-    min-height: 100vh;
-    background: $primary;
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
-
-  &__main {
-    width: 100%;
-    padding-left: 5rem;
-    box-sizing: border-box;
-    position: relative;
-  }
 }
