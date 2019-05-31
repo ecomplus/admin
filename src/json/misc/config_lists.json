@@ -1,0 +1,541 @@
+{
+  "_labels": {
+    "name": {
+      "en_us": "Name",
+      "pt_br": "Nome"
+    },
+    "slug": {
+      "en_us": "Slug"
+    },
+    "title": {
+      "en_us": "Title",
+      "pt_br": "Título"
+    },
+    "status": {
+      "en_us": "Status"
+    },
+    "created_at": {
+      "en_us": "Creation",
+      "pt_br": "Criação"
+    },
+    "updated_at": {
+      "en_us": "Update",
+      "pt_br": "Atualização"
+    }
+  },
+  "brands": {
+    "_fields": [ "name", "slug", "logo/url" ],
+    "logo/url": {
+      "label": {
+        "en_us": "Logo URL",
+        "pt_br": "URL do logo"
+      },
+      "type": "link"
+    },
+    "name": {
+      "width": 200
+    },
+    "slug": {
+      "width": 200
+    }
+  },
+  "categories": {
+    "_fields": [ "name", "slug", "parent/name" ],
+    "parent/name": {
+      "label": {
+        "en_us": "Parent category",
+        "pt_br": "Categoria pai"
+      }
+    }
+  },
+  "collections": {
+    "_fields": [ "name", "slug" ]
+  },
+  "grids": {
+    "_fields": [ "title", "grid_id" ],
+    "grid_id": {
+      "label": {
+        "en_us": "Grid ID",
+        "pt_br": "ID do grid"
+      }
+    }
+  },
+  "carts": {
+    "_fields": [
+      "_id",
+      "subtotal",
+      "discount",
+      "available",
+      "completed",
+      "status",
+      "permalink"
+    ],
+    "_hidden_fields": [
+      "items"
+    ],
+    "items": {
+      "template": "{{quantity}}x <a href='#/resources/products/{{product_id}}'>{{name}}</a> ({{sku}})"
+    },
+    "subtotal": {
+      "label": {
+        "en_us": "Subtotal"
+      },
+      "type": "money",
+      "width": 110
+    },
+    "discount": {
+      "label": {
+        "en_us": "Discount",
+        "pt_br": "Desconto"
+      },
+      "type": "money",
+      "width": 100
+    },
+    "available": {
+      "type": "bold",
+      "width": 105,
+      "label": {
+        "en_us": "Avail.",
+        "pt_br": "Disp."
+      },
+      "enum": {
+        "true": {
+          "class": "info",
+          "text": {
+            "en_us": "Available",
+            "pt_br": "Disponível"
+          }
+        },
+        "false": {
+          "class": "danger",
+          "text": {
+            "en_us": "Unavailable",
+            "pt_br": "Indisponível"
+          }
+        }
+      }
+    },
+    "completed": {
+      "type": "bold",
+      "width": 105,
+      "label": {
+        "en_us": "Comp."
+      },
+      "enum": {
+        "true": {
+          "class": "success",
+          "text": {
+            "en_us": "Completed",
+            "pt_br": "Completado"
+          }
+        },
+        "false": {
+          "text": {
+            "en_us": "Open",
+            "pt_br": "Aberto"
+          }
+        }
+      }
+    },
+    "status": {
+      "width": 100,
+      "cut_string": 10
+    },
+    "permalink": {
+      "label": {
+        "en_us": "Link"
+      },
+      "type": "link"
+    }
+  },
+  "customers": {
+    "_fields": [
+      "display_name",
+      "main_email",
+      "accepts_marketing",
+      "enabled",
+      "orders_count",
+      "orders_total_value"
+    ],
+    "_hidden_fields": [
+      "login",
+      "status"
+    ],
+    "status": {
+      "label": {
+        "en_us": "Custom status",
+        "pt_br": "Status customizado"
+      }
+    },
+    "accepts_marketing": {
+      "label": {
+        "en_us": "News"
+      },
+      "type": "bold",
+      "width": 80,
+      "enum": {
+        "true": {
+          "class": "info",
+          "text": {
+            "en_us": "Accepts",
+            "pt_br": "Aceito"
+          }
+        },
+        "false": {
+          "text": {
+            "en_us": "No",
+            "pt_br": "Não"
+          }
+        }
+      }
+    },
+    "display_name": {
+      "width": 135,
+      "cut_string": 18,
+      "label": {
+        "en_us": "Name",
+        "pt_br": "Nome"
+      }
+    },
+    "main_email": {
+      "label": {
+        "en_us": "Email",
+        "pt_br": "E-mail"
+      },
+      "type": "link",
+      "cut_string": 30
+    },
+    "enabled": {
+      "type": "bold",
+      "width": 110,
+      "label": {
+        "en_us": "Shop",
+        "pt_br": "Compras"
+      },
+      "enum": {
+        "true": {
+          "class": "success",
+          "text": {
+            "en_us": "Enabled",
+            "pt_br": "Habilitado"
+          }
+        },
+        "false": {
+          "class": "danger",
+          "text": {
+            "en_us": "Disabled",
+            "pt_br": "Desabilitado"
+          }
+        }
+      }
+    },
+    "login": {
+      "label": {
+        "en_us": "Login enabled",
+        "pt_br": "Login habilitado"
+      }
+    },
+    "orders_count": {
+      "label": {
+        "en_us": "Orders",
+        "pt_br": "Pedidos"
+      },
+      "width": 90,
+      "range": true
+    },
+    "orders_total_value": {
+      "label": {
+        "en_us": "Total"
+      },
+      "type": "money",
+      "width": 135
+    }
+  },
+  "orders": {
+    "_fields": [
+      "number",
+      "source_name",
+      "status",
+      "amount/subtotal",
+      "amount/total",
+      "financial_status/current",
+      "fulfillment_status/current"
+    ],
+    "_hidden_fields": [
+      "channel_id",
+      "code",
+      "payment_method_label",
+      "shipping_method_label",
+      "amount/discount",
+      "amount/freight",
+      "buyers",
+      "items"
+    ],
+    "channel_id": {
+      "label": {
+        "en_us": "Channel ID",
+        "pt_br": "ID do canal"
+      }
+    },
+    "code": {
+      "label": {
+        "en_us": "Code",
+        "pt_br": "Código"
+      }
+    },
+    "payment_method_label": {
+      "label": {
+        "en_us": "Payment method",
+        "pt_br": "Forma de pagamento"
+      }
+    },
+    "shipping_method_label": {
+      "label": {
+        "en_us": "Shipping method",
+        "pt_br": "Forma de envio"
+      }
+    },
+    "buyers": {
+      "template": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a> (<a href='mailto:{{main_email}}' target='_blank'>{{main_email}}</a>)"
+    },
+    "items": {
+      "template": "{{quantity}}x <a href='#/resources/products/{{product_id}}'>{{name}}</a> ({{sku}})"
+    },
+    "number": {
+      "label": {
+        "en_us": "No",
+        "pt_br": "Nº"
+      },
+      "width": 90,
+      "range": true
+    },
+    "source_name": {
+      "label": {
+        "en_us": "Source",
+        "pt_br": "Origem"
+      },
+      "width": 100,
+      "cut_string": 10
+    },
+    "status": {
+      "type": "bold",
+      "width": 100,
+      "enum": {
+        "open": {
+          "text": {
+            "en_us": "Open",
+            "pt_br": "Aberto"
+          }
+        },
+        "closed": {
+          "class": "success",
+          "text": {
+            "en_us": "Closed",
+            "pt_br": "Fechado"
+          }
+        },
+        "cancelled": {
+          "class": "danger",
+          "text": {
+            "en_us": "Cancelled",
+            "pt_br": "Cancelado"
+          }
+        }
+      }
+    },
+    "amount/subtotal": {
+      "label": {
+        "en_us": "Subtotal"
+      },
+      "type": "money",
+      "width": 120
+    },
+    "amount/total": {
+      "label": {
+        "en_us": "Total"
+      },
+      "type": "money",
+      "width": 120
+    },
+    "amount/discount": {
+      "label": {
+        "en_us": "Discount",
+        "pt_br": "Desconto"
+      },
+      "type": "money"
+    },
+    "amount/freight": {
+      "label": {
+        "en_us": "Freight",
+        "pt_br": "Frete"
+      },
+      "type": "money"
+    },
+    "financial_status/current": {
+      "label": {
+        "en_us": "Payment",
+        "pt_br": "Pagamento"
+      },
+      "type": "bold",
+      "enum": {
+        "pending": {
+          "text": {
+            "en_us": "Pending",
+            "pt_br": "Pendente"
+          }
+        },
+        "under_analysis": {
+          "class": "warning",
+          "text": {
+            "en_us": "Under analysis",
+            "pt_br": "Em análise"
+          }
+        },
+        "authorized": {
+          "class": "info",
+          "text": {
+            "en_us": "Authorized",
+            "pt_br": "Autorizado"
+          }
+        },
+        "unauthorized": {
+          "class": "warning",
+          "text": {
+            "en_us": "Unauthorized",
+            "pt_br": "Não autorizado"
+          }
+        },
+        "partially_paid": {
+          "class": "info",
+          "text": {
+            "en_us": "Part paid",
+            "pt_br": "Parte pago"
+          }
+        },
+        "paid": {
+          "class": "success",
+          "text": {
+            "en_us": "Paid",
+            "pt_br": "Pago"
+          }
+        },
+        "in_dispute": {
+          "class": "dark",
+          "text": {
+            "en_us": "In dispute",
+            "pt_br": "Disputa"
+          }
+        },
+        "partially_refunded": {
+          "class": "dark",
+          "text": {
+            "en_us": "Part refunded",
+            "pt_br": "Parte devolvido"
+          }
+        },
+        "refunded": {
+          "class": "danger",
+          "text": {
+            "en_us": "Refunded",
+            "pt_br": "Devolvido"
+          }
+        },
+        "voided": {
+          "class": "danger",
+          "text": {
+            "en_us": "Voided",
+            "pt_br": "Cancelado"
+          }
+        },
+        "unknown": {
+          "text": {
+            "en_us": "Unknown",
+            "pt_br": "Desconhecido"
+          }
+        }
+      }
+    },
+    "fulfillment_status/current": {
+      "label": {
+        "en_us": "Shipping",
+        "pt_br": "Entrega"
+      },
+      "type": "bold",
+      "enum": {
+        "invoice_issued": {
+          "text": {
+            "en_us": "Invoice issued",
+            "pt_br": "NF emitida"
+          }
+        },
+        "in_production": {
+          "text": {
+            "en_us": "In production",
+            "pt_br": "Em produção"
+          }
+        },
+        "in_separation": {
+          "text": {
+            "en_us": "In separation",
+            "pt_br": "Em separação"
+          }
+        },
+        "ready_for_shipping": {
+          "text": {
+            "en_us": "Ready for shipping",
+            "pt_br": "Pronto para envio"
+          }
+        },
+        "partially_shipped": {
+          "class": "info",
+          "text": {
+            "en_us": "Part shipped",
+            "pt_br": "Parte enviado"
+          }
+        },
+        "shipped": {
+          "class": "info",
+          "text": {
+            "en_us": "Shipped",
+            "pt_br": "Enviado"
+          }
+        },
+        "partially_delivered": {
+          "class": "info",
+          "text": {
+            "en_us": "Part delivered",
+            "pt_br": "Parte entregue"
+          }
+        },
+        "delivered": {
+          "class": "success",
+          "text": {
+            "en_us": "Delivered",
+            "pt_br": "Entregue"
+          }
+        },
+        "returned_for_exchange": {
+          "class": "warning",
+          "text": {
+            "en_us": "Return to exchange",
+            "pt_br": "Retorno e troca"
+          }
+        },
+        "received_for_exchange": {
+          "class": "dark",
+          "text": {
+            "en_us": "Waiting exchange",
+            "pt_br": "Aguardando troca"
+          }
+        },
+        "returned": {
+          "class": "danger",
+          "text": {
+            "en_us": "Returned",
+            "pt_br": "Devolvido"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,29 +1,14 @@
 # ecomplus-admin
+E-Com Plus Admin dashboard, jQuery SPA PWA
 
-## Project setup
-```
-npm install
-```
+### Development version
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+[![Netlify Status](https://api.netlify.com/api/v1/badges/974ff9b8-3d03-484d-bd33-1d356417394f/deploy-status)](https://app.netlify.com/sites/pensive-poitras-473c5b/deploys)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+https://app-dev.e-com.plus
 
-### Run your tests
-```
-npm run test
-```
+### Production
 
-### Lints and fixes files
-```
-npm run lint
-```
+[![Netlify Status](https://api.netlify.com/api/v1/badges/721420a9-4795-485b-9f5a-d56f87c87ae7/deploy-status)](https://app.netlify.com/sites/youthful-rosalind-c59c39/deploys)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+https://app.e-com.plus

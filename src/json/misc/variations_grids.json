@@ -1,0 +1,1148 @@
+{
+	"console": {
+		"title": {
+			"en_us": "Console"
+		},
+		"options": [
+      {
+				"option_id": "playstation_4",
+				"text": {
+					"en_us": "Playstation 4"
+				}
+			},
+			{
+				"option_id": "playstation_3",
+				"text": {
+					"en_us": "Playstation 3"
+				}
+			},
+			{
+				"option_id": "playstation_vita",
+				"text": {
+					"en_us": "Playstation Vita"
+				}
+			},
+			{
+				"option_id": "psp",
+				"text": {
+					"en_us": "PSP"
+				}
+			},
+			{
+				"option_id": "nintendo_switch",
+				"text": {
+					"en_us": "Nintendo Switch"
+				}
+			},
+			{
+				"option_id": "nintendo_3ds",
+				"text": {
+					"en_us": "Nintendo 3DS"
+				}
+			},
+			{
+				"option_id": "nintendo_ds",
+				"text": {
+					"en_us": "Nintendo DS"
+				}
+			},
+			{
+				"option_id": "nintendo_wiiu",
+				"text": {
+					"en_us": "Nintendo Wii U"
+				}
+			},
+			{
+				"option_id": "nintendo_wii",
+				"text": {
+					"en_us": "Nintendo Wii"
+				}
+			},
+			{
+				"option_id": "xbox_one",
+				"text": {
+					"en_us": "XBox One"
+				}
+			},
+			{
+				"option_id": "xbox360",
+				"text": {
+					"en_us": "XBox360"
+				}
+			},
+			{
+				"option_id": "pc",
+				"text": {
+					"en_us": "PC"
+				}
+			}
+		]
+	},
+	"sign": {
+		"title": {
+			"en_us": "Sign",
+			"pt_br": "Signo"
+		},
+		"options": [
+      {
+				"option_id": "aries",
+				"text": {
+					"en_us": "Aries",
+					"pt_br": "Áries"
+				}
+			},
+			{
+				"option_id": "taurus",
+				"text": {
+					"en_us": "Taurus",
+					"pt_br": "Touro"
+				}
+			},
+			{
+				"option_id": "gemini",
+				"text": {
+					"en_us": "Gemini",
+					"pt_br": "Gêmeos"
+				}
+			},
+			{
+				"option_id": "cancer",
+				"text": {
+					"en_us": "Cancer",
+					"pt_br": "Câncer"
+				}
+			},
+			{
+				"option_id": "leo",
+				"text": {
+					"en_us": "Leo",
+					"pt_br": "Leão"
+				}
+			},
+			{
+				"option_id": "virgo",
+				"text": {
+					"en_us": "Virgo",
+					"pt_br": "Virgem"
+				}
+			},
+			{
+				"option_id": "libra",
+				"text": {
+					"en_us": "Libra"
+				}
+			},
+			{
+				"option_id": "scorpio",
+				"text": {
+					"en_us": "Scorpio",
+					"pt_br": "Escorpião"
+				}
+			},
+			{
+				"option_id": "sagittarius",
+				"text": {
+					"en_us": "Sagittarius",
+					"pt_br": "Sagitário"
+				}
+			},
+			{
+				"option_id": "capricorn",
+				"text": {
+					"en_us": "Capricorn",
+					"pt_br": "Capricórnio"
+				}
+			},
+			{
+				"option_id": "aquarius",
+				"text": {
+					"en_us": "Aquarius",
+					"pt_br": "Áquarios"
+				}
+			},
+			{
+				"option_id": "pisces",
+				"text": {
+					"en_us": "Pisces",
+					"pt_br": "Peixes"
+				}
+			}
+		]
+	},
+	"flavor": {
+		"title": {
+			"en_us": "Flavor",
+			"pt_br": "Sabor"
+		},
+		"options": [
+      {
+				"option_id": "mango",
+				"text": {
+					"en_us": "Mango",
+					"pt_br": "Manga"
+				}
+			},
+			{
+				"option_id": "peach",
+				"text": {
+					"en_us": "Peach",
+					"pt_br": "Pêssego"
+				}
+			},
+			{
+				"option_id": "macchiatto",
+				"text": {
+					"en_us": "Macchiatto"
+				}
+			},
+			{
+				"option_id": "expresso",
+				"text": {
+					"en_us": "Expresso"
+				}
+			},
+			{
+				"option_id": "chocolate",
+				"text": {
+					"en_us": "Chocolate"
+				}
+			},
+			{
+				"option_id": "strawberry",
+				"text": {
+					"en_us": "Strawberry",
+					"pt_br": "Morango"
+				}
+			},
+			{
+				"option_id": "cookie",
+				"text": {
+					"en_us": "Cookie"
+				}
+			},
+			{
+				"option_id": "churros",
+				"text": {
+					"en_us": "Churros"
+				}
+			},
+			{
+				"option_id": "guarana",
+				"text": {
+					"en_us": "Guarana",
+					"pt_br": "Guaraná"
+				}
+			},
+			{
+				"option_id": "cranberry",
+				"text": {
+					"en_us": "Cranberry"
+				}
+			},
+			{
+				"option_id": "banana",
+				"text": {
+					"en_us": "Banana"
+				}
+			},
+			{
+				"option_id": "lemon",
+				"text": {
+					"en_us": "Lemon",
+					"pt_br": "Limão"
+				}
+			},
+			{
+				"option_id": "mint",
+				"text": {
+					"en_us": "Mint",
+					"pt_br": "Menta"
+				}
+			},
+			{
+				"option_id": "raspberry",
+				"text": {
+					"en_us": "Raspberry",
+					"pt_br": "Framboesa"
+				}
+			},
+			{
+				"option_id": "peanut_candy",
+				"text": {
+					"en_us": "Peanut candy",
+					"pt_br": "Paçoca"
+				}
+			},
+			{
+				"option_id": "doce_de_leite",
+				"text": {
+					"en_us": "Doce de leite"
+				}
+			},
+			{
+				"option_id": "passion_fruit",
+				"text": {
+					"en_us": "Passion fruit",
+					"pt_br": "Maracujá"
+				}
+			},
+			{
+				"option_id": "coconut",
+				"text": {
+					"en_us": "Coconut",
+					"pt_br": "Coco"
+				}
+			},
+			{
+				"option_id": "barbecue",
+				"text": {
+					"en_us": "Barbecue",
+					"pt_br": "Churrasco"
+				}
+			},
+			{
+				"option_id": "blueberry",
+				"text": {
+					"en_us": "Blueberry"
+				}
+			},
+			{
+				"option_id": "green_tea",
+				"text": {
+					"en_us": "Green tea",
+					"pt_br": "Chá verde"
+				}
+			},
+			{
+				"option_id": "jaboticaba",
+				"text": {
+					"en_us": "Jaboticaba"
+				}
+			},
+			{
+				"option_id": "condensed_milk",
+				"text": {
+					"en_us": "Condensed milk",
+					"pt_br": "Leite condensado"
+				}
+			},
+			{
+				"option_id": "orange",
+				"text": {
+					"en_us": "Orange",
+					"pt_br": "Laranja"
+				}
+			},
+			{
+				"option_id": "hazelnut",
+				"text": {
+					"en_us": "Hazelnut",
+					"pt_br": "Avelã"
+				}
+			},
+			{
+				"option_id": "peanut",
+				"text": {
+					"en_us": "Peanut",
+					"pt_br": "Amendoim"
+				}
+			},
+			{
+				"option_id": "green_apple",
+				"text": {
+					"en_us": "Green apple",
+					"pt_br": "Maçã verde"
+				}
+			},
+			{
+				"option_id": "cheese",
+				"text": {
+					"en_us": "Cheese",
+					"pt_br": "Queijo"
+				}
+			},
+			{
+				"option_id": "chicken",
+				"text": {
+					"en_us": "Chicken",
+					"pt_br": "Frango"
+				}
+			},
+			{
+				"option_id": "beef",
+				"text": {
+					"en_us": "Beef",
+					"pt_br": "Carne"
+				}
+			},
+			{
+				"option_id": "crunchy",
+				"text": {
+					"en_us": "Crunchy",
+					"pt_br": "Crocante"
+				}
+			},
+			{
+				"option_id": "cherry",
+				"text": {
+					"en_us": "Cherry",
+					"pt_br": "Cereja"
+				}
+			},
+			{
+				"option_id": "lychee",
+				"text": {
+					"en_us": "Lychee",
+					"pt_br": "Lichia"
+				}
+			},
+			{
+				"option_id": "neapolitan",
+				"text": {
+					"en_us": "Neapolitan",
+					"pt_br": "Napolitano"
+				}
+			},
+			{
+				"option_id": "tuti_frutti",
+				"text": {
+					"en_us": "Tuti frutti",
+					"pt_br": "Tuti frutti"
+				}
+			},
+			{
+				"option_id": "green_grape",
+				"text": {
+					"en_us": "Green grape",
+					"pt_br": "Uva verde"
+				}
+			},
+			{
+				"option_id": "peanut_butter",
+				"text": {
+					"en_us": "Peanut butter",
+					"pt_br": "Pasta de amendoim"
+				}
+			},
+			{
+				"option_id": "flakes",
+				"text": {
+					"en_us": "Flakes",
+					"pt_br": "Flocos"
+				}
+			},
+			{
+				"option_id": "cappuccino",
+				"text": {
+					"en_us": "Cappuccino"
+				}
+			},
+			{
+				"option_id": "plum",
+				"text": {
+					"en_us": "Plum",
+					"pt_br": "Ameixa"
+				}
+			},
+			{
+				"option_id": "guava",
+				"text": {
+					"en_us": "Guava",
+					"pt_br": "Goiaba"
+				}
+			},
+			{
+				"option_id": "acai",
+				"text": {
+					"en_us": "Acai",
+					"pt_br": "Açai"
+				}
+			},
+			{
+				"option_id": "pizza",
+				"text": {
+					"en_us": "Pizza"
+				}
+			},
+			{
+				"option_id": "tangerine",
+				"text": {
+					"en_us": "Tangerine",
+					"pt_br": "Tangerina"
+				}
+			},
+			{
+				"option_id": "watermelon",
+				"text": {
+					"en_us": "Watermelon",
+					"pt_br": "Melancia"
+				}
+			},
+			{
+				"option_id": "vanilla",
+				"text": {
+					"en_us": "Vanilla",
+					"pt_br": "Baunilha"
+				}
+			},
+			{
+				"option_id": "bitter",
+				"text": {
+					"en_us": "Bitter",
+					"pt_br": "Amargo"
+				}
+			},
+			{
+				"option_id": "honey",
+				"text": {
+					"en_us": "Honey",
+					"pt_br": "Mel"
+				}
+			},
+			{
+				"option_id": "milk",
+				"text": {
+					"en_us": "Milk",
+					"pt_br": "Leite"
+				}
+			},
+			{
+				"option_id": "cinnamon",
+				"text": {
+					"en_us": "Cinnamon",
+					"pt_br": "Chestnuts"
+				}
+			},
+			{
+				"option_id": "blackberry",
+				"text": {
+					"en_us": "Blackberry",
+					"pt_br": "Amora"
+				}
+			},
+			{
+				"option_id": "corn",
+				"text": {
+					"en_us": "Corn",
+					"pt_br": "Milho"
+				}
+			},
+			{
+				"option_id": "caramel",
+				"text": {
+					"en_us": "Caramel",
+					"pt_br": "Caramelo"
+				}
+			},
+			{
+				"option_id": "cocoa",
+				"text": {
+					"en_us": "Cocoa",
+					"pt_br": "Cacau"
+				}
+			},
+			{
+				"option_id": "chili",
+				"text": {
+					"en_us": "Chili",
+					"pt_br": "Pimenta"
+				}
+			},
+			{
+				"option_id": "herbs",
+				"text": {
+					"en_us": "Herbs",
+					"pt_br": "Ervas"
+				}
+			},
+			{
+				"option_id": "cheddar",
+				"text": {
+					"en_us": "Cheddar"
+				}
+			},
+			{
+				"option_id": "tomato",
+				"text": {
+					"en_us": "Tomato",
+					"pt_br": "Tomate"
+				}
+			},
+			{
+				"option_id": "kiwi",
+				"text": {
+					"en_us": "Kiwi"
+				}
+			}
+		]
+	},
+	"shape": {
+		"title": {
+			"en_us": "Shape",
+			"pt_br": "Formato"
+		},
+		"options": [
+      {
+				"option_id": "circle",
+				"text": {
+					"en_us": "Circle",
+					"pt_br": "Círculo"
+				}
+			},
+			{
+				"option_id": "square",
+				"text": {
+					"en_us": "Square",
+					"pt_br": "Quadrado"
+				}
+			},
+			{
+				"option_id": "triangle",
+				"text": {
+					"en_us": "Triangle",
+					"pt_br": "Triângulo"
+				}
+			},
+			{
+				"option_id": "star",
+				"text": {
+					"en_us": "Star",
+					"pt_br": "Estrela"
+				}
+			},
+			{
+				"option_id": "male",
+				"text": {
+					"en_us": "Male",
+					"pt_br": "Masculino"
+				}
+			}
+		]
+	},
+	"tension": {
+		"title": {
+			"en_us": "Tension",
+			"pt_br": "Tenção"
+		},
+		"options": [
+      {
+				"option_id": "110v",
+				"text": {
+					"en_us": "110V"
+				}
+			},
+			{
+				"option_id": "220v",
+				"text": {
+					"en_us": "220V"
+				}
+			},
+			{
+				"option_id": "110/220v",
+				"text": {
+					"en_us": "110/220V"
+				}
+			},
+			{
+				"option_id": "5v",
+				"text": {
+					"en_us": "5V"
+				}
+			}
+		]
+	},
+	"age_group": {
+		"title": {
+			"en_us": "age_group",
+			"pt_br": "faixa_etária"
+		},
+		"options": [
+      {
+				"option_id": "newborn",
+				"text": {
+					"en_us": "Newborn",
+					"pt_br": "Recém-nascido"
+				}
+			},
+			{
+				"option_id": "infant",
+				"text": {
+					"en_us": "Infant",
+					"pt_br": "Infantil"
+				}
+			},
+			{
+				"option_id": "toddler",
+				"text": {
+					"en_us": "Toddler",
+					"pt_br": "Criança de colo"
+				}
+			},
+			{
+				"option_id": "kids",
+				"text": {
+					"en_us": "Kids",
+					"pt_br": "Crianças"
+				}
+			},
+			{
+				"option_id": "adult",
+				"text": {
+					"en_us": "Adult",
+					"pt_br": "Adulto"
+				}
+			}
+		]
+	},
+	"energy_efficiency_class": {
+		"title": {
+			"en_us": "Energy_efficiency_class",
+			"pt_br": "Classe_de_eficiência_energética"
+		},
+		"options": [
+      {
+				"option_id": "a+++",
+				"text": {
+					"en_us": "A+++"
+				}
+			},
+			{
+				"option_id": "a++",
+				"text": {
+					"en_us": "A++"
+				}
+			},
+			{
+				"option_id": "a+",
+				"text": {
+					"en_us": "A+"
+				}
+			},
+			{
+				"option_id": "a",
+				"text": {
+					"en_us": "A"
+				}
+			},
+			{
+				"option_id": "b",
+				"text": {
+					"en_us": "B"
+				}
+			},
+			{
+				"option_id": "c",
+				"text": {
+					"en_us": "C"
+				}
+			},
+			{
+				"option_id": "d",
+				"text": {
+					"en_us": "D"
+				}
+			},
+			{
+				"option_id": "e",
+				"text": {
+					"en_us": "E"
+				}
+			},
+			{
+				"option_id": "f",
+				"text": {
+					"en_us": "F"
+				}
+			},
+			{
+				"option_id": "g",
+				"text": {
+					"en_us": "G"
+				}
+			}
+		]
+	},
+	"size": {
+		"title": {
+			"en_us": "Size",
+			"pt_br": "Tamanho"
+		},
+		"options": [
+      {
+				"option_id": "xs",
+				"text": {
+					"en_us": "XS",
+					"pt_br": "PP"
+				}
+			},
+			{
+				"option_id": "s",
+				"text": {
+					"en_us": "S",
+					"pt_br": "P"
+				}
+			},
+			{
+				"option_id": "m",
+				"text": "M"
+			},
+			{
+				"option_id": "l",
+				"text": {
+					"en_us": "L",
+					"pt_br": "G"
+				}
+			},
+			{
+				"option_id": "xl",
+				"text": {
+					"en_us": "XL",
+					"pt_br": "GG"
+				}
+			},
+			{
+				"option_id": "xxl",
+				"text": {
+					"en_us": "XXL",
+					"pt_br": "XG"
+				}
+			}
+		]
+	},
+	"gender": {
+		"title": {
+			"en_us": "Gender",
+			"pt_br": "Gênero"
+		},
+		"options": [
+      {
+				"option_id": "male",
+				"text": {
+					"en_us": "Male",
+					"pt_br": "Masculino"
+				}
+			},
+			{
+				"option_id": "female",
+				"text": {
+					"en_us": "Female",
+					"pt_br": "Feminino"
+				}
+			},
+			{
+				"option_id": "other",
+				"text": {
+					"en_us": "Other",
+					"pt_br": "Outro"
+				}
+			},
+			{
+				"option_id": "unisex",
+				"text": {
+					"en_us": "Unisex"
+				}
+			}
+		]
+	},
+	"material": {
+		"title": "Material",
+		"options": [
+      {
+				"option_id": "leather",
+				"text": {
+					"en_us": "Leather",
+					"pt_br": "Couro"
+				}
+			},
+			{
+				"option_id": "brocade",
+				"text": {
+					"en_us": "Brocade",
+					"pt_br": "Brocado"
+				}
+			},
+			{
+				"option_id": "cambric",
+				"text": {
+					"en_us": "Cambric",
+					"pt_br": "Cambraia"
+				}
+			},
+			{
+				"option_id": "velvet",
+				"text": {
+					"en_us": "Velvet",
+					"pt_br": "Veludo"
+				}
+			},
+			{
+				"option_id": "denim",
+				"text": {
+					"en_us": "Denim",
+					"pt_br": "Jeans"
+				}
+			},
+			{
+				"option_id": "flannels",
+				"text": {
+					"en_us": "Flannels",
+					"pt_br": "Flanela"
+				}
+			},
+			{
+				"option_id": "satin",
+				"text": {
+					"en_us": "Satin",
+					"pt_br": "Setin"
+				}
+			},
+			{
+				"option_id": "cotton",
+				"text": {
+					"en_us": "Cotton",
+					"pt_br": "Algodão"
+				}
+			},
+			{
+				"option_id": "polyester",
+				"text": {
+					"en_us": "Polyester",
+					"pt_br": "Poliéster"
+				}
+			},
+			{
+				"option_id": "spandex",
+				"text": {
+					"en_us": "Spandex",
+					"pt_br": "Elastano"
+				}
+			},
+      {
+				"option_id": "wood",
+				"text": {
+					"en_us": "Wood",
+					"pt_br": "Madeira"
+				}
+			},
+      {
+				"option_id": "plastic",
+				"text": {
+					"en_us": "Plastic",
+					"pt_br": "Plastico"
+				}
+			},
+      {
+				"option_id": "rubber",
+				"text": {
+					"en_us": "Rubber",
+					"pt_br": "Borracha"
+				}
+			},
+      {
+				"option_id": "gold",
+				"text": {
+					"en_us": "Gold",
+					"pt_br": "Ouro"
+				}
+			},
+      {
+				"option_id": "silver",
+				"text": {
+					"en_us": "Silver",
+					"pt_br": "Prata"
+				}
+			},
+      {
+				"option_id": "metal",
+				"text": {
+					"en_us": "Metal"
+				}
+			},
+      {
+				"option_id": "glass",
+				"text": {
+					"en_us": "Glass",
+					"pt_br": "Vidro"
+				}
+			}
+		]
+	},
+	"pattern": {
+		"title": {
+			"en_us": "Pattern",
+			"pt_br": "Estampa"
+		},
+		"options": [
+      {
+				"option_id": "striped",
+				"text": {
+					"en_us": "Striped",
+					"pt_br": "Listrado"
+				}
+			},
+			{
+				"option_id": "polka dot",
+				"text": {
+					"en_us": "Polka dot",
+					"pt_br": "Bolinhas"
+				}
+			},
+			{
+				"option_id": "checked",
+				"text": {
+					"en_us": "Checked",
+					"pt_br": "Xadrez"
+				}
+			},
+			{
+				"option_id": "geometric",
+				"text": {
+					"en_us": "Geometric",
+					"pt_br": "Geométrico"
+				}
+			},
+			{
+				"option_id": "zebra",
+				"text": {
+					"en_us": "Zebra",
+					"pt_br": "Zebrado"
+				}
+			},
+			{
+				"option_id": "paisley",
+				"text": {
+					"en_us": "Paisley",
+					"pt_br": "Floral"
+				}
+			}
+		]
+	},
+	"colors": {
+		"title": {
+			"en_us": "Color",
+			"pt_br": "Cor"
+		},
+		"options": [
+      {
+				"option_id": "white",
+				"text": {
+					"en_us": "White",
+					"pt_br": "Branco"
+				},
+				"colors": ["#ffffff"]
+			},
+			{
+				"option_id": "black",
+				"text": {
+					"en_us": "Black",
+					"pt_br": "Preto"
+				},
+				"colors": ["#000000"]
+			},
+			{
+				"option_id": "blue",
+				"text": {
+					"en_us": "Blue",
+					"pt_br": "Azul"
+				},
+				"colors": ["#0000ff"]
+			},
+			{
+				"option_id": "red",
+				"text": {
+					"en_us": "Red",
+					"pt_br": "Vermelho"
+				},
+				"colors": ["#ff0000"]
+			},
+			{
+				"option_id": "lime",
+				"text": {
+					"en_us": "Lime",
+					"pt_br": "Verde limão"
+				},
+				"colors": ["#00ff00"]
+			},
+			{
+				"option_id": "yellow",
+				"text": {
+					"en_us": "Yellow",
+					"pt_br": "Amarelo"
+				},
+				"colors": ["#ffff00"]
+			},
+			{
+				"option_id": "cyan",
+				"text": {
+					"en_us": "Cyan",
+					"pt_br": "Ciano"
+				},
+				"colors": ["#00ffff"]
+			},
+			{
+				"option_id": "magenta",
+				"text": {
+					"en_us": "Magenta",
+					"pt_br": "Magenta"
+				},
+				"colors": ["#ff00ff"]
+			},
+			{
+				"option_id": "silver",
+				"text": {
+					"en_us": "Siver",
+					"pt_br": "Prata"
+				},
+				"colors": ["#c0c0c0"]
+			},
+			{
+				"option_id": "gray",
+				"text": {
+					"en_us": "Gray",
+					"pt_br": "Cinza"
+				},
+				"colors": ["#808080"]
+			},
+			{
+				"option_id": "maroon",
+				"text": {
+					"en_us": "Maroon",
+					"pt_br": "Marom"
+				},
+				"colors": ["#800000"]
+			},
+			{
+				"option_id": "olive",
+				"text": {
+					"en_us": "Olive",
+					"pt_br": "Oliva"
+				},
+				"colors": ["#808000"]
+			},
+			{
+				"option_id": "green",
+				"text": {
+					"en_us": "Green",
+					"pt_br": "Verde"
+				},
+				"colors": ["#008000"]
+			},
+			{
+				"option_id": "orange",
+				"text": {
+					"en_us": "Orange",
+					"pt_br": "Laranja"
+				},
+				"colors": ["#FF5900"]
+			},
+			{
+				"option_id": "purple",
+				"text": {
+					"en_us": "Purple",
+					"pt_br": "Roxo"
+				},
+				"colors": ["#800080"]
+			}
+		]
+	}
+}
