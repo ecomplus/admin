@@ -1,0 +1,890 @@
+<form action="javascript:;" data-id="product-form" class="ajax-cards ajax-form ajax mb-30">
+  <div class="spinner-linear">
+    <div class="line"></div>
+  </div>
+  <div class="ajax-overlay"></div>
+
+  <div class="row" data-id="product-fields">
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group">
+            <label class="i18n require">
+              <span data-lang="en_us">Product name</span>
+              <span data-lang="pt_br">Nome do produto</span>
+            </label>
+            <input type="text" class="form-control action-title" name="name" maxlength="255" required />
+          </div>
+
+          <div class="row mt-30">
+            <div class="col-sm-7 col-md-12 col-lg-7">
+              <h4 class="i18n">
+                <span data-lang="en_us">Inventory</span>
+                <span data-lang="pt_br">Inventário</span>
+              </h4>
+
+              <div class="form-group">
+                <label class="require">SKU</label>
+                <div class="input-group">
+                  <input type="text" class="form-control text-monospace" name="sku" required />
+                  <span class="input-group-append">
+                    <button class="btn btn-light" type="button" data-id="random-sku">
+                      <i class="fa fa-random"></i>
+                      <span class="i18n">
+                        <span data-lang="en_us">Random</span>
+                        <span data-lang="pt_br">Aleatório</span>
+                      </span>
+                    </button>
+                  </span>
+                </div>
+                <span class="i18n">
+                  <small data-lang="en_us" class="form-text">Reference code</small>
+                  <small data-lang="pt_br" class="form-text">Código de referência</small>
+                </span>
+              </div>
+
+              <div class="form-group">
+                <div class="custom-controls-stacked">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="visible" checked />
+                    <label class="custom-control-label i18n">
+                      <span data-lang="en_us">Product visible</span>
+                      <span data-lang="pt_br">Produto visível</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="custom-controls-stacked">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="available" checked />
+                    <label class="custom-control-label i18n">
+                      <span data-lang="en_us">Available for purchase</span>
+                      <span data-lang="pt_br">Disponível para compra</span>
+                    </label>
+                  </div>
+                </div>
+                <div class="custom-controls-stacked">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="manage_stock" />
+                    <label class="custom-control-label i18n">
+                      <span data-lang="en_us">Automatically track inventory</span>
+                      <span data-lang="pt_br">Controle automático de estoque</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-7">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Type</span>
+                      <span data-lang="pt_br">Tipo</span>
+                    </label>
+                    <select class="form-control" name="commodity_type">
+                      <option value="physical"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Physical&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Físico&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Physical
+                      </option>
+                      <option value="digital">Digital</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Condition</span>
+                      <span data-lang="pt_br">Condição</span>
+                    </label>
+                    <select class="form-control" name="condition">
+                      <option value="new"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;New&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Novo&lt;/span&gt;
+                        &lt;/span&gt;">
+                        New
+                      </option>
+                      <option value="refurbished"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Refurbished&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Restaurado&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Refurbished
+                      </option>
+                      <option value="used"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Used&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Usado&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Used
+                      </option>
+                      <option value="not_specified"
+                        data-content="&lt;span class=&apos;i18n&apos;&gt;
+                        &lt;span data-lang=&apos;en_us&apos;&gt;Not specified&lt;/span&gt;
+                        &lt;span data-lang=&apos;pt_br&apos;&gt;Não especificado&lt;/span&gt;
+                        &lt;/span&gt;">
+                        Not specified
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Quantity</span>
+                      <span data-lang="pt_br">Quantidade</span>
+                    </label>
+                    <input type="number" class="form-control" name="quantity"
+                      min="0" max="9999999" step="any"/>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-5 col-md-12 col-lg-5">
+              <h4 class="i18n">
+                <span data-lang="en_us">Pricing</span>
+                <span data-lang="pt_br">Precificação</span>
+              </h4>
+
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Sale price</span>
+                  <span data-lang="pt_br">Preço de venda</span>
+                </label>
+                <input type="tel" class="form-control" name="price"
+                  data-is-number="true" data-money="true"/>
+              </div>
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Compare at price</span>
+                  <span data-lang="pt_br">Compare ao preço</span>
+                </label>
+                <input type="tel" class="form-control" name="base_price"
+                  data-is-number="true" data-money="true"/>
+              </div>
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Cost price</span>
+                  <span data-lang="pt_br">Preço de custo</span>
+                </label>
+                <input type="tel" class="form-control" name="cost_price"
+                  data-is-number="true" data-money="true"/>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Description</span>
+            <span data-lang="pt_br">Descrição</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <textarea class="html-editor" name="body_html"><div><br></div></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Variations</span>
+            <span data-lang="pt_br">Variações</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="callout callout-info" role="alert">
+              <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+                <span>×</span>
+              </button>
+              <p class="i18n">
+                <span data-lang="en_us">
+                  Add variants if the product has different versions and grids,
+                  <span class="text-info">such as sizes or colors</span>.
+                </span>
+                <span data-lang="pt_br">
+                  Adicione variantes se o produto possuir diferentes versões e grades,
+                  <span class="text-info">como tamanhos ou cores</span>.
+                </span>
+              </p>
+            </div>
+            <div class="hidden" data-id="grids-list-header">
+              <div class="flexbox">
+                <h6 class="i18n text-light">
+                  <span data-lang="en_us">
+                    Grid name
+                  </span>
+                  <span data-lang="pt_br">
+                    Nome da grade
+                  </span>
+                </h6>
+                <h6 class="i18n text-light hidden" data-id="add-option-header">
+                  <span data-lang="en_us">
+                    Option value
+                  </span>
+                  <span data-lang="pt_br">
+                    Valor da opção
+                  </span>
+                </h6>
+              </div>
+            </div>
+            <ul class="hide-empty mb-20 options-list" data-id="grids-list"></ul>
+            <button type="button" class="btn btn-light" data-id="add-grid">
+              <i class="fa fa-filter"></i>
+              <span class="i18n">
+                <span data-lang="en_us">Add grid</span>
+                <span data-lang="pt_br">Adicionar grade</span>
+              </span>
+            </button>
+            <ul class="hide-empty mt-20 options-list options-list-striped" data-id="variations-list"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Product images</span>
+            <span data-lang="pt_br">Imagens do produto</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <input type="file" name="pictures" multiple data-thumbnails="true" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Organization</span>
+            <span data-lang="pt_br">Organização</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="form-group">
+              <label>Keywords</label>
+              <select multiple name="keywords" class="tagsinput"></select>
+              <span class="i18n">
+                <small data-lang="en_us" class="form-text">
+                  Tags related with product for internal search
+                </small>
+                <small data-lang="pt_br" class="form-text">
+                  Tags relacionadas ao produto para pesquisa interna
+                </small>
+              </span>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-5 col-md-12 col-lg-5">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Brands</span>
+                    <span data-lang="pt_br">Marcas</span>
+                  </label>
+                  <select multiple class="form-control" data-live-search="true" name="brands"
+                    data-fill="brands"
+                    data-properties="_id,name,slug,logo"
+                    data-json="true">
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-7 col-md-12 col-lg-7">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Categories</span>
+                    <span data-lang="pt_br">Categorias</span>
+                  </label>
+                  <select multiple class="form-control" data-live-search="true" name="categories"
+                    data-fill="categories"
+                    data-subtext-property="parent.name"
+                    data-properties="_id,name,slug,ml_category_id,google_product_category_id"
+                    data-json="true">
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">Specifications</span>
+            <span data-lang="pt_br">Especificações</span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit features</span>
+                <span data-lang="pt_br">Editar características</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Specification grid</span>
+                <span data-lang="pt_br">Grade da especificação</span>
+              </label>
+              <div class="input-group">
+                <input class="form-control" type="text" data-id="spec-name">
+                <span class="input-group-append">
+                  <button type="button" class="btn btn-light" data-id="add-spec">
+                    <i class="fa fa-thumb-tack"></i>
+                    <span class="i18n">
+                      <span data-lang="en_us">Add</span>
+                      <span data-lang="pt_br">Adicionar</span>
+                    </span>
+                  </button>
+                </span>
+              </div>
+            </div>
+            <div data-id="specs-list" class="row"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">Search engine listing</span>
+            <span data-lang="pt_br">Listagem em motores de busca</span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit SEO fields</span>
+                <span data-lang="pt_br">Editar campos de SEO</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="form-group">
+              <label>Slug (URL)</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">/</span>
+                </div>
+                <input type="text" class="form-control" name="slug" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Title tag</label>
+              <input type="text" class="form-control" name="meta_title" />
+            </div>
+            <div class="form-group">
+              <label>Meta description Tag</label>
+              <textarea class="form-control" rows="4" name="meta_description"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">Barcodes</span>
+            <span data-lang="pt_br">Códigos de barra</span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit GTIN and MPN</span>
+                <span data-lang="pt_br">Editar GTIN e MPN</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="form-group">
+              <label>GTIN / ISBN / UPC</label>
+              <select multiple name="gtin" class="tagsinput"></select>
+              <span class="i18n">
+                <small data-lang="en_us" class="form-text">Barcode</small>
+                <small data-lang="pt_br" class="form-text">Código de barras</small>
+              </span>
+            </div>
+            <div class="form-group">
+              <label>MPN</label>
+              <select multiple name="mpn" class="tagsinput"></select>
+              <span class="i18n">
+                <small data-lang="en_us" class="form-text">Manufacturer code</small>
+                <small data-lang="pt_br" class="form-text">Código do fabricante</small>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">Shipping</span>
+            <span data-lang="pt_br">Frete</span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit product dimensions</span>
+                <span data-lang="pt_br">Editar dimensões do produto</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Weight</span>
+                    <span data-lang="pt_br">Peso</span>
+                  </label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" name="weight.value"
+                      min="0" max="999999" step="any"/>
+                    <div class="input-group-append w-70px">
+                      <select name="weight.unit">
+                        <option value="mg">mg</option>
+                        <option value="g" selected >g</option>
+                        <option value="kg">kg</option>
+                        <option value="lb">lb</option>
+                        <option value="oz">oz</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Width</span>
+                    <span data-lang="pt_br">Largura</span>
+                  </label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" name="dimensions.width.value"
+                      min="0" max="999999" step="any"/>
+                    <div class="input-group-append w-70px">
+                      <select name="dimensions.width.unit">
+                        <option value="mm">mm</option>
+                        <option value="cm" selected >cm</option>
+                        <option value="m">m</option>
+                        <option value="ft">ft</option>
+                        <option value="in">in</option>
+                        <option value="yd">yd</option>
+                        <option value="mi">mi</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Height</span>
+                    <span data-lang="pt_br">Altura</span>
+                  </label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" name="dimensions.height.value"
+                      min="0" max="999999" step="any"/>
+                    <div class="input-group-append w-70px">
+                      <select name="dimensions.height.unit">
+                        <option value="mm">mm</option>
+                        <option value="cm" selected >cm</option>
+                        <option value="m">m</option>
+                        <option value="ft">ft</option>
+                        <option value="in">in</option>
+                        <option value="yd">yd</option>
+                        <option value="mi">mi</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Length</span>
+                    <span data-lang="pt_br">Comprimento</span>
+                  </label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" name="dimensions.length.value"
+                      min="0" max="999999" step="any"/>
+                    <div class="input-group-append w-70px">
+                      <select name="dimensions.length.unit">
+                        <option value="mm">mm</option>
+                        <option value="cm" selected >cm</option>
+                        <option value="m">m</option>
+                        <option value="ft">ft</option>
+                        <option value="in">in</option>
+                        <option value="yd">yd</option>
+                        <option value="mi">mi</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hidden" data-id="variation-fields">
+    <div class="flexbox align-items-center mb-10">
+      <div>
+        <button class="btn btn-label btn-light" type="button" data-id="back-to-product">
+          <label><i class="ti-angle-double-left"></i></label>
+          <span class="i18n hidden-sm-down">
+            <span data-lang="en_us">Back to product</span>
+            <span data-lang="pt_br">Voltar ao produto</span>
+          </span>
+          <span class="i18n hidden-md-up">
+            <span data-lang="en_us">Product</span>
+            <span data-lang="pt_br">Produto</span>
+          </span>
+        </button>
+        <div class="btn-group ml-10">
+          <button class="btn btn-pure btn-light" type="button" data-id="prev-variation" disabled >
+            <i class="ti-angle-left"></i>
+          </button>
+          <button class="btn btn-pure btn-light" type="button" data-id="next-variation" disabled >
+            <i class="ti-angle-right"></i>
+          </button>
+        </div>
+      </div>
+      <div class="btn-group" data-id="copy-variation">
+        <button class="btn btn-light dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-copy"></i>
+          <span class="i18n hidden-sm-down">
+            <span data-lang="en_us">Copy other variation</span>
+            <span data-lang="pt_br">Copiar outra variação</span>
+          </span>
+        </button>
+        <div class="dropdown-menu"></div>
+      </div>
+    </div>
+    <div class="mb-10 inline-childs" data-id="variation-specs"></div>
+
+    <div class="row">
+      <div class="col-md-7">
+        <div class="card">
+          <div class="card-body">
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Variation name</span>
+                <span data-lang="pt_br">Nome do variação</span>
+              </label>
+              <input type="text" class="form-control" name="variations.name" maxlength="100"/>
+            </div>
+
+            <div class="row mt-30">
+              <div class="col-sm-7 col-md-12 col-lg-7">
+                <h4 class="i18n">
+                  <span data-lang="en_us">Inventory</span>
+                  <span data-lang="pt_br">Inventário</span>
+                </h4>
+
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Quantity</span>
+                    <span data-lang="pt_br">Quantidade</span>
+                  </label>
+                  <input type="number" class="form-control w-140px" name="variations.quantity"
+                    min="0" max="9999999" step="any"/>
+                </div>
+                <div class="form-group">
+                  <label>SKU</label>
+                  <input type="text" class="form-control text-monospace" name="variations.sku"/>
+                  <span class="i18n">
+                    <small data-lang="en_us" class="form-text">Reference code</small>
+                    <small data-lang="pt_br" class="form-text">Código de referência</small>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-sm-5 col-md-12 col-lg-5">
+                <h4 class="i18n">
+                  <span data-lang="en_us">Pricing</span>
+                  <span data-lang="pt_br">Precificação</span>
+                </h4>
+
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Sale price</span>
+                    <span data-lang="pt_br">Preço de venda</span>
+                  </label>
+                  <input type="tel" class="form-control" name="variations.price"
+                    data-is-number="true" data-money="true"/>
+                </div>
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Compare at price</span>
+                    <span data-lang="pt_br">Compare ao preço</span>
+                  </label>
+                  <input type="tel" class="form-control" name="variations.base_price"
+                    data-is-number="true" data-money="true"/>
+                  <span class="i18n">
+                    <small data-lang="en_us" class="form-text">Base price</small>
+                    <small data-lang="pt_br" class="form-text">Preço base</small>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-5">
+        <div class="card card-slided-up" data-id="variation-image">
+          <header class="card-header">
+            <h6 class="card-title i18n">
+              <span data-lang="en_us">Image</span>
+              <span data-lang="pt_br">Imagem</span>
+            </h6>
+            <ul class="card-controls">
+              <li>
+                <a class="card-btn-slide i18n" href="#">
+                  <span data-lang="en_us">Select variation image</span>
+                  <span data-lang="pt_br">Selecionar imagem da variação</span>
+                </a>
+              </li>
+            </ul>
+          </header>
+
+          <div class="card-content">
+            <div class="card-body">
+              <div class="select-image select-only scrollable scrollable-x">
+                <div class="images-list"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-slided-up">
+          <header class="card-header">
+            <h6 class="card-title i18n">
+              <span data-lang="en_us">Barcodes</span>
+              <span data-lang="pt_br">Códigos de barra</span>
+            </h6>
+            <ul class="card-controls">
+              <li>
+                <a class="card-btn-slide i18n" href="#">
+                  <span data-lang="en_us">Edit GTIN and MPN</span>
+                  <span data-lang="pt_br">Editar GTIN e MPN</span>
+                </a>
+              </li>
+            </ul>
+          </header>
+
+          <div class="card-content">
+            <div class="card-body">
+              <div class="form-group">
+                <label>GTIN / ISBN / UPC</label>
+                <select multiple name="variations.gtin" class="tagsinput"></select>
+                <span class="i18n">
+                  <small data-lang="en_us" class="form-text">Barcode</small>
+                  <small data-lang="pt_br" class="form-text">Código de barras</small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label>MPN</label>
+                <select multiple name="variations.mpn" class="tagsinput"></select>
+                <span class="i18n">
+                  <small data-lang="en_us" class="form-text">Manufacturer code</small>
+                  <small data-lang="pt_br" class="form-text">Código do fabricante</small>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card card-slided-up">
+          <header class="card-header">
+            <h6 class="card-title i18n">
+              <span data-lang="en_us">Shipping</span>
+              <span data-lang="pt_br">Frete</span>
+            </h6>
+            <ul class="card-controls">
+              <li>
+                <a class="card-btn-slide i18n" href="#">
+                  <span data-lang="en_us">Edit product dimensions</span>
+                  <span data-lang="pt_br">Editar dimensões do produto</span>
+                </a>
+              </li>
+            </ul>
+          </header>
+
+          <div class="card-content">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Weight</span>
+                      <span data-lang="pt_br">Peso</span>
+                    </label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" name="variations.weight.value"
+                        min="0" max="999999" step="any"/>
+                      <div class="input-group-append w-70px">
+                        <select name="variations.weight.unit" data-default="g">
+                          <option value="mg">mg</option>
+                          <option value="g" selected >g</option>
+                          <option value="kg">kg</option>
+                          <option value="lb">lb</option>
+                          <option value="oz">oz</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Width</span>
+                      <span data-lang="pt_br">Largura</span>
+                    </label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" name="variations.dimensions.width.value"
+                        min="0" max="999999" step="any"/>
+                      <div class="input-group-append w-70px">
+                        <select name="variations.dimensions.width.unit" data-default="cm">
+                          <option value="mm">mm</option>
+                          <option value="cm" selected >cm</option>
+                          <option value="m">m</option>
+                          <option value="ft">ft</option>
+                          <option value="in">in</option>
+                          <option value="yd">yd</option>
+                          <option value="mi">mi</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Height</span>
+                      <span data-lang="pt_br">Altura</span>
+                    </label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" name="variations.dimensions.height.value"
+                        min="0" max="999999" step="any"/>
+                      <div class="input-group-append w-70px">
+                        <select name="variations.dimensions.height.unit" data-default="cm">
+                          <option value="mm">mm</option>
+                          <option value="cm" selected >cm</option>
+                          <option value="m">m</option>
+                          <option value="ft">ft</option>
+                          <option value="in">in</option>
+                          <option value="yd">yd</option>
+                          <option value="mi">mi</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Length</span>
+                      <span data-lang="pt_br">Comprimento</span>
+                    </label>
+                    <div class="input-group">
+                      <input type="number" class="form-control" name="variations.dimensions.length.value"
+                        min="0" max="999999" step="any"/>
+                      <div class="input-group-append w-70px">
+                        <select name="variations.dimensions.length.unit" data-default="cm">
+                          <option value="mm">mm</option>
+                          <option value="cm" selected >cm</option>
+                          <option value="m">m</option>
+                          <option value="ft">ft</option>
+                          <option value="in">in</option>
+                          <option value="yd">yd</option>
+                          <option value="mi">mi</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bt-1 pt-20">
+    <button class="btn btn-success i18n mr-10">
+      <span data-lang="en_us">Save product</span>
+      <span data-lang="pt_br">Salvar produto</span>
+    </button>
+    <button type="button" class="btn btn-danger i18n delete-resource hidden">
+      <span data-lang="en_us">Delete</span>
+      <span data-lang="pt_br">Deletar</span>
+    </button>
+  </div>
+
+  <script>
+    // wait for second script loading before form setup
+    window.Tabs[window.tabId].wait = true
+    $.getScript('/assets/js/routes/resources/form/products.min.js', function () {
+      $.getScript('/assets/js/routes/resources/form.min.js')
+    })
+  </script>
+</form>
