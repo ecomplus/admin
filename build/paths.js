@@ -7,7 +7,9 @@ const { resolve, join } = require('path')
 const src = resolve(process.cwd(), 'src')
 const pub = resolve(process.cwd(), 'public')
 const script = join(src, 'js', 'index.js')
-const styles = join(src, 'scss', 'styles.scss')
+const styles = process.argv.indexOf('--tmp')
+  ? resolve(process.cwd(), 'tmp/theme/src/assets/css/scss/app.scss')
+  : join(src, 'scss', 'styles.scss')
 const template = join(src, 'views', 'index.ejs')
 
 // outpur directory

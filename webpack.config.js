@@ -3,6 +3,7 @@
 const devMode = process.env.NODE_ENV !== 'production'
 const pkg = require('./package.json')
 const themeColor = '#37003c'
+const isTemplate = process.argv.indexOf('--tmp')
 
 // project absolute paths
 const paths = require('./build/paths')
@@ -38,7 +39,7 @@ const config = {
   stats: {
     colors: true
   },
-  devtool: 'source-map',
+  devtool: isTemplate ? false : 'source-map',
   performance: {
     hints: devMode ? false : 'warning',
     maxEntrypointSize: 1000000,
@@ -90,7 +91,7 @@ const config = {
 
     // extract CSS to file
     new MiniCssExtractPlugin({
-      filename: 'styles.[chunkhash].css'
+      filename: isTemplate ? 'css/app.min.css' : 'styles.[chunkname].css'
     }),
 
     // create manifest.json file
