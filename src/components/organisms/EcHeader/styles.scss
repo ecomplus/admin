@@ -1,4 +1,6 @@
 @import "../../../scss/variables";
 
 .ec-header {
+  padding: map-get($spacers, 3);
+  background: theme-color('light');
 }

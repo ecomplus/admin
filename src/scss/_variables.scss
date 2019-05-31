@@ -1,8 +1,4 @@
 // https://github.com/twbs/bootstrap/blob/master/scss/_variables.scss
-// Required Bootstrap SASS files
-@import "../../node_modules/bootstrap/scss/functions";
-@import "../../node_modules/bootstrap/scss/variables";
-@import "../../node_modules/bootstrap/scss/mixins";
 
 // Force no caret for dropdowns
 // Using FontAwesome icons
@@ -12,3 +8,8 @@ $enable-responsive-font-sizes: true !default;
 
 // Colors
 $primary: #37003c;
+
+// Required Bootstrap SASS files
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
