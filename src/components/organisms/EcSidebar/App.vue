@@ -1,7 +1,6 @@
 <template>
-  <header class="ec-header">
-    <RouterLink to="/">Home</RouterLink>
-  </header>
+  <div class="ec-sidebar">
+  </div>
 </template>
 
 <script src="./index.js"></script>
