@@ -7,12 +7,27 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.8.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.18",
+    "@fortawesome/free-brands-svg-icons": "^5.8.2",
+    "@fortawesome/free-solid-svg-icons": "^5.8.2",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.0-rc.22",
     "core-js": "^2.6.9",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
+    "vue-avatar": "^2.1.7",
+    "vue-burger-menu": "^2.0.1",
+    "vue-clipboard2": "^0.3.0",
+    "vue-codemirror": "^4.0.6",
+    "vue-content-loader": "^0.2.1",
+    "vue-fullscreen": "^2.1.5",
+    "vue-progressbar": "^0.7.5",
     "vue-router": "^3.0.3",
+    "vue-select": "^3.1.0",
+    "vue2-transitions": "^0.3.0",
+    "vuetable-2": "^1.7.5",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
