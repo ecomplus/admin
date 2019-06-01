@@ -1,5 +1,6 @@
 <template>
   <div class="ec-sidebar">
+    <RouterLink to="/">Home</RouterLink>
   </div>
 </template>
 

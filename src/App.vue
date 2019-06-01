@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <RouterView />
+    <EcDashboard>
+      <RouterView/>
+    </EcDashboard>
   </div>
 </template>
 

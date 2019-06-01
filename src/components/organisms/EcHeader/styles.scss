@@ -2,5 +2,6 @@
 
 .ec-header {
   padding: map-get($spacers, 3);
-  background: theme-color('light');
+  background: transparent;
+  margin-bottom: map-get($spacers, 4);
 }

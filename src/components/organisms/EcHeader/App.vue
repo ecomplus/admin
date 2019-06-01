@@ -1,7 +1,7 @@
 <template>
-  <header class="ec-header">
-    <RouterLink to="/">Home</RouterLink>
-  </header>
+  <div class="ec-header">
+    <input class="form-control" type="text" placeholder="Search">
+  </div>
 </template>
 
 <script src="./index.js"></script>
