@@ -1,0 +1,207 @@
+<form action="javascript:;" data-id="collection-form" class="ajax-cards ajax-form ajax mb-30">
+  <div class="spinner-linear">
+    <div class="line"></div>
+  </div>
+  <div class="ajax-overlay"></div>
+
+  <div class="row">
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group">
+            <label class="i18n require">
+              <span data-lang="en_us">Collection name</span>
+              <span data-lang="pt_br">Nome da coleção</span>
+            </label>
+            <input type="text" class="form-control action-title" name="name" required />
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Icon</span>
+                  <span data-lang="pt_br">Ícone</span>
+                </label>
+                <input type="file" name="icon" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">Description</span>
+            <span data-lang="pt_br">Descrição</span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit HTML description</span>
+                <span data-lang="pt_br">Editar descrição HTML</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <textarea class="html-editor" name="body_html"><div><br></div></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-id="items-container">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Collection items</span>
+            <span data-lang="pt_br">Itens da Coleção</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" class="form-control" data-id="new-collections-item"/>
+                <span class="input-group-append">
+                  <button type="button" class="btn btn-light" data-id="add-collections-item">
+                    <i class="fa fa-tag"></i>
+                    <span class="i18n">
+                      <span data-lang="en_us">Add</span>
+                      <span data-lang="pt_br">Adicionar</span>
+                    </span>
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            <div class="collections-items-list">
+              <table class="table table-striped table-center">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>SKU</th>
+                    <th class="i18n">
+                      <span data-lang="en_us">Name</span>
+                      <span data-lang="pt_br">Nome</span>
+                    </th>
+                    <th class="i18n">
+                      <span data-lang="en_us">Image</span>
+                      <span data-lang="pt_br">Imagem</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody data-id="collections-items">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Short description</span>
+            <span data-lang="pt_br">Descrição curta</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <textarea class="form-control" rows="3" name="short_description"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Collection banners</span>
+            <span data-lang="pt_br">Banners da coleção</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <input type="file" name="pictures" multiple />
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">Search engine listing</span>
+            <span data-lang="pt_br">Listagem em motores de busca</span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit SEO fields</span>
+                <span data-lang="pt_br">Editar campos de SEO</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="form-group">
+              <label>Slug (URL)</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">/</span>
+                </div>
+                <input type="text" class="form-control" name="slug" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Title tag</label>
+              <input type="text" class="form-control" name="meta_title" />
+            </div>
+            <div class="form-group">
+              <label>Meta description Tag</label>
+              <textarea class="form-control" rows="4" name="meta_description"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bt-1 pt-20">
+    <button class="btn btn-success i18n mr-10">
+      <span data-lang="en_us">Save collection</span>
+      <span data-lang="pt_br">Salvar coleção</span>
+    </button>
+    <button type="button" class="btn btn-danger i18n delete-resource hidden">
+      <span data-lang="en_us">Delete</span>
+      <span data-lang="pt_br">Deletar</span>
+    </button>
+  </div>
+
+  <script>
+    $.getScript('/assets/js/routes/resources/form.min.js')
+    $.getScript('/assets/js/routes/resources/form/collections.min.js')
+  </script>
+</form>

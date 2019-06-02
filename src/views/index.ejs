@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="E-Com Plus Cloud Commerce Solution">
+
+    <title>Dashboard · E-Com Plus</title>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <link rel="icon" href="/img/favicon.png">
+
+    <!--  Open Graph Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="E-Com Plus Dashboard App">
+    <meta property="og:site_name" content="E-Com Plus Admin">
+    <meta property="og:description" content="E-Com Plus Cloud Commerce Solution">
+    <meta property="og:image" content="/img/og-img.png">
+    <meta property="og:url" content="https://app.e-com.plus/">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!--
+    <script type="text/javascript">
+      if (!sessionStorage.getItem('my_id')) window.location = '/pages/login.html';
+    </script>
+    -->
+
+    <!-- Styles -->
+    <link href="/assets/css/core.min.css" rel="stylesheet">
+  </head>
+
+  <body class="sidebar-folded" data-provide="pace" id="dashboard">
+    <!-- Preloader
+    <div class="preloader">
+      <div class="spinner-dots">
+        <span class="dot1"></span>
+        <span class="dot2"></span>
+        <span class="dot3"></span>
+      </div>
+    </div>
+    -->
+
+    <!-- Sidebar -->
+    <aside class="sidebar sidebar-expand-lg">
+      <header class="sidebar-header">
+        <a class="logo-icon" href="/#/"><img src="/img/logo-icon-light.png"></a>
+        <span class="logo">
+          <a href="/#/"><img src="/img/logo-light.png"></a>
+        </span>
+        <span class="sidebar-toggle-fold"></span>
+      </header>
+
+      <nav class="sidebar-navigation">
+        <ul class="menu" id="sidebar">
+        </ul>
+      </nav>
+
+    </aside>
+    <!-- END Sidebar -->
+
+    <!-- Topbar -->
+    <header class="topbar" id="topbar-search">
+      <div class="topbar-left">
+        <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
+
+        <a class="topbar-btn previous-route" href="#" data-placement="bottom">
+          <i class="ti-arrow-left"></i>
+        </a>
+        <a class="topbar-btn" href="#" data-placement="bottom" data-provide="fullscreen">
+          <i class="ti-fullscreen fullscreen-default"></i>
+          <i class="ti-layout-width-default fullscreen-active"></i>
+        </a>
+        <form class="lookup lookup-circle" target="index.html">
+          <input type="search" name="s" id="app-search" class="w-100">
+        </form>
+      </div>
+
+      <div class="topbar-right">
+        <a class="topbar-btn btn-avatar has-new" href="#qv-global" data-toggle="quickview">
+          <span class="badge badge-warning badge-xl badge-dot"></span>
+          <img class="avatar" src="/img/avatar/default.jpg">
+        </a>
+      </div>
+    </header>
+
+    <header class="topbar topbar-inverse bg-purple" id="topbar-action">
+      <div id="topbar-action-body">
+        <div class="topbar-left">
+          <h4 id="action-title"></h4>
+        </div>
+
+        <div class="topbar-right">
+          <div id="action-todo">
+            <button class="btn btn-secondary i18n previous-route">
+              <span data-lang="en_us">Cancel</span>
+              <span data-lang="pt_br">Cancelar</span>
+            </button>
+            <button class="btn btn-label btn-success" id="action-save">
+              <label>
+                <i class="ti-check"></i>
+              </label>
+              <span class="i18n">
+                <span data-lang="en_us">Save</span>
+                <span data-lang="pt_br">Salvar</span>
+              </span>
+            </button>
+          </div>
+          <div id="action-done">
+            <i class="ti-check-box"></i>
+            <span class="i18n">
+              <span data-lang="en_us">Saved</span>
+              <span data-lang="pt_br">Salvo</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <button id="topbar-action-toggle" class="btn btn-xs btn-primary">
+        <i class="ti-angle-up"></i>
+      </button>
+    </header>
+    <!-- END Topbar -->
+
+    <!-- Main container -->
+    <main class="main-container">
+
+      <div class="card card-body" id="search-results">
+        <div class="row gap-y">
+          <div class="col-md-6 col-lg-3">
+            <h6 class="fs-10 text-uppercase letter-spacing-3 p-20">
+              <span class="ti-layout text-muted pr-1"></span>
+              <span>Layout</span>
+              <span class="pl-10 text-muted">(3)</span>
+            </h6>
+
+            <div class="media-list media-list-divided media-list-hover">
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Sidebar</h6>
+                  <p class="fs-12 text-truncate">Main navigation area for your web application</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Topbar</h6>
+                  <p class="fs-12 text-truncate">A place for most used actions or information</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Footer</h6>
+                  <p class="fs-12 text-truncate">Copyright and some general links</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3">
+            <h6 class="fs-10 text-uppercase letter-spacing-3 p-20">
+              <span class="ti-align-left text-muted pr-1"></span>
+              <span>Content</span>
+              <span class="pl-10 text-muted">(2)</span>
+            </h6>
+            <div class="media-list media-list-divided media-list-hover">
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Icons</h6>
+                  <p class="fs-12 text-truncate">The best icon sets available in the web</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Typography</h6>
+                  <p class="fs-12 text-truncate">Simple and easily customized typography for headings,
+                    body text, lists, and more.</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3">
+            <h6 class="fs-10 text-uppercase letter-spacing-3 p-20">
+              <span class="ti-check-box text-muted pr-1"></span>
+              <span>UI Kit</span>
+              <span class="pl-10 text-muted">(5)</span>
+            </h6>
+            <div class="media-list media-list-divided media-list-hover">
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Buttons</h6>
+                  <p class="fs-12 text-truncate">Call to actions, floating action buttons, toolbar and more.</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Dialogs</h6>
+                  <p class="fs-12 text-truncate">Modal, lightbox, sweet alert, and docks.</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Notification</h6>
+                  <p class="fs-12 text-truncate">Alert, tooltip, popover, toast, callout,
+                    push notification and more.</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Dropdown</h6>
+                  <p class="fs-12 text-truncate">Toggleable, contextual overlays for displaying
+                    lists of links and more.</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Misc</h6>
+                  <p class="fs-12 text-truncate">Breadcrumbs, pagination, pager,
+                    context menu, sortable and more.</p>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3">
+            <h6 class="fs-10 text-uppercase letter-spacing-3 p-20">
+              <span class="ti-files text-muted pr-1"></span>
+              <span>Pages</span>
+              <span class="pl-10 text-muted">(4)</span>
+            </h6>
+            <div class="media-list media-list-divided media-list-hover">
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Gallery</h6>
+                  <p class="fs-12 text-truncate">Different type of photo gallery; shuffle, masonry, justified.</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Invoice</h6>
+                  <p class="fs-12 text-truncate">Display a receipt to your customers.</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Maps</h6>
+                  <p class="fs-12 text-truncate">Different type of google maps and mapael.</p>
+                </div>
+              </a>
+              <a class="media" href="#">
+                <div class="media-body">
+                  <h6 class="fs-13 lh-1">Users</h6>
+                  <p class="fs-12 text-truncate">View every user of your application.</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="router">
+        <div class="ajax-overlay loading"></div>
+        <div class="spinner-linear loading">
+          <div class="line"></div>
+        </div>
+
+        <!-- Nav tabs -->
+        <div id="app-tabs">
+          <a href="#" id="new-tab">
+            <i class="ti-plus"></i>
+          </a>
+          <a href="#" id="close-current-tab">
+            <i class="ti-close"></i>
+          </a>
+
+          <div id="app-nav-container">
+            <div class="scrollable">
+              <ul class="nav nav-tabs m-0" id="app-nav-tabs">
+                <li class="nav-item" id="new-nav-item">
+                  <a class="nav-link i18n" href="#">
+                    <span data-lang="en_us">New tab</span>
+                    <span data-lang="pt_br">Nova aba</span>
+                  </a>
+                  <i class="ti-close close-tab"></i>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- jQuery load -->
+        <div id="route-content"></div>
+      </div>
+
+      <!-- Footer
+      <footer class="site-footer">
+        <div class="row">
+          <div class="col-md-6">
+            <p>2018^ © E-Com Club. All rights reserved.</p>
+            <p>E-COM CLUB SOFTWARES PARA E-COMMERCE LTDA. CNPJ: 24.356.660/0001-78.</p>
+          </div>
+        </div>
+      </footer>
+      END Footer -->
+
+    </main>
+    <!-- END Main container -->
+
+    <div class="dock-list">
+      <!-- Chat -->
+      <div id="dock-chat" class="dock reveal minimize">
+        <header class="dock-header dock-header-inverse bg-info">
+          <div class="dock-title">
+            <span><i class="fa fa-comments"></i></span>
+            <span>Mony</span>
+          </div>
+          <div class="dock-actions">
+            <span data-dock="minimize"></span>
+          </div>
+        </header>
+
+        <div class="dock-body" data-provide="emoji" id="mony"></div>
+
+        <footer class="publisher pl-12" id="mony-publish">
+          <input type="text" class="publisher-input" placeholder="Digite algo">
+          <div class="flex-bottom gap-items">
+            <!--
+            <span class="publisher-btn file-group">
+              <i class="fa fa-paperclip file-browser"></i>
+              <input type="file">
+            </span>
+            <a class="publisher-btn" href="#"><i class="fa fa-smile-o"></i></a>
+            -->
+            <a class="publisher-btn" href="#"><i class="fa fa-paper-plane"></i></a>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <!-- Global quickviews -->
+    <div id="qv-global" class="quickview backdrop-light">
+      <ul class="quickview-header nav nav-tabs nav-justified nav-tabs-info">
+        <li class="nav-item">
+          <a class="nav-link i18n" data-toggle="tab" href="#qv-tab-settings">
+            <span data-lang="en_us">Preferences</span>
+            <span data-lang="pt_br">Preferências</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link i18n active" data-toggle="tab" href="#qv-tab-notifications">
+            <span data-lang="en_us">Notifications</span>
+            <span data-lang="pt_br">Notificações</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="quickview-body">
+        <div class="tab-content">
+          <div class="tab-pane fade" id="qv-tab-settings">
+            <div class="media-list media-list-divided media-list-hover">
+              <div class="media">
+                <div class="media-body">
+                  <p class="i18n">
+                    <strong data-lang="en_us">Sidebar open</strong>
+                    <strong data-lang="pt_br">Menu lateral aberto</strong>
+                  </p>
+                  <p class="i18n">
+                    <span data-lang="en_us">Displays icons and titles</span>
+                    <span data-lang="pt_br">Mostra ícones e títulos</span>
+                  </p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" onchange="sidebar.toggleFold()">
+                  <span class="switch-indicator"></span>
+                </label>
+              </div>
+
+              <div class="media">
+                <div class="media-body">
+                  <p class="i18n">
+                    <strong data-lang="en_us">Light sidebar</strong>
+                    <strong data-lang="pt_br">Menu lateral claro</strong>
+                  </p>
+                  <p class="i18n">
+                    <span data-lang="en_us">White background</span>
+                    <span data-lang="pt_br">Fundo branco</span>
+                  </p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" onchange="$('.sidebar').toggleClass('sidebar-light')">
+                  <span class="switch-indicator"></span>
+                </label>
+              </div>
+
+              <div class="media">
+                <div class="media-body">
+                  <p class="i18n">
+                    <strong data-lang="en_us">Unfixed top bar</strong>
+                    <strong data-lang="pt_br">Barra superior não fixa</strong>
+                  </p>
+                  <p class="i18n">
+                    <span data-lang="en_us">Will not always be visible</span>
+                    <span data-lang="pt_br">Não estará sempre visível</span>
+                  </p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" onchange="topbar.toggleFix()">
+                  <span class="switch-indicator"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="dropdown p-20 bt-2 flags-list">
+              <span class="btn fs-13" data-toggle="dropdown" id="current-lang">
+                <img height="14"><strong></strong>
+              </span>
+              <div class="dropdown-menu" id="langs-menu">
+                <a class="dropdown-item" href="javascript:;" data-lang="en_us">
+                  <img src="/img/flag/United-States-of-America.png">
+                  English
+                </a>
+                <a class="dropdown-item" href="javascript:;" data-lang="pt_br">
+                  <img src="/img/flag/Brazil.png">
+                  Português
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-pane fade active show" id="qv-tab-notifications">
+            <div class="bg-lightest py-10 px-20 text-right fs-14 bb-2">
+              <a href="#" class="text-lighter mr-10">
+                <i class="fa fa-trash"></i>
+              </a>
+              <a href="#" class="text-lighter">
+                <i class="fa fa-repeat"></i>
+              </a>
+            </div>
+
+            <div class="media-list media-list-hover media-list-divided">
+              <a class="media" href="#">
+                <span class="avatar bg-danger"><i class="ti-package"></i></span>
+                <div class="media-body">
+                  <p>Package lost on the way!</p>
+                  <time datetime="2017-07-14 20:00">1 hour ago</time>
+                </div>
+              </a>
+
+              <a class="media" href="#">
+                <span class="avatar bg-success"><i class="ti-user"></i></span>
+                <div class="media-body">
+                  <p>New user registered</p>
+                  <time datetime="2017-07-14 20:00">1 hour ago</time>
+                </div>
+              </a>
+
+              <a class="media" href="#">
+                <span class="avatar bg-purple"><i class="ti-comment"></i></span>
+                <div class="media-body">
+                  <p>New review on <em>iPhone 6s</em></p>
+                  <time datetime="2017-07-14 20:00">3 hours ago</time>
+                </div>
+              </a>
+
+              <a class="media" href="#">
+                <span class="avatar bg-info"><i class="ti-shopping-cart"></i></span>
+                <div class="media-body">
+                  <p>New order received</p>
+                  <time datetime="2017-07-14 20:00">5 hours ago</time>
+                </div>
+              </a>
+
+              <a class="media" href="#">
+                <span class="avatar bg-danger"><i class="fa fa-area-chart"></i></span>
+                <div class="media-body">
+                  <p>CPU usage went above 80%</p>
+                  <time datetime="2017-07-14 20:00">Yesterday</time>
+                </div>
+              </a>
+
+              <a class="media" href="#">
+                <span class="avatar bg-yellow"><i class="fa fa-star"></i></span>
+                <div class="media-body">
+                  <p>New rating on iPhone 6s, 5 star</p>
+                  <time datetime="2017-07-14 20:00">Yesterday</time>
+                </div>
+              </a>
+
+              <a class="media" href="#">
+                <span class="avatar bg-success"><i class="ti-user"></i></span>
+                <div class="media-body">
+                  <p>New user registered</p>
+                  <time datetime="2017-07-14 20:00">Yesterday</time>
+                </div>
+              </a>
+
+              <a class="media" href="#">
+                <span class="avatar bg-primary"><i class="ti-money"></i></span>
+                <div class="media-body">
+                  <p>New payment has made through PayPal</p>
+                  <time datetime="2017-07-14 20:00">2 days ago</time>
+                </div>
+              </a>
+
+              <a class="media" href="#">
+                <span class="avatar bg-info"><i class="ti-shopping-cart"></i></span>
+                <div class="media-body">
+                  <p>New order received</p>
+                  <time datetime="2017-07-14 20:00">2 days ago</time>
+                </div>
+              </a>
+
+              <a class="media" href="#">
+                <span class="avatar bg-purple"><i class="ti-comment"></i></span>
+                <div class="media-body">
+                  <p>New review on Samsung Galaxy S7</p>
+                  <time datetime="2017-07-14 20:00">Aug 17</time>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="quickview-footer flex-row-reverse">
+        <a class="btn btn-sm btn-info btn-label text-white qv-close" href="/#/profile">
+          <label><i class="ti-user"></i></label>
+          <span class="i18n">
+            <span data-lang="en_us">Profile</span>
+            <span data-lang="pt_br">Perfil</span>
+          </span>
+        </a>
+        <button class="btn btn-sm btn-secondary btn-label qv-close logout">
+          <label><i class="ti-power-off"></i></label>
+          <span class="i18n">
+            <span data-lang="en_us">Logout</span>
+            <span data-lang="pt_br">Sair</span>
+          </span>
+        </button>
+      </footer>
+    </div>
+
+    <div id="qv-storage" class="quickview backdrop-light quickview-xl">
+      <header class="quickview-header">
+        <p class="quickview-title lead i18n flex-grow">
+          <span data-lang="en_us">Library</span>
+          <span data-lang="pt_br">Biblioteca</span>
+        </p>
+        <span class="close"><i class="ti-close"></i></span>
+      </header>
+      <div class="quickview-body">
+        <div class="ajax-content scrollable">
+          <div class="spinner-linear">
+            <div class="line"></div>
+          </div>
+          <div class="ajax-overlay"></div>
+          <div class="m-20 masonry-grid gap-1" id="storage-content"></div>
+        </div>
+      </div>
+      <footer class="quickview-footer flex-row-reverse">
+        <div class="btn-toolbar">
+          <div class="btn-group mr-2">
+            <button class="btn btn-primary qv-close" onclick="upload()">
+              Upload
+            </button>
+          </div>
+          <div class="btn-group mr-2">
+            <button class="btn btn-light i18n" id="load-storage">
+              <span data-lang="en_us">Load more</span>
+              <span data-lang="pt_br">Carregar mais</span>
+            </button>
+            <button class="btn btn-light" id="storage-delete">
+              <i class="fa fa-trash"></i>
+            </button>
+          </div>
+          <div class="btn-group">
+            <button class="btn btn-success qv-close" id="storage-select">
+              <i class="fa fa-check-square-o"></i>
+            </button>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div id="qvx" class="quickview backdrop-light">
+      <header class="quickview-header">
+        <p class="quickview-title lead" id="qvx-title"></p>
+        <span class="close"><i class="ti-close"></i></span>
+      </header>
+      <div class="quickview-body">
+        <div class="quickview-block" id="qvx-body"></div>
+      </div>
+      <footer class="quickview-footer" id="qvx-footer"></footer>
+    </div>
+    <!-- END Global quickviews -->
+
+    <!-- Modal -->
+    <div class="modal modal-center fade" id="modal-logout" tabindex="-1">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title i18n">
+              <span data-lang="en_us">Going out...</span>
+              <span data-lang="pt_br">Saindo...</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body scrollable">
+            <p class="i18n">
+              <span data-lang="en_us">Are you sure you want to leave?</span>
+              <span data-lang="pt_br">Você tem certeza que deseja sair?</span>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Stay logged</span>
+                <span data-lang="pt_br">Continuar logado</span>
+              </span>
+            </button>
+            <button class="btn btn-bold btn-pure btn-danger" id="logout">
+              <span class="i18n">
+                <span data-lang="en_us">Logout</span>
+                <span data-lang="pt_br">Sair</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal-center fade" id="modal-unsaved" tabindex="-2">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title i18n">
+              <span data-lang="en_us">Unsaved changes</span>
+              <span data-lang="pt_br">Alterações não salvas</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body scrollable">
+            <p class="i18n">
+              <span data-lang="en_us">
+                Leaving this page, you are going to lose unsaved changes.
+                Are you sure you want to quit and discard changes?
+              </span>
+              <span data-lang="pt_br">
+                Ao sair desta página, você perderá as alterações não salvas.
+                Tem certeza que deseja sair e descartar as alterações?
+              </span>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Continue on page</span>
+                <span data-lang="pt_br">Continuar na página</span>
+              </span>
+            </button>
+            <button class="btn btn-bold btn-pure btn-danger" data-dismiss="modal" id="ignore-unsaved">
+              <span class="i18n">
+                <span data-lang="en_us">Discard changes</span>
+                <span data-lang="pt_br">Descartar alterações</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal-center fade" id="modal-confirm-request" tabindex="-3">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title i18n">
+              <span data-lang="en_us">Confirmation</span>
+              <span data-lang="pt_br">Confirmação</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body scrollable">
+            <p class="lead"></p>
+            <div class="custom-controls-stacked">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="skip-next-confirms" checked />
+                <label class="custom-control-label i18n">
+                  <span data-lang="en_us">
+                    Skip this confirmation for in-stream requests
+                  </span>
+                  <span data-lang="pt_br">
+                    Pular esta confirmação para solicitações em sequência
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" id="api-request-control">
+            <button class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal" id="discard-api-request">
+              <span class="i18n">
+                <span data-lang="en_us">Cancel</span>
+                <span data-lang="pt_br">Cancelar</span>
+              </span>
+            </button>
+            <button class="btn btn-bold btn-pure btn-warning" data-dismiss="modal" id="confirm-api-request">
+              <span class="i18n">
+                <span data-lang="en_us">Continue</span>
+                <span data-lang="pt_br">Continuar</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal-center fade" id="modal-uploads" tabindex="-4">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-body scrollable">
+            <div id="dropzone" class="dropzone dz-clickable w-100">
+              <div class="dz-default dz-message i18n">
+                <span data-lang="en_us">Drop or select files to upload</span>
+                <span data-lang="pt_br">Selecione ou arraste arquivos para upload</span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-bold btn-pure btn-info" data-dismiss="modal"
+              data-toggle="quickview" data-target="#qv-storage" onclick="initStorageLib()">
+              <span class="i18n">
+                <span data-lang="en_us">Library</span>
+                <span data-lang="pt_br">Biblioteca</span>
+              </span>
+            </button>
+            <button class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Cancel</span>
+                <span data-lang="pt_br">Cancelar</span>
+              </span>
+            </button>
+            <button class="btn btn-bold btn-pure btn-success" id="uploads-done" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Save</span>
+                <span data-lang="pt_br">Salvar</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal-center fade" id="modal-edit-image" tabindex="-5">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-body scrollable">
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Alternative text</span>
+                <span data-lang="pt_br">Texto alternativo</span>
+              </label>
+              <code>alt</code>
+              <input type="text" class="form-control" name="alt">
+            </div>
+            <div class="form-group">
+              <label>
+                <span class="i18n">
+                  <span data-lang="en_us">Image dimensions</span>
+                  <span data-lang="pt_br">Dimensões da imagem</span>
+                </span>
+                (px)
+              </label>
+              <input type="text" class="form-control" name="size"
+                pattern="^[1-9]([0-9]+)?x[1-9]([0-9]+)?$" placeholder="200x300">
+              <small class="form-text i18n">
+                <span data-lang="en_us">width <i>x</i> height</span>
+                <span data-lang="pt_br">largura <i>x</i> altura</span>
+              </small>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-bold btn-pure btn-danger" id="remove-image" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Remove</span>
+                <span data-lang="pt_br">Remover</span>
+              </span>
+            </button>
+            <button class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Cancel</span>
+                <span data-lang="pt_br">Cancelar</span>
+              </span>
+            </button>
+            <button class="btn btn-bold btn-pure btn-success" id="edit-image" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Save</span>
+                <span data-lang="pt_br">Salvar</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal modal-center fade" id="modal-channel" tabindex="-6">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title i18n">
+              <span data-lang="en_us">Add sales channel</span>
+              <span data-lang="pt_br">Adicionar canal de vendas</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body scrollable">
+            <div class="row">
+              <div class="col-sm">
+                <div class="form-group">
+                  <select class="form-control" name="type">
+                    <option value="ecommerce" selected >E-Commerce</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="i18n require">
+                    <span data-lang="en_us">Title</span>
+                    <span data-lang="pt_br">Título</span>
+                  </label>
+                  <input type="text" class="form-control" name="title">
+                </div>
+                <div class="form-group">
+                  <label class="i18n">
+                    <span data-lang="en_us">Code</span>
+                    <span data-lang="pt_br">Código</span>
+                  </label>
+                  <input type="text" class="form-control" name="code">
+                </div>
+              </div>
+              <div class="col-sm">
+                <div class="bg-lighter p-15 mb-20 i18n">
+                  <span data-lang="en_us">
+                    Sell through your online store and checkout, using your own domain
+                    or our free subdomain at
+                    <code><span class="text-primary">yourstore</span>.shop.e-com.plus</code>.
+                  </span>
+                  <span data-lang="pt_br">
+                    Venda através de sua loja virtual e check-out, usando seu domínio próprio
+                    ou nosso subdomínio gratuito
+                    <code><span class="text-primary">sualoja</span>.shop.e-com.plus</code>.
+                  </span>
+                </div>
+                <div id="channel-price" class="bg-lighter p-15 mb-20 hidden">
+                  <span class="i18n">
+                    <span data-lang="en_us">
+                      The first sales channel is free with your current plan, the others are
+                      paid at monthly cost of
+                    </span>
+                    <span data-lang="pt_br">
+                      O primeiro canal de vendas é gratuito no seu plano atual,
+                      os outros são pagos ao custo mensal de
+                    </span>
+                  </span>
+                  <strong class="text-info">R$ 20,00</strong>.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Cancel</span>
+                <span data-lang="pt_br">Cancelar</span>
+              </span>
+            </button>
+            <button class="btn btn-bold btn-pure btn-success" id="new-channel" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Save</span>
+                <span data-lang="pt_br">Salvar</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END Modal -->
+
+    <!-- Scripts -->
+    <script src="/assets/js/core.min.js"></script>
+  </body>
+</html>

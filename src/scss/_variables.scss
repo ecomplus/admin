@@ -1,0 +1,15 @@
+// https://github.com/twbs/bootstrap/blob/master/scss/_variables.scss
+
+// Force no caret for dropdowns
+// Using FontAwesome icons
+$enable-caret: false;
+// Enable RFS by default if not specified by theme
+$enable-responsive-font-sizes: true !default;
+
+// Colors
+$primary: #37003c;
+
+// Required Bootstrap SASS files
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
