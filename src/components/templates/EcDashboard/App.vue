@@ -11,8 +11,10 @@
       </header>
       <main class="ec-dashboard__main">
         <div class="ec-dashboard__container">
-          <!-- @slot Default slot for page content -->
-          <slot/>
+          <div class="container">
+            <!-- @slot Default slot for page content -->
+            <slot/>
+          </div>
         </div>
       </main>
     </article>
