@@ -1,5 +1,114 @@
+<header class="header pt-3" style="display: block;">
+  <div class="header-bar no-border row" id="home-cards">
+      <div class="col-md-4" style="text-align: center">
+        <h1 id="home-name"><strong></strong></h1>
+      </div>
+      <div class="col-md-4" style="text-align: center">
+        <h5 style="margin-bottom: 0em">Store ID</h5><span id="home-id"></span>
+      </div>
+      <div class="col-md-4" style="text-align: center">
+        <h5 style="margin-bottom: 0em">Object ID</h5><span id="home-object"></span>
+      </div>
+      <span class="pagination-arrows">
+        <i data-id="pagination-prev" class="ti-arrow-left"></i>
+        <i data-id="pagination-next" class="ti-arrow-right"></i>
+      </span>
+      <span class="document-dates">
+        <i class="ti-calendar"></i><span data-id="created-at"></span>
+        <i class="ti-save"></i><span data-id="updated-at"></span>
+      </span>
+  </div>
+</header>
+<div class="main-content" style="display: block;">
+  <div class="row" id="cards-graphs-amount">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body bg-primary">
+          <div class="flexbox mb-20">
+            <h6 class="text-uppercase text-white">
+              <span data-lang="en_us" style="display: none">Today</span>
+              <span data-lang="pt_br">Hoje</span>
+            </h6>
+            <h6 class="text-white"><i class="ion-android-arrow-dropup" id="dayAmountPcent"></i> %20</h6>
+          </div>
+          <div data-width="100%" data-height="80" data-fill-color="false" data-line-color="#fff" data-line-width="2" data-spot-radius="0" data-highlight-line-color="#fff">
+            <span data-lang="pt_br" style="font-size: 25px">R$ <strong id="dayAmount">2999,99</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body bg-info">
+          <div class="flexbox mb-20">
+            <h6 class="text-uppercase text-white">
+              <span data-lang="en_us" style="display: none">January</span>
+              <span data-lang="pt_br">Janeiro</span>
+            </h6>
+            <h6 class="text-white"><i class="ion-android-arrow-dropup"></i> %20</h6>
+          </div>
+          <div data-width="100%" data-height="80" data-fill-color="false" data-line-color="#fff" data-line-width="2" data-spot-radius="0" data-highlight-line-color="#fff">
+            <span data-lang="en_us" style="display: none">$ <strong data-id="monthAmount">12999,99</strong></span>
+            <span data-lang="pt_br" style="font-size: 25px">R$ <strong data-id="monthAmount">12999,99</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body bg-purple">
+          <div class="flexbox mb-20">
+            <h6 class="text-uppercase text-white">
+              <span>2019</span>
+            </h6>
+            <h6 class="text-white"><i class="ion-android-arrow-dropup"></i> %20</h6>
+          </div>
+          <div data-width="100%" data-height="80" data-fill-color="false" data-line-color="#fff" data-line-width="2" data-spot-radius="0" data-highlight-line-color="#fff">
+            <span data-lang="en_us" style="display: none">$ <strong data-id="yearAmount">12999,99</strong></span>
+            <span data-lang="pt_br" style="font-size: 25px">R$ <strong data-id="yearAmount">12999,99</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" data-id="cards-graphs-orders">
+    <div class="col-md-4">
+      <div class="card">
+        <h4 class="card-title"><strong>Pedidos</strong></h4>
+        <div class="card-body">
+          <canvas id="orderOfAll" width="400" height="400"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card" id="lastOrders">
+        <h4 class="card-title">Últimos<strong> Pedidos</strong></h4>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID do Pedido</th>
+                <th>Status</th>
+                <th>Valor do Pedido</th>
+                <th>Cliente</th>
+              </tr>
+            </thead>
+            <tbody id="addOrders">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div>
   <script type="text/javascript">
     window.routeReady()
+    // wait for second script loading before form setup
+    window.Tabs[window.tabId].wait = true
+    $.getScript('/assets/js/routes/resources/form.min.js')
+    $.getScript('/assets/js/routes/resources/form/home.js')
   </script>
 </div>

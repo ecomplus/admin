@@ -38,7 +38,8 @@ app.config({
     'tagsinput',
     'selectpicker',
     'colorpicker',
-    'datepicker'
+    'datepicker',
+    'chartjs'
   ],
 
   /*
