@@ -18,28 +18,31 @@
 
   // render cart items on table
   var setup = function () {
+    var appTab = $('#app-tab-' + tabId)
     var countPending = 0
     var countPaid = 0
     var countCancelled = 0
-    var $cardAmount = $('#cards-graphs-amount')
+    var $cardAmount = appTab.find('#cards-graphs-amount')
     var $todayTotal = $cardAmount.find('#dayAmount')
-    var $storeInfo = $('#home-cards')
+    var $storeInfo = appTab.find('#home-cards')
     var $storeName = $storeInfo.find('#home-name')
     var $storeobject = $storeInfo.find('#home-object')
     var $storeID = $storeInfo.find('#home-id')
     var storeId = localStorage.getItem('store_id')
-    var $lastOrders = $('#lastOrders')
+    var $lastOrders = appTab.find('#lastOrders')
     var $order = $lastOrders.find('#addOrders')
+    var $freight = appTab.find('#freight')
     var today = new Date()
     var dd = today.getDate() - 1
     var mm = (today.getMonth() - 1)
     var yyyy = today.getFullYear()
     var timezoneCalc = new Date().getTimezoneOffset()
     var totalAmount = 0
+    var freight = 0
     var dataStart = new Date(yyyy, 2, 25, 0, -timezoneCalc, 0, 0).toISOString()
     var dataEnd = new Date(yyyy, 2, 25, 24, 59 - timezoneCalc, 0, 0).toISOString()
     var urlOrder = 'orders.json?sort=amount&created_at>=' + dataStart + '&created_at<=' + dataEnd
-    console.log(urlOrder)
+    var arrayTable = []
     $storeID.text(storeId)
     var urlStore = 'stores/me.json'
     // var objMe = window.sessionStorage('meInfor') || []
@@ -58,18 +61,33 @@
         console.log(totalOrders)
         for (var i = 0; i < totalOrders.length; i++) {
           if (totalOrders[i].financial_status) {
+            var tableOrder = totalOrders[i].financial_status.current
+            arrayTable.push(tableOrder)
+            for (var ii = 0; ii < arrayTable.length; ii++) {
+              if (arrayTable[ii] === 'paid') {
+                arrayTable[ii] = 'Pagamento Aprovado'
+              }
+              if (arrayTable[ii] === 'voided') {
+                arrayTable[ii] = 'Pagamento Cancelado'
+              }
+              if (arrayTable[ii] === 'pending') {
+                arrayTable[ii] = 'Pagamento Pendente'
+              }
+            }
+
             if (i < 6) {
               $order.append('<tr>' +
               '  <th scope="row"><a href="/#/resources/orders/' + totalOrders[i]._id + ' ">' + totalOrders[i].number + ' </a></th>' +
-              '  <td>' + totalOrders[i].financial_status.current + '</td>' +
-              '  <td>' + totalOrders[i].amount.total + '</td>' +
+              '  <td>' + arrayTable[i] + '</td>' +
+              '  <td>' + totalOrders[i].amount.total.toFixed(2) + '</td>' +
               '  <td><a href="/#/resources/customers/' + totalOrders[i].buyers[0]._id + ' ">' + totalOrders[i].buyers[0].display_name + ' </a></td>' +
               '</tr>')
             }
             var statusOrder = totalOrders[i].financial_status.current
             totalAmount = totalOrders[i].amount.total + totalAmount
-            var todayAmount = totalAmount.toFixed(2).replace('.', ',')
-            $todayTotal.text(todayAmount)
+            freight = totalOrders[i].amount.freight + freight
+            $freight.text(freight.toFixed(2).replace('.', ','))
+            $todayTotal.text(totalAmount.toFixed(2).replace('.', ','))
             if (statusOrder === 'paid') {
               countPaid = countPaid + 1
             }

@@ -59,13 +59,12 @@
         <div class="card-body bg-purple">
           <div class="flexbox mb-20">
             <h6 class="text-uppercase text-white">
-              <span>2019</span>
+              <span>Gasto Diário com Frete</span>
             </h6>
             <h6 class="text-white"><i class="ion-android-arrow-dropup"></i> %20</h6>
           </div>
           <div data-width="100%" data-height="80" data-fill-color="false" data-line-color="#fff" data-line-width="2" data-spot-radius="0" data-highlight-line-color="#fff">
-            <span data-lang="en_us" style="display: none">$ <strong data-id="yearAmount">12999,99</strong></span>
-            <span data-lang="pt_br" style="font-size: 25px">R$ <strong data-id="yearAmount">12999,99</strong></span>
+            <span data-lang="pt_br" style="font-size: 25px">R$ <strong id="freight">12999,99</strong></span>
           </div>
         </div>
       </div>
@@ -109,6 +108,6 @@
     // wait for second script loading before form setup
     window.Tabs[window.tabId].wait = true
     $.getScript('/assets/js/routes/resources/form.min.js')
-    $.getScript('/assets/js/routes/resources/form/home.js')
+    $.getScript('/assets/js/routes/resources/form/home.min.js')
   </script>
 </div>
