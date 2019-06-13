@@ -31,21 +31,31 @@
     var storeId = localStorage.getItem('store_id')
     var $lastOrders = appTab.find('#lastOrders')
     var $order = $lastOrders.find('#addOrders')
-    var $freight = appTab.find('#freight')
+    var $approve = appTab.find('#approved')
+    var $monthTotal = appTab.find('#monthAmount')
     var today = new Date()
     var dd = today.getDate() - 1
-    var mm = (today.getMonth() - 1)
+    var mm = today.getMonth()
     var yyyy = today.getFullYear()
     var timezoneCalc = new Date().getTimezoneOffset()
     var totalAmount = 0
-    var freight = 0
-    var dataStart = new Date(yyyy, 2, 25, 0, -timezoneCalc, 0, 0).toISOString()
-    var dataEnd = new Date(yyyy, 2, 25, 24, 59 - timezoneCalc, 0, 0).toISOString()
+    var approved = 0
+    var monthTotalPaid = 0
+    var dataStart = new Date(yyyy, mm, dd, 0, -timezoneCalc, 0, 0).toISOString()
+    console.log(dataStart)
+    var dataEnd = new Date(yyyy, mm, dd, 23, 59 - timezoneCalc, 59, 0).toISOString()
+    console.log(dataEnd)
+    var dateStart = new Date(yyyy, mm, 1, 0, -timezoneCalc, 0, 0).toISOString()
+    console.log(dateStart)
+    var dateEnd = new Date(yyyy, mm, 31, 23, 59 - timezoneCalc, 59, 0).toISOString()
+    console.log(dateEnd)
     var urlOrder = 'orders.json?sort=amount&created_at>=' + dataStart + '&created_at<=' + dataEnd
+    var urlOrderMonth = 'orders.json?sort=amount&created_at>=' + dateStart + '&created_at<=' + dateEnd
     var arrayTable = []
     $storeID.text(storeId)
     var urlStore = 'stores/me.json'
     // var objMe = window.sessionStorage('meInfor') || []
+    // search for store name and object id
     window.callApi(urlStore, 'GET', function (error, schema) {
       if (!error) {
         var storeName = schema.name
@@ -54,57 +64,83 @@
         $storeobject.text(__id)
       }
     })
-
-    window.callApi(urlOrder, 'GET', function (err, json) {
-      if (!err) {
-        var totalOrders = json.result
-        console.log(totalOrders)
-        for (var i = 0; i < totalOrders.length; i++) {
-          if (totalOrders[i].financial_status) {
-            var tableOrder = totalOrders[i].financial_status.current
-            arrayTable.push(tableOrder)
-            for (var ii = 0; ii < arrayTable.length; ii++) {
-              if (arrayTable[ii] === 'paid') {
-                arrayTable[ii] = 'Pagamento Aprovado'
+    // search for dayly orders
+    $(document).ready(function () {
+      setTimeout(function () {
+        window.callApi(urlOrder, 'GET', function (err, json) {
+          if (!err) {
+            var totalOrders = json.result
+            console.log(totalOrders)
+            if (totalOrders.length === 0) {
+              appTab.find('#cards-graphs-orders').hide()
+            } else {
+              for (var i = 0; i < totalOrders.length; i++) {
+                if (totalOrders[i].financial_status) {
+                  var tableOrder = totalOrders[i].financial_status.current
+                  arrayTable.push(tableOrder)
+                  for (var ii = 0; ii < arrayTable.length; ii++) {
+                    if (arrayTable[ii] === 'paid') {
+                      arrayTable[ii] = 'Pagamento Aprovado'
+                    }
+                    if (arrayTable[ii] === 'voided') {
+                      arrayTable[ii] = 'Pagamento Cancelado'
+                    }
+                    if (arrayTable[ii] === 'pending') {
+                      arrayTable[ii] = 'Pagamento Pendente'
+                    }
+                  }
+                  if (i < 6) {
+                    $order.append('<tr>' +
+                    '  <th scope="row"><a href="/#/resources/orders/' + totalOrders[i]._id + ' ">' + totalOrders[i].number + ' </a></th>' +
+                    '  <td>' + arrayTable[i] + '</td>' +
+                    '  <td> R$ ' + totalOrders[i].amount.total.toFixed(2) + '</td>' +
+                    '  <td><a href="/#/resources/customers/' + totalOrders[i].buyers[0]._id + ' ">' + totalOrders[i].buyers[0].display_name + ' </a></td>' +
+                    '</tr>')
+                  }
+                  var statusOrder = totalOrders[i].financial_status.current
+                  totalAmount = totalOrders[i].amount.total + totalAmount
+                  $todayTotal.text(totalAmount.toFixed(2).replace('.', ','))
+                  if (statusOrder === 'paid') {
+                    countPaid = countPaid + 1
+                  }
+                  if (statusOrder === 'voided') {
+                    countCancelled = countCancelled + 1
+                  }
+                  if (statusOrder === 'pending') {
+                    countPending = countPending + 1
+                  }
+                  bar(countPaid, countPending, countCancelled)
+                } else {
+                  i = i + 1
+                }
               }
-              if (arrayTable[ii] === 'voided') {
-                arrayTable[ii] = 'Pagamento Cancelado'
-              }
-              if (arrayTable[ii] === 'pending') {
-                arrayTable[ii] = 'Pagamento Pendente'
-              }
             }
-
-            if (i < 6) {
-              $order.append('<tr>' +
-              '  <th scope="row"><a href="/#/resources/orders/' + totalOrders[i]._id + ' ">' + totalOrders[i].number + ' </a></th>' +
-              '  <td>' + arrayTable[i] + '</td>' +
-              '  <td>' + totalOrders[i].amount.total.toFixed(2) + '</td>' +
-              '  <td><a href="/#/resources/customers/' + totalOrders[i].buyers[0]._id + ' ">' + totalOrders[i].buyers[0].display_name + ' </a></td>' +
-              '</tr>')
-            }
-            var statusOrder = totalOrders[i].financial_status.current
-            totalAmount = totalOrders[i].amount.total + totalAmount
-            freight = totalOrders[i].amount.freight + freight
-            $freight.text(freight.toFixed(2).replace('.', ','))
-            $todayTotal.text(totalAmount.toFixed(2).replace('.', ','))
-            if (statusOrder === 'paid') {
-              countPaid = countPaid + 1
-            }
-            if (statusOrder === 'voided') {
-              countCancelled = countCancelled + 1
-            }
-            if (statusOrder === 'pending') {
-              countPending = countPending + 1
-            }
-            bar(countPaid, countPending, countCancelled)
-          } else {
-            i = i + 1
           }
-        }
-      }
+        })
+      }, 100)
     })
-
+    // search for month orders
+    $(document).ready(function () {
+      setTimeout(function () {
+        window.callApi(urlOrderMonth, 'GET', function (error, jsonMonth) {
+          if (!error) {
+            var monthOrders = jsonMonth.result
+            for (var i = 0; i < monthOrders.length; i++) {
+              if (monthOrders[i].financial_status) {
+                var order = monthOrders.length
+                if (monthOrders[i].financial_status.current === 'paid') {
+                  monthTotalPaid = monthOrders[i].amount.total + monthTotalPaid
+                  $monthTotal.text(monthTotalPaid.toFixed(2).replace('.', ','))
+                  approved = approved + 1
+                  var percentApproved = ((approved / order) * 100).toFixed(2)
+                  $approve.text(percentApproved)
+                }
+              }
+            }
+          }
+        })
+      }, 500)
+    })
     var bar = function () {
       var ctx = document.getElementById('orderOfAll')
       var myChart = new Chart(ctx, {
