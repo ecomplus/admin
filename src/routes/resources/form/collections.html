@@ -52,6 +52,59 @@
           </div>
         </div>
       </div>
+      <div class="card" data-id="items-container">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Collection items</span>
+            <span data-lang="pt_br">Itens da Coleção</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" class="form-control" data-id="new-collections-item"/>
+                <span class="input-group-append">
+                  <button type="button" class="btn btn-light" data-id="add-collections-item">
+                    <i class="fa fa-tag"></i>
+                    <span class="i18n">
+                      <span data-lang="en_us">Add</span>
+                      <span data-lang="pt_br">Adicionar</span>
+                    </span>
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            <div class="collections-items-list">
+              <table class="table table-striped table-center">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>SKU</th>
+                    <th class="i18n">
+                      <span data-lang="en_us">Name</span>
+                      <span data-lang="pt_br">Nome</span>
+                    </th>
+                    <th class="i18n">
+                      <span data-lang="en_us">Image</span>
+                      <span data-lang="pt_br">Imagem</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody data-id="collections-items">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="col-md-5">
@@ -149,5 +202,6 @@
 
   <script>
     $.getScript('/assets/js/routes/resources/form.min.js')
+    $.getScript('/assets/js/routes/resources/form/collections.min.js')
   </script>
 </form>

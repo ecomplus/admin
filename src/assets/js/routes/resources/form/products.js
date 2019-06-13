@@ -77,117 +77,128 @@
       }
     })
 
-    .always(function () {
-      // add store custom grids
-      window.callApi('grids.json?fields=title,grid_id,options', 'GET', function (err, json) {
-        if (!err) {
-          for (var i = 0; i < json.result.length; i++) {
-            var grid = json.result[i]
-            var normalizedTitle = normalizeString(grid.title)
-            // check duplicated grids
-            for (var gridId in Grids) {
-              if (Grids.hasOwnProperty(gridId)) {
-                if (gridId !== grid.grid_id && normalizeString(Grids[gridId].title) === normalizedTitle) {
-                  delete Grids[gridId]
-                }
-              }
-            }
-            Grids[grid.grid_id] = grid
-          }
-        }
-
-        // setup current product variations and specs
-        setTimeout(function () {
-          var data = Data()
-          var gridId
-          // setup preseted specifications
-          var specifications = data.specifications
-          if (specifications) {
-            for (gridId in specifications) {
-              var specArray = specifications[gridId]
-              if (Array.isArray(specArray)) {
-                // add one spec object per grid only
-                var specValue = addSpec(gridId)
-                if (specValue) {
-                  specValue(specArray[0].text)
-                }
-              }
-            }
-          }
-
-          // setup variations
-          var variations = data.variations
-          if (Array.isArray(variations) && variations.length) {
-            // add all options in use
-            var addOptions = function (addOption, gridId) {
-              // delay to wait grid full setup
-              setTimeout(function () {
-                for (var i = 0; i < variations.length; i++) {
-                  var spec = variations[i].specifications[gridId]
-                  if (Array.isArray(spec)) {
-                    for (var ii = 0; ii < spec.length; ii++) {
-                      addOption(spec[ii])
-                    }
+      .always(function () {
+        // add store custom grids
+        window.callApi('grids.json?fields=title,grid_id,options', 'GET', function (err, json) {
+          if (!err) {
+            for (var i = 0; i < json.result.length; i++) {
+              var grid = json.result[i]
+              var normalizedTitle = normalizeString(grid.title)
+              // check duplicated grids
+              for (var gridId in Grids) {
+                if (Grids.hasOwnProperty(gridId)) {
+                  if (gridId !== grid.grid_id && normalizeString(Grids[gridId].title) === normalizedTitle) {
+                    delete Grids[gridId]
                   }
                 }
-              }, 600)
-            }
+              }
 
-            // get grids from first variations
-            specifications = variations[0].specifications
+              // check if there's a grid object already saved with current ID
+              var Grid = Grids[grid.grid_id]
+              if (Grid) {
+                // keep default options
+                Grid.title = grid.title
+                if (grid.options) {
+                  Grid.options = Grid.options.concat(Grid.options, grid.options)
+                }
+              } else {
+                Grids[grid.grid_id] = grid
+              }
+            }
+          }
+
+          // setup current product variations and specs
+          setTimeout(function () {
+            var data = Data()
+            var gridId
+            // setup preseted specifications
+            var specifications = data.specifications
             if (specifications) {
               for (gridId in specifications) {
-                if (specifications.hasOwnProperty(gridId)) {
-                  // setup new grid
-                  var gridObject
-                  if (Grids.hasOwnProperty(gridId)) {
-                    gridObject = Grids[gridId]
-                  } else {
-                    gridObject = { 'title': gridId }
+                var specArray = specifications[gridId]
+                if (Array.isArray(specArray)) {
+                  // add one spec object per grid only
+                  var specValue = addSpec(gridId)
+                  if (specValue) {
+                    specValue(specArray[0].text)
                   }
-                  addOptions(addGrid(gridObject), gridId)
                 }
               }
             }
 
-            setTimeout(function () {
-              // grid options added
-              // true to skip data commits
-              generateVariations(true)
-
-              setTimeout(function () {
-                // fix variations list
-                var $checkbox = $listVariations.find('input[type="checkbox"]')
-                for (var i = 0; i < variations.length; i++) {
-                  var strValue = ''
-                  var specifications = variations[i].specifications
-                  // merge all specs values to string
-                  for (var gridId in specifications) {
-                    var spec = specifications[gridId]
+            // setup variations
+            var variations = data.variations
+            if (Array.isArray(variations) && variations.length) {
+              // add all options in use
+              var addOptions = function (addOption, gridId) {
+                // delay to wait grid full setup
+                setTimeout(function () {
+                  for (var i = 0; i < variations.length; i++) {
+                    var spec = variations[i].specifications[gridId]
                     if (Array.isArray(spec)) {
                       for (var ii = 0; ii < spec.length; ii++) {
-                        strValue += ',' + spec[ii].value
+                        addOption(spec[ii])
                       }
                     }
                   }
+                }, 600)
+              }
 
-                  // match variation on list
-                  $checkbox.filter(function () {
-                    return $(this).data('value') === strValue
-                  }).data('checked', true)
+              // get grids from first variations
+              specifications = variations[0].specifications
+              if (specifications) {
+                for (gridId in specifications) {
+                  if (specifications.hasOwnProperty(gridId)) {
+                    // setup new grid
+                    var gridObject
+                    if (Grids.hasOwnProperty(gridId)) {
+                      gridObject = Grids[gridId]
+                    } else {
+                      gridObject = { 'title': gridId }
+                    }
+                    addOptions(addGrid(gridObject), gridId)
+                  }
                 }
+              }
 
-                // unckech variations not in use
-                // mark as preseted variations
-                $checkbox.filter(function () {
-                  return !$(this).data('checked')
-                }).data('skip-data', true).prop('checked', false).trigger('change')
-              }, 200)
-            }, 800)
-          }
-        }, 100)
+              setTimeout(function () {
+                // grid options added
+                // true to skip data commits
+                generateVariations(true)
+
+                setTimeout(function () {
+                  // fix variations list
+                  var $checkbox = $listVariations.find('input[type="checkbox"]')
+                  for (var i = 0; i < variations.length; i++) {
+                    var strValue = ''
+                    var specifications = variations[i].specifications
+                    // merge all specs values to string
+                    for (var gridId in specifications) {
+                      var spec = specifications[gridId]
+                      if (Array.isArray(spec)) {
+                        for (var ii = 0; ii < spec.length; ii++) {
+                          strValue += ',' + spec[ii].value
+                        }
+                      }
+                    }
+
+                    // match variation on list
+                    $checkbox.filter(function () {
+                      return $(this).data('value') === strValue
+                    }).data('checked', true)
+                  }
+
+                  // unckech variations not in use
+                  // mark as preseted variations
+                  $checkbox.filter(function () {
+                    return !$(this).data('checked')
+                  }).data('skip-data', true).prop('checked', false).trigger('change')
+                }, 200)
+              }, 800)
+            }
+          }, 100)
+        })
       })
-    })
 
     var gridsTitles = function () {
       // return strings array with all grids titles
@@ -213,6 +224,72 @@
         }
       }
       return titles
+    }
+
+    Tab.saveCallback = function () {
+      // product document updated
+      var data = Data()
+      if (data) {
+        // save new grids
+        // https://developers.e-com.plus/docs/api/#/store/grids/
+        var grids = []
+        var gridId
+
+        // merge variations and product specs
+        var addGrids = function (item) {
+          if (item.specifications) {
+            for (gridId in item.specifications) {
+              if (item.specifications.hasOwnProperty(gridId) && grids.indexOf(gridId) === -1) {
+                grids.push(gridId)
+              }
+            }
+          }
+        }
+
+        // add specs from product body
+        addGrids(data)
+        if (data.variations) {
+          // add specs from each variation
+          data.variations.forEach(function (variation) {
+            addGrids(variation)
+          })
+        }
+
+        // list current grids and options stored
+        window.callApi('grids.json?fields=grid_id', 'GET', function (err, json) {
+          if (!err) {
+            grids.forEach(function (gridId) {
+              for (var i = 0; i < json.result.length; i++) {
+                if (json.result[i].grid_id === gridId) {
+                  // grid already saved
+                  return
+                }
+              }
+
+              // save grid with ID and title
+              var title
+              if (Grids.hasOwnProperty(gridId) && Grids[gridId].title) {
+                title = Grids[gridId].title
+              } else if (specsTitlesObject.hasOwnProperty(gridId)) {
+                title = specsTitlesObject[gridId]
+              } else {
+                // no title to save
+                return
+              }
+              var gridBody = {
+                'grid_id': gridId,
+                'title': title
+              }
+
+              // call Store API
+              var uri = 'grids.json'
+              var skipError = true
+              window.callApi(uri, 'POST', null, gridBody, skipError)
+            })
+          }
+        })
+        // TODO: save or update grid options
+      }
     }
 
     var fixGridId = function (gridId) {
@@ -272,10 +349,8 @@
                               '<i class="fa fa-trash"></i>' +
                             '</button>' +
                           '</div>' +
-                          '<input class="form-control" type="text" name="grid" placeholder="' + i18n({
-                            'en_us': 'Size',
-                            'pt_br': 'Tamanho'
-                          }) + '">' +
+                          '<input class="form-control" type="text" name="grid" placeholder="' +
+                          i18n({ 'en_us': 'Size', 'pt_br': 'Tamanho' }) + '">' +
                         '</div>' +
                       '</div>' +
                     '</div>' +
@@ -543,44 +618,45 @@
         }, 100)
       })
 
-      .blur(function () {
-        // fix for Safari
-        if (!gridOnChange) {
-          setTimeout(function () {
-            $inputGrid.trigger('change')
-          }, 100)
-        }
-      })
+        .blur(function () {
+          // fix for Safari
+          if (!gridOnChange) {
+            setTimeout(function () {
+              $inputGrid.trigger('change')
+            }, 100)
+          }
+        })
 
-      .keyup(function () {
-        if ($inputGrid.val() !== '') {
-          // grid name not empty
-          if (optionDisabled) {
-            // enable to add the grid options
-            $blockOption.fadeIn()
-            optionDisabled = false
+        .keyup(function () {
+          if ($inputGrid.val() !== '') {
+            // grid name not empty
+            if (optionDisabled) {
+              // enable to add the grid options
+              $blockOption.fadeIn()
+              optionDisabled = false
+              if (countGrids === 1) {
+                $('#t' + tabId + '-add-option-header').fadeIn()
+              }
+            }
+          } else if (!optionDisabled) {
+            // grid name empty
+            $blockOption.fadeOut()
+            optionDisabled = true
             if (countGrids === 1) {
-              $('#t' + tabId + '-add-option-header').fadeIn()
+              $('#t' + tabId + '-add-option-header').fadeOut()
             }
           }
-        } else if (!optionDisabled) {
-          // grid name empty
-          $blockOption.fadeOut()
-          optionDisabled = true
-          if (countGrids === 1) {
-            $('#t' + tabId + '-add-option-header').fadeOut()
+        })
+
+        .keydown(function (e) {
+          switch (e.which) {
+            // tab, enter
+            case 9:
+            case 13:
+              $inputGrid.trigger('blur')
+              break
           }
-        }
-      })
-      .keydown(function (e) {
-        switch (e.which) {
-          // tab, enter
-          case 9:
-          case 13:
-            $inputGrid.trigger('blur')
-            break
-        }
-      })
+        })
 
       $inputOption.keydown(function (e) {
         switch (e.which) {
@@ -1588,6 +1664,9 @@
     // setup inputs autocomplete
     Typeahead($inputSpec, 'specs', substringMatcher(gridsTitles()))
 
+    // store original grid title for specifications on object by grid ID
+    var specsTitlesObject = {}
+
     var addSpec = function (spec) {
       if (!spec) {
         spec = $inputSpec.val().trim()
@@ -1603,6 +1682,8 @@
           // use default grid title
           spec = Grids[gridId].title
         }
+        // save grid title
+        specsTitlesObject[gridId] = spec
 
         // check if input of this grid already exists
         var $input = $specs.find('input').filter(function () {

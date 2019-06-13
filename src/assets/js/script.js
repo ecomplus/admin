@@ -38,7 +38,8 @@ app.config({
     'tagsinput',
     'selectpicker',
     'colorpicker',
-    'datepicker'
+    'datepicker',
+    'chartjs'
   ],
 
   /*
@@ -623,7 +624,7 @@ app.config({
       }
     })
 
-    $form.find('input[type="text"],select,textarea').change(function () {
+    $form.find('input[type="text"],input[type="email"],select,textarea').change(function () {
       toData($(this))
 
       // check if other input field is filled based on this
@@ -660,6 +661,9 @@ app.config({
     })
 
     $form.find('input[type="tel"],input[type="number"]').change(function () {
+      if ($(this).data('numeric-string')) {
+        $(this).data('value', $(this).val().replace(/\D/g, ''))
+      }
       toData($(this))
     })
 
@@ -686,6 +690,16 @@ app.config({
           if (window.lang === 'pt_br') {
             // brazilian CEP format
             $(this).inputmask('99999-999')
+          }
+          break
+
+        case 'date':
+          if (window.lang === 'pt_br') {
+            // brazilian birth date
+            $(this).inputmask('99/99/9999')
+          } else {
+            // american birth date
+            $(this).inputmask('9999-99-99')
           }
           break
       }
@@ -726,6 +740,129 @@ app.config({
     $('input[readonly]').click(function () {
       $(this).select()
     })
+  }
+
+  var nestedForm = function ($form, obj, prop) {
+    // setup input values with current nested object from list
+    var objectId = obj._id
+    // reset input values
+    $form.find('input,select,textarea').data('object-id', objectId).val('')
+    setupInputValues($form, obj, prop + '.')
+    // fix select fields
+    $form.find('select').selectpicker('refresh')
+  }
+
+  // setup blocks for array of nested objects
+  window.handleNestedObjects = function (Data, commit, $block, $add, $remove, $next, prop, handleObj) {
+    var index
+    var isFormHidden = true
+    var toggleHidden = function (list) {
+      if (list && list.length) {
+        if (isFormHidden) {
+          // show the form and hide empty message
+          $block.slideDown().prev().slideUp()
+          isFormHidden = false
+        }
+      } else if (!isFormHidden) {
+        // empty list
+        // hide the form and show empty message
+        $block.slideUp().prev().slideDown()
+        isFormHidden = true
+      }
+    }
+
+    var toggleForm = function (list) {
+      // set form up with current object from list
+      if (list && list.length) {
+        if (typeof index !== 'number' || index < 0 || list.length <= index) {
+          // first object
+          index = 0
+        }
+        nestedForm($block, list[index], prop)
+      }
+    }
+
+    var toggleButtons = function (list) {
+      // toggle next and remove buttons based on list length
+      if (list && list.length) {
+        $remove.removeAttr('disabled')
+        if (list.length > 1) {
+          $next.removeAttr('disabled')
+          return
+        }
+      } else {
+        // empty list
+        $remove.attr('disabled', true)
+      }
+      $next.attr('disabled', true)
+    }
+
+    var toggleAll = function (list) {
+      if (!list) {
+        list = Data()[prop]
+      }
+      // toggle form visibility if needed
+      toggleHidden(list)
+      // setup form fields
+      toggleForm(list)
+      // enable or disable control buttons
+      toggleButtons(list)
+    }
+    toggleAll()
+
+    var add = function () {
+      var data = Data()
+      if (!data[prop]) {
+        data[prop] = []
+      }
+      var list = data[prop]
+      // create new object
+      var obj = { _id: randomObjectId() }
+      if (typeof handleObj === 'function') {
+        handleObj(obj)
+      }
+
+      // add object to list
+      list.push(obj)
+      index = list.length - 1
+      // fix input names before handling form
+      $block.find('input[data-name]').each(function () {
+        $(this).attr('name', $(this).data('name'))
+      })
+      // setup new object on form
+      toggleAll(list)
+      // focus on required text input (if any)
+      $block.find('input[required]').first().focus()
+      // commit only to perform reactive actions
+      commit(data, true)
+    }
+    $add.click(add)
+
+    // handle link to create transaction (when empty)
+    $block.prev().find('a').click(function () {
+      $add.click()
+    })
+
+    $remove.click(function () {
+      var data = Data()
+      var list = data[prop]
+      // remove current index from list
+      list.splice(index, 1)
+      // update form and buttons
+      toggleAll(list)
+      // commit only to perform reactive actions
+      commit(data, true)
+    })
+
+    $next.click(function () {
+      // next object on list
+      index++
+      toggleAll()
+    })
+
+    /* return function to manually add object to list
+    return add
+    */
   }
 
   window.setupInputValues = function ($form, data, prefix, objectId) {
