@@ -42,11 +42,8 @@
     var approved = 0
     var monthTotalPaid = 0
     var dataStart = new Date(yyyy, mm, dd, 0, -timezoneCalc, 0, 0).toISOString()
-    console.log(dataStart)
     var dataEnd = new Date(yyyy, mm, dd, 23, 59 - timezoneCalc, 59, 0).toISOString()
-    console.log(dataEnd)
     var dateStart = new Date(yyyy, mm, 1, 0, -timezoneCalc, 0, 0).toISOString()
-    console.log(dateStart)
     var dateEnd = new Date(yyyy, mm, 31, 23, 59 - timezoneCalc, 59, 0).toISOString()
     console.log(dateEnd)
     var urlOrder = 'orders.json?sort=amount&created_at>=' + dataStart + '&created_at<=' + dataEnd
