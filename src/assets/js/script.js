@@ -3132,8 +3132,8 @@ app.ready(function () {
                 } else {
                   hrNotifications = todayNotifications.getHours()
                 }
-
-                console.log(hrNotifications)
+                var idNfcs = notifications[i]._id
+                console.log(idNfcs)
                 var acao, action, urlNotification, resourcesNfcsBr, resourcesNfcsUs, htmlNotification, bgIconNfcs, iconNfcs, daysNfcBr, daysNfcUs, id, diffDays
                 var allResources = function () {
                   htmlNotification = '<a class="media" href="/#/' + urlNotification + '/' + id + ' ">' +

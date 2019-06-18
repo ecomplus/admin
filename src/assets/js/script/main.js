@@ -2114,198 +2114,202 @@ app.ready(function () {
             fatalError(err)
           } else {
             User = body
-            var notifications = User.notifications
+
             console.log(notifications)
-            for (var i = 0; i < notifications.length; i++) {
-              if (notifications[i].datetime) {
-                var dayNotifications = parseInt(notifications[i].datetime.substring(8, 10))
-                var monthNotifications = parseInt(notifications[i].datetime.substring(5, 7))
-                var yearNotifications = parseInt(notifications[i].datetime.substring(0, 4))
-                var hourNotifications = parseInt(notifications[i].datetime.substring(11, 13))
-                console.log(hourNotifications)
-                var todayNotifications = new Date()
-                var ddNotifications = todayNotifications.getDate()
-                var mmNotifications = (todayNotifications.getMonth() + 1)
-                var yyyyNotifications = todayNotifications.getFullYear()
-                var timeZoneCalc = todayNotifications.getTimezoneOffset()
-                if (todayNotifications.getHours() < 24 && todayNotifications.getHours() > 3) {
-                  var hrNotifications = todayNotifications.getHours() - timeZoneCalc / 60
-                } else {
-                  hrNotifications = todayNotifications.getHours()
-                }
-
-                console.log(hrNotifications)
-                var acao, action, urlNotification, resourcesNfcsBr, resourcesNfcsUs, htmlNotification, bgIconNfcs, iconNfcs, daysNfcBr, daysNfcUs, id, diffDays
-                var allResources = function () {
-                  htmlNotification = '<a class="media" href="/#/' + urlNotification + '/' + id + ' ">' +
-                      '  <span class="avatar ' + bgIconNfcs + '"><i class="' + iconNfcs + '"></i></span>' +
-                      '  <div class="media-body">' +
-                      '<p class="i18n">' +
-                      '  <span data-lang="pt_br">' + resourcesNfcsBr + ' ' + acao + '</span>' +
-                      '  <span data-lang="en_us">' + resourcesNfcsUs + ' ' + action + '/span>' +
-                      '</p>' +
-                      '<p class="i18n">' +
-                      ' <time data-lang="pt_br">' + diffDays + ' ' + daysNfcBr + ' atrás</time>' +
-                      ' <time data-lang="en_us">' + diffDays + ' ' + daysNfcUs + ' ago</time>' +
-                      '</p>' +
-                      '</div></a>'
-                }
-                var authentication = function () {
-                  urlNotification = 'authentications'
-                  resourcesNfcsBr = 'Autenticação'
-                  resourcesNfcsUs = 'Authentication'
-                  iconNfcs = 'icon fa fa-key'
-                  allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
-                  $('.notification').append(htmlNotification)
-                }
-                var products = function () {
-                  urlNotification = 'resources/products'
-                  resourcesNfcsBr = 'Produto'
-                  resourcesNfcsUs = 'Product'
-                  iconNfcs = 'icon fa fa-tag'
-                  allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
-                  $('.notification').append(htmlNotification)
-                }
-                var orders = function () {
-                  urlNotification = 'resources/orders'
-                  resourcesNfcsBr = 'Pedido'
-                  resourcesNfcsUs = 'Order'
-                  iconNfcs = 'icon fa fa-inbox'
-                  allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
-                  $('.notification').append(htmlNotification)
-                }
-                var categories = function () {
-                  urlNotification = 'resources/categories'
-                  resourcesNfcsBr = 'Categoria'
-                  resourcesNfcsUs = 'Category'
-                  iconNfcs = 'icon fa fa-bookmark'
-                  allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
-                  $('.notification').append(htmlNotification)
-                }
-                var brands = function () {
-                  urlNotification = 'resources/brands'
-                  resourcesNfcsBr = 'Marca'
-                  resourcesNfcsUs = 'Brand'
-                  iconNfcs = 'icon fa fa-trademark'
-                  allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
-                  $('.notification').append(htmlNotification)
-                }
-                var collections = function () {
-                  urlNotification = 'resources/collections'
-                  resourcesNfcsBr = 'Coleção'
-                  resourcesNfcsUs = 'Collection'
-                  iconNfcs = 'icon fa fa-th-large'
-                  allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
-                  $('.notification').append(htmlNotification)
-                }
-                var applications = function () {
-                  urlNotification = 'applications'
-                  resourcesNfcsBr = 'App'
-                  resourcesNfcsUs = 'App'
-                  iconNfcs = 'icon fa fa-database'
-                  allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
-                  $('.notification').append(htmlNotification)
-                }
-                var grids = function () {
-                  urlNotification = 'resources/grids'
-                  resourcesNfcsBr = 'Grade'
-                  resourcesNfcsUs = 'Grid'
-                  iconNfcs = 'icon fa fa-filter'
-                  allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
-                  $('.notification').append(htmlNotification)
-                }
-                var resourcesNotifications = function () {
-                  if (notifications[i].content.api_event.resource === 'authentications') {
-                    authentication(id, diffDays)
+            if (User.notifications) {
+              var notifications = User.notifications
+              for (var i = 0; i < notifications.length; i++) {
+                if (notifications[i].datetime) {
+                  var dayNotifications = parseInt(notifications[i].datetime.substring(8, 10))
+                  var monthNotifications = parseInt(notifications[i].datetime.substring(5, 7))
+                  var yearNotifications = parseInt(notifications[i].datetime.substring(0, 4))
+                  var hourNotifications = parseInt(notifications[i].datetime.substring(11, 13))
+                  console.log(hourNotifications)
+                  var todayNotifications = new Date()
+                  var ddNotifications = todayNotifications.getDate()
+                  var mmNotifications = (todayNotifications.getMonth() + 1)
+                  var yyyyNotifications = todayNotifications.getFullYear()
+                  var timeZoneCalc = todayNotifications.getTimezoneOffset()
+                  if (todayNotifications.getHours() < 24 && todayNotifications.getHours() > 3) {
+                    var hrNotifications = todayNotifications.getHours() - timeZoneCalc / 60
+                  } else {
+                    hrNotifications = todayNotifications.getHours()
                   }
-                  if (notifications[i].content.api_event.resource === 'products') {
-                    products(id, diffDays)
+                  var idNfcs = notifications[i]._id
+                  console.log(idNfcs)
+                  var acao, action, urlNotification, resourcesNfcsBr, resourcesNfcsUs, htmlNotification, bgIconNfcs, iconNfcs, daysNfcBr, daysNfcUs, id, diffDays
+                  var allResources = function () {
+                    htmlNotification = '<a class="media" href="/#/' + urlNotification + '/' + id + ' ">' +
+                        '  <span class="avatar ' + bgIconNfcs + '"><i class="' + iconNfcs + '"></i></span>' +
+                        '  <div class="media-body">' +
+                        '<p class="i18n">' +
+                        '  <span data-lang="pt_br">' + resourcesNfcsBr + ' ' + acao + '</span>' +
+                        '  <span data-lang="en_us">' + resourcesNfcsUs + ' ' + action + '/span>' +
+                        '</p>' +
+                        '<p class="i18n">' +
+                        ' <time data-lang="pt_br">' + diffDays + ' ' + daysNfcBr + ' atrás</time>' +
+                        ' <time data-lang="en_us">' + diffDays + ' ' + daysNfcUs + ' ago</time>' +
+                        '</p>' +
+                        '</div></a>'
                   }
-                  if (notifications[i].content.api_event.resource === 'orders') {
-                    orders(id, diffDays)
+                  var authentication = function () {
+                    urlNotification = 'authentications'
+                    resourcesNfcsBr = 'Autenticação'
+                    resourcesNfcsUs = 'Authentication'
+                    iconNfcs = 'icon fa fa-key'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
                   }
-                  if (notifications[i].content.api_event.resource === 'categories') {
-                    categories(id, diffDays)
+                  var products = function () {
+                    urlNotification = 'resources/products'
+                    resourcesNfcsBr = 'Produto'
+                    resourcesNfcsUs = 'Product'
+                    iconNfcs = 'icon fa fa-tag'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
                   }
-                  if (notifications[i].content.api_event.resource === 'brands') {
-                    brands(id, diffDays)
+                  var orders = function () {
+                    urlNotification = 'resources/orders'
+                    resourcesNfcsBr = 'Pedido'
+                    resourcesNfcsUs = 'Order'
+                    iconNfcs = 'icon fa fa-inbox'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
                   }
-                  if (notifications[i].content.api_event.resource === 'collections') {
-                    collections(id, diffDays)
+                  var categories = function () {
+                    urlNotification = 'resources/categories'
+                    resourcesNfcsBr = 'Categoria'
+                    resourcesNfcsUs = 'Category'
+                    iconNfcs = 'icon fa fa-bookmark'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
                   }
-                  if (notifications[i].content.api_event.resource === 'applications') {
-                    applications(id, diffDays)
+                  var brands = function () {
+                    urlNotification = 'resources/brands'
+                    resourcesNfcsBr = 'Marca'
+                    resourcesNfcsUs = 'Brand'
+                    iconNfcs = 'icon fa fa-trademark'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
                   }
-                  if (notifications[i].content.api_event.resource === 'grids') {
-                    grids(id, diffDays)
+                  var collections = function () {
+                    urlNotification = 'resources/collections'
+                    resourcesNfcsBr = 'Coleção'
+                    resourcesNfcsUs = 'Collection'
+                    iconNfcs = 'icon fa fa-th-large'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
                   }
-                }
-                if (yyyyNotifications === yearNotifications) {
-                  if (mmNotifications === monthNotifications) {
-                    if (ddNotifications === dayNotifications) {
-                      id = notifications[i].content.api_event.resource_id
-                      diffDays = hrNotifications - hourNotifications
-                      if (notifications[i].content.api_event.action === 'change') {
-                        acao = 'alterado'
-                        action = 'changed'
-                        bgIconNfcs = 'bg-warning'
-                        daysNfcBr = 'horas'
-                        daysNfcUs = 'hours'
-                        resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
-                      }
-                      if (notifications[i].content.api_event.action === 'delete') {
-                        acao = 'deletado'
-                        action = 'deleted'
-                        bgIconNfcs = 'bg-danger'
-                        daysNfcBr = 'horas'
-                        daysNfcUs = 'hours'
-                        resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
-                      }
-                      if (notifications[i].content.api_event.action === 'create') {
-                        acao = 'criado'
-                        action = 'created'
-                        bgIconNfcs = 'bg-success'
-                        daysNfcBr = 'horas'
-                        daysNfcUs = 'hours'
-                        resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
-                      }
+                  var applications = function () {
+                    urlNotification = 'applications'
+                    resourcesNfcsBr = 'App'
+                    resourcesNfcsUs = 'App'
+                    iconNfcs = 'icon fa fa-database'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
+                  }
+                  var grids = function () {
+                    urlNotification = 'resources/grids'
+                    resourcesNfcsBr = 'Grade'
+                    resourcesNfcsUs = 'Grid'
+                    iconNfcs = 'icon fa fa-filter'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
+                  }
+                  var resourcesNotifications = function () {
+                    if (notifications[i].content.api_event.resource === 'authentications') {
+                      authentication(id, diffDays)
                     }
-                    if (ddNotifications > dayNotifications) {
-                      id = notifications[i].content.api_event.resource_id
-                      diffDays = ddNotifications - dayNotifications
-                      if (diffDays < 0) {
-                        diffDays = 'Momentos'
-                      }
-
-                      if (notifications[i].content.api_event.action === 'change') {
-                        acao = 'alterado'
-                        action = 'changed'
-                        bgIconNfcs = 'bg-warning'
-                        daysNfcBr = 'dias'
-                        daysNfcUs = 'days'
-                        resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
-                      }
-                      if (notifications[i].content.api_event.action === 'delete') {
-                        acao = 'deletado'
-                        action = 'deleted'
-                        bgIconNfcs = 'bg-danger'
-                        daysNfcBr = 'dias'
-                        daysNfcUs = 'days'
-                        resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
-                      }
-                      if (notifications[i].content.api_event.action === 'create') {
-                        acao = 'criado'
-                        action = 'created'
-                        bgIconNfcs = 'bg-success'
-                        daysNfcBr = 'dias'
-                        daysNfcUs = 'days'
-                        resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
-                      }
+                    if (notifications[i].content.api_event.resource === 'products') {
+                      products(id, diffDays)
+                    }
+                    if (notifications[i].content.api_event.resource === 'orders') {
+                      orders(id, diffDays)
+                    }
+                    if (notifications[i].content.api_event.resource === 'categories') {
+                      categories(id, diffDays)
+                    }
+                    if (notifications[i].content.api_event.resource === 'brands') {
+                      brands(id, diffDays)
+                    }
+                    if (notifications[i].content.api_event.resource === 'collections') {
+                      collections(id, diffDays)
+                    }
+                    if (notifications[i].content.api_event.resource === 'applications') {
+                      applications(id, diffDays)
+                    }
+                    if (notifications[i].content.api_event.resource === 'grids') {
+                      grids(id, diffDays)
                     }
                   }
+                  if (yyyyNotifications === yearNotifications) {
+                    if (mmNotifications === monthNotifications) {
+                      if (ddNotifications === dayNotifications) {
+                        id = notifications[i].content.api_event.resource_id
+                        diffDays = hrNotifications - hourNotifications
+                        if (notifications[i].content.api_event.action === 'change') {
+                          acao = 'alterado'
+                          action = 'changed'
+                          bgIconNfcs = 'bg-warning'
+                          daysNfcBr = 'horas'
+                          daysNfcUs = 'hours'
+                          resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
+                        }
+                        if (notifications[i].content.api_event.action === 'delete') {
+                          acao = 'deletado'
+                          action = 'deleted'
+                          bgIconNfcs = 'bg-danger'
+                          daysNfcBr = 'horas'
+                          daysNfcUs = 'hours'
+                          resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
+                        }
+                        if (notifications[i].content.api_event.action === 'create') {
+                          acao = 'criado'
+                          action = 'created'
+                          bgIconNfcs = 'bg-success'
+                          daysNfcBr = 'horas'
+                          daysNfcUs = 'hours'
+                          resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
+                        }
+                      }
+                      if (ddNotifications > dayNotifications) {
+                        id = notifications[i].content.api_event.resource_id
+                        diffDays = ddNotifications - dayNotifications
+                        if (diffDays < 0) {
+                          diffDays = 'Momentos'
+                        }
+
+                        if (notifications[i].content.api_event.action === 'change') {
+                          acao = 'alterado'
+                          action = 'changed'
+                          bgIconNfcs = 'bg-warning'
+                          daysNfcBr = 'dias'
+                          daysNfcUs = 'days'
+                          resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
+                        }
+                        if (notifications[i].content.api_event.action === 'delete') {
+                          acao = 'deletado'
+                          action = 'deleted'
+                          bgIconNfcs = 'bg-danger'
+                          daysNfcBr = 'dias'
+                          daysNfcUs = 'days'
+                          resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
+                        }
+                        if (notifications[i].content.api_event.action === 'create') {
+                          acao = 'criado'
+                          action = 'created'
+                          bgIconNfcs = 'bg-success'
+                          daysNfcBr = 'dias'
+                          daysNfcUs = 'days'
+                          resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
+                        }
+                      }
+                    }
+                  }
                 }
-              }
+              } 
             }
+
             // ready to start dashboard
             Start()
             getStoreChannels()
