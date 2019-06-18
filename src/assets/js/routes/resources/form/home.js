@@ -4,18 +4,9 @@
 
 (function () {
   'use strict'
-  // lang of page
-  var lang = window.lang
   // current tab ID
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
-  // edit JSON document
-  var commit = Tab.commit
-  var Data = function () {
-    // current data from global variable
-    return Tab.data
-  }
-
   // render cart items on table
   var setup = function () {
     var appTab = $('#app-tab-' + tabId)
@@ -45,7 +36,6 @@
     var dataEnd = new Date(yyyy, mm, dd, 23, 59 - timezoneCalc, 59, 0).toISOString()
     var dateStart = new Date(yyyy, mm, 1, 0, -timezoneCalc, 0, 0).toISOString()
     var dateEnd = new Date(yyyy, mm, 31, 23, 59 - timezoneCalc, 59, 0).toISOString()
-    console.log(dateEnd)
     var urlOrder = 'orders.json?sort=amount&created_at>=' + dataStart + '&created_at<=' + dataEnd
     var urlOrderMonth = 'orders.json?sort=amount&created_at>=' + dateStart + '&created_at<=' + dateEnd
     var arrayTable = []
@@ -68,9 +58,8 @@
           if (!err) {
             var totalOrders = json.result
             console.log(totalOrders)
-            if (totalOrders.length === 0) {
-              appTab.find('#cards-graphs-orders').hide()
-            } else {
+            if (!totalOrders.length === 0) {
+              appTab.find('#cards-graphs-orders').show()
               for (var i = 0; i < totalOrders.length; i++) {
                 if (totalOrders[i].financial_status) {
                   var tableOrder = totalOrders[i].financial_status.current

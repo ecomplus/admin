@@ -39,10 +39,13 @@
         $description.val(schema.description)
         if (schema.doc_type === 'CPF') {
           $cpf.show()
+          $cnpj.hide()
+          $inscNumb.hide()
           $cpfDoc.val(schema.doc_number)
         }
         if (schema.doc_type === 'CNPJ') {
           $cnpj.show()
+          $cpf.hide()
           $cnpjDoc.val(schema.doc_number)
           $inscNumb.show()
         }
