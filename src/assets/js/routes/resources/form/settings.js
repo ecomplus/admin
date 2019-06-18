@@ -16,6 +16,7 @@
     var $cnpjDoc = $('#cnpjDoc')
     var $cpf = $('#cpf')
     var $cnpj = $('#cnpj')
+    var $inscNumb = $('#inscNumber')
     var objInfo = {}
     var $financialEmail = $('#financialEmail')
     var $contactEmail = $('#contactEmail')
@@ -43,6 +44,7 @@
         if (schema.doc_type === 'CNPJ') {
           $cnpj.show()
           $cnpjDoc.val(schema.doc_number)
+          $inscNumb.show()
         }
       }
     })
@@ -50,6 +52,13 @@
       var name = $storeNameConfig.val()
       objInfo = {
         'name': name
+      }
+      infoPatch(objInfo)
+    })
+    $inscNumb.change(function () {
+      var name = $inscNumb.val()
+      objInfo = {
+        'inscription_type': name
       }
       infoPatch(objInfo)
     })
