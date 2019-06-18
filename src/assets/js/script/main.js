@@ -2114,8 +2114,6 @@ app.ready(function () {
             fatalError(err)
           } else {
             User = body
-
-            console.log(notifications)
             if (User.notifications) {
               var notifications = User.notifications
               for (var i = 0; i < notifications.length; i++) {
@@ -2307,7 +2305,7 @@ app.ready(function () {
                     }
                   }
                 }
-              } 
+              }
             }
 
             // ready to start dashboard
