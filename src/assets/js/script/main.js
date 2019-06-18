@@ -2114,7 +2114,7 @@ app.ready(function () {
             fatalError(err)
           } else {
             User = body
-            if (User.notifications) {
+            if (!User.notifications === 'undefined') {
               var notifications = User.notifications
               for (var i = 0; i < notifications.length; i++) {
                 if (notifications[i].datetime) {
@@ -2306,8 +2306,9 @@ app.ready(function () {
                   }
                 }
               }
+            } else {
+              console.log('without notifications')
             }
-
             // ready to start dashboard
             Start()
             getStoreChannels()
