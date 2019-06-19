@@ -3113,30 +3113,25 @@ app.ready(function () {
             fatalError(err)
           } else {
             User = body
-            if (!User.notifications === 'undefined') {
+            console.log(User)
+            console.log(User.notifications)
+            if (User.notifications) {
               var notifications = User.notifications
-              for (var i = 0; i < notifications.length; i++) {
+              for (var i = notifications.length - 1; i > -1; i--) {
                 if (notifications[i].datetime) {
                   var dayNotifications = parseInt(notifications[i].datetime.substring(8, 10))
                   var monthNotifications = parseInt(notifications[i].datetime.substring(5, 7))
                   var yearNotifications = parseInt(notifications[i].datetime.substring(0, 4))
-                  var hourNotifications = parseInt(notifications[i].datetime.substring(11, 13))
-                  console.log(hourNotifications)
+                  var miliSecAPI = Date.parse(notifications[i].datetime)
                   var todayNotifications = new Date()
+                  var miliSec = Date.parse(todayNotifications)
                   var ddNotifications = todayNotifications.getDate()
                   var mmNotifications = (todayNotifications.getMonth() + 1)
                   var yyyyNotifications = todayNotifications.getFullYear()
-                  var timeZoneCalc = todayNotifications.getTimezoneOffset()
-                  if (todayNotifications.getHours() < 24 && todayNotifications.getHours() > 3) {
-                    var hrNotifications = todayNotifications.getHours() - timeZoneCalc / 60
-                  } else {
-                    hrNotifications = todayNotifications.getHours()
-                  }
                   var idNfcs = notifications[i]._id
-                  console.log(idNfcs)
                   var acao, action, urlNotification, resourcesNfcsBr, resourcesNfcsUs, htmlNotification, bgIconNfcs, iconNfcs, daysNfcBr, daysNfcUs, id, diffDays
                   var allResources = function () {
-                    htmlNotification = '<a class="media" href="/#/' + urlNotification + '/' + id + ' ">' +
+                    htmlNotification = '<a class="media" id="' + idNfcs + '" href="' + urlNotification + id + ' ">' +
                         '  <span class="avatar ' + bgIconNfcs + '"><i class="' + iconNfcs + '"></i></span>' +
                         '  <div class="media-body">' +
                         '<p class="i18n">' +
@@ -3150,7 +3145,7 @@ app.ready(function () {
                         '</div></a>'
                   }
                   var authentication = function () {
-                    urlNotification = 'authentications'
+                    urlNotification = 'javascript:;' //#/authentications/
                     resourcesNfcsBr = 'Autenticação'
                     resourcesNfcsUs = 'Authentication'
                     iconNfcs = 'icon fa fa-key'
@@ -3158,7 +3153,7 @@ app.ready(function () {
                     $('.notification').append(htmlNotification)
                   }
                   var products = function () {
-                    urlNotification = 'resources/products'
+                    urlNotification = '/#/resources/products/'
                     resourcesNfcsBr = 'Produto'
                     resourcesNfcsUs = 'Product'
                     iconNfcs = 'icon fa fa-tag'
@@ -3166,7 +3161,7 @@ app.ready(function () {
                     $('.notification').append(htmlNotification)
                   }
                   var orders = function () {
-                    urlNotification = 'resources/orders'
+                    urlNotification = '/#/resources/orders/'
                     resourcesNfcsBr = 'Pedido'
                     resourcesNfcsUs = 'Order'
                     iconNfcs = 'icon fa fa-inbox'
@@ -3174,7 +3169,7 @@ app.ready(function () {
                     $('.notification').append(htmlNotification)
                   }
                   var categories = function () {
-                    urlNotification = 'resources/categories'
+                    urlNotification = '/#/resources/categories/'
                     resourcesNfcsBr = 'Categoria'
                     resourcesNfcsUs = 'Category'
                     iconNfcs = 'icon fa fa-bookmark'
@@ -3182,7 +3177,7 @@ app.ready(function () {
                     $('.notification').append(htmlNotification)
                   }
                   var brands = function () {
-                    urlNotification = 'resources/brands'
+                    urlNotification = '/#/resources/brands/'
                     resourcesNfcsBr = 'Marca'
                     resourcesNfcsUs = 'Brand'
                     iconNfcs = 'icon fa fa-trademark'
@@ -3190,7 +3185,7 @@ app.ready(function () {
                     $('.notification').append(htmlNotification)
                   }
                   var collections = function () {
-                    urlNotification = 'resources/collections'
+                    urlNotification = '/#/resources/collections/'
                     resourcesNfcsBr = 'Coleção'
                     resourcesNfcsUs = 'Collection'
                     iconNfcs = 'icon fa fa-th-large'
@@ -3198,7 +3193,7 @@ app.ready(function () {
                     $('.notification').append(htmlNotification)
                   }
                   var applications = function () {
-                    urlNotification = 'applications'
+                    urlNotification = 'javascript:;' //#/resources/collections/
                     resourcesNfcsBr = 'App'
                     resourcesNfcsUs = 'App'
                     iconNfcs = 'icon fa fa-database'
@@ -3206,7 +3201,7 @@ app.ready(function () {
                     $('.notification').append(htmlNotification)
                   }
                   var grids = function () {
-                    urlNotification = 'resources/grids'
+                    urlNotification = '/#/resources/grids/'
                     resourcesNfcsBr = 'Grade'
                     resourcesNfcsUs = 'Grid'
                     iconNfcs = 'icon fa fa-filter'
@@ -3215,6 +3210,7 @@ app.ready(function () {
                   }
                   var resourcesNotifications = function () {
                     if (notifications[i].content.api_event.resource === 'authentications') {
+                      id = ''
                       authentication(id, diffDays)
                     }
                     if (notifications[i].content.api_event.resource === 'products') {
@@ -3233,6 +3229,7 @@ app.ready(function () {
                       collections(id, diffDays)
                     }
                     if (notifications[i].content.api_event.resource === 'applications') {
+                      id = ''
                       applications(id, diffDays)
                     }
                     if (notifications[i].content.api_event.resource === 'grids') {
@@ -3243,7 +3240,7 @@ app.ready(function () {
                     if (mmNotifications === monthNotifications) {
                       if (ddNotifications === dayNotifications) {
                         id = notifications[i].content.api_event.resource_id
-                        diffDays = hrNotifications - hourNotifications
+                        diffDays = Math.round((miliSec - miliSecAPI) / 3600000)
                         if (notifications[i].content.api_event.action === 'change') {
                           acao = 'alterado'
                           action = 'changed'
@@ -3272,10 +3269,6 @@ app.ready(function () {
                       if (ddNotifications > dayNotifications) {
                         id = notifications[i].content.api_event.resource_id
                         diffDays = ddNotifications - dayNotifications
-                        if (diffDays < 0) {
-                          diffDays = 'Momentos'
-                        }
-
                         if (notifications[i].content.api_event.action === 'change') {
                           acao = 'alterado'
                           action = 'changed'
@@ -3300,6 +3293,26 @@ app.ready(function () {
                           daysNfcUs = 'days'
                           resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
                         }
+                        var infoPatch = function (idClick) {
+                          // patch new store name
+                          var callback = function (err, body) {
+                            if (!err) {
+                              console.log('Mudou')
+                            }
+                          }
+                          var url = 'authentications/' + User._id + '/notifications/' + idClick + '.json'
+                          var data = {
+                            'read': true
+                          }
+                          window.callApi(url, 'PATCH', callback, data)
+                        }
+                        $('.notification > a.media').click(function () {
+                          var idClick = $(this).attr('id')
+                          if (idClick === idNfcs) {
+                            console.log('deu bom')
+                            infoPatch(idClick, User._id)
+                          }
+                        })
                       }
                     }
                   }
