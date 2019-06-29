@@ -16,7 +16,7 @@
     return Tab.data
   }
 
-  // render cart items on table
+  // render customers on table
   var setup = function () {
     var $infoCustomer = $('#t' + tabId + '-info-customer')
     var $inputRegister = $infoCustomer.find('#t' + tabId + '-registry-type')

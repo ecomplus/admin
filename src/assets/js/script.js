@@ -2601,7 +2601,7 @@ app.ready(function () {
                ]) +
 
                '<li class="menu-item">' +
-                 '<a class="menu-link" href="/#/apps">' +
+                 '<a class="menu-link" href="https://market.e-com.plus/" target="_blank">' +
                    '<span class="icon fa fa-puzzle-piece"></span>' +
                    '<span class="title">Apps</span>' +
                  '</a>' +
@@ -3113,6 +3113,216 @@ app.ready(function () {
             fatalError(err)
           } else {
             User = body
+            console.log(User)
+            console.log(User.notifications)
+            if (User.notifications) {
+              var notifications = User.notifications
+              for (var i = notifications.length - 1; i > -1; i--) {
+                if (notifications[i].datetime) {
+                  var dayNotifications = parseInt(notifications[i].datetime.substring(8, 10))
+                  var monthNotifications = parseInt(notifications[i].datetime.substring(5, 7))
+                  var yearNotifications = parseInt(notifications[i].datetime.substring(0, 4))
+                  var miliSecAPI = Date.parse(notifications[i].datetime)
+                  var todayNotifications = new Date()
+                  var miliSec = Date.parse(todayNotifications)
+                  var ddNotifications = todayNotifications.getDate()
+                  var mmNotifications = (todayNotifications.getMonth() + 1)
+                  var yyyyNotifications = todayNotifications.getFullYear()
+                  var idNfcs = notifications[i]._id
+                  var acao, action, urlNotification, resourcesNfcsBr, resourcesNfcsUs, htmlNotification, bgIconNfcs, iconNfcs, daysNfcBr, daysNfcUs, id, diffDays
+                  var allResources = function () {
+                    htmlNotification = '<a class="media" id="' + idNfcs + '" href="' + urlNotification + id + ' ">' +
+                        '  <span class="avatar ' + bgIconNfcs + '"><i class="' + iconNfcs + '"></i></span>' +
+                        '  <div class="media-body">' +
+                        '<p class="i18n">' +
+                        '  <span data-lang="pt_br">' + resourcesNfcsBr + ' ' + acao + '</span>' +
+                        '  <span data-lang="en_us">' + resourcesNfcsUs + ' ' + action + '/span>' +
+                        '</p>' +
+                        '<p class="i18n">' +
+                        ' <time data-lang="pt_br">' + diffDays + ' ' + daysNfcBr + ' atrás</time>' +
+                        ' <time data-lang="en_us">' + diffDays + ' ' + daysNfcUs + ' ago</time>' +
+                        '</p>' +
+                        '</div></a>'
+                  }
+                  var authentication = function () {
+                    urlNotification = 'javascript:;' //#/authentications/
+                    resourcesNfcsBr = 'Autenticação'
+                    resourcesNfcsUs = 'Authentication'
+                    iconNfcs = 'icon fa fa-key'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
+                  }
+                  var products = function () {
+                    urlNotification = '/#/resources/products/'
+                    resourcesNfcsBr = 'Produto'
+                    resourcesNfcsUs = 'Product'
+                    iconNfcs = 'icon fa fa-tag'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
+                  }
+                  var orders = function () {
+                    urlNotification = '/#/resources/orders/'
+                    resourcesNfcsBr = 'Pedido'
+                    resourcesNfcsUs = 'Order'
+                    iconNfcs = 'icon fa fa-inbox'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
+                  }
+                  var categories = function () {
+                    urlNotification = '/#/resources/categories/'
+                    resourcesNfcsBr = 'Categoria'
+                    resourcesNfcsUs = 'Category'
+                    iconNfcs = 'icon fa fa-bookmark'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
+                  }
+                  var brands = function () {
+                    urlNotification = '/#/resources/brands/'
+                    resourcesNfcsBr = 'Marca'
+                    resourcesNfcsUs = 'Brand'
+                    iconNfcs = 'icon fa fa-trademark'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
+                  }
+                  var collections = function () {
+                    urlNotification = '/#/resources/collections/'
+                    resourcesNfcsBr = 'Coleção'
+                    resourcesNfcsUs = 'Collection'
+                    iconNfcs = 'icon fa fa-th-large'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
+                  }
+                  var applications = function () {
+                    urlNotification = 'javascript:;' //#/resources/collections/
+                    resourcesNfcsBr = 'App'
+                    resourcesNfcsUs = 'App'
+                    iconNfcs = 'icon fa fa-database'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
+                  }
+                  var grids = function () {
+                    urlNotification = '/#/resources/grids/'
+                    resourcesNfcsBr = 'Grade'
+                    resourcesNfcsUs = 'Grid'
+                    iconNfcs = 'icon fa fa-filter'
+                    allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
+                    $('.notification').append(htmlNotification)
+                  }
+                  var resourcesNotifications = function () {
+                    if (notifications[i].content.api_event.resource === 'authentications') {
+                      id = ''
+                      authentication(id, diffDays)
+                    }
+                    if (notifications[i].content.api_event.resource === 'products') {
+                      products(id, diffDays)
+                    }
+                    if (notifications[i].content.api_event.resource === 'orders') {
+                      orders(id, diffDays)
+                    }
+                    if (notifications[i].content.api_event.resource === 'categories') {
+                      categories(id, diffDays)
+                    }
+                    if (notifications[i].content.api_event.resource === 'brands') {
+                      brands(id, diffDays)
+                    }
+                    if (notifications[i].content.api_event.resource === 'collections') {
+                      collections(id, diffDays)
+                    }
+                    if (notifications[i].content.api_event.resource === 'applications') {
+                      id = ''
+                      applications(id, diffDays)
+                    }
+                    if (notifications[i].content.api_event.resource === 'grids') {
+                      grids(id, diffDays)
+                    }
+                  }
+                  if (yyyyNotifications === yearNotifications) {
+                    if (mmNotifications === monthNotifications) {
+                      if (notifications[i].read === false || typeof notifications[i].read === 'undefined') {
+                        if (ddNotifications === dayNotifications) {
+                          id = notifications[i].content.api_event.resource_id
+                          diffDays = Math.round((miliSec - miliSecAPI) / 3600000)
+                          if (notifications[i].content.api_event.action === 'change') {
+                            acao = 'alterado'
+                            action = 'changed'
+                            bgIconNfcs = 'bg-warning'
+                            daysNfcBr = 'horas'
+                            daysNfcUs = 'hours'
+                            resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
+                          }
+                          if (notifications[i].content.api_event.action === 'delete') {
+                            acao = 'deletado'
+                            action = 'deleted'
+                            bgIconNfcs = 'bg-danger'
+                            daysNfcBr = 'horas'
+                            daysNfcUs = 'hours'
+                            resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
+                          }
+                          if (notifications[i].content.api_event.action === 'create') {
+                            acao = 'criado'
+                            action = 'created'
+                            bgIconNfcs = 'bg-success'
+                            daysNfcBr = 'horas'
+                            daysNfcUs = 'hours'
+                            resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
+                          }
+                        }
+                        if (ddNotifications > dayNotifications) {
+                          id = notifications[i].content.api_event.resource_id
+                          diffDays = ddNotifications - dayNotifications
+                          if (notifications[i].content.api_event.action === 'change') {
+                            acao = 'alterado'
+                            action = 'changed'
+                            bgIconNfcs = 'bg-warning'
+                            daysNfcBr = 'dias'
+                            daysNfcUs = 'days'
+                            resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
+                          }
+                          if (notifications[i].content.api_event.action === 'delete') {
+                            acao = 'deletado'
+                            action = 'deleted'
+                            bgIconNfcs = 'bg-danger'
+                            daysNfcBr = 'dias'
+                            daysNfcUs = 'days'
+                            resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
+                          }
+                          if (notifications[i].content.api_event.action === 'create') {
+                            acao = 'criado'
+                            action = 'created'
+                            bgIconNfcs = 'bg-success'
+                            daysNfcBr = 'dias'
+                            daysNfcUs = 'days'
+                            resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
+                          }
+                          var infoPatch = function (idClick) {
+                            // patch new store name
+                            var callback = function (err, body) {
+                              if (!err) {
+                                console.log('Mudou')
+                              }
+                            }
+                            var url = 'authentications/' + User._id + '/notifications/' + idClick + '.json'
+                            var data = {
+                              'read': true
+                            }
+                            window.callApi(url, 'PATCH', callback, data)
+                          }
+                          $('.notification > a.media').click(function () {
+                            var idClick = $(this).attr('id')
+                            if (idClick === idNfcs) {
+                              console.log('deu bom')
+                              infoPatch(idClick, User._id)
+                            }
+                          })
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            } else {
+              console.log('without notifications')
+            }
             // ready to start dashboard
             Start()
             getStoreChannels()
