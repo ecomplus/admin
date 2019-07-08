@@ -24,6 +24,10 @@
     var $celphone = $('#cel')
     var $address = $('#address')
     var $description = $('#description')
+    var $logo = $('#logotype')
+    var $logoAlt = $('#logoAlt')
+    var $imglogo = $('#image-logo')
+    var $plan = $('#plan')
     var urlStore = 'stores/me.json'
     window.callApi(urlStore, 'GET', function (error, schema) {
       if (!error) {
@@ -37,6 +41,42 @@
         $celphone.val(schema.contact_phone)
         $address.val(schema.address)
         $description.val(schema.description)
+        if (schema.$main.plan === 1) {
+          var namePlan = 'Plano Basic'
+        } else {
+          namePlan = 'Plano Plus'
+        }
+        $plan.replaceWith(
+          '<span class="i18n"> ' +
+                      '      <span data-lang="en_us">Plan</span> ' +
+                      '      <span data-lang="pt_br">Plano</span>' +
+                      '      </span>: ' + namePlan + '<br>' +
+                      '<span class="i18n"> ' +
+                      '      <span data-lang="en_us">Plan value</span> ' +
+                      '      <span data-lang="pt_br">Valor do plano</span>' +
+                      '      </span>: R$ ' + schema.$main.plan_value + '<br>' +
+                      '<span class="i18n"> ' +
+                      '      <span data-lang="en_us">Orders limit</span> ' +
+                      '      <span data-lang="pt_br">Limite de pedido</span>' +
+                      '      </span>: ' + schema.$main.orders_limit + '<br>' +
+                      '<span class="i18n"> ' +
+                      '      <span data-lang="en_us">Renewal day</span> ' +
+                      '      <span data-lang="pt_br">Dia da renovação</span>' +
+                      '      </span>: ' + schema.$main.renewal_day)
+        var logo = schema.logo.url
+        if (typeof logo === 'undefined') {
+          logo = 'https://i.imgur.com/TWxPsBC.png'
+          imglogo(logo)
+          objInfo = {
+            'logo': {
+              'url': logo
+            }
+          }
+          infoPatch(objInfo)
+        } else {
+          $logo.val(logo)
+          $logoAlt.val(schema.logo.alt)
+        }
         if (schema.doc_type === 'CPF') {
           $cpf.show()
           $cnpj.hide()
@@ -55,6 +95,32 @@
       var name = $storeNameConfig.val()
       objInfo = {
         'name': name
+      }
+      infoPatch(objInfo)
+    })
+    $logo.change(function () {
+      var url = $logo.val()
+      var logo = url
+      objInfo = {
+        'logo': {
+          'url': url
+        }
+      }
+      infoPatch(objInfo)
+      setTimeout(function () {
+        imglogo(logo)
+      }, 600)
+
+      console.log(logo)
+    })
+    $logoAlt.change(function () {
+      var altlogo = $logoAlt.val()
+      var url = $logo.val()
+      objInfo = {
+        'logo': {
+          'alt': altlogo,
+          'url': url
+        }
       }
       infoPatch(objInfo)
     })
@@ -133,6 +199,9 @@
       // generic for international phone numbers
       '99999[9{1,10}]'
     ])
+    var imglogo = function (logo) {
+      $imglogo.replaceWith('<img src="' + logo + '" alt="logotipo" id="image-logo">')
+    }
     var infoPatch = function () {
       // patch new store name
       var callback = function (err, body) {
