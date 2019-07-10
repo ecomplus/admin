@@ -28,6 +28,10 @@
     var $logoAlt = $('#logoAlt')
     var $imglogo = $('#image-logo')
     var $plan = $('#plan')
+    var $domain = $('#domain')
+    var $urlHomepage = $('#urlHomepage')
+    var $firstColor = $('#firstColor')
+    var $secondColor = $('#secondColor')
     var urlStore = 'stores/me.json'
     window.callApi(urlStore, 'GET', function (error, schema) {
       if (!error) {
@@ -41,6 +45,20 @@
         $celphone.val(schema.contact_phone)
         $address.val(schema.address)
         $description.val(schema.description)
+        $urlHomepage.val(schema.homepage)
+        $domain.val(schema.domain)
+        var swapFirst = schema.brand_colors.primary
+        var swapSecond = schema.brand_colors.secondary
+        if (swapFirst || swapSecond) {
+          $firstColor.val(schema.brand_colors.primary)
+          $secondColor.val(schema.brand_colors.secondary)
+          $('#swapFirst').css({
+            'background-color': swapFirst
+          })
+          $('#swapSecond').css({
+            'background-color': swapSecond
+          })
+        }
         if (schema.$main.plan === 1) {
           var namePlan = 'Plano Basic'
         } else {
@@ -65,7 +83,7 @@
                       '      </span>: ' + schema.$main.renewal_day)
         var logo = schema.logo.url
         if (typeof logo === 'undefined') {
-          logo = 'https://i.imgur.com/TWxPsBC.png'
+          logo = ''
           imglogo(logo)
           objInfo = {
             'logo': {
@@ -91,10 +109,53 @@
         }
       }
     })
+    $firstColor.change(function () {
+      var primaryColor = $firstColor.val()
+      var secondColor = $secondColor.val()
+      $('#swapFirst').css({
+        'background-color': primaryColor
+      })
+      objInfo = {
+        'brand_colors': {
+          'primary': primaryColor,
+          'secondary': secondColor
+        }
+      }
+      infoPatch(objInfo)
+    })
+    $secondColor.change(function () {
+      var secondColor = $secondColor.val()
+      var primaryColor = $firstColor.val()
+      $('#swapSecond').css({
+        'background-color': secondColor
+      })
+      objInfo = {
+        'brand_colors': {
+          'secondary': secondColor,
+          'primary': primaryColor
+
+        }
+      }
+      infoPatch(objInfo)
+    })
     $storeNameConfig.change(function () {
       var name = $storeNameConfig.val()
       objInfo = {
         'name': name
+      }
+      infoPatch(objInfo)
+    })
+    $urlHomepage.change(function () {
+      var urlHomepage = $urlHomepage.val()
+      objInfo = {
+        'homepage': urlHomepage
+      }
+      infoPatch(objInfo)
+    })
+    $domain.change(function () {
+      var domain = $domain.val()
+      objInfo = {
+        'domain': domain
       }
       infoPatch(objInfo)
     })
