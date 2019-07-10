@@ -92,11 +92,20 @@
       $text.change(function () {
         var text = $(this).val()
         if (text.trim() !== '') {
-          $(this).data('value', JSON.stringify({
-            text: text,
-            // parse text to option_id
-            option_id: clearAccents(text.toLowerCase(), '_').replace(/[^a-z0-9_]/g, '').substr(0, 30)
-          }))
+          if (text.length === 1) {
+            var optionNewid = '0' + text
+            $(this).data('value', JSON.stringify({
+              text: text,
+              // parse text to option_id
+              option_id: clearAccents(optionNewid.toLowerCase(), '_').replace(/[^a-z0-9_]/g, '').substr(0, 30)
+            }))
+          } else {
+            $(this).data('value', JSON.stringify({
+              text: text,
+              // parse text to option_id
+              option_id: clearAccents(text.toLowerCase(), '_').replace(/[^a-z0-9_]/g, '').substr(0, 30)
+            }))
+          }
         } else {
           $(this).data('value', '')
         }
