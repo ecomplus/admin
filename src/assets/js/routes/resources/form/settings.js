@@ -47,17 +47,19 @@
         $description.val(schema.description)
         $urlHomepage.val(schema.homepage)
         $domain.val(schema.domain)
-        var swapFirst = schema.brand_colors.primary
-        var swapSecond = schema.brand_colors.secondary
-        if (swapFirst || swapSecond) {
-          $firstColor.val(schema.brand_colors.primary)
-          $secondColor.val(schema.brand_colors.secondary)
-          $('#swapFirst').css({
-            'background-color': swapFirst
-          })
-          $('#swapSecond').css({
-            'background-color': swapSecond
-          })
+        if (schema.brand_colors) {
+          var swapFirst = schema.brand_colors.primary
+          var swapSecond = schema.brand_colors.secondary
+          if (swapFirst || swapSecond) {
+            $firstColor.val(schema.brand_colors.primary)
+            $secondColor.val(schema.brand_colors.secondary)
+            $('#swapFirst').css({
+              'background-color': swapFirst
+            })
+            $('#swapSecond').css({
+              'background-color': swapSecond
+            })
+          }
         }
         if (schema.$main.plan === 1) {
           var namePlan = 'Plano Basic'
@@ -81,6 +83,7 @@
                       '      <span data-lang="en_us">Renewal day</span> ' +
                       '      <span data-lang="pt_br">Dia da renovação</span>' +
                       '      </span>: ' + schema.$main.renewal_day)
+
         var logo = schema.logo.url
         if (typeof logo === 'undefined') {
           logo = ''
@@ -94,6 +97,7 @@
         } else {
           $logo.val(logo)
           $logoAlt.val(schema.logo.alt)
+          imglogo(logo)
         }
         if (schema.doc_type === 'CPF') {
           $cpf.show()
@@ -171,8 +175,6 @@
       setTimeout(function () {
         imglogo(logo)
       }, 600)
-
-      console.log(logo)
     })
     $logoAlt.change(function () {
       var altlogo = $logoAlt.val()
@@ -229,7 +231,6 @@
     })
     $celphone.change(function () {
       var celphone = $celphone.val().replace('(', '').replace(')', '').replace('-', '').replace(/\s+/g, '')
-      console.log(celphone)
       objInfo = {
         'contact_phone': celphone
       }
