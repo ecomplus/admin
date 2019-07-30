@@ -25,7 +25,7 @@
     var $approve = appTab.find('#approved')
     var $monthTotal = appTab.find('#monthAmount')
     var today = new Date()
-    var dd = today.getDate() - 1
+    var dd = today.getDate()
     var mm = today.getMonth()
     var yyyy = today.getFullYear()
     var timezoneCalc = new Date().getTimezoneOffset()
@@ -37,6 +37,7 @@
     var dateStart = new Date(yyyy, mm, 1, 0, -timezoneCalc, 0, 0).toISOString()
     var dateEnd = new Date(yyyy, mm, 31, 23, 59 - timezoneCalc, 59, 0).toISOString()
     var urlOrder = 'orders.json?sort=amount&created_at>=' + dataStart + '&created_at<=' + dataEnd
+    console.log(urlOrder)
     var urlOrderMonth = 'orders.json?sort=amount&created_at>=' + dateStart + '&created_at<=' + dateEnd
     var arrayTable = []
     $storeID.text(storeId)
@@ -58,7 +59,8 @@
           if (!err) {
             var totalOrders = json.result
             console.log(totalOrders)
-            if (!totalOrders.length === 0) {
+            console.log(!totalOrders.length === 0)
+            if (totalOrders.length) {
               appTab.find('#cards-graphs-orders').show()
               for (var i = 0; i < totalOrders.length; i++) {
                 if (totalOrders[i].financial_status) {
@@ -85,6 +87,7 @@
                   }
                   var statusOrder = totalOrders[i].financial_status.current
                   totalAmount = totalOrders[i].amount.total + totalAmount
+                  console.log(totalAmount)
                   $todayTotal.text(totalAmount.toFixed(2).replace('.', ','))
                   if (statusOrder === 'paid') {
                     countPaid = countPaid + 1
