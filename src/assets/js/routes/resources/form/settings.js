@@ -116,32 +116,39 @@
     $firstColor.change(function () {
       var primaryColor = $firstColor.val()
       var secondColor = $secondColor.val()
-      $('#swapFirst').css({
-        'background-color': primaryColor
-      })
-      objInfo = {
-        'brand_colors': {
-          'primary': primaryColor,
-          'secondary': secondColor
-        }
-      }
-      infoPatch(objInfo)
+      selectColors(primaryColor, secondColor)
     })
     $secondColor.change(function () {
-      var secondColor = $secondColor.val()
       var primaryColor = $firstColor.val()
-      $('#swapSecond').css({
-        'background-color': secondColor
-      })
+      var secondColor = $secondColor.val()
+      selectColors(primaryColor, secondColor)
+    })
+    var selectColors = function (color1, color2) {
+      if (color1.length === 7 && color2.length === 7) {
+        $('#swapSecond').css({
+          'background-color': color2
+        })
+        $('#swapFirst').css({
+          'background-color': color1
+        })
+      }
+      if (color2.length < 7) {
+        color2 = '#ffffff'
+      }
+      if (color1.length < 7) {
+        color1 = '#ffffff'
+        $('#swapFirst').css({
+          'background-color': color1
+        })
+      }
       objInfo = {
         'brand_colors': {
-          'secondary': secondColor,
-          'primary': primaryColor
-
+          'primary': color1,
+          'secondary': color2
         }
       }
       infoPatch(objInfo)
-    })
+    }
     $storeNameConfig.change(function () {
       var name = $storeNameConfig.val()
       objInfo = {
