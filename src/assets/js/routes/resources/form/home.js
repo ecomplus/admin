@@ -58,6 +58,8 @@
             if (totalOrders.length) {
               appTab.find('#cards-graphs-orders').show()
               for (var i = 0; i < totalOrders.length; i++) {
+                totalAmount = totalOrders[i].amount.total + totalAmount
+                $todayTotal.text(totalAmount.toFixed(2).replace('.', ','))
                 if (totalOrders[i].financial_status) {
                   var orderInfo = []
                   orderInfo.push(totalOrders[i]._id, totalOrders[i].number, totalOrders[i].financial_status.current, totalOrders[i].amount.total.toFixed(2).replace('.', ','), totalOrders[i].buyers[0]._id, totalOrders[i].buyers[0].display_name)
@@ -87,8 +89,6 @@
                   '  <td><a href="/#/resources/customers/' + orderInfo[4] + ' ">' + orderInfo[5] + ' </a></td>' +
                   '</tr>')
                   var statusOrder = totalOrders[i].financial_status.current
-                  totalAmount = totalOrders[i].amount.total + totalAmount
-                  $todayTotal.text(totalAmount.toFixed(2).replace('.', ','))
                   if (statusOrder === 'paid') {
                     countPaid = countPaid + 1
                   }
