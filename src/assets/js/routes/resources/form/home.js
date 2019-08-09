@@ -37,12 +37,9 @@
     var dateStart = new Date(yyyy, mm, 1, 0, -timezoneCalc, 0, 0).toISOString()
     var dateEnd = new Date(yyyy, mm, 31, 23, 59 - timezoneCalc, 59, 0).toISOString()
     var urlOrder = 'orders.json?sort=amount&created_at>=' + dataStart + '&created_at<=' + dataEnd
-    console.log(urlOrder)
     var urlOrderMonth = 'orders.json?sort=amount&created_at>=' + dateStart + '&created_at<=' + dateEnd
-    var arrayTable = []
     $storeID.text(storeId)
     var urlStore = 'stores/me.json'
-    // var objMe = window.sessionStorage('meInfor') || []
     // search for store name and object id
     window.callApi(urlStore, 'GET', function (error, schema) {
       if (!error) {
@@ -58,36 +55,39 @@
         window.callApi(urlOrder, 'GET', function (err, json) {
           if (!err) {
             var totalOrders = json.result
-            console.log(totalOrders)
-            console.log(!totalOrders.length === 0)
             if (totalOrders.length) {
               appTab.find('#cards-graphs-orders').show()
               for (var i = 0; i < totalOrders.length; i++) {
                 if (totalOrders[i].financial_status) {
-                  var tableOrder = totalOrders[i].financial_status.current
-                  arrayTable.push(tableOrder)
-                  for (var ii = 0; ii < arrayTable.length; ii++) {
-                    if (arrayTable[ii] === 'paid') {
-                      arrayTable[ii] = 'Pagamento Aprovado'
-                    }
-                    if (arrayTable[ii] === 'voided') {
-                      arrayTable[ii] = 'Pagamento Cancelado'
-                    }
-                    if (arrayTable[ii] === 'pending') {
-                      arrayTable[ii] = 'Pagamento Pendente'
-                    }
+                  var orderInfo = []
+                  orderInfo.push(totalOrders[i]._id, totalOrders[i].number, totalOrders[i].financial_status.current, totalOrders[i].amount.total.toFixed(2).replace('.', ','), totalOrders[i].buyers[0]._id, totalOrders[i].buyers[0].display_name)
+                  switch (orderInfo[2]) {
+                    case 'under_analysis':
+                      orderInfo[2] = 'Em análise'
+                      break
+                    case 'pending':
+                      orderInfo[2] = 'Pendente'
+                      break
+                    case 'refunded':
+                      orderInfo[2] = 'Devolvido'
+                      break
+                    case 'paid':
+                      orderInfo[2] = 'Aprovado'
+                      break
+                    case 'in_dispute':
+                      orderInfo[2] = 'Disputa'
+                      break
+                    case 'voided':
+                      orderInfo[2] = 'Cancelado'
                   }
-                  if (i < 6) {
-                    $order.append('<tr>' +
-                    '  <th scope="row"><a href="/#/resources/orders/' + totalOrders[i]._id + ' ">' + totalOrders[i].number + ' </a></th>' +
-                    '  <td>' + arrayTable[i] + '</td>' +
-                    '  <td> R$ ' + totalOrders[i].amount.total.toFixed(2) + '</td>' +
-                    '  <td><a href="/#/resources/customers/' + totalOrders[i].buyers[0]._id + ' ">' + totalOrders[i].buyers[0].display_name + ' </a></td>' +
-                    '</tr>')
-                  }
+                  $order.append('<tr>' +
+                  '  <th scope="row"><a href="/#/resources/orders/' + orderInfo[0] + ' ">' + orderInfo[1] + ' </a></th>' +
+                  '  <td>' + orderInfo[2] + '</td>' +
+                  '  <td> R$ ' + orderInfo[3] + '</td>' +
+                  '  <td><a href="/#/resources/customers/' + orderInfo[4] + ' ">' + orderInfo[5] + ' </a></td>' +
+                  '</tr>')
                   var statusOrder = totalOrders[i].financial_status.current
                   totalAmount = totalOrders[i].amount.total + totalAmount
-                  console.log(totalAmount)
                   $todayTotal.text(totalAmount.toFixed(2).replace('.', ','))
                   if (statusOrder === 'paid') {
                     countPaid = countPaid + 1
