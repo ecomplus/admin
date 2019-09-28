@@ -63,8 +63,21 @@
   var html
 
   // render H1
-  html = '<strong>' + resource.label[lang] + '</strong> · ' + tabLabel
-  $('#t' + tabId + '-resource-name').html(html)
+  if (resourceId === undefined) {
+    html = '<strong>' + resource.label[lang] + '</strong> · ' + tabLabel
+    $('#t' + tabId + '-resource-name').html(html)
+  } else {
+    html = '<strong>' + resource.label[lang] + '</strong> · ' + tabLabel + ' ' + '<a class="btn btn-pure" style="font-size: 10px; background: rgba(223,242,0,0.1); padding: 3px 10px" data-provide="tooltip" id="clipboad" data-placement="top" data-original-title="Clique para copiar ID" data-clipboard-text="' + resourceId + '">ID <i class="ti-clipboard"></i></a>'
+    $('#t' + tabId + '-resource-name').html(html)
+    $('#clipboad').hover(function () {
+      $(this).tooltip('show')
+    })
+    $('#clipboad').click(function () {
+      $(this).attr('data-original-title', 'ID copiado!')
+      $(this).find('.ti-clipboard').replaceWith('<i class="ti-check"></i>')
+      $(this).tooltip('show')
+    })
+  }
 
   // render breadcrumb links
   html = '<li class="breadcrumb-item">' +
