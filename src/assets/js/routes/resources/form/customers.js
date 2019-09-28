@@ -144,7 +144,12 @@
 
     var data = Data()
     if (data.name) {
-      var fullName = data.name.given_name + ' ' + data.name.middle_name + ' ' + data.name.family_name
+      var fullName
+      if (data.name.middle_name) {
+        fullName = data.name.given_name + ' ' + data.name.middle_name + ' ' + data.name.family_name
+      } else {
+        fullName = data.name.given_name + ' ' + data.name.family_name
+      }
       $fullName.val(fullName)
     }
 
