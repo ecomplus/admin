@@ -150,7 +150,6 @@
       } else {
         fullName = data.name.given_name + ' ' + data.name.family_name
       }
-
       $fullName.val(fullName)
     }
 
