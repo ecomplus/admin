@@ -74,7 +74,7 @@
     var showBuyer = function (buyer) {
       // show specific buyer info
       var objectId = buyer._id
-      // basic info only: email, name, phone numbers
+      // basic info only: email, name, phone numbers, doc_number
       var html = ''
       var email = buyer.main_email
       if (email) {
@@ -116,6 +116,12 @@
           var tel = phone.replace(/\D/g, '')
           html += '<a class="text-muted" href="tel:' + tel + '" target="_blank">' + phone + '</a>'
         }
+      }
+
+      // render doc number
+      var docNumber = buyer.doc_number
+      if (docNumber) {
+        html += '<br>' + docNumber
       }
 
       // link to edit customer
@@ -170,7 +176,7 @@
       // call Store API
       var uri = 'customers.json?main_email=' + encodeURIComponent($addBuyerInput.val().trim())
       // specify properties to return
-      uri += '&fields=_id,main_email,name,display_name,phones,addresses'
+      uri += '&fields=_id,main_email,doc_number,name,display_name,phones,addresses'
 
       window.callApi(uri, 'GET', function (err, json) {
         // hide spinner
