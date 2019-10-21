@@ -67,6 +67,9 @@
                     case 'under_analysis':
                       orderInfo[2] = 'Em análise'
                       break
+                    case 'authorized':
+                      orderInfo[2] = 'Autorizado'
+                      break
                     case 'pending':
                       orderInfo[2] = 'Pendente'
                       break
@@ -81,6 +84,19 @@
                       break
                     case 'voided':
                       orderInfo[2] = 'Cancelado'
+                      break
+                    case 'unauthorized':
+                      orderInfo[2] = 'Não autorizado'
+                      break
+                    case 'partially_paid':
+                      orderInfo[2] = 'Parcialmente Pago'
+                      break
+                    case 'partially_refunded':
+                      orderInfo[2] = 'Parcialmente devolvido'
+                      break
+                    case 'unknown':
+                      orderInfo[2] = 'Desconhecido'
+                      break
                   }
                   $order.append('<tr>' +
                   '  <th scope="row"><a href="/#/resources/orders/' + orderInfo[0] + ' ">' + orderInfo[1] + ' </a></th>' +
