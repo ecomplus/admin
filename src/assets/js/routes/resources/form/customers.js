@@ -341,9 +341,10 @@
         '      <span data-lang="pt_br">Outros</span>' +
         '      </span> '
       }
-      // create and show all information about the costumer
-      $abstractText.append(
-        '<span class="i18n"> ' +
+    }
+    // create and show all information about the costumer
+    $abstractText.append(
+      '<span class="i18n"> ' +
                     '      <span data-lang="en_us">Name</span> ' +
                     '      <span data-lang="pt_br">Nome</span>' +
                     '      </span>: ' + fullName + '<br>' +
@@ -359,8 +360,8 @@
                     '      <span data-lang="en_us">CPF/CNPJ</span> ' +
                     '      <span data-lang="pt_br">CPF/CNPJ</span>' +
                     '      </span>: ' + data.doc_number)
-      $abstractStatistic.append(
-        '<span class="i18n"> ' +
+    $abstractStatistic.append(
+      '<span class="i18n"> ' +
                     '      <span data-lang="en_us">Number of orders</span> ' +
                     '      <span data-lang="pt_br">Quantidade de pedidos</span>' +
                     '      </span>: ' + data.orders_count + '<br>' +
@@ -376,7 +377,6 @@
                                                         '      <span data-lang="en_us">Amount of money cancelled: $</span> ' +
                                                         '      <span data-lang="pt_br">Valor total de pedidos cancelados: R$</span>' +
                                                         '      </span>' + data.total_cancelled)
-    }
   }
 
   // wait for the form to be ready
