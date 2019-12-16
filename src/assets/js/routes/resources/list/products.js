@@ -462,9 +462,9 @@
         var operator = $input.data('opt')
         // ELS terms level queries
         var filterType = $input.data('filter') || 'terms'
-
         var value = $input.val()
         // fix input value
+        console.log(!Array.isArray(value))
         if (!Array.isArray(value)) {
           if ($input.data('is-number')) {
             value = stringToNumber(value)
@@ -474,7 +474,7 @@
             // string value
             value = value.trim()
           }
-          if (isNaN(value) || value === '') {
+          if (isNaN(value) & value === '') {
             value = null
           }
         } else if (!value.length) {
