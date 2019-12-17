@@ -2603,7 +2603,7 @@ app.ready(function () {
                ]) +
 
                '<li class="menu-item">' +
-                 '<a class="menu-link" href="/#/market">' +
+                 '<a class="menu-link" href="/#/apps">' +
                    '<span class="icon fa fa-puzzle-piece"></span>' +
                    '<span class="title">Marketplace</span>' +
                  '</a>' +

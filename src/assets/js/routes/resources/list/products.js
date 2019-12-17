@@ -177,7 +177,6 @@
         '</div>'
       ]
     })
-
     // clear all filters
     var clearFilters = function () {
       // reset
@@ -191,6 +190,70 @@
     $qv.find('#qvx-title').text(i18n({
       'en_us': 'Filter products',
       'pt_br': 'Filtrar produtos'
+    }))
+    // use quickview for mass edit
+    var $qvEdit = $('#modal-center')
+    $qvEdit.find('input[data-money]').inputMoney()
+    var $priceSell = $('#priceToSell')
+    var $quantityFixed = $('#quantityFixed')
+    var $editMass = $('#products-bulk-action')
+    $editMass.find('.edit-selected').click(function () {
+      if (!Tab.selectedItems.length > 0) {
+        console.log(Tab.selectedItems)
+        app.toast(i18n({
+          'en_us': 'No items selected',
+          'pt_br': 'Nenhum item selecionado'
+        }))
+      } else {
+        $editMass.find('button').attr('data-toggle', 'dropdown')
+      }
+    })
+
+    $qvEdit.find('#saveModal').click(function () {
+      var ids = Tab.selectedItems
+      if (ids) {
+        for (var i = 0; i < ids.length; i++) {
+          window.callApi('products/' + ids[i] + '.json', 'GET', function (error, schema) {
+            if (!error) {
+              var price = schema.price
+              var quantity
+              var getQuantity = schema.quantity
+              var discountSell = $('#discountSell').val() / 100
+              var discount = (price - price * discountSell).toFixed(2)
+              var priceSell = $priceSell.val().replace('R$', '')
+              var trimPrice = priceSell.replace(',', '.').trim()
+              var priceToSell = parseFloat(trimPrice)
+              var quantityFixed = $quantityFixed.val()
+              if (quantityFixed) {
+                quantity = quantityFixed
+              } else {
+                quantity = parseInt(getQuantity)
+              }
+              var objPrice = {
+                'price': priceToSell || parseFloat(discount),
+                'quantity': quantity
+              }
+              var callback = function (err, body) {
+                if (!err) {
+                  updateData()
+                  updateContent()
+                  app.toast(i18n({
+                    'en_us': 'Completed edit',
+                    'pt_br': 'Editação em massa completa'
+                  }))
+                }
+              }
+              window.callApi('products/' + schema._id + '.json', 'PATCH', callback, objPrice)
+            } else {
+              console.log(error)
+            }
+          })
+        }
+      }
+    })
+    $qvEdit.find('.modal-title').text(i18n({
+      'pt_br': 'Editar em massa',
+      'en_us': 'Mass edit'
     }))
     // show filters form
     $qv.find('#qvx-body').html($filters)
