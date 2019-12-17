@@ -8,6 +8,8 @@
   // current tab ID
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
+  // lang of page
+  var lang = window.lang
   // edit JSON document
   var commit = Tab.commit
   var Data = function () {
@@ -24,6 +26,9 @@
     // generate IDs for each new variation, brand or category
     var idPad = randomObjectId()
     var index = 0
+    var $enDate = $('#t' + tabId + '-enDate')
+    var $startDate = $('#t' + tabId + '-startDate')
+    console.log($enDate)
 
     // setup predefined grids
     // GMC defaults
@@ -1399,6 +1404,49 @@
     var genericName = i18n({
       'en_us': 'New product',
       'pt_br': 'Novo produto'
+    })
+
+    var data = Data()
+    var startDate, endDate
+    if (data.price_effective_date) {
+      if (data.price_effective_date.end) {
+        endDate = data.price_effective_date.end
+        var enDate = endDate.substring(0, 10).split('-')
+        var year = enDate[0]
+        var month = enDate[1]
+        var day = enDate[2]
+        if (lang === 'pt_br') {
+          $enDate.val(day + '/' + month + '/' + year)
+        } else {
+          $enDate.val(enDate)
+        }
+      }
+      if (data.price_effective_date.start) {
+        startDate = data.price_effective_date.start
+        var starDate = startDate.substring(0, 10).split('-')
+        var year1 = starDate[0]
+        var month1 = starDate[1]
+        var day1 = starDate[2]
+        if (lang === 'pt_br') {
+          $startDate.val(day1 + '/' + month1 + '/' + year1)
+        } else {
+          $startDate.val(starDate)
+        }
+      }
+    }
+    $startDate.change(function () {
+      var data = Data()
+      var newDateStart = $startDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/).filter(String)
+      var dateStart = new Date(parseInt(newDateStart[2]), (parseInt(newDateStart[1]) - 1), parseInt(newDateStart[0])).toISOString()
+      data.price_effective_date.start = dateStart
+      commit(data, true)
+    })
+    $enDate.change(function () {
+      var data = Data()
+      var newDateEnd = $enDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/).filter(String)
+      var dateEnd = new Date(parseInt(newDateEnd[2]), (parseInt(newDateEnd[1]) - 1), parseInt(newDateEnd[0])).toISOString()
+      data.price_effective_date.end = dateEnd
+      commit(data, true)
     })
 
     var $inputName = $form.find('input[name="name"]')
