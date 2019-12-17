@@ -194,6 +194,18 @@
     // use quickview for mass edit
     var $qvEdit = $('#modal-center')
     $qvEdit.find('input[data-money]').inputMoney()
+    var $startDate = $('#startDate')
+    var $endDate = $('#endDate')
+    var timezoneCalc = new Date().getTimezoneOffset()
+    if (window.lang === 'pt_br') {
+      // brazilian birth date
+      $startDate.inputmask('99/99/9999')
+      $endDate.inputmask('99/99/9999')
+    } else {
+      // american birth date
+      $startDate.inputmask('9999-99-99')
+      $endDate.inputmask('9999-99-99')
+    }
     var $priceSell = $('#priceToSell')
     var $quantityFixed = $('#quantityFixed')
     var $editMass = $('#products-bulk-action')
@@ -208,15 +220,18 @@
         $editMass.find('button').attr('data-toggle', 'dropdown')
       }
     })
-
     $qvEdit.find('#saveModal').click(function () {
       var ids = Tab.selectedItems
       if (ids) {
         for (var i = 0; i < ids.length; i++) {
           window.callApi('products/' + ids[i] + '.json', 'GET', function (error, schema) {
             if (!error) {
-              var price = schema.price
-              var quantity
+              var price, quantity
+              if (schema.base_price) {
+                price = schema.base_price
+              } else {
+                price = schema.price
+              }
               var getQuantity = schema.quantity
               var discountSell = $('#discountSell').val() / 100
               var discount = (price - price * discountSell).toFixed(2)
@@ -233,10 +248,22 @@
                 'price': priceToSell || parseFloat(discount),
                 'quantity': quantity
               }
+              if ($startDate.val() || $endDate.val()) {
+                objPrice.price_effective_date = {}
+                if ($startDate.val()) {
+                  var startDate = $startDate.val().split('/')
+                  var dateStart = new Date(parseInt(startDate[2]), (parseInt(startDate[1]) - 1), parseInt(startDate[0]), 0, -timezoneCalc, 0, 0).toISOString()
+                  objPrice.price_effective_date.start = dateStart
+                }
+                if ($endDate.val()) {
+                  var endDate = $endDate.val().split('/')
+                  var dateEnd = new Date(parseInt(endDate[2]), (parseInt(endDate[1]) - 1), parseInt(endDate[0]), 0, -timezoneCalc, 0, 0).toISOString()
+                  objPrice.price_effective_date.end = dateEnd
+                }
+              }
+              console.log(objPrice)
               var callback = function (err, body) {
                 if (!err) {
-                  updateData()
-                  updateContent()
                   app.toast(i18n({
                     'en_us': 'Completed edit',
                     'pt_br': 'Editação em massa completa'
