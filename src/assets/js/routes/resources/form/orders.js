@@ -21,6 +21,11 @@
   var setup = function () {
     // setup basic order data
     var data = Data()
+    console.log(data)
+    var orderId = window.location.href
+    var urlArray = orderId.split('/')
+    var idInvoice = urlArray[urlArray.length - 1]
+
     var $orderBase = $('#t' + tabId + '-order-base')
 
     // watch amount values
@@ -240,6 +245,9 @@
       // clear the input and show new buyer block
       $newBuyer.slideToggle().find('input')
       $addBuyerInput.val('').focus()
+    })
+    $orderBase.find('#t' + tabId + '-open-invoice').click(function () {
+      window.location.href = '/#/invoices/' + idInvoice
     })
 
     if (data.buyers && data.buyers.length) {

@@ -3617,6 +3617,10 @@ app.ready(function () {
                   // w
                   // go to authentications
                   return '/#/resources/authentications'
+                case 188:
+                  // w
+                  // go to invoices
+                  return '/#/resources/invoices'
               }
             }
 
