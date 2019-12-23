@@ -25,6 +25,9 @@
     </script>
 
     <!-- Styles -->
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ant-design-vue@1/dist/antd.min.css">
     <link href="/assets/css/core.min.css" rel="stylesheet">
     <link href="/assets/css/app.min.css" rel="stylesheet">
     <link href="/assets/css/style.min.css" rel="stylesheet">
@@ -326,10 +329,10 @@
           <div class="flex-bottom gap-items">
             <!--
             <span class="publisher-btn file-group">
-              <i class="fa fa-paperclip file-browser"></i>
+              <i class="fas fa-paperclip file-browser"></i>
               <input type="file">
             </span>
-            <a class="publisher-btn" href="#"><i class="fa fa-smile-o"></i></a>
+            <a class="publisher-btn" href="#"><i class="fas fa-smile-o"></i></a>
             -->
             <a class="publisher-btn" href="#"><i class="fa fa-paper-plane"></i></a>
           </div>
@@ -819,6 +822,24 @@
     <script src="/assets/plugin/00-App.js"></script>
     <script src="/assets/plugin/ace/src-min-noconflict/ace.js"></script>
     <script src="/assets/js/script.min.js"></script>
+    <script src="https://unpkg.com/axios@0/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/eventemitter3@4/umd/eventemitter3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2/js/md5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ecomplus/utils@1/dist/ecom-utils.polyfill.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ecomplus/client@1/dist/ecom-client.polyfill.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ecomplus/auth@0.4/dist/ecom-auth.root.min.js"></script>
+    <script>
+      $ecomConfig.set('country_code', 'BR')
+      const ecomAuth = new EcomAuth()
+      ecomAuth.login(localStorage.getItem('username'), localStorage.getItem('password'), localStorage.getItem('store_id'))
+      .then (function(newResult) {
+        localStorage.removeItem('password')
+        console.log('Auth logged')
+      })
+      .catch (function(e) {
+        console.log(e)
+      })
+    </script>
 
   </body>
 </html>
