@@ -323,6 +323,7 @@
     // handle bulk items edit or delete
     var bulkAction = function (method, bodyObject) {
       var todo = Tab.selectedItems.length
+      console.log(todo)
       if (todo > 0) {
         var cb = Tab.editItemsCallback()
         // call API to delete documents
@@ -348,6 +349,7 @@
             }
           }
           var id = Tab.selectedItems[done]
+          console.log(id)
           window.callApi(slug + '/' + id + '.json', method, callback, bodyObject)
         }
         next()

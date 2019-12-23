@@ -177,7 +177,6 @@
         '</div>'
       ]
     })
-
     // clear all filters
     var clearFilters = function () {
       // reset
@@ -191,6 +190,97 @@
     $qv.find('#qvx-title').text(i18n({
       'en_us': 'Filter products',
       'pt_br': 'Filtrar produtos'
+    }))
+    // use quickview for mass edit
+    var $qvEdit = $('#modal-center')
+    $qvEdit.find('input[data-money]').inputMoney()
+    var $startDate = $('#startDate')
+    var $endDate = $('#endDate')
+    var timezoneCalc = new Date().getTimezoneOffset()
+    if (window.lang === 'pt_br') {
+      // brazilian birth date
+      $startDate.inputmask('99/99/9999')
+      $endDate.inputmask('99/99/9999')
+    } else {
+      // american birth date
+      $startDate.inputmask('9999-99-99')
+      $endDate.inputmask('9999-99-99')
+    }
+    var $priceSell = $('#priceToSell')
+    var $quantityFixed = $('#quantityFixed')
+    var $editMass = $('#products-bulk-action')
+    $editMass.find('.edit-selected').click(function () {
+      if (!Tab.selectedItems.length > 0) {
+        console.log(Tab.selectedItems)
+        app.toast(i18n({
+          'en_us': 'No items selected',
+          'pt_br': 'Nenhum item selecionado'
+        }))
+      } else {
+        $editMass.find('button').attr('data-toggle', 'dropdown')
+      }
+    })
+    $qvEdit.find('#saveModal').click(function () {
+      var ids = Tab.selectedItems
+      if (ids) {
+        for (var i = 0; i < ids.length; i++) {
+          window.callApi('products/' + ids[i] + '.json', 'GET', function (error, schema) {
+            if (!error) {
+              var price, quantity
+              if (schema.base_price) {
+                price = schema.base_price
+              } else {
+                price = schema.price
+              }
+              var getQuantity = schema.quantity
+              var discountSell = $('#discountSell').val() / 100
+              var discount = (price - price * discountSell).toFixed(2)
+              var priceSell = $priceSell.val().replace('R$', '')
+              var trimPrice = priceSell.replace(',', '.').trim()
+              var priceToSell = parseFloat(trimPrice)
+              var quantityFixed = $quantityFixed.val()
+              if (quantityFixed) {
+                quantity = quantityFixed
+              } else {
+                quantity = parseInt(getQuantity)
+              }
+              var objPrice = {
+                'price': priceToSell || parseFloat(discount),
+                'quantity': quantity
+              }
+              if ($startDate.val() || $endDate.val()) {
+                objPrice.price_effective_date = {}
+                if ($startDate.val()) {
+                  var startDate = $startDate.val().split('/')
+                  var dateStart = new Date(parseInt(startDate[2]), (parseInt(startDate[1]) - 1), parseInt(startDate[0]), 0, -timezoneCalc, 0, 0).toISOString()
+                  objPrice.price_effective_date.start = dateStart
+                }
+                if ($endDate.val()) {
+                  var endDate = $endDate.val().split('/')
+                  var dateEnd = new Date(parseInt(endDate[2]), (parseInt(endDate[1]) - 1), parseInt(endDate[0]), 0, -timezoneCalc, 0, 0).toISOString()
+                  objPrice.price_effective_date.end = dateEnd
+                }
+              }
+              console.log(objPrice)
+              var callback = function (err, body) {
+                if (!err) {
+                  app.toast(i18n({
+                    'en_us': 'Completed edit',
+                    'pt_br': 'Editação em massa completa'
+                  }))
+                }
+              }
+              window.callApi('products/' + schema._id + '.json', 'PATCH', callback, objPrice)
+            } else {
+              console.log(error)
+            }
+          })
+        }
+      }
+    })
+    $qvEdit.find('.modal-title').text(i18n({
+      'pt_br': 'Editar em massa',
+      'en_us': 'Mass edit'
     }))
     // show filters form
     $qv.find('#qvx-body').html($filters)
@@ -462,9 +552,9 @@
         var operator = $input.data('opt')
         // ELS terms level queries
         var filterType = $input.data('filter') || 'terms'
-
         var value = $input.val()
         // fix input value
+        console.log(!Array.isArray(value))
         if (!Array.isArray(value)) {
           if ($input.data('is-number')) {
             value = stringToNumber(value)
@@ -474,7 +564,7 @@
             // string value
             value = value.trim()
           }
-          if (isNaN(value) || value === '') {
+          if (isNaN(value) & value === '') {
             value = null
           }
         } else if (!value.length) {

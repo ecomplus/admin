@@ -3,7 +3,6 @@
  */
 
 'use strict'
-
 require('./config')
 require('./util.js')
 
@@ -354,7 +353,9 @@ app.ready(function () {
         hideToastr()
         var username = $('#username').val()
         // get pass md5 hash
-        var password = md5($('#password').val())
+        var passwordPure = $('#password').val()
+        var password = md5(passwordPure)
+        localStorage.setItem('password', passwordPure)
 
         if ($('#remember').is(':checked')) {
           // keep the username for next logins
@@ -1602,9 +1603,9 @@ app.ready(function () {
                ]) +
 
                '<li class="menu-item">' +
-                 '<a class="menu-link" href="https://market.e-com.plus/" target="_blank">' +
+                 '<a class="menu-link" href="/#/apps">' +
                    '<span class="icon fa fa-puzzle-piece"></span>' +
-                   '<span class="title">Apps</span>' +
+                   '<span class="title"> Aplicativos </span>' +
                  '</a>' +
                '</li>' +
                '<li class="menu-item">' +
@@ -2114,8 +2115,6 @@ app.ready(function () {
             fatalError(err)
           } else {
             User = body
-            console.log(User)
-            console.log(User.notifications)
             if (User.notifications) {
               var notifications = User.notifications
               for (var i = notifications.length - 1; i > -1; i--) {
@@ -2146,7 +2145,7 @@ app.ready(function () {
                         '</div></a>'
                   }
                   var authentication = function () {
-                    urlNotification = 'javascript:;' //#/authentications/
+                    urlNotification = 'javascript:;' // #/authentications/
                     resourcesNfcsBr = 'Autenticação'
                     resourcesNfcsUs = 'Authentication'
                     iconNfcs = 'icon fa fa-key'
@@ -2194,7 +2193,7 @@ app.ready(function () {
                     $('.notification').append(htmlNotification)
                   }
                   var applications = function () {
-                    urlNotification = 'javascript:;' //#/resources/collections/
+                    urlNotification = 'javascript:;' // #/resources/collections/
                     resourcesNfcsBr = 'App'
                     resourcesNfcsUs = 'App'
                     iconNfcs = 'icon fa fa-database'
@@ -2618,6 +2617,10 @@ app.ready(function () {
                   // w
                   // go to authentications
                   return '/#/resources/authentications'
+                case 188:
+                  // w
+                  // go to invoices
+                  return '/#/resources/invoices'
               }
             }
 
