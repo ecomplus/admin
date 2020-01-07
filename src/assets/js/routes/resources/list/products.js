@@ -1,3 +1,4 @@
+
 /*!
  * Copyright 2018 E-Com Club
  */
@@ -196,6 +197,51 @@
     $qvEdit.find('input[data-money]').inputMoney()
     var $startDate = $('#startDate')
     var $endDate = $('#endDate')
+    var $setCategory = $('#setCategory')
+    var $saveCat = $('#saveModalCat')
+    var $categorySelect = $('#categoryMass')
+
+    // call and render categories
+    $setCategory.click(function () {
+      window.callApi('categories.json', 'GET', function (error, data) {
+        if (!error) {
+          var $option
+          for (var i = 0; i < data.result.length; i++) {
+            var valueCategory = function () {
+              return JSON.stringify({
+                _id: data.result[i]._id
+              })
+            }
+            $option = $('<option />', {
+              text: data.result[i].name,
+              value: valueCategory(data.result[i])
+            })
+            $categorySelect.append($option).selectpicker('refresh').trigger('change')
+          }
+        }
+      })
+    })
+
+    // save categories into selected products
+    $saveCat.click(function () {
+      var selectedCategories = $categorySelect.val()
+      var ids = Tab.selectedItems
+      for (var ii = 0; ii < ids.length; ii++) {
+        for (var i = 0; i < selectedCategories.length; i++) {
+          var parseCategory = JSON.parse(selectedCategories[i])
+          var callback = function (err, body) {
+            if (!err) {
+              app.toast(i18n({
+                'en_us': 'Completed edit',
+                'pt_br': 'Categoria inserida com sucesso'
+              }))
+            }
+          }
+          window.callApi('products/' + ids[ii] + '/categories.json', 'POST', callback, parseCategory)
+        }
+      }
+    })
+
     var timezoneCalc = new Date().getTimezoneOffset()
     if (window.lang === 'pt_br') {
       // brazilian birth date
@@ -266,7 +312,7 @@
                 if (!err) {
                   app.toast(i18n({
                     'en_us': 'Completed edit',
-                    'pt_br': 'Editação em massa completa'
+                    'pt_br': 'Edição em massa completa'
                   }))
                 }
               }
