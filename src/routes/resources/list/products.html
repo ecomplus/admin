@@ -92,13 +92,7 @@
                 <span data-lang="pt_br">Estoque e preços</span>
               </span>
             </a>
-            <a href="javascript:;" class="dropdown-item" data-edit="collection">
-              <span class="i18n">
-                <span data-lang="en_us">Collections</span>
-                <span data-lang="pt_br">Coleções</span>
-              </span>
-            </a>
-            <a href="javascript:;" class="dropdown-item" data-edit="category">
+            <a href="javascript:;" data-toggle="modal" data-target="#modal-center-1" id="setCategory" class="dropdown-item" data-edit="category">
               <span class="i18n">
                 <span data-lang="en_us">Categories</span>
                 <span data-lang="pt_br">Categorias</span>
@@ -232,6 +226,52 @@
           </span>
         </button>
         <button type="button" class="btn btn-bold btn-pure btn-primary" data-dismiss="modal" id="saveModal">
+          <span class="i18n">
+            <span data-lang="en_us">Save</span>
+            <span data-lang="pt_br">Salvar</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal modal-center fade" id="modal-center-1" tabindex="-1" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <span class="i18n">
+            <span data-lang="en_us">Mass add to category</span>
+            <span data-lang="pt_br">Adicionar em massa categorias</span>
+          </span>
+        </h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="flexbox">
+          <div class="form-group w-100">
+            <label class="i18n">
+              <span data-lang="en_us">Categories</span>
+              <span data-lang="pt_br">Categorias</span>
+            </label>
+            <select multiple class="form-control show-tick" data-live-search="true" name="categories"
+              placeholder="Camisas"
+              data-json="true"
+              id="categoryMass">
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">
+          <span class="i18n">
+            <span data-lang="en_us">Cancel</span>
+            <span data-lang="pt_br">Cancelar</span>
+          </span>
+        </button>
+        <button type="button" class="btn btn-bold btn-pure btn-primary" data-dismiss="modal" id="saveModalCat">
           <span class="i18n">
             <span data-lang="en_us">Save</span>
             <span data-lang="pt_br">Salvar</span>
