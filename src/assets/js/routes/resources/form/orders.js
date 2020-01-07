@@ -248,6 +248,9 @@
     $orderBase.find('#t' + tabId + '-open-invoice').click(function () {
       window.location.href = '/#/invoices/' + idInvoice
     })
+    $orderBase.find('#t' + tabId + '-open-ticket').click(function () {
+      window.location.href = '/#/tag/' + idInvoice
+    })
 
     if (data.buyers && data.buyers.length) {
       // async GET the customer addresses to use as default on shipping lines
