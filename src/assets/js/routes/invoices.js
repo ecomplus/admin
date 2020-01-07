@@ -32,6 +32,10 @@
     var urlArray = orderId.split('/')
     var idInvoice = urlArray[urlArray.length - 1]
 
+    appTab.find('#open-ticket').click(function () {
+      window.location.href = '/#/tag/' + idInvoice
+    })
+
     var urlStore = 'stores/me.json'
     var urlOrder = 'orders/' + idInvoice + '.json'
     // search for store name and object id

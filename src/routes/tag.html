@@ -1,0 +1,25 @@
+<center>
+  <div class="spinner-dots" style="font-size: 20px; margin-top: 25%">
+    <span class="dot1"></span>
+    <span class="dot2"></span>
+    <span class="dot3"></span>
+  </div>
+  <span style="font-size: 20px">Aguarde o redirecionamento de página.</span>
+</center>
+<form id="myForm" accept-charset="ISO-8859-1" action="http://www2.correios.com.br/enderecador/encomendas/act/gerarEtiqueta.cfm?etq=1" method="post">
+  <input type="hidden" name="to" value="4">
+  <input type="hidden" name="remLembrar" value="1">
+</form>
+<div>
+  <script>
+    window.routeReady()
+    // wait for second script loading before form setup
+    window.Tabs[window.tabId].wait = true
+    $.getScript('/assets/js/script/main.js')
+    $.getScript('/assets/js/routes/tag.min.js')
+    $.getScript('/assets/js/routes/resources/form.min.js')
+    setTimeout(function () {
+      document.getElementById("myForm").submit();
+    }, 3000)
+  </script>
+</div>
