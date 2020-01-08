@@ -64,13 +64,14 @@
               cityFrom = data.shipping_lines[0].from.city || ''
               provinceFrom = data.shipping_lines[0].from.province_code || ''
             } else {
-              var addressFrom = schema.address.split(',').trim()
+              var addressFrom = schema.address.split(',')
+              console.log(schema.address)
               streetFrom = addressFrom[0]
               numberFrom = addressFrom[1]
-              complementFrom = addressFrom[2] || ''
-              boroughFrom = addressFrom[3]
-              cityFrom = addressFrom[4]
-              provinceFrom = addressFrom[5]
+              complementFrom = addressFrom[5] || ''
+              boroughFrom = addressFrom[2]
+              cityFrom = addressFrom[3]
+              provinceFrom = addressFrom[4]
             }
             console.log(streetFrom)
             var corporateFrom = (schema.corporate_name) || (schema.name)
