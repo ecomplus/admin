@@ -137,6 +137,9 @@
             '    <input type="hidden" name="desDC_' + (i + 1) + '" value="">')
         }
       }
+      setTimeout(function () {
+        document.getElementById('myForm').submit()
+      }, 1000)
     })
   }
 
