@@ -120,6 +120,11 @@
       appTab.find('#correios').click(function () {
         if (Tab.selectedItems.length === 1) {
           window.location.href = '/#/tag/' + Tab.selectedItems[0]
+        } else if (Tab.selectedItems.length > 4) {
+          app.toast(i18n({
+            'en_us': 'Only 4 orders allowed',
+            'pt_br': 'Apenas 4 pedidos permitidos'
+          }))
         } else {
           window.location.href = '/#/tag/' + Tab.selectedItems
         }
