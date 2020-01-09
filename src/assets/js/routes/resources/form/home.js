@@ -47,6 +47,10 @@
         $storeName.text(storeName)
         var __id = schema._id
         $storeobject.text(__id)
+        localStorage.setItem('fromAddress', schema.address)
+        localStorage.setItem('fromContact', schema.contact_phone)
+        localStorage.setItem('fromName', schema.name)
+        localStorage.setItem('fromCorporate', schema.corporate_name)
       }
     })
     // search for dayly orders
