@@ -14,6 +14,7 @@
 
   // var lang = window.lang
   var i18n = window.i18n
+  var appTab = $('#app-tab-' + tabId)
 
   var baseHash = '/' + window.location.hash + '/'
   // create button
@@ -74,6 +75,55 @@
     } else {
       // default ?
       limit = 1000
+    }
+
+    if (resourceSlug === 'orders') {
+      console.log('estou em pedidos')
+      $grid.before('<div class="flexbox mb-20 pull-right"><div class="dropdown" id="orders-bulk-action">' +
+    '    <button class="btn btn-success order-selected" id="orders-selected" type="button" data-toggle="">' +
+    '      <i class="fa fa-pencil"></i>' +
+    '      <span class="i18n">' +
+    '        <span data-lang="en_us">' +
+    '          Shipping <span class="hidden-md-down">tags</span>' +
+    '        </span>' +
+    '        <span data-lang="pt_br">' +
+    '          Etiquetas <span class="hidden-md-down">de envio</span>' +
+    '        </span>' +
+    '      </span>' +
+    '    </button>' +
+    '    <div class="dropdown-menu">' +
+    '      <a href="javascript:;" class="dropdown-item" id="correios">' +
+    '        <span class="i18n">' +
+    '          <span data-lang="en_us">Shipping tag</span>' +
+    '          <span data-lang="pt_br">Etiqueta dos correios</span>' +
+    '        </span>' +
+    '      </a>' +
+    '      <a href="javascript:;" id="standart" class="dropdown-item">' +
+    '        <span class="i18n">' +
+    '          <span data-lang="en_us">Standart tag</span>' +
+    '          <span data-lang="pt_br">Etiqueta padrão</span>' +
+    '        </span>' +
+    '      </a>' +
+    '    </div>' +
+    '  </div></div>')
+      var $tagShipping = appTab.find('#orders-selected')
+      $tagShipping.click(function () {
+        if (!Tab.selectedItems.length > 0) {
+          app.toast(i18n({
+            'en_us': 'No orders selected',
+            'pt_br': 'Nenhum pedido selecionado'
+          }))
+        } else {
+          $tagShipping.attr('data-toggle', 'dropdown')
+        }
+      })
+      appTab.find('#correios').click(function () {
+        if (Tab.selectedItems.length === 1) {
+          window.location.href = '/#/tag/' + Tab.selectedItems[0]
+        } else {
+          window.location.href = '/#/tag/' + Tab.selectedItems
+        }
+      })
     }
     // current list filters
     var filters = {}
