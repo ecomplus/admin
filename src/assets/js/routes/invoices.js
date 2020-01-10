@@ -136,7 +136,7 @@
             documentClient = 'CPF'
             docNumber = data.buyers[0].doc_number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
           } else {
-            nameCompany = data.buyers[0].corporate_name
+            nameCompany = data.buyers[0].corporate_name || data.buyers[0].name.given_name + ' ' + data.buyers[0].name.family_name
             documentClient = 'CNPJ'
             docNumber = data.buyers[0].doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
           }
