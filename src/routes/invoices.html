@@ -1,107 +1,91 @@
 <div class="card">
-          <div class="card-body printing-area p-5">
-<h5 class="card-title card-title-bold text-muted" style="font-size: 15px">Pedido # <span id="invoice-id"></span></h5>
-
-            <div class="row gap-y p-5">
-              <div class="col-md-3">
-                <address id="invoice-from" style="font-size: 15px">
-                </address>
-              </div>
-
-              <div class="col-md-3 ml-md-auto text-md-right">
-                <h4 class="text-dark">Para:</h4>
-                <address id="invoice-to" style="font-size: 15px">
-                </address>
-
-                <br><br>
-                <span><strong>Data de criação:</strong> <span id="createdAt"></span></span>
-                <br>
-                <span><strong>Última atualização:</strong> <span id="updatedAt"></span></span>
-
-                <br><br><br><br><br>
-              </div>
-            </div>
-
-            <div class="table-responsive-md">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Descrição</th>
-                    <th>Quantidade</th>
-                    <th>Custo por unidade</th>
-                    <th>Total</th>
-                  </tr>
-                </thead>
-                <tbody id="itemsOrder">
-                </tbody>
-              </table>
-            </div>
-
-
-            <br><br>
-            <div class="row">
-              <div class="col-md-6">
-                <h5>Nota adicional</h5>
-                <p class="text-muted pt-10"><span id="noteOrder" style="font-size: 15px"></span></p>
-                <br>
-                <div class="bt-1 ml-md-auto pt-2" style="font-size: 15px">
-                  <span>Forma de envio: <strong id="shippingMethod"></strong></span><br>
-                  <span>Forma de pagmaneto: <strong id="paymentMethod"></strong></span><br>
-                  <span>Cupom: <strong id="coupon"></strong></span><br>
-                </div>
-              </div>
-
-              <div class="col-md-4 ml-md-auto text-right">
-                <br>
-                <span class="bt-1 d-inline-block pt-10 pl-40" style="font-size: 15px">
-                  <strong>SubTotal</strong>: <span id="subTotalOrder"></span>
-                  <br>
-                  <strong>Frete</strong>: <span id="freightOrder"></span>
-                  <br>
-                  <strong>Desconto</strong>: <span id="discountOrder"></span>
-                  <br>
-                  <strong>Taxa</strong>: <span id="taxOrder"></span>
-                  <br>
-                  <strong>Custo adicional</strong>: <span id="extraOrder"></span>
-                </span>
-                <br><br>
-                <p class="fs-30 text-primary"><strong>Total</strong>: <span id="totalOrder"></span></p>
-                <br>
-              </div>
-            </div>
-
-
-            <hr>
-
-            <div class="text-right">
-              <button type="button" class="btn btn-secondary" onclick="javascript:window.print();">
-                <span class="i18n">
-                  <span data-lang="en_us">Print</span>
-                  <span data-lang="pt_br">Imprimir</span>
-                </span>
-              </button>
-              <div data-id="send-ticket">
-                <button type="button" class="btn btn-light mt-2" id="open-ticket">
-                  <i class="fas fa-print"></i>
-                  <span class="i18n">
-                    <span data-lang="en_us">Open send ticket</span>
-                    <span data-lang="pt_br">Abrir etiqueta correios</span>
-                  </span>
-                </button>
-              </div>
-            </div>
-
-          </div>
-
+  <div class="card-body printing-area p-5">
+    <h5 class="card-title card-title-bold text-muted" style="font-size: 15px">Pedido # <span id="invoice-id"></span></h5>
+    <div class="row gap-y p-5">
+      <div class="col-md-3">
+        <address id="invoice-from" style="font-size: 15px">
+        </address>
+      </div>
+      <div class="col-md-3 ml-md-auto text-md-right">
+        <h4 class="text-dark">Para:</h4>
+        <address id="invoice-to" style="font-size: 15px"></address><br><br>
+        <span><strong>Data de criação:</strong> <span id="createdAt"></span></span><br>
+        <span><strong>Última atualização:</strong> <span id="updatedAt"></span></span>
+        <br><br><br><br><br>
+      </div>
+    </div>
+    <div class="table-responsive-md">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Custo por unidade</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="itemsOrder">
+        </tbody>
+      </table>
+    </div>
+    <br><br>
+    <div class="row">
+      <div class="col-md-6">
+        <h5>Nota adicional</h5>
+        <p class="text-muted pt-10"><span id="noteOrder" style="font-size: 15px"></span></p>
+        <br>
+        <div class="bt-1 ml-md-auto pt-2" style="font-size: 15px">
+          <span>Forma de envio: <strong id="shippingMethod"></strong></span><br>
+          <span>Forma de pagmaneto: <strong id="paymentMethod"></strong></span><br>
+          <span>Cupom: <strong id="coupon"></strong></span><br>
         </div>
-        <div>
-          <script>
-            window.routeReady()
-            // wait for second script loading before form setup
-            window.Tabs[window.tabId].wait = true
-            $.getScript('/assets/js/script/main.js')
-            $.getScript('/assets/js/routes/invoices.min.js')
-            $.getScript('/assets/js/routes/resources/form.min.js')
-          </script>
-        </div>
+      </div>
+      <div class="col-md-4 ml-md-auto text-right">
+        <br>
+        <span class="bt-1 d-inline-block pt-10 pl-40" style="font-size: 15px">
+          <strong>SubTotal</strong>: <span id="subTotalOrder"></span>
+          <br>
+          <strong>Frete</strong>: <span id="freightOrder"></span>
+          <br>
+          <strong>Desconto</strong>: <span id="discountOrder"></span>
+          <br>
+          <strong>Taxa</strong>: <span id="taxOrder"></span>
+          <br>
+          <strong>Custo adicional</strong>: <span id="extraOrder"></span>
+        </span>
+        <br><br>
+        <p class="fs-30 text-primary"><strong>Total</strong>: <span id="totalOrder"></span></p>
+        <br>
+      </div>
+    </div>
+    <hr>
+    <div class="text-right">
+      <button type="button" class="btn btn-secondary" onclick="javascript:window.print();">
+        <span class="i18n">
+          <span data-lang="en_us">Print</span>
+          <span data-lang="pt_br">Imprimir</span>
+        </span>
+      </button>
+      <div data-id="send-ticket">
+        <button type="button" class="btn btn-light mt-2" id="open-ticket">
+          <i class="fas fa-print"></i>
+          <span class="i18n">
+            <span data-lang="en_us">Open send ticket</span>
+            <span data-lang="pt_br">Abrir etiqueta correios</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div>
+  <script>
+    window.routeReady()
+    // wait for second script loading before form setup
+    window.Tabs[window.tabId].wait = true
+    $.getScript('/assets/js/script/main.js')
+    $.getScript('/assets/js/routes/invoices.min.js')
+    $.getScript('/assets/js/routes/resources/form.min.js')
+  </script>
+</div>

@@ -129,6 +129,16 @@
           window.location.href = '/#/tag/' + Tab.selectedItems
         }
       })
+      appTab.find('#standart').click(function () {
+        if (Tab.selectedItems.length < 10) {
+          window.location.href = '/#/tagstandart/' + Tab.selectedItems
+        } else {
+          app.toast(i18n({
+            'en_us': 'Only 9 orders allowed',
+            'pt_br': 'Apenas 9 pedidos permitidos'
+          }))
+        }
+      })
     }
     // current list filters
     var filters = {}
