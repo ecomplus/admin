@@ -33,10 +33,21 @@
       var newDoc = { _index: index }
       for (var prop in doc) {
         var deepObj = doc[prop]
+        if (deepObj !== null && Array.isArray(deepObj)) {
+          for (var i = 0; i < deepObj.length; i++) {
+            for (var deepProp in deepObj[i]) {
+              if (deepObj[i].hasOwnProperty(deepProp)) {
+                // assign to object
+                // using / to separate properties because jsGrid converts dot notation
+                newDoc[prop + '/' + deepProp] = deepObj[i][deepProp]
+              }
+            }
+          }
+        }
         if (typeof deepObj === 'object' && deepObj !== null && !Array.isArray(deepObj)) {
           // is object
           // go deeper
-          for (var deepProp in deepObj) {
+          for (deepProp in deepObj) {
             if (deepObj.hasOwnProperty(deepProp)) {
               // assign to object
               // using / to separate properties because jsGrid converts dot notation
@@ -78,7 +89,6 @@
     }
 
     if (resourceSlug === 'orders') {
-      console.log('estou em pedidos')
       $grid.before('<div class="flexbox mb-20 pull-right"><div class="dropdown" id="orders-bulk-action">' +
     '    <button class="btn btn-success order-selected" id="orders-selected" type="button" data-toggle="">' +
     '      <i class="fa fa-pencil"></i>' +
@@ -617,6 +627,14 @@
             }
           } else {
             // custom item template by field type
+            if (fieldOpts.templat) {
+              fieldObj.itemTemplate = function (item) {
+                if (item) {
+                  // add parsed template to hidden elements
+                  return item
+                }
+              }
+            }
             switch (fieldOpts.type) {
               case 'link':
                 fieldObj.itemTemplate = function (text) {
