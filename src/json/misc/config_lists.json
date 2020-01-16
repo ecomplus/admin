@@ -254,7 +254,7 @@
   "orders": {
     "_fields": [
       "number",
-      "source_name",
+      "buyers/main_email",
       "status",
       "amount/subtotal",
       "amount/total",
@@ -264,6 +264,7 @@
     "_hidden_fields": [
       "channel_id",
       "code",
+      "source_name",
       "payment_method_label",
       "shipping_method_label",
       "amount/discount",
@@ -295,8 +296,17 @@
         "pt_br": "Forma de envio"
       }
     },
+    "buyers/main_email": {
+      "templat": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a>",
+      "label": {
+        "en_us": "Buyer",
+        "pt_br": "Comprador"
+      },
+      "width": 200
+    },
     "buyers": {
-      "template": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a> (<a href='mailto:{{main_email}}' target='_blank'>{{main_email}}</a>)"
+      "template": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a>",
+      "width": 200
     },
     "items": {
       "template": "{{quantity}}x <a href='#/resources/products/{{product_id}}'>{{name}}</a> ({{sku}})"
