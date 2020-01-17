@@ -301,12 +301,10 @@
       "label": {
         "en_us": "Buyer",
         "pt_br": "Comprador"
-      },
-      "width": 200
+      }
     },
     "buyers": {
-      "template": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a>",
-      "width": 200
+      "template": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a>"
     },
     "items": {
       "template": "{{quantity}}x <a href='#/resources/products/{{product_id}}'>{{name}}</a> ({{sku}})"
