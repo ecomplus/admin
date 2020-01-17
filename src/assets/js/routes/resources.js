@@ -323,8 +323,8 @@
     // handle bulk items edit or delete
     var bulkAction = function (method, bodyObject) {
       var todo = Tab.selectedItems.length
-      console.log(todo)
       if (todo > 0) {
+        $('#modal-saved').modal('show')
         var cb = Tab.editItemsCallback()
         // call API to delete documents
         var done = 0
@@ -349,10 +349,13 @@
             }
           }
           var id = Tab.selectedItems[done]
-          console.log(id)
           window.callApi(slug + '/' + id + '.json', method, callback, bodyObject)
         }
-        next()
+        $('#list-save-changes').click(next)
+        $('#ignore-unsaved').click(function () {
+          Tab.selectedItems = []
+          load(loadContent, params)
+        })
       } else if (!resourceId) {
         // nothing to do, alert
         app.toast(i18n({
