@@ -77,36 +77,74 @@
 
     if (hasSlug) {
       // direct link and share
-      var link = function (link) {
-        if (window.shopDomain && Data().slug) {
-          var Link = 'https://' + window.shopDomain + '/' + Data().slug
-          if (link) {
-            // add link prefix
-            Link = link + encodeURIComponent(Link)
+      window.callApi('stores/me.json', 'GET', function (error, schema) {
+        if (!error) {
+          var link = function (link) {
+            if ((window.shopDomain || schema.domain) && Data().slug) {
+              var domain = schema.domain || window.shopDomain
+              var Link = 'https://' + domain + '/' + Data().slug
+              if (link) {
+                // add link prefix
+                Link = link + encodeURIComponent(Link)
+              }
+              newTabLink(Link)
+            } else {
+              app.toast(i18n({
+                'en_us': 'No link to share',
+                'pt_br': 'Nenhum link para compartilhar'
+              }))
+            }
           }
-          newTabLink(Link)
-        } else {
-          app.toast(i18n({
-            'en_us': 'No link to share',
-            'pt_br': 'Nenhum link para compartilhar'
-          }))
-        }
-      }
 
-      $('#t' + tabId + '-view').click(function () {
-        link()
-      })
-      $('#t' + tabId + '-facebook').click(function () {
-        link('https://www.facebook.com/sharer.php?u=')
-      })
-      $('#t' + tabId + '-whatsapp').click(function () {
-        var platform
-        if ($(window).width() < 480) {
-          platform = 'api'
+          $('#t' + tabId + '-view').click(function () {
+            link()
+          })
+          $('#t' + tabId + '-facebook').click(function () {
+            link('https://www.facebook.com/sharer.php?u=')
+          })
+          $('#t' + tabId + '-whatsapp').click(function () {
+            var platform
+            if ($(window).width() < 480) {
+              platform = 'api'
+            } else {
+              platform = 'web'
+            }
+            link('https://' + platform + '.whatsapp.com/send?text=')
+          })
         } else {
-          platform = 'web'
+          link = function (link) {
+            if ((window.shopDomain || localStorage.getItem('domain')) && Data().slug) {
+              var domain = localStorage.getItem('domain') || window.shopDomain
+              var Link = 'https://' + domain + '/' + Data().slug
+              if (link) {
+                // add link prefix
+                Link = link + encodeURIComponent(Link)
+              }
+              newTabLink(Link)
+            } else {
+              app.toast(i18n({
+                'en_us': 'No link to share',
+                'pt_br': 'Nenhum link para compartilhar'
+              }))
+            }
+          }
+
+          $('#t' + tabId + '-view').click(function () {
+            link()
+          })
+          $('#t' + tabId + '-facebook').click(function () {
+            link('https://www.facebook.com/sharer.php?u=')
+          })
+          $('#t' + tabId + '-whatsapp').click(function () {
+            var platform
+            if ($(window).width() < 480) {
+              platform = 'api'
+            } else {
+              platform = 'web'
+            }
+            link('https://' + platform + '.whatsapp.com/send?text=')
+          })
         }
-        link('https://' + platform + '.whatsapp.com/send?text=')
       })
     } else {
       // document doest not have link
