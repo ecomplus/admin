@@ -43,6 +43,7 @@
     // search for store name and object id
     window.callApi(urlStore, 'GET', function (error, schema) {
       if (!error) {
+        console.log(schema)
         var storeName = schema.name
         $storeName.text(storeName)
         var __id = schema._id
@@ -51,6 +52,7 @@
         localStorage.setItem('fromContact', schema.contact_phone)
         localStorage.setItem('fromName', schema.name)
         localStorage.setItem('fromCorporate', schema.corporate_name)
+        localStorage.setItem('domain', schema.domain)
       }
     })
     // search for dayly orders
