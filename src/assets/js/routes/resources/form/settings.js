@@ -168,6 +168,7 @@
       objInfo = {
         'domain': domain
       }
+      localStorage.setItem('domain', domain)
       infoPatch(objInfo)
     })
     $logo.change(function () {
