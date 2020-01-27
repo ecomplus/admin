@@ -35,7 +35,7 @@
   }
   // startup
   updateData()
-
+  console.log(list)
   if (list.length) {
     var baseHash = '/' + window.location.hash + '/'
     // search filters
@@ -229,12 +229,21 @@
       for (var ii = 0; ii < ids.length; ii++) {
         for (var i = 0; i < selectedCategories.length; i++) {
           var parseCategory = JSON.parse(selectedCategories[i])
+          var done = 0
           var callback = function (err, body) {
             if (!err) {
-              app.toast(i18n({
-                'en_us': 'Completed edit',
-                'pt_br': 'Categoria inserida com sucesso'
-              }))
+              done++
+              if (ids.length === done) {
+                $('#modal-center-1').modal('hide')
+                app.toast(i18n({
+                  'en_us': 'Completed edit',
+                  'pt_br': 'Categoria inserida com sucesso'
+                }))
+                $('#spinner-wait').hide()
+                load()
+              } else {
+                $('#spinner-wait').show()
+              }
             }
           }
           window.callApi('products/' + ids[ii] + '/categories.json', 'POST', callback, parseCategory)
@@ -270,6 +279,7 @@
       var ids = Tab.selectedItems
       if (ids) {
         for (var i = 0; i < ids.length; i++) {
+          var don = 0
           window.callApi('products/' + ids[i] + '.json', 'GET', function (error, schema) {
             if (!error) {
               var price, quantity
@@ -307,13 +317,20 @@
                   objPrice.price_effective_date.end = dateEnd
                 }
               }
-              console.log(objPrice)
               var callback = function (err, body) {
                 if (!err) {
-                  app.toast(i18n({
-                    'en_us': 'Completed edit',
-                    'pt_br': 'Edição em massa completa'
-                  }))
+                  don++
+                  if (Tab.selectedItems.length === don) {
+                    app.toast(i18n({
+                      'en_us': 'Completed edit',
+                      'pt_br': 'Edição em massa completa'
+                    }))
+                    $('#spinner-wait-edit').hide()
+                    $('#modal-center').modal('hide')
+                    load()
+                  } else {
+                    $('#spinner-wait-edit').show()
+                  }
                 }
               }
               window.callApi('products/' + schema._id + '.json', 'PATCH', callback, objPrice)
