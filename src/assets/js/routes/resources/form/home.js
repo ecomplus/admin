@@ -43,7 +43,6 @@
     // search for store name and object id
     window.callApi(urlStore, 'GET', function (error, schema) {
       if (!error) {
-        console.log(schema)
         var storeName = schema.name
         $storeName.text(storeName)
         var __id = schema._id
