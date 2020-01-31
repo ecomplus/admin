@@ -251,15 +251,16 @@
       // preset address if defined
       var addressNew
       var data = Data()
+      var addressConvert = function (e) {
+        return e.default === true
+      }
       if (data.addresses) {
         for (var i = 0; i < data.addresses.length; i++) {
           if (data.addresses[i].default) {
             // customer default shipping address
-            addressNew = data.addresses[i]
+            addressNew = data.addresses.filter(addressConvert)
             break
-          }
-          // use the first address on list
-          if (!addressNew) {
+          } else {
             addressNew = data.addresses[0]
           }
         }
@@ -280,7 +281,6 @@
       'addresses',
       handleShippingObj
     )
-
     // handle collapse for shipping address
     $('div[data-link-collapse]').each(function () {
       var $block = $(this)
@@ -355,7 +355,7 @@
                     '<span class="i18n"> ' +
                     '      <span data-lang="en_us">Gender</span> ' +
                     '      <span data-lang="pt_br">Gênero</span>' +
-                    '      </span>: ' + gender + '<br>' +
+                    '      </span>: ' + (gender || 'Não configurado') + '<br>' +
                     '<span class="i18n"> ' +
                     '      <span data-lang="en_us">CPF/CNPJ</span> ' +
                     '      <span data-lang="pt_br">CPF/CNPJ</span>' +
