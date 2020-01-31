@@ -63,6 +63,7 @@
     })
   }
   updateData()
+  console.log(list)
 
   if (list.length) {
     // delete checkbox element HTML
@@ -630,7 +631,6 @@
             if (fieldOpts.templat) {
               fieldObj.itemTemplate = function (item) {
                 if (item) {
-                  // add parsed template to hidden elements
                   return item
                 }
               }
