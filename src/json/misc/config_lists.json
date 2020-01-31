@@ -254,7 +254,7 @@
   "orders": {
     "_fields": [
       "number",
-      "buyers/main_email",
+      "buyers/display_name",
       "status",
       "amount/subtotal",
       "amount/total",
@@ -296,7 +296,7 @@
         "pt_br": "Forma de envio"
       }
     },
-    "buyers/main_email": {
+    "buyers/display_name": {
       "templat": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a>",
       "label": {
         "en_us": "Buyer",
