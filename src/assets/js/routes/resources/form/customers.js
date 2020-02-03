@@ -251,15 +251,16 @@
       // preset address if defined
       var addressNew
       var data = Data()
+      var addressConvert = function (e) {
+        return e.default === true
+      }
       if (data.addresses) {
         for (var i = 0; i < data.addresses.length; i++) {
           if (data.addresses[i].default) {
             // customer default shipping address
-            addressNew = data.addresses[i]
+            addressNew = data.addresses.filter(addressConvert)
             break
-          }
-          // use the first address on list
-          if (!addressNew) {
+          } else {
             addressNew = data.addresses[0]
           }
         }
@@ -280,7 +281,6 @@
       'addresses',
       handleShippingObj
     )
-
     // handle collapse for shipping address
     $('div[data-link-collapse]').each(function () {
       var $block = $(this)
@@ -308,7 +308,13 @@
       // start the resumed content on em tag
       resumeContent()
     })
-
+    var maskDocNumber = function () {
+      if (data.doc_type === 'j') {
+        return data.doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
+      } else {
+        return data.doc_number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
+      }
+    }
     // Get and save value of staff notes
     $note.change(function () {
       var data = Data()
@@ -321,7 +327,7 @@
         data.staff_notes = {}
       }
     })
-
+    console.log(data)
     if (data.gender) {
     // get gender value
       if (data.gender === 'f') {
@@ -355,28 +361,37 @@
                     '<span class="i18n"> ' +
                     '      <span data-lang="en_us">Gender</span> ' +
                     '      <span data-lang="pt_br">Gênero</span>' +
-                    '      </span>: ' + gender + '<br>' +
+                    '      </span>: ' + (gender || 'Não configurado') + '<br>' +
                     '<span class="i18n"> ' +
                     '      <span data-lang="en_us">CPF/CNPJ</span> ' +
                     '      <span data-lang="pt_br">CPF/CNPJ</span>' +
-                    '      </span>: ' + data.doc_number)
+                    '      </span>: ' + maskDocNumber(data.registry_type, data.doc_number))
     $abstractStatistic.append(
       '<span class="i18n"> ' +
                     '      <span data-lang="en_us">Number of orders</span> ' +
                     '      <span data-lang="pt_br">Quantidade de pedidos</span>' +
-                    '      </span>: ' + data.orders_count + '<br>' +
+                    '      </span>: ' + (data.orders_count || 'Nenhum pedido realizado') + '<br>' +
                     '<span class="i18n"> ' +
-                                '      <span data-lang="en_us">Amount of money in order: $</span> ' +
-                                '      <span data-lang="pt_br">Valor total de pedidos: R$</span>' +
-                                '      </span>' + data.orders_total_value + '<br>' +
+                                '      <span data-lang="en_us">Amount of money in order: </span> ' +
+                                '      <span data-lang="pt_br">Valor total de pedidos: </span>' +
+                                '      </span>' + (window.ecomUtils.formatMoney(data.orders_total_value, data.currency_id) || '0') + '<br>' +
                                 '<span class="i18n"> ' +
-                                            '      <span data-lang="en_us">Amount of money spent: $</span> ' +
-                                            '      <span data-lang="pt_br">Valor total de pedidos aprovados: R$</span>' +
-                                            '      </span>' + data.total_spent + '<br>' +
+                                            '      <span data-lang="en_us">Amount of money spent: </span> ' +
+                                            '      <span data-lang="pt_br">Valor total de pedidos aprovados: </span>' +
+                                            '      </span>' + (window.ecomUtils.formatMoney(data.total_spent, data.currency_id) || '0') + '<br>' +
                                             '<span class="i18n"> ' +
-                                                        '      <span data-lang="en_us">Amount of money cancelled: $</span> ' +
-                                                        '      <span data-lang="pt_br">Valor total de pedidos cancelados: R$</span>' +
-                                                        '      </span>' + data.total_cancelled)
+                                                        '      <span data-lang="en_us">Amount of money cancelled: </span> ' +
+                                                        '      <span data-lang="pt_br">Valor total de pedidos cancelados: </span>' +
+                                                        '      </span>' + (window.ecomUtils.formatMoney(data.total_cancelled, data.currency_id) || '0') + '<br>')
+    if (data.orders_count) {
+      for (var i = 0; i < data.orders.length; i++) {
+        $abstractStatistic.append('<span class="i18n"> ' +
+                      '      <span data-lang="en_us">Order</span> ' +
+                      '      <span data-lang="pt_br">Pedido</span>' +
+                      '      </span>: <a href="/#/resources/orders/' + data.orders[i]._id + '">' + data.orders[i].number + '</a><br>' +
+                      '<span class="i18n"> ')
+      }
+    }
   }
 
   // wait for the form to be ready
