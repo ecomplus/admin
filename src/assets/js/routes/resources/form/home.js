@@ -24,6 +24,10 @@
     var $order = $lastOrders.find('#addOrders')
     var $approve = appTab.find('#approved')
     var $monthTotal = appTab.find('#monthAmount')
+    var $lastCardAmount = appTab.find('#cards-graphs-amount-last')
+    var $lastApprove = appTab.find('#lastApproved')
+    var $lastMonthTotal = appTab.find('#lastMonthAmount')
+    var $lastTotal = $lastCardAmount.find('#lastDayAmount')
     var today = new Date()
     var dd = today.getDate()
     var mm = today.getMonth()
@@ -32,18 +36,23 @@
     var totalAmount = 0
     var approved = 0
     var monthTotalPaid = 0
+    var totalAmountLast = 0
+    var approvedLast = 0
+    var monthTotalPaidLast = 0
+    var dataStartYesterday = new Date(yyyy, mm, dd - 1, 0, -timezoneCalc, 0, 0).toISOString()
+    var dataEndYesterday = new Date(yyyy, mm, dd - 1, 23, 59 - timezoneCalc, 59, 0).toISOString()
+    var dateStartTwo = new Date(yyyy, mm - 1, dd, 0, -timezoneCalc, 0, 0).toISOString()
+    var dateEndTwo = new Date(yyyy, mm - 1, 31, 23, 59 - timezoneCalc, 59, 0).toISOString()
     var dataStart = new Date(yyyy, mm, dd, 0, -timezoneCalc, 0, 0).toISOString()
     var dataEnd = new Date(yyyy, mm, dd, 23, 59 - timezoneCalc, 59, 0).toISOString()
     var dateStart = new Date(yyyy, mm, 1, 0, -timezoneCalc, 0, 0).toISOString()
     var dateEnd = new Date(yyyy, mm, 31, 23, 59 - timezoneCalc, 59, 0).toISOString()
-    var urlOrder = 'orders.json?sort=amount&created_at>=' + dataStart + '&created_at<=' + dataEnd
-    var urlOrderMonth = 'orders.json?sort=amount&created_at>=' + dateStart + '&created_at<=' + dateEnd
+    var urlOrderLast = 'orders.json?sort=amount&created_at>=' + dateStartTwo + '&fields=buyers,amount,_id,created_at,financial_status,number,status'
     $storeID.text(storeId)
     var urlStore = 'stores/me.json'
     // search for store name and object id
     window.callApi(urlStore, 'GET', function (error, schema) {
       if (!error) {
-        console.log(schema)
         var storeName = schema.name
         $storeName.text(storeName)
         var __id = schema._id
@@ -58,17 +67,63 @@
     // search for dayly orders
     $(document).ready(function () {
       setTimeout(function () {
-        window.callApi(urlOrder, 'GET', function (err, json) {
+        window.callApi(urlOrderLast, 'GET', function (err, json) {
           if (!err) {
-            var totalOrders = json.result
-            if (totalOrders.length) {
+            console.log(json)
+            var filteredToday = json.result.filter(function (item) {
+              return item.created_at >= dataStart && item.created_at <= dataEnd
+            })
+            var filteredLast = json.result.filter(function (item) {
+              return item.created_at >= dataStartYesterday && item.created_at <= dataEndYesterday
+            })
+            var filteredMonth = json.result.filter(function (item) {
+              return item.created_at >= dateStart && item.created_at <= dateEnd
+            })
+            var filteredLastMonth = json.result.filter(function (item) {
+              return item.created_at >= dateStartTwo && item.created_at <= dateEndTwo
+            })
+            if (filteredMonth.length) {
+              for (var ii = 0; ii < filteredMonth.length; ii++) {
+                if (filteredMonth[ii].financial_status) {
+                  var order = filteredMonth.length
+                  if (filteredMonth[ii].financial_status.current === 'paid') {
+                    monthTotalPaid = filteredMonth[ii].amount.total + monthTotalPaid
+                    $monthTotal.text(monthTotalPaid.toFixed(2).replace('.', ','))
+                    approved = approved + 1
+                    var percentApproved = ((approved / order) * 100).toFixed(2)
+                    $approve.text(percentApproved)
+                  }
+                }
+              }
+            }
+            if (filteredLastMonth.length) {
+              for (var iii = 0; iii < filteredLastMonth.length; iii++) {
+                if (filteredLastMonth[iii].financial_status) {
+                  var orders = filteredLastMonth.length
+                  if (filteredLastMonth[iii].financial_status.current === 'paid') {
+                    monthTotalPaidLast = filteredLastMonth[iii].amount.total + monthTotalPaidLast
+                    $lastMonthTotal.text(monthTotalPaidLast.toFixed(2).replace('.', ','))
+                    approvedLast = approvedLast + 1
+                    var percentApprovedLast = ((approvedLast / orders) * 100).toFixed(2)
+                    $lastApprove.text(percentApprovedLast)
+                  }
+                }
+              }
+            }
+            if (filteredLast) {
+              for (var c = 0; c < filteredLast.length; c++) {
+                totalAmountLast = filteredLast[c].amount.total + totalAmountLast
+                $lastTotal.text(totalAmountLast.toFixed(2).replace('.', ','))
+              }
+            }
+            if (filteredToday.length) {
               appTab.find('#cards-graphs-orders').show()
-              for (var i = 0; i < totalOrders.length; i++) {
-                totalAmount = totalOrders[i].amount.total + totalAmount
+              for (var i = 0; i < filteredToday.length; i++) {
+                totalAmount = filteredToday[i].amount.total + totalAmount
                 $todayTotal.text(totalAmount.toFixed(2).replace('.', ','))
-                if (totalOrders[i].financial_status) {
+                if (filteredToday[i].financial_status) {
                   var orderInfo = []
-                  orderInfo.push(totalOrders[i]._id, totalOrders[i].number, totalOrders[i].financial_status.current, totalOrders[i].amount.total.toFixed(2).replace('.', ','), totalOrders[i].buyers[0]._id, totalOrders[i].buyers[0].display_name)
+                  orderInfo.push(filteredToday[i]._id, filteredToday[i].number, filteredToday[i].financial_status.current, filteredToday[i].amount.total.toFixed(2).replace('.', ','), filteredToday[i].buyers[0]._id, filteredToday[i].buyers[0].display_name)
                   switch (orderInfo[2]) {
                     case 'under_analysis':
                       orderInfo[2] = 'Em análise'
@@ -110,7 +165,7 @@
                   '  <td> R$ ' + orderInfo[3] + '</td>' +
                   '  <td><a href="/#/resources/customers/' + orderInfo[4] + ' ">' + orderInfo[5] + ' </a></td>' +
                   '</tr>')
-                  var statusOrder = totalOrders[i].financial_status.current
+                  var statusOrder = filteredToday[i].financial_status.current
                   if (statusOrder === 'paid') {
                     countPaid = countPaid + 1
                   }
@@ -129,28 +184,6 @@
           }
         })
       }, 100)
-    })
-    // search for month orders
-    $(document).ready(function () {
-      setTimeout(function () {
-        window.callApi(urlOrderMonth, 'GET', function (error, jsonMonth) {
-          if (!error) {
-            var monthOrders = jsonMonth.result
-            for (var i = 0; i < monthOrders.length; i++) {
-              if (monthOrders[i].financial_status) {
-                var order = monthOrders.length
-                if (monthOrders[i].financial_status.current === 'paid') {
-                  monthTotalPaid = monthOrders[i].amount.total + monthTotalPaid
-                  $monthTotal.text(monthTotalPaid.toFixed(2).replace('.', ','))
-                  approved = approved + 1
-                  var percentApproved = ((approved / order) * 100).toFixed(2)
-                  $approve.text(percentApproved)
-                }
-              }
-            }
-          }
-        })
-      }, 500)
     })
     var bar = function () {
       var ctx = document.getElementById('orderOfAll')

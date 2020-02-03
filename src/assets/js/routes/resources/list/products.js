@@ -294,16 +294,20 @@
               var priceSell = $priceSell.val().replace('R$', '')
               var trimPrice = priceSell.replace(',', '.').trim()
               var priceToSell = parseFloat(trimPrice)
+              var objPrice = {
+                'price': priceToSell || parseFloat(discount),
+                'base_price': schema.price
+              }
               var quantityFixed = $quantityFixed.val()
               if (quantityFixed) {
                 quantity = quantityFixed
-              } else {
+                objPrice.quantity = quantity
+              }
+              if (schema.quantity) {
                 quantity = parseInt(getQuantity)
+                objPrice.quantity = quantity
               }
-              var objPrice = {
-                'price': priceToSell || parseFloat(discount),
-                'quantity': quantity
-              }
+              console.log(objPrice)
               if ($startDate.val() || $endDate.val()) {
                 objPrice.price_effective_date = {}
                 if ($startDate.val()) {
@@ -333,7 +337,9 @@
                   }
                 }
               }
-              window.callApi('products/' + schema._id + '.json', 'PATCH', callback, objPrice)
+              setTimeout(function () {
+                window.callApi('products/' + schema._id + '.json', 'PATCH', callback, objPrice)
+              }, 500)
             } else {
               console.log(error)
             }

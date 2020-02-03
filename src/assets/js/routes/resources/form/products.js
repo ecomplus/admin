@@ -28,7 +28,6 @@
     var index = 0
     var $enDate = $('#t' + tabId + '-enDate')
     var $startDate = $('#t' + tabId + '-startDate')
-    console.log($enDate)
 
     // setup predefined grids
     // GMC defaults
