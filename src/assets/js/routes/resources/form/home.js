@@ -69,11 +69,9 @@
       setTimeout(function () {
         window.callApi(urlOrderLast, 'GET', function (err, json) {
           if (!err) {
-            console.log(json)
             var filteredToday = json.result.filter(function (item) {
               return item.created_at >= dataStart && item.created_at <= dataEnd
             })
-            console.log(filteredToday)
             var filteredLast = json.result.filter(function (item) {
               return item.created_at >= dataStartYesterday && item.created_at <= dataEndYesterday
             })
@@ -111,7 +109,7 @@
                 }
               }
             }
-            if (filteredLast) {
+            if (filteredLast.length) {
               for (var c = 0; c < filteredLast.length; c++) {
                 totalAmountLast = filteredLast[c].amount.total + totalAmountLast
                 $lastTotal.text(totalAmountLast.toFixed(2).replace('.', ','))
@@ -120,11 +118,14 @@
             if (filteredToday.length) {
               appTab.find('#cards-graphs-orders').show()
               for (var i = 0; i < filteredToday.length; i++) {
+                totalAmount = filteredToday[i].amount.total + totalAmount
+                $todayTotal.text(totalAmount.toFixed(2).replace('.', ','))
+                console.log(filteredToday[i].financial_status)
                 if (filteredToday[i].financial_status) {
-                  totalAmount = filteredToday[i].amount.total + totalAmount
-                  $todayTotal.text(totalAmount.toFixed(2).replace('.', ','))
                   var orderInfo = []
                   orderInfo.push(filteredToday[i]._id, filteredToday[i].number, filteredToday[i].financial_status.current, filteredToday[i].amount.total.toFixed(2).replace('.', ','), filteredToday[i].buyers[0]._id, filteredToday[i].buyers[0].display_name)
+                  console.log(orderInfo)
+                  console.log(filteredToday[i])
                   switch (orderInfo[2]) {
                     case 'under_analysis':
                       orderInfo[2] = 'Em análise'
