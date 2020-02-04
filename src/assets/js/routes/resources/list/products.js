@@ -282,11 +282,13 @@
           var don = 0
           window.callApi('products/' + ids[i] + '.json', 'GET', function (error, schema) {
             if (!error) {
-              var price, quantity
+              var price, quantity, objPrice
+              objPrice = {}
               if (schema.base_price) {
                 price = schema.base_price
               } else {
                 price = schema.price
+                objPrice.base_price = schema.price
               }
               var getQuantity = schema.quantity
               var discountSell = $('#discountSell').val() / 100
@@ -294,10 +296,8 @@
               var priceSell = $priceSell.val().replace('R$', '')
               var trimPrice = priceSell.replace(',', '.').trim()
               var priceToSell = parseFloat(trimPrice)
-              var objPrice = {
-                'price': priceToSell || parseFloat(discount),
-                'base_price': schema.price
-              }
+              objPrice.price = (priceToSell || parseFloat(discount))
+
               var quantityFixed = $quantityFixed.val()
               if (quantityFixed) {
                 quantity = quantityFixed
@@ -307,7 +307,6 @@
                 quantity = parseInt(getQuantity)
                 objPrice.quantity = quantity
               }
-              console.log(objPrice)
               if ($startDate.val() || $endDate.val()) {
                 objPrice.price_effective_date = {}
                 if ($startDate.val()) {
