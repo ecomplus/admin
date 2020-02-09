@@ -3032,10 +3032,14 @@ app.ready(function () {
                     if (imageSizes.hasOwnProperty(thumb) && picture[thumb]) {
                       var px = parseInt(picture[thumb].size, 10) || imageSizes[thumb].size
                       if (px) {
-                        // resize base
-                        picture[thumb].size = w > h
-                          ? px + 'x' + Math.round(h * px / w)
-                          : Math.round(w * px / h) + 'x' + px
+                        if (px >= Math.max(w, h)) {
+                          picture[thumb].size = picture.zoom.size
+                        } else {
+                          // resize base
+                          picture[thumb].size = w > h
+                            ? px + 'x' + Math.round(h * px / w)
+                            : Math.round(w * px / h) + 'x' + px
+                        }
                       } else {
                         delete picture[thumb].size
                       }
