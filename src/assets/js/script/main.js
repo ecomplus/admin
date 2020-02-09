@@ -1791,9 +1791,22 @@ app.ready(function () {
               // delete all image sizes
               // ref.: https://github.com/ecomclub/storage-api/blob/master/bin/web.js
               var baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
-              for (var thumb in imageSizes) {
-                if (imageSizes.hasOwnProperty(thumb)) {
-                  objects.push({ Key: imageSizes[thumb].path + baseKey })
+              var thumb
+              if (/^@v2-/.test(baseKey)) {
+                objects.push({ Key: baseKey })
+                if (!/\.webp$/.test(baseKey)) {
+                  for (thumb of ['big', 'normal']) {
+                    objects.push(
+                      { Key: 'imgs/' + thumb + '/' + baseKey },
+                      { Key: 'imgs/' + thumb + '/' + baseKey + '.webp' }
+                    )
+                  }
+                }
+              } else {
+                for (thumb in imageSizes) {
+                  if (imageSizes.hasOwnProperty(thumb)) {
+                    objects.push({ Key: imageSizes[thumb].path + baseKey })
+                  }
                 }
               }
             }
@@ -1843,9 +1856,19 @@ app.ready(function () {
                 // based on product resource picture property
                 // https://ecomstore.docs.apiary.io/#reference/products/product-object
                 var picture = {}
-                for (var thumb in imageSizes) {
-                  if (imageSizes.hasOwnProperty(thumb)) {
-                    picture[thumb] = { url: domain + imageSizes[thumb].path + baseKey }
+                var thumb
+                if (/^@v2-/.test(baseKey)) {
+                  picture.zoom = { url: domain + baseKey }
+                  if (!/\.webp$/.test(baseKey)) {
+                    for (thumb of ['big', 'normal']) {
+                      picture[thumb] = { url: domain + 'imgs/' + thumb + '/' + baseKey + '.webp' }
+                    }
+                  }
+                } else {
+                  for (thumb in imageSizes) {
+                    if (imageSizes.hasOwnProperty(thumb)) {
+                      picture[thumb] = { url: domain + imageSizes[thumb].path + baseKey }
+                    }
                   }
                 }
                 selectedImages.push(picture)
@@ -1889,8 +1912,8 @@ app.ready(function () {
             // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#listObjects-property
             var s3Method = 'listObjects'
             var bodyObject = {
-              // show thumbnails only
-              Prefix: imageSizes.normal.path,
+              // list base keys (zoom) only
+              Prefix: '@',
               MaxKeys: 15
             }
             if (nextMarker) {
@@ -1938,7 +1961,13 @@ app.ready(function () {
                                      '</div>'
                           Done()
                         }
-                        newImg.src = domain + key
+                        newImg.onerror = function () {
+                          var fallbackSrc = domain + key
+                          if (this.src !== fallbackSrc) {
+                            this.src = fallbackSrc
+                          }
+                        }
+                        newImg.src = domain + 'imgs/normal/' + key
                       }())
                     }
                   } else {
@@ -1981,11 +2010,15 @@ app.ready(function () {
                 // picture object
                 // based on product resource picture property
                 // https://ecomstore.docs.apiary.io/#reference/products/product-object
-                var picture = {}
-                var thumb
-                for (thumb in imageSizes) {
-                  if (imageSizes.hasOwnProperty(thumb)) {
-                    picture[thumb] = { url: domain + imageSizes[thumb].path + json.key }
+                var picture, thumb
+                if (json.picture) {
+                  picture = json.picture
+                } else {
+                  picture = {}
+                  for (thumb in imageSizes) {
+                    if (imageSizes.hasOwnProperty(thumb)) {
+                      picture[thumb] = { url: domain + imageSizes[thumb].path + json.key }
+                    }
                   }
                 }
 
@@ -1997,13 +2030,15 @@ app.ready(function () {
                   picture.zoom.size = w + 'x' + h
                   // calculate thumbnails sizes
                   for (thumb in imageSizes) {
-                    if (imageSizes.hasOwnProperty(thumb)) {
-                      var px = imageSizes[thumb].size
+                    if (imageSizes.hasOwnProperty(thumb) && picture[thumb]) {
+                      var px = parseInt(picture[thumb].size, 10) || imageSizes[thumb].size
                       if (px) {
                         // resize base
                         picture[thumb].size = w > h
                           ? px + 'x' + Math.round(h * px / w)
                           : Math.round(w * px / h) + 'x' + px
+                      } else {
+                        delete picture[thumb].size
                       }
                     }
                   }
