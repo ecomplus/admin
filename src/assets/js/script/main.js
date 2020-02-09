@@ -1791,19 +1791,18 @@ app.ready(function () {
               // delete all image sizes
               // ref.: https://github.com/ecomclub/storage-api/blob/master/bin/web.js
               var baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
-              var thumb
               if (/^@v2-/.test(baseKey)) {
                 objects.push({ Key: baseKey })
                 if (!/\.webp$/.test(baseKey)) {
-                  for (thumb of ['big', 'normal']) {
+                  ;['big', 'normal'].forEach(function (thumb) {
                     objects.push(
                       { Key: 'imgs/' + thumb + '/' + baseKey },
                       { Key: 'imgs/' + thumb + '/' + baseKey + '.webp' }
                     )
-                  }
+                  })
                 }
               } else {
-                for (thumb in imageSizes) {
+                for (var thumb in imageSizes) {
                   if (imageSizes.hasOwnProperty(thumb)) {
                     objects.push({ Key: imageSizes[thumb].path + baseKey })
                   }
@@ -1860,9 +1859,9 @@ app.ready(function () {
                 if (/^@v2-/.test(baseKey)) {
                   picture.zoom = { url: domain + baseKey }
                   if (!/\.webp$/.test(baseKey)) {
-                    for (thumb of ['big', 'normal']) {
+                    ;['big', 'normal'].forEach(function (thumb) {
                       picture[thumb] = { url: domain + 'imgs/' + thumb + '/' + baseKey + '.webp' }
-                    }
+                    })
                   }
                 } else {
                   for (thumb in imageSizes) {
