@@ -92,8 +92,8 @@
             $itemsOrder.append('<tr><td>' + (i + 1) + '</td>' +
           '  <td>' + data.items[i].name + '/ (' + data.items[i].sku + ')</td>' +
           '  <td>' + data.items[i].quantity + '</td>' +
-          '  <td>' + ecomUtils.formatMoney(data.items[i].price, data.items[i].currency_id || 'BRL', lang) + '</td>' +
-          '  <td>' + ecomUtils.formatMoney((data.items[i].final_price * data.items[i].quantity), data.items[i].currency_id || 'BRL', lang) + '</td></tr>')
+          '  <td>' + window.ecomUtils.formatMoney(data.items[i].final_price, (data.items[i].currency_id || 'BRL'), lang) + '</td>' +
+          '  <td>' + window.ecomUtils.formatMoney((data.items[i].final_price * data.items[i].quantity), (data.items[i].currency_id || 'BRL'), lang) + '</td></tr>')
           }
         }
         $shippingMethod.text(data.shipping_method_label)
