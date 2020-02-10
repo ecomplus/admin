@@ -85,7 +85,7 @@
               for (var ii = 0; ii < filteredMonth.length; ii++) {
                 if (filteredMonth[ii].financial_status) {
                   var order = filteredMonth.length
-                  if (filteredMonth[ii].financial_status.current === 'paid') {
+                  if (filteredMonth[ii].financial_status.current === 'paid' || filteredMonth[ii].financial_status.current === 'authorized') {
                     monthTotalPaid = filteredMonth[ii].amount.total + monthTotalPaid
                     $monthTotal.text(monthTotalPaid.toFixed(2).replace('.', ','))
                     approved = approved + 1
@@ -99,7 +99,7 @@
               for (var iii = 0; iii < filteredLastMonth.length; iii++) {
                 if (filteredLastMonth[iii].financial_status) {
                   var orders = filteredLastMonth.length
-                  if (filteredLastMonth[iii].financial_status.current === 'paid') {
+                  if (filteredLastMonth[iii].financial_status.current === 'paid' || filteredLastMonth[iii].financial_status.current === 'authorized') {
                     monthTotalPaidLast = filteredLastMonth[iii].amount.total + monthTotalPaidLast
                     $lastMonthTotal.text(monthTotalPaidLast.toFixed(2).replace('.', ','))
                     approvedLast = approvedLast + 1
@@ -120,12 +120,9 @@
               for (var i = 0; i < filteredToday.length; i++) {
                 totalAmount = filteredToday[i].amount.total + totalAmount
                 $todayTotal.text(totalAmount.toFixed(2).replace('.', ','))
-                console.log(filteredToday[i].financial_status)
                 if (filteredToday[i].financial_status) {
                   var orderInfo = []
                   orderInfo.push(filteredToday[i]._id, filteredToday[i].number, filteredToday[i].financial_status.current, filteredToday[i].amount.total.toFixed(2).replace('.', ','), filteredToday[i].buyers[0]._id, filteredToday[i].buyers[0].display_name)
-                  console.log(orderInfo)
-                  console.log(filteredToday[i])
                   switch (orderInfo[2]) {
                     case 'under_analysis':
                       orderInfo[2] = 'Em análise'
@@ -168,7 +165,7 @@
                   '  <td><a href="/#/resources/customers/' + orderInfo[4] + ' ">' + orderInfo[5] + ' </a></td>' +
                   '</tr>')
                   var statusOrder = filteredToday[i].financial_status.current
-                  if (statusOrder === 'paid') {
+                  if (statusOrder === 'paid' || statusOrder === 'authorized') {
                     countPaid = countPaid + 1
                   }
                   if (statusOrder === 'voided') {
