@@ -33,15 +33,11 @@
     var mm = today.getMonth()
     var yyyy = today.getFullYear()
     var timezoneCalc = new Date().getTimezoneOffset()
-    var totalAmount = 0
     var approved = 0
-    var monthTotalPaid = 0
-    var totalAmountLast = 0
     var approvedLast = 0
-    var monthTotalPaidLast = 0
     var dataStartYesterday = new Date(yyyy, mm, dd - 1, 0, -timezoneCalc, 0, 0).toISOString()
     var dataEndYesterday = new Date(yyyy, mm, dd - 1, 23, 59 - timezoneCalc, 59, 0).toISOString()
-    var dateStartTwo = new Date(yyyy, mm - 1, dd, 0, -timezoneCalc, 0, 0).toISOString()
+    var dateStartTwo = new Date(yyyy, mm - 1, 1, 0, -timezoneCalc, 0, 0).toISOString()
     var dateEndTwo = new Date(yyyy, mm - 1, 31, 23, 59 - timezoneCalc, 59, 0).toISOString()
     var dataStart = new Date(yyyy, mm, dd, 0, -timezoneCalc, 0, 0).toISOString()
     var dataEnd = new Date(yyyy, mm, dd, 23, 59 - timezoneCalc, 59, 0).toISOString()
@@ -51,6 +47,13 @@
     $storeID.text(storeId)
     var urlStore = 'stores/me.json'
     // search for store name and object id
+    var sumOfAmount = function (a, b) {
+      return {
+        amount: {
+          total: a.amount.total + b.amount.total
+        }
+      }
+    }
     window.callApi(urlStore, 'GET', function (error, schema) {
       if (!error) {
         var storeName = schema.name
@@ -82,44 +85,36 @@
               return item.created_at >= dateStartTwo && item.created_at <= dateEndTwo
             })
             if (filteredMonth.length) {
-              for (var ii = 0; ii < filteredMonth.length; ii++) {
-                if (filteredMonth[ii].financial_status) {
-                  var order = filteredMonth.length
-                  if (filteredMonth[ii].financial_status.current === 'paid' || filteredMonth[ii].financial_status.current === 'authorized') {
-                    monthTotalPaid = filteredMonth[ii].amount.total + monthTotalPaid
-                    $monthTotal.text(monthTotalPaid.toFixed(2).replace('.', ','))
-                    approved = approved + 1
-                    var percentApproved = ((approved / order) * 100).toFixed(2)
-                    $approve.text(percentApproved)
-                  }
+              var filteredMonthPaid = filteredMonth.filter(function (paid) {
+                if (paid.financial_status) {
+                  return paid.financial_status.current === 'paid' || paid.financial_status.current === 'authorized'
                 }
-              }
+              })
+              $monthTotal.text(window.ecomUtils.formatMoney(filteredMonthPaid.reduce(sumOfAmount).amount.total, 'BRL'))
+              var order = filteredMonth.length
+              approved = filteredMonthPaid.length + 1
+              var percentApproved = ((approved / order) * 100).toFixed(2)
+              $approve.text(percentApproved)
             }
             if (filteredLastMonth.length) {
-              for (var iii = 0; iii < filteredLastMonth.length; iii++) {
-                if (filteredLastMonth[iii].financial_status) {
-                  var orders = filteredLastMonth.length
-                  if (filteredLastMonth[iii].financial_status.current === 'paid' || filteredLastMonth[iii].financial_status.current === 'authorized') {
-                    monthTotalPaidLast = filteredLastMonth[iii].amount.total + monthTotalPaidLast
-                    $lastMonthTotal.text(monthTotalPaidLast.toFixed(2).replace('.', ','))
-                    approvedLast = approvedLast + 1
-                    var percentApprovedLast = ((approvedLast / orders) * 100).toFixed(2)
-                    $lastApprove.text(percentApprovedLast)
-                  }
+              var filteredLastMonthPaid = filteredLastMonth.filter(function (paid) {
+                if (paid.financial_status) {
+                  return paid.financial_status.current === 'paid' || paid.financial_status.current === 'authorized'
                 }
-              }
+              })
+              $lastMonthTotal.text(window.ecomUtils.formatMoney(filteredLastMonthPaid.reduce(sumOfAmount).amount.total, 'BRL'))
+              var orders = filteredLastMonth.length
+              approvedLast = filteredLastMonthPaid.length + 1
+              var percentApprovedLast = ((approvedLast / orders) * 100).toFixed(2)
+              $lastApprove.text(percentApprovedLast)
             }
             if (filteredLast.length) {
-              for (var c = 0; c < filteredLast.length; c++) {
-                totalAmountLast = filteredLast[c].amount.total + totalAmountLast
-                $lastTotal.text(totalAmountLast.toFixed(2).replace('.', ','))
-              }
+              $lastTotal.text(window.ecomUtils.formatMoney(filteredLast.reduce(sumOfAmount).amount.total, 'BRL'))
             }
             if (filteredToday.length) {
               appTab.find('#cards-graphs-orders').show()
               for (var i = 0; i < filteredToday.length; i++) {
-                totalAmount = filteredToday[i].amount.total + totalAmount
-                $todayTotal.text(totalAmount.toFixed(2).replace('.', ','))
+                $todayTotal.text(window.ecomUtils.formatMoney(filteredToday.reduce(sumOfAmount).amount.total, 'BRL'))
                 if (filteredToday[i].financial_status) {
                   var orderInfo = []
                   orderInfo.push(filteredToday[i]._id, filteredToday[i].number, filteredToday[i].financial_status.current, filteredToday[i].amount.total.toFixed(2).replace('.', ','), filteredToday[i].buyers[0]._id, filteredToday[i].buyers[0].display_name)
