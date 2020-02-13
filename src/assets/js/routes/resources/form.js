@@ -726,7 +726,7 @@
               var data = Data()
               if (!creating) {
                 // overwrite
-                method = 'PUT'
+                method = 'PATCH'
               } else {
                 method = 'POST'
 
