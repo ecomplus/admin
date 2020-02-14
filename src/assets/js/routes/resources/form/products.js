@@ -1435,24 +1435,30 @@
     }
     $startDate.change(function () {
       var data = Data()
-      var newDateStart = $startDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/).filter(String)
-      var dateStart = new Date(parseInt(newDateStart[2]), (parseInt(newDateStart[1]) - 1), parseInt(newDateStart[0])).toISOString()
       if (!data.hasOwnProperty('price_effective_date')) {
         data.price_effective_date = {}
       }
-      data.price_effective_date.start = dateStart
-      console.log(data)
+      if ($startDate.val()) {
+        var newDateStart = $startDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/).filter(String)
+        var dateStart = new Date(parseInt(newDateStart[2]), (parseInt(newDateStart[1]) - 1), parseInt(newDateStart[0])).toISOString()
+        data.price_effective_date.start = dateStart
+      } else {
+        delete data.price_effective_date['start']
+      }
       commit(data, true)
     })
     $enDate.change(function () {
       var data = Data()
-      var newDateEnd = $enDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/).filter(String)
-      var dateEnd = new Date(parseInt(newDateEnd[2]), (parseInt(newDateEnd[1]) - 1), parseInt(newDateEnd[0])).toISOString()
       if (!data.hasOwnProperty('price_effective_date')) {
         data.price_effective_date = {}
       }
-      data.price_effective_date.end = dateEnd
-      console.log(data)
+      if ($enDate.val()) {
+        var newDateEnd = $enDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/).filter(String)
+        var dateEnd = new Date(parseInt(newDateEnd[2]), (parseInt(newDateEnd[1]) - 1), parseInt(newDateEnd[0])).toISOString()
+        data.price_effective_date.end = dateEnd
+      } else {
+        delete data.price_effective_date['end']
+      }
       commit(data, true)
     })
 
