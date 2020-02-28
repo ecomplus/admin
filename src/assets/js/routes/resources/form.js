@@ -261,21 +261,13 @@
           var remove = function () {
             // remove property
             if (!Array.isArray(data)) {
-              delete data[prop]
+              if (parts.length === 1) {
+                data[prop] = ''
+              } else {
+                delete data[prop]
+              }
             } else {
               data.splice(prop, 1)
-            }
-            if (parts.length) {
-              // remove empty parents
-              data = Data()
-              for (var i = 0; i < parts.length - 1; i++) {
-                var part = parts[i]
-                if (!Object.keys(data[part]).length) {
-                  delete data[part]
-                } else {
-                  data = data[part]
-                }
-              }
             }
           }
 
