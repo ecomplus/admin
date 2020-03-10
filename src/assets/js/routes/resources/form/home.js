@@ -28,6 +28,10 @@
     var $lastApprove = appTab.find('#lastApproved')
     var $lastMonthTotal = appTab.find('#lastMonthAmount')
     var $lastTotal = $lastCardAmount.find('#lastDayAmount')
+    var $monthTotalOrders = appTab.find('#monthTotalOrders')
+    var $monthTotalOrdersApr = appTab.find('#monthTotalOrdersApproved')
+    var $lastMonthTotalOrders = appTab.find('#lastMonthTotalOrders')
+    var $lastMonthTotalOrdersApr = appTab.find('#lastMonthTotalOrdersApproved')
     var today = new Date()
     var dd = today.getDate()
     var mm = today.getMonth()
@@ -92,9 +96,11 @@
               })
               $monthTotal.text(window.ecomUtils.formatMoney(filteredMonthPaid.reduce(sumOfAmount).amount.total, 'BRL'))
               var order = filteredMonth.length
-              approved = filteredMonthPaid.length + 1
+              approved = filteredMonthPaid.length
               var percentApproved = ((approved / order) * 100).toFixed(2)
               $approve.text(percentApproved)
+              $monthTotalOrders.text(order)
+              $monthTotalOrdersApr.text(approved)
             }
             if (filteredLastMonth.length) {
               var filteredLastMonthPaid = filteredLastMonth.filter(function (paid) {
@@ -104,9 +110,11 @@
               })
               $lastMonthTotal.text(window.ecomUtils.formatMoney(filteredLastMonthPaid.reduce(sumOfAmount).amount.total, 'BRL'))
               var orders = filteredLastMonth.length
-              approvedLast = filteredLastMonthPaid.length + 1
+              approvedLast = filteredLastMonthPaid.length
               var percentApprovedLast = ((approvedLast / orders) * 100).toFixed(2)
               $lastApprove.text(percentApprovedLast)
+              $lastMonthTotalOrders.text(orders)
+              $lastMonthTotalOrdersApr.text(approvedLast)
             }
             if (filteredLast.length) {
               $lastTotal.text(window.ecomUtils.formatMoney(filteredLast.reduce(sumOfAmount).amount.total, 'BRL'))
