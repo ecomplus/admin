@@ -22,7 +22,6 @@
     }
     window.callApi('orders.json?fields=buyers,shipping_lines,_id', 'GET', function (error, data) {
       if (!error) {
-        console.log(data)
         var filtered = data.result.filter(function (item) {
           return idInvoice.indexOf(item._id) !== -1
         })
@@ -137,7 +136,6 @@
             '    <input type="hidden" name="desDC_' + (i + 1) + '" value="">' +
             '    <input type="hidden" name="aut_' + (i + 1) + '" checked="">' +
             '    <input type="hidden" name="num_' + (i + 1) + '" value="">')
-          console.log($formTag)
         }
       }
       setTimeout(function () {
