@@ -255,6 +255,7 @@
     "_fields": [
       "number",
       "buyers/display_name",
+      "extra_discount/discount_coupon",
       "status",
       "amount/subtotal",
       "amount/total",
@@ -301,6 +302,13 @@
       "label": {
         "en_us": "Buyer",
         "pt_br": "Comprador"
+      }
+    },
+    "extra_discount/discount_coupon": {
+      "templates": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a>",
+      "label": {
+        "en_us": "Coupon",
+        "pt_br": "Cupom"
       }
     },
     "buyers": {
