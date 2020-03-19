@@ -63,7 +63,6 @@
     })
   }
   updateData()
-  console.log(list)
 
   if (list.length) {
     // delete checkbox element HTML
