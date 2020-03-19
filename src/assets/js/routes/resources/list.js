@@ -635,6 +635,13 @@
                 }
               }
             }
+            if (fieldOpts.templates) {
+              fieldObj.itemTemplate = function (item) {
+                if (item) {
+                  return item
+                }
+              }
+            }
             switch (fieldOpts.type) {
               case 'link':
                 fieldObj.itemTemplate = function (text) {
@@ -930,11 +937,9 @@
                 } else {
                   // handle bulk items edit
                   var data = {}
-                  console.log(bulkEditFields)
                   for (var i = 0; i < bulkEditFields.length; i++) {
                     field = bulkEditFields[i]
                     if (query[field] !== '') {
-                      console.log(query[field])
                       // parse boolean values
                       switch (query[field]) {
                         case 'true':
