@@ -134,7 +134,10 @@
             '    <input type="hidden" name="desUf_' + (i + 1) + '" value="' + provinceTo + '">' +
             '    <input type="hidden" name="selDesUf_' + (i + 1) + '" value="' + provinceTo + '">' +
             '    <input type="hidden" name="desTelefone_' + (i + 1) + '" value="' + phonesCustomer + '">' +
-            '    <input type="hidden" name="desDC_' + (i + 1) + '" value="">')
+            '    <input type="hidden" name="desDC_' + (i + 1) + '" value="">' +
+            '    <input type="hidden" name="aut_' + (i + 1) + '" checked="">' +
+            '    <input type="hidden" name="num_' + (i + 1) + '" value="">')
+          console.log($formTag)
         }
       }
       setTimeout(function () {
