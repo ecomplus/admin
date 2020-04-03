@@ -1,8 +1,12 @@
 const path = require('path')
 const babiliPlugin = require('babili-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-let plugins = [new VueLoaderPlugin()]
+let plugins = [
+  new VueLoaderPlugin(),
+  new HtmlWebpackPlugin()
+]
 
 if (process.env.NODE_ENV === 'production') {
   plugins.push(new babiliPlugin())
@@ -44,6 +48,10 @@ module.exports = {
       {
         test: /\.(png|woff|woff2|eot|ttf|svg|otf)$/,
         loader: 'url-loader?limit=100000'
+      },
+      {
+        test: /\.html$/i,
+        loader: 'html-loader',
       },
     ]
   },
