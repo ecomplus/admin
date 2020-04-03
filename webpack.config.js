@@ -29,6 +29,14 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       },
       {
+        test: /\.s[ac]ss$/i,
+        use: [
+          'style-loader',
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+      {
         test: /\.(png|woff|woff2|eot|ttf|svg|otf)$/,
         loader: 'url-loader?limit=100000'
       },
