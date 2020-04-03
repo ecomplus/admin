@@ -2,10 +2,14 @@ const path = require('path')
 const babiliPlugin = require('babili-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 let plugins = [
   new VueLoaderPlugin(),
-  new HtmlWebpackPlugin()
+  new HtmlWebpackPlugin(),
+  new CopyPlugin([
+    { from: 'src/pages', to: path.resolve(__dirname, 'dist/pages') }
+  ])
 ]
 
 if (process.env.NODE_ENV === 'production') {
@@ -19,6 +23,9 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: 'dist'
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, 'dist')
   },
   module: {
     rules: [
