@@ -1,4 +1,4 @@
 {
-  "presets": ["es2017"],
-  "plugins": []
+  "presets": ["@babel/preset-env"],
+  "plugins": ["@babel/plugin-syntax-dynamic-import"]
 }

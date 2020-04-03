@@ -18,6 +18,7 @@ require('./util.js')
 */
 
 app.ready(function () {
+  console.log('passa aqui')
   var session = {}
   var reload = function () {
     // handle page reload
