@@ -1,7 +1,8 @@
 const path = require('path')
 const babiliPlugin = require('babili-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
-let plugins = []
+let plugins = [new VueLoaderPlugin()]
 
 if (process.env.NODE_ENV === 'production') {
   plugins.push(new babiliPlugin())
@@ -17,6 +18,10 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
