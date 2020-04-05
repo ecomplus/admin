@@ -236,11 +236,7 @@
         endpoint = slug + '.json'
         // default query string
         // limit up to 60 results by default
-        if (slug === 'orders') {
-          params = 'limit=60&sort=-updated_at&fields=buyers,amount,_id,created_at,financial_status,number,status,code,source_name,items,payment_method_label,shipping_method_label,updated_at,extra_discount'
-        } else {
-          params = 'limit=60&sort=-updated_at'
-        }
+        params = 'limit=60&sort=-updated_at'
       }
     } else {
       // specific resource document

@@ -35,7 +35,6 @@
   }
   // startup
   updateData()
-  console.log(list)
   if (list.length) {
     var baseHash = '/' + window.location.hash + '/'
     // search filters
@@ -266,7 +265,6 @@
     var $editMass = $('#products-bulk-action')
     $editMass.find('.edit-selected').click(function () {
       if (!Tab.selectedItems.length > 0) {
-        console.log(Tab.selectedItems)
         app.toast(i18n({
           'en_us': 'No items selected',
           'pt_br': 'Nenhum item selecionado'
@@ -622,7 +620,6 @@
         var filterType = $input.data('filter') || 'terms'
         var value = $input.val()
         // fix input value
-        console.log(!Array.isArray(value))
         if (!Array.isArray(value)) {
           if ($input.data('is-number')) {
             value = stringToNumber(value)
