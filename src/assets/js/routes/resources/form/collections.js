@@ -35,7 +35,7 @@
       var picture = item.pictures
       if (picture[0]) {
         // try small image or use any size
-        var thumb = picture[0].small
+        var thumb = picture[0].small || picture[0].normal
         if (thumb) {
           $img = $Link('<img src="' + thumb.url + '">')
           $img.addClass('cart-item-picture')
@@ -141,7 +141,7 @@
       source: source
     })
 
-    // handle new cart item
+    // handle new collection item
     var newItem = function () {
       // get the item SKU from input value
       var match = $newInput.val().match(/^.*\s\((.*)\)$/)
@@ -166,9 +166,10 @@
           if (product) {
             // create item object
             var data = Data()
-            console.log(data.products)
             var eachproducts
-            if (data.products === undefined) {
+            var productsCollection = data.products
+            var testOfEmpty = Array.isArray(productsCollection) && productsCollection.length
+            if (!testOfEmpty || (productsCollection === undefined)) {
               eachproducts = product._id
             } else {
               for (var ii = 0; ii < data.products.length; ii++) {
