@@ -8,7 +8,9 @@ let plugins = [
   new VueLoaderPlugin(),
   new HtmlWebpackPlugin(),
   new CopyPlugin([
-    { from: 'src/pages', to: path.resolve(__dirname, 'dist/pages') }
+    { from: './public', to: path.resolve(__dirname, 'dist/public') },
+    { from: './src/pages', to: path.resolve(__dirname, 'dist/public') },
+    { from: './src/assets', to: path.resolve(__dirname, 'dist/assets') },
   ])
 ]
 
@@ -22,7 +24,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: 'dist'
+    publicPath: '/'
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'dist')
