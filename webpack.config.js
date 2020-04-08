@@ -1,5 +1,5 @@
 const path = require('path')
-const babiliPlugin = require('babili-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
@@ -15,7 +15,7 @@ let plugins = [
 ]
 
 if (process.env.NODE_ENV === 'production') {
-  plugins.push(new babiliPlugin())
+  plugins.push(new MiniCssExtractPlugin())
 }
 
 
@@ -44,7 +44,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']
+        use: [ MiniCssExtractPlugin.loader, 'style-loader', 'css-loader']
       },
       {
         test: /\.s[ac]ss$/i,
