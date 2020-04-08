@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'production') {
 
 
 module.exports = {
-  entry: './src/app.js',
+  entry: './src/assets/js/script/main.js',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
@@ -44,7 +44,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [ MiniCssExtractPlugin.loader, 'style-loader', 'css-loader']
+        use: [ MiniCssExtractPlugin.loader, 'style-loader', 'css-loader', 'postcss-loader']
       },
       {
         test: /\.s[ac]ss$/i,
