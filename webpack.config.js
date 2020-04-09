@@ -3,6 +3,17 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const { InjectManifest } = require('workbox-webpack-plugin');
+
+let swSrc
+try {
+  swSrc = path.resolve(paths.pub, 'sw.js')
+  if (!fs.existsSync(swSrc)) {
+    swSrc = path.resolve(__dirname, 'public/sw.js')
+  }
+} catch (err) {
+  console.error(err)
+}
 
 let plugins = [
   new VueLoaderPlugin(),
@@ -16,6 +27,7 @@ let plugins = [
 
 if (process.env.NODE_ENV === 'production') {
   plugins.push(new MiniCssExtractPlugin())
+  new InjectManifest({ swSrc, swDest: 'sw.js' })
 }
 
 
@@ -44,7 +56,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [ MiniCssExtractPlugin.loader, 'style-loader', 'css-loader', 'postcss-loader']
+        use: [MiniCssExtractPlugin.loader, 'style-loader', 'css-loader', 'postcss-loader']
       },
       {
         test: /\.s[ac]ss$/i,
