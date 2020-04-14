@@ -5,15 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const { InjectManifest } = require('workbox-webpack-plugin');
 
-let swSrc
-try {
-  swSrc = path.resolve(paths.pub, 'sw.js')
-  if (!fs.existsSync(swSrc)) {
-    swSrc = path.resolve(__dirname, 'public/sw.js')
-  }
-} catch (err) {
-  console.error(err)
-}
+let swSrc = path.resolve(__dirname, 'public/sw.js')
 
 let plugins = [
   new VueLoaderPlugin(),
@@ -32,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
 
 
 module.exports = {
-  entry: './src/assets/js/script/main.js',
+  entry: './src/app.js',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
