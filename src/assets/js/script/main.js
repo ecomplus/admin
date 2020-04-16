@@ -3,6 +3,11 @@
  */
 
 'use strict'
+import '../../../../index.html'
+
+
+
+
 require('./config')
 require('./util.js')
 

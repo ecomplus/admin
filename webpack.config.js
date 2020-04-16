@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -8,9 +9,12 @@ const { InjectManifest } = require('workbox-webpack-plugin');
 let swSrc = path.resolve(__dirname, 'public/sw.js')
 
 let plugins = [
+  new webpack.ProvidePlugin({
+    'popper.js': 'Popper'
+  }),
   new VueLoaderPlugin(),
-  new HtmlWebpackPlugin(),
   new CopyPlugin([
+    { from: './index.html', to: path.resolve(__dirname, 'dist/') },
     { from: './public', to: path.resolve(__dirname, 'dist/public') },
     { from: './src/pages', to: path.resolve(__dirname, 'dist/public') },
     { from: './src/assets', to: path.resolve(__dirname, 'dist/assets') },
@@ -24,7 +28,7 @@ if (process.env.NODE_ENV === 'production') {
 
 
 module.exports = {
-  entry: './src/app.js',
+  entry: './src/assets/js/script/main.js',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
