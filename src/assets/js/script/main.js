@@ -3,10 +3,6 @@
  */
 
 'use strict'
-import '../../../../index.html'
-
-
-
 
 require('./config')
 require('./util.js')
@@ -1058,6 +1054,7 @@ app.ready(function () {
       var paths = route.split('/')
       // final route HTML file URI
       // only the first path
+      console.log('passa aqui...', paths)
       var uri = 'routes/' + paths[0] + '.html'
       for (var i = 1; i < paths.length; i++) {
         // URI param
