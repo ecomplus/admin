@@ -125,7 +125,7 @@
       // render doc number
       var docNumber = buyer.doc_number
       if (docNumber) {
-        html += '<br>' + docNumber
+        html += '<br>' + window.maskDocNumber(buyer)
       }
 
       // link to edit customer
