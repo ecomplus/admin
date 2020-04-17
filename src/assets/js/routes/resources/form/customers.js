@@ -191,9 +191,7 @@
     $birthDate.change(function () {
       var data = Data()
       var newDate = $birthDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/)
-      console.log(newDate)
       var dateNew = newDate.filter(String)
-      console.log(dateNew)
       if (!data.hasOwnProperty('birth_date')) {
         data.birth_date = {}
         if (lang === 'pt_br') {
@@ -308,13 +306,7 @@
       // start the resumed content on em tag
       resumeContent()
     })
-    var maskDocNumber = function () {
-      if (data.doc_type === 'j') {
-        return data.doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
-      } else {
-        return data.doc_number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
-      }
-    }
+
     // Get and save value of staff notes
     $note.change(function () {
       var data = Data()
@@ -327,7 +319,7 @@
         data.staff_notes = {}
       }
     })
-    console.log(data)
+
     if (data.gender) {
     // get gender value
       if (data.gender === 'f') {
@@ -365,7 +357,7 @@
                     '<span class="i18n"> ' +
                     '      <span data-lang="en_us">CPF/CNPJ</span> ' +
                     '      <span data-lang="pt_br">CPF/CNPJ</span>' +
-                    '      </span>: ' + maskDocNumber(data.registry_type, data.doc_number))
+                    '      </span>: ' + window.maskDocNumber(data))
     $abstractStatistic.append(
       '<span class="i18n"> ' +
                     '      <span data-lang="en_us">Number of orders</span> ' +
@@ -375,14 +367,7 @@
                                 '      <span data-lang="en_us">Amount of money in order: </span> ' +
                                 '      <span data-lang="pt_br">Valor total de pedidos: </span>' +
                                 '      </span>' + (window.ecomUtils.formatMoney(data.orders_total_value, data.currency_id) || '0') + '<br>' +
-                                '<span class="i18n"> ' +
-                                            '      <span data-lang="en_us">Amount of money spent: </span> ' +
-                                            '      <span data-lang="pt_br">Valor total de pedidos aprovados: </span>' +
-                                            '      </span>' + (window.ecomUtils.formatMoney(data.total_spent, data.currency_id) || '0') + '<br>' +
-                                            '<span class="i18n"> ' +
-                                                        '      <span data-lang="en_us">Amount of money cancelled: </span> ' +
-                                                        '      <span data-lang="pt_br">Valor total de pedidos cancelados: </span>' +
-                                                        '      </span>' + (window.ecomUtils.formatMoney(data.total_cancelled, data.currency_id) || '0') + '<br>')
+                                '<span class="i18n"> ')
     if (data.orders_count) {
       for (var i = 0; i < data.orders.length; i++) {
         $abstractStatistic.append('<span class="i18n"> ' +

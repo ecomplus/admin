@@ -59,6 +59,14 @@
     tabTitle = resource.label[lang] + ' · ' + tabLabel
   }
 
+  window.maskDocNumber = function (data) {
+    if (data.doc_type === 'j') {
+      return data.doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
+    } else {
+      return data.doc_number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
+    }
+  }
+
   // initial rendering
   var html
 
@@ -236,7 +244,11 @@
         endpoint = slug + '.json'
         // default query string
         // limit up to 60 results by default
-        params = 'limit=60&sort=-updated_at'
+        if (slug === 'orders') {
+          params = 'limit=60&sort=-updated_at&fields=buyers,fulfillment_status,amount,_id,created_at,financial_status,number,status,code,source_name,items,payment_method_label,shipping_method_label,updated_at,extra_discount'
+        } else {
+          params = 'limit=60&sort=-updated_at'
+        }
       }
     } else {
       // specific resource document
