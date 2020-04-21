@@ -30,7 +30,7 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   entry: './src/assets/js/script/main.js',
   output: {
-    filename: 'bundle.js',
+    filename: 'assets/js/script.min.js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
