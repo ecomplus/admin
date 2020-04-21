@@ -17,6 +17,7 @@ let plugins = [
     { from: './index.html', to: path.resolve(__dirname, 'dist/') },
     { from: './public', to: path.resolve(__dirname, 'dist/public') },
     { from: './src/pages', to: path.resolve(__dirname, 'dist/public') },
+    { from: './src/routes', to: path.resolve(__dirname, 'dist/public') },
     { from: './src/assets', to: path.resolve(__dirname, 'dist/assets') },
   ])
 ]
