@@ -1062,66 +1062,100 @@ app.ready(function () {
       }
 
       $('#router > .loading').show()
-      // load HTML content
-      $.ajax({
-        url: uri,
-        dataType: 'html',
-        // timeout in 10s
-        timeout: 10000
+
+      import(`../../../routes/${paths[0]}.html`).then(html => {
+        var elTab = $('#app-tab-' + currentTab)
+        // global to identify tab on route scripts
+        window.tabId = currentTab
+        window.elTab = elTab
+
+        // store data when necessary
+        // commit changes on tab data globally
+        // get tab JSON data globally
+        // improve reactivity
+        window.Tabs[currentTab] = {
+          /*
+          data: {},
+          commit: function () {},
+          load: function () {},
+          pagination: function () {},
+          */
+          state: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {}
+        }
+
+        if (!internal) {
+          // have to force routeReady call after 10s
+          routeReadyTimeout = setTimeout(function () {
+            router('408', true)
+          }, 10000)
+        }
+        // put HTML content
+        elTab.html(html.default)
       })
-        .done(function (html) {
-          // successful response
-          var elTab = $('#app-tab-' + currentTab)
-          // global to identify tab on route scripts
-          window.tabId = currentTab
-          window.elTab = elTab
+      // load HTML content
 
-          // store data when necessary
-          // commit changes on tab data globally
-          // get tab JSON data globally
-          // improve reactivity
-          window.Tabs[currentTab] = {
-            /*
-            data: {},
-            commit: function () {},
-            load: function () {},
-            pagination: function () {},
-            */
-            state: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {}
-          }
+      // Todo: Remover
+      // $.ajax({
+      //   url: uri,
+      //   dataType: 'html',
+      //   // timeout in 10s
+      //   timeout: 10000
+      // })
+      //   .done(function (html) {
+      //     // successful response
+      //     var elTab = $('#app-tab-' + currentTab)
+      //     // global to identify tab on route scripts
+      //     window.tabId = currentTab
+      //     window.elTab = elTab
 
-          if (!internal) {
-            // have to force routeReady call after 10s
-            routeReadyTimeout = setTimeout(function () {
-              router('408', true)
-            }, 10000)
-          }
-          // put HTML content
-          elTab.html(html)
-        })
-        .fail(function (jqXHR, textStatus, err) {
-          if (jqXHR.status === 404) {
-            // not found
-            // internal rewrite
-            window.e404()
-          } else {
-            // do internal route to error page
-            var eNum
-            switch (textStatus) {
-              case 'abort':
-                eNum = '400'
-                break
-              case 'timeout':
-                eNum = '504'
-                break
-              default:
-                // unexpected status
-                console.error(err)
-                eNum = '500'
-            }
-            router(eNum, true)
-          }
-        })
+      //     // store data when necessary
+      //     // commit changes on tab data globally
+      //     // get tab JSON data globally
+      //     // improve reactivity
+      //     window.Tabs[currentTab] = {
+      //       /*
+      //       data: {},
+      //       commit: function () {},
+      //       load: function () {},
+      //       pagination: function () {},
+      //       */
+      //       state: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {}
+      //     }
+
+      //     if (!internal) {
+      //       // have to force routeReady call after 10s
+      //       routeReadyTimeout = setTimeout(function () {
+      //         router('408', true)
+      //       }, 10000)
+      //     }
+      //     // put HTML content
+      //     elTab.html(html)
+      //   })
+      //   .fail(function (jqXHR, textStatus, err) {
+      //     if (jqXHR.status === 404) {
+      //       // not found
+      //       // internal rewrite
+      //       window.e404()
+      //     } else {
+      //       // do internal route to error page
+      //       var eNum
+      //       switch (textStatus) {
+      //         case 'abort':
+      //           eNum = '400'
+      //           break
+      //         case 'timeout':
+      //           eNum = '504'
+      //           break
+      //         default:
+      //           // unexpected status
+      //           console.error(err)
+      //           eNum = '500'
+      //       }
+      //       router(eNum, true)
+      //     }
+      //   })
+
+
     }
 
     var contentPagination = function (prev) {
@@ -1232,7 +1266,8 @@ app.ready(function () {
           waitingRoute = route
           return
         }
-
+        console.log('hashChange...')
+        alert(route)
         router(route)
         // unset save action
         if (tabObj && tabObj.saveAction) {
