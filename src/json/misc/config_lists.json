@@ -152,19 +152,26 @@
     "_fields": [
       "display_name",
       "main_email",
-      "accepts_marketing",
+      "doc_number",
       "enabled",
       "orders_count",
       "orders_total_value"
     ],
     "_hidden_fields": [
       "login",
-      "status"
+      "status",
+      "accepts_marketing"
     ],
     "status": {
       "label": {
         "en_us": "Custom status",
         "pt_br": "Status customizado"
+      }
+    },
+    "doc_number": {
+      "label": {
+        "pt_br": "CPF/CNPJ",
+        "en_us": "Doc number"
       }
     },
     "accepts_marketing": {
