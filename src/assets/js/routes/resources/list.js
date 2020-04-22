@@ -28,6 +28,7 @@
   var data, list
   var updateData = function () {
     data = Tab.data
+
     // map deeper objects
     list = data.result.map(function (doc, index) {
       var newDoc = { _index: index }
@@ -627,13 +628,6 @@
             }
           } else {
             // custom item template by field type
-            if (fieldOpts.templat) {
-              fieldObj.itemTemplate = function (item) {
-                if (item) {
-                  return item
-                }
-              }
-            }
             if (fieldOpts.templates) {
               fieldObj.itemTemplate = function (item) {
                 if (item) {
