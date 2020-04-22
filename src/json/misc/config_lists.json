@@ -152,19 +152,26 @@
     "_fields": [
       "display_name",
       "main_email",
-      "accepts_marketing",
+      "doc_number",
       "enabled",
       "orders_count",
       "orders_total_value"
     ],
     "_hidden_fields": [
       "login",
-      "status"
+      "status",
+      "accepts_marketing"
     ],
     "status": {
       "label": {
         "en_us": "Custom status",
         "pt_br": "Status customizado"
+      }
+    },
+    "doc_number": {
+      "label": {
+        "pt_br": "CPF/CNPJ",
+        "en_us": "Doc number"
       }
     },
     "accepts_marketing": {
@@ -255,7 +262,7 @@
     "_fields": [
       "number",
       "buyers/display_name",
-      "status",
+      "extra_discount/discount_coupon",
       "amount/subtotal",
       "amount/total",
       "financial_status/current",
@@ -269,7 +276,7 @@
       "shipping_method_label",
       "amount/discount",
       "amount/freight",
-      "buyers",
+      "buyers/main_email",
       "items"
     ],
     "channel_id": {
@@ -290,6 +297,12 @@
         "pt_br": "Forma de pagamento"
       }
     },
+    "buyers/main_email": {
+      "label": {
+        "en_us": "Email",
+        "pt_br": "E-mail"
+      }
+    },
     "shipping_method_label": {
       "label": {
         "en_us": "Shipping method",
@@ -297,17 +310,21 @@
       }
     },
     "buyers/display_name": {
-      "templat": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a>",
       "label": {
         "en_us": "Buyer",
         "pt_br": "Comprador"
-      }
-    },
-    "buyers": {
-      "template": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a>"
+      },
+      "templates": ""
     },
     "items": {
       "template": "{{quantity}}x <a href='#/resources/products/{{product_id}}'>{{name}}</a> ({{sku}})"
+    },
+    "extra_discount/discount_coupon": {
+      "cut_string": 30,
+      "label": {
+        "en_us": "Coupon",
+        "pt_br": "Cupom"
+      }
     },
     "number": {
       "label": {
@@ -324,32 +341,6 @@
       },
       "width": 100,
       "cut_string": 10
-    },
-    "status": {
-      "type": "bold",
-      "width": 100,
-      "enum": {
-        "open": {
-          "text": {
-            "en_us": "Open",
-            "pt_br": "Aberto"
-          }
-        },
-        "closed": {
-          "class": "success",
-          "text": {
-            "en_us": "Closed",
-            "pt_br": "Fechado"
-          }
-        },
-        "cancelled": {
-          "class": "danger",
-          "text": {
-            "en_us": "Cancelled",
-            "pt_br": "Cancelado"
-          }
-        }
-      }
     },
     "amount/subtotal": {
       "label": {
