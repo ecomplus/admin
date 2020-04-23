@@ -21,6 +21,7 @@
   var setup = function () {
     // setup basic order data
     var data = Data()
+    console.log(data)
     var orderId = window.location.href
     var urlArray = orderId.split('/')
     var idInvoice = urlArray[urlArray.length - 1]
@@ -125,7 +126,7 @@
       // render doc number
       var docNumber = buyer.doc_number
       if (docNumber) {
-        html += '<br>' + window.maskDocNumber(buyer)
+        html += '<br>' + docNumber
       }
 
       // link to edit customer
