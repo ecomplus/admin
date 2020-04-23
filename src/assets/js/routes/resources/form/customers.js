@@ -109,6 +109,14 @@
       commit(data, true)
     })
 
+    var maskDocNumber = function (data) {
+      if (data.registry_type === 'j') {
+        return data.doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
+      } else {
+        return data.doc_number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
+      }
+    }
+
     // separate fullname
     $fullName.change(function () {
       var data = Data()
@@ -357,7 +365,7 @@
                     '<span class="i18n"> ' +
                     '      <span data-lang="en_us">CPF/CNPJ</span> ' +
                     '      <span data-lang="pt_br">CPF/CNPJ</span>' +
-                    '      </span>: ' + window.maskDocNumber(data))
+                    '      </span>: ' + maskDocNumber(data))
     $abstractStatistic.append(
       '<span class="i18n"> ' +
                     '      <span data-lang="en_us">Number of orders</span> ' +
