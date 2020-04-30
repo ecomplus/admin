@@ -4,6 +4,7 @@
 
 'use strict'
 
+import '../../vendor/shepherd/js/tether'
 require('./config')
 require('./util.js')
 
@@ -751,29 +752,42 @@ app.ready(function () {
       el.hide()
       var parent = el.closest('.ajax-content')
       parent.addClass('ajax')
-
-      $.ajax({
-        url: uri,
-        dataType: 'html',
-        // timeout in 6s
-        timeout: 6000
-      })
-        .done(function (html) {
-          // successful response
-          // put HTML content
-          el.html(html).fadeIn()
-        })
-        .fail(function (jqXHR, textStatus, err) {
+      console.log('loadContent', uri)
+      import (`../../../${uri}`).then(html => {
+        el.html(html.default).fadeIn()
+      }).catch(err =>{
           app.toast(i18n({
-            'en_us': jqXHR.status + ' error, cannot load HTML content',
-            'pt_br': 'Erro ' + jqXHR.status + ', não foi possível carregar o conteúdo HTML'
+            'en_us': err + ' error, cannot load HTML content',
+            'pt_br': 'Erro ' + err + ', não foi possível carregar o conteúdo HTML'
           }))
-        })
-        .always(function () {
+      }).finally(() => {
           setTimeout(function () {
             parent.removeClass('ajax')
           }, 400)
-        })
+      })
+
+      // $.ajax({
+      //   url: uri,
+      //   dataType: 'html',
+      //   // timeout in 6s
+      //   timeout: 6000
+      // })
+      //   .done(function (html) {
+      //     // successful response
+      //     // put HTML content
+      //     el.html(html).fadeIn()
+      //   })
+      //   .fail(function (jqXHR, textStatus, err) {
+      //     app.toast(i18n({
+      //       'en_us': jqXHR.status + ' error, cannot load HTML content',
+      //       'pt_br': 'Erro ' + jqXHR.status + ', não foi possível carregar o conteúdo HTML'
+      //     }))
+      //   })
+      //   .always(function () {
+      //     setTimeout(function () {
+      //       parent.removeClass('ajax')
+      //     }, 400)
+      //   })
     }
 
     var skipNextConfirms = null
@@ -1062,8 +1076,9 @@ app.ready(function () {
       }
 
       $('#router > .loading').show()
-
-      import(`../../../routes/${paths[0]}.html`).then(html => {
+      console.log(uri)
+      import(`../../../${uri}`).then(html => {
+        console.log("html....", html)
         var elTab = $('#app-tab-' + currentTab)
         // global to identify tab on route scripts
         window.tabId = currentTab

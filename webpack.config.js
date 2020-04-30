@@ -19,6 +19,7 @@ let plugins = [
     { from: './src/pages', to: path.resolve(__dirname, 'dist/public') },
     { from: './src/routes', to: path.resolve(__dirname, 'dist/public') },
     { from: './src/assets', to: path.resolve(__dirname, 'dist/assets') },
+    { from: './src/json', to: path.resolve(__dirname, 'dist/json') },
   ])
 ]
 
@@ -35,8 +36,17 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
+  externals: [
+    { tether: 'tether' }
+  ],
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist')
+    contentBase: [path.resolve(__dirname, 'dist/public'), path.join(__dirname, 'dist/assets')],
+    publicPath: '/'
+  },
+  resolve: {
+    alias: {
+
+    }
   },
   module: {
     rules: [
@@ -46,17 +56,29 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: [
+          /node_modules/,
+          path.resolve(__dirname, 'src/assets/plugin'),
+          path.resolve(__dirname, 'src/assets/vendor')
+        ],
         use: {
           loader: 'babel-loader'
         }
       },
       {
         test: /\.css$/,
+        exclude: [
+          path.resolve(__dirname, 'src/assets/plugin'),
+          path.resolve(__dirname, 'src/assets/vendor')
+        ],
         use: [MiniCssExtractPlugin.loader, 'style-loader', 'css-loader', 'postcss-loader']
       },
       {
         test: /\.s[ac]ss$/i,
+        exclude: [
+          path.resolve(__dirname, 'src/assets/plugin'),
+          path.resolve(__dirname, 'src/assets/vendor')
+        ],
         use: [
           'style-loader',
           'css-loader',
@@ -65,11 +87,19 @@ module.exports = {
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg|otf)$/,
-        loader: 'url-loader?limit=100000'
+        loader: 'url-loader?limit=100000',
+        exclude: [
+          path.resolve(__dirname, 'src/assets/plugin'),
+          path.resolve(__dirname, 'src/assets/vendor')
+        ],
       },
       {
         test: /\.html$/i,
         loader: 'html-loader',
+        exclude: [
+          path.resolve(__dirname, 'src/assets/plugin'),
+          path.resolve(__dirname, 'src/assets/vendor')
+        ],
       },
     ]
   },
