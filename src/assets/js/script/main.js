@@ -4,7 +4,6 @@
 
 'use strict'
 
-import '../../vendor/shepherd/js/tether'
 require('./config')
 require('./util.js')
 
@@ -1281,8 +1280,6 @@ app.ready(function () {
           waitingRoute = route
           return
         }
-        console.log('hashChange...')
-        alert(route)
         router(route)
         // unset save action
         if (tabObj && tabObj.saveAction) {

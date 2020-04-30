@@ -9,16 +9,14 @@ const { InjectManifest } = require('workbox-webpack-plugin');
 let swSrc = path.resolve(__dirname, 'public/sw.js')
 
 let plugins = [
-  new webpack.ProvidePlugin({
-    'popper.js': 'Popper'
-  }),
   new VueLoaderPlugin(),
   new CopyPlugin([
     { from: './index.html', to: path.resolve(__dirname, 'dist/') },
     { from: './public', to: path.resolve(__dirname, 'dist/public') },
+    { from: './externals', to: path.resolve(__dirname, 'dist/assets') },
     { from: './src/pages', to: path.resolve(__dirname, 'dist/public') },
     { from: './src/routes', to: path.resolve(__dirname, 'dist/public') },
-    { from: './src/assets', to: path.resolve(__dirname, 'dist/assets') },
+    { from: './src/assets/', to: path.resolve(__dirname, 'dist/assets') },
     { from: './src/json', to: path.resolve(__dirname, 'dist/json') },
   ])
 ]
@@ -58,8 +56,6 @@ module.exports = {
         test: /\.js$/,
         exclude: [
           /node_modules/,
-          path.resolve(__dirname, 'src/assets/plugin'),
-          path.resolve(__dirname, 'src/assets/vendor')
         ],
         use: {
           loader: 'babel-loader'
@@ -67,18 +63,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        exclude: [
-          path.resolve(__dirname, 'src/assets/plugin'),
-          path.resolve(__dirname, 'src/assets/vendor')
-        ],
         use: [MiniCssExtractPlugin.loader, 'style-loader', 'css-loader', 'postcss-loader']
       },
       {
         test: /\.s[ac]ss$/i,
-        exclude: [
-          path.resolve(__dirname, 'src/assets/plugin'),
-          path.resolve(__dirname, 'src/assets/vendor')
-        ],
         use: [
           'style-loader',
           'css-loader',
@@ -88,18 +76,10 @@ module.exports = {
       {
         test: /\.(png|woff|woff2|eot|ttf|svg|otf)$/,
         loader: 'url-loader?limit=100000',
-        exclude: [
-          path.resolve(__dirname, 'src/assets/plugin'),
-          path.resolve(__dirname, 'src/assets/vendor')
-        ],
       },
       {
         test: /\.html$/i,
         loader: 'html-loader',
-        exclude: [
-          path.resolve(__dirname, 'src/assets/plugin'),
-          path.resolve(__dirname, 'src/assets/vendor')
-        ],
       },
     ]
   },
