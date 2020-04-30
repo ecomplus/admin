@@ -653,11 +653,11 @@
 	},
 	"age_group": {
 		"title": {
-			"en_us": "age_group",
-			"pt_br": "faixa_etária"
+			"en_us": "Age group",
+			"pt_br": "Idade"
 		},
 		"options": [
-      {
+			{
 				"option_id": "newborn",
 				"text": {
 					"en_us": "Newborn",
