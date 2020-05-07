@@ -2,10 +2,7 @@
  * Copyright 2018 E-Com Club
  */
 
-(function () {
-  'use strict'
-
-  // current tab ID
+ export const handleList = () => {
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
   var elContainer = $('#t' + tabId + '-tab-normal')
@@ -385,6 +382,7 @@
 
     // load lists configuration JSON
     $.getJSON('json/misc/config_lists.json', function (json) {
+      debugger;
       var config = json[resourceSlug]
       if (config) {
         fields.push({
@@ -1032,4 +1030,4 @@
   setTimeout(function () {
     window.unsetSaveAction()
   }, 200)
-}())
+ }

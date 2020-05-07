@@ -1,416 +1,363 @@
-/*!
- * Copyright 2018 E-Com Club
- */
+import * as resourceHTML from '~/views/resources.html'
+import * as listHTML from '~/views/resources/list.html'
+import { handleError } from '../script/router'
 
-import * as router from '../script/router'
-import Resources from './new-resources'
-
-export const loadResource = () => {
-  'use strict'
-
-  var newResource = new Resources()
-
-  // current tab ID
-  var tabId = window.tabId
-  var Tab = window.Tabs[tabId]
-  // prefix tab ID on content elements IDs
-  window.renderContentIds()
-
-  var slug = window.routeParams[0]
-  if (slug === undefined) {
-    // first URI param is required
-    window.e404()
-    return
-  }
-  var resource = window.apiResources[slug]
-  if (resource === undefined) {
-    // invalid resource slug
-    window.e404()
-    return
+class Resources {
+  constructor(resourceEl) {
+    this.resourceEl = resourceEl
+    this.resourceHTML = resourceHTML
   }
 
-  var lang = window.lang
-  var i18n = window.i18n
+  islisting() {
+    return this.resourceId === undefined
+  }
 
-  var tabLabel, tabTitle
-  var resourceId = window.routeParams[1]
-  var creating, listing
-  if (resourceId === undefined) {
-    // resource root URI
-    // default action
-    tabLabel = i18n({
-      'en_us': 'List',
-      'pt_br': 'Listar'
-    })
-    tabTitle = resource.label[lang]
-    listing = true
-  } else {
-    if (resourceId === 'new') {
-      // create
-      tabLabel = i18n({
+  isNew() {
+    return this.resourceId === 'new'
+  }
+
+
+  getTablabel() {
+    if (this.islisting()) {
+      return this.i18n({
+        'en_us': 'List',
+        'pt_br': 'Listar'
+      })
+    }
+
+    if (this.isNew) {
+      return this.i18n({
         'en_us': 'Create',
         'pt_br': 'Criar'
       })
-      // unset ID
-      resourceId = undefined
-      creating = true
+    }
+    return this.i18n({
+      'en_us': 'Edit',
+      'pt_br': 'Editar'
+    })
+  }
+
+  getTabTitle() {
+    let tabTitle = this.resource.label[this.lang]
+    return this.islisting() ? tabTitle : `${tabTitle} · ${this.tabLabel}`
+  }
+
+  renderH1() {
+    let html = `<strong> ${this.resource.label[this.lang]}</strong> · ${this.tabLabel}`
+    if (this.resourceId === undefined) {
+      $('#t' + this.tabId + '-resource-name').html(html)
     } else {
-      tabLabel = i18n({
-        'en_us': 'Edit',
-        'pt_br': 'Editar'
+      html = `
+        ${html}
+        <a class="btn btn-pure" style="font-size: 10px; background: rgba(223,242,0,0.1); padding: 3px 10px" data-provide="tooltip" id="clipboad" data-placement="top" data-original-title="Clique para copiar ID" data-clipboard-text="${resourceId}">
+          ID <i class="ti-clipboard"></i>
+        </a>
+      `
+      $('#t' + this.tabId + '-resource-name').html(html)
+      $('#clipboad').hover(function () {
+        $(this).tooltip('show')
+      })
+      $('#clipboad').click(function () {
+        $(this).attr('data-original-title', 'ID copiado!')
+        $(this).find('.ti-clipboard').replaceWith('<i class="ti-check"></i>')
+        $(this).tooltip('show')
       })
     }
-    // tab title with resource name and action
-    tabTitle = resource.label[lang] + ' · ' + tabLabel
   }
 
-  // initial rendering
-  var html
+  renderBreadcrump() {
+    const html = `
+    <li class="breadcrumb-item">
+      <a href="/#/resources/${this.slug}">
+        <i class="fa fa-${this.resource.icon}"></i>${this.resource.label[this.lang]}
+      </a>
+    </li>
+    <li class="breadcrumb-item active">
+      ${this.tabLabel}
+    </li>
+    `
+    $('#t' + this.tabId + '-breadcrumbs').append(html)
+  }
 
-  // render H1
-  newResource.renderH1()
+  getJsonEditor() {
+    const editor = ace.edit('t' + this.tabId + '-code-editor')
+    editor.setTheme('ace/theme/dawn')
+    editor.session.setMode('ace/mode/json')
+    $('#t' + this.tabId + '-code-tab').click(function () {
+      // focus on editor and force viewport update
+      setTimeout(function () {
+        editor.focus()
+        editor.renderer.updateFull()
+      }, 200)
+    })
+    return editor
+  }
 
-  // render breadcrumb links
-  html = '<li class="breadcrumb-item">' +
-    '<a href="/#/resources/' + slug + '">' +
-    '<i class="fa fa-' + resource.icon + '"></i> ' + resource.label[lang] +
-    '</a>' +
-    '</li>' +
-    '<li class="breadcrumb-item active">' +
-    tabLabel +
-    '</li>'
-  $('#t' + tabId + '-breadcrumbs').append(html)
+  getFormHtml() {
+    throw 'Method not implemented in child class'
+  }
 
-  // set up JSON code editor
-  var editor = ace.edit('t' + tabId + '-code-editor')
-  editor.setTheme('ace/theme/dawn')
-  editor.session.setMode('ace/mode/json')
-  $('#t' + tabId + '-code-tab').click(function () {
-    // focus on editor and force viewport update
-    setTimeout(function () {
-      editor.focus()
-      editor.renderer.updateFull()
-    }, 200)
-  })
+  loadListContent(el) {
+    this.handleHtml(this.listHTML, el)
+    window.routeReady(this.tabTitle)
+  }
 
-  var loadContent = function (err) {
-    // check err if callback
-    if (!err) {
-      // HTML card content
-      var contentUri
-      if (listing === true) {
-        if (slug !== 'products') {
-          // custom list
-          contentUri = '~/routes/resources/list.html'
-        } else {
-          // products list
-          contentUri = '~/routes/resources/list/products.html'
-        }
-      } else {
-        // form to create and edit
-        contentUri = 'routes/resources/form/' + slug + '.html'
-
-        // commit changes on JSON document globally
-        // improve reactivity
-        Tab.commit = commit
-
-        editor.on('blur', function () {
-          // code editor manually changed (?)
-          var json
-          try {
-            json = JSON.parse(editor.session.getValue())
-          } catch (e) {
-            // invalid JSON
-            return
-          }
-          // update data
-          Tab.data = json
-        })
-        editor.on('change', function () {
-          window.triggerUnsaved(tabId)
-        })
+  loadFormContent(el) {
+    // commit changes on JSON document globally
+    // improve reactivity
+    Tab.commit = this.commit
+    editor.on('blur', function () {
+      // code editor manually changed (?)
+      var json
+      try {
+        json = JSON.parse(editor.session.getValue())
+      } catch (e) {
+        // invalid JSON
+        return
       }
-      router.loadContent(contentUri, $('#t' + tabId + '-tab-normal'))
-    }
-    // show content and unlock screen
-    window.routeReady(tabTitle)
+      // update data
+      Tab.data = json
+    })
+    editor.on('change', function () {
+      window.triggerUnsaved(tabId)
+    })
+    this.handleHtml(this.formHTML, el)
+    window.routeReady(this.tabTitle)
   }
 
-  var commit = function (json, updated) {
+  loadContent() {
+    const el = $('#t' + this.tabId + '-tab-normal')
+    if (this.islisting()) {
+      return this.loadListContent(el)
+    }
+    return this.loadFormContent(el)
+  }
+
+  handleHtml(html, el) {
+    const parent = el.closest('.ajax-content')
+    parent.addClass('ajax')
+    el.html(html)
+    parent.removeClass('ajax')
+  }
+
+  commit(json, updated) {
     if (!updated) {
       // pass JSON data
-      Tab.data = json
+      this.Tab.data = json
     }
     // reset Ace editor content
-    editor.session.setValue(JSON.stringify(json, null, 4))
+    this.editor.session.setValue(JSON.stringify(json, null, 4))
   }
 
-  // set resource params globally
-  Tab.resourceId = resourceId
-  Tab.slug = slug
-
-  if (creating !== true) {
-    var endpoint, load, params
-    if (resourceId === undefined) {
-      // disable edition
-      editor.setReadOnly(true)
-
-      if (slug === 'products') {
-        // ELS Request Body Search
-        // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html
-        // default body
-        // ref: https://github.com/ecomclub/ecomplus-sdk-js/blob/master/main.js
-        var Body = {
-          sort: [
-            { available: { order: 'desc' } },
-            '_score',
-            { ad_relevance: { order: 'desc' } },
-            { _id: { order: 'desc' } }
-          ],
-          aggs: {
-            'brands.name': { terms: { field: 'brands.name' } },
-            'categories.name': { terms: { field: 'categories.name' } },
-            status: { terms: { field: 'status' } },
-            // Metric Aggregations
-            min_price: { min: { field: 'price' } },
-            max_price: { max: { field: 'price' } },
-            avg_price: { avg: { field: 'price' } }
-          },
-          // results limit
-          size: 30
-        }
-
-        // specific load function for products listing
-        load = function (callback, query, sort, page, size) {
-          var cb = function (err, json) {
-            if (!err) {
-              // set tab JSON data
-              commit(json)
-            }
-            if (typeof callback === 'function') {
-              callback(null, json)
-            }
-          }
-
-          // body data
-          var body
-          if (query) {
-            // merge params without changing original default body
-            // query object with search results conditions
-            body = Object.assign({ query: query }, Body)
-          } else {
-            body = Body
-          }
-          if (sort) {
-            // replace sort rule
-            if (body.sort.length > 4) {
-              body.sort[2] = sort
-            } else {
-              body.sort.splice(2, 0, sort)
-            }
-          }
-          // pagination
-          if (size) {
-            body.size = size
-          }
-          if (page) {
-            body.from = body.size * page
-          } else {
-            body.from = 0
-          }
-
-          // call Search API
-          window.callSearchApi('items.json', 'POST', cb, body)
-        }
-      } else {
-        // generic resource listing
-        endpoint = slug + '.json'
-        // default query string
-        // limit up to 60 results by default
-        if (slug === 'orders') {
-          params = 'limit=60&sort=-updated_at&fields=buyers,amount,_id,created_at,financial_status,number,status,code,source_name,items,payment_method_label,shipping_method_label,updated_at,extra_discount'
-        } else {
-          params = 'limit=60&sort=-updated_at'
-        }
+  handlerPaginationButtons() {
+    if (this.Tab.state.pagination) {
+      const $next = $('#t' + tabId + '-pagination-next')
+      const $prev = $('#t' + tabId + '-pagination-prev')
+      if (this.Tab.state.page === 0) {
+        $prev.addClass('disabled')
       }
-    } else {
-      // specific resource document
-      endpoint = slug + '/' + resourceId + '.json'
-
-      // handle pagination buttons
-      if (Tab.state.pagination) {
-        var $next = $('#t' + tabId + '-pagination-next')
-        var $prev = $('#t' + tabId + '-pagination-prev')
-        if (Tab.state.page === 0) {
-          $prev.addClass('disabled')
-        }
-        // global tab pagination handler
-        Tab.pagination = Tab.state.pagination
-        $prev.click(function () {
-          $(this).addClass('disabled')
-          Tab.pagination(true)
-        })
-        $next.click(function () {
-          $(this).addClass('disabled')
-          Tab.pagination()
-        }).closest('.pagination-arrows').fadeIn()
-      }
+      // global tab pagination handler
+      this.Tab.pagination = Tab.state.pagination
+      const self = this
+      $prev.click(function () {
+        $(this).addClass('disabled')
+        self.Tab.pagination(true)
+      })
+      $next.click(function () {
+        $(this).addClass('disabled')
+        self.Tab.pagination()
+      }).closest('.pagination-arrows').fadeIn()
     }
+  }
 
-    if (!load) {
-      // default load function
-      load = function (callback, params) {
-        var uri = endpoint
-        if (params) {
-          uri += '?' + params
-        }
-
-        // call Store API
-        window.callApi(uri, 'GET', function (err, json) {
-          if (!err) {
-            if (resourceId !== undefined) {
-              // editing
-              // show modification timestamps
-              if (json.created_at) {
-                var dateList = ['day', 'month', 'year', 'hour', 'minute', 'second']
-                if (json.updated_at) {
-                  $('#t' + tabId + '-updated-at').text(formatDate(json.updated_at, dateList))
-                }
-                $('#t' + tabId + '-created-at').text(formatDate(json.created_at, dateList))
-                  .closest('.document-dates').fadeIn()
-              }
-
-              // remove common immutable data
-              delete json._id
-              delete json.store_id
-              delete json.created_at
-              delete json.updated_at
-            }
-            // set tab JSON data
-            commit(json)
-          }
-
-          if (typeof callback === 'function') {
-            callback(null, json)
-          }
-        })
-      }
-    }
-    // load JSON data globally
-    Tab.load = load
-
-    // show create document button
-    $('#t' + tabId + '-new').fadeIn().click(function () {
+  showCreateButton() {
+    $('#t' + this.tabId + '-new').fadeIn().click(function () {
       // redirect to create document page
       window.location = '/' + window.location.hash + '/new'
     })
+  }
 
-    // handle delete and edit list items
-    Tab.selectedItems = []
-    Tab.editItemsCallback = function () {
+  showDeleteButton() {
+    // show delete button
+    $('#t' + this.tabId + '-delete').fadeIn().click(function () {
+      this.bulkActionDelete('DELETE')
+    })
+  }
+
+  bulkAction(method, bodyObject) {
+    var todo = this.Tab.selectedItems.length
+    if (todo > 0) {
+      $('#modal-saved').modal('show')
+      var cb = Tab.editItemsCallback()
+      // call API to delete documents
+      var done = 0
+      // collect all requests errors
+      var errors = []
+
+      var next = function () {
+        var callback = function (err) {
+          if (err) {
+            errors.push(err)
+          }
+          done++
+          if (done === todo) {
+            // end
+            if (typeof cb === 'function') {
+              cb(errors)
+            }
+            // reset selected IDs
+            this.Tab.selectedItems = []
+          } else {
+            next()
+          }
+        }
+        var id = this.Tab.selectedItems[done]
+        window.callApi(this.slug + '/' + id + '.json', method, callback, bodyObject)
+      }
+      $('#list-save-changes').click(next)
+      $('#ignore-unsaved').click(function () {
+        this.Tab.selectedItems = []
+        this.loadData()
+      })
+    } else if (!this.resourceId) {
+      // nothing to do, alert
+      app.toast(i18n({
+        'en_us': 'No items selected',
+        'pt_br': 'Nenhum item selecionado'
+      }))
+    }
+  }
+
+  bulkActionDelete(method, bodyObject) {
+    var todo = this.Tab.selectedItems.length
+    if (todo > 0) {
+      var cb = this.Tab.editItemsCallback()
+      // call API to delete documents
+      var done = 0
+      // collect all requests errors
+      var errors = []
+
+      var next = function () {
+        var callback = function (err) {
+          if (err) {
+            errors.push(err)
+          }
+          done++
+          if (done === todo) {
+            // end
+            if (typeof cb === 'function') {
+              cb(errors)
+            }
+            // reset selected IDs
+            this.Tab.selectedItems = []
+          } else {
+            next()
+          }
+        }
+        var id = this.Tab.selectedItems[done]
+        window.callApi(this.slug + '/' + id + '.json', method, callback, bodyObject)
+      }
+      next()
+    } else if (!this.resourceId) {
+      // nothing to do, alert
+      app.toast(i18n({
+        'en_us': 'No items selected',
+        'pt_br': 'Nenhum item selecionado'
+      }))
+    }
+  }
+
+  preLoadData() {
+    // sobrescrver em product e orders
+    let params, endpoint
+    if (this.islisting()) {
+      this.editor.setReadOnly(true)
+      endpoint = `${this.slug}.json`
+      params = 'limit=60&sort=-updated_at'
+    } else {
+      endpoint = `${this.slug}/${this.resourceId}.json`
+      this.handlerPaginationButtons()
+    }
+    return { params, endpoint }
+  }
+
+  loadData() {
+    debugger;
+    const self = this
+    if (this.isNew()) {
+      this.commit({})
+      return this.loadContent()
+    }
+    const { params, endpoint } = this.preLoadData()
+    let uri = endpoint
+    if (params) {
+      uri += '?' + params
+    }
+
+    window.callApi(uri, 'GET', function (err, json) {
+      if (!err) {
+        if (!self.isNew()) {
+          // editing
+          // show modification timestamps
+          if (json.created_at) {
+            var dateList = ['day', 'month', 'year', 'hour', 'minute', 'second']
+            if (json.updated_at) {
+              $('#t' + self.tabId + '-updated-at').text(formatDate(json.updated_at, dateList))
+            }
+            $('#t' + self.tabId + '-created-at').text(formatDate(json.created_at, dateList))
+              .closest('.document-dates').fadeIn()
+          }
+
+          // remove common immutable data
+          delete json._id
+          delete json.store_id
+          delete json.created_at
+          delete json.updated_at
+        }
+        // set tab JSON data
+        self.commit(json)
+      }
+      self.loadContent()
+    })
+
+    this.Tab.selectedItems = []
+    this.Tab.editItemsCallback = function () {
       // returns callback for bulk action end
       return function () { }
     }
-    Tab.editItems = function (bodyObject) {
+
+    this.Tab.editItems = function (bodyObject) {
       bulkAction('PATCH', bodyObject)
     }
+  }
 
-    // handle bulk items edit
-    var bulkAction = function (method, bodyObject) {
-      var todo = Tab.selectedItems.length
-      if (todo > 0) {
-        $('#modal-saved').modal('show')
-        var cb = Tab.editItemsCallback()
-        // call API to delete documents
-        var done = 0
-        // collect all requests errors
-        var errors = []
-
-        var next = function () {
-          var callback = function (err) {
-            if (err) {
-              errors.push(err)
-            }
-            done++
-            if (done === todo) {
-              // end
-              if (typeof cb === 'function') {
-                cb(errors)
-              }
-              // reset selected IDs
-              Tab.selectedItems = []
-            } else {
-              next()
-            }
-          }
-          var id = Tab.selectedItems[done]
-          window.callApi(slug + '/' + id + '.json', method, callback, bodyObject)
-        }
-        $('#list-save-changes').click(next)
-        $('#ignore-unsaved').click(function () {
-          Tab.selectedItems = []
-          load(loadContent, params)
-        })
-      } else if (!resourceId) {
-        // nothing to do, alert
-        app.toast(i18n({
-          'en_us': 'No items selected',
-          'pt_br': 'Nenhum item selecionado'
-        }))
-      }
+  handleResource() {
+    const parent = this.resourceEl.closest('.ajax-content')
+    parent.addClass('ajax')
+    this.resourceEl.html(this.resourceHTML)
+    this.tabId = window.tabId
+    this.Tab = window.Tabs[tabId]
+    window.renderContentIds()
+    this.resourceId = window.routeParams[1]
+    this.slug = window.routeParams[0]
+    if (!this.slug) {
+      handleError('404', $('#t' + tabId + '-tab-normal'))
     }
-
-    // handle bulk items delet
-    var bulkActionDelete = function (method, bodyObject) {
-      var todo = Tab.selectedItems.length
-      if (todo > 0) {
-        var cb = Tab.editItemsCallback()
-        // call API to delete documents
-        var done = 0
-        // collect all requests errors
-        var errors = []
-
-        var next = function () {
-          var callback = function (err) {
-            if (err) {
-              errors.push(err)
-            }
-            done++
-            if (done === todo) {
-              // end
-              if (typeof cb === 'function') {
-                cb(errors)
-              }
-              // reset selected IDs
-              Tab.selectedItems = []
-            } else {
-              next()
-            }
-          }
-          var id = Tab.selectedItems[done]
-          window.callApi(slug + '/' + id + '.json', method, callback, bodyObject)
-        }
-        next()
-      } else if (!resourceId) {
-        // nothing to do, alert
-        app.toast(i18n({
-          'en_us': 'No items selected',
-          'pt_br': 'Nenhum item selecionado'
-        }))
-      }
-    }
-
-    // show delete button
-    $('#t' + tabId + '-delete').fadeIn().click(function () {
-      bulkActionDelete('DELETE')
-    })
-
-    // preload data, then load HTML content
-    load(loadContent, params)
-  } else {
-    // creating
-    // starts with empty object
-    commit({})
-    loadContent()
+    this.Tab.resourceId = this.resourceId
+    this.Tab.slug = this.slug
+    this.Tab.load = this.loadData
+    this.resource = window.apiResources[this.slug]
+    this.lang = window.lang
+    this.i18n = window.i18n
+    this.tabLabel = this.getTablabel()
+    this.listing = this.islisting()
+    this.creating = this.isNew()
+    this.tabTitle = this.getTabTitle()
+    this.editor = this.getJsonEditor()
+    this.listHTML = listHTML
+    this.formHTML = this.getFormHtml()
+    this.loadData()
   }
 }
+
+export default Resources
