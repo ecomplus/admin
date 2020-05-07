@@ -6,6 +6,7 @@
 
 require('./config')
 require('./util.js')
+import { router, handleError } from  './router'
 
 /*
 |--------------------------------------------------------------------------
@@ -745,50 +746,6 @@ app.ready(function () {
     // use tabs functions and objects globally
     window.Tabs = {}
 
-    // general function to load HTML content
-    window.loadContent = function (uri, el) {
-      // show loading spinner
-      el.hide()
-      var parent = el.closest('.ajax-content')
-      parent.addClass('ajax')
-      console.log('loadContent', uri)
-      import (`../../../${uri}`).then(html => {
-        el.html(html.default).fadeIn()
-      }).catch(err =>{
-          app.toast(i18n({
-            'en_us': err + ' error, cannot load HTML content',
-            'pt_br': 'Erro ' + err + ', não foi possível carregar o conteúdo HTML'
-          }))
-      }).finally(() => {
-          setTimeout(function () {
-            parent.removeClass('ajax')
-          }, 400)
-      })
-
-      // $.ajax({
-      //   url: uri,
-      //   dataType: 'html',
-      //   // timeout in 6s
-      //   timeout: 6000
-      // })
-      //   .done(function (html) {
-      //     // successful response
-      //     // put HTML content
-      //     el.html(html).fadeIn()
-      //   })
-      //   .fail(function (jqXHR, textStatus, err) {
-      //     app.toast(i18n({
-      //       'en_us': jqXHR.status + ' error, cannot load HTML content',
-      //       'pt_br': 'Erro ' + jqXHR.status + ', não foi possível carregar o conteúdo HTML'
-      //     }))
-      //   })
-      //   .always(function () {
-      //     setTimeout(function () {
-      //       parent.removeClass('ajax')
-      //     }, 400)
-      //   })
-    }
-
     var skipNextConfirms = null
     var confirmationTimeout
     var requestControl = function (confirm) {
@@ -1047,131 +1004,6 @@ app.ready(function () {
       closeTab(currentTab)
     })
 
-    var router = function (route, internal) {
-      if (!internal) {
-        if (routeInProgress === true) {
-          // routing in progress
-          return
-        }
-        // console.log('Go to route => ' + route)
-        if (currentTab !== null) {
-          // add route to history
-          appTabs[currentTab].routesHistory.push(route)
-        }
-      }
-      routeInProgress = true
-
-      // reset route parameters
-      window.routeParams = []
-      var paths = route.split('/')
-      // final route HTML file URI
-      // only the first path
-      var uri = 'routes/' + paths[0] + '.html'
-      for (var i = 1; i < paths.length; i++) {
-        // URI param
-        if (paths[i] !== '') {
-          window.routeParams.push(paths[i])
-        }
-      }
-
-      $('#router > .loading').show()
-      console.log(uri)
-      import(`../../../${uri}`).then(html => {
-        console.log("html....", html)
-        var elTab = $('#app-tab-' + currentTab)
-        // global to identify tab on route scripts
-        window.tabId = currentTab
-        window.elTab = elTab
-
-        // store data when necessary
-        // commit changes on tab data globally
-        // get tab JSON data globally
-        // improve reactivity
-        window.Tabs[currentTab] = {
-          /*
-          data: {},
-          commit: function () {},
-          load: function () {},
-          pagination: function () {},
-          */
-          state: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {}
-        }
-
-        if (!internal) {
-          // have to force routeReady call after 10s
-          routeReadyTimeout = setTimeout(function () {
-            router('408', true)
-          }, 10000)
-        }
-        // put HTML content
-        elTab.html(html.default)
-      })
-      // load HTML content
-
-      // Todo: Remover
-      // $.ajax({
-      //   url: uri,
-      //   dataType: 'html',
-      //   // timeout in 10s
-      //   timeout: 10000
-      // })
-      //   .done(function (html) {
-      //     // successful response
-      //     var elTab = $('#app-tab-' + currentTab)
-      //     // global to identify tab on route scripts
-      //     window.tabId = currentTab
-      //     window.elTab = elTab
-
-      //     // store data when necessary
-      //     // commit changes on tab data globally
-      //     // get tab JSON data globally
-      //     // improve reactivity
-      //     window.Tabs[currentTab] = {
-      //       /*
-      //       data: {},
-      //       commit: function () {},
-      //       load: function () {},
-      //       pagination: function () {},
-      //       */
-      //       state: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {}
-      //     }
-
-      //     if (!internal) {
-      //       // have to force routeReady call after 10s
-      //       routeReadyTimeout = setTimeout(function () {
-      //         router('408', true)
-      //       }, 10000)
-      //     }
-      //     // put HTML content
-      //     elTab.html(html)
-      //   })
-      //   .fail(function (jqXHR, textStatus, err) {
-      //     if (jqXHR.status === 404) {
-      //       // not found
-      //       // internal rewrite
-      //       window.e404()
-      //     } else {
-      //       // do internal route to error page
-      //       var eNum
-      //       switch (textStatus) {
-      //         case 'abort':
-      //           eNum = '400'
-      //           break
-      //         case 'timeout':
-      //           eNum = '504'
-      //           break
-      //         default:
-      //           // unexpected status
-      //           console.error(err)
-      //           eNum = '500'
-      //       }
-      //       router(eNum, true)
-      //     }
-      //   })
-
-
-    }
-
     var contentPagination = function (prev) {
       // handle pagination inside current tab content if any
       var pagination = window.Tabs[currentTab].pagination
@@ -1229,7 +1061,7 @@ app.ready(function () {
 
     // global 404 error function
     window.e404 = function () {
-      router('404', true)
+      handleError('404', $('#app-tab-' + currentTab))
     }
 
     var checkTabsRoutes = function (hash) {
@@ -1280,7 +1112,7 @@ app.ready(function () {
           waitingRoute = route
           return
         }
-        router(route)
+        router(route, false, routeInProgress, currentTab, appTabs, routeReadyTimeout)
         // unset save action
         if (tabObj && tabObj.saveAction) {
           // leaving form page
