@@ -3,9 +3,7 @@
  * Copyright 2018 E-Com Club
  */
 
-(function () {
-  'use strict'
-
+export const handleList = () => {
   // current tab ID
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
@@ -772,4 +770,4 @@
   setTimeout(function () {
     window.unsetSaveAction()
   }, 200)
-}())
+}

@@ -2,10 +2,7 @@
  * Copyright 2018 E-Com Club
  */
 
-(function () {
-  'use strict'
-
-  // current tab ID
+export const handleForm = () => {
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
   // lang of page
@@ -1899,4 +1896,4 @@
       }
     })
   }
-}())
+}

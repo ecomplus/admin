@@ -1,19 +1,19 @@
-import cartsFormHTML from '~/views/resources/form/carts.html'
+import * as ordersFormHTML from '~/views/resources/form/orders.html'
 import Resources from '../../controllers/resources'
 import { handleList } from '../../controllers/resources/list'
 import * as form from '../../controllers/resources/form'
-import * as cartsForm from '../../controllers/resources/form/carts'
+import * as ordersForm from '../../controllers/resources/form/orders'
 
-class CartsResource extends Resources {
+class OrdersResource extends Resources {
   constructor(resourceEl) {
     super(resourceEl)
-    this.formHTML = cartsFormHTML
+    this.formHTML = ordersFormHTML
     this.listLoaders = [handleList]
     this.formLoaders = [
       form.handleForm,
-      cartsForm.handleForm
+      ordersForm.handleForm
     ]
   }
 }
 
-export default CartsResource
+export default OrdersResource

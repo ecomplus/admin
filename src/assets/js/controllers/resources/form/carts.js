@@ -2,10 +2,7 @@
  * Copyright 2018 E-Com Club
  */
 
-(function () {
-  'use strict'
-
-  // current tab ID
+export const handleForm = () => {
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
   // edit JSON document
@@ -125,7 +122,7 @@
           // row count
           $('<th>', {
             scope: 'row',
-            html: [ $remove, (index + 1) ]
+            html: [$remove, (index + 1)]
           }),
           // product or variation SKU with link to edit page
           $('<td>', { html: $Link(item.sku || '') }),
@@ -182,12 +179,12 @@
             var item = searchResults[i]._source
             if (!item.variations || !item.variations.length) {
               // add product to matches
-              add([ item.name + ' (' + item.sku + ')' ])
+              add([item.name + ' (' + item.sku + ')'])
             } else {
               // add variations only
               for (var ii = 0; ii < item.variations.length; ii++) {
                 var variation = item.variations[ii]
-                add([ variation.name + ' (' + variation.sku + ')' ])
+                add([variation.name + ' (' + variation.sku + ')'])
               }
             }
           }
@@ -266,7 +263,7 @@
                 for (i = 0; i < product.pictures.length; i++) {
                   var picture = product.pictures[i]
                   if (picture._id === variation.picture_id) {
-                    variation.pictures = [ picture ]
+                    variation.pictures = [picture]
                     break
                   }
                 }
@@ -325,4 +322,4 @@
   } else {
     $(document).one('form-' + tabId, setup)
   }
-}())
+}

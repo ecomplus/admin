@@ -382,7 +382,6 @@
 
     // load lists configuration JSON
     $.getJSON('json/misc/config_lists.json', function (json) {
-      debugger;
       var config = json[resourceSlug]
       if (config) {
         fields.push({

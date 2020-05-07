@@ -2,9 +2,7 @@
  * Copyright 2018 E-Com Club
  */
 
-(function () {
-  'use strict'
-  // lang of page
+export const handleForm = () => {
   var lang = window.lang
   // current tab ID
   var tabId = window.tabId
@@ -309,10 +307,12 @@
       resumeContent()
     })
     var maskDocNumber = function () {
-      if (data.doc_type === 'j') {
-        return data.doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
-      } else {
-        return data.doc_number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
+      if (data.doc_type) {
+        if (data.doc_type === 'j') {
+          return data.doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
+        } else {
+          return data.doc_number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
+        }
       }
     }
     // Get and save value of staff notes
@@ -329,67 +329,67 @@
     })
     console.log(data)
     if (data.gender) {
-    // get gender value
+      // get gender value
       if (data.gender === 'f') {
         var gender = '<span class="i18n"> ' +
-        '      <span data-lang="en_us">Female</span> ' +
-        '      <span data-lang="pt_br">Feminino</span>' +
-        '      </span> '
+          '      <span data-lang="en_us">Female</span> ' +
+          '      <span data-lang="pt_br">Feminino</span>' +
+          '      </span> '
       } else if (data.gender === 'm') {
         gender = '<span class="i18n"> ' +
-        '      <span data-lang="en_us">Male</span> ' +
-        '      <span data-lang="pt_br">Masculino</span>' +
-        '      </span> '
+          '      <span data-lang="en_us">Male</span> ' +
+          '      <span data-lang="pt_br">Masculino</span>' +
+          '      </span> '
       }
       if (data.gender === 'x') {
         gender = '<span class="i18n"> ' +
-        '      <span data-lang="en_us">Others</span> ' +
-        '      <span data-lang="pt_br">Outros</span>' +
-        '      </span> '
+          '      <span data-lang="en_us">Others</span> ' +
+          '      <span data-lang="pt_br">Outros</span>' +
+          '      </span> '
       }
     }
     // create and show all information about the costumer
     $abstractText.append(
       '<span class="i18n"> ' +
-                    '      <span data-lang="en_us">Name</span> ' +
-                    '      <span data-lang="pt_br">Nome</span>' +
-                    '      </span>: ' + fullName + '<br>' +
-                    '<span class="i18n"> ' +
-                    '      <span data-lang="en_us">Birth Date</span> ' +
-                    '      <span data-lang="pt_br">Data de Nascimento</span>' +
-                    '      </span>: ' + date + '<br>' +
-                    '<span class="i18n"> ' +
-                    '      <span data-lang="en_us">Gender</span> ' +
-                    '      <span data-lang="pt_br">Gênero</span>' +
-                    '      </span>: ' + (gender || 'Não configurado') + '<br>' +
-                    '<span class="i18n"> ' +
-                    '      <span data-lang="en_us">CPF/CNPJ</span> ' +
-                    '      <span data-lang="pt_br">CPF/CNPJ</span>' +
-                    '      </span>: ' + maskDocNumber(data.registry_type, data.doc_number))
+      '      <span data-lang="en_us">Name</span> ' +
+      '      <span data-lang="pt_br">Nome</span>' +
+      '      </span>: ' + fullName + '<br>' +
+      '<span class="i18n"> ' +
+      '      <span data-lang="en_us">Birth Date</span> ' +
+      '      <span data-lang="pt_br">Data de Nascimento</span>' +
+      '      </span>: ' + date + '<br>' +
+      '<span class="i18n"> ' +
+      '      <span data-lang="en_us">Gender</span> ' +
+      '      <span data-lang="pt_br">Gênero</span>' +
+      '      </span>: ' + (gender || 'Não configurado') + '<br>' +
+      '<span class="i18n"> ' +
+      '      <span data-lang="en_us">CPF/CNPJ</span> ' +
+      '      <span data-lang="pt_br">CPF/CNPJ</span>' +
+      '      </span>: ' + maskDocNumber(data.registry_type, data.doc_number))
     $abstractStatistic.append(
       '<span class="i18n"> ' +
-                    '      <span data-lang="en_us">Number of orders</span> ' +
-                    '      <span data-lang="pt_br">Quantidade de pedidos</span>' +
-                    '      </span>: ' + (data.orders_count || 'Nenhum pedido realizado') + '<br>' +
-                    '<span class="i18n"> ' +
-                                '      <span data-lang="en_us">Amount of money in order: </span> ' +
-                                '      <span data-lang="pt_br">Valor total de pedidos: </span>' +
-                                '      </span>' + (window.ecomUtils.formatMoney(data.orders_total_value, data.currency_id) || '0') + '<br>' +
-                                '<span class="i18n"> ' +
-                                            '      <span data-lang="en_us">Amount of money spent: </span> ' +
-                                            '      <span data-lang="pt_br">Valor total de pedidos aprovados: </span>' +
-                                            '      </span>' + (window.ecomUtils.formatMoney(data.total_spent, data.currency_id) || '0') + '<br>' +
-                                            '<span class="i18n"> ' +
-                                                        '      <span data-lang="en_us">Amount of money cancelled: </span> ' +
-                                                        '      <span data-lang="pt_br">Valor total de pedidos cancelados: </span>' +
-                                                        '      </span>' + (window.ecomUtils.formatMoney(data.total_cancelled, data.currency_id) || '0') + '<br>')
+      '      <span data-lang="en_us">Number of orders</span> ' +
+      '      <span data-lang="pt_br">Quantidade de pedidos</span>' +
+      '      </span>: ' + (data.orders_count || 'Nenhum pedido realizado') + '<br>' +
+      '<span class="i18n"> ' +
+      '      <span data-lang="en_us">Amount of money in order: </span> ' +
+      '      <span data-lang="pt_br">Valor total de pedidos: </span>' +
+      '      </span>' + (window.ecomUtils.formatMoney(data.orders_total_value, data.currency_id) || '0') + '<br>' +
+      '<span class="i18n"> ' +
+      '      <span data-lang="en_us">Amount of money spent: </span> ' +
+      '      <span data-lang="pt_br">Valor total de pedidos aprovados: </span>' +
+      '      </span>' + (window.ecomUtils.formatMoney(data.total_spent, data.currency_id) || '0') + '<br>' +
+      '<span class="i18n"> ' +
+      '      <span data-lang="en_us">Amount of money cancelled: </span> ' +
+      '      <span data-lang="pt_br">Valor total de pedidos cancelados: </span>' +
+      '      </span>' + (window.ecomUtils.formatMoney(data.total_cancelled, data.currency_id) || '0') + '<br>')
     if (data.orders_count) {
       for (var i = 0; i < data.orders.length; i++) {
         $abstractStatistic.append('<span class="i18n"> ' +
-                      '      <span data-lang="en_us">Order</span> ' +
-                      '      <span data-lang="pt_br">Pedido</span>' +
-                      '      </span>: <a href="/#/resources/orders/' + data.orders[i]._id + '">' + data.orders[i].number + '</a><br>' +
-                      '<span class="i18n"> ')
+          '      <span data-lang="en_us">Order</span> ' +
+          '      <span data-lang="pt_br">Pedido</span>' +
+          '      </span>: <a href="/#/resources/orders/' + data.orders[i]._id + '">' + data.orders[i].number + '</a><br>' +
+          '<span class="i18n"> ')
       }
     }
   }
@@ -400,4 +400,4 @@
   } else {
     $(document).one('form-' + tabId, setup)
   }
-}())
+}
