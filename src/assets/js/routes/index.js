@@ -23,14 +23,5 @@ export const routes = [
       const customerResource = new CustomerResource(el)
       customerResource.handleResource()
     }
-  },
-  {
-    path: '/resources',
-    children: [
-      {
-        path: '/customers',
-        load: (el) => customers.load(el)
-      }
-    ]
-  },
+  }
 ]
