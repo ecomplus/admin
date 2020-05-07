@@ -1,4 +1,4 @@
-import customerFormHTML from '~/views/resources/form/customers.html'
+import cartsFormHTML from '~/views/resources/form/carts.html'
 import Resources from '../../controllers/resources'
 import { handleList } from '../../controllers/resources/list'
 
@@ -8,7 +8,7 @@ class CustomerResource extends Resources {
   }
 
   getFormHtml() {
-    return customerFormHTML
+    return cartsFormHTML
   }
 
   handleResource() {
