@@ -2,7 +2,9 @@ import * as home from './modules/home'
 import * as settings from './modules/settings'
 import * as apps from './modules/apps'
 import CustomerResource from './modules/customers'
-import CartsResource from './modules/customers'
+import CartsResource from './modules/carts'
+import OrdersResource from './modules/orders'
+import ProductsResource from './modules/products'
 
 export const routes = [
   {
@@ -18,6 +20,13 @@ export const routes = [
     load: (el) => apps.load(el)
   },
   {
+    path: '/resources/orders',
+    load: (el) => {
+      const ordersResource = new OrdersResource(el)
+      ordersResource.handleResource()
+    }
+  },
+  {
     path: '/resources/customers',
     load: (el) => {
       const customerResource = new CustomerResource(el)
@@ -29,6 +38,13 @@ export const routes = [
     load: (el) => {
       const cartsResource = new CartsResource(el)
       cartsResource.handleResource()
+    }
+  },
+  {
+    path: '/resources/products',
+    load: (el) => {
+      const productsResource = new ProductsResource(el)
+      productsResource.handleResource()
     }
   }
 ]

@@ -2,10 +2,7 @@
  * Copyright 2018 E-Com Club
  */
 
-(function () {
-  'use strict'
-
-  // current tab ID
+export const handleForm = () => {
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
   var elContainer = $('#t' + tabId + '-tab-normal')
@@ -376,12 +373,12 @@
           $editor.summernote({
             // https://summernote.org/deep-dive/
             toolbar: [
-              [ 'style', [ 'style' ] ],
-              [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear' ] ],
-              [ 'color', [ 'color' ] ],
-              [ 'insert', [ 'picture', 'link', 'video', 'hr', 'table' ] ],
-              [ 'paragraph', [ 'ul', 'ol', 'paragraph' ] ],
-              [ 'misc', [ 'codeview', 'help' ] ]
+              ['style', ['style']],
+              ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+              ['color', ['color']],
+              ['insert', ['picture', 'link', 'video', 'hr', 'table']],
+              ['paragraph', ['ul', 'ol', 'paragraph']],
+              ['misc', ['codeview', 'help']]
             ],
             height: 300,
             dialogsFade: true,
@@ -695,8 +692,8 @@
           var $el = $('<div/>', {
             'class': 'select-image scrollable scrollable-x ajax-content',
             html: '<div class="ajax-overlay"><div class="spinner-circle-material"></div></div>' +
-                  '<div class="images-list"></div>' +
-                  '<p><i class="fa fa-picture-o"></i>&nbsp; ' + text + '</p>',
+              '<div class="images-list"></div>' +
+              '<p><i class="fa fa-picture-o"></i>&nbsp; ' + text + '</p>',
             click: selectImage
           })
           $(this).replaceWith($el)
@@ -803,7 +800,7 @@
       var fill = $(this).data('fill')
       todo++
       // array of destination elements
-      var $els = [ $(this) ]
+      var $els = [$(this)]
       // add select elements with the same options (same resource)
       $form.find('select[data-fill-same="' + $(this).attr('name') + '"]').each(function () {
         $els.push($(this))
@@ -875,4 +872,4 @@
       })
     })
   }
-}())
+}

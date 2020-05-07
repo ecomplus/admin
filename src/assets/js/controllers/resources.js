@@ -6,6 +6,10 @@ class Resources {
   constructor(resourceEl) {
     this.resourceEl = resourceEl
     this.resourceHTML = resourceHTML
+    this.formHTML = ''
+    this.listHTML = listHTML
+    this.formLoaders = []
+    this.listLoaders = []
   }
 
   islisting() {
@@ -93,10 +97,6 @@ class Resources {
     return editor
   }
 
-  getFormHtml() {
-    throw 'Method not implemented in child class'
-  }
-
   loadListContent(el) {
     this.handleHtml(this.listHTML, el)
     window.routeReady(this.tabTitle)
@@ -123,6 +123,7 @@ class Resources {
       window.triggerUnsaved(self.tabId)
     })
     this.handleHtml(this.formHTML, el)
+
     window.routeReady(this.tabTitle)
   }
 
@@ -139,6 +140,15 @@ class Resources {
     parent.addClass('ajax')
     el.html(html)
     parent.removeClass('ajax')
+    if (this.islisting()) {
+      for (const liatLoader of this.listLoaders) {
+        liatLoader()
+      }
+    } else {
+      for (const formLoader of this.formLoaders) {
+        formLoader()
+      }
+    }
   }
 
   commit(json, updated) {
@@ -288,6 +298,8 @@ class Resources {
       this.commit({})
       return this.loadContent()
     }
+    this.showCreateButton()
+    this.showDeleteButton()
     const { params, endpoint } = this.preLoadData()
     let uri = endpoint
     if (params) {
@@ -354,8 +366,6 @@ class Resources {
     this.creating = this.isNew()
     this.tabTitle = this.getTabTitle()
     this.editor = this.getJsonEditor()
-    this.listHTML = listHTML
-    this.formHTML = this.getFormHtml()
     this.loadData()
   }
 }

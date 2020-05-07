@@ -1,10 +1,7 @@
 /*!
  * Copyright 2018 E-Com Club
  */
-
-(function () {
-  'use strict'
-
+export const handleForm = () => {
   var lang = window.lang
   var i18n = window.i18n
 
@@ -497,4 +494,4 @@
   } else {
     $(document).one('form-' + tabId, setup)
   }
-}())
+}
