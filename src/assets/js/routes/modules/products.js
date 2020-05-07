@@ -49,10 +49,9 @@ class ProductsResource extends Resources {
     if (query) {
       // merge params without changing original default body
       // query object with search results conditions
-      body = Object.assign({ query: query }, Body)
-    } else {
-      body = Body
+      body = Object.assign({ query: query }, body)
     }
+
     if (sort) {
       // replace sort rule
       if (body.sort.length > 4) {
