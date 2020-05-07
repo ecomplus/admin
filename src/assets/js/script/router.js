@@ -45,29 +45,8 @@ export const router = (route, internal, routeInProgress, currentTab, appTabs, ro
   // }
 }
 
-export const loadContent = function (uri, el) {
-  el.hide()
-  var parent = el.closest('.ajax-content')
-  parent.addClass('ajax')
-  console.log('loadContent', uri)
-  import(uri).then(html => {
-    el.html(html.default).fadeIn()
-  }).catch(err => {
-    app.toast(i18n({
-      'en_us': err + ' error, cannot load HTML content',
-      'pt_br': 'Erro ' + err + ', não foi possível carregar o conteúdo HTML'
-    }))
-  }).finally(() => {
-    setTimeout(function () {
-      parent.removeClass('ajax')
-    }, 400)
-  })
-}
-
-
-
 export const handleRoute = (uri, el) => {
-  const route = routes.find(route => route.path === uri)
+  const route = routes.find(route => uri.startsWith(route.path))
   if (!route) {
     return handleError('404', el)
   }

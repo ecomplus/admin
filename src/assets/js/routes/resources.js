@@ -105,21 +105,22 @@ class Resources {
   loadFormContent(el) {
     // commit changes on JSON document globally
     // improve reactivity
-    Tab.commit = this.commit
-    editor.on('blur', function () {
+    this.Tab.commit = this.commit
+    const self = this
+    this.editor.on('blur', function () {
       // code editor manually changed (?)
       var json
       try {
-        json = JSON.parse(editor.session.getValue())
+        json = JSON.parse(self.editor.session.getValue())
       } catch (e) {
         // invalid JSON
         return
       }
       // update data
-      Tab.data = json
+      self.Tab.data = json
     })
-    editor.on('change', function () {
-      window.triggerUnsaved(tabId)
+    this.editor.on('change', function () {
+      window.triggerUnsaved(self.tabId)
     })
     this.handleHtml(this.formHTML, el)
     window.routeReady(this.tabTitle)
@@ -282,7 +283,6 @@ class Resources {
   }
 
   loadData() {
-    debugger;
     const self = this
     if (this.isNew()) {
       this.commit({})
