@@ -2,7 +2,7 @@ import * as home from './modules/home'
 import * as resources from './modules/resources'
 import * as settings from './modules/settings'
 import * as apps from './modules/apps'
-import * as customers from './modules/customers'
+import CustomerResource from './modules/customers'
 
 export const routes = [
   {
@@ -19,7 +19,10 @@ export const routes = [
   },
   {
     path: '/resources/customers',
-    load: (el) => customers.load(el)
+    load: (el) => {
+      const customerResource = new CustomerResource(el)
+      customerResource.handleResource()
+    }
   },
   {
     path: '/resources',
