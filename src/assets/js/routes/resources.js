@@ -2,8 +2,13 @@
  * Copyright 2018 E-Com Club
  */
 
-(function () {
+import * as router from '../script/router'
+import Resources from './new-resources'
+
+export const loadResource = () => {
   'use strict'
+
+  var newResource = new Resources()
 
   // current tab ID
   var tabId = window.tabId
@@ -63,31 +68,17 @@
   var html
 
   // render H1
-  if (resourceId === undefined) {
-    html = '<strong>' + resource.label[lang] + '</strong> · ' + tabLabel
-    $('#t' + tabId + '-resource-name').html(html)
-  } else {
-    html = '<strong>' + resource.label[lang] + '</strong> · ' + tabLabel + ' ' + '<a class="btn btn-pure" style="font-size: 10px; background: rgba(223,242,0,0.1); padding: 3px 10px" data-provide="tooltip" id="clipboad" data-placement="top" data-original-title="Clique para copiar ID" data-clipboard-text="' + resourceId + '">ID <i class="ti-clipboard"></i></a>'
-    $('#t' + tabId + '-resource-name').html(html)
-    $('#clipboad').hover(function () {
-      $(this).tooltip('show')
-    })
-    $('#clipboad').click(function () {
-      $(this).attr('data-original-title', 'ID copiado!')
-      $(this).find('.ti-clipboard').replaceWith('<i class="ti-check"></i>')
-      $(this).tooltip('show')
-    })
-  }
+  newResource.renderH1()
 
   // render breadcrumb links
   html = '<li class="breadcrumb-item">' +
-               '<a href="/#/resources/' + slug + '">' +
-                 '<i class="fa fa-' + resource.icon + '"></i> ' + resource.label[lang] +
-               '</a>' +
-             '</li>' +
-             '<li class="breadcrumb-item active">' +
-               tabLabel +
-             '</li>'
+    '<a href="/#/resources/' + slug + '">' +
+    '<i class="fa fa-' + resource.icon + '"></i> ' + resource.label[lang] +
+    '</a>' +
+    '</li>' +
+    '<li class="breadcrumb-item active">' +
+    tabLabel +
+    '</li>'
   $('#t' + tabId + '-breadcrumbs').append(html)
 
   // set up JSON code editor
@@ -110,10 +101,10 @@
       if (listing === true) {
         if (slug !== 'products') {
           // custom list
-          contentUri = 'routes/resources/list.html'
+          contentUri = '~/routes/resources/list.html'
         } else {
           // products list
-          contentUri = 'routes/resources/list/products.html'
+          contentUri = '~/routes/resources/list/products.html'
         }
       } else {
         // form to create and edit
@@ -139,7 +130,7 @@
           window.triggerUnsaved(tabId)
         })
       }
-      window.loadContent(contentUri, $('#t' + tabId + '-tab-normal'))
+      router.loadContent(contentUri, $('#t' + tabId + '-tab-normal'))
     }
     // show content and unlock screen
     window.routeReady(tabTitle)
@@ -281,7 +272,7 @@
               // editing
               // show modification timestamps
               if (json.created_at) {
-                var dateList = [ 'day', 'month', 'year', 'hour', 'minute', 'second' ]
+                var dateList = ['day', 'month', 'year', 'hour', 'minute', 'second']
                 if (json.updated_at) {
                   $('#t' + tabId + '-updated-at').text(formatDate(json.updated_at, dateList))
                 }
@@ -318,7 +309,7 @@
     Tab.selectedItems = []
     Tab.editItemsCallback = function () {
       // returns callback for bulk action end
-      return function () {}
+      return function () { }
     }
     Tab.editItems = function (bodyObject) {
       bulkAction('PATCH', bodyObject)
@@ -422,4 +413,4 @@
     commit({})
     loadContent()
   }
-}())
+}
