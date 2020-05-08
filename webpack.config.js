@@ -1,9 +1,8 @@
 const path = require('path')
-const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const { InjectManifest } = require('workbox-webpack-plugin');
 
 let swSrc = path.resolve(__dirname, 'public/sw.js')
@@ -23,7 +22,7 @@ let plugins = [
 
 if (process.env.NODE_ENV === 'production') {
   plugins.push(new MiniCssExtractPlugin())
-  new InjectManifest({ swSrc, swDest: 'sw.js' })
+  plugins.push(new InjectManifest({ swSrc, swDest: 'sw.js' }))
 }
 
 
@@ -34,9 +33,9 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
-  externals: [
-    { tether: 'tether' }
-  ],
+  optimization: {
+    minimizer: [new TerserPlugin()]
+  },
   devServer: {
     contentBase: [path.resolve(__dirname, 'dist/public'), path.join(__dirname, 'dist/assets')],
     publicPath: '/'
