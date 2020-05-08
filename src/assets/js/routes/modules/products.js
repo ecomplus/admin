@@ -18,6 +18,9 @@ class ProductsResource extends Resources {
   }
 
   preLoadData() {
+    if (!this.islisting()) {
+      return super.preLoadData()
+    }
     let body = {
       sort: [
         { available: { order: 'desc' } },
@@ -41,7 +44,7 @@ class ProductsResource extends Resources {
   }
 
   loadData(query, sort, page, size) {
-    if (this.isNew()) {
+    if (!this.islisting()) {
       return super.loadData()
     }
     let { body } = this.preLoadData()

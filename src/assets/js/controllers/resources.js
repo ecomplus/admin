@@ -152,12 +152,16 @@ class Resources {
   }
 
   commit(json, updated) {
+    let self = this
+    if (!self) {
+      self = window.Tabs[window.tabId].resourceInstance
+    }
     if (!updated) {
       // pass JSON data
-      this.Tab.data = json
+      self.Tab.data = json
     }
     // reset Ace editor content
-    this.editor.session.setValue(JSON.stringify(json, null, 4))
+    self.editor.session.setValue(JSON.stringify(json, null, 4))
   }
 
   handlerPaginationButtons() {
@@ -168,7 +172,7 @@ class Resources {
         $prev.addClass('disabled')
       }
       // global tab pagination handler
-      this.Tab.pagination = Tab.state.pagination
+      this.Tab.pagination = this.Tab.state.pagination
       const self = this
       $prev.click(function () {
         $(this).addClass('disabled')
@@ -279,7 +283,6 @@ class Resources {
   }
 
   preLoadData() {
-    // sobrescrver em product e orders
     let params, endpoint
     if (this.islisting()) {
       this.editor.setReadOnly(true)
@@ -348,13 +351,14 @@ class Resources {
     parent.addClass('ajax')
     this.resourceEl.html(this.resourceHTML)
     this.tabId = window.tabId
-    this.Tab = window.Tabs[tabId]
+    this.Tab = window.Tabs[this.tabId]
     window.renderContentIds()
     this.resourceId = window.routeParams[1]
     this.slug = window.routeParams[0]
     if (!this.slug) {
       handleError('404', $('#t' + tabId + '-tab-normal'))
     }
+    this.Tab.resourceInstance = this
     this.Tab.resourceId = this.resourceId
     this.Tab.slug = this.slug
     this.Tab.load = this.loadData
