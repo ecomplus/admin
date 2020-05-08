@@ -8,6 +8,7 @@ import ProductsResource from './modules/products'
 import BrandsResource from './modules/brands'
 import CategoriesResource from './modules/categories'
 import CollectionsResource from './modules/collections'
+import GridsResource from './modules/grids'
 
 
 export const routes = [
@@ -70,6 +71,13 @@ export const routes = [
     load: (el) => {
       const collectionsResource = new CollectionsResource(el)
       collectionsResource.handleResource()
+    }
+  },
+  {
+    path: '/resources/grids',
+    load: (el) => {
+      const gridsResource = new GridsResource(el)
+      gridsResource.handleResource()
     }
   },
 ]
