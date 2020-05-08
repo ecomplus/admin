@@ -8,7 +8,7 @@ export const handleForm = () => {
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
   // edit JSON document
-  var commit = Tab.commit
+  var commit = Tab.resourceInstance.commit
   var Data = function () {
     // current data from global variable
     return Tab.data
