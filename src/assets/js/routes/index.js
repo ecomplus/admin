@@ -2,6 +2,7 @@ import * as home from './modules/home'
 import * as settings from './modules/settings'
 import * as apps from './modules/apps'
 import * as tagstandart from './modules/tagstandart'
+import * as invoices from './modules/invoices'
 import CustomerResource from './modules/customers'
 import CartsResource from './modules/carts'
 import OrdersResource from './modules/orders'
@@ -28,6 +29,10 @@ export const routes = [
   {
     path: '/tagstandart',
     load: (el) => tagstandart.load(el)
+  },
+  {
+    path: '/invoices',
+    load: (el) => invoices.load(el)
   },
   {
     path: '/resources/orders',

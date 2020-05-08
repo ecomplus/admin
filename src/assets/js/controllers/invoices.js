@@ -2,9 +2,7 @@
  * Copyright 2018 E-Com Club
  */
 
-(function () {
-  'use strict'
-  // current tab ID
+export const handleInvoices = () => {
   var tabId = window.tabId
   var ecomUtils = window.ecomUtils
   var lang = window.lang
@@ -180,4 +178,4 @@
   } else {
     $(document).one('form-' + tabId, setup)
   }
-}())
+}
