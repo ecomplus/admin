@@ -2,9 +2,7 @@
  * Copyright 2018 E-Com Club
  */
 
-(function () {
-  'use strict'
-
+export const handleForm = () => {
   // current tab ID
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
@@ -31,44 +29,44 @@
     var liIndex = 0
     // option li element HTML
     var liOption = '<div class="input-group">' +
-                     '<div class="input-group-prepend">' +
-                       '<span class="input-group-text">' +
-                         '<div class="custom-control custom-checkbox">' +
-                           '<input type="checkbox" class="custom-control-input">' +
-                           '<label class="custom-control-label"> </label>' +
-                         '</div>' +
-                       '</span>' +
-                     '</div>' +
-                     '<input class="form-control" type="text" name="options." ' +
-                       'data-json="true" data-object-assign="true">' +
-                     '<span class="input-group-append">' +
-                       '<button class="btn btn-light" type="button"><i class="fa fa-cog"></i></button>' +
-                     '</span>' +
-                   '</div>' +
-                   '<div class="mt-10 hidden edit-option">' +
-                     '<div class="mb-10 row no-gutters">' +
-                       '<div class="col mr-2">' +
-                         '<input type="text" class="form-control colorpicker" ' +
-                           'name="options.colors[].0" placeholder="' + dictionary.color + ' 1">' +
-                       '</div>' +
-                       '<div class="col mr-2">' +
-                         '<input type="text" class="form-control colorpicker" ' +
-                           'name="options.colors[].1" placeholder="' + dictionary.color + ' 2">' +
-                       '</div>' +
-                       '<div class="col">' +
-                         '<input type="text" class="form-control colorpicker" ' +
-                           'name="options.colors[].2" placeholder="' + dictionary.color + ' 3">' +
-                       '</div>' +
-                     '</div>' +
-                     '<a class="i18n" href="javascript:;" onclick="$(this).next().slideToggle()">' +
-                       '<span data-lang="en_us">+ Option\'s additional cost</span>' +
-                       '<span data-lang="pt_br">+ Custo adicional da opção</span>' +
-                     '</a>' +
-                     '<div class="hidden mt-10">' +
-                       // copy content from add to price block
-                       $('#t' + tabId + '-add-to-price').html().replace(/(add_to_price)/g, 'options.$1') +
-                     '</div>' +
-                   '</div>'
+      '<div class="input-group-prepend">' +
+      '<span class="input-group-text">' +
+      '<div class="custom-control custom-checkbox">' +
+      '<input type="checkbox" class="custom-control-input">' +
+      '<label class="custom-control-label"> </label>' +
+      '</div>' +
+      '</span>' +
+      '</div>' +
+      '<input class="form-control" type="text" name="options." ' +
+      'data-json="true" data-object-assign="true">' +
+      '<span class="input-group-append">' +
+      '<button class="btn btn-light" type="button"><i class="fa fa-cog"></i></button>' +
+      '</span>' +
+      '</div>' +
+      '<div class="mt-10 hidden edit-option">' +
+      '<div class="mb-10 row no-gutters">' +
+      '<div class="col mr-2">' +
+      '<input type="text" class="form-control colorpicker" ' +
+      'name="options.colors[].0" placeholder="' + dictionary.color + ' 1">' +
+      '</div>' +
+      '<div class="col mr-2">' +
+      '<input type="text" class="form-control colorpicker" ' +
+      'name="options.colors[].1" placeholder="' + dictionary.color + ' 2">' +
+      '</div>' +
+      '<div class="col">' +
+      '<input type="text" class="form-control colorpicker" ' +
+      'name="options.colors[].2" placeholder="' + dictionary.color + ' 3">' +
+      '</div>' +
+      '</div>' +
+      '<a class="i18n" href="javascript:;" onclick="$(this).next().slideToggle()">' +
+      '<span data-lang="en_us">+ Option\'s additional cost</span>' +
+      '<span data-lang="pt_br">+ Custo adicional da opção</span>' +
+      '</a>' +
+      '<div class="hidden mt-10">' +
+      // copy content from add to price block
+      $('#t' + tabId + '-add-to-price').html().replace(/(add_to_price)/g, 'options.$1') +
+      '</div>' +
+      '</div>'
 
     var addOption = function (optionObject) {
       // add li element
@@ -187,4 +185,4 @@
     // ready to setup and show form
     Tab.formSetup()
   }
-}())
+}
