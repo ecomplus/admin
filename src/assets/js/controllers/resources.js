@@ -295,15 +295,19 @@ class Resources {
     return { params, endpoint }
   }
 
-  loadData() {
-    const self = this
-    if (this.isNew()) {
-      this.commit({})
-      return this.loadContent()
+  loadData(callback, params) {
+    let self = this
+    if (!self) {
+      self = window.Tabs[window.tabId].resourceInstance
     }
-    this.showCreateButton()
-    this.showDeleteButton()
-    const { params, endpoint } = this.preLoadData()
+    if (self.isNew()) {
+      self.commit({})
+      return self.loadContent()
+    }
+    self.showCreateButton()
+    self.showDeleteButton()
+    const { otherParams, endpoint } = self.preLoadData()
+    params = params ? params : otherParams
     let uri = endpoint
     if (params) {
       uri += '?' + params
@@ -332,16 +336,19 @@ class Resources {
         // set tab JSON data
         self.commit(json)
       }
+      if (typeof(callback) === 'function') {
+        callback()
+      }
       self.loadContent()
     })
 
-    this.Tab.selectedItems = []
-    this.Tab.editItemsCallback = function () {
+    self.Tab.selectedItems = []
+    self.Tab.editItemsCallback = function () {
       // returns callback for bulk action end
       return function () { }
     }
 
-    this.Tab.editItems = function (bodyObject) {
+    self.Tab.editItems = function (bodyObject) {
       bulkAction('PATCH', bodyObject)
     }
   }

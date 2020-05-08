@@ -314,7 +314,7 @@
             cb()
           }
         }
-        Tab.load(callback, params)
+        Tab.resourceInstance.loadData(callback, params)
       } else if (!waiting) {
         waiting = true
       }
