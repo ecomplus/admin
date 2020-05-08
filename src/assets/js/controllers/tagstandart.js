@@ -2,9 +2,7 @@
  * Copyright 2018 E-Com Club
  */
 
-(function () {
-  'use strict'
-  // current tab ID
+export const handleTagStandart = () => {
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
   // render cart items on table
@@ -103,4 +101,4 @@
   } else {
     $(document).one('form-' + tabId, setup)
   }
-}())
+}
