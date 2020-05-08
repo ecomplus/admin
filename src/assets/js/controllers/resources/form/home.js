@@ -2,9 +2,7 @@
  * Copyright 2018 E-Com Club
  */
 
-(function () {
-  'use strict'
-  // current tab ID
+export const handleForm = () => {
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
   // render cart items on table
@@ -162,11 +160,11 @@
                       break
                   }
                   $order.append('<tr>' +
-                  '  <th scope="row"><a href="/#/resources/orders/' + orderInfo[0] + ' ">' + orderInfo[1] + ' </a></th>' +
-                  '  <td>' + orderInfo[2] + '</td>' +
-                  '  <td> R$ ' + orderInfo[3] + '</td>' +
-                  '  <td><a href="/#/resources/customers/' + orderInfo[4] + ' ">' + orderInfo[5] + ' </a></td>' +
-                  '</tr>')
+                    '  <th scope="row"><a href="/#/resources/orders/' + orderInfo[0] + ' ">' + orderInfo[1] + ' </a></th>' +
+                    '  <td>' + orderInfo[2] + '</td>' +
+                    '  <td> R$ ' + orderInfo[3] + '</td>' +
+                    '  <td><a href="/#/resources/customers/' + orderInfo[4] + ' ">' + orderInfo[5] + ' </a></td>' +
+                    '</tr>')
                   var statusOrder = filteredToday[i].financial_status.current
                   if (statusOrder === 'paid' || statusOrder === 'authorized') {
                     countPaid = countPaid + 1
@@ -234,4 +232,4 @@
   } else {
     $(document).one('form-' + tabId, setup)
   }
-}())
+}
