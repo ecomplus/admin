@@ -6,6 +6,7 @@ import CartsResource from './modules/carts'
 import OrdersResource from './modules/orders'
 import ProductsResource from './modules/products'
 import BrandsResource from './modules/brands'
+import CategoriesResource from './modules/categories'
 
 export const routes = [
   {
@@ -49,10 +50,10 @@ export const routes = [
     }
   },
   {
-    path: '/resources/brands',
+    path: '/resources/categories',
     load: (el) => {
-      const brandsResource = new BrandsResource(el)
-      brandsResource.handleResource()
+      const categoriesResource = new CategoriesResource(el)
+      categoriesResource.handleResource()
     }
   },
 ]
