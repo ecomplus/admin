@@ -2,8 +2,7 @@
  * Copyright 2018 E-Com Club
  */
 
-(function () {
-  'use strict'
+export const handleForm = () => {
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
   window.renderContentIds()
@@ -290,4 +289,4 @@
   } else {
     $(document).one('form-' + tabId, setup)
   }
-}())
+}
