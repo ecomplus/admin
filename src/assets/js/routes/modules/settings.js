@@ -1,7 +1,9 @@
 import * as html from '~/views/settings.html'
+import * as form from '../../controllers/resources/form.js'
+import * as settingsForm from '../../controllers/resources/form/settings'
 
 export const load = async (el) => {
   el.html(html)
-  await import('../../controllers/resources/form.js')
-  await import('../../controllers/resources/form/settings.js')
+  form.handleForm()
+  settingsForm.handleForm()
 }
