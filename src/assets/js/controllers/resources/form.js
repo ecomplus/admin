@@ -259,12 +259,26 @@ export const handleForm = () => {
             // remove property
             if (!Array.isArray(data)) {
               if (parts.length === 1) {
-                data[prop] = ''
-              } else {
-                delete data[prop]
+                if (typeof data[parts] === 'object') {
+                  delete data[parts]
+                } else {
+                  data[prop] = ''
+                }
               }
             } else {
               data.splice(prop, 1)
+            }
+            if (parts.length) {
+              // remove empty parents
+              data = Data()
+              for (var i = 0; i < parts.length - 1; i++) {
+                var part = parts[i]
+                if (!Object.keys(data[part]).length) {
+                  delete data[part]
+                } else {
+                  data = data[part]
+                }
+              }
             }
           }
 
@@ -715,7 +729,11 @@ export const handleForm = () => {
               var data = Data()
               if (!creating) {
                 // overwrite
-                method = 'PATCH'
+                if (slug === 'orders') {
+                  method = 'PATCH'
+                } else {
+                  method = 'PUT'
+                }
               } else {
                 method = 'POST'
 
