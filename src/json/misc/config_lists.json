@@ -159,7 +159,8 @@
     ],
     "_hidden_fields": [
       "login",
-      "status"
+      "status",
+      "accepts_marketing"
     ],
     "status": {
       "label": {
@@ -255,7 +256,6 @@
     "_fields": [
       "number",
       "buyers/display_name",
-      "extra_discount/discount_coupon",
       "status",
       "amount/subtotal",
       "amount/total",
@@ -291,6 +291,12 @@
         "pt_br": "Forma de pagamento"
       }
     },
+    "buyers/main_email": {
+      "label": {
+        "en_us": "Email",
+        "pt_br": "E-mail"
+      }
+    },
     "shipping_method_label": {
       "label": {
         "en_us": "Shipping method",
@@ -298,40 +304,17 @@
       }
     },
     "buyers/display_name": {
-      "templat": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a>",
       "label": {
         "en_us": "Buyer",
         "pt_br": "Comprador"
-      }
-    },
-    "extra_discount/discount_coupon": {
-      "templates": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a>",
-      "label": {
-        "en_us": "Coupon",
-        "pt_br": "Cupom"
-      }
+      },
+      "templates": ""
     },
     "buyers": {
       "template": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a>"
     },
     "items": {
       "template": "{{quantity}}x <a href='#/resources/products/{{product_id}}'>{{name}}</a> ({{sku}})"
-    },
-    "number": {
-      "label": {
-        "en_us": "No",
-        "pt_br": "Nº"
-      },
-      "width": 90,
-      "range": true
-    },
-    "source_name": {
-      "label": {
-        "en_us": "Source",
-        "pt_br": "Origem"
-      },
-      "width": 100,
-      "cut_string": 10
     },
     "status": {
       "type": "bold",
@@ -358,6 +341,22 @@
           }
         }
       }
+    },
+    "number": {
+      "label": {
+        "en_us": "No",
+        "pt_br": "Nº"
+      },
+      "width": 90,
+      "range": true
+    },
+    "source_name": {
+      "label": {
+        "en_us": "Source",
+        "pt_br": "Origem"
+      },
+      "width": 100,
+      "cut_string": 10
     },
     "amount/subtotal": {
       "label": {

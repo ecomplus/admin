@@ -30,21 +30,53 @@ export const handleForm = () => {
     var $monthTotalOrdersApr = appTab.find('#monthTotalOrdersApproved')
     var $lastMonthTotalOrders = appTab.find('#lastMonthTotalOrders')
     var $lastMonthTotalOrdersApr = appTab.find('#lastMonthTotalOrdersApproved')
+    var calcWithTimezone = function (timeZone) {
+      if (timeZone < 0) {
+        return -1 * timeZone
+      } else {
+        return timeZone
+      }
+    }
+    var pad = function (number) {
+      if (number < 10) {
+        return '0' + number
+      }
+      return number
+    }
+    var getISOWithLocalStart = function (date) {
+      return date.getFullYear() +
+        '-' + pad(date.getMonth() + 1) +
+        '-' + pad(date.getDate()) +
+        'T' + pad(date.getHours()) +
+        ':' + pad(date.getMinutes()) +
+        ':' + pad(date.getSeconds()) +
+        '.000Z'
+    }
+    var getISOWithLocalEnd = function (date) {
+      return date.getFullYear() +
+        '-' + pad(date.getMonth() + 1) +
+        '-' + pad(date.getDate()) +
+        'T' + pad(date.getHours()) +
+        ':' + pad(date.getMinutes()) +
+        ':' + pad(date.getSeconds()) +
+        '.999Z'
+    }
     var today = new Date()
     var dd = today.getDate()
     var mm = today.getMonth()
     var yyyy = today.getFullYear()
-    var timezoneCalc = new Date().getTimezoneOffset()
+    var timezoneCalc = calcWithTimezone(new Date().getTimezoneOffset())
+    var dataStartYesterday = getISOWithLocalStart(new Date(yyyy, mm, dd - 1, 0, timezoneCalc, 0, 0))
+    var dataEndYesterday = getISOWithLocalEnd(new Date(yyyy, mm, dd - 1, 23, 59 + timezoneCalc, 59, 0))
+    var dateStartTwo = getISOWithLocalStart(new Date(yyyy, mm - 1, 1, 0, timezoneCalc, 0, 0))
+    var dateEndTwo = getISOWithLocalEnd(new Date(yyyy, mm - 1, 31, 23, 59 + timezoneCalc, 59, 0))
+    var dataStart = getISOWithLocalStart(new Date(yyyy, mm, dd, 0, timezoneCalc, 0, 0))
+    var dataEnd = getISOWithLocalEnd(new Date(yyyy, mm, dd, 23, 59 + timezoneCalc, 59, 0))
+    var dateStart = getISOWithLocalStart(new Date(yyyy, mm, 1, 0, timezoneCalc, 0, 0))
+    var dateEnd = getISOWithLocalEnd(new Date(yyyy, mm, 31, 23, 59 + timezoneCalc, 59, 0))
+
     var approved = 0
     var approvedLast = 0
-    var dataStartYesterday = new Date(yyyy, mm, dd - 1, 0, -timezoneCalc, 0, 0).toISOString()
-    var dataEndYesterday = new Date(yyyy, mm, dd - 1, 23, 59 - timezoneCalc, 59, 0).toISOString()
-    var dateStartTwo = new Date(yyyy, mm - 1, 1, 0, -timezoneCalc, 0, 0).toISOString()
-    var dateEndTwo = new Date(yyyy, mm - 1, 31, 23, 59 - timezoneCalc, 59, 0).toISOString()
-    var dataStart = new Date(yyyy, mm, dd, 0, -timezoneCalc, 0, 0).toISOString()
-    var dataEnd = new Date(yyyy, mm, dd, 23, 59 - timezoneCalc, 59, 0).toISOString()
-    var dateStart = new Date(yyyy, mm, 1, 0, -timezoneCalc, 0, 0).toISOString()
-    var dateEnd = new Date(yyyy, mm, 31, 23, 59 - timezoneCalc, 59, 0).toISOString()
     var urlOrderLast = 'orders.json?sort=amount&created_at>=' + dateStartTwo + '&fields=buyers,amount,_id,created_at,financial_status,number,status'
     $storeID.text(storeId)
     var urlStore = 'stores/me.json'
@@ -73,6 +105,7 @@ export const handleForm = () => {
     $(document).ready(function () {
       setTimeout(function () {
         window.callApi(urlOrderLast, 'GET', function (err, json) {
+          console.log(json)
           if (!err) {
             var filteredToday = json.result.filter(function (item) {
               return item.created_at >= dataStart && item.created_at <= dataEnd
