@@ -377,6 +377,7 @@ class Resources {
     this.creating = this.isNew()
     this.tabTitle = this.getTabTitle()
     this.editor = this.getJsonEditor()
+    this.renderBreadcrump()
     this.loadData()
   }
 }
