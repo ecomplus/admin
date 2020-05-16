@@ -138,17 +138,25 @@ class Resources {
   handleHtml(html, el) {
     const parent = el.closest('.ajax-content')
     parent.addClass('ajax')
-    el.html(html)
-    parent.removeClass('ajax')
     if (this.islisting()) {
-      for (const liatLoader of this.listLoaders) {
-        liatLoader()
+      if (!this.loadedLists) {
+        el.html(html)
+        for (const listLoader of this.listLoaders) {
+          listLoader()
+        }
       }
+      this.loadedLists = true
     } else {
-      for (const formLoader of this.formLoaders) {
-        formLoader()
+      if (!this.loadedForms) {
+        el.html(html)
+        for (const formLoader of this.formLoaders) {
+          formLoader()
+        }
       }
+      this.loadedForms = true
     }
+    parent.removeClass('ajax')
+
   }
 
   commit(json, updated) {
@@ -356,6 +364,8 @@ class Resources {
   handleResource() {
     const parent = this.resourceEl.closest('.ajax-content')
     parent.addClass('ajax')
+    this.loadedLists = false
+    this.loadedForms = false
     this.resourceEl.html(this.resourceHTML)
     this.tabId = window.tabId
     this.Tab = window.Tabs[this.tabId]
