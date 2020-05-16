@@ -35,14 +35,6 @@ export const router = (route, internal, routeInProgress, currentTab, appTabs, ro
     state: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {}
   }
   handleRoute('/' + paths.join('/'), elTab)
-
-  // Todo: move routeReady from main.js to here
-  // if (!internal) {
-  //   // have to force routeReady call after 10s
-  //   routeReadyTimeout = setTimeout(function () {
-  //     handleError('408', elTab)
-  //   }, 10000)
-  // }
 }
 
 export const handleRoute = (uri, el) => {
