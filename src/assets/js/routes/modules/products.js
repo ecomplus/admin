@@ -43,11 +43,15 @@ class ProductsResource extends Resources {
     return { body }
   }
 
-  loadData(query, sort, page, size) {
-    if (!this.islisting()) {
+  loadData(callback, query, sort, page, size) {
+    let self = this
+    if (!self || !(self instanceof ProductsResource)) {
+      self = window.Tabs[window.tabId].resourceInstance
+    }
+    if (!self.islisting()) {
       return super.loadData()
     }
-    let { body } = this.preLoadData()
+    let { body } = self.preLoadData()
 
     if (query) {
       // merge params without changing original default body
@@ -72,10 +76,12 @@ class ProductsResource extends Resources {
     } else {
       body.from = 0
     }
-    const self = this
     window.callSearchApi('items.json', 'POST', (err, json) => {
       if (!err) {
         self.commit(json)
+      }
+      if (typeof(callback) === 'function') {
+        callback()
       }
       self.loadContent()
     }, body)
