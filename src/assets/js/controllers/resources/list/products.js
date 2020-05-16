@@ -103,7 +103,7 @@ export const handleList = () => {
         }
         // perform search request
         loading = true
-        Tab.load(callback, query, sort, page, size)
+        Tab.resourceInstance.loadData(callback, query, sort, page, size)
       }
     }
 
