@@ -7,5 +7,5 @@ export const load = async (el) => {
   el.html(html)
   form.handleForm()
   settingsForm.handleForm()
-  window.routeReady('Settings')
+  window.routeReady()
 }

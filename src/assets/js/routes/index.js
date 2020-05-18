@@ -1,3 +1,4 @@
+import * as newPage from './modules/new'
 import * as home from './modules/home'
 import * as settings from './modules/settings'
 import * as apps from './modules/apps'
@@ -15,6 +16,10 @@ import GridsResource from './modules/grids'
 
 
 export const routes = [
+  {
+    path: '/new',
+    load: (el) => newPage.load(el)
+  },
   {
     path: '/home',
     load: (el) => home.load(el)

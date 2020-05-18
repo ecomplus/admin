@@ -7,5 +7,5 @@ export const load = async (el) => {
   window.Tabs[window.tabId].wait = true
   form.handleForm()
   homeForm.handleForm()
-  window.routeReady('Dashboard')
+  window.routeReady()
 }
