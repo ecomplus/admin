@@ -17,9 +17,6 @@ export const router = (route, internal, routeInProgress, currentTab, appTabs, ro
   // reset route parameters
   window.routeParams = []
   var paths = route.split('/')
-  // final route HTML file URI
-  // only the first path
-  var uri = '../routes/modules/' + paths[0] + '.js'
   for (var i = 1; i < paths.length; i++) {
     // URI param
     if (paths[i] !== '') {
