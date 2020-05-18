@@ -25,8 +25,8 @@ if (process.env.NODE_ENV === 'production') {
   plugins.push(new InjectManifest({ swSrc, swDest: 'sw.js' }))
 }
 
-
 module.exports = {
+  mode: process.env.NODE_ENV || 'development',
   entry: './src/assets/js/script/main.js',
   output: {
     filename: 'assets/js/script.min.js',
