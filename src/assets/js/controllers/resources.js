@@ -377,6 +377,7 @@ class Resources {
     }
     this.Tab.resourceInstance = this
     this.Tab.resourceId = this.resourceId
+    this.Tab.selectedItems = []
     this.Tab.slug = this.slug
     this.Tab.load = this.loadData
     this.resource = window.apiResources[this.slug]
