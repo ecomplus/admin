@@ -1,4 +1,5 @@
 /dist
+/.serve
 
 # Logs
 logs
