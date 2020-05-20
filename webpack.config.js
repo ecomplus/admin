@@ -8,6 +8,7 @@ const WebpackPwaManifest = require('webpack-pwa-manifest')
 const WorkboxPlugin = require('workbox-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 const devMode = process.env.NODE_ENV !== 'production'
 
@@ -29,6 +30,46 @@ if (!devMode) {
 }
 entry.admin.push(path.resolve(dirSrc, 'index.js'))
 
+const baseScssModule = [
+  {
+    loader: 'css-loader',
+    options: {
+      sourceMap: true
+    }
+  },
+
+  {
+    loader: 'postcss-loader',
+    options: {
+      ident: 'postcss',
+      minimize: !devMode,
+      plugins: [
+        require('autoprefixer')(),
+        require('cssnano')({ preset: 'default' })
+      ],
+      sourceMap: true
+    }
+  },
+
+  {
+    loader: 'sass-loader',
+    options: {
+      sassOptions: {
+        includePaths: [
+          dirModules
+        ],
+        importer (file, prev, done) {
+          if (file.startsWith('~')) {
+            return done({ file: file.substr(1) })
+          }
+          done({ file })
+        }
+      },
+      sourceMap: true
+    }
+  }
+]
+
 const config = {
   mode: devMode ? 'development' : 'production',
   stats: {
@@ -41,6 +82,8 @@ const config = {
     maxAssetSize: 2000000
   },
   resolve: {
+    mainFields: ['module', 'browser', 'main'],
+    extensions: ['.wasm', '.mjs', '.js', '.json', '.vue'],
     alias: {
       '@': dirSrc
     }
@@ -85,54 +128,21 @@ const config = {
     new CopyPlugin([{
       from: dirPublic,
       to: dirOutput
-    }])
+    }]),
+
+    new VueLoaderPlugin()
   ],
 
   module: {
     rules: [
       {
         test: /\.s?css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              minimize: !devMode,
-              plugins: [
-                require('autoprefixer')(),
-                require('cssnano')({ preset: 'default' })
-              ],
-              sourceMap: true
-            }
-          },
-
-          {
-            loader: 'sass-loader',
-            options: {
-              sassOptions: {
-                includePaths: [
-                  dirModules
-                ],
-                importer (file, prev, done) {
-                  if (file.startsWith('~')) {
-                    return done({ file: file.substr(1) })
-                  }
-                  done({ file })
-                }
-              },
-              sourceMap: true
-            }
-          }
-        ]
+        oneOf: [{
+          resourceQuery: /^\?vue/,
+          use: ['vue-style-loader'].concat(baseScssModule)
+        }, {
+          use: [MiniCssExtractPlugin.loader].concat(baseScssModule)
+        }]
       },
 
       {
@@ -158,6 +168,16 @@ const config = {
       {
         test: /^(?!.*\/?html\/.*$).*\.html$/,
         loader: 'html-loader'
+      },
+
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          compilerOptions: {
+            whitespace: devMode ? 'preserve' : 'condense'
+          }
+        }
       },
 
       {
