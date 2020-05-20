@@ -1,4 +1,4 @@
-import * as html from '@/views/settings.html'
+import * as html from '@/dashboard/views/settings.html'
 import * as form from '../../controllers/resources/form.js'
 import * as settingsForm from '../../controllers/resources/form/settings'
 

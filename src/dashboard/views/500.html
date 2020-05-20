@@ -1,0 +1,29 @@
+<div class="row no-margin py-40 px-20">
+  <div class="col-12">
+    <div class="card card-transparent mx-auto text-center">
+      <h1 class="text-secondary lh-1 fs-200">500</h1>
+      <hr class="w-30px mx-auto mb-30 mt-0">
+      <h3 class="text-uppercase i18n">
+        <span data-lang="en_us">Internal server error</span>
+        <span data-lang="pt_br">Erro interno do servidor</span>
+      </h3>
+      <p class="lead i18n">
+        <span data-lang="en_us">Something is wrong internally, please report the error.</span>
+        <span data-lang="pt_br">Algo está errado internamente, favor reportar o erro.</span>
+      </p>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var lang = window.lang
+    var title
+    switch (lang) {
+      case 'pt_br':
+        title = 'Erro interno do servidor'
+        break
+      default:
+        title = 'Internal server error'
+    }
+    window.routeReady(title)
+  </script>
+</div>

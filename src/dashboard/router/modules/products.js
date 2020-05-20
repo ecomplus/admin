@@ -1,5 +1,5 @@
-import productsListHTML from '@/views/resources/list/products.html'
-import productsFormHTML from '@/views/resources/form/products.html'
+import productsListHTML from '@/dashboard/views/resources/list/products.html'
+import productsFormHTML from '@/dashboard/views/resources/form/products.html'
 import Resources from '../../controllers/resources'
 import { handleList } from '../../controllers/resources/list/products'
 import * as form from '../../controllers/resources/form'

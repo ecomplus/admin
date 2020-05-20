@@ -1,4 +1,4 @@
-import * as html from '@/views/invoices.html'
+import * as html from '@/dashboard/views/invoices.html'
 import * as form from '../../controllers/resources/form'
 import * as invoices from '../../controllers/invoices'
 
