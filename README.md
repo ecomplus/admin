@@ -1,3 +1,9 @@
+**ESTE REPOSITÓRIO SERÁ ARQUIVADO PORQUE O HISTÓRICO ESTÁ COMPROMETIDO**
+
+:point_right: https://github.com/ecomplus/admin/
+
+___
+
 # ecomplus-admin
 E-Com Plus Admin dashboard, jQuery SPA PWA
 

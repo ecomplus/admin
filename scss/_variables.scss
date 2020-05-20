@@ -1,0 +1,30 @@
+$blue:                #007bff                   !default;
+$indigo:              #6610f2                   !default;
+$purple:              #37003c                   !default;
+$pink:                #ff015b                   !default;
+$red:                 #fe0002                   !default;
+$orange:              #ff5600                   !default;
+$yellow:              #dff200                   !default;
+$green:               #00e679                   !default;
+$teal:                #20c997                   !default;
+$cyan:                #03a9b3                   !default;
+
+$primary:             $pink                     !default;
+$primary-light:       lighten($primary, 10%)    !default;
+$primary-lighter:     lighten($primary, 21%)    !default;
+$primary-lightest:    lighten($primary, 33%)    !default;
+
+$secondary:           $purple                   !default;
+$secondary-light:     lighten($secondary, 8%)   !default;
+$secondary-lighter:   lighten($secondary, 11%)  !default;
+$secondary-lightest:  lighten($secondary, 16%)  !default;
+
+$success:             $green                    !default;
+$info:                $cyan                     !default;
+$warning:             $orange                   !default;
+$danger:              $red                      !default;
+
+$yiq-text-dark:       $purple                   !default;
+
+$font-family-sans-serif: "Fira Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$enable-responsive-font-sizes: true !default;
