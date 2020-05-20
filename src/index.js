@@ -1,4 +1,3 @@
-import './lib/fontawesome-icons'
 import session from './lib/session'
 import ecomUtils from '@ecomplus/utils'
 
