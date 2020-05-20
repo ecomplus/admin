@@ -4,7 +4,7 @@ import { handleFatalError, handleApiError } from '@/lib/errors'
 import i18n from '@/lib/i18n'
 import { hide as hideToastr } from '@/lib/toast'
 import './util.js'
-import { router, handleError } from './router'
+import { router, handleError } from '../router/'
 
 const { sessionStorage, $, app } = window
 

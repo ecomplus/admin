@@ -1,9 +1,9 @@
-import * as resourceHTML from '@/views/resources.html'
-import * as listHTML from '@/views/resources/list.html'
-import { handleError } from '../script/router'
+import * as resourceHTML from '@/dashboard/views/resources.html'
+import * as listHTML from '@/dashboard/views/resources/list.html'
+import { handleError } from '../router/'
 
 class Resources {
-  constructor(resourceEl) {
+  constructor (resourceEl) {
     this.resourceEl = resourceEl
     this.resourceHTML = resourceHTML
     this.formHTML = ''
@@ -12,16 +12,15 @@ class Resources {
     this.listLoaders = []
   }
 
-  islisting() {
+  islisting () {
     return this.resourceId === undefined
   }
 
-  isNew() {
+  isNew () {
     return this.resourceId === 'new'
   }
 
-
-  getTablabel() {
+  getTablabel () {
     if (this.islisting()) {
       return this.i18n({
         'en_us': 'List',

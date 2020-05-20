@@ -1,4 +1,4 @@
-import cartsFormHTML from '@/views/resources/form/carts.html'
+import cartsFormHTML from '@/dashboard/views/resources/form/carts.html'
 import Resources from '../../controllers/resources'
 import { handleList } from '../../controllers/resources/list'
 import * as form from '../../controllers/resources/form'

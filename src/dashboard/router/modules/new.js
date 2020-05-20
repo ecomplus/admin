@@ -1,4 +1,4 @@
-import * as html from '@/views/new.html'
+import * as html from '@/dashboard/views/new.html'
 
 export const load = async (el) => {
   el.html(html)

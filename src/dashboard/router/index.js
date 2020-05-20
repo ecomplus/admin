@@ -1,24 +1,21 @@
-import { routes } from '../routes'
+import routes from './routes'
+
+const { $ } = window
 
 export const router = (route, internal, routeInProgress, currentTab, appTabs, routeReadyTimeout) => {
   if (!internal) {
     if (routeInProgress === true) {
-      // routing in progress
       return
     }
-    // console.log('Go to route => ' + route)
     if (currentTab !== null) {
-      // add route to history
       appTabs[currentTab].routesHistory.push(route)
     }
   }
   routeInProgress = true
 
-  // reset route parameters
   window.routeParams = []
   var paths = route.split('/')
   for (var i = 1; i < paths.length; i++) {
-    // URI param
     if (paths[i] !== '') {
       window.routeParams.push(paths[i])
     }
@@ -39,12 +36,14 @@ export const handleRoute = (uri, el) => {
   if (!route) {
     return handleError('404', el)
   }
-  route.load(el)
+  const promise = route.load(el)
+  if (promise && promise.then) {
+    promise.then(({ load }) => load(el)).catch(console.error)
+  }
 }
 
 export const handleError = (error, el) => {
-  import(`@/views/${error}.html`).then(html => {
+  import(`@/dashboard/views/${error}.html`).then(html => {
     el.html(html.default)
   })
 }
-

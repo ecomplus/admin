@@ -1,4 +1,4 @@
-import * as html from '@/views/tag.html'
+import * as html from '@/dashboard/views/tag.html'
 import * as form from '../../controllers/resources/form'
 import * as tag from '../../controllers/tag'
 

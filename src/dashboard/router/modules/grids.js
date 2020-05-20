@@ -1,19 +1,19 @@
-import collectionsFormHTML from '@/views/resources/form/collections.html'
+import gridsFormHTML from '@/dashboard/views/resources/form/grids.html'
 import Resources from '../../controllers/resources'
 import { handleList } from '../../controllers/resources/list'
 import * as form from '../../controllers/resources/form'
-import * as collectionsForm from '../../controllers/resources/form/collections'
+import * as gridsForm from '../../controllers/resources/form/grids'
 
-class CollectionsResource extends Resources {
+class GridsResource extends Resources {
   constructor(resourceEl) {
     super(resourceEl)
-    this.formHTML = collectionsFormHTML
+    this.formHTML = gridsFormHTML
     this.listLoaders = [handleList]
     this.formLoaders = [
       form.handleForm,
-      collectionsForm.handleForm
+      gridsForm.handleForm
     ]
   }
 }
 
-export default CollectionsResource
+export default GridsResource
