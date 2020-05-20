@@ -1,11 +1,8 @@
-**ESTE REPOSITÓRIO SERÁ ARQUIVADO PORQUE O HISTÓRICO ESTÁ COMPROMETIDO**
+# E-Com Plus Admin
 
-:point_right: https://github.com/ecomplus/admin/
+E-Com Plus Admin dashboard
 
-___
-
-# ecomplus-admin
-E-Com Plus Admin dashboard, jQuery SPA PWA
+:hammer: JAMStack SPA PWA
 
 ### Development version
 
