@@ -1166,8 +1166,8 @@ ul > li:nth-child(4n+4) > .badges-list li {
   }
 }
 
-#dashboard {
-  display: none;
+#dashboard > .dashboard-start {
+  opacity: 0;
 }
 
 // utilities
