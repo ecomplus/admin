@@ -49,7 +49,9 @@ class ProductsResource extends Resources {
       self = window.Tabs[window.tabId].resourceInstance
     }
     if (!self.islisting()) {
-      return super.loadData()
+      return super.loadData(() => {
+        this.renderH1()
+      })
     }
     let { body } = self.preLoadData()
 
