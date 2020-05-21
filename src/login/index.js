@@ -6,7 +6,12 @@ import loginHTML from './index.html'
 
 const { sessionStorage, localStorage, Image, $ } = window
 
-const $login = $('<div>').html(loginHTML).appendTo($('body'))
+const $dashboardStart = $('.dashboard-start').hide()
+
+const $login = $('<div>')
+  .attr('id', 'login')
+  .html(loginHTML)
+  .prependTo($('body'))
 
 import('@/lib/i18n').catch(console.error)
 
@@ -220,6 +225,7 @@ $('#login-form').submit(function () {
                   import('@/dashboard/')
                     .then(() => {
                       $login.remove()
+                      $dashboardStart.show()
 
                       const ecomAuth = new EcomAuth()
                       ecomAuth.login(

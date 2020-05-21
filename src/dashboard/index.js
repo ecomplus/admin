@@ -1,5 +1,4 @@
 import { update as updateSession } from '@/lib/session'
-import dashboardHTML from './index.html'
 
 const { sessionStorage, $ } = window
 
@@ -11,9 +10,14 @@ if (goTo) {
 }
 
 $(document).ready(() => {
-  $('body').html(dashboardHTML)
   updateSession()
   import('@/lib/i18n')
-    .then(exp => import('./script/main').then(exp.updateDom))
+    .then(exp => {
+      $('#dashboard')
+        .fadeOut()
+        .children('.dashboard-start')
+        .css('opacity', 1)
+      return import('./script/main').then(exp.updateDom)
+    })
     .catch(console.error)
 })
