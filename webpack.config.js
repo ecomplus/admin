@@ -166,7 +166,8 @@ const config = {
       },
 
       {
-        test: /^(?!.*\/?html\/.*$).*\.html$/,
+        test: /\.html$/,
+        exclude: /(node_modules|vue|components)/,
         loader: 'html-loader'
       },
 
