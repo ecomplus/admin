@@ -28,7 +28,7 @@ class Resources {
       })
     }
 
-    if (this.isNew) {
+    if (this.isNew()) {
       return this.i18n({
         'en_us': 'Create',
         'pt_br': 'Criar'
@@ -52,7 +52,7 @@ class Resources {
     } else {
       html = `
         ${html}
-        <a class="btn btn-pure" style="font-size: 10px; background: rgba(223,242,0,0.1); padding: 3px 10px" data-provide="tooltip" id="clipboad" data-placement="top" data-original-title="Clique para copiar ID" data-clipboard-text="${resourceId}">
+        <a class="btn btn-pure" style="font-size: 10px; background: rgba(223,242,0,0.1); padding: 3px 10px" data-provide="tooltip" id="clipboad" data-placement="top" data-original-title="Clique para copiar ID" data-clipboard-text="${this.resourceId}">
           ID <i class="ti-clipboard"></i>
         </a>
       `
@@ -388,7 +388,9 @@ class Resources {
     this.tabTitle = this.getTabTitle()
     this.editor = this.getJsonEditor()
     this.renderBreadcrump()
-    this.loadData()
+    this.loadData(() => {
+      this.renderH1()
+    })
   }
 }
 
