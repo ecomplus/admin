@@ -60,11 +60,14 @@ class ProductsResource extends Resources {
     }
 
     if (sort) {
-      // replace sort rule
       if (body.sort.length > 4) {
         body.sort[2] = sort
       } else {
-        body.sort.splice(2, 0, sort)
+        if ('quantity' in sort || 'price' in sort) {
+          body.sort.splice(1, 0, sort)
+        } else {
+          body.sort.splice(2, 0, sort)
+        }
       }
     }
     // pagination
