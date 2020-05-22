@@ -1,0 +1,134 @@
+.sidebar {
+  &-header {
+    > .logo {
+      img {
+        width: auto;
+        height: 26px;
+      }
+
+      &-icon img {
+        width: auto;
+        height: 26px;
+        max-width: none;
+      }
+    }
+  }
+
+  .menu-link .title {
+    font-size: 15px;
+  }
+
+  .menu-submenu .menu-link {
+    font-weight: 400;
+  }
+
+  &:not(.sidebar-light) {
+    .sidebar-navigation {
+      background-color: darken($purple, 5.5%);
+
+      > .menu > .menu-item {
+        > .menu-link {
+          color: rgba($white, .75);
+        }
+
+        &:hover,
+        &.active {
+          > .menu-link {
+            color: $white;
+            background-color: darken($purple, 7.4%);
+          }
+        }
+      }
+
+      .menu-submenu {
+        background-color: darken($purple, 8.1%);
+      }
+    }
+
+    .menu-submenu {
+      .menu-link {
+        opacity: 1;
+        color: rgba($white, .55);
+      }
+
+      .menu-item {
+        &:hover,
+        &.active {
+          > .menu-link {
+            color: $white;
+          }
+        }
+      }
+    }
+
+    .ps-container > .ps-scrollbar-y-rail > .ps-scrollbar-y {
+      background-color: rgba($white, .35);
+    }
+  }
+
+  .menu-item > .menu-featured-link::before,
+  &:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item > .menu-link::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: $primary;
+  }
+
+  &:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item {
+    > .menu-link::before {
+      background: transparent;
+      transition: 0.2s linear;
+    }
+
+    &.active > .menu-link::before {
+      background: $primary;
+    }
+  }
+
+  .menu-item > .menu-featured-link > .title {
+    color: $gray-700;
+  }
+
+  &:not(.sidebar-light) .menu-item > .menu-featured-link > .title {
+    color: $white;
+  }
+
+  .menu-category {
+    &,
+    i {
+      cursor: pointer;
+      transition: 0.2s linear;
+    }
+
+    i {
+      margin-left: 10px;
+    }
+
+    &:hover {
+      opacity: .9;
+
+      i {
+        color: $green;
+      }
+    }
+  }
+
+  .li-channel {
+    display: none;
+  }
+
+  .sidebar-navigation > .menu .menu-item .badge {
+    font-family: $font-family-monospace;
+    font-weight: 600;
+    line-height: 1;
+    padding: 4px 6px;
+
+    &:empty {
+      display: none;
+    }
+  }
+}

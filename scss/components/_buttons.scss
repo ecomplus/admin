@@ -1,0 +1,76 @@
+button:focus {
+  outline: none;
+}
+
+.btn {
+  text-transform: uppercase;
+  border-radius: 2px;
+  font-weight: 500;
+  font-size: .85rem;
+
+  &:disabled,
+  &.disabled {
+    cursor: not-allowed;
+    opacity: .65;
+  }
+
+  &-lg {
+    font-weight: 600;
+  }
+}
+
+@each $color, $value in $theme-colors {
+  $color-yiq-value: color-yiq($value);
+
+  .btn-#{$color} {
+    &:not(.btn-pure) {
+      background-color: $value;
+      border-color: $value;
+      color: $color-yiq-value;
+
+      &:not([disabled]):not(.disabled) {
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+          background-color: darken($value, 4%);
+          border-color: darken($value, 4%);
+          color: $color-yiq-value;
+          @if $color == 'light' {
+            box-shadow: 0 1px 5px rgba(darken($value, 10%), .4);
+          } @else {
+            box-shadow: 0 1px 5px rgba($value, .4);
+          }
+        }
+
+        &:active:focus {
+          border-color: darken($value, 5%);
+          background-color: darken($value, 5%);
+          color: $color-yiq-value;
+          @if $color == 'light' {
+            box-shadow: 0 1px 5px rgba(darken($value, 10%), .5);
+          } @else {
+            box-shadow: 0 1px 5px rgba($value, .5);
+          }
+        }
+      }
+    }
+
+    &.btn-pure {
+      color: $value;
+
+      &:not([disabled]):not(.disabled) {
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+          color: darken($value, 10%);
+        }
+
+        &:active:focus {
+          color: darken($value, 15%);
+        }
+      }
+    }
+  }
+}

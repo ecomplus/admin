@@ -2,110 +2,11 @@
 $color-purple-light: lighten($purple, 20%);
 $color-purple-lighter: lighten($purple, 35%);
 
-// logo image size
-.loggin-banner > img {
-  max-width: 198px;
-  height: auto;
-}
-.sidebar-header > .logo img {
-  width: auto;
-  height: 26px;
-}
-.sidebar-header > .logo-icon img {
-  width: auto;
-  height: 26px;
-  max-width: none;
-}
-
-// notification
-.toast {
-  background-color: $orange;
-}
-.toast.fix-reveal {
-  transform: translateX(-50%) translateY(0);
-}
-
-// checkbox switch
-.switch input:checked ~ .switch-indicator {
-  background: rgba($primary, .25);
-}
-
-// sidebar menu
-.sidebar:not(.sidebar-light) .sidebar-navigation {
-  background-color: darken($purple, 5.5%);
-}
-.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item > .menu-link {
-  color: rgba($white, .75);
-}
-.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item:hover > .menu-link,
-.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item.active > .menu-link {
-  color: $white;
-  background-color: darken($purple, 7.4%);
-}
-.sidebar:not(.sidebar-light) .sidebar-navigation .menu-submenu {
-  background-color: darken($purple, 8.1%);
-}
-.sidebar:not(.sidebar-light) .menu-submenu .menu-link {
-  opacity: 1;
-  color: rgba($white, .55);
-}
-.sidebar:not(.sidebar-light) .menu-submenu .menu-item:hover > .menu-link,
-.sidebar:not(.sidebar-light) .menu-submenu .menu-item.active > .menu-link {
-  color: $white;
-}
-.sidebar:not(.sidebar-light) .ps-container > .ps-scrollbar-y-rail > .ps-scrollbar-y {
-  background-color: rgba($white, .35);
-}
-.sidebar .menu-item > .menu-featured-link::before,
-.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item > .menu-link::before {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 3px;
-  height: 100%;
-  background: $primary;
-}
-.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item > .menu-link::before {
-  background: transparent;
-  transition: 0.2s linear;
-}
-.sidebar:not(.sidebar-light) .sidebar-navigation > .menu > .menu-item.active > .menu-link::before {
-  background: $primary;
-}
-.sidebar .menu-item > .menu-featured-link > .title {
-  color: $color-text;
-}
-.sidebar:not(.sidebar-light) .menu-item > .menu-featured-link > .title {
-  color: $white;
-}
-.sidebar .menu-category,
-.sidebar .menu-category i {
-  cursor: pointer;
-  transition: 0.2s linear;
-}
-.sidebar .menu-category i {
-  margin-left: 10px;
-}
-.sidebar .menu-category:hover {
-  opacity: .9;
-}
-.sidebar .menu-category:hover i {
-  color: $green;
-}
-.sidebar .li-channel {
-  display: none;
-}
-.sidebar .sidebar-navigation > .menu .menu-item .badge {
-  font-family: $font-family-monospace;
-  font-weight: 600;
-  line-height: 1;
-  padding: 4px 6px;
-}
-.sidebar .sidebar-navigation > .menu .menu-item .badge:empty {
-  display: none;
-}
+@import "components/buttons";
+@import "components/login";
+@import "components/sidebar";
+@import "components/toast";
+@import "components/forms";
 
 .topbar-btn:hover,
 .topbar .dropdown.show .topbar-btn {
@@ -1256,15 +1157,4 @@ ul > li:nth-child(4n+4) > .badges-list li {
   display: inline-block;
   width: 42%;
   height: 100%;
-}
-
-// general
-.btn:disabled {
-  cursor: not-allowed;
-}
-.btn-pure.btn-light:disabled {
-  opacity: .25;
-}
-.btn-warning:disabled {
-  color: $white;
 }
