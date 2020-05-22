@@ -8,6 +8,7 @@ import * as productsForm from '../../controllers/resources/form/products'
 class ProductsResource extends Resources {
   constructor(resourceEl) {
     super(resourceEl)
+    this.tabWait = true
     this.listHTML = productsListHTML
     this.formHTML = productsFormHTML
     this.listLoaders = [handleList]

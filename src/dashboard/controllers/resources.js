@@ -8,6 +8,7 @@ class Resources {
     this.resourceHTML = resourceHTML
     this.formHTML = ''
     this.listHTML = listHTML
+    this.tabWait = false
     this.formLoaders = []
     this.listLoaders = []
   }
@@ -368,6 +369,7 @@ class Resources {
     this.resourceEl.html(this.resourceHTML)
     this.tabId = window.tabId
     this.Tab = window.Tabs[this.tabId]
+    this.Tab.wait = this.tabWait
     window.renderContentIds()
     this.resourceId = window.routeParams[1]
     this.slug = window.routeParams[0]
