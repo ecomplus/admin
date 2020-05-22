@@ -375,7 +375,7 @@ class Resources {
       handleError('404', $('#t' + tabId + '-tab-normal'))
     }
     this.Tab.resourceInstance = this
-    this.Tab.resourceId = this.resourceId
+    this.Tab.resourceId = this.isNew() ? undefined : this.resourceId
     this.Tab.selectedItems = []
     this.Tab.slug = this.slug
     this.Tab.load = this.loadData
