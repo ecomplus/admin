@@ -2,6 +2,8 @@
  * Copyright 2018 E-Com Club
  */
 
+const { $, randomObjectId } = window
+
 export const handleForm = () => {
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
@@ -29,33 +31,33 @@ export const handleForm = () => {
     // setup predefined grids
     // GMC defaults
     var Grids = {
-      'size': {
-        'title': i18n({
-          'en_us': 'Size',
-          'pt_br': 'Tamanho'
+      size: {
+        title: i18n({
+          en_us: 'Size',
+          pt_br: 'Tamanho'
         })
       },
-      'material': {
-        'title': 'Material'
+      material: {
+        title: 'Material'
       },
-      'pattern': {
-        'title': i18n({
-          'en_us': 'Pattern',
-          'pt_br': 'Estampa'
+      pattern: {
+        title: i18n({
+          en_us: 'Pattern',
+          pt_br: 'Estampa'
         })
       },
-      'colors': {
-        'title': i18n({
-          'en_us': 'Primary color',
-          'pt_br': 'Cor primária'
+      colors: {
+        title: i18n({
+          en_us: 'Primary color',
+          pt_br: 'Cor primária'
         })
       },
       // multiple colors
       // for sample purposes only
       'colors.2': {
-        'title': i18n({
-          'en_us': 'Secondary color',
-          'pt_br': 'Cor secundária'
+        title: i18n({
+          en_us: 'Secondary color',
+          pt_br: 'Cor secundária'
         })
       }
     }
