@@ -1,7 +1,10 @@
 .toast {
-  background-color: $orange;
+  border-radius: 2px;
+  background-color: rgba($light, .95);
+  box-shadow: 0 2px 5px rgba(darken($light, 8%), .5);
 
-  &.fix-reveal {
-    transform: translateX(-50%) translateY(0);
+  &-header {
+    background-color: darken($light, 5%);
+    font-weight: 400;
   }
 }
