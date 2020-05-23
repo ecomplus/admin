@@ -43,6 +43,8 @@ const i18n = function (label) {
         pt_br: 'Não'
       }
     }
+  } else if (Array.isArray(label)) {
+    return label.map(label => _i18n(label))
   }
   return _i18n(label)
 }
