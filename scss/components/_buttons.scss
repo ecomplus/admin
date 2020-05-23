@@ -74,3 +74,27 @@ button:focus {
     }
   }
 }
+
+select,
+.bootstrap-select {
+  .dropdown-toggle {
+    text-transform: none;
+    color: $gray-800;
+
+    &:not([disabled]):not(.disabled) {
+      &:hover:not(:focus):not(:active):not([aria-expanded=true]) {
+        box-shadow: none;
+        color: $gray-900;
+      }
+
+      &:focus,
+      &:active,
+      &:active:focus,
+      &[aria-expanded=true] {
+        color: $gray-900;
+        border-color: $primary;
+        box-shadow: 0 0 0 .1rem rgba($primary, .15);
+      }
+    }
+  }
+}
