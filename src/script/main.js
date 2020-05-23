@@ -1,3 +1,4 @@
+import { i19delete } from '@ecomplus/i18n'
 import { $ecomConfig } from '@ecomplus/utils'
 import session from '@/lib/session'
 import { handleFatalError, handleApiError } from '@/lib/errors'
@@ -17,10 +18,6 @@ const { sessionStorage, $, app } = window
     resources: i18n({
       en_us: 'Resources',
       pt_br: 'Recursos'
-    }),
-    channels: i18n({
-      en_us: 'Sales channels',
-      pt_br: 'Canais de venda'
     }),
     media: i18n({
       en_us: 'Media',
@@ -1149,11 +1146,6 @@ const { sessionStorage, $, app } = window
                  '<span class="icon fa fa-cogs"></span>' +
                  '<span class="title">' + dictionary.settings + '</span>' +
                '</a>' +
-             '</li>' +
-
-             // channels will be rendered after
-             '<li class="menu-category" onclick="newChannel()">' +
-               dictionary.channels + '<i class="fa fa-plus-circle"></i>' +
              '</li>'
 
     var $menu = $('#sidebar')
@@ -1189,78 +1181,6 @@ const { sessionStorage, $, app } = window
     }
   }
   renderMenu()
-
-  // store sales channels
-  var channels = []
-  var renderChannels = function () {
-    var menu = $('#sidebar')
-    // reset
-    menu.find('.li-channel').remove()
-
-    for (var i = 0; i < channels.length; i++) {
-      var channel = channels[i]
-      var url = '/#/channels/' + channel.id
-      var link
-      if (channel.domains.length) {
-        // use last channel domain
-        link = 'https://' + channel.domains[channel.domains.length - 1]
-      } else {
-        // @TODO
-        // other channel type ?
-        link = '#'
-      }
-
-      // sales channels on menu
-      var $el = $('<li />', {
-        'class': 'menu-item li-channel',
-        html: '<a class="menu-link" href="javascript:;">' +
-                '<span class="icon fa fa-shopping-bag"></span>' +
-                '<span class="title">' + channel.title + '</span>' +
-                '<span class="arrow"></span>' +
-              '</a>' +
-              '<ul class="menu-submenu">' +
-                '<li class="menu-item">' +
-                  '<a class="menu-link" href="' + link + '" target="_blank">' +
-                    '<span class="icon fa fa-eye"></span>' +
-                    '<span class="title">' + dictionary.go_to_store + '</span>' +
-                  '</a>' +
-                '</li>' +
-                '<li class="menu-item">' +
-                  '<a class="menu-link" href="' + url + '/themes">' +
-                    '<span class="icon fa fa-paint-brush"></span>' +
-                    '<span class="title">' + dictionary.themes + '</span>' +
-                  '</a>' +
-                '</li>' +
-                '<li class="menu-item">' +
-                  '<a class="menu-link" href="' + url + '/settings">' +
-                    '<span class="icon fa fa-wrench"></span>' +
-                    '<span class="title">' + dictionary.settings + '</span>' +
-                  '</a>' +
-                '</li>' +
-              '</ul>'
-      })
-      menu.append($el)
-      // show channels with animation
-      $el.slideDown('slow')
-    }
-  }
-  // renderChannels()
-
-  window.newChannel = function () {
-    // handle new channel price and open modal
-    // only first channel is free
-    if (channels.length) {
-      var price = Store.$main.additional_channels_cost
-      if (price === undefined) {
-        return
-      } else {
-        var $div = $('#channel-price')
-        $div.children('strong').text(window.formatMoney(price))
-        $div.show()
-      }
-    }
-    $('#modal-channel').modal('show')
-  }
 
   callStorageApi(null, function (err, json) {
     if (!err) {
@@ -1892,53 +1812,10 @@ const { sessionStorage, $, app } = window
           }
           // ready to start dashboard
           Start()
-          getStoreChannels()
         }
       })
     }
   })
-
-  // get store channels and domains from Main API
-  var getStoreChannels = function () {
-    callMainApi('channels.json', 'GET', function (err, body) {
-      if (!err) {
-        channels = body.result
-        if (channels.length) {
-          for (var i = 0; i < channels.length; i++) {
-            // setup channel domains array
-            channels[i].domains = []
-          }
-
-          // get store domains and associate with channels
-          callMainApi('domains.json', 'GET', function (err, body) {
-            if (!err) {
-              var domains = body.result
-              // add each domain to respective channel
-              for (var i = 0; i < domains.length; i++) {
-                var domain = domains[i].id
-                for (var ii = 0; ii < channels.length; ii++) {
-                  if (domains[i].channel_id === channels[ii].id) {
-                    channels[ii].domains.push(domain)
-                  }
-                }
-
-                // check domain name
-                if (!window.shopDomain) {
-                  if (domain.indexOf('.e-com.plus') === -1 || i === domains.length - 1) {
-                    // save as main domain globally
-                    window.shopDomain = domain
-                  }
-                }
-              }
-
-              // render channels on sidebar menu
-              renderChannels()
-            }
-          })
-        }
-      }
-    })
-  }
 
   var Start = function () {
     // create first tab
@@ -1963,30 +1840,6 @@ const { sessionStorage, $, app } = window
       $(window).off('beforeunload')
       // just redirect to lose session and logout
       window.location = '/'
-    })
-
-    $('#new-channel').click(function () {
-      // create new sales channel
-      var body = {}
-      $('#modal-channel').find('input,select').each(function () {
-        var prop = $(this).attr('name')
-        var val = $(this).val()
-        if (prop && val) {
-          // add property to request body
-          body[prop] = val
-        }
-      })
-
-      var callback = function (err) {
-        if (!err) {
-          // reload store channels
-          getStoreChannels()
-          // reset form
-          $('#modal-channel input').val('')
-        }
-      }
-
-      callApi('@channels.json', 'POST', callback, body)
     })
 
     // open new tab on target blank click
