@@ -222,7 +222,7 @@ $('#login-form').submit(function () {
                   sessionStorage.setItem('expires', json.expires)
                   sessionStorage.setItem('username', username)
 
-                  import('@/dashboard/')
+                  import('@/dashboard')
                     .then(() => {
                       $login.remove()
                       $dashboardStart.show()
