@@ -1,5 +1,6 @@
 import session from './lib/session'
 import ecomUtils from '@ecomplus/utils'
+import '@ecomplus/storefront-twbs/src/'
 
 const { sessionStorage, app } = window
 
