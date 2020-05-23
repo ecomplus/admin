@@ -71,7 +71,18 @@ const baseScssModule = [
 ]
 
 const config = {
+  entry,
   mode: devMode ? 'development' : 'production',
+  output: {
+    path: dirOutput,
+    publicPath: '/',
+    filename: devMode ? '[name].js' : `${filenameSchema}.js`,
+    chunkFilename: '[contenthash].js'
+  },
+  optimization: {
+    minimizer: [new TerserPlugin()]
+  },
+
   stats: {
     colors: true
   },
@@ -88,16 +99,9 @@ const config = {
       '@': dirSrc
     }
   },
-
-  entry,
-  output: {
-    path: dirOutput,
-    publicPath: '/',
-    filename: devMode ? '[name].js' : `${filenameSchema}.js`,
-    chunkFilename: '[contenthash].js'
-  },
-  optimization: {
-    minimizer: [new TerserPlugin()]
+  externals: {
+    jquery: 'jQuery',
+    './fontawesome-icons': 'window'
   },
 
   devServer: {
