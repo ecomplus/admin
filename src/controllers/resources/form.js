@@ -1,10 +1,6 @@
-/*!
- * Copyright 2018 E-Com Club
- */
+const { $ } = window
 
 export default function () {
-  'use strict'
-
   // current tab ID
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
@@ -61,13 +57,17 @@ export default function () {
     $('#t' + tabId + '-delete').click(Delete)
     elContainer.find('.delete-resource').click(Delete).fadeIn()
 
-    $('#t' + tabId + '-duplicate').click(function () {
+    $(`#t${tabId}-duplicate`).click(function () {
       // create new document with same JSON data
       var callback = function (json) {
         // redirect to new document edit page
         window.location = '/#/resources/' + slug + '/' + json._id
       }
-      callApi(slug + '.json', 'POST', callback, Data())
+      const data = Object.assign({}, Data())
+      if (data.sku) {
+        data.sku += '-C' + parseInt(Math.random() * 100, 10)
+      }
+      callApi(slug + '.json', 'POST', callback, data)
     })
 
     $('#t' + tabId + '-new').click(function () {
