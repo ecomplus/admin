@@ -99,9 +99,17 @@ const config = {
       '@': dirSrc
     }
   },
+
   externals: {
     jquery: 'jQuery',
-    './fontawesome-icons': 'window'
+    './fontawesome-icons': 'window',
+    'bootstrap/js/dist/alert': 'window',
+    'bootstrap/js/dist/button': 'window',
+    'bootstrap/js/dist/collapse': 'window',
+    'bootstrap/js/dist/dropdown': 'window',
+    'bootstrap/js/dist/tab': 'window',
+    'bootstrap/js/dist/tooltip': 'window',
+    'bootstrap/js/dist/util': 'window'
   },
 
   devServer: {
