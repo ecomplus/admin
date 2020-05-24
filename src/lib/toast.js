@@ -37,12 +37,11 @@ const toast = app.toast = (body, { title, variant, delay } = {}) => {
     case 'success':
       icon = 'check-circle'
       break
-    case 'warning':
-    case 'danger':
-      icon = 'exclamation-triangle'
+    case 'info':
+      icon = 'info-circle'
       break
     default:
-      icon = 'info-circle'
+      icon = 'exclamation-triangle'
   }
 
   const $toast = $('<div>', {
@@ -55,7 +54,7 @@ const toast = app.toast = (body, { title, variant, delay } = {}) => {
 
   $toast[0].innerHTML = `
   <div class="toast-header">
-    <i class="text-${(variant || 'info')} fas fa-${icon} mr-2"></i>
+    <i class="text-${(variant || 'warning')} fas fa-${icon} mr-2"></i>
     <span class="mr-auto">
       ${(title || i18n(i19info))}
     </span>
