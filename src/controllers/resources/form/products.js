@@ -590,7 +590,7 @@ export default function () {
               $colorpicker.minicolors(minicolorsOptions)
               // fix colorpicker panel position
               var $panel = $colorpicker.nextAll('.minicolors-panel')
-              $panel.addClass('swatches-only').css('top', (-($panel.height() + 8)) + 'px')
+              $panel.addClass('swatches-first').css('top', (-($panel.height() + 8)) + 'px')
             }
 
             if (optionFocus) {
