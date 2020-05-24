@@ -451,11 +451,11 @@ export default function () {
         if (item.pictures && item.pictures.length) {
           var picture = item.pictures[0]
           // try thumbnail
-          var thumb = picture.small
+          var thumb = picture.small || picture.normal
           if (!thumb) {
             // use any size
             for (var size in picture) {
-              if (picture.hasOwnProperty(size) && size !== '_id') {
+              if (picture[size] && size !== '_id') {
                 thumb = picture[size]
                 break
               }
@@ -473,7 +473,7 @@ export default function () {
         var $item = $('<div>', {
           'class': 'col item-product',
           html: [
-            '<a href="' + link + '" class="item-picture">' + pictureHtml + '</a>' +
+            `<a href="${link}" class="item-picture" title="${item.name}">${pictureHtml}</a>` +
             '<div class="item-info">' +
               '<a href="' + link + '">' + item.name + '</a>' +
               '<div class="item-price">' + priceString + '</div>' +
