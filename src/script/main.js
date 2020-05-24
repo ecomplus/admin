@@ -1917,7 +1917,7 @@ const { sessionStorage, $, app } = window
           var hash = '#' + uriParts[1]
           if (hash !== '#') {
             // same of javascript:;
-            handleTargetBlank(hash, el.innerText)
+            handleTargetBlank(hash, el.innerText || el.title)
           }
         }
       }
