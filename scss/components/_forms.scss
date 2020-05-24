@@ -1,3 +1,50 @@
 .switch input:checked ~ .switch-indicator {
   background: rgba($primary, .25);
 }
+
+.form-control,
+.bootstrap-select .dropdown-toggle,
+.jsgrid input {
+  color: $gray-600;
+  border-color: $gray-200;
+  background: $white;
+}
+
+select,
+.bootstrap-select {
+  .dropdown-toggle {
+    text-transform: none;
+
+    &:not([disabled]):not(.disabled) {
+      &:hover:not(:focus):not(:active):not([aria-expanded=true]) {
+        background-color: lighten($light, 1%);
+        box-shadow: none;
+        color: $gray-900;
+      }
+
+      &:focus,
+      &:active,
+      &:active:focus,
+      &[aria-expanded=true] {
+        background-color: lighten($light, 1.25%);
+        color: $gray-900;
+        border-color: $primary;
+        box-shadow: 0 0 0 .1rem rgba($primary, .15);
+      }
+    }
+  }
+
+  .dropdown-menu .selected {
+    background-color: $light;
+  }
+}
+
+.dropdown-item {
+  &:hover {
+    background-color: lighten($light, 1.5%);
+  }
+
+  &.active {
+    background-color: $light;
+  }
+}
