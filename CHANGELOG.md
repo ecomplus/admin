@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.1](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2020-05-24)
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/admin-marketplace to v0.2.22 ([de40887](https://github.com/ecomplus/admin/commit/de40887ddc0f14c43ed3e0d7a9ad2329a5ced3f3))
+* **orders-form:** fix payments history & fulfillments order on timeline ([6cdbe21](https://github.com/ecomplus/admin/commit/6cdbe21798e1f428615c414ba12676af54517e6a))
+* **products-list:** minor fixes for item component ([bb30bb9](https://github.com/ecomplus/admin/commit/bb30bb99b05c99ee7c8e491e7f2174c072bb3125))
+* **tabs:** using link text or title for target blank tabs ([1e4cb01](https://github.com/ecomplus/admin/commit/1e4cb01c59e7716ce6aa4040e9afc9106b84f44a))
+* **toast:** warning type by default ([fccf769](https://github.com/ecomplus/admin/commit/fccf7691bf6e41dbe49badc254dec4eb37b9511c))
+
 ## [1.0.0-alpha.0](https://github.com/ecomplus/admin/compare/v0.1.0...v1.0.0-alpha.0) (2020-05-23)
 
 
