@@ -16,7 +16,7 @@ $toastAside
     $('<div>', {
       'aria-live': 'polite',
       'aria-atomic': 'true',
-      style: 'position: relative; min-height: 200px'
+      style: 'position: relative; min-height: 100px'
     })
       .append($toastDock)
   )
