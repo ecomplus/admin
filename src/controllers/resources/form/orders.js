@@ -316,19 +316,25 @@ export default function () {
       var $timeline = $('#t' + tabId + '-order-timeline')
       var events = []
       var eventTypes = {
-        'payments_history': financialStatus,
-        'fulfillments': fulfillmentStatus
+        payments_history: financialStatus,
+        fulfillments: fulfillmentStatus
       }
 
       // merge payment and fulfillment status changes
       for (var eventType in eventTypes) {
-        if (eventTypes.hasOwnProperty(eventType) && data[eventType]) {
+        if (eventTypes[eventType] && data[eventType]) {
           // get enum from JSON to set color and text by event
           opts = json.orders[eventTypes[eventType]].enum
-          data[eventType].forEach(function (entry) {
+          data[eventType].sort((a, b) => {
+            if (a.date_time && b.date_time) {
+              return a.date_time > b.date_time
+                ? 1 : -1
+            }
+            return 0
+          }).forEach(function (entry) {
             var eventObj
             for (var status in opts) {
-              if (opts.hasOwnProperty(status) && status === entry.status) {
+              if (opts[status] && status === entry.status) {
                 // status found
                 eventObj = opts[status]
                 break
