@@ -26,7 +26,11 @@ button:focus {
     &:not(.btn-pure) {
       background-color: $value;
       border-color: $value;
-      color: $color-yiq-value;
+      @if $color == 'light' {
+        color: $gray-600;
+      } @else {
+        color: $color-yiq-value;
+      }
 
       &:not([disabled]):not(.disabled) {
         &:hover,
@@ -35,22 +39,24 @@ button:focus {
         &.active {
           background-color: darken($value, 3%);
           border-color: darken($value, 3%);
-          color: $color-yiq-value;
           @if $color == 'light' {
-            box-shadow: 0 1px 5px rgba(darken($value, 10%), .4);
+            color: $gray-700;
+            box-shadow: 0 0 0 .1rem rgba($value, .8);
           } @else {
-            box-shadow: 0 1px 5px rgba($value, .4);
+            color: $color-yiq-value;
+            box-shadow: 0 0 0 .1rem rgba($value, .4);
           }
         }
 
         &:active:focus {
           border-color: darken($value, 5%);
           background-color: darken($value, 5%);
-          color: $color-yiq-value;
           @if $color == 'light' {
-            box-shadow: 0 1px 5px rgba(darken($value, 10%), .5);
+            color: $gray-700;
+            box-shadow: 0 0 0 .1rem rgba($value, .9);
           } @else {
-            box-shadow: 0 1px 5px rgba($value, .5);
+            color: $color-yiq-value;
+            box-shadow: 0 0 0 .1rem rgba($value, .5);
           }
         }
       }
@@ -71,20 +77,6 @@ button:focus {
           color: darken($value, 15%);
         }
       }
-    }
-  }
-}
-
-.btn.btn-light {
-  color: $gray-600;
-
-  &:not([disabled]):not(.disabled) {
-    &:hover,
-    &:focus,
-    &:active,
-    &.active,
-    &:active:focus {
-      color: $gray-700;
     }
   }
 }

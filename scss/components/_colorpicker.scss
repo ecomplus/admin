@@ -1,0 +1,24 @@
+.minicolors {
+  &-panel {
+    z-index: 199 !important;
+
+    &.swatches-only > * {
+      display: none;
+    }
+
+    &.swatches-only,
+    &.swatches-first {
+      > .minicolors-swatches {
+        display: block;
+
+        > li {
+          width: 31.5px;
+          height: 31.5px;
+          border-radius: 2px;
+          margin-right: 1.5px;
+          margin-bottom: 1.5px;
+        }
+      }
+    }
+  }
+}

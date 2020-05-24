@@ -26,7 +26,7 @@ select,
       &:active,
       &:active:focus,
       &[aria-expanded=true] {
-        background-color: lighten($light, 1.25%);
+        background-color: lighten($light, 1.15%);
         color: $gray-900;
         border-color: $primary;
         box-shadow: 0 0 0 .1rem rgba($primary, .15);
@@ -41,7 +41,7 @@ select,
 
 .dropdown-item {
   &:hover {
-    background-color: lighten($light, 1.5%);
+    background-color: lighten($light, 1.3%);
   }
 
   &.active {
