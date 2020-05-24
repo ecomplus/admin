@@ -66,22 +66,25 @@ export default function () {
     var gridsOptions = {}
 
     // load grids and options samples
-    $.getJSON('json/misc/variations_grids.json', function (json) {
-      // successful
-      for (var gridId in json) {
-        var grid = json[gridId]
-        if (grid) {
-          if (Grids.hasOwnProperty(gridId) && grid.options) {
-            // overwrite options only
-            Grids[gridId].options = i18n(grid.options)
-          } else {
-            Grids[gridId] = i18n(grid)
+    import('@/data/misc/variations-grids')
+      .then(exp => {
+        const json = exp.default
+        // successful
+        for (var gridId in json) {
+          var grid = json[gridId]
+          if (grid) {
+            if (Grids.hasOwnProperty(gridId) && grid.options) {
+              // overwrite options only
+              Grids[gridId].options = i18n(grid.options)
+            } else {
+              Grids[gridId] = i18n(grid)
+            }
           }
         }
-      }
-    })
+      })
+      .catch(console.error)
 
-      .always(function () {
+      .finally(() => {
         // add store custom grids
         window.callApi('grids.json?fields=title,grid_id,options', 'GET', function (err, json) {
           if (!err) {
@@ -1337,7 +1340,7 @@ export default function () {
         index++
         // refresh the picker plugin
         // trigger change to handle commit and save action
-        $select.append($option).selectpicker('refresh').trigger('change')
+        $select.append($option).appSelectpicker('refresh').trigger('change')
 
         // create resource document
         var slug = $select.attr('name')

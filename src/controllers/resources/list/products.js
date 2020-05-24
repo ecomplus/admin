@@ -215,7 +215,7 @@ export default function () {
               text: data.result[i].name,
               value: valueCategory(data.result[i])
             })
-            $categorySelect.append($option).selectpicker('refresh').trigger('change')
+            $categorySelect.append($option).appSelectpicker('refresh').trigger('change')
           }
         }
       })
@@ -599,10 +599,8 @@ export default function () {
               'class': 'form-group selectpicker-default',
               html: $select
             }))
-            $select.selectpicker({
-              style: 'btn-light',
-              noneSelectedText: agg.label,
-              windowPadding: 70
+            $select.appSelectpicker({
+              noneSelectedText: agg.label
             })
           }
         }

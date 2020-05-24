@@ -89,11 +89,7 @@
     }
 
     // setup general preloaded plugins
-    $('select').selectpicker({
-      style: 'btn-light',
-      noneSelectedText: '--',
-      windowPadding: 70
-    })
+    $('select').appSelectpicker()
 
     // handle manual action topbar toggle
     $('#topbar-action-toggle').click(function () {
@@ -641,7 +637,7 @@
     $form.find('input,select,textarea').data('object-id', objectId).val('')
     setupInputValues($form, obj, prop + '.')
     // fix select fields
-    $form.find('select').selectpicker('refresh')
+    $form.find('select').appSelectpicker('refresh')
   }
 
   // setup blocks for array of nested objects

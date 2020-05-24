@@ -1,6 +1,4 @@
-/*!
- * Copyright 2018 E-Com Club
- */
+const { $ } = window
 
 export default function () {
   'use strict'
@@ -268,132 +266,135 @@ export default function () {
     }
 
     // reuse order status enum and respective colors from lists configuration JSON
-    $.getJSON('json/misc/config_lists.json', function (json) {
-      // order status string fields
-      var financialStatus = 'financial_status/current'
-      var fulfillmentStatus = 'fulfillment_status/current'
-      var fields = [
-        'status',
-        financialStatus,
-        fulfillmentStatus
-      ]
-      var opts
+    import('@/data/misc/config-lists')
+      .then(exp => {
+        const json = exp.default
+        // order status string fields
+        var financialStatus = 'financial_status/current'
+        var fulfillmentStatus = 'fulfillment_status/current'
+        var fields = [
+          'status',
+          financialStatus,
+          fulfillmentStatus
+        ]
+        var opts
 
-      for (var i = 0; i < fields.length; i++) {
-        var field = fields[i]
-        var prop = field.replace('/', '.')
-        var html = []
-        opts = json.orders[field].enum
+        for (var i = 0; i < fields.length; i++) {
+          var field = fields[i]
+          var prop = field.replace('/', '.')
+          var html = []
+          opts = json.orders[field].enum
 
-        // add options to HTML string
-        for (var status in opts) {
-          if (opts.hasOwnProperty(status)) {
-            html.push($('<option>', {
-              value: status,
-              text: status,
-              'data-content': '<span class="text-' + opts[status].class + '">' +
-                i18n(opts[status].text) + '</span>'
-            }))
-          }
-        }
-        if (field !== 'status') {
-          // add empty option
-          html.unshift('<option value="" selected > -- </option>')
-        }
-
-        // update select element
-        var $select = $orderBase.find('select[name="' + prop + '"]')
-        $select.html(html)
-        var value = getFromDotNotation(Data(), prop)
-        if (value) {
-          // set selected value
-          $select.val(value)
-        }
-        $select.selectpicker('refresh')
-      }
-
-      // setup order timeline
-      var $timeline = $('#t' + tabId + '-order-timeline')
-      var events = []
-      var eventTypes = {
-        payments_history: financialStatus,
-        fulfillments: fulfillmentStatus
-      }
-
-      // merge payment and fulfillment status changes
-      for (var eventType in eventTypes) {
-        if (eventTypes[eventType] && data[eventType]) {
-          // get enum from JSON to set color and text by event
-          opts = json.orders[eventTypes[eventType]].enum
-          data[eventType].sort((a, b) => {
-            if (a.date_time && b.date_time) {
-              return a.date_time > b.date_time
-                ? 1 : -1
+          // add options to HTML string
+          for (var status in opts) {
+            if (opts.hasOwnProperty(status)) {
+              html.push($('<option>', {
+                value: status,
+                text: status,
+                'data-content': '<span class="text-' + opts[status].class + '">' +
+                  i18n(opts[status].text) + '</span>'
+              }))
             }
-            return 0
-          }).forEach(function (entry) {
-            var eventObj
-            for (var status in opts) {
-              if (opts[status] && status === entry.status) {
-                // status found
-                eventObj = opts[status]
-                break
+          }
+          if (field !== 'status') {
+            // add empty option
+            html.unshift('<option value="" selected > -- </option>')
+          }
+
+          // update select element
+          var $select = $orderBase.find('select[name="' + prop + '"]')
+          $select.html(html)
+          var value = getFromDotNotation(Data(), prop)
+          if (value) {
+            // set selected value
+            $select.val(value)
+          }
+          $select.appSelectpicker('refresh')
+        }
+
+        // setup order timeline
+        var $timeline = $('#t' + tabId + '-order-timeline')
+        var events = []
+        var eventTypes = {
+          payments_history: financialStatus,
+          fulfillments: fulfillmentStatus
+        }
+
+        // merge payment and fulfillment status changes
+        for (var eventType in eventTypes) {
+          if (eventTypes[eventType] && data[eventType]) {
+            // get enum from JSON to set color and text by event
+            opts = json.orders[eventTypes[eventType]].enum
+            data[eventType].sort((a, b) => {
+              if (a.date_time && b.date_time) {
+                return a.date_time > b.date_time
+                  ? 1 : -1
               }
-            }
-            eventObj.date_time = entry.date_time
-            eventObj.type = eventType
-            events.push(eventObj)
-          })
+              return 0
+            }).forEach(function (entry) {
+              var eventObj
+              for (var status in opts) {
+                if (opts[status] && status === entry.status) {
+                  // status found
+                  eventObj = opts[status]
+                  break
+                }
+              }
+              eventObj.date_time = entry.date_time
+              eventObj.type = eventType
+              events.push(eventObj)
+            })
+          }
         }
-      }
 
-      if (events.length) {
-        // order events by date
-        events.sort(function (a, b) {
-          if (a.date_time > b.date_time) {
-            return 1
-          }
-          if (a.date_time < b.date_time) {
-            return -1
-          }
-          // a must be equal to b
-          return 0
-        })
+        if (events.length) {
+          // order events by date
+          events.sort(function (a, b) {
+            if (a.date_time > b.date_time) {
+              return 1
+            }
+            if (a.date_time < b.date_time) {
+              return -1
+            }
+            // a must be equal to b
+            return 0
+          })
 
-        // update timeline element
-        // show full timestamp of each event
-        var dateList = [ 'day', 'month', 'year', 'hour', 'minute', 'second' ]
-        events.forEach(function (eventObj) {
-          // color by status
-          var badgeColor = eventObj.class || 'default'
-          // setup timeline block content
-          var blockContent = ''
-          if (eventObj.date_time) {
-            blockContent += '<time datetime="' + eventObj.date_time + '">' +
-              formatDate(eventObj.date_time, dateList) + '</time>'
-          }
-          blockContent += '<p>' + i18n(eventObj.text) + '</p>'
+          // update timeline element
+          // show full timestamp of each event
+          var dateList = [ 'day', 'month', 'year', 'hour', 'minute', 'second' ]
+          events.forEach(function (eventObj) {
+            // color by status
+            var badgeColor = eventObj.class || 'default'
+            // setup timeline block content
+            var blockContent = ''
+            if (eventObj.date_time) {
+              blockContent += '<time datetime="' + eventObj.date_time + '">' +
+                formatDate(eventObj.date_time, dateList) + '</time>'
+            }
+            blockContent += '<p>' + i18n(eventObj.text) + '</p>'
 
-          // add block to timeline element
-          $timeline.append($('<li>', {
-            'class': 'timeline-block',
-            html: [
-              $('<div>', {
-                'class': 'timeline-point',
-                html: '<span class="badge badge-dot badge-lg badge-' + badgeColor + '"></span>'
-              }),
-              $('<div>', {
-                'class': 'timeline-content',
-                html: blockContent
-              })
-            ]
-          }))
-        })
+            // add block to timeline element
+            $timeline.append($('<li>', {
+              'class': 'timeline-block',
+              html: [
+                $('<div>', {
+                  'class': 'timeline-point',
+                  html: '<span class="badge badge-dot badge-lg badge-' + badgeColor + '"></span>'
+                }),
+                $('<div>', {
+                  'class': 'timeline-content',
+                  html: blockContent
+                })
+              ]
+            }))
+          })
 
-        // show timeline element on DOM
-        $timeline.closest('.hidden').slideDown()
-      }
-    })
+          // show timeline element on DOM
+          $timeline.closest('.hidden').slideDown()
+        }
+      })
+      .catch(console.error)
 
     // setup current transaction(s)
     var $payment = $('#t' + tabId + '-order-payment')

@@ -378,11 +378,7 @@ export default function () {
 
         // setup inputs plugins
         $form.find('.tagsinput').tagsinput()
-        $form.find('select:not(.tagsinput)').selectpicker({
-          style: 'btn-light',
-          noneSelectedText: '--',
-          windowPadding: 70
-        })
+        $form.find('select:not(.tagsinput)').appSelectpicker()
 
         var $editor = $form.find('.html-editor')
         if ($editor.length) {
