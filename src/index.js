@@ -1,6 +1,7 @@
 import session from './lib/session'
 import ecomUtils from '@ecomplus/utils'
 import '@ecomplus/storefront-twbs/src/'
+import './lib/forms/selectpicker'
 
 const { sessionStorage, app } = window
 
