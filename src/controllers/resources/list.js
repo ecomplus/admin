@@ -1,4 +1,4 @@
-const { $ } = window
+const { $, cutString } = window
 
 export default function () {
   'use strict'
@@ -728,7 +728,8 @@ export default function () {
 
             if (fieldOpts.cut_string) {
               // max chars of string to fill well inside column
-              (function (maxLength) {
+              ;(function (maxLength) {
+                fieldObj.css = 'text-truncate'
                 var templateFn = fieldObj.itemTemplate
                 fieldObj.itemTemplate = function (text, item) {
                   if (text) {
@@ -741,7 +742,7 @@ export default function () {
                         // update element HTML content
                         out.html(abbr)
                       } else {
-                        out.replace(text, abbr)
+                        out = out.replace(text, abbr)
                       }
                     }
                     return out
