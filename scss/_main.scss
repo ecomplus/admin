@@ -507,6 +507,9 @@ body {
 // buttons for document edition
 .header-action .edit-btn {
   display: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
 .header-action .edit-btn,
 .header-action .edit-btn:hover {
@@ -717,6 +720,9 @@ body {
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
 }
+.data-list tr > .data-list-multi {
+  line-height: 1.25;
+}
 .data-list tr > .data-list-check {
   width: 70px !important;
 }
@@ -779,6 +785,13 @@ body {
   padding: .7rem;
   border-top: 1px solid $color-purple-light;
   background: rgba($color-pale-purple, .2);
+  font-size: 15px;
+  line-height: 1.8;
+
+  a[href=" - "],
+  a:empty {
+    display: none
+  }
 }
 .data-list-accordion span {
   display: inline-block;
