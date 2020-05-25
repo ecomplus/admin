@@ -651,7 +651,7 @@ export default function () {
                       const enumStatus = config.status.enum[item.status]
                       if (enumStatus) {
                         title += ` : ${i18n(enumStatus.text)}`
-                        className += `text-monospace text-${(enumStatus.class || 'info')}`
+                        className = `text-monospace text-${(enumStatus.class || 'info')}`
                       }
                     }
                     return $('<a>', {
