@@ -1,4 +1,3 @@
-import { i19delete } from '@ecomplus/i18n'
 import { $ecomConfig } from '@ecomplus/utils'
 import session from '@/lib/session'
 import { handleFatalError, handleApiError } from '@/lib/errors'
@@ -6,6 +5,7 @@ import i18n from '@/lib/i18n'
 import { hide as hideToast } from '@/lib/toast'
 import loadRoute from '@/router/load-route'
 import './util.js'
+import EventEmitter from 'eventemitter3'
 
 const { sessionStorage, $, app } = window
 
@@ -448,7 +448,7 @@ const { sessionStorage, $, app } = window
         actionTitle: null
       }
       // add tab to route content element
-      $('#route-content').append('<div id="app-tab-' + id + '"></div>')
+      $('#route-content').append(`<div id="app-tab-${id}"></div>`)
 
       // update tabs nav HTML
       var navItem = $('#new-nav-item').clone().attr('id', 'app-nav-' + id)
@@ -624,7 +624,8 @@ const { sessionStorage, $, app } = window
           load: function () {},
           pagination: function () {},
           */
-          state: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {}
+          state: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {},
+          emitter: new EventEmitter()
         }
 
         if (!internal) {
