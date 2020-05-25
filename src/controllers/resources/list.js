@@ -35,7 +35,7 @@ export default function () {
         if (deepObj !== null && Array.isArray(deepObj)) {
           for (var i = 0; i < deepObj.length; i++) {
             for (var deepProp in deepObj[i]) {
-              if (deepObj[i].hasOwnProperty(deepProp)) {
+              if (deepObj[i][deepProp] !== undefined) {
                 // assign to object
                 // using / to separate properties because jsGrid converts dot notation
                 newDoc[prop + '/' + deepProp] = deepObj[i][deepProp]
@@ -45,14 +45,25 @@ export default function () {
         }
         if (typeof deepObj === 'object' && deepObj !== null && !Array.isArray(deepObj)) {
           // is object
-          // go deeper
-          for (deepProp in deepObj) {
-            if (deepObj.hasOwnProperty(deepProp)) {
-              // assign to object
-              // using / to separate properties because jsGrid converts dot notation
-              newDoc[prop + '/' + deepProp] = deepObj[deepProp]
+          const goDeeper = (loopObj, prop) => {
+            for (deepProp in loopObj) {
+              if (loopObj[deepProp] !== undefined) {
+                // assign to object
+                // using / to separate properties because jsGrid converts dot notation
+                const newProp = prop + `/${deepProp}`
+                if (
+                  typeof loopObj[deepProp] === 'object' &&
+                  loopObj[deepProp] &&
+                  !Array.isArray(loopObj[deepProp])
+                ) {
+                  goDeeper(Object.assign({}, loopObj[deepProp]), newProp)
+                } else {
+                  newDoc[newProp] = loopObj[deepProp]
+                }
+              }
             }
           }
+          goDeeper(Object.assign({}, deepObj), prop)
         } else {
           // just keep the original property
           newDoc[prop] = deepObj
@@ -278,7 +289,7 @@ export default function () {
           var field = fieldsList[i]
           var value = filters[field]
           if (value && value !== '') {
-            var prop = field.replace('/', '.')
+            var prop = field.replace(/\//g, '.')
             if (/([0-9]+)?>>([0-9]+)?/.test(value)) {
               // query by range
               value = value.split('>>')
@@ -289,6 +300,10 @@ export default function () {
                 params += '&' + prop + '<=' + value[1]
               }
             } else {
+              if (value.indexOf('@') > -1 && prop.indexOf('display_name') > -1) {
+                // handling customer/buyer name and email on same column
+                prop = prop.replace('display_name', 'main_email')
+              }
               params += '&' + prop + '=' + value
             }
           }
@@ -471,10 +486,21 @@ export default function () {
                         var nested = item[field][ii]
                         var template = config[field].template
                         for (var prop in nested) {
-                          if (nested.hasOwnProperty(prop)) {
+                          if (nested[prop] !== undefined) {
                             // replace variables on string HTML template
                             var regex = new RegExp('{{' + prop + '}}', 'g')
-                            template = template.replace(regex, nested[prop])
+                            let text
+                            if (typeof nested[prop] === 'object') {
+                              // parse JSON to field values only
+                              text = JSON.stringify(nested[prop])
+                                .replace(/[^:]+:"?([^,"}]+)(["\]}]+)?/g, '<span>$1</span>')
+                              if (text === '[]' || text === '{}') {
+                                text = ''
+                              }
+                            } else {
+                              text = nested[prop]
+                            }
+                            template = template.replace(regex, text)
                           }
                         }
                         // replace variables not matched
@@ -609,7 +635,8 @@ export default function () {
             var fieldObj = {
               name: field,
               type: 'text',
-              title: i18n(fieldOpts.label || json._labels[field])
+              title: i18n(fieldOpts.label || json._labels[field]),
+              css: ''
             }
 
             if (i === 0) {
@@ -618,7 +645,18 @@ export default function () {
               if (field !== '_id') {
                 fieldObj.itemTemplate = function (text, item) {
                   if (text && item) {
+                    let className
+                    let title = `#${text}`
+                    if (config.status && config.status.enum && item.status) {
+                      const enumStatus = config.status.enum[item.status]
+                      if (enumStatus) {
+                        title += ` : ${i18n(enumStatus.text)}`
+                        className += `text-monospace text-${(enumStatus.class || 'info')}`
+                      }
+                    }
                     return $('<a>', {
+                      class: className,
+                      title,
                       text: text,
                       href: baseHash + item._id
                     })
@@ -674,7 +712,7 @@ export default function () {
                       // colored bold text
                       var className = type + ' text-' + (valueObj.class || 'muted')
                       return $('<span>', {
-                        'class': className,
+                        class: className,
                         text: i18n(valueObj.text) || value
                       })
                     }
@@ -745,7 +783,7 @@ export default function () {
             if (fieldOpts.cut_string) {
               // max chars of string to fill well inside column
               ;(function (maxLength) {
-                fieldObj.css = 'text-truncate'
+                fieldObj.css += ' text-truncate'
                 var templateFn = fieldObj.itemTemplate
                 fieldObj.itemTemplate = function (text, item) {
                   if (text) {
@@ -769,15 +807,41 @@ export default function () {
 
             if (fieldOpts.width) {
               // set fixed width
-              fieldObj.css = 'data-list-fixed'
+              fieldObj.css += ' data-list-fixed'
               fieldObj.width = fieldOpts.width
             }
             if (fieldOpts.range) {
               // filter by number range
               filterRange(fieldObj, null, field)
-            } else {
+            } else if (fieldOpts.editable !== false) {
               // enable bulk edit for current field
               bulkEditFields.push(field)
+            }
+
+            const extraField = fieldOpts.extra_field
+            if (extraField) {
+              // additional field on same column
+              const { itemTemplate } = fieldObj
+              if (itemTemplate) {
+                fieldObj.itemTemplate = function (text, item) {
+                  if (item[extraField]) {
+                    return [
+                      itemTemplate(text, item),
+                      `<br><small title="${item[extraField]}">${item[extraField]}</small>`
+                    ]
+                  } else {
+                    return itemTemplate(text, item)
+                  }
+                }
+              } else {
+                fieldObj.itemTemplate = function (text, item) {
+                  return text + (item[extraField] ? ` <small>${item[extraField]}</small>` : '')
+                }
+              }
+              fieldObj.css += ' data-list-multi'
+              if (fieldObj.css.indexOf('text-truncate') === -1) {
+                fieldObj.css += ' text-truncate'
+              }
             }
 
             fields.push(fieldObj)

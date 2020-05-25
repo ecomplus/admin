@@ -188,13 +188,14 @@ export default function () {
     window.routeReady(tabTitle)
   }
 
-  var commit = function (json, updated) {
+  var commit = function (data, updated) {
     if (!updated) {
       // pass JSON data
-      Tab.data = json
+      Tab.data = data
     }
     // reset Ace editor content
-    editor.session.setValue(JSON.stringify(json, null, 4))
+    editor.session.setValue(JSON.stringify(data, null, 2))
+    Tab.emitter.emit('commit', { data })
   }
 
   // set resource params globally
@@ -309,6 +310,33 @@ export default function () {
       // default load function
       load = function (callback, params) {
         var uri = endpoint
+        if (resourceId === undefined && slug === 'orders') {
+          // mocking orders list fields here
+          params = (params ? `${params}&fields=` : 'fields=') +
+            'source_name,' +
+            'number,' +
+            'status,' +
+            'financial_status.current,' +
+            'fulfillment_status.current,' +
+            'amount,' +
+            'payment_method_label,' +
+            'shipping_method_label,' +
+            'buyers._id,' +
+            'buyers.main_email,' +
+            'buyers.display_name,' +
+            'buyers.phones,' +
+            'buyers.doc_number,' +
+            'transactions.payment_link,' +
+            'transactions.intermediator.transaction_code,' +
+            'items.product_id,' +
+            'items.sku,' +
+            'items.name,' +
+            'items.quantity,' +
+            'extra_discount.discount_coupon,' +
+            'extra_discount.app.label,' +
+            'created_at,' +
+            'updated_at'
+        }
         if (params) {
           uri += '?' + params
         }

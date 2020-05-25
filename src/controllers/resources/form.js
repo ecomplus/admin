@@ -152,7 +152,7 @@ export default function () {
     }
 
     // show buttons
-    $('#t' + tabId + '-nav .edit-btn').fadeIn()
+    $('#t' + tabId + '-nav .edit-btn:not([data-list])').fadeIn()
   }
 
   // count AJAX requests
