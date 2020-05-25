@@ -788,9 +788,16 @@ body {
   font-size: 15px;
   line-height: 1.8;
 
-  a[href=" - "],
-  a:empty {
-    display: none
+  a {
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-flex;
+    max-width: 500px;
+
+    &[href=" - "],
+    &:empty {
+      display: none;
+    }
   }
 }
 .data-list-accordion span {
