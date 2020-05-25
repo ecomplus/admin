@@ -256,22 +256,25 @@
     "_fields": [
       "number",
       "buyers/display_name",
-      "status",
       "amount/subtotal",
       "amount/total",
+      "extra_discount/app/label",
       "financial_status/current",
       "fulfillment_status/current"
     ],
     "_hidden_fields": [
-      "channel_id",
+      "number",
       "code",
       "source_name",
       "payment_method_label",
       "shipping_method_label",
+      "amount/subtotal",
       "amount/discount",
       "amount/freight",
+      "amount/total",
       "buyers",
-      "items"
+      "items",
+      "transactions"
     ],
     "channel_id": {
       "label": {
@@ -287,8 +290,8 @@
     },
     "payment_method_label": {
       "label": {
-        "en_us": "Payment method",
-        "pt_br": "Forma de pagamento"
+        "en_us": "Payment",
+        "pt_br": "Pagamento"
       }
     },
     "buyers/main_email": {
@@ -297,10 +300,20 @@
         "pt_br": "E-mail"
       }
     },
+    "extra_discount/app/label": {
+      "label": {
+        "en_us": "Campaign",
+        "pt_br": "Campanha"
+      },
+      "editable": false,
+      "width": 100,
+      "cut_string": 10,
+      "extra_field": "extra_discount/discount_coupon"
+    },
     "shipping_method_label": {
       "label": {
-        "en_us": "Shipping method",
-        "pt_br": "Forma de envio"
+        "en_us": "Shipping",
+        "pt_br": "Envio"
       }
     },
     "buyers/display_name": {
@@ -308,14 +321,19 @@
         "en_us": "Buyer",
         "pt_br": "Comprador"
       },
-      "cut_string": 18,
-      "templates": ""
+      "editable": false,
+      "width": 140,
+      "cut_string": 20,
+      "extra_field": "buyers/main_email"
     },
     "buyers": {
-      "template": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a>"
+      "template": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a> - <a href='mailto:{{main_email}}' target='_blank' rel='noopener'>{{main_email}}</a> <span class='ml-3'>{{phones}}</span>"
     },
     "items": {
       "template": "{{quantity}}x <a href='#/resources/products/{{product_id}}'>{{name}}</a> ({{sku}})"
+    },
+    "transactions": {
+      "template": "<a href='{{payment_link}}' target='_blank' rel='noopener' class='mr-3'>{{payment_link}}</a> <code>{{intermediator}}</code>"
     },
     "status": {
       "type": "bold",
@@ -348,7 +366,7 @@
         "en_us": "No",
         "pt_br": "Nº"
       },
-      "width": 90,
+      "width": 80,
       "range": true
     },
     "source_name": {
@@ -469,7 +487,8 @@
             "pt_br": "Desconhecido"
           }
         }
-      }
+      },
+      "extra_field": "payment_method_label"
     },
     "fulfillment_status/current": {
       "label": {
@@ -551,7 +570,8 @@
             "pt_br": "Devolvido"
           }
         }
-      }
+      },
+      "extra_field": "shipping_method_label"
     }
   }
 }
