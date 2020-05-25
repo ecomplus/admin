@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.3](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2020-05-25)
+
+
+### Bug Fixes
+
+* **resource-list:** minor style fixes for resource lists ([4cf6ba7](https://github.com/ecomplus/admin/commit/4cf6ba7cd96bb60b802dab53329173fd446d40ad))
+
 ## [1.0.0-alpha.2](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2020-05-25)
 
 
