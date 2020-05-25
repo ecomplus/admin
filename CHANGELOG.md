@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.2](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2020-05-25)
+
+
+### Features
+
+* **orders-list:** auto set min/max number for equal search by default ([82adce2](https://github.com/ecomplus/admin/commit/82adce2e3c25ec7f69a9b5a8de0a12ade802ebec))
+* **resources-list:** multi fields columns, mock default orders fields ([869a388](https://github.com/ecomplus/admin/commit/869a3884ea9144dde77b2e3dbe15fd987b8034ef))
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/utils to v1.4.1 ([49454e1](https://github.com/ecomplus/admin/commit/49454e164ebbb1fd9a5f6525b2f2691042b0f869))
+* **imports:** importing json data properly ([fe9cb9f](https://github.com/ecomplus/admin/commit/fe9cb9f3a035b4a43afd9558980ec70227582de3))
+* **product-form:** using 'swatches-first' (not only) on colorpickers ([db57fe5](https://github.com/ecomplus/admin/commit/db57fe54cfb9ac5c032759ab2e5a62ea97586df8))
+* **resource-lists:** truncate text on limited length cols ([4408e1b](https://github.com/ecomplus/admin/commit/4408e1b86fb5a7b1b783567430f5ab8597bd3ed9))
+* **scss:** data list gereral fixes ([40ae06c](https://github.com/ecomplus/admin/commit/40ae06c66b23c96ebf00813a69e825170da6bedc))
+* **scss:** minor fixes for select and button styles ([011a101](https://github.com/ecomplus/admin/commit/011a101f728dcb1ec6cfae6cdcf30604d6fc25b8))
+* **scss:** minor form components and buttons styles fixes ([4e30812](https://github.com/ecomplus/admin/commit/4e308128a7cb7251d7feae0ae486c086c3ddca2a))
+* **selectpicker:** ensuring picker works on first click, set defaults ([5e05330](https://github.com/ecomplus/admin/commit/5e053303ee00ac6681d1d2bd599d035e1aa57c3e))
+* **toast:** minor fix to prevent toast container overlaping ([a465afe](https://github.com/ecomplus/admin/commit/a465afe3ad6577cddebe2f7c2ae76ac43285dbbe))
+
 ## [1.0.0-alpha.1](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2020-05-24)
 
 
