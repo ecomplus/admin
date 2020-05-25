@@ -533,15 +533,31 @@ export default function () {
             }
           })
 
-          var filterRange = function (fieldObj, inputMask) {
+          var filterRange = function (fieldObj, inputMask, field) {
             // handle filter by range
             // for numbers only
             fieldObj.filterTemplate = function () {
               // hidden input to handle jsGrid hardcoded filterControl property
               var $hidden = $('<input>', { type: 'hidden' })
+              let lastMin, lastMax
               var setValue = function () {
                 var min = $min.data('value') || $min.val() || ''
                 var max = $max.data('value') || $max.val() || ''
+                if (max && min && max < min) {
+                  return $max.val(min).trigger('change')
+                }
+                if (field === 'number') {
+                  // auto set min/max for equal search by default
+                  if (min) {
+                    if (!max && lastMax === undefined) {
+                      return $max.val(min).trigger('change')
+                    }
+                  } else if (max && lastMin === undefined) {
+                    return $min.val(max).trigger('change')
+                  }
+                  lastMin = min
+                  lastMax = lastMax === '' && !max ? undefined : max
+                }
                 $hidden.val(min !== '' || max !== '' ? min + '>>' + max : '')
                 // reload data with new filter value
                 $grid.jsGrid('loadData')
@@ -550,7 +566,7 @@ export default function () {
 
               // inputs for min and max values
               var inputsOpts = {
-                'class': 'data-list-range',
+                class: 'data-list-range',
                 keydown: function (e) {
                   switch (e.which) {
                     // enter
@@ -561,15 +577,15 @@ export default function () {
                 },
                 type: 'tel',
                 placeholder: i18n({
-                  'en_us': 'min',
-                  'pt_br': 'mín'
+                  en_us: 'min',
+                  pt_br: 'mín'
                 })
               }
               var $min = $('<input>', inputsOpts)
               var $max = $('<input>', Object.assign(inputsOpts, {
                 placeholder: i18n({
-                  'en_us': 'max',
-                  'pt_br': 'máx'
+                  en_us: 'max',
+                  pt_br: 'máx'
                 })
               }))
 
@@ -581,7 +597,7 @@ export default function () {
               // set hidden input value on range inputs change events
               $min.change(setValue)
               $max.change(setValue)
-              return $('<div>', { html: [ $min, $max ] })
+              return $('<div>', { html: [$min, $max] })
             }
           }
 
@@ -758,7 +774,7 @@ export default function () {
             }
             if (fieldOpts.range) {
               // filter by number range
-              filterRange(fieldObj)
+              filterRange(fieldObj, null, field)
             } else {
               // enable bulk edit for current field
               bulkEditFields.push(field)
