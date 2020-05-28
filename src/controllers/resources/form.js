@@ -516,15 +516,9 @@ export default function () {
                     if (!thumbnails) {
                       // no thumbnails
                       // only original (zoom) size is saved
-                      var url = picture.url
-                      picture = { zoom: picture }
-                      if (url.indexOf('digitaloceanspaces.com/@') !== -1) {
-                        // from store bucket
-                        picture.normal = {
-                          url: url.replace(/^((https?:)?\/\/[^/]+\/)(.*)$/, '$1imgs/400px/$3')
-                        }
-                      } else {
-                        picture.normal = picture.zoom
+                      picture = {
+                        normal: picture,
+                        zoom: picture
                       }
                     }
                     pictures.push(picture)
