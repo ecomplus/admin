@@ -151,7 +151,7 @@ export default function () {
       })
       appTab.find('#standart').click(function () {
         if (Tab.selectedItems.length < 10) {
-          window.location.href = '/#/tagstandart/' + Tab.selectedItems
+          window.location.href = '/#/tagstandard/' + Tab.selectedItems
         } else {
           app.toast(i18n({
             'en_us': 'Only 9 orders allowed',
