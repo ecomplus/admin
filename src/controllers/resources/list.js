@@ -300,9 +300,13 @@ export default function () {
                 params += '&' + prop + '<=' + value[1]
               }
             } else {
-              if (value.indexOf('@') > -1 && prop.indexOf('display_name') > -1) {
-                // handling customer/buyer name and email on same column
-                prop = prop.replace('display_name', 'main_email')
+              if (prop.indexOf('name') > -1) {
+                if (value.indexOf('@') > -1) {
+                  // handling customer/buyer name and email on same column
+                  prop = prop.replace('display_name', 'main_email')
+                }
+                // 'like' search for names and email
+                prop += '%'
               }
               params += '&' + prop + '=' + value
             }
