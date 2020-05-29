@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.5](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2020-05-29)
+
+## [1.0.0-alpha.4](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2020-05-28)
+
+
+### Features
+
+* **list:** 'like' search for names and email ([187cc5b](https://github.com/ecomplus/admin/commit/187cc5b1bf4e03ca5cbbf90d927bae48e65dea1d))
+
+
+### Bug Fixes
+
+* **resource-forms:** fix handling picture objects without thumbs ([51ee9f6](https://github.com/ecomplus/admin/commit/51ee9f601e359413dec5fa2f16dffe8964046782))
+
 ## [1.0.0-alpha.3](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2020-05-25)
 
 

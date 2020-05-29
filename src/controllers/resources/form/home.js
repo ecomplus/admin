@@ -5,7 +5,7 @@
 export default function () {
   'use strict'
   // current tab ID
-  var tabId = window.tabId
+  const { $, localStorage, tabId } = window
   var Tab = window.Tabs[tabId]
   // render cart items on table
   var setup = function () {
@@ -71,7 +71,7 @@ export default function () {
     var dataStartYesterday = getISOWithLocalStart(new Date(yyyy, mm, dd - 1, 0, timezoneCalc, 0, 0))
     var dataEndYesterday = getISOWithLocalEnd(new Date(yyyy, mm, dd - 1, 23, 59 + timezoneCalc, 59, 0))
     var dateStartTwo = getISOWithLocalStart(new Date(yyyy, mm - 1, 1, 0, timezoneCalc, 0, 0))
-    var dateEndTwo = getISOWithLocalEnd(new Date(yyyy, mm - 1, 31, 23, 59 + timezoneCalc, 59, 0))
+    // var dateEndTwo = getISOWithLocalEnd(new Date(yyyy, mm - 1, 31, 23, 59 + timezoneCalc, 59, 0))
     var dataStart = getISOWithLocalStart(new Date(yyyy, mm, dd, 0, timezoneCalc, 0, 0))
     var dataEnd = getISOWithLocalEnd(new Date(yyyy, mm, dd, 23, 59 + timezoneCalc, 59, 0))
     var dateStart = getISOWithLocalStart(new Date(yyyy, mm, 1, 0, timezoneCalc, 0, 0))
@@ -79,7 +79,10 @@ export default function () {
 
     var approved = 0
     var approvedLast = 0
-    var urlOrderLast = 'orders.json?sort=amount&created_at>=' + dateStartTwo + '&fields=buyers,amount,_id,created_at,financial_status,number,status'
+    var urlOrderLastMonth = 'orders.json?sort=amount&created_at>=' + dateStartTwo + '&created_at<=' + dateStart + '&fields=amount,created_at,financial_status'
+    console.log(urlOrderLastMonth)
+    var urlOrderMonth = 'orders.json?sort=amount&created_at>=' + dateStart + '&fields=buyers,amount,_id,created_at,financial_status,number'
+    console.log(urlOrderMonth)
     $storeID.text(storeId)
     var urlStore = 'stores/me.json'
     // search for store name and object id
@@ -106,27 +109,25 @@ export default function () {
     // search for dayly orders
     $(document).ready(function () {
       setTimeout(function () {
-        window.callApi(urlOrderLast, 'GET', function (err, json) {
-          console.log(json)
+        window.callApi(urlOrderMonth, 'GET', function (err, json) {
           if (!err) {
-            var filteredToday = json.result.filter(function (item) {
+            const filteredToday = json.result.filter(function (item) {
               return item.created_at >= dataStart && item.created_at <= dataEnd
             })
-            var filteredLast = json.result.filter(function (item) {
+            console.log(filteredToday)
+            const filteredLast = json.result.filter(function (item) {
               return item.created_at >= dataStartYesterday && item.created_at <= dataEndYesterday
             })
-            var filteredMonth = json.result.filter(function (item) {
+            const filteredMonth = json.result.filter(function (item) {
               return item.created_at >= dateStart && item.created_at <= dateEnd
-            })
-            var filteredLastMonth = json.result.filter(function (item) {
-              return item.created_at >= dateStartTwo && item.created_at <= dateEndTwo
             })
             if (filteredMonth.length) {
               var filteredMonthPaid = filteredMonth.filter(function (paid) {
                 if (paid.financial_status) {
-                  return paid.financial_status.current === 'paid' || paid.financial_status.current === 'authorized'
+                  return paid.financial_status.current === 'paid'
                 }
               })
+              console.log(filteredMonthPaid)
               $monthTotal.text(window.ecomUtils.formatMoney(filteredMonthPaid.reduce(sumOfAmount).amount.total, 'BRL'))
               var order = filteredMonth.length
               approved = filteredMonthPaid.length
@@ -134,20 +135,6 @@ export default function () {
               $approve.text(percentApproved)
               $monthTotalOrders.text(order)
               $monthTotalOrdersApr.text(approved)
-            }
-            if (filteredLastMonth.length) {
-              var filteredLastMonthPaid = filteredLastMonth.filter(function (paid) {
-                if (paid.financial_status) {
-                  return paid.financial_status.current === 'paid' || paid.financial_status.current === 'authorized'
-                }
-              })
-              $lastMonthTotal.text(window.ecomUtils.formatMoney(filteredLastMonthPaid.reduce(sumOfAmount).amount.total, 'BRL'))
-              var orders = filteredLastMonth.length
-              approvedLast = filteredLastMonthPaid.length
-              var percentApprovedLast = ((approvedLast / orders) * 100).toFixed(2)
-              $lastApprove.text(percentApprovedLast)
-              $lastMonthTotalOrders.text(orders)
-              $lastMonthTotalOrdersApr.text(approvedLast)
             }
             if (filteredLast.length) {
               $lastTotal.text(window.ecomUtils.formatMoney(filteredLast.reduce(sumOfAmount).amount.total, 'BRL'))
@@ -201,7 +188,7 @@ export default function () {
                   '  <td><a href="/#/resources/customers/' + orderInfo[4] + ' ">' + orderInfo[5] + ' </a></td>' +
                   '</tr>')
                   var statusOrder = filteredToday[i].financial_status.current
-                  if (statusOrder === 'paid' || statusOrder === 'authorized') {
+                  if (statusOrder === 'paid') {
                     countPaid = countPaid + 1
                   }
                   if (statusOrder === 'voided') {
@@ -215,6 +202,25 @@ export default function () {
                   i = i + 1
                 }
               }
+            }
+          }
+        })
+        window.callApi(urlOrderLastMonth, 'GET', function (err, data) {
+          if (!err) {
+            if (data.result.length) {
+              var filteredLastMonthPaid = data.result.filter(function (paid) {
+                if (paid.financial_status) {
+                  return paid.financial_status.current === 'paid'
+                }
+              })
+              console.log(filteredLastMonthPaid)
+              $lastMonthTotal.text(window.ecomUtils.formatMoney(filteredLastMonthPaid.reduce(sumOfAmount).amount.total, 'BRL'))
+              var orders = data.result.length
+              approvedLast = filteredLastMonthPaid.length
+              var percentApprovedLast = ((approvedLast / orders) * 100).toFixed(2)
+              $lastApprove.text(percentApprovedLast)
+              $lastMonthTotalOrders.text(orders)
+              $lastMonthTotalOrdersApr.text(approvedLast)
             }
           }
         })

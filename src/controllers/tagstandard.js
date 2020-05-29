@@ -5,7 +5,7 @@
 export default function () {
   'use strict'
   // current tab ID
-  var tabId = window.tabId
+  const { $, localStorage, tabId, formatPhone } = window
   var Tab = window.Tabs[tabId]
   // render cart items on table
   var setup = function () {
@@ -17,11 +17,11 @@ export default function () {
     var idInvoices = urlArray[urlArray.length - 1]
     var idInvoice
     if (idInvoices.length === 24) {
-      idInvoice = [ idInvoices ]
+      idInvoice = [idInvoices]
     } else {
       idInvoice = idInvoices.split(',')
     }
-    window.callApi('orders.json?fields=buyers,shipping_lines,_id,number', 'GET', function (error, data) {
+    window.callApi('orders.json?fields=buyers,shipping_lines,_id,number&sort=-created_at', 'GET', function (error, data) {
       if (!error) {
         var filtered = data.result.filter(function (item) {
           return idInvoice.indexOf(item._id) !== -1
@@ -29,9 +29,7 @@ export default function () {
         for (var i = 0; i < filtered.length; i++) {
           var nameCompany, phonesCustomer
           if (filtered[i].buyers) {
-            console.log(filtered[i].buyers)
             if (filtered[i].buyers[0].registry_type === 'p') {
-              console.log(filtered[i].buyers[0].name)
               if (filtered[i].buyers[0].name.middle_name) {
                 nameCompany = filtered[i].buyers[0].name.given_name + ' ' + filtered[i].buyers[0].name.middle_name + ' ' + filtered[i].buyers[0].name.family_name
               } else {
