@@ -1,6 +1,39 @@
-<div class="card">
-  <div class="card-body printing-area p-5">
-    <h5 class="card-title card-title-bold text-muted" style="font-size: 15px">Pedido # <span id="invoice-id"></span></h5>
+<div class="main-content">
+  <div class="card">
+    <div class="card-body">
+      <div class="pb-20">
+        <button type="button" class="btn btn-success mr-10" onclick="window.print()">
+          <i class="fa fa-print"></i>
+          <span class="i18n">
+            <span data-lang="en_us">Print</span>
+            <span data-lang="pt_br">Imprimir</span>
+          </span>
+        </button>
+        <button type="button" class="btn btn-light shipping-tags">
+          <i class="fa fa-external-link"></i>
+          <span class="i18n">
+            <span data-lang="en_us">Shipping tag</span>
+            <span data-lang="pt_br">Etiquetas de envio</span>
+          </span>
+        </button>
+      </div>
+      <article class="container printing-area">
+        <div class="fs-14 fw-400 invoices">
+          <div class="spinner-linear loading">
+            <div class="line"></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
+
+<div class="d-none invoice-model">
+  <div class="py-5">
+    <h3>
+      Pedido
+      <span class="text-monospace">#<span id="invoice-id"></span></span>
+    </h3>
     <div class="row gap-y p-5">
       <div class="col-md-3">
         <address id="invoice-from" style="font-size: 15px">
@@ -57,24 +90,6 @@
         <br><br>
         <p class="fs-30 text-primary"><strong>Total</strong>: <span id="totalOrder"></span></p>
         <br>
-      </div>
-    </div>
-    <hr>
-    <div class="text-right">
-      <button type="button" class="btn btn-secondary" onclick="javascript:window.print();">
-        <span class="i18n">
-          <span data-lang="en_us">Print</span>
-          <span data-lang="pt_br">Imprimir</span>
-        </span>
-      </button>
-      <div data-id="send-ticket">
-        <button type="button" class="btn btn-light mt-2" id="open-ticket">
-          <i class="fas fa-print"></i>
-          <span class="i18n">
-            <span data-lang="en_us">Open send ticket</span>
-            <span data-lang="pt_br">Abrir etiqueta correios</span>
-          </span>
-        </button>
       </div>
     </div>
   </div>
