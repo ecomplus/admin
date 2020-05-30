@@ -1,183 +1,187 @@
-/*!
- * Copyright 2018 E-Com Club
- */
-
 export default function () {
-  'use strict'
-  // current tab ID
-  var tabId = window.tabId
-  var ecomUtils = window.ecomUtils
-  var lang = window.lang
-  var Tab = window.Tabs[tabId]
-  // render cart items on table
-  var setup = function () {
-    var appTab = $('#app-tab-' + tabId)
-    var $invoiceId = appTab.find('#invoice-id')
-    var $toInfo = appTab.find('#invoice-to')
-    var $fromInfo = appTab.find('#invoice-from')
-    var $createdAt = appTab.find('#createdAt')
-    var $updatedAt = appTab.find('#updatedAt')
-    var $itemsOrder = appTab.find('#itemsOrder')
-    var $subTotalOrder = appTab.find('#subTotalOrder')
-    var $freightOrder = appTab.find('#freightOrder')
-    var $discountOrder = appTab.find('#discountOrder')
-    var $taxOrder = appTab.find('#taxOrder')
-    var $extraOrder = appTab.find('#extraOrder')
-    var $totalOrder = appTab.find('#totalOrder')
-    var $shippingMethod = appTab.find('#shippingMethod')
-    var $paymentMethod = appTab.find('#paymentMethod')
-    var $notes = appTab.find('#noteOrder')
-    var $coupon = appTab.find('#coupon')
-    var orderId = window.location.href
-    var urlArray = orderId.split('/')
-    var idInvoice = urlArray[urlArray.length - 1]
+  const { $, app, ecomUtils, callApi, lang, tabId, routeParams, formatPhone } = window
 
-    appTab.find('#open-ticket').click(function () {
-      window.location.href = '/#/tag/' + idInvoice
-    })
+  const $appTab = $(`#app-tab-${tabId}`)
+  const $invoices = $appTab.find('.invoices')
+  const invoiceModelHtml = $appTab.find('.invoice-model').html()
+  const orderIds = routeParams[routeParams.length - 1]
 
-    var urlStore = 'stores/me.json'
-    var urlOrder = 'orders/' + idInvoice + '.json'
-    // search for store name and object id
-    window.callApi(urlStore, 'GET', function (error, schema) {
-      if (!error) {
-        console.log(schema)
-        var phoneFrom, docNumber
-        var emailFrom = (schema.contact_email) || ''
-        if (schema.contact_phone) {
-          phoneFrom = formatPhone(ecomUtils.parsePhone(schema.contact_phone))
-        } else {
-          phoneFrom = ''
-        }
-        if (schema.doc_type === 'CNPJ') {
-          docNumber = schema.doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
-        } else {
-          docNumber = schema.doc_number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
-        }
-        var corporateFrom = (schema.corporate_name) || (schema.name)
-        if (schema.logo.url) {
-          var logo = schema.logo.url
-        }
-        console.log(logo)
-        console.log(corporateFrom)
-        $fromInfo.append('<img src="' + logo + '"><br><br>' +
-      '<strong>' + corporateFrom + '</strong><br>' +
-      '<strong>' + schema.doc_type + ' : ' + docNumber + '</strong><br>' +
-      '<span>' + emailFrom + '</span> ' +
-      '<br>' +
-      '<span>' + phoneFrom + '</span> '
-        )
+  const renderInvoice = (store, order) => {
+    const $invoice = $('<div>', {
+      style: 'border-bottom: 2px dashed #ccc; display: none'
+    }).html(invoiceModelHtml)
+
+    var $invoiceId = $invoice.find('#invoice-id')
+    var $toInfo = $invoice.find('#invoice-to')
+    var $fromInfo = $invoice.find('#invoice-from')
+    var $createdAt = $invoice.find('#createdAt')
+    var $updatedAt = $invoice.find('#updatedAt')
+    var $itemsOrder = $invoice.find('#itemsOrder')
+    var $subTotalOrder = $invoice.find('#subTotalOrder')
+    var $freightOrder = $invoice.find('#freightOrder')
+    var $discountOrder = $invoice.find('#discountOrder')
+    var $taxOrder = $invoice.find('#taxOrder')
+    var $extraOrder = $invoice.find('#extraOrder')
+    var $totalOrder = $invoice.find('#totalOrder')
+    var $shippingMethod = $invoice.find('#shippingMethod')
+    var $paymentMethod = $invoice.find('#paymentMethod')
+    var $notes = $invoice.find('#noteOrder')
+    var $coupon = $invoice.find('#coupon')
+
+    var phoneFrom, docNumber
+    var emailFrom = (store.contact_email) || ''
+    if (store.contact_phone) {
+      phoneFrom = formatPhone(ecomUtils.parsePhone(store.contact_phone))
+    } else {
+      phoneFrom = ''
+    }
+    if (store.doc_type === 'CNPJ') {
+      docNumber = store.doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
+    } else {
+      docNumber = store.doc_number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
+    }
+    var corporateFrom = (store.corporate_name) || (store.name)
+    if (store.logo.url) {
+      var logo = store.logo.url
+    }
+    $fromInfo.append('<img src="' + logo + '"><br><br>' +
+  '<strong>' + corporateFrom + '</strong><br>' +
+  '<strong>' + store.doc_type + ' : ' + docNumber + '</strong><br>' +
+  '<span>' + emailFrom + '</span> ' +
+  '<br>' +
+  '<span>' + phoneFrom + '</span> '
+    )
+
+    $createdAt.text(ecomUtils.formatDate(order.created_at))
+    $updatedAt.text(ecomUtils.formatDate(order.updated_at) || 'Não houve atualização ainda')
+    $invoiceId.text(order.number)
+    var notes = order.staff_notes || order.notes || 'Nenhuma observação'
+    $notes.text(notes)
+    if (order.amount) {
+      $subTotalOrder.text(ecomUtils.formatMoney(order.amount.subtotal, 'BRL', lang) || 'R$ 0,00')
+      $freightOrder.text(ecomUtils.formatMoney(order.amount.freight, 'BRL', lang) || 'R$ 0,00')
+      $discountOrder.text(ecomUtils.formatMoney(order.amount.discount, 'BRL', lang) || 'R$ 0,00')
+      $extraOrder.text(ecomUtils.formatMoney(order.amount.extra, 'BRL', lang) || 'R$ 0,00')
+      $taxOrder.text(ecomUtils.formatMoney(order.amount.tax, 'BRL', lang) || 'R$ 0,00')
+      $totalOrder.text(ecomUtils.formatMoney(order.amount.total, 'BRL', lang))
+    }
+    if (order.items) {
+      for (var i = 0; i < order.items.length; i++) {
+        $itemsOrder.append('<tr><td>' + (i + 1) + '</td>' +
+      '  <td>' + order.items[i].name + '/ (' + order.items[i].sku + ')</td>' +
+      '  <td>' + order.items[i].quantity + '</td>' +
+      '  <td>' + window.ecomUtils.formatMoney((order.items[i].final_price || order.items[i].price), (order.items[i].currency_id || 'BRL'), lang) + '</td>' +
+      '  <td>' + window.ecomUtils.formatMoney(((order.items[i].final_price || order.items[i].price) * order.items[i].quantity), (order.items[i].currency_id || 'BRL'), lang) + '</td></tr>')
       }
-    })
-
-    // search for order
-    window.callApi(urlOrder, 'GET', function (error, data) {
-      if (!error) {
-        console.log(data)
-        $createdAt.text(ecomUtils.formatDate(data.created_at))
-        $updatedAt.text(ecomUtils.formatDate(data.updated_at) || 'Não houve atualização ainda')
-        $invoiceId.text(data.number)
-        var notes = data.staff_notes || data.notes || 'Nenhuma observação'
-        $notes.text(notes)
-        if (data.amount) {
-          $subTotalOrder.text(ecomUtils.formatMoney(data.amount.subtotal, 'BRL', lang) || 'R$ 0,00')
-          $freightOrder.text(ecomUtils.formatMoney(data.amount.freight, 'BRL', lang) || 'R$ 0,00')
-          $discountOrder.text(ecomUtils.formatMoney(data.amount.discount, 'BRL', lang) || 'R$ 0,00')
-          $extraOrder.text(ecomUtils.formatMoney(data.amount.extra, 'BRL', lang) || 'R$ 0,00')
-          $taxOrder.text(ecomUtils.formatMoney(data.amount.tax, 'BRL', lang) || 'R$ 0,00')
-          $totalOrder.text(ecomUtils.formatMoney(data.amount.total, 'BRL', lang))
-        }
-        if (data.items) {
-          for (var i = 0; i < data.items.length; i++) {
-            $itemsOrder.append('<tr><td>' + (i + 1) + '</td>' +
-          '  <td>' + data.items[i].name + '/ (' + data.items[i].sku + ')</td>' +
-          '  <td>' + data.items[i].quantity + '</td>' +
-          '  <td>' + window.ecomUtils.formatMoney((data.items[i].final_price || data.items[i].price), (data.items[i].currency_id || 'BRL'), lang) + '</td>' +
-          '  <td>' + window.ecomUtils.formatMoney(((data.items[i].final_price || data.items[i].price) * data.items[i].quantity), (data.items[i].currency_id || 'BRL'), lang) + '</td></tr>')
-          }
-        }
-        $shippingMethod.text(data.shipping_method_label)
-        if (data.transactions) {
-          if (data.transactions[0].app) {
-            if (data.transactions[0].app.intermediator) {
-              $paymentMethod.text(data.transactions[0].app.intermediator.name)
-            } else {
-              $paymentMethod.text(data.transactions[0].app.label)
-            }
-          } else {
-            $paymentMethod.text(data.payment_method_label)
-          }
-        }
-        if (data.shipping_lines) {
-          if (data.shipping_lines[0].app) {
-            var shippingName = data.shipping_lines[0].app.carrier + ' | ' + data.shipping_lines[0].app.label
-            $shippingMethod.text(shippingName)
-          } else {
-            $shippingMethod.text(data.shipping_method_label)
-          }
-        }
-        if (data.extra_discount) {
-          if (data.extra_discount.discount_coupon) {
-            $coupon.text(data.extra_discount.discount_coupon)
-          } else {
-            $coupon.text('Outra forma de desconto')
-          }
+    }
+    $shippingMethod.text(order.shipping_method_label)
+    if (order.transactions) {
+      if (order.transactions[0].app) {
+        if (order.transactions[0].app.intermediator) {
+          $paymentMethod.text(order.transactions[0].app.intermediator.name)
         } else {
-          $coupon.text('Nenhum uso de cupom')
+          $paymentMethod.text(order.transactions[0].app.label)
         }
-        var nameCompany, documentClient, docNumber, emailCustomer, phonesCustomer
-        if (data.buyers) {
-          if (data.buyers[0].registry_type === 'p') {
-            if (data.buyers[0].name.middle_name) {
-              nameCompany = data.buyers[0].name.given_name + ' ' + data.buyers[0].name.middle_name + ' ' + data.buyers[0].name.family_name
-            } else {
-              nameCompany = data.buyers[0].name.given_name + ' ' + data.buyers[0].name.family_name
-            }
-            documentClient = 'CPF'
-            docNumber = data.buyers[0].doc_number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
-          } else {
-            nameCompany = data.buyers[0].corporate_name || data.buyers[0].name.given_name + ' ' + data.buyers[0].name.family_name
-            documentClient = 'CNPJ'
-            docNumber = data.buyers[0].doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
-          }
-          emailCustomer = data.buyers[0].main_email
-          if (data.buyers[0].phones) {
-            if (data.buyers[0].phones.length > 1) {
-              phonesCustomer = '<span>' + formatPhone(data.buyers[0].phones[0]) + '<br>' + formatPhone(data.buyers[0].phones[1]) + ' </span>'
-            }
-            if (data.buyers[0].phones.length === 1) {
-              phonesCustomer = '<span>' + formatPhone(data.buyers[0].phones[0]) + ' </span>'
-            }
-          }
-        }
-        if (data.shipping_lines) {
-          var addressToZip = data.shipping_lines[0].to.zip
-          var addressFrom = (ecomUtils.lineAddress(data.shipping_lines[0].from)) || ''
-          var addressTo = (ecomUtils.lineAddress(data.shipping_lines[0].to)) || ''
-          var addressFromZip = data.shipping_lines[0].from.zip
-        }
-        $toInfo.append('<strong> ' + nameCompany + '</strong><br>' +
-      '    <strong> ' + documentClient + ':' + docNumber + '</strong><br>' +
-      '    <span>CEP: ' + addressToZip + '</span><br>' +
-      '    <span>Endereço: ' + addressTo + '</span><br>' +
-      '    <span>' + emailCustomer + '</span> ' +
-      '    <br> ' +
-      '    <span>' + phonesCustomer + '</span>'
-        )
-        setTimeout(function () {
-          $fromInfo.append('<br>' +
-            '<span> CEP: ' + addressFromZip + '</span><br>' +
-            '    <span>' + addressFrom + '</span><br>'
-          )
-        }, 500)
+      } else {
+        $paymentMethod.text(order.payment_method_label)
       }
-    })
+    }
+    if (order.shipping_lines) {
+      if (order.shipping_lines[0].app) {
+        var shippingName = order.shipping_lines[0].app.carrier + ' | ' + order.shipping_lines[0].app.label
+        $shippingMethod.text(shippingName)
+      } else {
+        $shippingMethod.text(order.shipping_method_label)
+      }
+    }
+    if (order.extra_discount) {
+      if (order.extra_discount.discount_coupon) {
+        $coupon.text(order.extra_discount.discount_coupon)
+      } else {
+        $coupon.text('Outra forma de desconto')
+      }
+    } else {
+      $coupon.text('Nenhum uso de cupom')
+    }
+    var nameCompany, documentClient, buyerDocNumber, emailCustomer, phonesCustomer
+    if (order.buyers) {
+      if (order.buyers[0].registry_type === 'p') {
+        if (order.buyers[0].name.middle_name) {
+          nameCompany = order.buyers[0].name.given_name + ' ' + order.buyers[0].name.middle_name + ' ' + order.buyers[0].name.family_name
+        } else {
+          nameCompany = order.buyers[0].name.given_name + ' ' + order.buyers[0].name.family_name
+        }
+        documentClient = 'CPF'
+        buyerDocNumber = order.buyers[0].doc_number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
+      } else {
+        nameCompany = order.buyers[0].corporate_name || order.buyers[0].name.given_name + ' ' + order.buyers[0].name.family_name
+        documentClient = 'CNPJ'
+        buyerDocNumber = order.buyers[0].doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
+      }
+      emailCustomer = order.buyers[0].main_email
+      if (order.buyers[0].phones) {
+        if (order.buyers[0].phones.length > 1) {
+          phonesCustomer = '<span>' + formatPhone(order.buyers[0].phones[0]) + '<br>' + formatPhone(order.buyers[0].phones[1]) + ' </span>'
+        }
+        if (order.buyers[0].phones.length === 1) {
+          phonesCustomer = '<span>' + formatPhone(order.buyers[0].phones[0]) + ' </span>'
+        }
+      }
+    }
+    if (order.shipping_lines) {
+      var addressToZip = order.shipping_lines[0].to.zip
+      var addressFrom = (ecomUtils.lineAddress(order.shipping_lines[0].from)) || ''
+      var addressTo = (ecomUtils.lineAddress(order.shipping_lines[0].to)) || ''
+      var addressFromZip = order.shipping_lines[0].from.zip
+    }
+    $toInfo.append('<strong> ' + nameCompany + '</strong><br>' +
+  '    <strong> ' + documentClient + ':' + buyerDocNumber + '</strong><br>' +
+  '    <span>CEP: ' + addressToZip + '</span><br>' +
+  '    <span>Endereço: ' + addressTo + '</span><br>' +
+  '    <span>' + emailCustomer + '</span> ' +
+  '    <br> ' +
+  '    <span>' + phonesCustomer + '</span>'
+    )
+    setTimeout(function () {
+      $fromInfo.append('<br>' +
+        '<span> CEP: ' + addressFromZip + '</span><br>' +
+        '    <span>' + addressFrom + '</span><br>'
+      )
+    }, 100)
+
+    $invoices.append($invoice)
+    $invoice.fadeIn()
   }
 
-  // wait for the form to be ready
-  if (Tab.$form) {
-    setup()
-  } else {
-    $(document).one('form-' + tabId, setup)
+  const ids = orderIds.split(',')
+  if (ids.length) {
+    callApi('stores/me.json', 'GET', (err, store) => {
+      if (err) {
+        console.error(err)
+        app.toast()
+      } else {
+        let i = 0
+        const getDoc = () => {
+          if (i < ids.length) {
+            callApi(`orders/${ids[i]}.json`, 'GET', (err, order) => {
+              if (err) {
+                console.error(err)
+                app.toast()
+              } else {
+                renderInvoice(store, order)
+              }
+              i++
+              getDoc()
+            })
+          } else {
+            $invoices.find('.loading').hide()
+            $appTab.find('.shipping-tags').click(() => {
+              window.location.href = `/#/shipping-tags/${orderIds}`
+            })
+          }
+        }
+        getDoc()
+      }
+    })
   }
 }

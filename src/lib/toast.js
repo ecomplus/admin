@@ -1,4 +1,4 @@
-import { i19close, i19errorMsg, i19info } from '@ecomplus/i18n'
+import { i19close, i19errorMsg } from '@ecomplus/i18n'
 import { i18n } from '@ecomplus/utils'
 
 const { $, app } = window
@@ -22,14 +22,15 @@ $toastAside
   )
   .appendTo('body')
 
-const toast = app.toast = (body, { title, variant, delay } = {}) => {
-  if (typeof body !== 'string' && body) {
+const toast = app.toast = (title, { body, variant, delay } = {}) => {
+  if (typeof title !== 'string' && title) {
     try {
       body = JSON.stringify(body, null, 2)
     } catch (err) {
       console.error(err)
       return
     }
+    title = null
   }
 
   let icon
@@ -49,27 +50,27 @@ const toast = app.toast = (body, { title, variant, delay } = {}) => {
     role: 'alert',
     'aria-live': 'assertive',
     'aria-atomic': 'true',
-    'data-delay': delay || 7000
+    'data-delay': delay || 10000
   })
 
   $toast[0].innerHTML = `
   <div class="toast-header">
-    <i class="text-${(variant || 'warning')} fas fa-${icon} mr-2"></i>
+    <i class="text-${(variant || 'warning')} fas fa-${icon} mr-3 ml-1"></i>
     <span class="mr-auto">
-      ${(title || i18n(i19info))}
+      ${(title || i18n(i19errorMsg))}
     </span>
     <button
       type="button"
-      class="ml-2 mb-1 close"
+      class="ml-3 mb-1 close"
       data-dismiss="toast"
       aria-label="${i18n(i19close)}"
     >
       <span aria-hidden="true">&times;</span>
     </button>
-  </div>
-  <div class="toast-body">
-    ${(body || i18n(i19errorMsg))}
   </div>`
+  if (body) {
+    $toast[0].innerHTML += `<div class="toast-body">${body}</div>`
+  }
 
   $toast.appendTo($toastDock)
   $toast.on('show.bs.toast', () => {

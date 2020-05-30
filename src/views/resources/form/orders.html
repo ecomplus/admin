@@ -196,24 +196,6 @@
                   </div>
                 </div>
               </div>
-              <div data-id="invoices">
-                <button type="button" class="btn btn-light mt-2" data-id="open-invoice">
-                  <i class="fas fa-print"></i>
-                  <span class="i18n">
-                    <span data-lang="en_us">Open invoice</span>
-                    <span data-lang="pt_br">Abrir fatura</span>
-                  </span>
-                </button>
-              </div>
-              <div data-id="send-ticket">
-                <button type="button" class="btn btn-light mt-2" data-id="open-ticket">
-                  <i class="fas fa-print"></i>
-                  <span class="i18n">
-                    <span data-lang="en_us">Open send ticket</span>
-                    <span data-lang="pt_br">Abrir etiqueta correios</span>
-                  </span>
-                </button>
-              </div>
             </div>
           </div>
 
@@ -1427,7 +1409,7 @@
   </div>
 
   <div class="bt-1 pt-20">
-    <button class="btn btn-success i18n mr-10">
+    <button class="btn btn-success i18n save-resource mr-10">
       <span data-lang="en_us">Save order</span>
       <span data-lang="pt_br">Salvar pedido</span>
     </button>
@@ -1435,5 +1417,26 @@
       <span data-lang="en_us">Delete</span>
       <span data-lang="pt_br">Deletar</span>
     </button>
+
+    <span class="d-none d-lg-inline">
+      <span data-id="invoices">
+        <button type="button" class="btn btn-light ml-2" data-id="open-invoice">
+          <i class="fa fa-print"></i>
+          <span class="i18n">
+            <span data-lang="en_us">Open invoice</span>
+            <span data-lang="pt_br">Abrir fatura</span>
+          </span>
+        </button>
+      </span>
+      <span data-id="send-ticket">
+        <button type="button" class="btn btn-light ml-2" data-id="open-ticket">
+          <i class="fa fa-truck"></i>
+          <span class="i18n">
+            <span data-lang="en_us">Shipping tag</span>
+            <span data-lang="pt_br">Etiqueta de envio</span>
+          </span>
+        </button>
+      </span>
+    </span>
   </div>
 </form>

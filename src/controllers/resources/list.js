@@ -1,7 +1,8 @@
-const { $, cutString } = window
+import Papa from 'papaparse'
+import * as dot from 'dot-object'
 
 export default function () {
-  'use strict'
+  const { $, app, i18n, callApi, cutString, formatMoney, formatDate, stringToNumber } = window
 
   // current tab ID
   var tabId = window.tabId
@@ -9,10 +10,6 @@ export default function () {
   var elContainer = $('#t' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
-
-  // var lang = window.lang
-  var i18n = window.i18n
-  var appTab = $('#app-tab-' + tabId)
 
   var baseHash = '/' + window.location.hash + '/'
   // create button
@@ -74,6 +71,65 @@ export default function () {
   }
   updateData()
 
+  const toogleSpinners = isLoaded => {
+    const fn = isLoaded ? 'hide' : 'show'
+    $(`#t${tabId}-loading`)[fn]()
+    $grid.find('.loading')[fn]()
+  }
+
+  // export all current or selected documents
+  $(`#t${tabId}-export`).click(function () {
+    if (data.result.length) {
+      const ids = Tab.selectedItems.length ? Tab.selectedItems : data.result.map(({ _id }) => _id)
+      toogleSpinners()
+      $(this).addClass('disabled')
+      let i = 0
+      const exportData = []
+
+      const getDoc = () => {
+        if (i === ids.length) {
+          // download CSV
+          const csv = Papa.unparse(exportData)
+          const csvData = new window.Blob([csv], {
+            type: 'text/csv;charset=utf-8;'
+          })
+          const csvURL = navigator.msSaveBlob
+            ? navigator.msSaveBlob(csvData, 'download.csv')
+            : window.URL.createObjectURL(csvData)
+          const $link = document.createElement('a')
+          $link.href = csvURL
+          $link.setAttribute('download', `${resourceSlug}.csv`)
+          $link.click()
+          toogleSpinners(true)
+          $(this).removeClass('disabled')
+          return
+        }
+
+        callApi(`${resourceSlug}/${ids[i]}.json`, 'GET', (err, doc) => {
+          if (err) {
+            console.error(err)
+            app.toast()
+          } else {
+            // add to list parsed to dot notation
+            const row = dot.dot(doc)
+            for (const field in row) {
+              if (row[field] !== undefined) {
+                const type = typeof row[field]
+                // save var type on row header
+                row[`${type.charAt(0).toUpperCase()}${type.slice(1)}(${field})`] = row[field]
+                delete row[field]
+              }
+            }
+            exportData.push(row)
+          }
+          i++
+          getDoc()
+        })
+      }
+      getDoc()
+    }
+  })
+
   if (list.length) {
     // delete checkbox element HTML
     var elCheckbox = '<div class="custom-controls-stacked">' +
@@ -91,7 +147,7 @@ export default function () {
     // control pagination
     var offset = 0
     var limit
-    if (data.meta.hasOwnProperty('limit')) {
+    if (data.meta.limit) {
       limit = data.meta.limit
     } else {
       // default ?
@@ -99,67 +155,37 @@ export default function () {
     }
 
     if (resourceSlug === 'orders') {
-      $grid.before('<div class="flexbox mb-20 pull-right"><div class="dropdown" id="orders-bulk-action">' +
-    '    <button class="btn btn-success order-selected" id="orders-selected" type="button" data-toggle="">' +
-    '      <i class="fa fa-pencil"></i>' +
-    '      <span class="i18n">' +
-    '        <span data-lang="en_us">' +
-    '          Shipping <span class="hidden-md-down">tags</span>' +
-    '        </span>' +
-    '        <span data-lang="pt_br">' +
-    '          Etiquetas <span class="hidden-md-down">de envio</span>' +
-    '        </span>' +
-    '      </span>' +
-    '    </button>' +
-    '    <div class="dropdown-menu">' +
-    '      <a href="javascript:;" class="dropdown-item" id="correios">' +
-    '        <span class="i18n">' +
-    '          <span data-lang="en_us">Shipping tag</span>' +
-    '          <span data-lang="pt_br">Etiqueta dos correios</span>' +
-    '        </span>' +
-    '      </a>' +
-    '      <a href="javascript:;" id="standart" class="dropdown-item">' +
-    '        <span class="i18n">' +
-    '          <span data-lang="en_us">Standart tag</span>' +
-    '          <span data-lang="pt_br">Etiqueta padrão</span>' +
-    '        </span>' +
-    '      </a>' +
-    '    </div>' +
-    '  </div></div>')
-      var $tagShipping = appTab.find('#orders-selected')
-      $tagShipping.click(function () {
+      // orders list specific tools
+      const checkSelectedOrders = redirectRoute => {
         if (!Tab.selectedItems.length > 0) {
           app.toast(i18n({
-            'en_us': 'No orders selected',
-            'pt_br': 'Nenhum pedido selecionado'
+            en_us: 'No orders selected',
+            pt_br: 'Nenhum pedido selecionado'
           }))
-        } else {
-          $tagShipping.attr('data-toggle', 'dropdown')
+          return false
+        } else if (redirectRoute) {
+          window.location.href = `/#/${redirectRoute}/${Tab.selectedItems}`
         }
-      })
-      appTab.find('#correios').click(function () {
-        if (Tab.selectedItems.length === 1) {
-          window.location.href = '/#/tag/' + Tab.selectedItems[0]
-        } else if (Tab.selectedItems.length > 4) {
-          app.toast(i18n({
-            'en_us': 'Only 4 orders allowed',
-            'pt_br': 'Apenas 4 pedidos permitidos'
-          }))
-        } else {
-          window.location.href = '/#/tag/' + Tab.selectedItems
+        return Tab.selectedItems
+      }
+      $(`#t${tabId}-invoices`).click(() => checkSelectedOrders('invoices'))
+      $(`#t${tabId}-shipping-tags`).click(() => checkSelectedOrders('shipping-tags'))
+      $(`#t${tabId}-correios-enderecador`).click(() => {
+        if (Tab.selectedItems.length > 4) {
+          app.toast('O endereçador do Correios imprime apenas 4 etiquetas por vez')
+          return
         }
-      })
-      appTab.find('#standart').click(function () {
-        if (Tab.selectedItems.length < 10) {
-          window.location.href = '/#/tagstandard/' + Tab.selectedItems
-        } else {
-          app.toast(i18n({
-            'en_us': 'Only 9 orders allowed',
-            'pt_br': 'Apenas 9 pedidos permitidos'
-          }))
-        }
+        checkSelectedOrders('shipping-tags/correios')
       })
     }
+
+    // show list action buttons
+    $(`#t${tabId}-nav .edit-btn[data-list]`).each(function () {
+      if ($(this).data('list') === '*' || $(this).data('list') === resourceSlug) {
+        $(this).fadeIn()
+      }
+    })
+
     // current list filters
     var filters = {}
     // start default sorting
@@ -452,7 +478,7 @@ export default function () {
               var $loading = '<div class="spinner-circle-shadow loading"></div>'
               return $('<div>', {
                 class: 'data-list-control',
-                html: [ $filter, $loading ]
+                html: [$filter, $loading]
               })
             },
 
@@ -536,17 +562,17 @@ export default function () {
 
               // setup hidden div
               var $hidden = $('<div>', {
-                'class': 'data-list-accordion',
+                class: 'data-list-accordion',
                 html: hiddenEls
               })
 
               return $('<div>', {
-                'class': 'data-list-extend',
+                class: 'data-list-extend',
                 html: [
                   el,
                   // icon to toggle accordion with extended row info
                   $('<i>', {
-                    'class': 'ti-angle-down'
+                    class: 'ti-angle-down'
                   }).one('click', function () {
                     $(this).closest('tr').append($hidden)
                   }).click(function (e) {
@@ -737,10 +763,10 @@ export default function () {
                       ]
                       // render an option element for each possible value
                       for (var value in enumValues) {
-                        if (enumValues.hasOwnProperty(value)) {
+                        if (enumValues[value]) {
                           $options.push($('<option>', {
                             text: value,
-                            value: value,
+                            value,
                             'data-content': genElement(value).prop('outerHTML')
                           }))
                         }
@@ -748,7 +774,7 @@ export default function () {
 
                       // create and return the select element
                       var $select = $('<select>', {
-                        'class': 'hidden',
+                        class: 'hidden',
                         html: $options,
                         change: function () {
                           // reload data with new filter value
@@ -921,7 +947,7 @@ export default function () {
         var createdAt = dateField('created_at')
         // updated at with resumed date and time info
         // bold = true
-        var updatedAt = dateField('updated_at', [ 'day', 'month', 'hour', 'minute' ], true)
+        var updatedAt = dateField('updated_at', ['day', 'month', 'hour', 'minute'], true)
         fields.push(createdAt, updatedAt)
 
         $grid.jsGrid({
@@ -1003,7 +1029,7 @@ export default function () {
 
                   if (!editing) {
                     for (field in filters) {
-                      if (filters.hasOwnProperty(field) && query[field] !== filters[field]) {
+                      if (filters[field] !== undefined && query[field] !== filters[field]) {
                         filters[field] = query[field]
                         if (!changed) {
                           changed = true
@@ -1073,8 +1099,8 @@ export default function () {
                   } else if (editing && !edited) {
                     // click on pencil icon without any changed input (?)
                     app.toast(i18n({
-                      'en_us': 'Edit the header fields to modify the selected items',
-                      'pt_br': 'Edite os campos no cabeçalho para alterar os itens selecionados'
+                      en_us: 'Edit the header fields to modify the selected items',
+                      pt_br: 'Edite os campos no cabeçalho para alterar os itens selecionados'
                     }))
                   }
                 } else {
@@ -1104,6 +1130,7 @@ export default function () {
       .catch(console.error)
   } else {
     // no resource objects
+    $(`#t${tabId}-nav .edit-btn[data-list]`).fadeOut()
   }
 
   // timeout to topbar fallback

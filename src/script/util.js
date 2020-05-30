@@ -2,6 +2,7 @@
   'use strict'
 
   window.startMony = function (store, user, session) {
+    /*
     // https://github.com/ecomclub/mony
     var params = {
       storeId: store.store_id,
@@ -64,6 +65,7 @@
         sendQuestion()
       }
     })
+    */
   }
 
   // auxiliary local only variables
