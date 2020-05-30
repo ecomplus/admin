@@ -1,0 +1,36 @@
+<div class="main-content">
+  <div class="card">
+    <div class="card-body">
+      <div class="pb-20">
+        <button type="button" class="btn btn-success mr-10" onclick="window.print()">
+          <i class="fa fa-print"></i>
+          <span class="i18n">
+            <span data-lang="en_us">Print</span>
+            <span data-lang="pt_br">Imprimir</span>
+          </span>
+        </button>
+        <button type="button" class="btn btn-light print-correios">
+          <i class="fa fa-truck"></i>
+          Etiquetas dos Correios
+        </button>
+      </div>
+      <article class="container printing-area">
+        <div class="row fs-14 fw-400 shipping-tags">
+          <div class="spinner-linear">
+            <div class="line"></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</div>
+
+<form
+  class="correios-enderecador"
+  accept-charset="ISO-8859-1"
+  action="http://www2.correios.com.br/enderecador/encomendas/act/gerarEtiqueta.cfm?etq=1"
+  method="post"
+>
+  <input type="hidden" name="to" value="4">
+  <input type="hidden" name="remLembrar" value="1">
+</form>

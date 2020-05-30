@@ -17,10 +17,8 @@ export default path => {
       return import('./routes/invoices')
     case 'settings':
       return import('./routes/settings')
-    case 'tag':
-      return import('./routes/tag')
-    case 'tagstandard':
-      return import('./routes/tagstandard')
+    case 'shipping-tags':
+      return import('./routes/shipping-tags')
     case '500':
       return fixHtmlImport(import('@/views/500.html'))
     default:
