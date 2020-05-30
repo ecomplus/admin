@@ -4,7 +4,13 @@
   box-shadow: 0 2px 5px rgba(darken($light, 8%), .5);
 
   &-header {
-    background-color: darken($light, 5%);
+    background-color: darken($light, 2.5%);
     font-weight: 400;
+
+    &:only-child {
+      font-size: 15px;
+      padding-top: .7rem;
+      padding-bottom: .7rem;
+    }
   }
 }
