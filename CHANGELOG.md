@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.6](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2020-05-30)
+
+
+### Features
+
+* **invoices:** multiple invoices print, fix tab title ([a924113](https://github.com/ecomplus/admin/commit/a92411367f73f66e0e8c9a6e8eff7ed36a6aacc3))
+* **list:** handling export to csv and list custom tools ([458a280](https://github.com/ecomplus/admin/commit/458a280c8cbd13a0d8af8ad100d4cdd0442390d1))
+* **resources:** default edit btns for lists ([239a47a](https://github.com/ecomplus/admin/commit/239a47aeb248238c28094be8d1e9ae974ea171b2))
+
+
+### Bug Fixes
+
+* **forms:** general legacy code fixes ([24e8749](https://github.com/ecomplus/admin/commit/24e8749773833e98f70088f8c2fec1e7a44d61d3))
+* **resource-forms:** fix handling bottom save buttons ([0cf9f1e](https://github.com/ecomplus/admin/commit/0cf9f1eaaff15d77db4e8336dab6961ac0446362))
+* **shipping-tags:** refactoring shipping tags, fix requests and els ([2288f23](https://github.com/ecomplus/admin/commit/2288f23d1e3bea9f43ce983829bab37501e09ce6))
+* **util:** skip Mony for now (legacy) ([c909e1d](https://github.com/ecomplus/admin/commit/c909e1d9c58d9c2fe962758c4e59621b0f1eaead))
+
 ## [1.0.0-alpha.5](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2020-05-29)
 
 ## [1.0.0-alpha.4](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2020-05-28)
