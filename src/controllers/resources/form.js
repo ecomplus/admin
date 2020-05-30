@@ -1,6 +1,6 @@
-const { $ } = window
-
 export default function () {
+  const { $ } = window
+
   // current tab ID
   var tabId = window.tabId
   var Tab = window.Tabs[tabId]
@@ -773,6 +773,12 @@ export default function () {
 
               callApi(endpoint, method, callback, data)
             }, 200)
+          })
+
+          // save buttons
+          elContainer.find('.save-resource').click(function (e) {
+            $form.submit()
+            e.preventDefault()
           })
         }, 200)
 

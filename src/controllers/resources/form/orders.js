@@ -1,13 +1,7 @@
-const { $ } = window
-
 export default function () {
-  'use strict'
-
-  var lang = window.lang
-  var i18n = window.i18n
+  const { $, i18n, lang, tabId, routeParams } = window
 
   // current tab ID
-  var tabId = window.tabId
   var Tab = window.Tabs[tabId]
   // edit JSON document
   var commit = Tab.commit
@@ -20,9 +14,15 @@ export default function () {
     // setup basic order data
     var data = Data()
     console.log(data)
-    var orderId = window.location.href
-    var urlArray = orderId.split('/')
-    var idInvoice = urlArray[urlArray.length - 1]
+    var orderId = routeParams[routeParams.length - 1]
+
+    var elContainer = $('#t' + tabId + '-tab-normal')
+    elContainer.find('#t' + tabId + '-open-invoice').click(function () {
+      window.location.href = '/#/invoices/' + orderId
+    })
+    elContainer.find('#t' + tabId + '-open-ticket').click(function () {
+      window.location.href = '/#/shipping-tags/' + orderId
+    })
 
     var $orderBase = $('#t' + tabId + '-order-base')
 
@@ -243,12 +243,6 @@ export default function () {
       // clear the input and show new buyer block
       $newBuyer.slideToggle().find('input')
       $addBuyerInput.val('').focus()
-    })
-    $orderBase.find('#t' + tabId + '-open-invoice').click(function () {
-      window.location.href = '/#/invoices/' + idInvoice
-    })
-    $orderBase.find('#t' + tabId + '-open-ticket').click(function () {
-      window.location.href = '/#/tag/' + idInvoice
     })
 
     if (data.buyers && data.buyers.length) {
