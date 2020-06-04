@@ -695,6 +695,42 @@
       </div>
     </div>
 
+    <div class="modal modal-center fade" id="table-upload" tabindex="-6">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="form-group">
+              <label>
+                <i class="fa fa-upload"></i>
+                <span class="i18n">
+                  <span data-lang="en_us">Import table</span>
+                  <span data-lang="pt_br">Importar tabela</span>
+                </span>
+              </label>
+              <div class="form-group file-group">
+                <input type="text" class="form-control file-value file-browser" placeholder="Upload" readonly="">
+                <input type="file" accept=".csv">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-bold btn-pure btn-secondary" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Cancel</span>
+                <span data-lang="pt_br">Cancelar</span>
+              </span>
+            </button>
+            <button class="btn btn-bold btn-pure btn-success" id="import-table" data-dismiss="modal">
+              <span class="i18n">
+                <span data-lang="en_us">Save</span>
+                <span data-lang="pt_br">Salvar</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="/assets/js/core.min.js"></script>
     <script src="/assets/js/app.min.js"></script>
 

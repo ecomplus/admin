@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.7](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2020-06-04)
+
+
+### Features
+
+* **resources-lists:** handling csv table import ([fc203ba](https://github.com/ecomplus/admin/commit/fc203ba9ca0695a2468fd09d7f6f8dbdf50293e1))
+
 ## [1.0.0-alpha.6](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2020-05-30)
 
 
