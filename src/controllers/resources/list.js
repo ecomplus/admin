@@ -130,6 +130,76 @@ export default function () {
     }
   })
 
+  // import CSV table
+  $(`#t${tabId}-import`).click(function () {
+    const $modal = $('#table-upload')
+    $modal.modal('toggle')
+
+    function parseCsv () {
+      toogleSpinners()
+      const file = $modal.find('input[type="file"]')[0].files[0]
+      Papa.parse(file, {
+        header: true,
+        error: (err, file, inputElem, reason) => {
+          console.error(err)
+          app.toast()
+        },
+
+        complete: ({ data }) => {
+          let i = 0
+          const editDoc = () => {
+            if (i === data.length) {
+              // all done
+              toogleSpinners(true)
+              return
+            }
+            const row = data[i]
+            for (const head in row) {
+              if (row[head] === '') {
+                delete row[head]
+              } else if (row[head] !== undefined) {
+                // fix var type and field name
+                const field = head.replace(/\w+\(([^)]+)\)/i, '$1')
+                row[field] = head.startsWith('Number') ? Number(row[head])
+                  : head.startsWith('Boolean') ? Boolean(row[head]) : row[head]
+                delete row[head]
+              }
+            }
+            const doc = dot.object(data[i])
+            i++
+
+            const _id = doc._id
+            if (_id) {
+              delete doc._id
+              delete doc.store_id
+              delete doc.created_at
+              delete doc.updated_at
+              callApi(`${resourceSlug}/${_id}.json`, 'PATCH', (err, doc) => {
+                if (err) {
+                  console.error(err)
+                  app.toast()
+                }
+                editDoc()
+              }, doc)
+            } else {
+              app.toast(i18n({
+                en_us: `Object ID not specified at line ${(i + 2)} (_id)`,
+                pt_br: `ID do objeto não especificado na linha ${(i + 2)} (_id)`
+              }))
+              editDoc()
+            }
+          }
+          editDoc()
+        }
+      })
+    }
+
+    $('#import-table').bind('click', parseCsv)
+    $modal.on('hidden.bs.modal', function (e) {
+      $('#import-table').unbind('click', parseCsv)
+    })
+  })
+
   if (list.length) {
     // delete checkbox element HTML
     var elCheckbox = '<div class="custom-controls-stacked">' +
