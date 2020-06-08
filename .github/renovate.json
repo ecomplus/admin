@@ -1,5 +1,9 @@
 {
   "extends": [
     "github>ecomclub/renovate-config"
+  ],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/public/**"
   ]
 }
