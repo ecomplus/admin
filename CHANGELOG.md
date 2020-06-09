@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.8](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2020-06-09)
+
+
+### Bug Fixes
+
+* **prints:** better print styles for invoices and shipping tags ([4db9dcc](https://github.com/ecomplus/admin/commit/4db9dcc84ae56bd91dde0b5777351a8b7e8753c6))
+* **resource-forms:** fix handling empty prop to remove ([a6ed257](https://github.com/ecomplus/admin/commit/a6ed257bc6090fa656d03f04296a434943ad61d4))
+
 ## [1.0.0-alpha.7](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2020-06-04)
 
 
