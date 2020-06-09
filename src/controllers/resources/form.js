@@ -262,7 +262,7 @@ export default function () {
             // remove property
             if (!Array.isArray(data)) {
               if (parts.length === 1) {
-                if (typeof data[parts] === 'object') {
+                if (typeof data[parts] !== 'string') {
                   delete data[parts]
                 } else {
                   data[prop] = ''
