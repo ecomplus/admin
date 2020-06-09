@@ -74,7 +74,7 @@ export default function () {
             }
 
             $shippingTags.push(`
-              <div class="col-xs-4 col-md-4" style="border: 2px dashed #ccc;">
+              <div class="col-xs-4 col-md-4" style="border: 2px dashed #ccc; page-break-inside: avoid">
                 <div class="p-2 pt-3">
                   <ul class="list-unstyled  border-bottom">
                     <li><strong>REMETENTE</strong></li>
