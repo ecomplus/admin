@@ -8,7 +8,7 @@ export default function () {
 
   const renderInvoice = (store, order) => {
     const $invoice = $('<div>', {
-      style: 'border-bottom: 2px dashed #ccc; display: none'
+      style: 'page-break-after: always; page-break-inside: avoid'
     }).html(invoiceModelHtml)
 
     var $invoiceId = $invoice.find('#invoice-id')

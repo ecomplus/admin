@@ -1,0 +1,12 @@
+@media print {
+  .sidebar,
+  .topbar,
+  #app-tabs {
+    display: none;
+  }
+
+  .main-container {
+    margin-left: 0 !important;
+    padding-top: 0 !important;
+  }
+}

@@ -1,6 +1,6 @@
 {
   "name": "@ecomplus/admin",
-  "version": "1.0.0-alpha.7",
+  "version": "1.0.0-alpha.8",
   "description": "E-Com Plus Admin dashboard PWA",
   "main": "src/index.js",
   "scripts": {
@@ -59,7 +59,7 @@
     "@ecomplus/auth": "^0.4.1",
     "@ecomplus/client": "^2.0.4",
     "@ecomplus/i18n": "^1.11.1",
-    "@ecomplus/storefront-components": "^1.0.0-beta.26",
+    "@ecomplus/storefront-components": "^1.0.0-beta.27",
     "@ecomplus/storefront-twbs": "^5.8.0",
     "@ecomplus/utils": "^1.4.1",
     "axios": "^0.19.2",
