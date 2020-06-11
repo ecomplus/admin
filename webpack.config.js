@@ -137,10 +137,12 @@ const config = {
       cleanStaleWebpackAssets: false
     }),
 
-    new CopyPlugin([{
-      from: dirPublic,
-      to: dirOutput
-    }]),
+    new CopyPlugin({
+      patterns: [{
+        from: dirPublic,
+        to: dirOutput
+      }]
+    }),
 
     new VueLoaderPlugin()
   ],
