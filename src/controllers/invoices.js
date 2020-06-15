@@ -1,153 +1,183 @@
+import {
+  i19additionalCost,
+  i19additionalNotes,
+  i19buyer,
+  i19description,
+  i19discount,
+  i19discountCoupon,
+  i19freight,
+  i19order,
+  i19paymentMethod,
+  i19price,
+  i19quantity,
+  i19shippingMethod,
+  i19subtotal,
+  i19tax,
+  i19total,
+  i19zipCode
+} from '@ecomplus/i18n'
+
+import {
+  i18n,
+  fullName as getFullName,
+  lineAddress as getLineAddress,
+  price as getPrice,
+  formatDate,
+  formatMoney
+} from '@ecomplus/utils'
+
+import {
+  formatCPF,
+  formatCNPJ,
+  formatCEP
+} from '@brazilian-utils/brazilian-utils'
+
 export default function () {
-  const { $, app, ecomUtils, callApi, lang, tabId, routeParams, formatPhone } = window
+  const { $, app, ecomUtils, callApi, tabId, routeParams, formatPhone } = window
 
   const $appTab = $(`#app-tab-${tabId}`)
   const $invoices = $appTab.find('.invoices')
-  const invoiceModelHtml = $appTab.find('.invoice-model').html()
   const orderIds = routeParams[routeParams.length - 1]
 
   const renderInvoice = (store, order) => {
+    const buyer = order.buyers && order.buyers[0]
+    const shippingLine = order.shipping_lines && order.shipping_lines[0]
+    const transaction = order.transactions && order.transactions[0]
+
     const $invoice = $('<div>', {
-      style: 'page-break-after: always; page-break-inside: avoid'
-    }).html(invoiceModelHtml)
+      class: 'mb-70 pb-3',
+      style: 'border-bottom: 1px dashed #ccc; page-break-after: always; page-break-inside: avoid'
+    }).html(`
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="fw-400">
+            ${i18n(i19order)}
+            <span class="text-monospace">#${order.number}</span>
+          </h3>
+        </div>
 
-    var $invoiceId = $invoice.find('#invoice-id')
-    var $toInfo = $invoice.find('#invoice-to')
-    var $fromInfo = $invoice.find('#invoice-from')
-    var $createdAt = $invoice.find('#createdAt')
-    var $updatedAt = $invoice.find('#updatedAt')
-    var $itemsOrder = $invoice.find('#itemsOrder')
-    var $subTotalOrder = $invoice.find('#subTotalOrder')
-    var $freightOrder = $invoice.find('#freightOrder')
-    var $discountOrder = $invoice.find('#discountOrder')
-    var $taxOrder = $invoice.find('#taxOrder')
-    var $extraOrder = $invoice.find('#extraOrder')
-    var $totalOrder = $invoice.find('#totalOrder')
-    var $shippingMethod = $invoice.find('#shippingMethod')
-    var $paymentMethod = $invoice.find('#paymentMethod')
-    var $notes = $invoice.find('#noteOrder')
-    var $coupon = $invoice.find('#coupon')
+        <div class="col-auto">
+          <div class="d-inline-block">
+            <i class="ti-calendar mr-1"></i> ${formatDate(order.created_at)}
+          </div>
+          <div class="d-inline-block">
+            ${(order.updated_at ? `<i class="ti-save ml-3 mr-1"></i> ${formatDate(order.updated_at)}` : '')}
+          </div>
+        </div>
+      </div>
 
-    var phoneFrom, docNumber
-    var emailFrom = (store.contact_email) || ''
-    if (store.contact_phone) {
-      phoneFrom = formatPhone(ecomUtils.parsePhone(store.contact_phone))
-    } else {
-      phoneFrom = ''
-    }
-    if (store.doc_type === 'CNPJ') {
-      docNumber = store.doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
-    } else {
-      docNumber = store.doc_number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
-    }
-    var corporateFrom = (store.corporate_name) || (store.name)
-    if (store.logo.url) {
-      var logo = store.logo.url
-    }
-    $fromInfo.append('<img src="' + logo + '"><br><br>' +
-  '<strong>' + corporateFrom + '</strong><br>' +
-  '<strong>' + store.doc_type + ' : ' + docNumber + '</strong><br>' +
-  '<span>' + emailFrom + '</span> ' +
-  '<br>' +
-  '<span>' + phoneFrom + '</span> '
-    )
+      <div class="row px-3 pt-4 fs-15">
+        <div class="col-md-3">
+          ${(store.logo ? `<img src="${store.logo.url}" class="mb-4">` : '')}
+          <h4 class="fw-400">${(store.corporate_name || store.name)}</h4>
+          ${store.doc_type}:
+          <strong>
+            ${store.doc_type === 'CNPJ' ? formatCNPJ(store.doc_number) : formatCPF(store.doc_number)}
+          </strong>
+          <br>
+          ${(store.contact_email ? `${store.contact_email}<br>` : '')}
+          ${(store.contact_phone ? formatPhone(ecomUtils.parsePhone(store.contact_phone)) : '')}
+        </div>
 
-    $createdAt.text(ecomUtils.formatDate(order.created_at))
-    $updatedAt.text(ecomUtils.formatDate(order.updated_at) || 'Não houve atualização ainda')
-    $invoiceId.text(order.number)
-    var notes = order.staff_notes || order.notes || 'Nenhuma observação'
-    $notes.text(notes)
-    if (order.amount) {
-      $subTotalOrder.text(ecomUtils.formatMoney(order.amount.subtotal, 'BRL', lang) || 'R$ 0,00')
-      $freightOrder.text(ecomUtils.formatMoney(order.amount.freight, 'BRL', lang) || 'R$ 0,00')
-      $discountOrder.text(ecomUtils.formatMoney(order.amount.discount, 'BRL', lang) || 'R$ 0,00')
-      $extraOrder.text(ecomUtils.formatMoney(order.amount.extra, 'BRL', lang) || 'R$ 0,00')
-      $taxOrder.text(ecomUtils.formatMoney(order.amount.tax, 'BRL', lang) || 'R$ 0,00')
-      $totalOrder.text(ecomUtils.formatMoney(order.amount.total, 'BRL', lang))
-    }
-    if (order.items) {
-      for (var i = 0; i < order.items.length; i++) {
-        $itemsOrder.append('<tr><td>' + (i + 1) + '</td>' +
-      '  <td>' + order.items[i].name + '/ (' + order.items[i].sku + ')</td>' +
-      '  <td>' + order.items[i].quantity + '</td>' +
-      '  <td>' + window.ecomUtils.formatMoney((order.items[i].final_price || order.items[i].price), (order.items[i].currency_id || 'BRL'), lang) + '</td>' +
-      '  <td>' + window.ecomUtils.formatMoney(((order.items[i].final_price || order.items[i].price) * order.items[i].quantity), (order.items[i].currency_id || 'BRL'), lang) + '</td></tr>')
-      }
-    }
-    $shippingMethod.text(order.shipping_method_label)
-    if (order.transactions) {
-      if (order.transactions[0].app) {
-        if (order.transactions[0].app.intermediator) {
-          $paymentMethod.text(order.transactions[0].app.intermediator.name)
-        } else {
-          $paymentMethod.text(order.transactions[0].app.label)
-        }
-      } else {
-        $paymentMethod.text(order.payment_method_label)
-      }
-    }
-    if (order.shipping_lines) {
-      if (order.shipping_lines[0].app) {
-        var shippingName = order.shipping_lines[0].app.carrier + ' | ' + order.shipping_lines[0].app.label
-        $shippingMethod.text(shippingName)
-      } else {
-        $shippingMethod.text(order.shipping_method_label)
-      }
-    }
-    if (order.extra_discount) {
-      if (order.extra_discount.discount_coupon) {
-        $coupon.text(order.extra_discount.discount_coupon)
-      } else {
-        $coupon.text('Outra forma de desconto')
-      }
-    } else {
-      $coupon.text('Nenhum uso de cupom')
-    }
-    var nameCompany, documentClient, buyerDocNumber, emailCustomer, phonesCustomer
-    if (order.buyers) {
-      if (order.buyers[0].registry_type === 'p') {
-        if (order.buyers[0].name.middle_name) {
-          nameCompany = order.buyers[0].name.given_name + ' ' + order.buyers[0].name.middle_name + ' ' + order.buyers[0].name.family_name
-        } else {
-          nameCompany = order.buyers[0].name.given_name + ' ' + order.buyers[0].name.family_name
-        }
-        documentClient = 'CPF'
-        buyerDocNumber = order.buyers[0].doc_number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
-      } else {
-        nameCompany = order.buyers[0].corporate_name || order.buyers[0].name.given_name + ' ' + order.buyers[0].name.family_name
-        documentClient = 'CNPJ'
-        buyerDocNumber = order.buyers[0].doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
-      }
-      emailCustomer = order.buyers[0].main_email
-      if (order.buyers[0].phones) {
-        if (order.buyers[0].phones.length > 1) {
-          phonesCustomer = '<span>' + formatPhone(order.buyers[0].phones[0]) + '<br>' + formatPhone(order.buyers[0].phones[1]) + ' </span>'
-        }
-        if (order.buyers[0].phones.length === 1) {
-          phonesCustomer = '<span>' + formatPhone(order.buyers[0].phones[0]) + ' </span>'
-        }
-      }
-    }
-    if (order.shipping_lines) {
-      var addressToZip = order.shipping_lines[0].to.zip
-      var addressFrom = (ecomUtils.lineAddress(order.shipping_lines[0].from)) || ''
-      var addressTo = (ecomUtils.lineAddress(order.shipping_lines[0].to)) || ''
-      var addressFromZip = order.shipping_lines[0].from.zip
-    }
-    $toInfo.append('<strong> ' + nameCompany + '</strong><br>' +
-  '    <strong> ' + documentClient + ':' + buyerDocNumber + '</strong><br>' +
-  '    <span>CEP: ' + addressToZip + '</span><br>' +
-  '    <span>Endereço: ' + addressTo + '</span><br>' +
-  '    <span>' + emailCustomer + '</span> ' +
-  '    <br> ' +
-  '    <span>' + phonesCustomer + '</span>'
-    )
-    setTimeout(function () {
-      $fromInfo.append('<br>' +
-        '<span> CEP: ' + addressFromZip + '</span><br>' +
-        '    <span>' + addressFrom + '</span><br>'
-      )
-    }, 100)
+        <div class="col-md-3 ml-md-auto text-md-right">
+          <div class="fs-17">
+            <span class="text-muted">${i18n(i19buyer)}:</span><br>
+            <strong>${(buyer ? (buyer.corporate_name || getFullName(buyer)) : '')}</strong><br>
+            ${(buyer
+              ? buyer.registry_type === 'p'
+                ? `CPF: ${formatCPF(buyer.doc_number)}` : `CNPJ: ${formatCNPJ(buyer.doc_number)}`
+              : '')}
+          </div>
+
+          <div class="mt-3">
+          ${(shippingLine
+            ? `
+            ${i18n(i19zipCode)}: ${formatCEP(shippingLine.to.zip)}<br>
+            <address>${getLineAddress(shippingLine.to)}</address>`
+            : '')}
+            ${(buyer ? `${buyer.main_email}<br>` : '')}
+            ${(buyer && buyer.phones ? buyer.phones.map(phone => formatPhone(phone)).join(' / ') : '')}
+          </div>
+        </div>
+      </div>
+
+      <hr>
+      <div class="table-responsive mb-4">
+        <table class="table table-hover">
+          <thead>
+            <tr class="text-muted">
+              <th>#</th>
+              <th>${i18n(i19description)}</th>
+              <th>${i18n(i19quantity)}</th>
+              <th>${i18n(i19price)}</th>
+              <th>${i18n(i19total)}</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${(order.items
+              ? order.items.reduce((trsStr, item, i) => trsStr + `
+                <tr>
+                  <td>${(i + 1)}</td>
+                  <td>${item.name} (${item.sku})</td>
+                  <td>${item.quantity}</td>
+                  <td>${formatMoney(getPrice(item))}</td>
+                  <td>${formatMoney(getPrice(item) * item.quantity)}</td>
+                </tr>`, '')
+              : '')}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row border-top py-4">
+        <div class="col-md-6">
+          ${(order.notes
+            ? `<p><span class="text-muted">${i18n(i19additionalNotes)}</span>:<br>${order.notes}</p>`
+            : '')}
+          ${i18n(i19shippingMethod)}:
+            <strong>${(shippingLine && shippingLine.app
+              ? `${shippingLine.app.label} (${shippingLine.app.carrier})`
+              : order.shipping_method_label)}</strong><br>
+          ${i18n(i19paymentMethod)}:
+            <strong>${(transaction && transaction.app
+              ? transaction.app.label +
+                (transaction.app.intermediator ? ` (${transaction.app.intermediator.name})` : '')
+              : order.payment_method_label)}</strong><br>
+          ${(order.extra_discount && order.extra_discount.discount_coupon
+            ? `${i18n(i19discountCoupon)}: <strong>${order.extra_discount.discount_coupon}</strong>`
+            : '')}
+        </div>
+
+        <div class="col-auto ml-auto text-right">
+          <table class="table table-borderless table-sm" style="width: 300px">
+            <tbody>
+              <tr>
+                <td>${i18n(i19subtotal)}</td>
+                <td>${formatMoney(order.amount.subtotal || 0)}</td>
+              </tr>
+              <tr>
+                <td>${i18n(i19freight)}</td>
+                <td>${formatMoney(order.amount.freight || 0)}</td>
+              </tr>
+              <tr>
+                <td>${i18n(i19discount)}</td>
+                <td>${formatMoney(order.amount.discount || 0)}</td>
+              </tr>
+              <tr>
+                <td>${i18n(i19tax)}</td>
+                <td>${formatMoney(order.amount.tax || 0)}</td>
+              </tr>
+              <tr>
+                <td>${i18n(i19additionalCost)}</td>
+                <td>${formatMoney(order.amount.extra || 0)}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="pr-2" style="color: #202020">
+            <span class="fs-22">${i18n(i19total)}:</span>
+            <strong class="fs-30 ml-2">${formatMoney(order.amount.total)}</strong>
+          </div>
+        </div>
+      </div>`)
 
     $invoices.append($invoice)
     $invoice.fadeIn()
@@ -174,7 +204,7 @@ export default function () {
               getDoc()
             })
           } else {
-            $invoices.find('.loading').hide()
+            $invoices.find('.loading').slideUp()
             $appTab.find('.shipping-tags').click(() => {
               window.location.href = `/#/shipping-tags/${orderIds}`
             })
