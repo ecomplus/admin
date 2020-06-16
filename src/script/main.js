@@ -1595,7 +1595,7 @@ const { sessionStorage, $, app } = window
     if (err) {
       handleFatalError(err)
     } else {
-      Store = body
+      window.Store = Store = body
       // console.log(Store)
       // get authentication object
       callApi('authentications/me.json', 'GET', function (err, body) {

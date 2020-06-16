@@ -1,10 +1,14 @@
 export default function () {
   const { localStorage, $, ecomUtils, callApi, formatPhone, tabId, routeParams } = window
+  const store = window.Store || {}
 
   const $appTab = $(`#app-tab-${tabId}`)
   const orderIds = routeParams[routeParams.length - 1]
+  const endpoint = `orders.json?_id=${orderIds}` +
+    '&fields=buyers.phones,buyers.doc_number,shipping_lines,number,' +
+      'items.name,items.quantity,items.price,items.final_price'
 
-  callApi(`orders.json?_id=${orderIds}&fields=buyers.phones,shipping_lines,number`, 'GET', (error, data) => {
+  callApi(endpoint, 'GET', (error, data) => {
     if (!error) {
       const $shippingTags = []
 
@@ -74,7 +78,7 @@ export default function () {
             }
 
             $shippingTags.push(`
-              <div class="col-xs-4 col-md-4" style="border: 2px dashed #ccc; page-break-inside: avoid">
+              <div class="col-md-4" style="border: 2px dashed #ccc; page-break-inside: avoid">
                 <div class="p-2 pt-3">
                   <ul class="list-unstyled  border-bottom">
                     <li><strong>REMETENTE</strong></li>
@@ -117,6 +121,46 @@ export default function () {
       } else {
         $appTab.find('.shipping-tags').html($shippingTags)
         $appTab.find('.print-correios').click(() => $correiosEnderecador.submit())
+
+        $appTab.find('.doc-correios').click(() => {
+          let url = 'https://declaracao-correios.netlify.app/?'
+          data.result.forEach((order, i) => {
+            if (order.shipping_lines && order.shipping_lines[0]) {
+              const { to, from } = order.shipping_lines[0]
+              if (from && to) {
+                const pkg = order.shipping_lines[0].package
+                url += `&pedido=${encodeURIComponent(JSON.stringify({
+                  remNome: from.name || store.corporate_name,
+                  remEndereco: `${from.street}, ${(from.number || 'S/N')}, ${(from.borough || '')}`,
+                  remLinha2: `${(from.complement || '')} - ${(from.near_to || '')}`,
+                  remCidade: from.city,
+                  remUf: from.province_code,
+                  remCep: from.zip,
+                  remDoc: store.doc_number,
+                  desNome: to.name,
+                  desEndereco: `${to.street}, ${(to.number || 'S/N')}, ${(to.borough || '')}`,
+                  desLinha2: `${(to.complement || '')} - ${(to.near_to || '')}`,
+                  desCidade: to.city,
+                  desUf: to.province_code,
+                  desCep: to.zip,
+                  desDoc: order.buyers && order.buyers[0] && order.buyers[0].doc_number,
+                  itens: order.items.map(item => ({
+                    conteudo: item.name,
+                    quant: item.quantity,
+                    valor: ecomUtils.price(item)
+                  })),
+                  peso: pkg && pkg.weight
+                    ? (!pkg.weight.unit || pkg.weight.unit === 'kg') ? pkg.weight.value
+                      : pkg.weight.unit === 'g' ? pkg.weight.value / 1000
+                        : undefined
+                    : undefined
+                }))}`
+              }
+            }
+          })
+          const win = window.open(url, '_blank')
+          win.focus()
+        })
       }
     }
   })

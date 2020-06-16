@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.9](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2020-06-16)
+
+
+### Features
+
+* **shipping-tags:** handling Correios content declaration document ([257b9c7](https://github.com/ecomplus/admin/commit/257b9c7cfc395b079a00e1e5eea85dd7f3e8000d))
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/admin-marketplace, add brazilian-utils ([34cd6b6](https://github.com/ecomplus/admin/commit/34cd6b69ae2d09eafb9a9ac65186d2835749bf4b))
+* **i18n:** set $ecomConfig default currency (BRL) ([b41f55f](https://github.com/ecomplus/admin/commit/b41f55f3fec144e6ca72846be7ad3189737b547d))
+
 ## [1.0.0-alpha.8](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2020-06-09)
 
 

@@ -8,7 +8,11 @@ if (!lang || !/^[a-z]{2}(_[a-z]{2})?$/.test(lang)) {
   lang = 'pt_br'
 }
 $ecomConfig.set('lang', lang)
-$ecomConfig.set('country_code', 'BR')
+if (lang === 'pt_br') {
+  $ecomConfig.set('country_code', 'BR')
+  $ecomConfig.set('currency', 'BRL')
+  $ecomConfig.set('currency_symbol', 'R$')
+}
 
 const updateDom = () => {
   const $el = $('#langs-menu [data-lang="' + lang + '"]')
