@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.10](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.9...v1.0.0-alpha.10) (2020-06-18)
+
+
+### Features
+
+* **products-list:** also handle csv import/export for products ([3c5b22a](https://github.com/ecomplus/admin/commit/3c5b22ab42ddec69807dd9134d65f5373cb5e7fd))
+
 ## [1.0.0-alpha.9](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2020-06-16)
 
 
