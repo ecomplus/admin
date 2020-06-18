@@ -65,6 +65,51 @@ export default function () {
       }
       return newDoc
     })
+
+    if (resourceSlug === 'orders') {
+      const getAmount = statusList => {
+        let amount = 0
+        list.forEach(row => {
+          if (statusList) {
+            const status = row['financial_status/current']
+            if (!status || !statusList.includes(status)) {
+              return
+            }
+          }
+          amount += row['amount/total']
+        })
+        return amount
+      }
+
+      // sum amounts and percentage values
+      const totalAmount = getAmount()
+      const approvedAmount = getAmount([
+        'paid',
+        'partially_paid'
+      ])
+      const approvedPc = Math.round(approvedAmount * 100 / totalAmount)
+      const cancelledAmount = getAmount([
+        'unauthorized',
+        'voided',
+        'in_dispute',
+        'refunded',
+        'partially_refunded'
+      ])
+      const cancelledPc = Math.round(cancelledAmount * 100 / totalAmount)
+
+      // update order statistics
+      $(`#t${tabId}-orders-total`).text(formatMoney(totalAmount))
+      $(`#t${tabId}-orders-approved`).text(formatMoney(approvedAmount))
+      $(`#t${tabId}-orders-approved-pc`).text(`~${approvedPc}%`)
+      $(`#t${tabId}-orders-approved-bar`)
+        .css('width', `${approvedPc}%`)
+        .attr('aria-valuenow', approvedPc)
+      $(`#t${tabId}-orders-cancelled`).text(formatMoney(cancelledAmount))
+      $(`#t${tabId}-orders-cancelled-pc`).text(`~${cancelledPc}%`)
+      $(`#t${tabId}-orders-cancelled-bar`)
+        .css('width', `${cancelledPc}%`)
+        .attr('aria-valuenow', cancelledPc)
+    }
   }
   updateData()
 
@@ -115,6 +160,7 @@ export default function () {
         }
         checkSelectedOrders('shipping-tags/correios')
       })
+      $(`#t${tabId}-orders-statistics`).slideDown()
     }
 
     // current list filters
