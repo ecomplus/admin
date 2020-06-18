@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.11](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2020-06-18)
+
+
+### Features
+
+* **orders-list:** handling orders statistics ([82f8fa0](https://github.com/ecomplus/admin/commit/82f8fa0025126537fa644d068ff3e18ed67cb6f1))
+
 ## [1.0.0-alpha.10](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.9...v1.0.0-alpha.10) (2020-06-18)
 
 

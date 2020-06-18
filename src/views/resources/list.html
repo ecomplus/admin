@@ -76,3 +76,70 @@
     </div>
   </div>
 </div>
+
+<div data-id="orders-statistics" class="row" style="display: none">
+  <div class="col-12 col-md">
+    <div class="card card-body" style="min-height: 118px">
+      <h6 class="text-info">
+        <span class="text-uppercase i18n">
+          <span data-lang="en_us">Total on list</span>
+          <span data-lang="pt_br">Total na lista</span>
+        </span>
+      </h6>
+      <br>
+      <span data-id="orders-total" class="fw-100 fs-40"></span>
+    </div>
+  </div>
+
+  <div class="col-12 col-md">
+    <div class="card card-body" style="min-height: 118px">
+      <h6 class="text-success">
+        <span class="text-uppercase i18n">
+          <span data-lang="en_us">Confirmed</span>
+          <span data-lang="pt_br">Confirmado</span>
+        </span>
+      </h6>
+      <br>
+      <p class="fs-28">
+        <span data-id="orders-approved-pc"></span>
+        <span data-id="orders-approved" class="text-muted fs-18"></span>
+      </p>
+      <div class="progress">
+        <div
+          data-id="orders-approved-bar"
+          class="progress-bar bg-success"
+          role="progressbar"
+          aria-valuenow="0"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        ></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12 col-md">
+    <div class="card card-body" style="min-height: 118px">
+      <h6 class="text-danger">
+        <span class="text-uppercase i18n">
+          <span data-lang="en_us">Cancelled</span>
+          <span data-lang="pt_br">Cancelado</span>
+        </span>
+      </h6>
+      <br>
+      <p class="fs-28">
+        <span data-id="orders-cancelled-pc"></span>
+        <span data-id="orders-cancelled" class="text-muted fs-18"></span>
+      </p>
+      <div class="progress">
+        <div
+          data-id="orders-cancelled-bar"
+          class="progress-bar bg-danger"
+          role="progressbar"
+          aria-valuenow="0"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        ></div>
+      </div>
+    </div>
+  </div>
+</div>
