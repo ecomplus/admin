@@ -1,8 +1,5 @@
-import Papa from 'papaparse'
-import * as dot from 'dot-object'
-
 export default function () {
-  const { $, app, i18n, callApi, cutString, formatMoney, formatDate, stringToNumber } = window
+  const { $, app, i18n, cutString, formatMoney, formatDate, stringToNumber } = window
 
   // current tab ID
   var tabId = window.tabId
@@ -71,135 +68,6 @@ export default function () {
   }
   updateData()
 
-  const toogleSpinners = isLoaded => {
-    const fn = isLoaded ? 'hide' : 'show'
-    $(`#t${tabId}-loading`)[fn]()
-    $grid.find('.loading')[fn]()
-  }
-
-  // export all current or selected documents
-  $(`#t${tabId}-export`).click(function () {
-    if (data.result.length) {
-      const ids = Tab.selectedItems.length ? Tab.selectedItems : data.result.map(({ _id }) => _id)
-      toogleSpinners()
-      $(this).addClass('disabled')
-      let i = 0
-      const exportData = []
-
-      const getDoc = () => {
-        if (i === ids.length) {
-          // download CSV
-          const csv = Papa.unparse(exportData)
-          const csvData = new window.Blob([csv], {
-            type: 'text/csv;charset=utf-8;'
-          })
-          const csvURL = navigator.msSaveBlob
-            ? navigator.msSaveBlob(csvData, 'download.csv')
-            : window.URL.createObjectURL(csvData)
-          const $link = document.createElement('a')
-          $link.href = csvURL
-          $link.setAttribute('download', `${resourceSlug}.csv`)
-          $link.click()
-          toogleSpinners(true)
-          $(this).removeClass('disabled')
-          return
-        }
-
-        callApi(`${resourceSlug}/${ids[i]}.json`, 'GET', (err, doc) => {
-          if (err) {
-            console.error(err)
-            app.toast()
-          } else {
-            // add to list parsed to dot notation
-            const row = dot.dot(doc)
-            for (const field in row) {
-              if (row[field] !== undefined) {
-                const type = typeof row[field]
-                // save var type on row header
-                row[`${type.charAt(0).toUpperCase()}${type.slice(1)}(${field})`] = row[field]
-                delete row[field]
-              }
-            }
-            exportData.push(row)
-          }
-          i++
-          getDoc()
-        })
-      }
-      getDoc()
-    }
-  })
-
-  // import CSV table
-  $(`#t${tabId}-import`).click(function () {
-    const $modal = $('#table-upload')
-    $modal.modal('toggle')
-
-    function parseCsv () {
-      toogleSpinners()
-      const file = $modal.find('input[type="file"]')[0].files[0]
-      Papa.parse(file, {
-        header: true,
-        error: (err, file, inputElem, reason) => {
-          console.error(err)
-          app.toast()
-        },
-
-        complete: ({ data }) => {
-          let i = 0
-          const editDoc = () => {
-            if (i === data.length) {
-              // all done
-              toogleSpinners(true)
-              return
-            }
-            const row = data[i]
-            for (const head in row) {
-              if (row[head] === '') {
-                delete row[head]
-              } else if (row[head] !== undefined) {
-                // fix var type and field name
-                const field = head.replace(/\w+\(([^)]+)\)/i, '$1')
-                row[field] = head.startsWith('Number') ? Number(row[head])
-                  : head.startsWith('Boolean') ? Boolean(row[head]) : row[head]
-                delete row[head]
-              }
-            }
-            const doc = dot.object(data[i])
-            i++
-
-            const _id = doc._id
-            if (_id) {
-              delete doc._id
-              delete doc.store_id
-              delete doc.created_at
-              delete doc.updated_at
-              callApi(`${resourceSlug}/${_id}.json`, 'PATCH', (err, doc) => {
-                if (err) {
-                  console.error(err)
-                  app.toast()
-                }
-                editDoc()
-              }, doc)
-            } else {
-              app.toast(i18n({
-                en_us: `Object ID not specified at line ${(i + 2)} (_id)`,
-                pt_br: `ID do objeto não especificado na linha ${(i + 2)} (_id)`
-              }))
-              editDoc()
-            }
-          }
-          editDoc()
-        }
-      })
-    }
-
-    $('#import-table').bind('click', parseCsv)
-    $modal.on('hidden.bs.modal', function (e) {
-      $('#import-table').unbind('click', parseCsv)
-    })
-  })
-
   if (list.length) {
     // delete checkbox element HTML
     var elCheckbox = '<div class="custom-controls-stacked">' +
@@ -248,13 +116,6 @@ export default function () {
         checkSelectedOrders('shipping-tags/correios')
       })
     }
-
-    // show list action buttons
-    $(`#t${tabId}-nav .edit-btn[data-list]`).each(function () {
-      if ($(this).data('list') === '*' || $(this).data('list') === resourceSlug) {
-        $(this).fadeIn()
-      }
-    })
 
     // current list filters
     var filters = {}

@@ -1,9 +1,8 @@
-/*!
- * Copyright 2018 E-Com Club
- */
+import Papa from 'papaparse'
+import * as dot from 'dot-object'
 
 export default function () {
-  'use strict'
+  const { $, app, i18n, callApi, formatDate } = window
 
   // current tab ID
   var tabId = window.tabId
@@ -25,7 +24,6 @@ export default function () {
   }
 
   var lang = window.lang
-  var i18n = window.i18n
 
   var tabLabel, tabTitle
   var resourceId = window.routeParams[1]
@@ -34,8 +32,8 @@ export default function () {
     // resource root URI
     // default action
     tabLabel = i18n({
-      'en_us': 'List',
-      'pt_br': 'Listar'
+      en_us: 'List',
+      pt_br: 'Listar'
     })
     tabTitle = resource.label[lang]
     listing = true
@@ -43,16 +41,16 @@ export default function () {
     if (resourceId === 'new') {
       // create
       tabLabel = i18n({
-        'en_us': 'Create',
-        'pt_br': 'Criar'
+        en_us: 'Create',
+        pt_br: 'Criar'
       })
       // unset ID
       resourceId = undefined
       creating = true
     } else {
       tabLabel = i18n({
-        'en_us': 'Edit',
-        'pt_br': 'Editar'
+        en_us: 'Edit',
+        pt_br: 'Editar'
       })
     }
     // tab title with resource name and action
@@ -91,7 +89,7 @@ export default function () {
   $('#t' + tabId + '-breadcrumbs').append(html)
 
   // set up JSON code editor
-  var editor = ace.edit('t' + tabId + '-code-editor')
+  var editor = window.ace.edit('t' + tabId + '-code-editor')
   editor.setTheme('ace/theme/dawn')
   editor.session.setMode('ace/mode/json')
   $('#t' + tabId + '-code-tab').click(function () {
@@ -348,7 +346,7 @@ export default function () {
               // editing
               // show modification timestamps
               if (json.created_at) {
-                var dateList = [ 'day', 'month', 'year', 'hour', 'minute', 'second' ]
+                var dateList = ['day', 'month', 'year', 'hour', 'minute', 'second']
                 if (json.updated_at) {
                   $('#t' + tabId + '-updated-at').text(formatDate(json.updated_at, dateList))
                 }
@@ -391,6 +389,14 @@ export default function () {
       bulkAction('PATCH', bodyObject)
     }
 
+    const alertAnySelected = () => {
+      // nothing to do, alert
+      app.toast(i18n({
+        en_us: 'No items selected',
+        pt_br: 'Nenhum item selecionado'
+      }))
+    }
+
     // handle bulk items edit
     var bulkAction = function (method, bodyObject) {
       var todo = Tab.selectedItems.length
@@ -428,11 +434,7 @@ export default function () {
           load(loadContent, params)
         })
       } else if (!resourceId) {
-        // nothing to do, alert
-        app.toast(i18n({
-          'en_us': 'No items selected',
-          'pt_br': 'Nenhum item selecionado'
-        }))
+        alertAnySelected()
       }
     }
 
@@ -468,11 +470,7 @@ export default function () {
         }
         next()
       } else if (!resourceId) {
-        // nothing to do, alert
-        app.toast(i18n({
-          'en_us': 'No items selected',
-          'pt_br': 'Nenhum item selecionado'
-        }))
+        alertAnySelected()
       }
     }
 
@@ -483,6 +481,147 @@ export default function () {
 
     // preload data, then load HTML content
     load(loadContent, params)
+
+    if (listing) {
+      // show list action buttons
+      $(`#t${tabId}-nav .edit-btn[data-list]`).each(function () {
+        if ($(this).data('list') === '*' || $(this).data('list') === slug) {
+          $(this).fadeIn()
+        }
+      })
+
+      // export all current or selected documents
+      $(`#t${tabId}-export`).click(function () {
+        if (Tab.selectedItems.length) {
+          const ids = Tab.selectedItems
+          $(`#t${tabId}-loading`).show()
+          $(this).addClass('disabled')
+          let i = 0
+          const exportData = []
+
+          const getDoc = () => {
+            if (i === ids.length) {
+              // download CSV
+              const csv = Papa.unparse(exportData)
+              const csvData = new window.Blob([csv], {
+                type: 'text/csv;charset=utf-8;'
+              })
+              const csvURL = navigator.msSaveBlob
+                ? navigator.msSaveBlob(csvData, 'download.csv')
+                : window.URL.createObjectURL(csvData)
+              const $link = document.createElement('a')
+              $link.href = csvURL
+              $link.setAttribute('download', `${slug}.csv`)
+              $link.click()
+              $(`#t${tabId}-loading`).hide()
+              $(this).removeClass('disabled')
+              return
+            }
+
+            callApi(`${slug}/${ids[i]}.json`, 'GET', (err, doc) => {
+              if (err) {
+                console.error(err)
+                app.toast()
+              } else {
+                // add to list parsed to dot notation
+                const row = dot.dot(doc)
+                for (const field in row) {
+                  if (row[field] !== undefined) {
+                    const type = typeof row[field]
+                    // save var type on row header
+                    row[`${type.charAt(0).toUpperCase()}${type.slice(1)}(${field})`] = row[field]
+                    delete row[field]
+                  }
+                }
+                exportData.push(row)
+              }
+              i++
+              getDoc()
+            })
+          }
+          getDoc()
+        } else {
+          alertAnySelected()
+        }
+      })
+
+      // import CSV table
+      $(`#t${tabId}-import`).click(function () {
+        const $modal = $('#table-upload')
+        $modal.modal('toggle')
+
+        function parseCsv () {
+          $(`#t${tabId}-loading`).show()
+          const cb = Tab.editItemsCallback()
+          const file = $modal.find('input[type="file"]')[0].files[0]
+          Papa.parse(file, {
+            header: true,
+            error: (err, file, inputElem, reason) => {
+              console.error(err)
+              app.toast()
+            },
+
+            complete: ({ data }) => {
+              let i = 0
+              const editDoc = () => {
+                if (i === data.length) {
+                  // all done
+                  $(`#t${tabId}-loading`).hide()
+                  if (typeof cb === 'function') {
+                    cb()
+                  }
+                  return
+                }
+
+                const row = data[i]
+                for (const head in row) {
+                  if (row[head] === '') {
+                    delete row[head]
+                  } else if (row[head] !== undefined) {
+                    // fix var type and field name
+                    const field = head.replace(/\w+\(([^)]+)\)/i, '$1')
+                    row[field] = head.startsWith('Number') ? Number(row[head])
+                      : head.startsWith('Boolean') ? Boolean(row[head]) : row[head]
+                    delete row[head]
+                  }
+                }
+                const doc = dot.object(data[i])
+                i++
+
+                const _id = doc._id
+                if (_id) {
+                  delete doc._id
+                  delete doc.store_id
+                  delete doc.created_at
+                  delete doc.updated_at
+                  callApi(`${slug}/${_id}.json`, 'PATCH', (err, doc) => {
+                    if (err) {
+                      console.error(err)
+                      app.toast()
+                    }
+                    editDoc()
+                  }, doc)
+                } else {
+                  if (i < data.length || i === 1) {
+                    app.toast(i18n({
+                      en_us: `Object ID not specified at line ${(i + 1)} (_id)`,
+                      pt_br: `ID do objeto não especificado na linha ${(i + 1)} (_id)`
+                    }))
+                  }
+                  editDoc()
+                }
+              }
+              editDoc()
+            }
+          })
+        }
+
+        $('#import-table').bind('click', parseCsv)
+        $modal.on('hidden.bs.modal', function (e) {
+          $('#import-table').unbind('click', parseCsv)
+        })
+      })
+    }
   } else {
     // creating
     // starts with empty object
