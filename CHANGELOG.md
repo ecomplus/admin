@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.12](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2020-07-01)
+
+
+### Bug Fixes
+
+* **assets:** fix some img filenames (fix service worker) ([0036cdf](https://github.com/ecomplus/admin/commit/0036cdf68c07a7f90ca2efca9074d6e6f3fbee9e))
+* **product-form:** fix GTIN/MPN for variations (string only, not array) ([10b864f](https://github.com/ecomplus/admin/commit/10b864f7baeaf1bd31ca16b345b90985fb27c353))
+
 ## [1.0.0-alpha.11](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2020-06-18)
 
 
