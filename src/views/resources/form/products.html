@@ -747,7 +747,12 @@
             <div class="card-body">
               <div class="form-group">
                 <label>GTIN / ISBN / UPC</label>
-                <input type="text" class="form-control" name="variations.gtin" maxlength="14"/>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="variations.gtin"
+                  pattern="^([0-9]{8}|[0-9]{12,14})$"
+                />
                 <span class="i18n">
                   <small data-lang="en_us" class="form-text">Barcode</small>
                   <small data-lang="pt_br" class="form-text">Código de barras</small>
