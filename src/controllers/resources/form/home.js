@@ -146,9 +146,9 @@ export default function () {
             }
 
             if (filteredToday.length) {
+              appTab.find('#cards-graphs-orders').show()
               const todayAmount = filteredToday.reduce(sumOfAmount)
               $todayTotal.text(window.ecomUtils.formatMoney(todayAmount.amount.total, 'BRL'))
-              appTab.find('#cards-graphs-orders').show()
               for (var i = 0; i < filteredToday.length; i++) {
                 if (filteredToday[i].financial_status) {
                   var orderInfo = []
