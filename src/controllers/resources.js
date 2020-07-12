@@ -2,7 +2,7 @@ import Papa from 'papaparse'
 import * as dot from 'dot-object'
 
 export default function () {
-  const { $, app, i18n, callApi, formatDate } = window
+  const { $, app, i18n, callApi, formatDate, askConfirmation } = window
 
   // current tab ID
   var tabId = window.tabId
@@ -401,7 +401,6 @@ export default function () {
     var bulkAction = function (method, bodyObject) {
       var todo = Tab.selectedItems.length
       if (todo > 0) {
-        $('#modal-saved').modal('show')
         var cb = Tab.editItemsCallback()
         // call API to delete documents
         var done = 0
@@ -414,7 +413,7 @@ export default function () {
               errors.push(err)
             }
             done++
-            if (done === todo) {
+            if (done >= todo) {
               // end
               if (typeof cb === 'function') {
                 cb(errors)
@@ -425,14 +424,24 @@ export default function () {
               next()
             }
           }
+
           var id = Tab.selectedItems[done]
-          window.callApi(slug + '/' + id + '.json', method, callback, bodyObject)
+          if (id) {
+            askConfirmation(
+              `https://api.e-com.plus/v1/${slug}/${id}.json`,
+              method,
+              callback,
+              bodyObject,
+              i18n({
+                en_us: 'The selected list item will be edited, are you sure?',
+                pt_br: 'O item selecionado na lista será editado, tem certeza?'
+              })
+            )
+          } else {
+            callback()
+          }
         }
-        $('#list-save-changes').click(next)
-        $('#ignore-unsaved').click(function () {
-          Tab.selectedItems = []
-          load(loadContent, params)
-        })
+        next()
       } else if (!resourceId) {
         alertAnySelected()
       }
