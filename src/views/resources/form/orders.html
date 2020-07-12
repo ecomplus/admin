@@ -527,20 +527,35 @@
                         <input type="text" class="form-control"
                           name="transactions.intermediator.transaction_code"/>
                       </div>
+                    </div>
+                    <div class="col-sm-6">
                       <div class="form-group">
                         <label class="i18n">
-                          <span data-lang="en_us">Transaction Id</span>
-                          <span data-lang="pt_br">Id da transação</span>
+                          <span data-lang="en_us">Payment ID</span>
+                          <span data-lang="pt_br">ID do pagamento</span>
                         </label>
                         <input type="text" class="form-control"
                           name="transactions.intermediator.transaction_id"/>
                       </div>
                     </div>
+                  </div>
+
+                  <div class="row">
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label>Gateway</label>
                         <input type="text" class="form-control"
                           name="transactions.app.intermediator.name" readonly />
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Buyer ID</span>
+                          <span data-lang="pt_br">ID do comprador</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="transactions.intermediator.buyer_id"/>
                       </div>
                     </div>
                   </div>
@@ -804,6 +819,16 @@
                           name="shipping_lines.tracking_codes[].0.code"/>
                       </div>
                     </div>
+                    <div class="col-12">
+                      <div class="form-group">
+                        <label class="i18n">
+                          <span data-lang="en_us">Tracking link</span>
+                          <span data-lang="pt_br">Link para rastreio</span>
+                        </label>
+                        <input type="text" class="form-control"
+                          name="shipping_lines.tracking_codes[].0.link"/>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -888,7 +913,10 @@
                     </div>
                     <div class="col-lg-12 col-sm-7">
                       <div class="form-group">
-                        <label>Link</label>
+                        <label class="i18n">
+                          <span data-lang="en_us">Invoice link</span>
+                          <span data-lang="pt_br">Link da NFe</span>
+                        </label>
                         <input type="text" class="form-control"
                           name="shipping_lines.invoices[].0.link"/>
                       </div>
