@@ -313,6 +313,7 @@ const { sessionStorage, $, app } = window
   window.callApi = callApi
   window.callStorageApi = callStorageApi
   window.callSearchApi = callSearchApi
+  window.askConfirmation = askConfirmation
   // use tabs functions and objects globally
   window.Tabs = {}
 
