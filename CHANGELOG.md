@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.14](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2020-07-12)
+
+
+### Features
+
+* **orders-form:** minor form layout edit, add some fields ([97a643d](https://github.com/ecomplus/admin/commit/97a643d083ae68b9531115ace5bdf54525c70880))
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#166](https://github.com/ecomplus/admin/issues/166)) ([d6e9b65](https://github.com/ecomplus/admin/commit/d6e9b65106d253b6afd649c2ec622508aa6c8e36))
+* **lists:** fix infinite edits for some columns ([9a49890](https://github.com/ecomplus/admin/commit/9a4989063f206588a0f49007ab306f0ff5c9f3e0))
+
 ## [1.0.0-alpha.13](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2020-07-02)
 
 
