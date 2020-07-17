@@ -4,7 +4,7 @@
 
 export default function () {
   'use strict'
-  var tabId = window.tabId
+  var { tabId, $, localStorage, app, i18n, callApi } = window
   var Tab = window.Tabs[tabId]
   window.renderContentIds()
 
@@ -14,10 +14,15 @@ export default function () {
     var $storeObjIdConfig = $('#objectIdConfig')
     var $cpfDoc = $('#cpfDoc')
     var $cnpjDoc = $('#cnpjDoc')
+    const $actionSave = $('#actionSave')
     var $cpf = $('#cpf')
+    const $inscType = $('#inscType')
+    const $docType = $('#docType')
     var $cnpj = $('#cnpj')
-    var $inscNumb = $('#inscNumber')
+    var $inscNumb = $('#inscNumb')
     var objInfo = {}
+    var $docCPF = $('#docCPF')
+    var $docCNPJ = $('#docCNPJ')
     var $financialEmail = $('#financialEmail')
     var $contactEmail = $('#contactEmail')
     var $corpName = $('#corpName')
@@ -33,7 +38,7 @@ export default function () {
     var $firstColor = $('#firstColor')
     var $secondColor = $('#secondColor')
     var urlStore = 'stores/me.json'
-    window.callApi(urlStore, 'GET', function (error, schema) {
+    callApi(urlStore, 'GET', function (error, schema) {
       if (!error) {
         console.log(schema)
         $storeNameConfig.val(schema.name)
@@ -47,6 +52,9 @@ export default function () {
         $description.val(schema.description)
         $urlHomepage.val(schema.homepage)
         $domain.val(schema.domain)
+        if (schema.domain) {
+          localStorage.setItem('domain', schema.domain)
+        }
         if (schema.brand_colors) {
           var swapFirst = schema.brand_colors.primary
           var swapSecond = schema.brand_colors.secondary
@@ -87,30 +95,58 @@ export default function () {
         var logo = schema.logo.url
         if (typeof logo === 'undefined') {
           logo = ''
-          imglogo(logo)
-          objInfo = {
-            'logo': {
-              'url': logo
-            }
-          }
-          infoPatch(objInfo)
         } else {
           $logo.val(logo)
-          $logoAlt.val(schema.logo.alt)
           imglogo(logo)
+          $logoAlt.val(schema.logo.alt)
         }
         if (schema.doc_type === 'CPF') {
+          $docCPF.attr('checked', true)
+          $docCNPJ.attr('checked', false)
           $cpf.show()
           $cnpj.hide()
           $inscNumb.hide()
+          $inscType.hide()
           $cpfDoc.val(schema.doc_number)
         }
         if (schema.doc_type === 'CNPJ') {
           $cnpj.show()
           $cpf.hide()
-          $cnpjDoc.val(schema.doc_number)
           $inscNumb.show()
+          $inscType.show()
+          $inscNumb.val(schema.inscription_number)
+          $cnpjDoc.val(schema.doc_number)
+          $docCPF.attr('checked', false)
+          $docCNPJ.attr('checked', true)
+          if (schema.inscription_number === 'state') {
+            $inscType.find('#inscState').attr('checked', true)
+          } else {
+            $inscType.find('#inscMuni').attr('checked', true)
+          }
         }
+      }
+    })
+    $docCPF.change(function () {
+      $cpf.show()
+      $cnpj.hide()
+      $inscNumb.hide()
+      $inscType.hide()
+    })
+    $docCNPJ.change(function () {
+      $cnpj.show()
+      $cpf.hide()
+      $inscNumb.show()
+      $inscType.show()
+    })
+    $docType.find('input').change(function () {
+      if ($(this).val() === 'CPF') {
+        $cpf.show()
+        $cnpj.hide()
+        $inscNumb.hide()
+      } else {
+        $inscNumb.show()
+        $cnpj.show()
+        $cpf.hide()
       }
     })
     $firstColor.change(function () {
@@ -141,125 +177,20 @@ export default function () {
           'background-color': color1
         })
       }
-      objInfo = {
-        'brand_colors': {
-          'primary': color1,
-          'secondary': color2
-        }
-      }
-      infoPatch(objInfo)
     }
-    $storeNameConfig.change(function () {
-      var name = $storeNameConfig.val()
-      objInfo = {
-        'name': name
-      }
-      infoPatch(objInfo)
-    })
-    $urlHomepage.change(function () {
-      var urlHomepage = $urlHomepage.val()
-      objInfo = {
-        'homepage': urlHomepage
-      }
-      infoPatch(objInfo)
-    })
-    $domain.change(function () {
-      var domain = $domain.val()
-      objInfo = {
-        'domain': domain
-      }
-      localStorage.setItem('domain', domain)
-      infoPatch(objInfo)
-    })
-    $logo.change(function () {
-      var url = $logo.val()
-      var logo = url
-      objInfo = {
-        'logo': {
-          'url': url
+    const removeMask = function (prop, value) {
+      if (prop === 'doc_number') {
+        if (value.split('').length > 14) {
+          return value.replace(/(\d{2}).(\d{3}).(\d{3})\/(\d{4})-(\d{2})/, '$1$2$3$4$5')
+        } else {
+          return value.replace(/(\d{3}).(\d{3}).(\d{3})-(\d{2})/, '$1$2$3$4')
         }
+      } else if (prop === 'contact_phone') {
+        return value.replace('(', '').replace(')', '').replace('-', '').replace(/\s+/g, '')
+      } else {
+        return value
       }
-      infoPatch(objInfo)
-      setTimeout(function () {
-        imglogo(logo)
-      }, 600)
-    })
-    $logoAlt.change(function () {
-      var altlogo = $logoAlt.val()
-      var url = $logo.val()
-      objInfo = {
-        'logo': {
-          'alt': altlogo,
-          'url': url
-        }
-      }
-      infoPatch(objInfo)
-    })
-    $inscNumb.change(function () {
-      var name = $inscNumb.val()
-      objInfo = {
-        'inscription_type': name
-      }
-      infoPatch(objInfo)
-    })
-    $financialEmail.change(function () {
-      var financialEmail = $financialEmail.val()
-      objInfo = {
-        'financial_email': financialEmail
-      }
-      infoPatch(objInfo)
-    })
-    $contactEmail.change(function () {
-      var contactEmail = $contactEmail.val()
-      objInfo = {
-        'contact_email': contactEmail
-      }
-      infoPatch(objInfo)
-    })
-    $corpName.change(function () {
-      var corpName = $corpName.val()
-      objInfo = {
-        'corporate_name': corpName
-      }
-      infoPatch(objInfo)
-    })
-    $description.change(function () {
-      var description = $description.val()
-      objInfo = {
-        'description': description
-      }
-      infoPatch(objInfo)
-    })
-    $address.change(function () {
-      var address = $address.val()
-      objInfo = {
-        'address': address
-      }
-      infoPatch(objInfo)
-    })
-    $celphone.change(function () {
-      var celphone = $celphone.val().replace('(', '').replace(')', '').replace('-', '').replace(/\s+/g, '')
-      objInfo = {
-        'contact_phone': celphone
-      }
-      infoPatch(objInfo)
-    })
-    $cpfDoc.change(function () {
-      var docNumber = $cpfDoc.val().replace(/(\d{3}).(\d{3}).(\d{3})-(\d{2})/, '$1$2$3$4')
-      objInfo = {
-        'doc_number': docNumber
-      }
-      infoPatch(objInfo)
-    })
-
-    // save doc number juridical person
-    $cnpjDoc.change(function () {
-      var docNumber = $cnpjDoc.val().replace(/(\d{2}).(\d{3}).(\d{3})\/(\d{4})-(\d{2})/, '$1$2$3$4$5')
-      objInfo = {
-        'doc_number': docNumber
-      }
-      infoPatch(objInfo)
-    })
+    }
     $cpf.find('#cpfDoc').inputmask('999.999.999-99')
     $cnpj.find('#cnpjDoc').inputmask('99.999.999/9999-99')
     $celphone.inputmask([
@@ -272,16 +203,47 @@ export default function () {
     var imglogo = function (logo) {
       $imglogo.replaceWith('<img src="' + logo + '" alt="logotipo" id="image-logo">')
     }
+    const set = (obj, path, val) => {
+      const keys = path.split('.')
+      let lastKey
+      if (keys.length > 1) {
+        lastKey = keys.pop()
+        const lastObj = keys.reduce((obj, key) => obj[key] = obj[key] || {}, obj)
+        lastObj[lastKey] = val
+      } else {
+        lastKey = keys
+        Object.assign(obj[keys] = val, obj)
+      }
+    }
+    $('.form-group').find('input').change(function () {
+      var prop = $(this).attr('name')
+      var value = removeMask(prop, $(this).val())
+      set(objInfo, prop, value)
+      $actionSave.show()
+    })
     var infoPatch = function () {
       // patch new store name
       var callback = function (err, body) {
         if (!err) {
-          console.log('Mudou')
+          app.toast(i18n({
+            en_us: 'Save with success',
+            pt_br: 'Salvo com sucesso'
+          }))
+          $actionSave.hide()
+        } else {
+          app.toast(i18n({
+            en_us: 'Nothing to save',
+            pt_br: 'Nada para salvar'
+          }))
         }
       }
       var data = objInfo
-      window.callApi('stores/me.json', 'PATCH', callback, data)
+      callApi('stores/me.json', 'PATCH', callback, data)
     }
+
+    $actionSave.click(function () {
+      infoPatch(objInfo)
+    })
   }
 
   // wait for the form to be ready

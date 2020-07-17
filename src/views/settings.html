@@ -23,6 +23,7 @@
       </div>
   </div>
 </header>
+
 <div class="main-content" style="display: block;">
   <div class="row">
     <div class="col-md-12">
@@ -36,7 +37,7 @@
                     <span data-lang="en_us">Store Name</span>
                     <span data-lang="pt_br">Nome da loja</span>
                   </label>
-                  <input type="tel" id="storeNameConfig" class="form-control" maxlength="255" placeholder="Loja Teste">
+                  <input type="tel" id="storeNameConfig" name="name" class="form-control" maxlength="255" placeholder="Loja Teste">
                 </div>
               </div>
               <div class="col-lg-4 col-sm-6">
@@ -45,7 +46,7 @@
                     <span data-lang="en_us">Store ID</span>
                     <span data-lang="pt_br">Store ID</span>
                   </label>
-                  <input type="tel" id="storeIdConfig" readonly="true" class="form-control" placeholder="0000">
+                  <input type="tel" id="storeIdConfig" name="store_id" readonly="true" class="form-control" placeholder="0000">
                 </div>
               </div>
               <div class="col-lg-4 col-sm-6">
@@ -54,7 +55,7 @@
                     <span data-lang="en_us">Object ID</span>
                     <span data-lang="pt_br">Object ID</span>
                   </label>
-                  <input type="tel" id="objectIdConfig" readonly="true" class="form-control" placeholder="x2325dsfsdhhdss">
+                  <input type="tel" id="objectIdConfig" name="_id" readonly="true" class="form-control">
                 </div>
               </div>
             </div>
@@ -74,7 +75,7 @@
                   <span data-lang="en_us">Financial email</span>
                   <span data-lang="pt_br">E-mail financeiro</span>
                 </label>
-                <input type="email" class="form-control" id="financialEmail"/>
+                <input type="email" class="form-control" name="financial_email" id="financialEmail"/>
               </div>
             </div>
             <div class="col-lg-6">
@@ -83,7 +84,7 @@
                   <span data-lang="en_us">Contact email</span>
                   <span data-lang="pt_br">E-mail de contato</span>
                 </label>
-                <input type="email" class="form-control" id="contactEmail"/>
+                <input type="email" class="form-control" name="contact_email" id="contactEmail"/>
               </div>
             </div>
           </div>
@@ -92,7 +93,7 @@
               <span data-lang="en_us">Corporate Name</span>
               <span data-lang="pt_br">Nome Corporativo</span>
             </label>
-            <input type="text" class="form-control" id="corpName" maxlength="255"/>
+            <input type="text" class="form-control" name="corporate_name" id="corpName" maxlength="255"/>
           </div>
         </div>
       </div>
@@ -103,48 +104,89 @@
           <div class="card-body">
             <div class="row">
               <div class="col-lg-6">
+                <div class="form-group" id="docType">
+                  <label class="i18n">
+                    <span data-lang="en_us">Type of Register</span>
+                    <span data-lang="pt_br">Tipo de Registro</span>
+                  </label><br>
+                  <div class="custom-controls-stacked">
+                    <div class="custom-control custom-radio d-inline">
+                      <input type="radio" class="custom-control-input" id="docCPF" name="doc_type" value="CPF" />
+                      <label class="custom-control-label i18n pr-15">
+                        <span data-lang="en_us">Physical</span>
+                        <span data-lang="pt_br">Física</span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-radio d-inline">
+                      <input type="radio" class="custom-control-input" id="docCNPJ" name="doc_type" value="CNPJ" />
+                      <label class="custom-control-label i18n">
+                        <span data-lang="en_us">Juridical</span>
+                        <span data-lang="pt_br">Jurídica</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group" >
+                  <label class="i18n">
+                    <span data-lang="en_us">Telephone Contact</span>
+                    <span data-lang="pt_br">Telefone de Contato</span>
+                  </label>
+                  <input type="tel" class="form-control" name="contact_phone" data-mask="tel" id="cel"/>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
                 <div class="form-group" id="cpf">
                     <label class="i18n">
                       <span data-lang="en_us">CPF</span>
                       <span data-lang="pt_br">CPF</span>
                     </label>
-                    <input type="tel" class="form-control" id="cpfDoc"/>
+                    <input type="tel" class="form-control" name="doc_number" id="cpfDoc"/>
                 </div>
                 <div class="form-group" id="cnpj">
                     <label class="i18n">
                       <span data-lang="en_us">CNPJ</span>
                       <span data-lang="pt_br">CNPJ</span>
                     </label>
-                    <input type="tel" class="form-control" id="cnpjDoc"/>
+                    <input type="tel" class="form-control" name="doc_number" id="cnpjDoc"/>
                 </div>
-              </div>
-              <div class="col-lg-6">
-              <div class="form-group" >
-                  <label class="i18n">
-                    <span data-lang="en_us">Telephone Contact</span>
-                    <span data-lang="pt_br">Telefone de Contato</span>
-                  </label>
-                  <input type="tel" class="form-control" data-mask="tel" id="cel"/>
-                  </div>
               </div>
             </div>
-            <div class="row" id="inscNumber" style="display: none">
+            <div class="row">
               <div class="col-lg-6">
-                <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">State Inscription</span>
-                      <span data-lang="pt_br">Inscrição Estadual</span>
-                    </label>
-                    <input type="number" class="form-control" id="inscEst" maxlength="50"/>
+                <div class="form-group" id="inscType">
+                  <label class="i18n">
+                    <span data-lang="en_us">Type of Inscription</span>
+                    <span data-lang="pt_br">Tipo de Inscrição</span>
+                  </label><br>
+                  <div class="custom-controls-stacked">
+                    <div class="custom-control custom-radio d-inline">
+                      <input type="radio" class="custom-control-input" id="inscState" name="inscription_type" value="State" />
+                      <label class="custom-control-label i18n pr-15">
+                        <span data-lang="en_us">State</span>
+                        <span data-lang="pt_br">Estadual</span>
+                      </label>
+                    </div>
+                    <div class="custom-control custom-radio d-inline">
+                      <input type="radio" class="custom-control-input" id="inscMuni" name="inscription_type" value="Municipal" />
+                      <label class="custom-control-label i18n">
+                        <span data-lang="en_us">Municipal</span>
+                        <span data-lang="pt_br">Municipal</span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-lg-6">
-                <div class="form-group">
+                <div class="form-group" id="inscNumb">
                     <label class="i18n">
-                      <span data-lang="en_us">Municipal Inscription</span>
-                      <span data-lang="pt_br">Inscrição Municipal</span>
+                      <span data-lang="en_us">Inscription Number</span>
+                      <span data-lang="pt_br">Número da Inscrição</span>
                     </label>
-                    <input type="number" class="form-control" id="inscMuni" maxlength="50"/>
+                    <input type="number" class="form-control" name="inscription_number" maxlength="50"/>
                 </div>
               </div>
             </div>
@@ -182,7 +224,7 @@
                   <span data-lang="en_us">*Address format: Street, number, neighboor, city, state, complement</span>
                   <span data-lang="pt_br">*Endereço no formato: Rua, número, bairro, cidade, (UF), complemento</span>
                 </label>
-                <input type="tel" class="form-control" data-mask="tel" id="address"/>
+                <input type="tel" class="form-control" name="address" data-mask="tel" id="address"/>
               </div>
             </div>
           </div>
@@ -217,7 +259,7 @@
                   <span data-lang="en_us">Let some information about your store</span>
                   <span data-lang="pt_br">Escreva uma descrição sobre sua loja</span>
                 </label>
-                <textarea class="form-control" maxlength="3000" rows="6" id="description"></textarea>
+                <textarea class="form-control" maxlength="3000" name="description" rows="6" id="description"></textarea>
               </div>
             </div>
           </div>
@@ -246,7 +288,7 @@
                 <span data-lang="en_us">Logo URL</span>
                 <span data-lang="pt_br">URL do Logotipo</span>
               </label>
-              <input type="text" class="form-control" id="logotype" maxlength="255"/>
+              <input type="text" class="form-control" name="logo.url" id="logotype" maxlength="255"/>
             </div>
             <div class="row">
               <div class="col-md-6">
@@ -266,7 +308,7 @@
                     <span data-lang="en_us">Alt text (Important for SEO)</span>
                     <span data-lang="pt_br">Tag Alt de SEO</span>
                   </label>
-                  <input type="text" class="form-control" id="logoAlt" maxlength="255"/>
+                  <input type="text" class="form-control" name="logo.alt" id="logoAlt" maxlength="255"/>
                 </div>
               </div>
             </div>
@@ -324,9 +366,9 @@
                     <span data-lang="pt_br">Cor primária</span>
                   </label>
                   <div class="minicolors minicolors-theme-bootstrap minicolors-position-top minicolors-position-left">
-                    <input type="text" class="form-control minicolors-input" data-provide="colorpicker" data-control="wheel" size="7" id="firstColor" data-position="top left">
+                    <input type="text" class="form-control minicolors-input" data-provide="colorpicker" name="brand_colors.primary" data-control="wheel" size="7" id="firstColor" data-position="top left">
                     <span class="minicolors-swatch minicolors-sprite minicolors-input-swatch">
-                      <span class="minicolors-swatch-color" id="swapFirst"></span>
+                      <span class="minicolors-swatch-color"  id="swapFirst"></span>
                     </span>
                     <div class="minicolors-panel minicolors-slider-wheel">
                       <div class="minicolors-slider minicolors-sprite" style="background-color: rgb(64, 255, 236);">
@@ -350,7 +392,7 @@
                     <span data-lang="pt_br">Cor secundária</span>
                   </label>
                   <div class="minicolors minicolors-theme-bootstrap minicolors-position-top minicolors-position-left">
-                    <input type="text" class="form-control minicolors-input" data-provide="colorpicker" data-control="wheel" size="7" id="secondColor" data-position="top left">
+                    <input type="text" class="form-control minicolors-input" name="brand_colors.secondary" data-provide="colorpicker" data-control="wheel" size="7" id="secondColor" data-position="top left">
                     <span class="minicolors-swatch minicolors-sprite minicolors-input-swatch">
                       <span class="minicolors-swatch-color" id="swapSecond"></span>
                     </span>
@@ -406,7 +448,7 @@
                     <span data-lang="en_us">Shop URL</span>
                     <span data-lang="pt_br">URL da loja</span>
                   </label>
-                  <input type="text" class="form-control" id="urlHomepage" maxlength="255"/>
+                  <input type="text" class="form-control" name="homepage" id="urlHomepage" maxlength="255"/>
                 </div>
               </div>
               <div class="col-lg-6">
@@ -415,23 +457,19 @@
                     <span data-lang="en_us">Domain URL</span>
                     <span data-lang="pt_br">Domínio da loja</span>
                   </label>
-                  <input type="text" class="form-control" id="domain" maxlength="255"/>
+                  <input type="text" class="form-control" name="domain" id="domain" maxlength="255"/>
                 </div>
-              </div>
-              <div class="col-lg-12">
-                <span class="i18n">
-                  <small data-lang="en_us" class="form-text"><a style="color: #ff015b" target="_blank" href="https://app.netlify.com/start/deploy?stack=cms&repository=https://github.com/ecomclub/storefront">Click here</a> to deploy your front end</small>
-                  <small data-lang="pt_br" class="form-text"><a style="color: #ff015b" target="_blank" href="https://app.netlify.com/start/deploy?stack=cms&repository=https://github.com/ecomclub/storefront">Clique aqui</a> para criar o visual da loja</small>
-                </span><br>
-                <span class="i18n">
-                  <small data-lang="en_us" class="form-text">To deploy correctly, acess the tutorial by <a style="color: #ff015b" target="_blank" href="https://community.e-com.plus/t/criando-o-frontend-da-loja-com-o-tema-padrao/103">link</a></small>
-                  <small data-lang="pt_br" class="form-text">Para melhor configuração, acesse o tutorial pelo <a style="color: #ff015b" target="_blank" href="https://community.e-com.plus/t/criando-o-frontend-da-loja-com-o-tema-padrao/103">link</a></small>
-                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  <div class="bt-1 pt-20">
+    <button class="btn btn-success i18n mr-10" id="actionSave" style="display: none">
+      <span data-lang="en_us">Save</span>
+      <span data-lang="pt_br">Salvar</span>
+    </button>
   </div>
 </div>
