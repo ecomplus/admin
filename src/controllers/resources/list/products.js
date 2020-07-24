@@ -6,8 +6,8 @@ export default function () {
   'use strict'
 
   // current tab ID
-  var tabId = window.tabId
-  var Tab = window.Tabs[tabId]
+  var { tabId, $, callApi, app, i18n, quickview, formatMoney, lang, handleInputs, stringToNumber, unsetSaveAction, Tabs } = window
+  var Tab = Tabs[tabId]
   /*
   var elContainer = $('#t' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
@@ -20,9 +20,6 @@ export default function () {
   var $list = $container.find('#products-list-results')
   // load more button
   var $load = $container.find('#load-products')
-
-  // var lang = window.lang
-  var i18n = window.i18n
 
   // resource list data
   var data, list
@@ -187,8 +184,8 @@ export default function () {
     // use global dynamic quickview
     var $qv = $('#qvx')
     $qv.find('#qvx-title').text(i18n({
-      'en_us': 'Filter products',
-      'pt_br': 'Filtrar produtos'
+      en_us: 'Filter products',
+      pt_br: 'Filtrar produtos'
     }))
     // use quickview for mass edit
     var $qvEdit = $('#modal-center')
@@ -201,8 +198,9 @@ export default function () {
 
     // call and render categories
     $setCategory.click(function () {
-      window.callApi('categories.json', 'GET', function (error, data) {
+      callApi('categories.json', 'GET', function (error, data) {
         if (!error) {
+          console.log(data)
           var $option
           for (var i = 0; i < data.result.length; i++) {
             var valueCategory = function () {
@@ -224,33 +222,32 @@ export default function () {
     $saveCat.click(function () {
       var selectedCategories = $categorySelect.val()
       var ids = Tab.selectedItems
-      for (var ii = 0; ii < ids.length; ii++) {
-        for (var i = 0; i < selectedCategories.length; i++) {
-          var parseCategory = JSON.parse(selectedCategories[i])
-          var done = 0
-          var callback = function (err, body) {
+      var parseCategory = JSON.parse(selectedCategories)
+      ids.forEach((item, i) => {
+        setTimeout(function () {
+          callApi(`products/${item}/categories.json`, 'POST', (err, doc) => {
             if (!err) {
-              done++
-              if (ids.length === done) {
+              if (ids.length === i + 1) {
                 $('#modal-center-1').modal('hide')
                 app.toast(i18n({
-                  'en_us': 'Completed edit',
-                  'pt_br': 'Categoria inserida com sucesso'
-                }))
+                  en_us: 'Completed edit',
+                  pt_br: 'Categoria inserida com sucesso'
+                }), {
+                  variant: 'success'
+                })
                 $('#spinner-wait').hide()
                 load()
               } else {
                 $('#spinner-wait').show()
               }
             }
-          }
-          window.callApi('products/' + ids[ii] + '/categories.json', 'POST', callback, parseCategory)
-        }
-      }
+          }, parseCategory)
+        }, 400 * i)
+      })
     })
 
     var timezoneCalc = new Date().getTimezoneOffset()
-    if (window.lang === 'pt_br') {
+    if (lang === 'pt_br') {
       // brazilian birth date
       $startDate.inputmask('99/99/9999')
       $endDate.inputmask('99/99/9999')
@@ -265,8 +262,8 @@ export default function () {
     $editMass.find('.edit-selected').click(function () {
       if (!Tab.selectedItems.length > 0) {
         app.toast(i18n({
-          'en_us': 'No items selected',
-          'pt_br': 'Nenhum item selecionado'
+          en_us: 'No items selected',
+          pt_br: 'Nenhum item selecionado'
         }))
       } else {
         $editMass.find('button').attr('data-toggle', 'dropdown')
@@ -277,7 +274,7 @@ export default function () {
       if (ids) {
         for (var i = 0; i < ids.length; i++) {
           var don = 0
-          window.callApi('products/' + ids[i] + '.json', 'GET', function (error, schema) {
+          callApi('products/' + ids[i] + '.json', 'GET', function (error, schema) {
             if (!error) {
               var price, quantity, objPrice
               objPrice = {}
@@ -322,9 +319,12 @@ export default function () {
                   don++
                   if (Tab.selectedItems.length === don) {
                     app.toast(i18n({
-                      'en_us': 'Completed edit',
-                      'pt_br': 'Edição em massa completa'
-                    }))
+                      en_us: 'Completed edit',
+                      pt_br: 'Edição em massa completa'
+                    }),
+                    {
+                      variant: 'success'
+                    })
                     $('#spinner-wait-edit').hide()
                     $('#modal-center').modal('hide')
                     load()
@@ -334,7 +334,7 @@ export default function () {
                 }
               }
               setTimeout(function () {
-                window.callApi('products/' + schema._id + '.json', 'PATCH', callback, objPrice)
+                callApi('products/' + schema._id + '.json', 'PATCH', callback, objPrice)
               }, 500)
             } else {
               console.log(error)
@@ -344,15 +344,15 @@ export default function () {
       }
     })
     $qvEdit.find('.modal-title').text(i18n({
-      'pt_br': 'Editar em massa',
-      'en_us': 'Mass edit'
+      pt_br: 'Editar em massa',
+      en_us: 'Mass edit'
     }))
     // show filters form
     $qv.find('#qvx-body').html($filters)
     // add submit button
     $qv.find('#qvx-footer').html([
       $('<button>', {
-        'class': 'btn btn-success mr-2',
+        class: 'btn btn-success mr-2',
         click: function () {
           // submit filters form
           load()
@@ -360,20 +360,20 @@ export default function () {
           quickview.close($qv)
         },
         html: i18n({
-          'en_us': 'Apply filters',
-          'pt_br': 'Aplicar filtros'
+          en_us: 'Apply filters',
+          pt_br: 'Aplicar filtros'
         })
       }),
       $('<button>', {
-        'class': 'btn btn-warning',
+        class: 'btn btn-warning',
         click: function () {
           clearFilters()
           // close quickview
           quickview.close($qv)
         },
         html: i18n({
-          'en_us': 'Clear',
-          'pt_br': 'Limpar'
+          en_us: 'Clear',
+          pt_br: 'Limpar'
         })
       })
     ])
@@ -434,8 +434,8 @@ export default function () {
           priceString = formatMoney(item.price, item.currency_id)
         } else {
           priceString = i18n({
-            'en_us': 'No price',
-            'pt_br': 'Sem preço'
+            en_us: 'No price',
+            pt_br: 'Sem preço'
           })
         }
         if (item.quantity) {
@@ -466,11 +466,11 @@ export default function () {
         }
 
         var $checkbox = $('<input>', {
-          'class': 'custom-control-input',
+          class: 'custom-control-input',
           type: 'checkbox'
         })
         var $item = $('<div>', {
-          'class': 'col item-product',
+          class: 'col item-product',
           html: [
             `<a href="${link}" class="item-picture" title="${item.name}">${pictureHtml}</a>` +
             '<div class="item-info">' +
@@ -483,13 +483,13 @@ export default function () {
               '<span class="item-qnt">' + qntString + '</span>' +
             '</div>',
             $('<div>', {
-              'class': 'custom-controls-stacked',
+              class: 'custom-controls-stacked',
               html: $('<div>', {
-                'class': 'custom-control custom-checkbox',
+                class: 'custom-control custom-checkbox',
                 html: [
                   $checkbox,
                   $('<label>', {
-                    'class': 'custom-control-label',
+                    class: 'custom-control-label',
                     html: '<span class="item-sku">' + item.sku + '</span>'
                   })
                 ]
@@ -506,7 +506,7 @@ export default function () {
       if (page === 0) {
         if (total > 0) {
           $list.html($('<div>', {
-            'class': 'row row-products',
+            class: 'row row-products',
             html: $items
           }))
         } else {
@@ -555,14 +555,14 @@ export default function () {
       var aggs = {
         'brands.name': {
           label: i18n({
-            'en_us': 'Brands',
-            'pt_br': 'Marcas'
+            en_us: 'Brands',
+            pt_br: 'Marcas'
           })
         },
         'categories.name': {
           label: i18n({
-            'en_us': 'Categories',
-            'pt_br': 'Categorias'
+            en_us: 'Categories',
+            pt_br: 'Categorias'
           })
         },
         status: {
@@ -571,7 +571,7 @@ export default function () {
       }
 
       for (var prop in aggs) {
-        if (aggs.hasOwnProperty(prop) && Aggs.hasOwnProperty(prop)) {
+        if (aggs[prop] && Aggs[prop]) {
           var agg = aggs[prop]
           // create select element for current aggregation field
           var buckets = Aggs[prop].buckets
@@ -589,13 +589,13 @@ export default function () {
             var $select = $('<select />', {
               multiple: true,
               'data-live-search': true,
-              'class': 'form-control',
+              class: 'form-control',
               name: prop,
               html: elOptions
             })
             // add to filters content
             $customFilters.prepend($('<div />', {
-              'class': 'form-group selectpicker-default',
+              class: 'form-group selectpicker-default',
               html: $select
             }))
             $select.appSelectpicker({
@@ -636,7 +636,7 @@ export default function () {
         // check if filter already exists
         for (var i = 0; i < filters.length; i++) {
           var filterObj = filters[i][filterType]
-          if (filterObj && filterObj.hasOwnProperty(prop)) {
+          if (filterObj && filterObj[prop]) {
             // found
             if (!operator) {
               if (value !== null) {
@@ -678,8 +678,8 @@ export default function () {
     var $search = $container.find('#search-products')
     var $searchInput = $search.find('input')
     $searchInput.attr('placeholder', i18n({
-      'en_us': 'Polo Shirt',
-      'pt_br': 'Camisa Polo'
+      en_us: 'Polo Shirt',
+      pt_br: 'Camisa Polo'
     }))
     $search.submit(function () {
       // https://ecomsearch.docs.apiary.io/#reference/items/items-search/complex-search
@@ -708,7 +708,7 @@ export default function () {
         $(this).parent().children('.active')
           .removeClass('active').removeData('sort').find('i').remove()
         $(this).addClass('active').data('sort', order).append($('<i>', {
-          'class': 'ml-1 fa ' + iconClass.desc
+          class: 'ml-1 fa ' + iconClass.desc
         }))
       }
 
@@ -764,6 +764,6 @@ export default function () {
 
   // timeout to topbar fallback
   setTimeout(function () {
-    window.unsetSaveAction()
+    unsetSaveAction()
   }, 200)
 }
