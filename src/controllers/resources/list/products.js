@@ -200,7 +200,6 @@ export default function () {
     $setCategory.click(function () {
       callApi('categories.json', 'GET', function (error, data) {
         if (!error) {
-          console.log(data)
           var $option
           for (var i = 0; i < data.result.length; i++) {
             var valueCategory = function () {
