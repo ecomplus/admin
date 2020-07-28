@@ -554,14 +554,6 @@ export default function () {
         }
       })
 
-      const isTrue = (data) => {
-        if (data === 'TRUE') {
-          return true
-        } else {
-          return false
-        }
-      }
-
       // import CSV table
       $(`#t${tabId}-import`).click(function () {
         const $modal = $('#table-upload')
