@@ -554,6 +554,14 @@ export default function () {
         }
       })
 
+      const isTrue = (data) => {
+        if (data === 'TRUE') {
+          return true
+        } else {
+          return false
+        }
+      }
+
       // import CSV table
       $(`#t${tabId}-import`).click(function () {
         const $modal = $('#table-upload')
@@ -590,7 +598,7 @@ export default function () {
                     // fix var type and field name
                     const field = head.replace(/\w+\(([^)]+)\)/i, '$1')
                     row[field] = head.startsWith('Number') ? Number(row[head])
-                      : head.startsWith('Boolean') ? Boolean(row[head]) : row[head]
+                      : head.startsWith('Boolean') ? Boolean(isTrue(row[head])) : row[head]
                     delete row[head]
                   }
                 }
