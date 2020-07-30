@@ -590,7 +590,10 @@ export default function () {
                     // fix var type and field name
                     const field = head.replace(/\w+\(([^)]+)\)/i, '$1')
                     row[field] = head.startsWith('Number') ? Number(row[head])
-                      : head.startsWith('Boolean') ? Boolean(row[head]) : row[head]
+                      : head.startsWith('Boolean')
+                        ? typeof row[head] === 'string' ? row[head].toUpperCase().indexOf('TRUE') > -1
+                          : Boolean(row[head])
+                        : row[head]
                     delete row[head]
                   }
                 }
