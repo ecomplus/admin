@@ -1,5 +1,5 @@
 export default function () {
-  const { $, i18n, lang, tabId, routeParams } = window
+  const { $, i18n, lang, tabId, routeParams, formatMoney, formatDate, formatPhone, callApi, app, getFromDotNotation, handleNestedObjects } = window
 
   // current tab ID
   var Tab = window.Tabs[tabId]
@@ -13,7 +13,6 @@ export default function () {
   var setup = function () {
     // setup basic order data
     var data = Data()
-    console.log(data)
     var orderId = routeParams[routeParams.length - 1]
 
     var elContainer = $('#t' + tabId + '-tab-normal')
@@ -117,7 +116,22 @@ export default function () {
           var phone = formatPhone(buyer.phones[i])
           // digits only for link
           var tel = phone.replace(/\D/g, '')
-          html += '<a class="text-muted" href="tel:' + tel + '" target="_blank">' + phone + '</a>'
+          var countTel = tel.split('')
+          var cellphone
+          if (lang === 'pt_br') {
+            if (countTel.length > 11) {
+              cellphone = tel
+            } else {
+              cellphone = '55' + tel
+            }
+          } else {
+            cellphone = '1' + tel
+          }
+          if ($(window).width() > 767) {
+            html += '<a class="text-muted" href="https://web.whatsapp.com/send?1=pt_BR&phone=' + cellphone + '" target="_blank">' + phone + '</a>'
+          } else {
+            html += '<a class="text-muted" href="tel:' + tel + '" target="_blank">' + phone + '</a>'
+          }
         }
       }
 
@@ -131,14 +145,14 @@ export default function () {
       var $edit = $('<a>', {
         href: '#/resources/customers/' + objectId,
         html: '<i class="fa fa-pencil"></i> ' + i18n({
-          'en_us': 'edit registration',
-          'pt_br': 'editar cadastro'
+          en_us: 'edit registration',
+          pt_br: 'editar cadastro'
         })
       })
 
       // icon to handle buyer delete from list
       var $remove = $('<i>', {
-        'class': 'p-10 remove fa fa-trash'
+        class: 'p-10 remove fa fa-trash'
       }).click(function () {
         var data = Data()
         var buyers = data.buyers
@@ -160,8 +174,8 @@ export default function () {
 
       // create buyer block, append and show
       var $div = $('<div>', {
-        'class': 'hidden mb-3 nested-block',
-        html: [ $remove, '<div>' + html + '</div>', $edit ]
+        class: 'hidden mb-3 nested-block',
+        html: [$remove, '<div>' + html + '</div>', $edit]
       })
       $buyerInfo.append($div)
       $div.slideDown()
@@ -181,7 +195,7 @@ export default function () {
       // specify properties to return
       uri += '&fields=_id,main_email,doc_number,name,display_name,phones,addresses'
 
-      window.callApi(uri, 'GET', function (err, json) {
+      callApi(uri, 'GET', function (err, json) {
         // hide spinner
         $newBuyer.removeClass('ajax')
         if (!err) {
@@ -196,8 +210,8 @@ export default function () {
             for (var i = 0; i < buyers.length; i++) {
               if (buyers[i]._id === buyer._id) {
                 app.toast(i18n({
-                  'en_us': 'This customer has already been added',
-                  'pt_br': 'Este cliente já foi adicionado'
+                  en_us: 'This customer has already been added',
+                  pt_br: 'Este cliente já foi adicionado'
                 }))
                 return
               }
@@ -218,8 +232,8 @@ export default function () {
           } else {
             // any customer found with email from input
             app.toast(i18n({
-              'en_us': 'No customers found with this email',
-              'pt_br': 'Nenhum cliente encontrado com este e-mail'
+              en_us: 'No customers found with this email',
+              pt_br: 'Nenhum cliente encontrado com este e-mail'
             }))
           }
         }
@@ -256,7 +270,7 @@ export default function () {
           buyerAdresses = json.addresses || []
         }
       }
-      window.callApi(uri, 'GET', callback, null, skipError)
+      callApi(uri, 'GET', callback, null, skipError)
     }
 
     // reuse order status enum and respective colors from lists configuration JSON
@@ -356,7 +370,7 @@ export default function () {
 
           // update timeline element
           // show full timestamp of each event
-          var dateList = [ 'day', 'month', 'year', 'hour', 'minute', 'second' ]
+          var dateList = ['day', 'month', 'year', 'hour', 'minute', 'second']
           events.forEach(function (eventObj) {
             // color by status
             var badgeColor = eventObj.class || 'default'
@@ -370,14 +384,14 @@ export default function () {
 
             // add block to timeline element
             $timeline.append($('<li>', {
-              'class': 'timeline-block',
+              class: 'timeline-block',
               html: [
                 $('<div>', {
-                  'class': 'timeline-point',
+                  class: 'timeline-point',
                   html: '<span class="badge badge-dot badge-lg badge-' + badgeColor + '"></span>'
                 }),
                 $('<div>', {
-                  'class': 'timeline-content',
+                  class: 'timeline-content',
                   html: blockContent
                 })
               ]
