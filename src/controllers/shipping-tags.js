@@ -55,8 +55,14 @@ export default function () {
                 to.phone = phones[0]
               }
             }
+            if (!to.number) {
+              to.number = 'S/N'
+            }
             if (!from.name) {
               from.name = localStorage.getItem('fromCorporate') || localStorage.getItem('fromName') || ''
+            }
+            if (!from.number) {
+              from.number = 'S/N'
             }
             if (!from.phone) {
               const number = localStorage.getItem('fromContact')
@@ -64,12 +70,12 @@ export default function () {
                 from.phone = { number }
               }
             }
-            if (!from.street) {
+            if (!from.street || !from.borough) {
               const localCenderAddress = localStorage.getItem('fromAddress')
               if (localCenderAddress) {
                 const addressParts = localCenderAddress.split(',')
                 from.street = addressParts[0]
-                from.number = addressParts[1]
+                from.number = (addressParts[1] || 'S/N')
                 from.complement = addressParts[5]
                 from.borough = addressParts[2]
                 from.city = addressParts[3]
