@@ -43,6 +43,9 @@ export default function () {
     const buyer = order.buyers && order.buyers[0]
     const shippingLine = order.shipping_lines && order.shipping_lines[0]
     const transaction = order.transactions && order.transactions[0]
+    const getItemsValid = order.items.filter(function (item) {
+      return item.quantity > 0
+    })
 
     const $invoice = $('<div>', {
       class: 'mb-70 pb-3',
@@ -114,8 +117,8 @@ export default function () {
             </tr>
           </thead>
           <tbody>
-            ${(order.items
-              ? order.items.reduce((trsStr, item, i) => trsStr + `
+            ${(getItemsValid
+              ? getItemsValid.reduce((trsStr, item, i) => trsStr + `
                 <tr>
                   <td>${(i + 1)}</td>
                   <td>${item.name} (${item.sku})</td>
