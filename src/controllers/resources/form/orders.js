@@ -116,10 +116,9 @@ export default function () {
           var phone = formatPhone(buyer.phones[i])
           // digits only for link
           var tel = phone.replace(/\D/g, '')
-          var countTel = tel.split('')
           var cellphone
           if (lang === 'pt_br') {
-            if (countTel.length > 11) {
+            if (tel.length > 11) {
               cellphone = tel
             } else {
               cellphone = '55' + tel
