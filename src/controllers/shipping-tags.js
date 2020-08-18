@@ -55,6 +55,9 @@ export default function () {
                 to.phone = phones[0]
               }
             }
+            if (!to.number) {
+              to.number = 'S/N'
+            }
             if (!from.name) {
               from.name = localStorage.getItem('fromCorporate') || localStorage.getItem('fromName') || ''
             }
@@ -64,17 +67,19 @@ export default function () {
                 from.phone = { number }
               }
             }
-            if (!from.street) {
+            if (!from.street || !from.borough) {
               const localCenderAddress = localStorage.getItem('fromAddress')
               if (localCenderAddress) {
                 const addressParts = localCenderAddress.split(',')
                 from.street = addressParts[0]
-                from.number = addressParts[1]
+                from.number = (addressParts[1] || 'S/N')
                 from.complement = addressParts[5]
                 from.borough = addressParts[2]
                 from.city = addressParts[3]
                 from.province_code = addressParts[4]
               }
+            } else if (!from.number) {
+              from.number = 'S/N'
             }
 
             $shippingTags.push(`
@@ -131,14 +136,14 @@ export default function () {
                 const pkg = order.shipping_lines[0].package
                 url += `&pedido=${encodeURIComponent(JSON.stringify({
                   remNome: from.name || store.corporate_name,
-                  remEndereco: `${from.street}, ${(from.number || 'S/N')}, ${(from.borough || '')}`,
+                  remEndereco: `${from.street}, ${from.number}, ${(from.borough || '')}`,
                   remLinha2: `${(from.complement || '')} - ${(from.near_to || '')}`,
                   remCidade: from.city,
                   remUf: from.province_code,
                   remCep: from.zip,
                   remDoc: store.doc_number,
                   desNome: to.name,
-                  desEndereco: `${to.street}, ${(to.number || 'S/N')}, ${(to.borough || '')}`,
+                  desEndereco: `${to.street}, ${to.number}, ${(to.borough || '')}`,
                   desLinha2: `${(to.complement || '')} - ${(to.near_to || '')}`,
                   desCidade: to.city,
                   desUf: to.province_code,
