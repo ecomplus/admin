@@ -43,7 +43,6 @@ export default function () {
     const buyer = order.buyers && order.buyers[0]
     const shippingLine = order.shipping_lines && order.shipping_lines[0]
     const transaction = order.transactions && order.transactions[0]
-    const getItemsValid = order.items && order.items.filter(item => item.quantity > 0)
 
     const $invoice = $('<div>', {
       class: 'mb-70 pb-3',
