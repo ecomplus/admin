@@ -114,8 +114,8 @@ export default function () {
             </tr>
           </thead>
           <tbody>
-            ${(getItemsValid
-              ? getItemsValid.reduce((trsStr, item, i) => trsStr + `
+            ${(order.items
+              ? order.items.filter(item => item.quantity > 0).reduce((trsStr, item, i) => trsStr + `
                 <tr>
                   <td>${(i + 1)}</td>
                   <td>${item.name} (${item.sku})</td>
