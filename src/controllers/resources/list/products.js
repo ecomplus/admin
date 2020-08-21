@@ -1,13 +1,47 @@
 /*!
  * Copyright 2018 E-Com Club
  */
+import {
+  i19price,
+  i19quantity,
+  i19sku,
+  i19product,
+  i19brands,
+  i19with,
+  i19or,
+  i19status,
+  i19saved,
+  i19success,
+  // i19clear
+  // i19noPrice,
+  // i19applyFilters,
+  // i19massEdit,
+  // i19noItemSelected,
+  // i19filterProducts,
+  // i19maximum,
+  // i19minimum,
+  i19categories
+} from '@ecomplus/i18n'
+
+import {
+  i18n as translate,
+  formatMoney
+} from '@ecomplus/utils'
 
 export default function () {
   'use strict'
 
   // current tab ID
-  var { tabId, $, callApi, app, i18n, quickview, formatMoney, lang, handleInputs, stringToNumber, unsetSaveAction, Tabs } = window
+  var { tabId, $, callApi, app, quickview, lang, handleInputs, stringToNumber, unsetSaveAction, Tabs } = window
   var Tab = Tabs[tabId]
+  var i19noPrice = 'Sem preço'
+  var i19clear = 'Limpar'
+  var i19applyFilters = 'Aplicar filtros'
+  var i19massEdit = 'Editar em massa'
+  var i19noItemSelected = 'Nenhum item selecionado'
+  var i19filterProducts = 'Filtrar produtos'
+  var i19maximum = 'Máximo'
+  var i19minimum = 'Mínimo'
   /*
   var elContainer = $('#t' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
@@ -127,47 +161,41 @@ export default function () {
           'data-filter="term"/>' +
         '</div>',
         $customFilters,
-        '<label class="i18n">' +
-          '<span data-lang="en_us">Price</span>' +
-          '<span data-lang="pt_br">Preço</span>' +
+        '<label>' +
+          '<span>' + `${translate(i19price)}` + '</span>' +
         '</label>' +
         '<div class="flexbox">' +
           '<div class="form-group">' +
             '<input class="form-control" type="tel" name="price" ' +
             'data-opt="gte" data-filter="range" data-is-number="true" data-money="true"/>' +
-            '<small class="form-text i18n">' +
-              '<span data-lang="en_us">Minimun</span>' +
-              '<span data-lang="pt_br">Mínimo</span>' +
+            '<small class="form-text">' +
+              '<span>' + `${translate(i19minimum)}` + '</span>' +
             '</small>' +
           '</div>' +
           '<div class="form-group">' +
             '<input class="form-control" type="tel" name="price" ' +
             'data-opt="lte" data-filter="range" data-is-number="true" data-money="true"/>' +
-            '<small class="form-text i18n">' +
-              '<span data-lang="en_us">Maximum</span>' +
-              '<span data-lang="pt_br">Máximo</span>' +
+            '<small class="form-text">' +
+              '<span>' + `${translate(i19maximum)}` + '</span>' +
             '</small>' +
           '</div>' +
         '</div>' +
-        '<label class="i18n">' +
-          '<span data-lang="en_us">Quantity</span>' +
-          '<span data-lang="pt_br">Quantidade</span>' +
+        '<label>' +
+          '<span>' + `${translate(i19quantity)}` + '</span>' +
         '</label>' +
         '<div class="flexbox">' +
           '<div class="form-group">' +
             '<input class="form-control" type="number" name="quantity" ' +
             'data-opt="gte" data-filter="range" data-is-number="true"/>' +
-            '<small class="form-text i18n">' +
-              '<span data-lang="en_us">Minimun</span>' +
-              '<span data-lang="pt_br">Mínimo</span>' +
+            '<small class="form-text">' +
+              '<span>' + `${translate(i19minimum)}` + '</span>' +
             '</small>' +
           '</div>' +
           '<div class="form-group">' +
             '<input class="form-control" type="number" name="quantity" ' +
             'data-opt="lte" data-filter="range" data-is-number="true"/>' +
-            '<small class="form-text i18n">' +
-              '<span data-lang="en_us">Maximum</span>' +
-              '<span data-lang="pt_br">Máximo</span>' +
+            '<small class="form-text">' +
+              '<span>' + `${translate(i19maximum)}` + '</span>' +
             '</small>' +
           '</div>' +
         '</div>'
@@ -183,10 +211,7 @@ export default function () {
 
     // use global dynamic quickview
     var $qv = $('#qvx')
-    $qv.find('#qvx-title').text(i18n({
-      en_us: 'Filter products',
-      pt_br: 'Filtrar produtos'
-    }))
+    $qv.find('#qvx-title').text(`${translate(i19filterProducts)}`)
     // use quickview for mass edit
     var $qvEdit = $('#modal-center')
     $qvEdit.find('input[data-money]').inputMoney()
@@ -228,10 +253,9 @@ export default function () {
             if (!err) {
               if (ids.length === i + 1) {
                 $('#modal-center-1').modal('hide')
-                app.toast(i18n({
-                  en_us: 'Completed edit',
-                  pt_br: 'Categoria inserida com sucesso'
-                }), {
+                app.toast(
+                `${translate(i19saved)}` + ' ' + `${translate(i19with)}` + ' ' + `${translate(i19success)}`,
+                {
                   variant: 'success'
                 })
                 $('#spinner-wait').hide()
@@ -260,10 +284,7 @@ export default function () {
     var $editMass = $('#products-bulk-action')
     $editMass.find('.edit-selected').click(function () {
       if (!Tab.selectedItems.length > 0) {
-        app.toast(i18n({
-          en_us: 'No items selected',
-          pt_br: 'Nenhum item selecionado'
-        }))
+        app.toast(`${translate(i19noItemSelected)}`)
       } else {
         $editMass.find('button').attr('data-toggle', 'dropdown')
       }
@@ -317,10 +338,8 @@ export default function () {
                 if (!err) {
                   don++
                   if (Tab.selectedItems.length === don) {
-                    app.toast(i18n({
-                      en_us: 'Completed edit',
-                      pt_br: 'Edição em massa completa'
-                    }),
+                    app.toast(
+                    `${translate(i19saved)}` + ' ' + `${translate(i19with)}` + ' ' + `${translate(i19success)}`,
                     {
                       variant: 'success'
                     })
@@ -342,10 +361,9 @@ export default function () {
         }
       }
     })
-    $qvEdit.find('.modal-title').text(i18n({
-      pt_br: 'Editar em massa',
-      en_us: 'Mass edit'
-    }))
+    $qvEdit.find('.modal-title').text(
+      `${translate(i19massEdit)}`
+    )
     // show filters form
     $qv.find('#qvx-body').html($filters)
     // add submit button
@@ -358,10 +376,7 @@ export default function () {
           // close quickview
           quickview.close($qv)
         },
-        html: i18n({
-          en_us: 'Apply filters',
-          pt_br: 'Aplicar filtros'
-        })
+        html: `${translate(i19applyFilters)}`
       }),
       $('<button>', {
         class: 'btn btn-warning',
@@ -370,10 +385,7 @@ export default function () {
           // close quickview
           quickview.close($qv)
         },
-        html: i18n({
-          en_us: 'Clear',
-          pt_br: 'Limpar'
-        })
+        html: `${translate(i19clear)}`
       })
     ])
 
@@ -432,10 +444,7 @@ export default function () {
         if (item.price) {
           priceString = formatMoney(item.price, item.currency_id)
         } else {
-          priceString = i18n({
-            en_us: 'No price',
-            pt_br: 'Sem preço'
-          })
+          priceString = `${translate(i19noPrice)}`
         }
         if (item.quantity) {
           qntString = item.quantity + ' un'
@@ -553,19 +562,13 @@ export default function () {
       $customFilters.html('')
       var aggs = {
         'brands.name': {
-          label: i18n({
-            en_us: 'Brands',
-            pt_br: 'Marcas'
-          })
+          label: `${translate(i19brands)}`
         },
         'categories.name': {
-          label: i18n({
-            en_us: 'Categories',
-            pt_br: 'Categorias'
-          })
+          label: `${translate(i19categories)}`
         },
         status: {
-          label: 'Status'
+          label: `${translate(i19status)}`
         }
       }
 
@@ -676,10 +679,10 @@ export default function () {
     // search form
     var $search = $container.find('#search-products')
     var $searchInput = $search.find('input')
-    $searchInput.attr('placeholder', i18n({
-      en_us: 'Polo Shirt',
-      pt_br: 'Camisa Polo'
-    }))
+    $searchInput.attr(
+      'placeholder',
+      `${translate(i19product)}` + ' ' + `${translate(i19or)}` + ' ' + `${translate(i19sku)}`
+    )
     $search.submit(function () {
       // https://ecomsearch.docs.apiary.io/#reference/items/items-search/complex-search
       term = $searchInput.val().trim()
