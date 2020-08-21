@@ -91,6 +91,7 @@ export default function () {
                   query: term,
                   fields: [
                     'name',
+                    'sku',
                     'keywords'
                   ]
                 }
