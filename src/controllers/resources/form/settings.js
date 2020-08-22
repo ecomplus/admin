@@ -11,7 +11,7 @@ export default function () {
   var setup = function () {
     var $storeNameConfig = $('#storeNameConfig')
     var $storeIdConfig = $('#storeIdConfig')
-    var $storeObjIdConfig = $('#objectIdConfig')
+    var $layoutStore = $('#layoutStore')
     var $cpfDoc = $('#cpfDoc')
     var $cnpjDoc = $('#cnpjDoc')
     const $actionSave = $('#actionSave')
@@ -40,10 +40,8 @@ export default function () {
     var urlStore = 'stores/me.json'
     callApi(urlStore, 'GET', function (error, schema) {
       if (!error) {
-        console.log(schema)
         $storeNameConfig.val(schema.name)
         $storeIdConfig.val(schema.store_id)
-        $storeObjIdConfig.val(schema._id)
         $corpName.val(schema.corporate_name)
         $contactEmail.val(schema.contact_email)
         $financialEmail.val(schema.financial_email)
@@ -54,6 +52,17 @@ export default function () {
         $domain.val(schema.domain)
         if (schema.domain) {
           localStorage.setItem('domain', schema.domain)
+        }
+        if (schema.homepage) {
+          $layoutStore.append(
+            '  <a target="_blank" data-lang="en_us" href="' + schema.homepage + '/admin" class="form-text">Access layout store</a>' +
+            '  <a target="_blank" data-lang="pt_br" href="' + schema.homepage + '/admin" class="form-text">Acessar visual da loja</a>'
+          )
+        } else {
+          $layoutStore.append(
+            '  <span data-lang="en_us">Set homepage url to edit your layout</span>' +
+            '  <span data-lang="pt_br">Configure a url da homepage para editar o layout</span>'
+          )
         }
         if (schema.brand_colors) {
           var swapFirst = schema.brand_colors.primary
@@ -228,7 +237,10 @@ export default function () {
           app.toast(i18n({
             en_us: 'Save with success',
             pt_br: 'Salvo com sucesso'
-          }))
+          }),
+          {
+            variant: 'success'
+          })
           $actionSave.hide()
         } else {
           app.toast(i18n({
