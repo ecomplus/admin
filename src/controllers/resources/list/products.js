@@ -7,11 +7,8 @@ import {
   i19sku,
   i19product,
   i19brands,
-  i19with,
   i19or,
   i19status,
-  i19saved,
-  i19success,
   // i19clear
   // i19noPrice,
   // i19applyFilters,
@@ -20,19 +17,15 @@ import {
   // i19filterProducts,
   // i19maximum,
   // i19minimum,
+  // i19savedWithSuccess
   i19categories
 } from '@ecomplus/i18n'
-
-import {
-  i18n as translate,
-  formatMoney
-} from '@ecomplus/utils'
 
 export default function () {
   'use strict'
 
   // current tab ID
-  var { tabId, $, callApi, app, quickview, lang, handleInputs, stringToNumber, unsetSaveAction, Tabs } = window
+  var { tabId, $, callApi, app, quickview, lang, handleInputs, stringToNumber, unsetSaveAction, Tabs, i18n, formatMoney } = window
   var Tab = Tabs[tabId]
   var i19noPrice = 'Sem preço'
   var i19clear = 'Limpar'
@@ -42,6 +35,7 @@ export default function () {
   var i19filterProducts = 'Filtrar produtos'
   var i19maximum = 'Máximo'
   var i19minimum = 'Mínimo'
+  var i19savedWithSuccess = 'Salvo com sucesso'
   /*
   var elContainer = $('#t' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
@@ -163,40 +157,40 @@ export default function () {
         '</div>',
         $customFilters,
         '<label>' +
-          '<span>' + `${translate(i19price)}` + '</span>' +
+          '<span>' + `${i18n(i19price)}` + '</span>' +
         '</label>' +
         '<div class="flexbox">' +
           '<div class="form-group">' +
             '<input class="form-control" type="tel" name="price" ' +
             'data-opt="gte" data-filter="range" data-is-number="true" data-money="true"/>' +
             '<small class="form-text">' +
-              '<span>' + `${translate(i19minimum)}` + '</span>' +
+              '<span>' + `${i18n(i19minimum)}` + '</span>' +
             '</small>' +
           '</div>' +
           '<div class="form-group">' +
             '<input class="form-control" type="tel" name="price" ' +
             'data-opt="lte" data-filter="range" data-is-number="true" data-money="true"/>' +
             '<small class="form-text">' +
-              '<span>' + `${translate(i19maximum)}` + '</span>' +
+              '<span>' + `${i18n(i19maximum)}` + '</span>' +
             '</small>' +
           '</div>' +
         '</div>' +
         '<label>' +
-          '<span>' + `${translate(i19quantity)}` + '</span>' +
+          '<span>' + `${i18n(i19quantity)}` + '</span>' +
         '</label>' +
         '<div class="flexbox">' +
           '<div class="form-group">' +
             '<input class="form-control" type="number" name="quantity" ' +
             'data-opt="gte" data-filter="range" data-is-number="true"/>' +
             '<small class="form-text">' +
-              '<span>' + `${translate(i19minimum)}` + '</span>' +
+              '<span>' + `${i18n(i19minimum)}` + '</span>' +
             '</small>' +
           '</div>' +
           '<div class="form-group">' +
             '<input class="form-control" type="number" name="quantity" ' +
             'data-opt="lte" data-filter="range" data-is-number="true"/>' +
             '<small class="form-text">' +
-              '<span>' + `${translate(i19maximum)}` + '</span>' +
+              '<span>' + `${i18n(i19maximum)}` + '</span>' +
             '</small>' +
           '</div>' +
         '</div>'
@@ -212,7 +206,7 @@ export default function () {
 
     // use global dynamic quickview
     var $qv = $('#qvx')
-    $qv.find('#qvx-title').text(`${translate(i19filterProducts)}`)
+    $qv.find('#qvx-title').text(`${i18n(i19filterProducts)}`)
     // use quickview for mass edit
     var $qvEdit = $('#modal-center')
     $qvEdit.find('input[data-money]').inputMoney()
@@ -255,7 +249,7 @@ export default function () {
               if (ids.length === i + 1) {
                 $('#modal-center-1').modal('hide')
                 app.toast(
-                `${translate(i19saved)}` + ' ' + `${translate(i19with)}` + ' ' + `${translate(i19success)}`,
+                `${i18n(i19savedWithSuccess)}`,
                 {
                   variant: 'success'
                 })
@@ -285,7 +279,7 @@ export default function () {
     var $editMass = $('#products-bulk-action')
     $editMass.find('.edit-selected').click(function () {
       if (!Tab.selectedItems.length > 0) {
-        app.toast(`${translate(i19noItemSelected)}`)
+        app.toast(`${i18n(i19noItemSelected)}`)
       } else {
         $editMass.find('button').attr('data-toggle', 'dropdown')
       }
@@ -340,7 +334,7 @@ export default function () {
                   don++
                   if (Tab.selectedItems.length === don) {
                     app.toast(
-                    `${translate(i19saved)}` + ' ' + `${translate(i19with)}` + ' ' + `${translate(i19success)}`,
+                    `${i18n(i19savedWithSuccess)}`,
                     {
                       variant: 'success'
                     })
@@ -363,7 +357,7 @@ export default function () {
       }
     })
     $qvEdit.find('.modal-title').text(
-      `${translate(i19massEdit)}`
+      `${i18n(i19massEdit)}`
     )
     // show filters form
     $qv.find('#qvx-body').html($filters)
@@ -377,7 +371,7 @@ export default function () {
           // close quickview
           quickview.close($qv)
         },
-        html: `${translate(i19applyFilters)}`
+        html: `${i18n(i19applyFilters)}`
       }),
       $('<button>', {
         class: 'btn btn-warning',
@@ -386,7 +380,7 @@ export default function () {
           // close quickview
           quickview.close($qv)
         },
-        html: `${translate(i19clear)}`
+        html: `${i18n(i19clear)}`
       })
     ])
 
@@ -445,7 +439,7 @@ export default function () {
         if (item.price) {
           priceString = formatMoney(item.price, item.currency_id)
         } else {
-          priceString = `${translate(i19noPrice)}`
+          priceString = `${i18n(i19noPrice)}`
         }
         if (item.quantity) {
           qntString = item.quantity + ' un'
@@ -563,13 +557,13 @@ export default function () {
       $customFilters.html('')
       var aggs = {
         'brands.name': {
-          label: `${translate(i19brands)}`
+          label: `${i18n(i19brands)}`
         },
         'categories.name': {
-          label: `${translate(i19categories)}`
+          label: `${i18n(i19categories)}`
         },
         status: {
-          label: `${translate(i19status)}`
+          label: `${i18n(i19status)}`
         }
       }
 
@@ -682,7 +676,7 @@ export default function () {
     var $searchInput = $search.find('input')
     $searchInput.attr(
       'placeholder',
-      `${translate(i19product)}` + ' ' + `${translate(i19or)}` + ' ' + `${translate(i19sku)}`
+      `${i18n(i19product)}` + ' ' + `${i18n(i19or)}` + ' ' + `${i18n(i19sku)}`
     )
     $search.submit(function () {
       // https://ecomsearch.docs.apiary.io/#reference/items/items-search/complex-search
