@@ -672,8 +672,14 @@ body {
 }
 
 // fix for checkbox control
-.custom-control-label {
-  cursor: pointer;
+.custom-control {
+  &-inline {
+    display: inline-flex;
+  }
+
+  &-label {
+    cursor: pointer;
+  }
 }
 
 // resources list

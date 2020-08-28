@@ -1,3 +1,5 @@
+import Sortable from 'sortablejs'
+
 export default function () {
   const { $ } = window
 
@@ -578,7 +580,7 @@ export default function () {
                     if (done > 1) {
                       // handle images sorting
                       // https://github.com/RubaXa/Sortable
-                      window.Sortable.create($list[0], {
+                      Sortable.create($list[0], {
                         onUpdate: function (e) {
                           // console.log(e.detail)
                           // move array elements on data

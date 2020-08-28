@@ -17,7 +17,7 @@ export default function () {
     var $todayTotal = $cardAmount.find('#dayAmount')
     var $storeInfo = appTab.find('#home-cards')
     var $storeName = $storeInfo.find('#home-name')
-    var $storeobject = $storeInfo.find('#home-object')
+    var $storeLayout = $storeInfo.find('#home-layout')
     var $storeID = $storeInfo.find('#home-id')
     var storeId = localStorage.getItem('store_id')
     var $lastOrders = appTab.find('#lastOrders')
@@ -94,9 +94,18 @@ export default function () {
     window.callApi(urlStore, 'GET', function (error, schema) {
       if (!error) {
         var storeName = schema.name
+        if (schema.homepage) {
+          $storeLayout.append(
+            '  <a target="_blank" data-lang="en_us" href="' + schema.homepage + '/admin" class="form-text">Access layout store</a>' +
+            '  <a target="_blank" data-lang="pt_br" href="' + schema.homepage + '/admin" class="form-text">Acessar visual da loja</a>'
+          )
+        } else {
+          $storeLayout.append(
+            '  <a href="/#/settings" data-lang="en_us">Set homepage url to edit your layout</a>' +
+            '  <a href="/#/settings" data-lang="pt_br">Configure a url da loja para editar o layout</a>'
+          )
+        }
         $storeName.text(storeName)
-        var __id = schema._id
-        $storeobject.text(__id)
         localStorage.setItem('fromAddress', schema.address)
         localStorage.setItem('fromContact', schema.contact_phone)
         localStorage.setItem('fromName', schema.name)

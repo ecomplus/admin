@@ -7,7 +7,7 @@ import loadRoute from '@/router/load-route'
 import './util.js'
 import EventEmitter from 'eventemitter3'
 
-const { sessionStorage, $, app } = window
+const { sessionStorage, localStorage, $, app } = window
 
 ;(function () {
   const dictionary = {
@@ -60,7 +60,11 @@ const { sessionStorage, $, app } = window
   }
   // start showing pace and headers while loading
   $('#dashboard').fadeIn()
-  console.log('Hello #' + session.my_id + '\nStore #' + storeId)
+  console.log(`Hello #${session.my_id}`)
+  console.log(`Store #${storeId}`)
+  if (localStorage.getItem('advanced_dash')) {
+    console.log('Access Token:', session.access_token)
+  }
   // hide for security
   sessionStorage.removeItem('my_id')
   sessionStorage.removeItem('access_token')
