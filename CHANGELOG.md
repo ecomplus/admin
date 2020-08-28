@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.15](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2020-08-28)
+
+
+### Features
+
+* **admin-production-time:** insert production time into product ([42bb5ca](https://github.com/ecomplus/admin/commit/42bb5caace336988738c4ea1d3adca4a027497c2))
+* **advanced-dash:** handling optional ace editor and advanced dash option ([38d0fee](https://github.com/ecomplus/admin/commit/38d0feed303fbc35aa35ab3bf37eb15e1fa1cb5c))
+* **list-products:** also support search by sku ([#193](https://github.com/ecomplus/admin/issues/193)) ([e05634a](https://github.com/ecomplus/admin/commit/e05634a6e0d2aa38b5769ebbe2ea4d3c9f1eb01b))
+* **login:** handle option md5 pass wntry and advanced dash ([d0c2d9f](https://github.com/ecomplus/admin/commit/d0c2d9f4fc472fd50ebbdf3e11306a525a7f84c4))
+* **order-admin:** fix global impors and put whatsapp link ([88540f9](https://github.com/ecomplus/admin/commit/88540f9851ec8675e29506afac17b942320230da))
+* insert input for google product category id ([73b6675](https://github.com/ecomplus/admin/commit/73b6675e3ac3cfdd584689a11d1ddb34d0917d52))
+
+
+### Bug Fixes
+
+* **admin-category:** add delay in to post mass edit ([548b9cc](https://github.com/ecomplus/admin/commit/548b9cc2c653b5c381b2ab7b9b08de0f8fa78557))
+* **deps:** add jquery libs and sortable to skip using compiled App.js ([98fc668](https://github.com/ecomplus/admin/commit/98fc6682175720bdbae3b10e2f021be8ebd3e880))
+* **deps:** fix not used (yet) @ecomplus/storefront packages ([068c273](https://github.com/ecomplus/admin/commit/068c2738a1f614144dd7858ceb89ef4b928cef6a))
+* **resources:** hide advanced (json editor) tab by default ([5a7e7cd](https://github.com/ecomplus/admin/commit/5a7e7cd645ccfc2ffd9605dabe9a9c6f2b6868f5))
+* **resources-lists:** fix parsing csv booleans ([#176](https://github.com/ecomplus/admin/issues/176)) ([1049f39](https://github.com/ecomplus/admin/commit/1049f39f59cb7363f62ad87347a54861015289c4))
+* **scss:** minor fix for custom controls (inline) ([a595f90](https://github.com/ecomplus/admin/commit/a595f901f7a0ea3e8cafc4d8c3ba489ad87949a3))
+* items in to invoice with valid quantity ([#185](https://github.com/ecomplus/admin/issues/185)) ([aec749b](https://github.com/ecomplus/admin/commit/aec749b585ab1bae70cbbc18744edf084b0e9722))
+* s/n from and to correios and custom ([2aa593d](https://github.com/ecomplus/admin/commit/2aa593de209e0e7b5de84ac332b9bb325a3c7ec1))
+
 ## [1.0.0-alpha.14](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2020-07-12)
 
 
