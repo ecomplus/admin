@@ -89,16 +89,19 @@ export default function () {
   $('#t' + tabId + '-breadcrumbs').append(html)
 
   // set up JSON code editor
-  var editor = window.ace.edit('t' + tabId + '-code-editor')
-  editor.setTheme('ace/theme/dawn')
-  editor.session.setMode('ace/mode/json')
-  $('#t' + tabId + '-code-tab').click(function () {
-    // focus on editor and force viewport update
-    setTimeout(function () {
-      editor.focus()
-      editor.renderer.updateFull()
-    }, 200)
-  })
+  let editor
+  if (window.ace) {
+    editor = window.ace.edit(`t${tabId}-code-editor`)
+    editor.setTheme('ace/theme/dawn')
+    editor.session.setMode('ace/mode/json')
+    $(`#t${tabId}-code-tab`).click(function () {
+      // focus on editor and force viewport update
+      setTimeout(function () {
+        editor.focus()
+        editor.renderer.updateFull()
+      }, 200)
+    })
+  }
 
   var loadContent = function (err) {
     // check err if callback
@@ -146,21 +149,20 @@ export default function () {
         // improve reactivity
         Tab.commit = commit
 
-        editor.on('blur', function () {
-          // code editor manually changed (?)
-          var json
-          try {
-            json = JSON.parse(editor.session.getValue())
-          } catch (e) {
-            // invalid JSON
-            return
-          }
-          // update data
-          Tab.data = json
-        })
-        editor.on('change', function () {
-          window.triggerUnsaved(tabId)
-        })
+        if (editor) {
+          editor.on('blur', function () {
+            // code editor manually changed (?)
+            var json
+            try {
+              json = JSON.parse(editor.session.getValue())
+            } catch (e) {
+              // invalid JSON
+              return
+            }
+            // update data
+            Tab.data = json
+          })
+        }
       }
 
       // show loading spinner
@@ -190,9 +192,13 @@ export default function () {
     if (!updated) {
       // pass JSON data
       Tab.data = data
+    } else {
+      window.triggerUnsaved(tabId)
     }
-    // reset Ace editor content
-    editor.session.setValue(JSON.stringify(data, null, 2))
+    if (editor) {
+      // reset Ace editor content
+      editor.session.setValue(JSON.stringify(data, null, 2))
+    }
     Tab.emitter.emit('commit', { data })
   }
 
@@ -203,8 +209,10 @@ export default function () {
   if (creating !== true) {
     var endpoint, load, params
     if (resourceId === undefined) {
-      // disable edition
-      editor.setReadOnly(true)
+      if (editor) {
+        // disable edition
+        editor.setReadOnly(true)
+      }
 
       if (slug === 'products') {
         // ELS Request Body Search
