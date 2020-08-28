@@ -2,6 +2,8 @@
  * Copyright 2018 E-Com Club
  */
 
+import Sortable from 'sortablejs'
+
 export default function () {
   'use strict'
 
@@ -376,7 +378,7 @@ export default function () {
 
     // handle grids sorting
     // https://github.com/RubaXa/Sortable
-    window.Sortable.create($listGrids[0], {
+    Sortable.create($listGrids[0], {
       // handle sorting on drag icon only
       handle: '.i-drag',
 
@@ -713,7 +715,7 @@ export default function () {
         setTimeout(function () {
           // handle options sorting
           // https://github.com/RubaXa/Sortable
-          window.Sortable.create($li.find('.badges-list')[0], {
+          Sortable.create($li.find('.badges-list')[0], {
             onUpdate: function (e) {
               // console.log(e)
               // move array elements
