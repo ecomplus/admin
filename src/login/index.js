@@ -129,6 +129,12 @@ $el.find('cite').text(quote.author)
 const username = localStorage.getItem('username')
 if (username) {
   $('#username').val(username)
+  if (localStorage.getItem('using_pass_md5') === username) {
+    $('#md5').prop('checked', true)
+  }
+}
+if (localStorage.getItem('advanced_dash')) {
+  $('#advanced').prop('checked', true)
 }
 
 $('#username, #password')
@@ -143,15 +149,19 @@ $('#login-form').submit(function () {
   if (!$(this).hasClass('ajax')) {
     hideToast()
     const username = $('#username').val()
-    const passwordPure = $('#password').val()
-    const password = md5(passwordPure)
-    localStorage.setItem('password', passwordPure)
+    const password = $('#md5').is(':checked') ? $('#password').val() : md5($('#password').val())
 
-    if ($('#remember').is(':checked')) {
-      localStorage.setItem('username', username)
-    } else {
-      localStorage.removeItem('username')
-    }
+    ;[
+      ['remember', 'username'],
+      ['advanced', 'advanced_dash'],
+      ['md5', 'using_pass_md5']
+    ].forEach(([checkboxId, itemName]) => {
+      if ($(`#${checkboxId}`).is(':checked')) {
+        localStorage.setItem(itemName, username)
+      } else {
+        localStorage.removeItem(itemName)
+      }
+    })
 
     const form = $(this)
     form.addClass('ajax')
@@ -179,8 +189,8 @@ $('#login-form').submit(function () {
     })
 
       .done(function (data) {
-        console.log('Logged')
         const storeId = data.store_id
+        console.log(`Logged ${username} for #${storeId}`)
         localStorage.setItem('store_id', storeId)
 
         $.ajax({
@@ -228,15 +238,11 @@ $('#login-form').submit(function () {
                       $dashboardStart.show()
 
                       const ecomAuth = new EcomAuth()
-                      ecomAuth.login(
-                        localStorage.getItem('username'),
-                        localStorage.getItem('password'),
-                        localStorage.getItem('store_id')
-                      )
-                        .then(() => {
-                          localStorage.removeItem('password')
-                        })
-                        .catch(console.error)
+                      ecomAuth.setSession({
+                        store_id: storeId,
+                        user: username,
+                        ...json
+                      })
                     })
                     .catch(console.error)
                 }
