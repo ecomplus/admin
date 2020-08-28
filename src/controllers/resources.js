@@ -94,7 +94,7 @@ export default function () {
     editor = window.ace.edit(`t${tabId}-code-editor`)
     editor.setTheme('ace/theme/dawn')
     editor.session.setMode('ace/mode/json')
-    $(`#t${tabId}-code-tab`).click(function () {
+    $(`#t${tabId}-code-tab`).fadeIn().click(function () {
       // focus on editor and force viewport update
       setTimeout(function () {
         editor.focus()
