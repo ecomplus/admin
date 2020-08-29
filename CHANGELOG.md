@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.17](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.16...v1.0.0-alpha.17) (2020-08-29)
+
+
+### Bug Fixes
+
+* **form:** fix selector for inputs text (no type attr) ([9a7c1f4](https://github.com/ecomplus/admin/commit/9a7c1f47e1a10186acc62cbc64f6dcfd62903e0f))
+
 ## [1.0.0-alpha.16](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.15...v1.0.0-alpha.16) (2020-08-29)
 
 
