@@ -356,15 +356,15 @@ export default function () {
       '<span class="i18n"> ' +
                     '      <span data-lang="en_us">Name</span> ' +
                     '      <span data-lang="pt_br">Nome</span>' +
-                    '      </span>: ' + fullName + '<br>' +
+                    '      </span>: ' + (fullName || '') + '<br>' +
                     '<span class="i18n"> ' +
                     '      <span data-lang="en_us">Birth Date</span> ' +
                     '      <span data-lang="pt_br">Data de Nascimento</span>' +
-                    '      </span>: ' + date + '<br>' +
+                    '      </span>: ' + (date || '') + '<br>' +
                     '<span class="i18n"> ' +
                     '      <span data-lang="en_us">Gender</span> ' +
                     '      <span data-lang="pt_br">Gênero</span>' +
-                    '      </span>: ' + (gender || 'Não configurado') + '<br>' +
+                    '      </span>: ' + (gender || '') + '<br>' +
                     '<span class="i18n"> ' +
                     '      <span data-lang="en_us">CPF/CNPJ</span> ' +
                     '      <span data-lang="pt_br">CPF/CNPJ</span>' +
