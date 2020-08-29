@@ -1,6 +1,6 @@
 {
   "name": "@ecomplus/admin",
-  "version": "1.0.0-alpha.15",
+  "version": "1.0.0-alpha.16",
   "description": "E-Com Plus Admin dashboard PWA",
   "main": "src/index.js",
   "scripts": {
@@ -60,6 +60,7 @@
     "@ecomplus/auth": "^0.4.1",
     "@ecomplus/client": "^2.1.0",
     "@ecomplus/i18n": "^1.15.0",
+    "@ecomplus/storefront-twbs": "^5.9.3",
     "@ecomplus/utils": "^1.4.1",
     "blueimp-md5": "^2.17.0",
     "bootstrap": "^4.5.2",
