@@ -110,6 +110,9 @@ export default function () {
     })
 
     var maskDocNumber = function (data) {
+      if (!data.doc_number) {
+        return ''
+      }
       if (data.registry_type === 'j') {
         return data.doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
       } else {
@@ -366,17 +369,17 @@ export default function () {
                     '      <span data-lang="en_us">CPF/CNPJ</span> ' +
                     '      <span data-lang="pt_br">CPF/CNPJ</span>' +
                     '      </span>: ' + maskDocNumber(data))
-    $abstractStatistic.append(
-      '<span class="i18n"> ' +
-                    '      <span data-lang="en_us">Number of orders</span> ' +
-                    '      <span data-lang="pt_br">Quantidade de pedidos</span>' +
-                    '      </span>: ' + (data.orders_count || 'Nenhum pedido realizado') + '<br>' +
-                    '<span class="i18n"> ' +
-                                '      <span data-lang="en_us">Amount of money in order: </span> ' +
-                                '      <span data-lang="pt_br">Valor total de pedidos: </span>' +
-                                '      </span>' + (window.ecomUtils.formatMoney(data.orders_total_value, data.currency_id) || '0') + '<br>' +
-                                '<span class="i18n"> ')
     if (data.orders_count) {
+      $abstractStatistic.append(
+        '<span class="i18n"> ' +
+                      '      <span data-lang="en_us">Number of orders</span> ' +
+                      '      <span data-lang="pt_br">Quantidade de pedidos</span>' +
+                      '      </span>: ' + data.orders_count + '<br>' +
+                      '<span class="i18n"> ' +
+                                  '      <span data-lang="en_us">Amount of money in order: </span> ' +
+                                  '      <span data-lang="pt_br">Valor total de pedidos: </span>' +
+                                  '      </span>' + window.ecomUtils.formatMoney(data.orders_total_value || 0, data.currency_id) + '<br>' +
+                                  '<span class="i18n"> ')
       for (var i = 0; i < data.orders.length; i++) {
         $abstractStatistic.append('<span class="i18n"> ' +
                       '      <span data-lang="en_us">Order</span> ' +
