@@ -366,7 +366,9 @@ export default function () {
       // use function on specific resources forms scripts
       Tab.inputToData = inputToData
       console.log($form.find('input[name="name"]'))
-      handleInputs($form, inputToData)
+      setTimeout(() => {
+        handleInputs($form, inputToData)
+      }, 800)
 
       var formSetup = function () {
         if (!creating) {
