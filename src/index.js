@@ -1,6 +1,7 @@
 import { name, version } from '../package.json'
 import session from './lib/session'
 import ecomUtils from '@ecomplus/utils'
+import '@ecomplus/storefront-twbs/src/'
 import 'inputmask/dist/inputmask/jquery.inputmask'
 import 'jquery-maskmoney/dist/jquery.maskMoney'
 import './lib/forms/selectpicker'
