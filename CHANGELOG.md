@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.16](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.15...v1.0.0-alpha.16) (2020-08-29)
+
+
+### Bug Fixes
+
+* **customiers:** fix printing undefined customer props (empty) ([42657a7](https://github.com/ecomplus/admin/commit/42657a7a05597426a0ebb3a30d50bc371aa2b589))
+* **customiers:** prevent error with undefined order info properties (new customer) ([b12fe29](https://github.com/ecomplus/admin/commit/b12fe2901e6cff2b01a7395e724d0e8ad1f6b5bb))
+* **deps:** @ecomplus/storefront-twbs still needed for toast plugin ([6aa7e48](https://github.com/ecomplus/admin/commit/6aa7e48037d3b8aefec1526e3ddd7adb93b2b664))
+
 ## [1.0.0-alpha.15](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2020-08-28)
 
 
