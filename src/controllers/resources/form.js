@@ -188,20 +188,17 @@ export default function () {
 
       // setup input events
       var inputToData = function ($input, checkbox) {
-        console.log('inputToData', $input, checkbox, ready)
         if (!ready) {
           return
         }
         var prop = $input.attr('name')
         if (prop && prop !== '') {
-          console.log(prop)
           var data = Data()
           var i
 
           // object dot notation
           var parts = prop.split('.')
           if (parts.length) {
-            console.log(parts)
             var objectId = $input.data('object-id')
             var isArray
             i = 0
@@ -368,6 +365,7 @@ export default function () {
       }
       // use function on specific resources forms scripts
       Tab.inputToData = inputToData
+      console.log($form.find('input[name="name"]'))
       handleInputs($form, inputToData)
 
       var formSetup = function () {

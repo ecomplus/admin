@@ -514,6 +514,8 @@
       }
     })
 
+    console.log($form.find('input[type="text"],input[type="email"],select,textarea'))
+
     $form.find('input[type="text"],input[type="email"],select,textarea').change(function () {
       toData($(this))
 
