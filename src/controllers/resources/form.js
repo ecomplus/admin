@@ -67,7 +67,14 @@ export default function () {
       }
       const data = Object.assign({}, Data())
       if (data.sku) {
-        data.sku += '-C' + parseInt(Math.random() * 100, 10)
+        const suffixSku = () => '-C' + parseInt(Math.random() * 100, 10)
+        data.sku += suffixSku()
+        if (data.variations) {
+          data.variations.forEach(variation => {
+            variation.sku += suffixSku()
+            variation._id = randomObjectId()
+          })
+        }
       }
       callApi(slug + '.json', 'POST', callback, data)
     })
