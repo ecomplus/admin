@@ -5,22 +5,16 @@
 import Sortable from 'sortablejs'
 
 export default function () {
-  'use strict'
+  const { $, i18n, lang, tabId, randomObjectId, normalizeString } = window
 
-  // current tab ID
-  var tabId = window.tabId
+  // current tab
   var Tab = window.Tabs[tabId]
-  // lang of page
-  var lang = window.lang
   // edit JSON document
   var commit = Tab.commit
   var Data = function () {
     // current data from global variable
     return Tab.data
   }
-
-  // var lang = window.lang
-  var i18n = window.i18n
 
   Tab.continue = function () {
     // get form element from global Tab object
@@ -34,33 +28,45 @@ export default function () {
     // setup predefined grids
     // GMC defaults
     var Grids = {
-      'size': {
-        'title': i18n({
-          'en_us': 'Size',
-          'pt_br': 'Tamanho'
+      size: {
+        title: i18n({
+          en_us: 'Size',
+          pt_br: 'Tamanho'
         })
       },
-      'material': {
-        'title': 'Material'
+      material: {
+        title: 'Material'
       },
-      'pattern': {
-        'title': i18n({
-          'en_us': 'Pattern',
-          'pt_br': 'Estampa'
+      pattern: {
+        title: i18n({
+          en_us: 'Pattern',
+          pt_br: 'Estampa'
         })
       },
-      'colors': {
-        'title': i18n({
-          'en_us': 'Primary color',
-          'pt_br': 'Cor primária'
+      age_group: {
+        title: i18n({
+          en_us: 'Age group',
+          pt_br: 'Idade'
+        })
+      },
+      gender: {
+        title: i18n({
+          en_us: 'Gender',
+          pt_br: 'Gênero'
+        })
+      },
+      colors: {
+        title: i18n({
+          en_us: 'Primary color',
+          pt_br: 'Cor primária'
         })
       },
       // multiple colors
       // for sample purposes only
       'colors.2': {
-        'title': i18n({
-          'en_us': 'Secondary color',
-          'pt_br': 'Cor secundária'
+        title: i18n({
+          en_us: 'Secondary color',
+          pt_br: 'Cor secundária'
         })
       }
     }
@@ -75,7 +81,7 @@ export default function () {
         for (var gridId in json) {
           var grid = json[gridId]
           if (grid) {
-            if (Grids.hasOwnProperty(gridId) && grid.options) {
+            if (Grids[gridId] && grid.options) {
               // overwrite options only
               Grids[gridId].options = i18n(grid.options)
             } else {
@@ -95,8 +101,11 @@ export default function () {
               var normalizedTitle = normalizeString(grid.title)
               // check duplicated grids
               for (var gridId in Grids) {
-                if (Grids.hasOwnProperty(gridId)) {
+                if (Grids[gridId]) {
                   if (gridId !== grid.grid_id && normalizeString(Grids[gridId].title) === normalizedTitle) {
+                    if (!grid.options || !grid.options.length) {
+                      grid.options = Grids[gridId].options
+                    }
                     delete Grids[gridId]
                   }
                 }
@@ -157,13 +166,13 @@ export default function () {
               specifications = variations[0].specifications
               if (specifications) {
                 for (gridId in specifications) {
-                  if (specifications.hasOwnProperty(gridId)) {
+                  if (specifications[gridId]) {
                     // setup new grid
                     var gridObject
-                    if (Grids.hasOwnProperty(gridId)) {
+                    if (Grids[gridId]) {
                       gridObject = Grids[gridId]
                     } else {
-                      gridObject = { 'title': gridId }
+                      gridObject = { title: gridId }
                     }
                     addOptions(addGrid(gridObject), gridId)
                   }

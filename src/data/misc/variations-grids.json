@@ -696,8 +696,8 @@
 	},
 	"energy_efficiency_class": {
 		"title": {
-			"en_us": "Energy_efficiency_class",
-			"pt_br": "Classe_de_eficiência_energética"
+			"en_us": "Energy efficiency class",
+			"pt_br": "Classe de eficiência energética"
 		},
 		"options": [
       {
