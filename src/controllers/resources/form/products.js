@@ -1013,7 +1013,7 @@ export default function () {
             // variation name
             // regex to test variations names
             // check if variation name was generated automatically by pattern
-            var nameRegex = new RegExp('^' + Name + '(\\s\\/\\s.*)$')
+            var nameRegex = new RegExp('^' + Name.replace(/([^\w\s])/ig, '\\$1') + '(\\s\\/\\s.*)$')
             var name = Name
             var strValue = ''
             var specifications = {}
