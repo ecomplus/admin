@@ -59,27 +59,25 @@ export default function () {
 
   // initial rendering
   // render H1
-  const $resourceName = $('#t' + tabId + '-resource-name')
-  $resourceName.html('<strong>' + resource.label[lang] + '</strong> · ' + tabLabel)
+  $(`#t${tabId}-resource-name`).html(
+    `<span class="d-none d-lg-inline"><strong>${resource.label[lang]}</strong> · </span>${tabLabel}`
+  )
+
   if (resourceId) {
-    $resourceName.append(
-      '<a class="btn btn-pure fs-11 px-2 ml-lg-3" style="width: 100px" data-toggle="tooltip" id="copy-id" ' +
-        `title="${i18n({ en_us: 'Click to copy the ID', pt_br: 'Clique para copiar o ID' })}" ` +
-        `data-clipboard-text="${resourceId}">` +
-          '<span></span>' +
-          `<code class="fs-9 d-block">${resourceId.substr(0, 4)}..${resourceId.slice(-6)}</code>` +
+    // handle copy ID button
+    const $copyId = $(
+      '<a class="btn btn-pure fs-11 py-0 px-2 ml-3" data-toggle="tooltip"' +
+      ` title="${i18n({ en_us: 'Click to copy the ID', pt_br: 'Clique para copiar o ID' })}"` +
+      ` data-clipboard-text="${resourceId}">` +
+        `<code>${resourceId.substr(0, 4)}..${resourceId.slice(-6)}</code>` +
+        '<span class="ml-1"></span>' +
       '</a>'
     )
-
-    // handle copy ID button
-    $('#copy-id').tooltip()
-    const resetCopyId = () => $('#copy-id > span').html('ID <i class="ti-clipboard"></i>')
+    $(`#t${tabId}-document-codes`).prepend($copyId)
+    const resetCopyId = () => $copyId.children('span').html('<i class="ti-clipboard"></i>')
     resetCopyId()
-    $('#copy-id').click(function () {
-      $(this).children('span').html(i18n({
-        en_us: 'Copied',
-        pt_br: 'Copiado'
-      }) + ' <i class="ti-check"></i>')
+    $copyId.tooltip().click(function () {
+      $(this).children('span').html('<i class="ti-check"></i>')
       setTimeout(resetCopyId, 6000)
     })
   }
@@ -301,9 +299,9 @@ export default function () {
       endpoint = slug + '/' + resourceId + '.json'
 
       // handle pagination buttons
+      var $next = $('#t' + tabId + '-pagination-next')
+      var $prev = $('#t' + tabId + '-pagination-prev')
       if (Tab.state.pagination) {
-        var $next = $('#t' + tabId + '-pagination-next')
-        var $prev = $('#t' + tabId + '-pagination-prev')
         if (Tab.state.page === 0) {
           $prev.addClass('disabled')
         }
@@ -316,8 +314,14 @@ export default function () {
         $next.click(function () {
           $(this).addClass('disabled')
           Tab.pagination()
-        }).closest('.pagination-arrows').fadeIn()
+        })
+      } else {
+        $prev.attr('class', 'ti-angle-double-left').click(() => {
+          window.location = '/#/resources/' + slug
+        })
+        $next.hide()
       }
+      $next.closest('.pagination-arrows').fadeIn()
     }
 
     if (!load) {
