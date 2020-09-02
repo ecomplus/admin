@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.18](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.17...v1.0.0-alpha.18) (2020-09-02)
+
+
+### Features
+
+* **error-handling:** better api error msg and try focusing invalid input ([e1d8e48](https://github.com/ecomplus/admin/commit/e1d8e482f2b49da3ca43ab1dc7f9a69001b84178))
+* **products-form:** most complete production time info ([5b5ca11](https://github.com/ecomplus/admin/commit/5b5ca11696ce72b85ec49c01514637d16623a339))
+
+
+### Bug Fixes
+
+* **css:** removing wrong generic btn-group style ([54d32ef](https://github.com/ecomplus/admin/commit/54d32efabc685abd3717f1e6a44b397fda3051c8))
+* **duplicate-products:** suffix sku and create new _id for variations [#198](https://github.com/ecomplus/admin/issues/198) ([9d2556a](https://github.com/ecomplus/admin/commit/9d2556ad9c7e15e6ec27d2a0e8c398d537cf9564))
+* **products-form:** escape special chars to handle name test for variations ([1a03ed1](https://github.com/ecomplus/admin/commit/1a03ed15e50485842e28a1324b512bcd9069010d))
+* **products-form:** fixes for preset grids and options ([ee5eb39](https://github.com/ecomplus/admin/commit/ee5eb39fa336558deca25ffa3b8accd6d2c7397f))
+* **router:** prevent having empty routes history ([5339df8](https://github.com/ecomplus/admin/commit/5339df81c566bca72471140e5dcf6b385e417f32))
+
 ## [1.0.0-alpha.17](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.16...v1.0.0-alpha.17) (2020-08-29)
 
 

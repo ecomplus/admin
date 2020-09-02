@@ -804,10 +804,13 @@ const { sessionStorage, localStorage, $, app } = window
       var routesHistory = appTabs[currentTab].routesHistory
       if (routesHistory.length - 2 >= 0) {
         // fix routes history pointer
-        routesHistory.pop()
+        var currentRoute = routesHistory.pop()
         var route = routesHistory.pop()
         // go to last visited route
         path += route
+        if (!routesHistory.length) {
+          routesHistory.push(currentRoute)
+        }
       }
     }
     window.location = path

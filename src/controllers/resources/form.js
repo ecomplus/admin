@@ -67,7 +67,14 @@ export default function () {
       }
       const data = Object.assign({}, Data())
       if (data.sku) {
-        data.sku += '-C' + parseInt(Math.random() * 100, 10)
+        const suffixSku = () => '-C' + parseInt(Math.random() * 100, 10)
+        data.sku += suffixSku()
+        if (data.variations) {
+          data.variations.forEach(variation => {
+            variation.sku += suffixSku()
+            variation._id = randomObjectId()
+          })
+        }
       }
       callApi(slug + '.json', 'POST', callback, data)
     })
@@ -374,7 +381,7 @@ export default function () {
         } else {
           // preset for checkbox fields with default values
           setTimeout(function () {
-            $form.find('[type="checkbox"]').trigger('change')
+            $form.find('[type="checkbox"]:not([data-skip])').trigger('change')
           }, 100)
         }
 

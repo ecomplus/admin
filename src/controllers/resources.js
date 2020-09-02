@@ -58,35 +58,41 @@ export default function () {
   }
 
   // initial rendering
-  var html
-
   // render H1
-  if (resourceId === undefined) {
-    html = '<strong>' + resource.label[lang] + '</strong> · ' + tabLabel
-    $('#t' + tabId + '-resource-name').html(html)
-  } else {
-    html = '<strong>' + resource.label[lang] + '</strong> · ' + tabLabel + ' ' + '<a class="btn btn-pure" style="font-size: 10px; background: rgba(223,242,0,0.1); padding: 3px 10px" data-provide="tooltip" id="clipboad" data-placement="top" data-original-title="Clique para copiar ID" data-clipboard-text="' + resourceId + '">ID <i class="ti-clipboard"></i></a>'
-    $('#t' + tabId + '-resource-name').html(html)
-    $('#clipboad').hover(function () {
-      $(this).tooltip('show')
-    })
-    $('#clipboad').click(function () {
-      $(this).attr('data-original-title', 'ID copiado!')
-      $(this).find('.ti-clipboard').replaceWith('<i class="ti-check"></i>')
-      $(this).tooltip('show')
+  $(`#t${tabId}-resource-name`).html(
+    `<span class="d-none d-lg-inline"><strong>${resource.label[lang]}</strong> · </span>${tabLabel}`
+  )
+
+  if (resourceId) {
+    // handle copy ID button
+    const $copyId = $(
+      '<a class="btn btn-pure fs-11 py-0 px-2 ml-3" data-toggle="tooltip"' +
+      ` title="${i18n({ en_us: 'Click to copy the ID', pt_br: 'Clique para copiar o ID' })}"` +
+      ` data-clipboard-text="${resourceId}">` +
+        `<code>${resourceId.substr(0, 4)}..${resourceId.slice(-6)}</code>` +
+        '<span class="ml-1"></span>' +
+      '</a>'
+    )
+    $(`#t${tabId}-document-codes`).prepend($copyId)
+    const resetCopyId = () => $copyId.children('span').html('<i class="ti-clipboard"></i>')
+    resetCopyId()
+    $copyId.tooltip().click(function () {
+      $(this).children('span').html('<i class="ti-check"></i>')
+      setTimeout(resetCopyId, 6000)
     })
   }
 
   // render breadcrumb links
-  html = '<li class="breadcrumb-item">' +
-               '<a href="/#/resources/' + slug + '">' +
-                 '<i class="fa fa-' + resource.icon + '"></i> ' + resource.label[lang] +
-               '</a>' +
-             '</li>' +
-             '<li class="breadcrumb-item active">' +
-               tabLabel +
-             '</li>'
-  $('#t' + tabId + '-breadcrumbs').append(html)
+  $('#t' + tabId + '-breadcrumbs').append(
+    '<li class="breadcrumb-item">' +
+      '<a href="/#/resources/' + slug + '">' +
+        '<i class="fa fa-' + resource.icon + '"></i> ' + resource.label[lang] +
+      '</a>' +
+    '</li>' +
+    '<li class="breadcrumb-item active">' +
+      tabLabel +
+    '</li>'
+  )
 
   // set up JSON code editor
   let editor
@@ -293,9 +299,9 @@ export default function () {
       endpoint = slug + '/' + resourceId + '.json'
 
       // handle pagination buttons
+      var $next = $('#t' + tabId + '-pagination-next')
+      var $prev = $('#t' + tabId + '-pagination-prev')
       if (Tab.state.pagination) {
-        var $next = $('#t' + tabId + '-pagination-next')
-        var $prev = $('#t' + tabId + '-pagination-prev')
         if (Tab.state.page === 0) {
           $prev.addClass('disabled')
         }
@@ -308,8 +314,14 @@ export default function () {
         $next.click(function () {
           $(this).addClass('disabled')
           Tab.pagination()
-        }).closest('.pagination-arrows').fadeIn()
+        })
+      } else {
+        $prev.attr('class', 'ti-angle-double-left').click(() => {
+          window.location = '/#/resources/' + slug
+        })
+        $next.hide()
       }
+      $next.closest('.pagination-arrows').fadeIn()
     }
 
     if (!load) {

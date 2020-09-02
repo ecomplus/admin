@@ -5,13 +5,10 @@
 import Sortable from 'sortablejs'
 
 export default function () {
-  'use strict'
+  const { $, i18n, lang, tabId, randomObjectId, normalizeString } = window
 
-  // current tab ID
-  var tabId = window.tabId
+  // current tab
   var Tab = window.Tabs[tabId]
-  // lang of page
-  var lang = window.lang
   // edit JSON document
   var commit = Tab.commit
   var Data = function () {
@@ -19,48 +16,55 @@ export default function () {
     return Tab.data
   }
 
-  // var lang = window.lang
-  var i18n = window.i18n
-
   Tab.continue = function () {
     // get form element from global Tab object
     var $form = Tab.$form
     // generate IDs for each new variation, brand or category
     var idPad = randomObjectId()
     var index = 0
-    var $enDate = $('#t' + tabId + '-enDate')
-    var $startDate = $('#t' + tabId + '-startDate')
 
     // setup predefined grids
     // GMC defaults
     var Grids = {
-      'size': {
-        'title': i18n({
-          'en_us': 'Size',
-          'pt_br': 'Tamanho'
+      size: {
+        title: i18n({
+          en_us: 'Size',
+          pt_br: 'Tamanho'
         })
       },
-      'material': {
-        'title': 'Material'
+      material: {
+        title: 'Material'
       },
-      'pattern': {
-        'title': i18n({
-          'en_us': 'Pattern',
-          'pt_br': 'Estampa'
+      pattern: {
+        title: i18n({
+          en_us: 'Pattern',
+          pt_br: 'Estampa'
         })
       },
-      'colors': {
-        'title': i18n({
-          'en_us': 'Primary color',
-          'pt_br': 'Cor primária'
+      age_group: {
+        title: i18n({
+          en_us: 'Age group',
+          pt_br: 'Idade'
+        })
+      },
+      gender: {
+        title: i18n({
+          en_us: 'Gender',
+          pt_br: 'Gênero'
+        })
+      },
+      colors: {
+        title: i18n({
+          en_us: 'Primary color',
+          pt_br: 'Cor primária'
         })
       },
       // multiple colors
       // for sample purposes only
       'colors.2': {
-        'title': i18n({
-          'en_us': 'Secondary color',
-          'pt_br': 'Cor secundária'
+        title: i18n({
+          en_us: 'Secondary color',
+          pt_br: 'Cor secundária'
         })
       }
     }
@@ -75,7 +79,7 @@ export default function () {
         for (var gridId in json) {
           var grid = json[gridId]
           if (grid) {
-            if (Grids.hasOwnProperty(gridId) && grid.options) {
+            if (Grids[gridId] && grid.options) {
               // overwrite options only
               Grids[gridId].options = i18n(grid.options)
             } else {
@@ -95,8 +99,11 @@ export default function () {
               var normalizedTitle = normalizeString(grid.title)
               // check duplicated grids
               for (var gridId in Grids) {
-                if (Grids.hasOwnProperty(gridId)) {
+                if (Grids[gridId]) {
                   if (gridId !== grid.grid_id && normalizeString(Grids[gridId].title) === normalizedTitle) {
+                    if (!grid.options || !grid.options.length) {
+                      grid.options = Grids[gridId].options
+                    }
                     delete Grids[gridId]
                   }
                 }
@@ -157,13 +164,13 @@ export default function () {
               specifications = variations[0].specifications
               if (specifications) {
                 for (gridId in specifications) {
-                  if (specifications.hasOwnProperty(gridId)) {
+                  if (specifications[gridId]) {
                     // setup new grid
                     var gridObject
-                    if (Grids.hasOwnProperty(gridId)) {
+                    if (Grids[gridId]) {
                       gridObject = Grids[gridId]
                     } else {
-                      gridObject = { 'title': gridId }
+                      gridObject = { title: gridId }
                     }
                     addOptions(addGrid(gridObject), gridId)
                   }
@@ -1004,7 +1011,7 @@ export default function () {
             // variation name
             // regex to test variations names
             // check if variation name was generated automatically by pattern
-            var nameRegex = new RegExp('^' + Name + '(\\s\\/\\s.*)$')
+            var nameRegex = new RegExp('^' + Name.replace(/([^\w\s])/ig, '\\$1') + '(\\s\\/\\s.*)$')
             var name = Name
             var strValue = ''
             var specifications = {}
@@ -1408,63 +1415,6 @@ export default function () {
     var genericName = i18n({
       'en_us': 'New product',
       'pt_br': 'Novo produto'
-    })
-
-    var data = Data()
-    var startDate, endDate
-    if (data.price_effective_date) {
-      if (data.price_effective_date.end) {
-        endDate = data.price_effective_date.end
-        var enDate = endDate.substring(0, 10).split('-')
-        var year = enDate[0]
-        var month = enDate[1]
-        var day = enDate[2]
-        if (lang === 'pt_br') {
-          $enDate.val(day + '/' + month + '/' + year)
-        } else {
-          $enDate.val(enDate)
-        }
-      }
-      if (data.price_effective_date.start) {
-        startDate = data.price_effective_date.start
-        var starDate = startDate.substring(0, 10).split('-')
-        var year1 = starDate[0]
-        var month1 = starDate[1]
-        var day1 = starDate[2]
-        if (lang === 'pt_br') {
-          $startDate.val(day1 + '/' + month1 + '/' + year1)
-        } else {
-          $startDate.val(starDate)
-        }
-      }
-    }
-    $startDate.change(function () {
-      var data = Data()
-      if (!data.hasOwnProperty('price_effective_date')) {
-        data.price_effective_date = {}
-      }
-      if ($startDate.val()) {
-        var newDateStart = $startDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/).filter(String)
-        var dateStart = new Date(parseInt(newDateStart[2]), (parseInt(newDateStart[1]) - 1), parseInt(newDateStart[0])).toISOString()
-        data.price_effective_date.start = dateStart
-      } else {
-        delete data.price_effective_date['start']
-      }
-      commit(data, true)
-    })
-    $enDate.change(function () {
-      var data = Data()
-      if (!data.hasOwnProperty('price_effective_date')) {
-        data.price_effective_date = {}
-      }
-      if ($enDate.val()) {
-        var newDateEnd = $enDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/).filter(String)
-        var dateEnd = new Date(parseInt(newDateEnd[2]), (parseInt(newDateEnd[1]) - 1), parseInt(newDateEnd[0])).toISOString()
-        data.price_effective_date.end = dateEnd
-      } else {
-        delete data.price_effective_date['end']
-      }
-      commit(data, true)
     })
 
     var $inputName = $form.find('input[name="name"]')
@@ -1903,5 +1853,72 @@ export default function () {
           break
       }
     })
+
+    // production time handler
+    $form.find('input[name="production_time.days"]').keyup(function () {
+      const isEmpty = $(this).val() === ''
+      $(`#t${tabId}-production-time-options`)[isEmpty ? 'slideUp' : 'slideDown']()
+      if (isEmpty) {
+        const data = Data()
+        delete data.production_time
+        commit(data, true)
+      }
+    })
+
+    // price effective date range
+    const $priceEffectiveDates = $(`#t${tabId}-price-effective-dates`)
+      .inputmask(lang === 'pt_br' ? '99/99/9999 ~ 99/99/9999' : '99-99-9999 ~ 99-99-9999')
+      .change(function () {
+        const val = $(this).val()
+        const data = Data()
+        delete data.price_effective_date
+        if (val) {
+          const dateStrs = val.split(' ~ ')
+          if (dateStrs.length === 2) {
+            dateStrs.forEach((dateStr, i) => {
+              const [day, month, year] = dateStr.split(/[/-]/).map(s => Number(s))
+              if (day && month && year) {
+                const date = new Date(year, month - 1, day)
+                if (!isNaN(date.getTime())) {
+                  if (!data.price_effective_date) {
+                    data.price_effective_date = {}
+                  }
+                  data.price_effective_date[!i ? 'start' : 'end'] = date.toISOString()
+                }
+              }
+            })
+          }
+        }
+        commit(data, true)
+      })
+
+    if (Data().price_effective_date) {
+      // manually reset date range
+      const { start, end } = Data().price_effective_date
+      if (start || end) {
+        let dateRangeStr = ''
+        ;[start, end].forEach((isoDate, i) => {
+          let placeholder
+          if (i > 0) {
+            dateRangeStr += ' ~ '
+            placeholder = '_'
+          } else {
+            placeholder = '0'
+          }
+          let day = ''.padStart(2, placeholder)
+          let month = day
+          let year = day + day
+          const sep = lang === 'pt_br' ? '/' : '-'
+          if (isoDate) {
+            const date = new Date(isoDate)
+            day = date.getDate().toString().padStart(2, '0')
+            month = (date.getMonth() + 1).toString().padStart(2, '0')
+            year = date.getFullYear()
+          }
+          dateRangeStr += `${day}${sep}${month}${sep}${year}`
+        })
+        $priceEffectiveDates.val(dateRangeStr)
+      }
+    }
   }
 }

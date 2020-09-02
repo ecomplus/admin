@@ -136,15 +136,7 @@
                       <span data-lang="pt_br">Quantidade</span>
                     </label>
                     <input type="number" class="form-control" name="quantity"
-                      min="0" max="9999999" step="any"/>
-                  </div>
-                  <div class="form-group">
-                    <label class="i18n">
-                      <span data-lang="en_us">Availability</span>
-                      <span data-lang="pt_br">Disponibilidade</span>
-                    </label>
-                    <input type="number" class="form-control" name="production_time.days"
-                      min="0" max="99999"/>
+                      min="0" max="9999999" step="any" placeholder="0"/>
                   </div>
                 </div>
               </div>
@@ -170,8 +162,21 @@
                   <span data-lang="pt_br">Compare ao preço</span>
                 </label>
                 <input type="tel" class="form-control" name="base_price"
+                  style="text-decoration: line-through dashed rgba(0, 0, 0, .25)"
                   data-is-number="true" data-money="true"/>
+                <span class="i18n">
+                  <small data-lang="en_us" class="form-text">Price without discount</small>
+                  <small data-lang="pt_br" class="form-text">Preço sem desconto</small>
+                </span>
               </div>
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Promotion period</span>
+                  <span data-lang="pt_br">Período da promoção</span>
+                </label>
+                <input type="tel" class="form-control" data-id="price-effective-dates"/>
+              </div>
+
               <div class="form-group">
                 <label class="i18n">
                   <span data-lang="en_us">Cost price</span>
@@ -179,22 +184,6 @@
                 </label>
                 <input type="tel" class="form-control" name="cost_price"
                   data-is-number="true" data-money="true"/>
-              </div>
-              <div class="form-group">
-                <label class="i18n">
-                  <span data-lang="en_us">Promotion Start Date</span>
-                  <span data-lang="pt_br">Data de início da promoção</span>
-                </label>
-                <input type="tel" data-mask="date" class="form-control" data-id="startDate"
-                  data-is-number="true"/>
-              </div>
-              <div class="form-group">
-                <label class="i18n">
-                  <span data-lang="en_us">Promotion End Date</span>
-                  <span data-lang="pt_br">Data final da promoção</span>
-                </label>
-                <input type="tel" data-id="enDate" data-mask="date" class="form-control"
-                  data-is-number="true"/>
               </div>
             </div>
           </div>
@@ -494,8 +483,8 @@
           <ul class="card-controls">
             <li>
               <a class="card-btn-slide i18n" href="#">
-                <span data-lang="en_us">Edit product dimensions</span>
-                <span data-lang="pt_br">Editar dimensões do produto</span>
+                <span data-lang="en_us">Edit dimensions and deadlines</span>
+                <span data-lang="pt_br">Editar dimensões e prazos</span>
               </a>
             </li>
           </ul>
@@ -595,6 +584,41 @@
                       </select>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Production time</span>
+                <span data-lang="pt_br">Prazo de produção</span>
+              </label>
+              <input type="number" class="form-control w-140px" name="production_time.days"
+                min="0" max="99999"/>
+              <span class="i18n">
+                <small data-lang="en_us" class="form-text">Deadline days</small>
+                <small data-lang="pt_br" class="form-text">Dias de prazo</small>
+              </span>
+            </div>
+            <div class="form-group" style="display: none" data-id="production-time-options">
+              <div class="custom-controls-stacked">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input"
+                     name="production_time.cumulative" data-skip />
+                  <label class="custom-control-label i18n">
+                    <span data-lang="en_us">Cumulative time per unit</span>
+                    <span data-lang="pt_br">Prazo cumulativo por unidade</span>
+                  </label>
+                </div>
+              </div>
+              <div class="custom-controls-stacked">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input"
+                    name="production_time.working_days" data-skip checked />
+                  <label class="custom-control-label i18n">
+                    <span data-lang="en_us">Deadline on working days</span>
+                    <span data-lang="pt_br">Prazo em dias úteis</span>
+                  </label>
                 </div>
               </div>
             </div>
@@ -704,10 +728,11 @@
                     <span data-lang="pt_br">Compare ao preço</span>
                   </label>
                   <input type="tel" class="form-control" name="variations.base_price"
+                    style="text-decoration: line-through dashed rgba(0, 0, 0, .25)"
                     data-is-number="true" data-money="true"/>
                   <span class="i18n">
-                    <small data-lang="en_us" class="form-text">Base price</small>
-                    <small data-lang="pt_br" class="form-text">Preço base</small>
+                    <small data-lang="en_us" class="form-text">Price without discount</small>
+                    <small data-lang="pt_br" class="form-text">Preço sem desconto</small>
                   </span>
                 </div>
               </div>
