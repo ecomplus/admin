@@ -381,7 +381,7 @@ export default function () {
         } else {
           // preset for checkbox fields with default values
           setTimeout(function () {
-            $form.find('[type="checkbox"]').trigger('change')
+            $form.find('[type="checkbox"]:not([data-skip])').trigger('change')
           }, 100)
         }
 

@@ -22,8 +22,6 @@ export default function () {
     // generate IDs for each new variation, brand or category
     var idPad = randomObjectId()
     var index = 0
-    var $enDate = $('#t' + tabId + '-enDate')
-    var $startDate = $('#t' + tabId + '-startDate')
 
     // setup predefined grids
     // GMC defaults
@@ -1419,63 +1417,6 @@ export default function () {
       'pt_br': 'Novo produto'
     })
 
-    var data = Data()
-    var startDate, endDate
-    if (data.price_effective_date) {
-      if (data.price_effective_date.end) {
-        endDate = data.price_effective_date.end
-        var enDate = endDate.substring(0, 10).split('-')
-        var year = enDate[0]
-        var month = enDate[1]
-        var day = enDate[2]
-        if (lang === 'pt_br') {
-          $enDate.val(day + '/' + month + '/' + year)
-        } else {
-          $enDate.val(enDate)
-        }
-      }
-      if (data.price_effective_date.start) {
-        startDate = data.price_effective_date.start
-        var starDate = startDate.substring(0, 10).split('-')
-        var year1 = starDate[0]
-        var month1 = starDate[1]
-        var day1 = starDate[2]
-        if (lang === 'pt_br') {
-          $startDate.val(day1 + '/' + month1 + '/' + year1)
-        } else {
-          $startDate.val(starDate)
-        }
-      }
-    }
-    $startDate.change(function () {
-      var data = Data()
-      if (!data.hasOwnProperty('price_effective_date')) {
-        data.price_effective_date = {}
-      }
-      if ($startDate.val()) {
-        var newDateStart = $startDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/).filter(String)
-        var dateStart = new Date(parseInt(newDateStart[2]), (parseInt(newDateStart[1]) - 1), parseInt(newDateStart[0])).toISOString()
-        data.price_effective_date.start = dateStart
-      } else {
-        delete data.price_effective_date['start']
-      }
-      commit(data, true)
-    })
-    $enDate.change(function () {
-      var data = Data()
-      if (!data.hasOwnProperty('price_effective_date')) {
-        data.price_effective_date = {}
-      }
-      if ($enDate.val()) {
-        var newDateEnd = $enDate.val().split(/(\d{2})\/(\d{2})\/(\d{4})/).filter(String)
-        var dateEnd = new Date(parseInt(newDateEnd[2]), (parseInt(newDateEnd[1]) - 1), parseInt(newDateEnd[0])).toISOString()
-        data.price_effective_date.end = dateEnd
-      } else {
-        delete data.price_effective_date['end']
-      }
-      commit(data, true)
-    })
-
     var $inputName = $form.find('input[name="name"]')
     $inputName.attr('placeholder', i18n({
       'en_us': 'Long Sleeve Polo Shirt',
@@ -1912,5 +1853,72 @@ export default function () {
           break
       }
     })
+
+    // production time handler
+    $form.find('input[name="production_time.days"]').keyup(function () {
+      const isEmpty = $(this).val() === ''
+      $(`#t${tabId}-production-time-options`)[isEmpty ? 'slideUp' : 'slideDown']()
+      if (isEmpty) {
+        const data = Data()
+        delete data.production_time
+        commit(data, true)
+      }
+    })
+
+    // price effective date range
+    const $priceEffectiveDates = $(`#t${tabId}-price-effective-dates`)
+      .inputmask(lang === 'pt_br' ? '99/99/9999 ~ 99/99/9999' : '99-99-9999 ~ 99-99-9999')
+      .change(function () {
+        const val = $(this).val()
+        const data = Data()
+        delete data.price_effective_date
+        if (val) {
+          const dateStrs = val.split(' ~ ')
+          if (dateStrs.length === 2) {
+            dateStrs.forEach((dateStr, i) => {
+              const [day, month, year] = dateStr.split(/[/-]/).map(s => Number(s))
+              if (day && month && year) {
+                const date = new Date(year, month - 1, day)
+                if (!isNaN(date.getTime())) {
+                  if (!data.price_effective_date) {
+                    data.price_effective_date = {}
+                  }
+                  data.price_effective_date[!i ? 'start' : 'end'] = date.toISOString()
+                }
+              }
+            })
+          }
+        }
+        commit(data, true)
+      })
+
+    if (Data().price_effective_date) {
+      // manually reset date range
+      const { start, end } = Data().price_effective_date
+      if (start || end) {
+        let dateRangeStr = ''
+        ;[start, end].forEach((isoDate, i) => {
+          let placeholder
+          if (i > 0) {
+            dateRangeStr += ' ~ '
+            placeholder = '_'
+          } else {
+            placeholder = '0'
+          }
+          let day = ''.padStart(2, placeholder)
+          let month = day
+          let year = day + day
+          const sep = lang === 'pt_br' ? '/' : '-'
+          if (isoDate) {
+            const date = new Date(isoDate)
+            day = date.getDate().toString().padStart(2, '0')
+            month = (date.getMonth() + 1).toString().padStart(2, '0')
+            year = date.getFullYear()
+          }
+          dateRangeStr += `${day}${sep}${month}${sep}${year}`
+        })
+        $priceEffectiveDates.val(dateRangeStr)
+      }
+    }
   }
 }
