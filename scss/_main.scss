@@ -706,8 +706,11 @@ body {
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
 }
-.data-list tr > .data-list-multi {
+.data-list tr > td.data-list-multi {
   line-height: 1.25;
+  a {
+    border: none;
+  }
 }
 .data-list tr > .data-list-check {
   width: 70px !important;
