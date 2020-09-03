@@ -1,24 +1,25 @@
 /*!
  * Copyright 2018 E-Com Club
  */
+
 import {
-  i19price,
-  i19quantity,
-  i19sku,
-  i19product,
+  i19applyFilters,
   i19brands,
+  i19categories,
+  i19clear,
+  i19filterProducts,
+  i19massEdit,
+  i19maximum,
+  i19minimum,
+  i19noItemSelected,
+  i19noPrice,
   i19or,
-  i19status,
-  // i19clear
-  // i19noPrice,
-  // i19applyFilters,
-  // i19massEdit,
-  // i19noItemSelected,
-  // i19filterProducts,
-  // i19maximum,
-  // i19minimum,
-  // i19savedWithSuccess
-  i19categories
+  i19price,
+  i19productName,
+  i19quantity,
+  i19savedWithSuccess,
+  i19sku,
+  i19status
 } from '@ecomplus/i18n'
 
 export default function () {
@@ -27,15 +28,6 @@ export default function () {
   // current tab ID
   var { tabId, $, callApi, app, quickview, lang, handleInputs, stringToNumber, unsetSaveAction, Tabs, i18n, formatMoney } = window
   var Tab = Tabs[tabId]
-  var i19noPrice = 'Sem preço'
-  var i19clear = 'Limpar'
-  var i19applyFilters = 'Aplicar filtros'
-  var i19massEdit = 'Editar em massa'
-  var i19noItemSelected = 'Nenhum item selecionado'
-  var i19filterProducts = 'Filtrar produtos'
-  var i19maximum = 'Máximo'
-  var i19minimum = 'Mínimo'
-  var i19savedWithSuccess = 'Salvo com sucesso'
   /*
   var elContainer = $('#t' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
@@ -69,7 +61,7 @@ export default function () {
     var index = -1
     var maxResults = 0
     // results sorting
-    var sort = {}
+    var sort = null
 
     // JSON data load
     var loading = false
@@ -202,7 +194,14 @@ export default function () {
       filters = []
       load()
     }
-    $container.find('#clear-products-filters').click(clearFilters)
+
+    $container.find('#clear-products-filters').click(() => {
+      // clear all search options
+      $searchInput.val('')
+      term = ''
+      sort = {}
+      clearFilters()
+    })
 
     // use global dynamic quickview
     var $qv = $('#qvx')
@@ -441,11 +440,10 @@ export default function () {
         } else {
           priceString = `${i18n(i19noPrice)}`
         }
-        if (item.quantity) {
+        if (item.quantity >= 0) {
           qntString = item.quantity + ' un'
         } else {
-          // infinite
-          qntString = '∞'
+          qntString = '-'
         }
 
         // product picture or placeholder image
@@ -676,42 +674,66 @@ export default function () {
     var $searchInput = $search.find('input')
     $searchInput.attr(
       'placeholder',
-      `${i18n(i19product)}` + ' ' + `${i18n(i19or)}` + ' ' + `${i18n(i19sku)}`
+      `${i18n(i19productName)} ${i18n(i19or).toLowerCase()} ${i18n(i19sku)}`
     )
     $search.submit(function () {
       // https://ecomsearch.docs.apiary.io/#reference/items/items-search/complex-search
       term = $searchInput.val().trim()
+      if (sort === null) {
+        $container.find('#order-products a[data-field="_score"]').click()
+      }
       load()
     })
 
     // handle sorting
     $container.find('#order-products a').click(function () {
-      var order
-      var iconClass = {
-        desc: 'fa-caret-down text-warning',
-        asc: 'fa-caret-up text-info'
-      }
-      if ($(this).hasClass('active')) {
-        // invert order and replace icon
-        // check last sort order
-        var lastOrder = $(this).data('sort')
-        order = lastOrder === 'desc' ? 'asc' : 'desc'
-        $(this).data('sort', order).find('i')
-          .removeClass(iconClass[lastOrder]).addClass(iconClass[order])
-      } else {
-        // defaut is desc
-        order = 'desc'
+      const unsetLastActive = () => {
         // unmask last active item
         $(this).parent().children('.active')
           .removeClass('active').removeData('sort').find('i').remove()
-        $(this).addClass('active').data('sort', order).append($('<i>', {
-          class: 'ml-1 fa ' + iconClass.desc
+      }
+      const wasActive = $(this).hasClass('active')
+      const field = $(this).data('field')
+
+      if (field === '_score') {
+        // no asc/desc order option
+        if (wasActive) {
+          // nothing to do
+          return
+        }
+        unsetLastActive()
+        $(this).addClass('active').append($('<i>', {
+          class: 'ml-1 fas fa-minus text-success'
         }))
+        sort = field
+      } else {
+        let order
+        const iconClass = {
+          desc: 'fa-caret-down text-warning',
+          asc: 'fa-caret-up text-info'
+        }
+
+        if (wasActive) {
+          // invert order and replace icon
+          // check last sort order
+          var lastOrder = $(this).data('sort')
+          order = lastOrder === 'desc' ? 'asc' : 'desc'
+          $(this).data('sort', order).find('i')
+            .removeClass(iconClass[lastOrder]).addClass(iconClass[order])
+        } else {
+          // defaut is desc
+          order = 'desc'
+          unsetLastActive()
+          $(this).addClass('active').data('sort', order).append($('<i>', {
+            class: 'ml-1 fa ' + iconClass.desc
+          }))
+        }
+
+        // reset sort object
+        sort = {}
+        sort[field] = { order: order }
       }
 
-      // reset sort object
-      sort = {}
-      sort[$(this).data('field')] = { order: order }
       // reload results
       load()
     })

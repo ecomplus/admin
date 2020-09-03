@@ -227,9 +227,6 @@ export default function () {
         // ref: https://github.com/ecomclub/ecomplus-sdk-js/blob/master/main.js
         var Body = {
           sort: [
-            { available: { order: 'desc' } },
-            '_score',
-            { ad_relevance: { order: 'desc' } },
             { _id: { order: 'desc' } }
           ],
           aggs: {
@@ -266,13 +263,9 @@ export default function () {
           } else {
             body = Body
           }
-          if (sort) {
+          if (sort && (typeof sort === 'string' || Object.keys(sort).length)) {
             // replace sort rule
-            if (body.sort.length > 4) {
-              body.sort[2] = sort
-            } else {
-              body.sort.splice(2, 0, sort)
-            }
+            body.sort[0] = sort
           }
           // pagination
           if (size) {
