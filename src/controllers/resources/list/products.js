@@ -18,7 +18,6 @@ import {
   i19productName,
   i19quantity,
   i19savedWithSuccess,
-  i19sku,
   i19status
 } from '@ecomplus/i18n'
 
@@ -185,12 +184,47 @@ export default function () {
               '<span>' + `${i18n(i19maximum)}` + '</span>' +
             '</small>' +
           '</div>' +
+        '</div>' +
+        '<div class="form-group mb-0">' +
+          '<div class="custom-controls-stacked">' +
+            '<div class="custom-control custom-radio">' +
+              '<input type="radio" class="custom-control-input" name="visible" data-filter="term" value="true"/>' +
+              '<label class="custom-control-label i18n">' +
+                '<span data-lang="en_us">Visible products</span>' +
+                '<span data-lang="pt_br">Produtos visíveis</span>' +
+              '</label>' +
+            '</div>' +
+            '<div class="custom-control custom-radio">' +
+              '<input type="radio" class="custom-control-input" name="visible" data-filter="term" value="false"/>' +
+              '<label class="custom-control-label i18n">' +
+                '<span data-lang="en_us">Invisible</span>' +
+                '<span data-lang="pt_br">Invisíveis</span>' +
+              '</label>' +
+            '</div>' +
+          '</div>' +
+          '<div class="custom-controls-stacked">' +
+            '<div class="custom-control custom-radio">' +
+              '<input type="radio" class="custom-control-input" name="available" data-filter="term" value="true"/>' +
+              '<label class="custom-control-label i18n">' +
+                '<span data-lang="en_us">Available for purchase</span>' +
+                '<span data-lang="pt_br">Disponíveis para compra</span>' +
+              '</label>' +
+            '</div>' +
+            '<div class="custom-control custom-radio mb-0">' +
+              '<input type="radio" class="custom-control-input" name="available" data-filter="term" value="false"/>' +
+              '<label class="custom-control-label i18n">' +
+                '<span data-lang="en_us">Unavailable</span>' +
+                '<span data-lang="pt_br">Indisponíveis</span>' +
+              '</label>' +
+            '</div>' +
+          '</div>' +
         '</div>'
       ]
     })
     // clear all filters
     var clearFilters = function () {
       // reset
+      $filters.find('input').val('').prop('checked', false)
       filters = []
       load()
     }
@@ -205,7 +239,7 @@ export default function () {
 
     // use global dynamic quickview
     var $qv = $('#qvx')
-    $qv.find('#qvx-title').text(`${i18n(i19filterProducts)}`)
+    $qv.find('#qvx-title').text(i18n(i19filterProducts))
     // use quickview for mass edit
     var $qvEdit = $('#modal-center')
     $qvEdit.find('input[data-money]').inputMoney()
@@ -615,13 +649,23 @@ export default function () {
         if (!Array.isArray(value)) {
           if ($input.data('is-number')) {
             value = stringToNumber(value)
-          } else if ($input.attr('type') === 'number') {
-            value = parseFloat(value)
           } else {
-            // string value
-            value = value.trim()
+            switch ($input.attr('type')) {
+              case 'number':
+                value = parseFloat(value)
+                break
+              case 'radio':
+                if (!$input.is(':checked')) {
+                  return
+                }
+                value = value === 'true'
+                break
+              default:
+                // string value
+                value = value.trim()
+            }
           }
-          if (isNaN(value) & value === '') {
+          if (isNaN(value) || value === '') {
             value = null
           }
         } else if (!value.length) {
@@ -631,7 +675,7 @@ export default function () {
         // check if filter already exists
         for (var i = 0; i < filters.length; i++) {
           var filterObj = filters[i][filterType]
-          if (filterObj && filterObj[prop]) {
+          if (filterObj && filterObj[prop] !== undefined) {
             // found
             if (!operator) {
               if (value !== null) {
@@ -674,7 +718,7 @@ export default function () {
     var $searchInput = $search.find('input')
     $searchInput.attr(
       'placeholder',
-      `${i18n(i19productName)} ${i18n(i19or).toLowerCase()} ${i18n(i19sku)}`
+      `${i18n(i19productName)} ${i18n(i19or).toLowerCase()} SKU`
     )
     $search.submit(function () {
       // https://ecomsearch.docs.apiary.io/#reference/items/items-search/complex-search
