@@ -151,23 +151,12 @@
   "customers": {
     "_fields": [
       "display_name",
-      "main_email",
+      "doc_number",
       "accepts_marketing",
       "enabled",
       "orders_count",
       "orders_total_value"
     ],
-    "_hidden_fields": [
-      "login",
-      "status",
-      "accepts_marketing"
-    ],
-    "status": {
-      "label": {
-        "en_us": "Custom status",
-        "pt_br": "Status customizado"
-      }
-    },
     "accepts_marketing": {
       "label": {
         "en_us": "News"
@@ -191,20 +180,21 @@
       }
     },
     "display_name": {
-      "width": 135,
-      "cut_string": 18,
+      "cut_string": 35,
       "label": {
-        "en_us": "Name",
-        "pt_br": "Nome"
-      }
-    },
-    "main_email": {
-      "label": {
-        "en_us": "Email",
-        "pt_br": "E-mail"
+        "en_us": "Name / Email",
+        "pt_br": "Nome / E-mail"
       },
-      "type": "link",
-      "cut_string": 30
+      "extra_field": "main_email"
+    },
+    "doc_number": {
+      "width": 135,
+      "cut_string": 20,
+      "label": {
+        "en_us": "Document",
+        "pt_br": "Documento"
+      },
+      "extra_field": "phones/number"
     },
     "enabled": {
       "type": "bold",
@@ -228,28 +218,23 @@
             "pt_br": "Desabilitado"
           }
         }
-      }
-    },
-    "login": {
-      "label": {
-        "en_us": "Login enabled",
-        "pt_br": "Login habilitado"
-      }
+      },
+      "extra_field": "status"
     },
     "orders_count": {
+      "width": 90,
+      "range": true,
       "label": {
         "en_us": "Orders",
         "pt_br": "Pedidos"
-      },
-      "width": 90,
-      "range": true
+      }
     },
     "orders_total_value": {
+      "type": "money",
+      "width": 130,
       "label": {
         "en_us": "Total"
-      },
-      "type": "money",
-      "width": 135
+      }
     }
   },
   "orders": {
