@@ -298,7 +298,6 @@ export default function () {
       })
     })
 
-    var timezoneCalc = new Date().getTimezoneOffset()
     if (lang === 'pt_br') {
       // brazilian birth date
       $startDate.inputmask('99/99/9999')
@@ -331,7 +330,7 @@ export default function () {
         return stringToNumber(value)
       } else if (prop === 'price_effective_date.start' || prop === 'price_effective_date.end') {
         var date = value.split('/')
-        return new Date(parseInt(date[2]), (parseInt(date[1]) - 1), parseInt(date[0]), 0, -timezoneCalc, 0, 0).toISOString()
+        return date[2] + '-' + date[1] + '-' + date[0] + 'T00:00:00.000Z'
       } else {
         if (value) {
           return stringToNumber(value)
@@ -385,7 +384,7 @@ export default function () {
               if ($discount.val()) {
                 discount = parseFloat(calcDiscount(price, $discount.val()))
               }
-              if (schema.variations) {
+              if (schema.variations && (discount || objChange.price || objChange.quantity)) {
                 var done
                 const { variations } = schema
                 variations.forEach((variation, ii) => {
