@@ -241,7 +241,7 @@ export default function () {
     var $qv = $('#qvx')
     $qv.find('#qvx-title').text(i18n(i19filterProducts))
     // use quickview for mass edit
-    var $qvEdit = $('#modal-center')
+    var $qvEdit = $('#modal-mass-edit')
     $qvEdit.find('input[data-money]').inputMoney()
     var $startDate = $('#startDate')
     var $endDate = $('#endDate')
@@ -330,14 +330,14 @@ export default function () {
         return stringToNumber(value)
       } else if (prop === 'price_effective_date.start' || prop === 'price_effective_date.end') {
         var date = value.split('/')
-        return date[2] + '-' + date[1] + '-' + date[0] + 'T00:00:00.000Z'
+        return new Date(date[2], date[1] - 1, date[0]).toISOString()
       } else {
         if (value) {
           return stringToNumber(value)
         }
       }
     }
-    const set = (obj, path, val) => {
+    const setObjChange = (obj, path, val) => {
       if (path) {
         const keys = path.split('.')
         let lastKey
@@ -358,15 +358,15 @@ export default function () {
     var objChange = {}
     var objVariation = {}
     var objSimple = {}
-    $('#modal-center').find('input').change(function () {
+    $('#modal-mass-edit').find('input').change(function () {
       var prop = $(this).attr('name')
       var value = removeMask(prop, $(this).val())
-      set(objChange, prop, value)
+      setObjChange(objChange, prop, value)
       removeEmpty(objChange)
-      $('#saveModal').show()
+      $('#saveModalMass').show()
     })
 
-    $qvEdit.find('#saveModal').click(function () {
+    $qvEdit.find('#saveModalMass').click(function () {
       var ids = Tab.selectedItems
       var i = 0
       if (ids) {
@@ -383,7 +383,9 @@ export default function () {
               }
               if ($discount.val()) {
                 discount = parseFloat(calcDiscount(price, $discount.val()))
+                objSimple.price = discount
               }
+              objSimple = Object.assign(objSimple, objChange)
               if (schema.variations && (discount || objChange.price || objChange.quantity)) {
                 var done
                 const { variations } = schema
@@ -393,29 +395,19 @@ export default function () {
                   } else if (variation.price) {
                     price = variation.price
                     objVariation.base_price = variation.price
-                    objSimple.base_price = variation.price
                   }
                   if ($discount.val()) {
                     discount = parseFloat(calcDiscount(price, $discount.val()))
                   }
-                  if (objChange.quantity) {
+                  if (objChange.quantity === 0 || objChange.quantity) {
                     objVariation.quantity = objChange.quantity
                   }
                   if (objChange.price || discount) {
                     objVariation.price = objChange.price || discount
-                    if (discount) {
-                      objSimple.price = discount
-                    } else if (objChange.price) {
-                      objSimple.price = objChange.price
-                    }
                   }
                   callApi('products/' + schema._id + '/variations/' + variation._id + '.json', 'PATCH', callbackVariation, objVariation)
                   done = ii
                 })
-                if (objChange.quantity) {
-                  objSimple.quantity = objChange.quantity * variations.length
-                }
-                objSimple = Object.assign(objSimple, objChange)
                 var callbackVariation = function (err, body) {
                   if (!err) {
                     if (variations.length === done) {
@@ -429,7 +421,7 @@ export default function () {
                         variant: 'success'
                       })
                       $('#spinner-wait-edit').hide()
-                      $('#modal-center').modal('hide')
+                      $('#modal-mass-edit').modal('hide')
                       setTimeout(function () {
                         load(true)
                       }, 500)
@@ -437,11 +429,6 @@ export default function () {
                       $('#spinner-wait-edit').show()
                     }
                   }
-                }
-              } else {
-                objSimple = Object.assign(objSimple, objChange)
-                if (discount) {
-                  objSimple.price = discount
                 }
               }
               setTimeout(function () {
@@ -470,7 +457,7 @@ export default function () {
                 variant: 'success'
               })
               $('#spinner-wait-edit').hide()
-              $('#modal-center').modal('hide')
+              $('#modal-mass-edit').modal('hide')
               setTimeout(function () {
                 load(true)
               }, 500)
