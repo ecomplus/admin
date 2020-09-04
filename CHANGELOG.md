@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.19](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2020-09-04)
+
+
+### Features
+
+* **customers-list:** add doc and phone number ([#199](https://github.com/ecomplus/admin/issues/199)) ([132353d](https://github.com/ecomplus/admin/commit/132353d80999fbe737069b4c02571c0d7b0e8e92))
+* **media-library:** list images starting from last ones ([#35](https://github.com/ecomplus/admin/issues/35)) ([1db1fbb](https://github.com/ecomplus/admin/commit/1db1fbb424013f3bf8b804b04d5e8b704d59d399))
+* **products-list:** optional filters by 'available' and 'visible' [#189](https://github.com/ecomplus/admin/issues/189) ([5efdc59](https://github.com/ecomplus/admin/commit/5efdc597cc6e014e7938da2537e37fa70a9c1efc))
+* **produts-form:** handling product customizations ([#115](https://github.com/ecomplus/admin/issues/115)) ([2ecef77](https://github.com/ecomplus/admin/commit/2ecef77cc668523118ee1364e3e9f21a82513d4c))
+
+
+### Bug Fixes
+
+* **products-list:** fix quantity mass edit and also handle variations ([#210](https://github.com/ecomplus/admin/issues/210)) ([1e11ccf](https://github.com/ecomplus/admin/commit/1e11ccfde8591a09a3bff28e4597d1799c273295))
+* **products-list:** using one els sort rule only ([#179](https://github.com/ecomplus/admin/issues/179)) ([308710b](https://github.com/ecomplus/admin/commit/308710b6f0eb399eaddedbbeabbde1cd357492e6))
+
 ## [1.0.0-alpha.18](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.17...v1.0.0-alpha.18) (2020-09-02)
 
 
