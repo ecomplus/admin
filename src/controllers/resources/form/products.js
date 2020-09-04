@@ -5,7 +5,7 @@
 import Sortable from 'sortablejs'
 
 export default function () {
-  const { $, i18n, lang, tabId, randomObjectId, normalizeString } = window
+  const { $, i18n, lang, tabId, randomObjectId, normalizeString, cutString, substringMatcher } = window
 
   // current tab
   var Tab = window.Tabs[tabId]
@@ -92,7 +92,7 @@ export default function () {
 
       .finally(() => {
         // add store custom grids
-        window.callApi('grids.json?fields=title,grid_id,options', 'GET', function (err, json) {
+        window.callApi('grids.json?fields=title,grid_id,options,custom_value,attachment', 'GET', (err, json) => {
           if (!err) {
             for (var i = 0; i < json.result.length; i++) {
               var grid = json.result[i]
@@ -125,25 +125,27 @@ export default function () {
 
           // setup current product variations and specs
           setTimeout(function () {
-            var data = Data()
-            var gridId
-            // setup preseted specifications
-            var specifications = data.specifications
+            const data = Data()
+            let gridId
+            // setup preseted specifications/customizations
+            let { specifications, customizations, variations } = data
             if (specifications) {
               for (gridId in specifications) {
                 var specArray = specifications[gridId]
                 if (Array.isArray(specArray)) {
                   // add one spec object per grid only
-                  var specValue = addSpec(gridId)
+                  var specValue = addSpec(gridId, 'spec', true)
                   if (specValue) {
                     specValue(specArray[0].text)
                   }
                 }
               }
             }
+            if (customizations) {
+              customizations.forEach(grid => addSpec(grid.grid_id, 'customization', true))
+            }
 
             // setup variations
-            var variations = data.variations
             if (Array.isArray(variations) && variations.length) {
               // add all options in use
               var addOptions = function (addOption, gridId) {
@@ -212,15 +214,19 @@ export default function () {
                 }, 200)
               }, 800)
             }
+
+            // setup specs/customizations autocomplete
+            Typeahead($specInputs.spec, 'specs', substringMatcher(gridsTitles()))
+            Typeahead($specInputs.customization, 'customizations', substringMatcher(gridsTitles(true)))
           }, 100)
         })
       })
 
-    var gridsTitles = function () {
+    var gridsTitles = function (canAcceptCustom) {
       // return strings array with all grids titles
       var titles = []
       for (var gridId in Grids) {
-        if (Grids.hasOwnProperty(gridId)) {
+        if (Grids[gridId] && (!Grids[gridId].custom_value || canAcceptCustom)) {
           titles.push(Grids[gridId].title)
         }
       }
@@ -1674,16 +1680,36 @@ export default function () {
     // select variation image from product images
     var $variationImage = $variationFields.find('#t' + tabId + '-variation-image')
 
-    // handling specifications
-    var $inputSpec = $('#t' + tabId + '-spec-name')
-    var $specs = $('#t' + tabId + '-specs-list')
-    // setup inputs autocomplete
-    Typeahead($inputSpec, 'specs', substringMatcher(gridsTitles()))
+    // handling specifications and customizations
+    const $specInputs = {}
+    const $specLists = {}
+    ;['spec', 'customization'].forEach(type => {
+      $specInputs[type] = $(`#t${tabId}-${type}-name`)
+      $specLists[type] = $(`#t${tabId}-${type}s-list`)
+
+      // handle spec submit with button and enter
+      $(`#t${tabId}-add-${type}`).click(function () {
+        addSpec(null, type)
+      })
+      $specInputs[type].keydown(function (e) {
+        switch (e.which) {
+          // enter
+          case 13:
+            addSpec(null, type)
+            // do not submit form
+            e.preventDefault()
+            break
+        }
+      })
+    })
 
     // store original grid title for specifications on object by grid ID
-    var specsTitlesObject = {}
+    const specsTitlesObject = {}
 
-    var addSpec = function (spec) {
+    const addSpec = (spec, type = 'spec', isPreset = false) => {
+      const $inputSpec = $specInputs[type]
+      const $specs = $specLists[type]
+      let $input
       if (!spec) {
         spec = $inputSpec.val().trim()
       }
@@ -1693,38 +1719,57 @@ export default function () {
         // clear spec input
         $inputSpec.typeahead('val', '')
         // generate new grid ID
-        var gridId = fixGridId(normalizeString(spec))
-        if (Grids[gridId]) {
+        const gridId = fixGridId(normalizeString(spec))
+        const grid = Grids[gridId]
+        if (grid) {
           // use default grid title
-          spec = Grids[gridId].title
+          spec = grid.title
         }
         // save grid title
         specsTitlesObject[gridId] = spec
 
-        // check if input of this grid already exists
-        var $input = $specs.find('input').filter(function () {
-          return $(this).data('grid') === gridId
-        })
-        if ($input.length) {
-          $input.focus()
-          return
+        if (type === 'spec') {
+          // check if input of this grid already exists
+          $input = $specs.find('input').filter(function () {
+            return $(this).data('grid') === gridId
+          })
+          if ($input.length) {
+            $input.focus()
+            return
+          }
+          // create DOM elements for specification grid
+          $input = $('<input>', {
+            class: 'form-control',
+            'data-grid': gridId,
+            type: 'text'
+          })
+        } else if (grid && !isPreset) {
+          // add customization
+          const data = Data()
+          if (!data.customizations) {
+            data.customizations = []
+          }
+          data.customizations.push({
+            _id: randomObjectId(),
+            label: grid.title,
+            grid_id: gridId,
+            options: grid.options,
+            custom_value: grid.custom_value,
+            attachment: grid.attachment
+          })
+          // commit new data
+          commit(data, true)
         }
 
-        // create DOM elements for specification grid
-        $input = $('<input>', {
-          'class': 'form-control',
-          'data-grid': gridId,
-          type: 'text'
-        })
         var $remove = $('<a>', {
-          'class': 'p-2 text-danger',
+          class: 'p-2 text-danger',
           href: 'javascript:;',
           html: '<i class="fa fa-ban"></i>'
         })
         var $div = $('<div>', {
-          'class': 'col-6 hidden',
+          class: 'col-6 hidden',
           html: $('<div>', {
-            'class': 'form-group',
+            class: $input ? 'form-group' : null,
             html: [
               $remove,
               '<label>' + spec + '</label>',
@@ -1734,95 +1779,108 @@ export default function () {
         })
         $specs.append($div)
         $div.slideDown()
-        // setup autocomplete
-        Typeahead($input, 'features', substringMatcher(optionsTitles(gridId)))
-        $input.focus()
 
-        // add specification to product data
-        $input.change(function () {
-          var text = $(this).val().trim()
-          if (text !== '') {
-            var skipData
-            if ($(this).data('skip-data')) {
-              // don't make changes
-              skipData = true
-              // change on next event
-              $(this).removeData('skip-data')
-            }
+        if ($input) {
+          // setup autocomplete
+          Typeahead($input, 'features', substringMatcher(optionsTitles(gridId)))
+          $input.focus()
 
-            // set value from text
-            var value = normalizeString(text)
-            // try to find predefined option
-            var optionObject = searchGridOption(gridId, value)
-            if (optionObject) {
-              if (gridId !== 'colors') {
-                // replace value with saved option ID
-                value = optionObject.option_id
-              } else {
-                // RGB code with #
-                value = optionObject.colors[0]
-              }
-            } else if (gridId === 'colors') {
-              // unset value to prevent API error
-              value = null
-            }
-
-            if (!skipData) {
-              // mount specification object
-              var specObject = {
-                text: text
-              }
-              // optional value
-              if (value) {
-                specObject.value = value
+          // add specification to product data
+          $input.change(function () {
+            var text = $(this).val().trim()
+            if (text !== '') {
+              var skipData
+              if ($(this).data('skip-data')) {
+                // don't make changes
+                skipData = true
+                // change on next event
+                $(this).removeData('skip-data')
               }
 
-              // update data
-              var data = Data()
-              if (!data.hasOwnProperty('specifications')) {
-                data.specifications = {}
-              }
-              var specs = data.specifications
-              if (!specs[gridId]) {
-                specs[gridId] = [ specObject ]
-              } else {
-                var specData = $(this).data('spec-data')
-                if (specData) {
-                  // update spec object on array
-                  for (var i = 0; i < specs[gridId].length; i++) {
-                    if (specs[gridId][i].text === specData) {
-                      // matched
-                      specs[gridId][i] = specObject
-                    }
-                  }
+              // set value from text
+              var value = normalizeString(text)
+              // try to find predefined option
+              var optionObject = searchGridOption(gridId, value)
+              if (optionObject) {
+                if (gridId !== 'colors') {
+                  // replace value with saved option ID
+                  value = optionObject.option_id
                 } else {
-                  specs[gridId].push(specObject)
+                  // RGB code with #
+                  value = optionObject.colors[0]
                 }
+              } else if (gridId === 'colors') {
+                // unset value to prevent API error
+                value = null
               }
-              // commit only to perform reactive actions
-              commit(data, true)
-            }
 
-            // save spec value to further check
-            $(this).data('spec-data', text)
-          }
-        })
+              if (!skipData) {
+                // mount specification object
+                var specObject = {
+                  text: text
+                }
+                // optional value
+                if (value) {
+                  specObject.value = value
+                }
+
+                // update data
+                var data = Data()
+                if (!data.specifications) {
+                  data.specifications = {}
+                }
+                var specs = data.specifications
+                if (!specs[gridId]) {
+                  specs[gridId] = [specObject]
+                } else {
+                  var specData = $(this).data('spec-data')
+                  if (specData) {
+                    // update spec object on array
+                    for (var i = 0; i < specs[gridId].length; i++) {
+                      if (specs[gridId][i].text === specData) {
+                        // matched
+                        specs[gridId][i] = specObject
+                      }
+                    }
+                  } else {
+                    specs[gridId].push(specObject)
+                  }
+                }
+                // commit only to perform reactive actions
+                commit(data, true)
+              }
+
+              // save spec value to further check
+              $(this).data('spec-data', text)
+            }
+          })
+        }
 
         // remove specification object
         $remove.click(function () {
-          var specData = $input.data('spec-data')
-          if (specData) {
-            // remove from data
-            var data = Data()
-            var specs = data.specifications
-            if (specs && specs[gridId]) {
-              specs[gridId] = $.grep(specs[gridId], function (i) {
-                return i.text !== specData
-              })
-              if (!specs[gridId].length) {
-                // remove empty array
-                delete specs[gridId]
+          // remove from data
+          const data = Data()
+          if (type === 'spec') {
+            const specData = $input.data('spec-data')
+            if (specData) {
+              const specs = data.specifications
+              if (specs && specs[gridId]) {
+                specs[gridId] = $.grep(specs[gridId], function (i) {
+                  return i.text !== specData
+                })
+                if (!specs[gridId].length) {
+                  // remove empty array
+                  delete specs[gridId]
+                }
+                // commit only to perform reactive actions
+                commit(data, true)
               }
+            }
+          } else {
+            const gridIndex = data.customizations
+              .findIndex(customization => customization.grid_id === gridId)
+            if (gridIndex > -1) {
+              data.customizations.splice(gridIndex, 1)
               // commit only to perform reactive actions
               commit(data, true)
             }
@@ -1837,22 +1895,11 @@ export default function () {
 
       // returns function to set spec value
       return function (text) {
-        $input.typeahead('val', text).data('skip-data', true).trigger('change')
+        if ($input) {
+          $input.typeahead('val', text).data('skip-data', true).trigger('change')
+        }
       }
     }
-
-    // handle spec submit with button and enter
-    $('#t' + tabId + '-add-spec').click(function () { addSpec() })
-    $inputSpec.keydown(function (e) {
-      switch (e.which) {
-        // enter
-        case 13:
-          addSpec()
-          // do not submit form
-          e.preventDefault()
-          break
-      }
-    })
 
     // production time handler
     $form.find('input[name="production_time.days"]').keyup(function () {
