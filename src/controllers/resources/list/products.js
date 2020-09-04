@@ -246,6 +246,7 @@ export default function () {
     var $startDate = $('#startDate')
     var $endDate = $('#endDate')
     var $setCategory = $('#setCategory')
+    var $discount = $('#discountSell')
     var $saveCat = $('#saveModalCat')
     var $categorySelect = $('#categoryMass')
 
@@ -297,7 +298,6 @@ export default function () {
       })
     })
 
-    var timezoneCalc = new Date().getTimezoneOffset()
     if (lang === 'pt_br') {
       // brazilian birth date
       $startDate.inputmask('99/99/9999')
@@ -307,8 +307,10 @@ export default function () {
       $startDate.inputmask('9999-99-99')
       $endDate.inputmask('9999-99-99')
     }
-    var $priceSell = $('#priceToSell')
-    var $quantityFixed = $('#quantityFixed')
+    $discount.inputmask('99,999%')
+    const calcDiscount = function (price, discount) {
+      return (price - price * stringToNumber(discount) / 100).toFixed(2)
+    }
     var $editMass = $('#products-bulk-action')
     $editMass.find('.edit-selected').click(function () {
       if (!Tab.selectedItems.length > 0) {
@@ -317,75 +319,166 @@ export default function () {
         $editMass.find('button').attr('data-toggle', 'dropdown')
       }
     })
+    const removeEmpty = obj => {
+      Object.keys(obj).forEach(key => {
+        if (obj[key] && typeof obj[key] === 'object') removeEmpty(obj[key])
+        else if (obj[key] == null) delete obj[key]
+      })
+    }
+    const removeMask = function (prop, value) {
+      if (prop === 'price' || prop === 'quantity') {
+        return stringToNumber(value)
+      } else if (prop === 'price_effective_date.start' || prop === 'price_effective_date.end') {
+        var date = value.split('/')
+        return date[2] + '-' + date[1] + '-' + date[0] + 'T00:00:00.000Z'
+      } else {
+        if (value) {
+          return stringToNumber(value)
+        }
+      }
+    }
+    const set = (obj, path, val) => {
+      if (path) {
+        const keys = path.split('.')
+        let lastKey
+        if (keys.length > 1) {
+          if (val) {
+            lastKey = keys.pop()
+            const lastObj = keys.reduce((obj, key) => obj[key] = obj[key] || {}, obj)
+            lastObj[lastKey] = val
+          } else {
+            delete obj[keys[0]]
+          }
+        } else {
+          lastKey = keys
+          Object.assign(obj[keys] = val, obj)
+        }
+      }
+    }
+    var objChange = {}
+    var objVariation = {}
+    var objSimple = {}
+    $('#modal-center').find('input').change(function () {
+      var prop = $(this).attr('name')
+      var value = removeMask(prop, $(this).val())
+      set(objChange, prop, value)
+      removeEmpty(objChange)
+      $('#saveModal').show()
+    })
+
     $qvEdit.find('#saveModal').click(function () {
       var ids = Tab.selectedItems
+      var i = 0
       if (ids) {
-        for (var i = 0; i < ids.length; i++) {
-          var don = 0
+        var don = 0
+        var startAgain = function () {
           callApi('products/' + ids[i] + '.json', 'GET', function (error, schema) {
             if (!error) {
-              var price, quantity, objPrice
-              objPrice = {}
+              var price, discount
               if (schema.base_price) {
                 price = schema.base_price
               } else {
                 price = schema.price
-                objPrice.base_price = schema.price
+                objSimple.base_price = schema.price
               }
-              var getQuantity = schema.quantity
-              var discountSell = $('#discountSell').val() / 100
-              var discount = (price - price * discountSell).toFixed(2)
-              var priceSell = $priceSell.val().replace('R$', '')
-              var trimPrice = priceSell.replace(',', '.').trim()
-              var priceToSell = parseFloat(trimPrice)
-              objPrice.price = (priceToSell || parseFloat(discount))
-
-              var quantityFixed = $quantityFixed.val()
-              if (quantityFixed) {
-                quantity = quantityFixed
-                objPrice.quantity = quantity
+              if ($discount.val()) {
+                discount = parseFloat(calcDiscount(price, $discount.val()))
               }
-              if (schema.quantity) {
-                quantity = parseInt(getQuantity)
-                objPrice.quantity = quantity
-              }
-              if ($startDate.val() || $endDate.val()) {
-                objPrice.price_effective_date = {}
-                if ($startDate.val()) {
-                  var startDate = $startDate.val().split('/')
-                  var dateStart = new Date(parseInt(startDate[2]), (parseInt(startDate[1]) - 1), parseInt(startDate[0]), 0, -timezoneCalc, 0, 0).toISOString()
-                  objPrice.price_effective_date.start = dateStart
-                }
-                if ($endDate.val()) {
-                  var endDate = $endDate.val().split('/')
-                  var dateEnd = new Date(parseInt(endDate[2]), (parseInt(endDate[1]) - 1), parseInt(endDate[0]), 0, -timezoneCalc, 0, 0).toISOString()
-                  objPrice.price_effective_date.end = dateEnd
-                }
-              }
-              var callback = function (err, body) {
-                if (!err) {
-                  don++
-                  if (Tab.selectedItems.length === don) {
-                    app.toast(
-                    `${i18n(i19savedWithSuccess)}`,
-                    {
-                      variant: 'success'
-                    })
-                    $('#spinner-wait-edit').hide()
-                    $('#modal-center').modal('hide')
-                    load()
-                  } else {
-                    $('#spinner-wait-edit').show()
+              if (schema.variations && (discount || objChange.price || objChange.quantity)) {
+                var done
+                const { variations } = schema
+                variations.forEach((variation, ii) => {
+                  if (variation.base_price) {
+                    price = variation.base_price
+                  } else if (variation.price) {
+                    price = variation.price
+                    objVariation.base_price = variation.price
+                    objSimple.base_price = variation.price
                   }
+                  if ($discount.val()) {
+                    discount = parseFloat(calcDiscount(price, $discount.val()))
+                  }
+                  if (objChange.quantity) {
+                    objVariation.quantity = objChange.quantity
+                  }
+                  if (objChange.price || discount) {
+                    objVariation.price = objChange.price || discount
+                    if (discount) {
+                      objSimple.price = discount
+                    } else if (objChange.price) {
+                      objSimple.price = objChange.price
+                    }
+                  }
+                  callApi('products/' + schema._id + '/variations/' + variation._id + '.json', 'PATCH', callbackVariation, objVariation)
+                  done = ii
+                })
+                if (objChange.quantity) {
+                  objSimple.quantity = objChange.quantity * variations.length
+                }
+                objSimple = Object.assign(objSimple, objChange)
+                var callbackVariation = function (err, body) {
+                  if (!err) {
+                    if (variations.length === done) {
+                      delete objVariation.price
+                      delete objVariation.quantity
+                      delete objVariation.base_price
+                      delete objVariation.price_effective_date
+                      app.toast(
+                      `${i18n(i19savedWithSuccess)}`,
+                      {
+                        variant: 'success'
+                      })
+                      $('#spinner-wait-edit').hide()
+                      $('#modal-center').modal('hide')
+                      setTimeout(function () {
+                        load(true)
+                      }, 500)
+                    } else {
+                      $('#spinner-wait-edit').show()
+                    }
+                  }
+                }
+              } else {
+                objSimple = Object.assign(objSimple, objChange)
+                if (discount) {
+                  objSimple.price = discount
                 }
               }
               setTimeout(function () {
-                callApi('products/' + schema._id + '.json', 'PATCH', callback, objPrice)
+                callApi('products/' + schema._id + '.json', 'PATCH', callback, objSimple)
               }, 500)
             } else {
               console.log(error)
             }
           })
+        }
+        startAgain()
+        var callback = function (err, body) {
+          if (!err) {
+            i++
+            don++
+            if (objSimple) {
+              delete objSimple.price
+              delete objSimple.quantity
+              delete objSimple.base_price
+              delete objSimple.price_effective_date
+            }
+            if (Tab.selectedItems.length === don) {
+              app.toast(
+              `${i18n(i19savedWithSuccess)}`,
+              {
+                variant: 'success'
+              })
+              $('#spinner-wait-edit').hide()
+              $('#modal-center').modal('hide')
+              setTimeout(function () {
+                load(true)
+              }, 500)
+            } else {
+              $('#spinner-wait-edit').show()
+              startAgain()
+            }
+          }
         }
       }
     })
