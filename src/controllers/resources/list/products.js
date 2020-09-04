@@ -330,7 +330,7 @@ export default function () {
         return stringToNumber(value)
       } else if (prop === 'price_effective_date.start' || prop === 'price_effective_date.end') {
         var date = value.split('/')
-        return date[2] + '-' + date[1] + '-' + date[0] + 'T00:00:00.000Z'
+        return date[2] + '-' + date[1] + '-' + date[0] + 'T00:00:00.100Z'
       } else {
         if (value) {
           return stringToNumber(value)
