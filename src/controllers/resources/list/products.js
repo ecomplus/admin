@@ -1,24 +1,24 @@
 /*!
  * Copyright 2018 E-Com Club
  */
+
 import {
-  i19price,
-  i19quantity,
-  i19sku,
-  i19product,
+  i19applyFilters,
   i19brands,
+  i19categories,
+  i19clear,
+  i19filterProducts,
+  i19massEdit,
+  i19maximum,
+  i19minimum,
+  i19noItemSelected,
+  i19noPrice,
   i19or,
-  i19status,
-  // i19clear
-  // i19noPrice,
-  // i19applyFilters,
-  // i19massEdit,
-  // i19noItemSelected,
-  // i19filterProducts,
-  // i19maximum,
-  // i19minimum,
-  // i19savedWithSuccess
-  i19categories
+  i19price,
+  i19productName,
+  i19quantity,
+  i19savedWithSuccess,
+  i19status
 } from '@ecomplus/i18n'
 
 export default function () {
@@ -27,15 +27,6 @@ export default function () {
   // current tab ID
   var { tabId, $, callApi, app, quickview, lang, handleInputs, stringToNumber, unsetSaveAction, Tabs, i18n, formatMoney } = window
   var Tab = Tabs[tabId]
-  var i19noPrice = 'Sem preço'
-  var i19clear = 'Limpar'
-  var i19applyFilters = 'Aplicar filtros'
-  var i19massEdit = 'Editar em massa'
-  var i19noItemSelected = 'Nenhum item selecionado'
-  var i19filterProducts = 'Filtrar produtos'
-  var i19maximum = 'Máximo'
-  var i19minimum = 'Mínimo'
-  var i19savedWithSuccess = 'Salvo com sucesso'
   /*
   var elContainer = $('#t' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
@@ -69,7 +60,7 @@ export default function () {
     var index = -1
     var maxResults = 0
     // results sorting
-    var sort = {}
+    var sort = null
 
     // JSON data load
     var loading = false
@@ -193,26 +184,69 @@ export default function () {
               '<span>' + `${i18n(i19maximum)}` + '</span>' +
             '</small>' +
           '</div>' +
+        '</div>' +
+        '<div class="form-group mb-0">' +
+          '<div class="custom-controls-stacked">' +
+            '<div class="custom-control custom-radio">' +
+              '<input type="radio" class="custom-control-input" name="visible" data-filter="term" value="true"/>' +
+              '<label class="custom-control-label i18n">' +
+                '<span data-lang="en_us">Visible products</span>' +
+                '<span data-lang="pt_br">Produtos visíveis</span>' +
+              '</label>' +
+            '</div>' +
+            '<div class="custom-control custom-radio">' +
+              '<input type="radio" class="custom-control-input" name="visible" data-filter="term" value="false"/>' +
+              '<label class="custom-control-label i18n">' +
+                '<span data-lang="en_us">Invisible</span>' +
+                '<span data-lang="pt_br">Invisíveis</span>' +
+              '</label>' +
+            '</div>' +
+          '</div>' +
+          '<div class="custom-controls-stacked">' +
+            '<div class="custom-control custom-radio">' +
+              '<input type="radio" class="custom-control-input" name="available" data-filter="term" value="true"/>' +
+              '<label class="custom-control-label i18n">' +
+                '<span data-lang="en_us">Available for purchase</span>' +
+                '<span data-lang="pt_br">Disponíveis para compra</span>' +
+              '</label>' +
+            '</div>' +
+            '<div class="custom-control custom-radio mb-0">' +
+              '<input type="radio" class="custom-control-input" name="available" data-filter="term" value="false"/>' +
+              '<label class="custom-control-label i18n">' +
+                '<span data-lang="en_us">Unavailable</span>' +
+                '<span data-lang="pt_br">Indisponíveis</span>' +
+              '</label>' +
+            '</div>' +
+          '</div>' +
         '</div>'
       ]
     })
     // clear all filters
     var clearFilters = function () {
       // reset
+      $filters.find('input').val('').prop('checked', false)
       filters = []
       load()
     }
-    $container.find('#clear-products-filters').click(clearFilters)
+
+    $container.find('#clear-products-filters').click(() => {
+      // clear all search options
+      $searchInput.val('')
+      term = ''
+      sort = {}
+      clearFilters()
+    })
 
     // use global dynamic quickview
     var $qv = $('#qvx')
-    $qv.find('#qvx-title').text(`${i18n(i19filterProducts)}`)
+    $qv.find('#qvx-title').text(i18n(i19filterProducts))
     // use quickview for mass edit
-    var $qvEdit = $('#modal-center')
+    var $qvEdit = $('#modal-mass-edit')
     $qvEdit.find('input[data-money]').inputMoney()
     var $startDate = $('#startDate')
     var $endDate = $('#endDate')
     var $setCategory = $('#setCategory')
+    var $discount = $('#discountSell')
     var $saveCat = $('#saveModalCat')
     var $categorySelect = $('#categoryMass')
 
@@ -264,7 +298,6 @@ export default function () {
       })
     })
 
-    var timezoneCalc = new Date().getTimezoneOffset()
     if (lang === 'pt_br') {
       // brazilian birth date
       $startDate.inputmask('99/99/9999')
@@ -274,8 +307,10 @@ export default function () {
       $startDate.inputmask('9999-99-99')
       $endDate.inputmask('9999-99-99')
     }
-    var $priceSell = $('#priceToSell')
-    var $quantityFixed = $('#quantityFixed')
+    $discount.inputmask('99,999%')
+    const calcDiscount = function (price, discount) {
+      return (price - price * stringToNumber(discount) / 100).toFixed(2)
+    }
     var $editMass = $('#products-bulk-action')
     $editMass.find('.edit-selected').click(function () {
       if (!Tab.selectedItems.length > 0) {
@@ -284,75 +319,153 @@ export default function () {
         $editMass.find('button').attr('data-toggle', 'dropdown')
       }
     })
-    $qvEdit.find('#saveModal').click(function () {
+    const removeEmpty = obj => {
+      Object.keys(obj).forEach(key => {
+        if (obj[key] && typeof obj[key] === 'object') removeEmpty(obj[key])
+        else if (obj[key] == null) delete obj[key]
+      })
+    }
+    const removeMask = function (prop, value) {
+      if (prop === 'price' || prop === 'quantity') {
+        return stringToNumber(value)
+      } else if (prop === 'price_effective_date.start' || prop === 'price_effective_date.end') {
+        var date = value.split('/')
+        return new Date(date[2], date[1] - 1, date[0]).toISOString()
+      } else {
+        if (value) {
+          return stringToNumber(value)
+        }
+      }
+    }
+    const setObjChange = (obj, path, val) => {
+      if (path) {
+        const keys = path.split('.')
+        let lastKey
+        if (keys.length > 1) {
+          if (val) {
+            lastKey = keys.pop()
+            const lastObj = keys.reduce((obj, key) => obj[key] = obj[key] || {}, obj)
+            lastObj[lastKey] = val
+          } else {
+            delete obj[keys[0]]
+          }
+        } else {
+          lastKey = keys
+          Object.assign(obj[keys] = val, obj)
+        }
+      }
+    }
+    var objChange = {}
+    var objVariation = {}
+    var objSimple = {}
+    $('#modal-mass-edit').find('input').change(function () {
+      var prop = $(this).attr('name')
+      var value = removeMask(prop, $(this).val())
+      setObjChange(objChange, prop, value)
+      removeEmpty(objChange)
+      $('#saveModalMass').show()
+    })
+
+    $qvEdit.find('#saveModalMass').click(function () {
       var ids = Tab.selectedItems
+      var i = 0
       if (ids) {
-        for (var i = 0; i < ids.length; i++) {
-          var don = 0
+        var don = 0
+        var startAgain = function () {
           callApi('products/' + ids[i] + '.json', 'GET', function (error, schema) {
             if (!error) {
-              var price, quantity, objPrice
-              objPrice = {}
+              var price, discount
               if (schema.base_price) {
                 price = schema.base_price
               } else {
                 price = schema.price
-                objPrice.base_price = schema.price
+                objSimple.base_price = schema.price
               }
-              var getQuantity = schema.quantity
-              var discountSell = $('#discountSell').val() / 100
-              var discount = (price - price * discountSell).toFixed(2)
-              var priceSell = $priceSell.val().replace('R$', '')
-              var trimPrice = priceSell.replace(',', '.').trim()
-              var priceToSell = parseFloat(trimPrice)
-              objPrice.price = (priceToSell || parseFloat(discount))
-
-              var quantityFixed = $quantityFixed.val()
-              if (quantityFixed) {
-                quantity = quantityFixed
-                objPrice.quantity = quantity
+              if ($discount.val()) {
+                discount = parseFloat(calcDiscount(price, $discount.val()))
+                objSimple.price = discount
               }
-              if (schema.quantity) {
-                quantity = parseInt(getQuantity)
-                objPrice.quantity = quantity
-              }
-              if ($startDate.val() || $endDate.val()) {
-                objPrice.price_effective_date = {}
-                if ($startDate.val()) {
-                  var startDate = $startDate.val().split('/')
-                  var dateStart = new Date(parseInt(startDate[2]), (parseInt(startDate[1]) - 1), parseInt(startDate[0]), 0, -timezoneCalc, 0, 0).toISOString()
-                  objPrice.price_effective_date.start = dateStart
-                }
-                if ($endDate.val()) {
-                  var endDate = $endDate.val().split('/')
-                  var dateEnd = new Date(parseInt(endDate[2]), (parseInt(endDate[1]) - 1), parseInt(endDate[0]), 0, -timezoneCalc, 0, 0).toISOString()
-                  objPrice.price_effective_date.end = dateEnd
-                }
-              }
-              var callback = function (err, body) {
-                if (!err) {
-                  don++
-                  if (Tab.selectedItems.length === don) {
-                    app.toast(
-                    `${i18n(i19savedWithSuccess)}`,
-                    {
-                      variant: 'success'
-                    })
-                    $('#spinner-wait-edit').hide()
-                    $('#modal-center').modal('hide')
-                    load()
-                  } else {
-                    $('#spinner-wait-edit').show()
+              objSimple = Object.assign(objSimple, objChange)
+              if (schema.variations && (discount || objChange.price || objChange.quantity)) {
+                var done
+                const { variations } = schema
+                variations.forEach((variation, ii) => {
+                  if (variation.base_price) {
+                    price = variation.base_price
+                  } else if (variation.price) {
+                    price = variation.price
+                    objVariation.base_price = variation.price
+                  }
+                  if ($discount.val()) {
+                    discount = parseFloat(calcDiscount(price, $discount.val()))
+                  }
+                  if (objChange.quantity === 0 || objChange.quantity) {
+                    objVariation.quantity = objChange.quantity
+                  }
+                  if (objChange.price || discount) {
+                    objVariation.price = objChange.price || discount
+                  }
+                  callApi('products/' + schema._id + '/variations/' + variation._id + '.json', 'PATCH', callbackVariation, objVariation)
+                  done = ii
+                })
+                var callbackVariation = function (err, body) {
+                  if (!err) {
+                    if (variations.length === done) {
+                      delete objVariation.price
+                      delete objVariation.quantity
+                      delete objVariation.base_price
+                      delete objVariation.price_effective_date
+                      app.toast(
+                      `${i18n(i19savedWithSuccess)}`,
+                      {
+                        variant: 'success'
+                      })
+                      $('#spinner-wait-edit').hide()
+                      $('#modal-mass-edit').modal('hide')
+                      setTimeout(function () {
+                        load(true)
+                      }, 500)
+                    } else {
+                      $('#spinner-wait-edit').show()
+                    }
                   }
                 }
               }
               setTimeout(function () {
-                callApi('products/' + schema._id + '.json', 'PATCH', callback, objPrice)
+                callApi('products/' + schema._id + '.json', 'PATCH', callback, objSimple)
               }, 500)
             } else {
               console.log(error)
             }
           })
+        }
+        startAgain()
+        var callback = function (err, body) {
+          if (!err) {
+            i++
+            don++
+            if (objSimple) {
+              delete objSimple.price
+              delete objSimple.quantity
+              delete objSimple.base_price
+              delete objSimple.price_effective_date
+            }
+            if (Tab.selectedItems.length === don) {
+              app.toast(
+              `${i18n(i19savedWithSuccess)}`,
+              {
+                variant: 'success'
+              })
+              $('#spinner-wait-edit').hide()
+              $('#modal-mass-edit').modal('hide')
+              setTimeout(function () {
+                load(true)
+              }, 500)
+            } else {
+              $('#spinner-wait-edit').show()
+              startAgain()
+            }
+          }
         }
       }
     })
@@ -441,11 +554,10 @@ export default function () {
         } else {
           priceString = `${i18n(i19noPrice)}`
         }
-        if (item.quantity) {
+        if (item.quantity >= 0) {
           qntString = item.quantity + ' un'
         } else {
-          // infinite
-          qntString = '∞'
+          qntString = '-'
         }
 
         // product picture or placeholder image
@@ -617,13 +729,23 @@ export default function () {
         if (!Array.isArray(value)) {
           if ($input.data('is-number')) {
             value = stringToNumber(value)
-          } else if ($input.attr('type') === 'number') {
-            value = parseFloat(value)
           } else {
-            // string value
-            value = value.trim()
+            switch ($input.attr('type')) {
+              case 'number':
+                value = parseFloat(value)
+                break
+              case 'radio':
+                if (!$input.is(':checked')) {
+                  return
+                }
+                value = value === 'true'
+                break
+              default:
+                // string value
+                value = value.trim()
+            }
           }
-          if (isNaN(value) & value === '') {
+          if (isNaN(value) || value === '') {
             value = null
           }
         } else if (!value.length) {
@@ -633,7 +755,7 @@ export default function () {
         // check if filter already exists
         for (var i = 0; i < filters.length; i++) {
           var filterObj = filters[i][filterType]
-          if (filterObj && filterObj[prop]) {
+          if (filterObj && filterObj[prop] !== undefined) {
             // found
             if (!operator) {
               if (value !== null) {
@@ -676,42 +798,66 @@ export default function () {
     var $searchInput = $search.find('input')
     $searchInput.attr(
       'placeholder',
-      `${i18n(i19product)}` + ' ' + `${i18n(i19or)}` + ' ' + `${i18n(i19sku)}`
+      `${i18n(i19productName)} ${i18n(i19or).toLowerCase()} SKU`
     )
     $search.submit(function () {
       // https://ecomsearch.docs.apiary.io/#reference/items/items-search/complex-search
       term = $searchInput.val().trim()
+      if (sort === null) {
+        $container.find('#order-products a[data-field="_score"]').click()
+      }
       load()
     })
 
     // handle sorting
     $container.find('#order-products a').click(function () {
-      var order
-      var iconClass = {
-        desc: 'fa-caret-down text-warning',
-        asc: 'fa-caret-up text-info'
-      }
-      if ($(this).hasClass('active')) {
-        // invert order and replace icon
-        // check last sort order
-        var lastOrder = $(this).data('sort')
-        order = lastOrder === 'desc' ? 'asc' : 'desc'
-        $(this).data('sort', order).find('i')
-          .removeClass(iconClass[lastOrder]).addClass(iconClass[order])
-      } else {
-        // defaut is desc
-        order = 'desc'
+      const unsetLastActive = () => {
         // unmask last active item
         $(this).parent().children('.active')
           .removeClass('active').removeData('sort').find('i').remove()
-        $(this).addClass('active').data('sort', order).append($('<i>', {
-          class: 'ml-1 fa ' + iconClass.desc
+      }
+      const wasActive = $(this).hasClass('active')
+      const field = $(this).data('field')
+
+      if (field === '_score') {
+        // no asc/desc order option
+        if (wasActive) {
+          // nothing to do
+          return
+        }
+        unsetLastActive()
+        $(this).addClass('active').append($('<i>', {
+          class: 'ml-1 fas fa-minus text-success'
         }))
+        sort = field
+      } else {
+        let order
+        const iconClass = {
+          desc: 'fa-caret-down text-warning',
+          asc: 'fa-caret-up text-info'
+        }
+
+        if (wasActive) {
+          // invert order and replace icon
+          // check last sort order
+          var lastOrder = $(this).data('sort')
+          order = lastOrder === 'desc' ? 'asc' : 'desc'
+          $(this).data('sort', order).find('i')
+            .removeClass(iconClass[lastOrder]).addClass(iconClass[order])
+        } else {
+          // defaut is desc
+          order = 'desc'
+          unsetLastActive()
+          $(this).addClass('active').data('sort', order).append($('<i>', {
+            class: 'ml-1 fa ' + iconClass.desc
+          }))
+        }
+
+        // reset sort object
+        sort = {}
+        sort[field] = { order: order }
       }
 
-      // reset sort object
-      sort = {}
-      sort[$(this).data('field')] = { order: order }
       // reload results
       load()
     })

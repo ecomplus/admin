@@ -1,3 +1,15 @@
+.form-control {
+  height: auto;
+
+  &:disabled,
+  &[readonly] {
+    background: $color-bg-lighter;
+  }
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
 .switch input:checked ~ .switch-indicator {
   background: rgba($primary, .25);
 }
@@ -8,6 +20,21 @@
   color: $gray-600;
   border-color: $gray-200;
   background: $white;
+}
+
+.input-group,
+.form-control {
+  max-width: 100%;
+}
+
+.input-group > .twitter-typeahead {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  width: 1%;
+
+  > .form-control {
+    z-index: 3;
+  }
 }
 
 select,

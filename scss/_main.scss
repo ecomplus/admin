@@ -472,27 +472,6 @@ body {
   z-index: 994;
 }
 
-// input defaults
-.form-control:disabled,
-.form-control[readonly] {
-  background: $color-bg-lighter;
-}
-.form-control:disabled {
-  cursor: not-allowed;
-}
-.input-group,
-.form-control {
-  max-width: 100%;
-}
-.input-group > .twitter-typeahead {
-  -ms-flex: 1 1 auto;
-  flex: 1 1 auto;
-  width: 1%;
-}
-.input-group > .twitter-typeahead > .form-control {
-  z-index: 3;
-}
-
 .header-action .nav-link.active,
 .header-action .nav-link:hover {
   border-bottom-color: $color-purple-light;
@@ -727,8 +706,11 @@ body {
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
 }
-.data-list tr > .data-list-multi {
+.data-list tr > td.data-list-multi {
   line-height: 1.25;
+  a {
+    border: none;
+  }
 }
 .data-list tr > .data-list-check {
   width: 70px !important;

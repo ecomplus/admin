@@ -7,7 +7,7 @@ import loadRoute from '@/router/load-route'
 import './util.js'
 import EventEmitter from 'eventemitter3'
 
-const { sessionStorage, localStorage, $, app } = window
+const { sessionStorage, localStorage, Image, $, app } = window
 
 ;(function () {
   const dictionary = {
@@ -1342,60 +1342,72 @@ const { sessionStorage, localStorage, $, app } = window
             unactivateImages()
           } else {
             app.toast(i18n({
-              'en_us': 'No image selected to delete',
-              'pt_br': 'Nenhuma imagem selecionada para deletar'
+              en_us: 'No image selected to delete',
+              pt_br: 'Nenhuma imagem selecionada para deletar'
             }))
           }
         })
 
         // images pagination control
-        var isTruncated, lastKey
         $('#load-storage').click(function () {
-          loadStorageContent(lastKey)
+          loadStorageContent(true)
         })
 
-        var loadStorageContent = function (nextMarker) {
+        var storageNextMarker
+        var storageOffset = 0
+        var loadStorageContent = function (isLoadMore, maxImages = 15) {
           // reset DOM element
           var $el = $('#storage-content')
           var $ajax = $el.closest('.ajax-content')
-          if (!nextMarker) {
+          if (!isLoadMore) {
             $el.html('')
           }
           $ajax.addClass('ajax')
           var $btn = $('#load-storage')
           $btn.attr('disabled', true)
+          var $count = $('#count-storage')
+          $count.text('')
 
           // get bucket objects from Storage API
           // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#listObjects-property
           var s3Method = 'listObjects'
           var bodyObject = {
             // list base keys (zoom) only
-            Prefix: '@',
-            MaxKeys: 15
+            Prefix: '@'
           }
-          if (nextMarker) {
-            bodyObject.Marker = nextMarker
+          if (isLoadMore) {
+            if (!storageOffset) {
+              bodyObject.Marker = storageNextMarker
+            }
+          } else if (storageOffset) {
+            // reset
+            storageOffset = 0
           }
 
           var callback = function (err, json) {
             if (!err) {
-              var list = json.Contents
-              if (Array.isArray(list)) {
+              if (json && Array.isArray(json.Contents)) {
+                var list = json.Contents
+                  .slice(-storageOffset - maxImages, json.Contents.length - storageOffset)
+                  .reverse()
                 // HTML content listing files
                 // Mansory grid
                 var content = ''
                 var todo = list.length
                 var done = 0
+
                 var Done = function () {
                   done++
                   if (done >= todo) {
                     // ready
-                    isTruncated = json.IsTruncated
-                    if (isTruncated) {
+                    storageOffset = storageOffset + list.length >= json.Contents.length
+                      ? 0 : storageOffset + maxImages
+                    if (json.IsTruncated || storageOffset) {
                       // there are more images to load
                       $btn.removeAttr('disabled')
+                      $count.text(json.IsTruncated ? `${json.Contents.length}+` : json.Contents.length)
                       if (json.NextMarker) {
-                        lastKey = json.NextMarker
+                        storageNextMarker = json.NextMarker
                       }
                     }
                     $ajax.removeClass('ajax')
@@ -1410,12 +1422,13 @@ const { sessionStorage, localStorage, $, app } = window
                       // load image first
                       var newImg = new Image()
                       newImg.onload = function () {
-                        content += '<div class="masonry-item storage-object">' +
+                        content = '<div class="masonry-item storage-object">' +
                                      '<a href="javascript:;" onclick="$(this).toggleClass(\'active\')" ' +
                                      'data-key="' + key + '">' +
                                        '<img src="' + this.src + '">' +
                                      '</a>' +
-                                   '</div>'
+                                   '</div>' +
+                                   content
                         Done()
                       }
                       newImg.onerror = function () {
@@ -1582,7 +1595,7 @@ const { sessionStorage, localStorage, $, app } = window
 
         // init images library
         window.initStorageLib = function () {
-          if (lastKey === undefined) {
+          if (storageNextMarker === undefined) {
             loadStorageContent()
           }
         }

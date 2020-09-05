@@ -832,9 +832,12 @@ export default function () {
               if (itemTemplate) {
                 fieldObj.itemTemplate = function (text, item) {
                   if (item[extraField]) {
+                    const content = extraField.endsWith('email')
+                      ? `<a href="mailto:${item[extraField]}" target="_blank">${item[extraField]}</a>`
+                      : item[extraField]
                     return [
                       itemTemplate(text, item),
-                      `<br><small title="${item[extraField]}">${item[extraField]}</small>`
+                      `<br><small title="${item[extraField]}">${content}</small>`
                     ]
                   } else {
                     return itemTemplate(text, item)

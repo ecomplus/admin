@@ -227,9 +227,6 @@ export default function () {
         // ref: https://github.com/ecomclub/ecomplus-sdk-js/blob/master/main.js
         var Body = {
           sort: [
-            { available: { order: 'desc' } },
-            '_score',
-            { ad_relevance: { order: 'desc' } },
             { _id: { order: 'desc' } }
           ],
           aggs: {
@@ -266,13 +263,9 @@ export default function () {
           } else {
             body = Body
           }
-          if (sort) {
+          if (sort && (typeof sort === 'string' || Object.keys(sort).length)) {
             // replace sort rule
-            if (body.sort.length > 4) {
-              body.sort[2] = sort
-            } else {
-              body.sort.splice(2, 0, sort)
-            }
+            body.sort[0] = sort
           }
           // pagination
           if (size) {
@@ -328,32 +321,52 @@ export default function () {
       // default load function
       load = function (callback, params) {
         var uri = endpoint
-        if (resourceId === undefined && slug === 'orders') {
-          // mocking orders list fields here
-          params = (params ? `${params}&fields=` : 'fields=') +
-            'source_name,' +
-            'number,' +
-            'status,' +
-            'financial_status.current,' +
-            'fulfillment_status.current,' +
-            'amount,' +
-            'payment_method_label,' +
-            'shipping_method_label,' +
-            'buyers._id,' +
-            'buyers.main_email,' +
-            'buyers.display_name,' +
-            'buyers.phones,' +
-            'buyers.doc_number,' +
-            'transactions.payment_link,' +
-            'transactions.intermediator.transaction_code,' +
-            'items.product_id,' +
-            'items.sku,' +
-            'items.name,' +
-            'items.quantity,' +
-            'extra_discount.discount_coupon,' +
-            'extra_discount.app.label,' +
-            'created_at,' +
-            'updated_at'
+        if (resourceId === undefined) {
+          // mocking some resources list fields here
+          let fields
+          switch (slug) {
+            case 'orders':
+              fields = 'source_name,' +
+                'number,' +
+                'status,' +
+                'financial_status.current,' +
+                'fulfillment_status.current,' +
+                'amount,' +
+                'payment_method_label,' +
+                'shipping_method_label,' +
+                'buyers._id,' +
+                'buyers.main_email,' +
+                'buyers.display_name,' +
+                'buyers.phones,' +
+                'buyers.doc_number,' +
+                'transactions.payment_link,' +
+                'transactions.intermediator.transaction_code,' +
+                'items.product_id,' +
+                'items.sku,' +
+                'items.name,' +
+                'items.quantity,' +
+                'extra_discount.discount_coupon,' +
+                'extra_discount.app.label,' +
+                'created_at,' +
+                'updated_at'
+              break
+            case 'customers':
+              fields = 'enabled,' +
+                'status,' +
+                'main_email,' +
+                'accepts_marketing,' +
+                'display_name,' +
+                'phones,' +
+                'doc_number,' +
+                'orders_count,' +
+                'orders_total_value,' +
+                'created_at,' +
+                'updated_at'
+              break
+          }
+          if (fields) {
+            params = (params ? `${params}&fields=` : 'fields=') + fields
+          }
         }
         if (params) {
           uri += '?' + params
