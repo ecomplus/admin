@@ -6,7 +6,7 @@ export default function () {
   'use strict'
 
   // current tab ID
-  var tabId = window.tabId
+  const { tabId, $, setupInputValues, callApi, callSearchApi, app } = window
   var Tab = window.Tabs[tabId]
   // edit JSON document
   var commit = Tab.commit
@@ -43,7 +43,7 @@ export default function () {
       }
       // icon to handle item remove
       var $remove = $('<i>', {
-        'class': 'py-10 pr-10 remove fa fa-trash'
+        class: 'py-10 pr-10 remove fa fa-trash'
       }).click(function () {
         var data = Data()
         for (var i = 0; i < data.products.length; i++) {
@@ -72,7 +72,7 @@ export default function () {
           // simple text input for item name
           $('<td>', {
             html: $('<input>', {
-              'id': 'nameProduct',
+              id: 'nameProduct',
               name: 'items.name',
               type: 'text'
             })
@@ -94,7 +94,7 @@ export default function () {
     if (productss && productss.length) {
       for (var i = 0; i < productss.length; i++) {
         var urlProduto = 'products/' + productss[i] + '.json'
-        window.callApi(urlProduto, 'GET', function (err, json) {
+        callApi(urlProduto, 'GET', function (err, json) {
           if (!err) {
             var jsonProducts = json
           }
@@ -117,13 +117,13 @@ export default function () {
       var url = 'items.json?q=' + encodeURIComponent(query)
 
       // run search API request
-      window.callSearchApi(url, 'GET', function (err, data) {
+      callSearchApi(url, 'GET', function (err, data) {
         if (!err && data.hits) {
           searchResults = data.hits.hits
           for (var i = 0; i < searchResults.length; i++) {
             var item = searchResults[i]._source
             // add product to matches
-            add([ item.name + ' (' + item.sku + ')' ])
+            add([item.name + ' (' + item.sku + ')'])
           }
         }
       })
@@ -188,12 +188,13 @@ export default function () {
             var index = data.products.length
             if (eachproducts === null) {
               app.toast(i18n({
-                'en_us': 'Error! Already added this product in the collection!',
-                'pt_br': 'Erro! Esse produto já foi inserido na coleção!'
+                en_us: 'Error! Already added this product in the collection!',
+                pt_br: 'Erro! Esse produto já foi inserido na coleção!'
               }))
             } else {
               data.products[index] = eachproducts
-              commit(data)
+              commit(data, true)
+              console.log(data)
               // add item to table
               addItem(product, index)
             }
