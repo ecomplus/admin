@@ -283,9 +283,11 @@ export default function () {
             if (parts.length) {
               // remove empty parents
               data = Data()
-              for (var i = 0; i < parts.length - 1; i++) {
+              for (var i = 0; i < parts.length; i++) {
                 var part = parts[i]
                 if (!Object.keys(data[part]).length) {
+                  delete data[part]
+                } else if (i > 1) {
                   delete data[part]
                 } else {
                   data = data[part]
