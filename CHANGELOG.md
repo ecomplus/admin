@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.20](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.19...v1.0.0-alpha.20) (2020-09-30)
+
+
+### Bug Fixes
+
+* **products-list:** sort _score by default ([a3c33d3](https://github.com/ecomplus/admin/commit/a3c33d3e6a77efbf7936f10332e5e766a32e84a2))
+* data promo removing offset time ([c3f2f9f](https://github.com/ecomplus/admin/commit/c3f2f9ffed1f3f01b9406c6a84d1f8eacc1bb1cd))
+* fix quantity mass edit and put for variations too ([8f5754d](https://github.com/ecomplus/admin/commit/8f5754d1a3c056d68feb88f876ee40cd092e4534))
+
 ## [1.0.0-alpha.19](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2020-09-04)
 
 
