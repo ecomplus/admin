@@ -33,12 +33,6 @@
             <a href="javascript:;" class="dropdown-item active" data-field="_id" data-sort="desc">
               ID <i class="ml-1 fa fa-caret-down text-warning"></i>
             </a>
-            <a href="javascript:;" class="dropdown-item" data-field="views">
-              <span class="i18n">
-                <span data-lang="en_us">Views</span>
-                <span data-lang="pt_br">Visualizações</span>
-              </span>
-            </a>
             <a href="javascript:;" class="dropdown-item" data-field="sales">
               <span class="i18n">
                 <span data-lang="en_us">Sales</span>
@@ -57,21 +51,26 @@
                 <span data-lang="pt_br">Quantidade</span>
               </span>
             </a>
+            <a href="javascript:;" class="dropdown-item" data-field="_score">
+              <span class="i18n">
+                <span data-lang="en_us">Search term</span>
+                <span data-lang="pt_br">Termo de busca</span>
+              </span>
+            </a>
           </div>
         </div>
 
-        <span class="btn-group">
-          <a class="btn btn-light" href="#qvx" data-toggle="quickview">
-            <i class="fa fa-filter"></i>
-            <span class="i18n hidden-sm-down">
-              <span data-lang="en_us">Filter results</span>
-              <span data-lang="pt_br">Filtrar resultados</span>
-            </span>
-          </a>
-          <button class="btn btn-light" type="button" id="clear-products-filters">
-            <i class="fa fa-eraser"></i>
-          </button>
-        </span>
+        <a class="btn btn-light" href="#qvx" data-toggle="quickview">
+          <i class="fa fa-filter"></i>
+          <span class="i18n hidden-sm-down">
+            <span data-lang="en_us">Filter results</span>
+            <span data-lang="pt_br">Filtrar resultados</span>
+          </span>
+        </a>
+
+        <button class="btn btn-light" type="button" id="clear-products-filters">
+          <i class="fa fa-eraser"></i>
+        </button>
 
         <div class="dropdown" id="products-bulk-action">
           <button class="btn btn-success edit-selected" type="button" data-toggle="">
