@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.21](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.20...v1.0.0-alpha.21) (2020-10-08)
+
+
+### Features
+
+* **keep-login:** handle session and local storage to keep login keys ([#217](https://github.com/ecomplus/admin/issues/217)) ([263b3bf](https://github.com/ecomplus/admin/commit/263b3bf6b68e635214fe7bc1c1672df20083f392))
+
+
+### Bug Fixes
+
+* **ace-editor:** send commit event on editor blur ([#225](https://github.com/ecomplus/admin/issues/225)) ([2d0a088](https://github.com/ecomplus/admin/commit/2d0a0882650bcdcc400be3e6a2201b6b2c3a589b))
+* **export-table:** generate table with all keys ([#233](https://github.com/ecomplus/admin/issues/233)) ([dfd0905](https://github.com/ecomplus/admin/commit/dfd090535dd1d3e264b7d8eeefd6d6ea4f695357))
+* **orders-form:** ignoring duplicated status entries ([#232](https://github.com/ecomplus/admin/issues/232)) ([30a3a87](https://github.com/ecomplus/admin/commit/30a3a871807beb388139f28bd923f967d986b672))
+
 ## [1.0.0-alpha.20](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.19...v1.0.0-alpha.20) (2020-09-30)
 
 
