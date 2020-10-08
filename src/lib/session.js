@@ -4,13 +4,17 @@ const { localStorage, sessionStorage, $ } = window
 
 const session = {}
 
+const getStorageItem = label => {
+  return sessionStorage.getItem(label) || localStorage.getItem(label)
+}
+
 const update = () => {
-  const storeId = localStorage.getItem('store_id')
+  const storeId = getStorageItem('store_id')
   $ecomConfig.set('store_id', storeId)
   session.my_id = session.access_token = null
   if (storeId > 0) {
-    session.my_id = sessionStorage.getItem('my_id')
-    session.access_token = sessionStorage.getItem('access_token')
+    session.my_id = getStorageItem('my_id')
+    session.access_token = getStorageItem('access_token')
   }
 }
 

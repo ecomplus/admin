@@ -65,9 +65,10 @@ const { sessionStorage, localStorage, Image, $, app } = window
   if (localStorage.getItem('advanced_dash')) {
     console.log('Access Token:', session.access_token)
   }
-  // hide for security
-  sessionStorage.removeItem('my_id')
-  sessionStorage.removeItem('access_token')
+  /* hide for security
+  localStorage.removeItem('my_id')
+  localStorage.removeItem('access_token')
+  */
 
   // common APIs authentication headers
   var authHeaders = {
@@ -1858,6 +1859,8 @@ const { sessionStorage, localStorage, Image, $, app } = window
     })
 
     $('#logout').click(function () {
+      sessionStorage.removeItem('access_token')
+      localStorage.removeItem('access_token')
       // skip confirmation promp
       $(window).off('beforeunload')
       // just redirect to lose session and logout

@@ -126,6 +126,51 @@ $el.find('[data-lang="en_us"]').text(quote.msg.en_us)
 $el.find('[data-lang="pt_br"]').text(quote.msg.pt_br)
 $el.find('cite').text(quote.author)
 
+const initDashboard = (storeId, username, session) => {
+  return import('@/dashboard')
+    .then(() => {
+      $login.remove()
+      $dashboardStart.show()
+
+      const ecomAuth = new EcomAuth()
+      ecomAuth.setSession({
+        store_id: storeId,
+        user: username,
+        ...session
+      })
+    })
+    .catch(console.error)
+}
+
+const accessToken = localStorage.getItem('access_token')
+if (accessToken) {
+  const storeId = localStorage.getItem('store_id')
+  const myId = localStorage.getItem('my_id')
+
+  if (storeId && myId) {
+    $.ajax({
+      url: 'https://api.e-com.plus/v1/authentications/me.json',
+      dataType: 'json',
+      headers: {
+        'X-Store-ID': storeId,
+        'X-My-ID': myId,
+        'X-Access-Token': accessToken
+      },
+      xhrFields: {
+        withCredentials: true
+      }
+    })
+
+      .done(() => {
+        initDashboard(storeId, localStorage.getItem('username'), {
+          my_id: myId,
+          access_token: accessToken
+        })
+      })
+      .fail(() => localStorage.removeItem('access_token'))
+  }
+}
+
 const username = localStorage.getItem('username')
 if (username) {
   $('#username').val(username)
@@ -191,7 +236,12 @@ $('#login-form').submit(function () {
       .done(function (data) {
         const storeId = data.store_id
         console.log(`Logged ${username} for #${storeId}`)
-        localStorage.setItem('store_id', storeId)
+
+        const setStorageItem = (label, value) => {
+          sessionStorage.setItem(label, value)
+          localStorage.setItem(label, value)
+        }
+        setStorageItem('store_id', storeId)
 
         $.ajax({
           url: 'https://api.e-com.plus/v1/_authenticate.json',
@@ -227,24 +277,11 @@ $('#login-form').submit(function () {
                 if (ssoUrl && ssoUrl !== '') {
                   window.location = 'https://admin.e-com.plus' + decodeURIComponent(ssoUrl)
                 } else {
-                  sessionStorage.setItem('my_id', json.my_id)
-                  sessionStorage.setItem('access_token', json.access_token)
-                  sessionStorage.setItem('expires', json.expires)
-                  sessionStorage.setItem('username', username)
-
-                  import('@/dashboard')
-                    .then(() => {
-                      $login.remove()
-                      $dashboardStart.show()
-
-                      const ecomAuth = new EcomAuth()
-                      ecomAuth.setSession({
-                        store_id: storeId,
-                        user: username,
-                        ...json
-                      })
-                    })
-                    .catch(console.error)
+                  setStorageItem('my_id', json.my_id)
+                  setStorageItem('access_token', json.access_token)
+                  setStorageItem('expires', json.expires)
+                  setStorageItem('username', username)
+                  initDashboard(storeId, username, json)
                 }
               })
           })
