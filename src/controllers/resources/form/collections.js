@@ -194,7 +194,6 @@ export default function () {
             } else {
               data.products[index] = eachproducts
               commit(data, true)
-              console.log(data)
               // add item to table
               addItem(product, index)
             }
