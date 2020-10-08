@@ -167,6 +167,7 @@ export default function () {
             }
             // update data
             Tab.data = json
+            commit(Tab.data, true)
           })
         }
       }
