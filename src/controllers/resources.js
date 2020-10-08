@@ -544,7 +544,14 @@ export default function () {
           const getDoc = () => {
             if (i === ids.length) {
               // download CSV
-              const csv = Papa.unparse(exportData)
+              const header = Object.keys(exportData.reduce(function (result, obj) {
+                return Object.assign(result, obj)
+              }, {}))
+              const objHeader = header.reduce((obj, key) => (obj[key] = '', obj), {})
+              let rowWithHeader = []
+              rowWithHeader[0] = objHeader
+              rowWithHeader = rowWithHeader.concat(exportData)
+              const csv = Papa.unparse(rowWithHeader, { skipEmptyLines: 'greedy' })
               const csvData = new window.Blob([csv], {
                 type: 'text/csv;charset=utf-8;'
               })
