@@ -332,13 +332,18 @@ export default function () {
           if (eventTypes[eventType] && data[eventType]) {
             // get enum from JSON to set color and text by event
             opts = json.orders[eventTypes[eventType]].enum
-            data[eventType].sort((a, b) => {
+            const sortedEntries = data[eventType].sort((a, b) => {
               if (a.date_time && b.date_time) {
                 return a.date_time > b.date_time
                   ? 1 : -1
               }
               return 0
-            }).forEach(function (entry) {
+            })
+
+            sortedEntries.forEach(function (entry, index) {
+              if (index > 0 && entry.status === sortedEntries[index - 1].status) {
+                return
+              }
               var eventObj
               for (var status in opts) {
                 if (opts[status] && status === entry.status) {
