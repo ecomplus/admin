@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.22](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2020-10-10)
+
+
+### Features
+
+* **document-title:** set title with store name if available ([8046222](https://github.com/ecomplus/admin/commit/8046222542104d101c4f1c95ed22435ab6237d7a))
+* **export-all-list:** partially export all resource documents ([#235](https://github.com/ecomplus/admin/issues/235)) ([9848a33](https://github.com/ecomplus/admin/commit/9848a33ce1829f0f304abb83d00659d72bfc0456))
+
+
+### Bug Fixes
+
+* **fatal-error:** force logout on fatal error ([9725747](https://github.com/ecomplus/admin/commit/97257473a76469590a6d6740c27ba8f29ab5f44f))
+
 ## [1.0.0-alpha.21](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.20...v1.0.0-alpha.21) (2020-10-08)
 
 
