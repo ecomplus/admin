@@ -2,7 +2,7 @@ import { $ecomConfig, i18n } from '@ecomplus/utils'
 import { reload } from './session'
 import toast from './toast'
 
-const { $ } = window
+const { localStorage, sessionStorage, $ } = window
 
 const handleFatalError = err => {
   if (err) {
@@ -12,6 +12,8 @@ const handleFatalError = err => {
     en_us: 'Fatal error, restarting in 3 seconds',
     pt_br: 'Erro fatal, reiniciando em 3 segundos'
   }))
+  localStorage.removeItem('access_token')
+  sessionStorage.removeItem('access_token')
   setTimeout(function () {
     reload()
   }, 3000)
