@@ -705,6 +705,9 @@ const { sessionStorage, localStorage, Image, $, app } = window
       // default
       title = 'Dashboard'
     }
+    if (Store && Store.name) {
+      title += ` · ${Store.name}`
+    }
     // update document title
     document.title = title + ' · E-Com Plus'
   }

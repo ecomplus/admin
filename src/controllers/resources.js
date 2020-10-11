@@ -240,7 +240,7 @@ export default function () {
             avg_price: { avg: { field: 'price' } }
           },
           // results limit
-          size: 30
+          size: 300
         }
 
         // specific load function for products listing
@@ -533,6 +533,46 @@ export default function () {
         }
       })
 
+      // parse API document to CSV row wioth dot notation header
+      const parseDocToRow = doc => {
+        const row = dot.dot(doc)
+        for (const field in row) {
+          if (row[field] !== undefined) {
+            const type = typeof row[field]
+            if (type !== 'object') {
+              // save var type on row header
+              row[`${type.charAt(0).toUpperCase()}${type.slice(1)}(${field})`] = row[field]
+            }
+            delete row[field]
+          }
+        }
+        return row
+      }
+
+      // download CSV table with parsed data
+      const downloadCsv = exportData => {
+        const columns = []
+        exportData.forEach(row => {
+          Object.keys(row).forEach(field => {
+            if (!/_records/.test(field) && columns.indexOf(field) === -1) {
+              columns.push(field)
+            }
+          })
+        })
+        const csv = Papa.unparse(exportData, { columns })
+        const csvData = new window.Blob([csv], {
+          type: 'text/csv;charset=utf-8;'
+        })
+        const csvURL = navigator.msSaveBlob
+          ? navigator.msSaveBlob(csvData, 'download.csv')
+          : window.URL.createObjectURL(csvData)
+        const $link = document.createElement('a')
+        $link.href = csvURL
+        $link.setAttribute('download', `${slug}.csv`)
+        $link.click()
+        $(`#t${tabId}-loading`).hide()
+      }
+
       // export all current or selected documents
       $(`#t${tabId}-export`).click(function () {
         if (Tab.selectedItems.length) {
@@ -544,46 +584,16 @@ export default function () {
 
           const getDoc = () => {
             if (i === ids.length) {
-              // download CSV
-              const header = Object.keys(exportData.reduce(function (result, obj) {
-                return Object.assign(result, obj)
-              }, {}))
-              const objHeader = header.reduce((obj, key) => (obj[key] = '', obj), {})
-              let rowWithHeader = []
-              rowWithHeader[0] = objHeader
-              rowWithHeader = rowWithHeader.concat(exportData)
-              const csv = Papa.unparse(rowWithHeader, { skipEmptyLines: 'greedy' })
-              const csvData = new window.Blob([csv], {
-                type: 'text/csv;charset=utf-8;'
-              })
-              const csvURL = navigator.msSaveBlob
-                ? navigator.msSaveBlob(csvData, 'download.csv')
-                : window.URL.createObjectURL(csvData)
-              const $link = document.createElement('a')
-              $link.href = csvURL
-              $link.setAttribute('download', `${slug}.csv`)
-              $link.click()
-              $(`#t${tabId}-loading`).hide()
               $(this).removeClass('disabled')
-              return
+              return downloadCsv(exportData)
             }
-
             callApi(`${slug}/${ids[i]}.json`, 'GET', (err, doc) => {
               if (err) {
                 console.error(err)
                 app.toast()
               } else {
                 // add to list parsed to dot notation
-                const row = dot.dot(doc)
-                for (const field in row) {
-                  if (row[field] !== undefined) {
-                    const type = typeof row[field]
-                    // save var type on row header
-                    row[`${type.charAt(0).toUpperCase()}${type.slice(1)}(${field})`] = row[field]
-                    delete row[field]
-                  }
-                }
-                exportData.push(row)
+                exportData.push(parseDocToRow(doc))
               }
               i++
               getDoc()
@@ -673,6 +683,52 @@ export default function () {
         $modal.on('hidden.bs.modal', function (e) {
           $('#import-table').unbind('click', parseCsv)
         })
+      })
+
+      // partially export all documents
+      $(`#t${tabId}-export-all`).click(function () {
+        $(`#t${tabId}-loading`).show()
+        $(this).addClass('disabled')
+        const exportData = []
+        const limit = 1000
+        let url = `${slug}.json?limit=${limit}`
+        switch (slug) {
+          case 'customers':
+            url += '&fields=_id,state,status,main_email,accepts_marketing,display_name,name' +
+              ',birth_date,gender,phones,doc_number,orders_count,orders_total_value'
+            break
+          case 'orders':
+            url += '&fields=_id,created_at,checkout_link,utm,source_name,number,code,status' +
+              ',financial_status,fulfillment_status,amount,payment_method_label,shipping_method_label'
+            break
+          case 'carts':
+            url += '&fields=_id,available,completed,permalink,status,utm,customers,subtotal,discount'
+            break
+          case 'grids':
+            url += '&fields=_id,title,grid_id'
+            break
+        }
+
+        const getList = (offset = 0) => {
+          callApi(`${url}&offset=${offset}`, 'GET', (err, { result }) => {
+            if (err) {
+              console.error(err)
+              app.toast()
+            } else {
+              result.forEach(doc => {
+                // add to list parsed to dot notation
+                exportData.push(parseDocToRow(doc))
+              })
+              if (result.length < limit || slug === 'products') {
+                $(this).removeClass('disabled')
+                return downloadCsv(exportData)
+              }
+              // next page
+              getList(offset + limit)
+            }
+          })
+        }
+        getList()
       })
     }
   } else {
