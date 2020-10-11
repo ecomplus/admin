@@ -539,8 +539,10 @@ export default function () {
         for (const field in row) {
           if (row[field] !== undefined) {
             const type = typeof row[field]
-            // save var type on row header
-            row[`${type.charAt(0).toUpperCase()}${type.slice(1)}(${field})`] = row[field]
+            if (type !== 'object') {
+              // save var type on row header
+              row[`${type.charAt(0).toUpperCase()}${type.slice(1)}(${field})`] = row[field]
+            }
             delete row[field]
           }
         }
@@ -549,16 +551,15 @@ export default function () {
 
       // download CSV table with parsed data
       const downloadCsv = exportData => {
-        const header = {}
+        const columns = []
         exportData.forEach(row => {
           Object.keys(row).forEach(field => {
-            if (!/_records/.test(field) && header[field] === undefined) {
-              header[field] = ''
+            if (!/_records/.test(field) && columns.indexOf(field) === -1) {
+              columns.push(field)
             }
           })
         })
-        exportData.unshift(header)
-        const csv = Papa.unparse(exportData, { skipEmptyLines: 'greedy' })
+        const csv = Papa.unparse(exportData, { columns })
         const csvData = new window.Blob([csv], {
           type: 'text/csv;charset=utf-8;'
         })
@@ -718,7 +719,7 @@ export default function () {
                 // add to list parsed to dot notation
                 exportData.push(parseDocToRow(doc))
               })
-              if (result.length < limit) {
+              if (result.length < limit || slug === 'products') {
                 $(this).removeClass('disabled')
                 return downloadCsv(exportData)
               }
