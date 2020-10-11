@@ -240,7 +240,7 @@ export default function () {
             avg_price: { avg: { field: 'price' } }
           },
           // results limit
-          size: 30
+          size: 300
         }
 
         // specific load function for products listing
@@ -690,9 +690,26 @@ export default function () {
         $(this).addClass('disabled')
         const exportData = []
         const limit = 1000
+        let url = `${slug}.json?limit=${limit}`
+        switch (slug) {
+          case 'customers':
+            url += '&fields=_id,state,status,main_email,accepts_marketing,display_name,name' +
+              ',birth_date,gender,phones,doc_number,orders_count,orders_total_value'
+            break
+          case 'orders':
+            url += '&fields=_id,created_at,checkout_link,utm,source_name,number,code,status' +
+              ',financial_status,fulfillment_status,amount,payment_method_label,shipping_method_label'
+            break
+          case 'carts':
+            url += '&fields=_id,available,completed,permalink,status,utm,customers,subtotal,discount'
+            break
+          case 'grids':
+            url += '&fields=_id,title,grid_id'
+            break
+        }
 
         const getList = (offset = 0) => {
-          callApi(`${slug}.json?limit=${limit}&offset=${offset}`, 'GET', (err, { result }) => {
+          callApi(`${url}&offset=${offset}`, 'GET', (err, { result }) => {
             if (err) {
               console.error(err)
               app.toast()
