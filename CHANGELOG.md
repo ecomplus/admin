@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.23](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2020-10-11)
+
+
+### Bug Fixes
+
+* **export-csv:** skip 'Object()' columns, hardset papaparse columns ([9e4f9a8](https://github.com/ecomplus/admin/commit/9e4f9a8f7fa535c6385c483c45cba564f2e1438f))
+* **resources-list:** specify fields for list all csv export ([714a9d7](https://github.com/ecomplus/admin/commit/714a9d7acee8ac020c228b4b9e6d41455129970f))
+
 ## [1.0.0-alpha.22](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2020-10-10)
 
 
