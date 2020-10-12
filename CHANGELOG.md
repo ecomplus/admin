@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.24](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2020-10-12)
+
+
+### Bug Fixes
+
+* **collections-form:** fix handling collections products list ([#212](https://github.com/ecomplus/admin/issues/212)) ([7e974be](https://github.com/ecomplus/admin/commit/7e974be319afd3c9c873ccebfde711b6c0ddbf62))
+* **login:** checking and reseting expired access tokens ([9e57604](https://github.com/ecomplus/admin/commit/9e576046d3b2c65af931da5d9eb0cd1285a112ac))
+
 ## [1.0.0-alpha.23](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2020-10-11)
 
 
