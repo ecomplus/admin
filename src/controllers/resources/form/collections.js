@@ -3,10 +3,9 @@
  */
 
 export default function () {
-  'use strict'
+  const { $, app, i18n, tabId, ecomUtils, callSearchApi } = window
 
-  // current tab ID
-  var tabId = window.tabId
+  // current tab
   var Tab = window.Tabs[tabId]
   // edit JSON document
   var commit = Tab.commit
@@ -14,15 +13,16 @@ export default function () {
     // current data from global variable
     return Tab.data
   }
-  // var lang = window.lang
-  var i18n = window.i18n
-  // render cart items on table
+
+  // render collection items on table
   var setup = function () {
     var $itemsContainer = Tab.$form.find('#t' + tabId + '-items-container')
     var $items = $itemsContainer.find('#t' + tabId + '-collections-items')
-    var addItem = function (item, index) {
-      var objectId = item._id
-      var $Link = function (html) {
+
+    const addItem = function (item, index) {
+      const objectId = item._id
+
+      const $Link = function (html) {
         // link to edit product
         return $('<a>', {
           href: '/#/resources/products/' + item._id,
@@ -31,19 +31,17 @@ export default function () {
       }
 
       // render product picture if defined
-      var $img = ''
-      var picture = item.pictures
-      if (picture[0]) {
-        // try small image or use any size
-        var thumb = picture[0].small || picture[0].normal
-        if (thumb) {
-          $img = $Link('<img src="' + thumb.url + '">')
-          $img.addClass('cart-item-picture')
-        }
+      let $img = ''
+      // try small image or use any size
+      const thumb = ecomUtils.img(item, 'small')
+      if (thumb) {
+        $img = $Link('<img src="' + thumb.url + '">')
+        $img.addClass('cart-item-picture')
       }
+
       // icon to handle item remove
       var $remove = $('<i>', {
-        'class': 'py-10 pr-10 remove fa fa-trash'
+        class: 'py-10 pr-10 remove fa fa-trash'
       }).click(function () {
         var data = Data()
         for (var i = 0; i < data.products.length; i++) {
@@ -68,14 +66,13 @@ export default function () {
             html: $remove
           }),
           // product SKU with link to edit page
-          $('<td>', { html: $Link(item.sku || '') }),
+          $('<td>', {
+            html: $('<code>', { html: $Link(item.sku || '') })
+          }),
           // simple text input for item name
           $('<td>', {
-            html: $('<input>', {
-              'id': 'nameProduct',
-              name: 'items.name',
-              type: 'text'
-            })
+            title: item.name,
+            html: $Link(`${item.name.substring(0, 50)}${(item.name.length > 50 ? '...' : '')}`)
           }),
           // item picture with link to edit
           $('<td>', { html: $img })
@@ -83,24 +80,20 @@ export default function () {
       })
       $items.append($tr)
       index++
-
-      // setup quantity, name and price inputs
-      $tr.find('input').data('object-id', objectId)
-      setupInputValues($tr, item, 'items.')
     }
 
     // list current items on table element
-    var productss = Data().products
-    if (productss && productss.length) {
-      for (var i = 0; i < productss.length; i++) {
-        var urlProduto = 'products/' + productss[i] + '.json'
-        window.callApi(urlProduto, 'GET', function (err, json) {
-          if (!err) {
-            var jsonProducts = json
-          }
-          addItem(jsonProducts, i)
-        })
-      }
+    const { products } = Data()
+    if (products && products.length) {
+      const query = `_id:("${products.join('" "')}")`
+      callSearchApi(`items.json?q=${encodeURIComponent(query)}`, 'GET', function (err, data) {
+        if (!err && data.hits) {
+          data.hits.hits.forEach(({ _source, _id }, i) => addItem({
+            _id,
+            ..._source
+          }, i))
+        }
+      })
     }
 
     // handle items search
@@ -117,13 +110,13 @@ export default function () {
       var url = 'items.json?q=' + encodeURIComponent(query)
 
       // run search API request
-      window.callSearchApi(url, 'GET', function (err, data) {
+      callSearchApi(url, 'GET', function (err, data) {
         if (!err && data.hits) {
           searchResults = data.hits.hits
           for (var i = 0; i < searchResults.length; i++) {
             var item = searchResults[i]._source
             // add product to matches
-            add([ item.name + ' (' + item.sku + ')' ])
+            add([item.name + ' (' + item.sku + ')'])
           }
         }
       })
@@ -149,53 +142,39 @@ export default function () {
         var sku = match[1]
         if (sku && searchResults.length) {
           // get product
-          var product
+          let product
 
           for (var i = 0; i < searchResults.length; i++) {
-            var hit = searchResults[i]
-            var src = hit._source
-            if (src.sku !== sku) {
+            var { _source, _id } = searchResults[i]
+            if (_source.sku !== sku) {
               // test variations
               continue
             }
             // product matched
-            product = src
-            product._id = hit._id
+            product = {
+              _id,
+              ..._source
+            }
             break
           }
+
           if (product) {
             // create item object
             var data = Data()
-            var eachproducts
-            var productsCollection = data.products
-            var testOfEmpty = Array.isArray(productsCollection) && productsCollection.length
-            if (!testOfEmpty || (productsCollection === undefined)) {
-              eachproducts = product._id
-            } else {
-              for (var ii = 0; ii < data.products.length; ii++) {
-                if (product._id === data.products[ii]) {
-                  eachproducts = null
-                  break
-                } else {
-                  eachproducts = product._id
-                }
-              }
-            }
-            // add the new item to cart data
+            // add the new product ID to collection data
             if (!data.products) {
               data.products = []
             }
-            var index = data.products.length
-            if (eachproducts === null) {
+            if (data.products.indexOf(product._id) > -1) {
               app.toast(i18n({
-                'en_us': 'Error! Already added this product in the collection!',
-                'pt_br': 'Erro! Esse produto já foi inserido na coleção!'
+                en_us: 'Already added this product in the collection',
+                pt_br: 'Esse produto já foi inserido na coleção'
               }))
             } else {
-              data.products[index] = eachproducts
-              commit(data)
               // add item to table
-              addItem(product, index)
+              addItem(product, data.products.length)
+              data.products.push(product._id)
+              commit(data, true)
             }
           }
         }
