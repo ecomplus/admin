@@ -145,7 +145,16 @@ const initDashboard = (storeId, username, session) => {
 const accessToken = localStorage.getItem('access_token')
 if (accessToken) {
   const storeId = localStorage.getItem('store_id')
-  const myId = localStorage.getItem('my_id')
+  let myId = localStorage.getItem('my_id')
+
+  const expires = localStorage.getItem('expires')
+  if (expires) {
+    const dateExpires = new Date(localStorage.getItem('expires'))
+    if (dateExpires.getTime() < Date.now()) {
+      localStorage.removeItem('access_token')
+      myId = null
+    }
+  }
 
   if (storeId && myId) {
     $.ajax({
@@ -161,11 +170,13 @@ if (accessToken) {
       }
     })
 
-      .done(() => {
-        initDashboard(storeId, localStorage.getItem('username'), {
-          my_id: myId,
-          access_token: accessToken
-        })
+      .done(function (data, textStatus, jqXHR) {
+        if (jqXHR.status === 200) {
+          initDashboard(storeId, localStorage.getItem('username'), {
+            my_id: myId,
+            access_token: accessToken
+          })
+        }
       })
       .fail(() => localStorage.removeItem('access_token'))
   }
