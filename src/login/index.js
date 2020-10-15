@@ -157,28 +157,11 @@ if (accessToken) {
   }
 
   if (storeId && myId) {
-    $.ajax({
-      url: 'https://api.e-com.plus/v1/authentications/me.json',
-      dataType: 'json',
-      headers: {
-        'X-Store-ID': storeId,
-        'X-My-ID': myId,
-        'X-Access-Token': accessToken
-      },
-      xhrFields: {
-        withCredentials: true
-      }
+    initDashboard(storeId, localStorage.getItem('username'), {
+      my_id: myId,
+      access_token: accessToken,
+      expires
     })
-
-      .done(function (data, textStatus, jqXHR) {
-        if (jqXHR.status === 200) {
-          initDashboard(storeId, localStorage.getItem('username'), {
-            my_id: myId,
-            access_token: accessToken
-          })
-        }
-      })
-      .fail(() => localStorage.removeItem('access_token'))
   }
 }
 
