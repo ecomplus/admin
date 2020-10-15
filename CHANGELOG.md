@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.25](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.24...v1.0.0-alpha.25) (2020-10-15)
+
+
+### Bug Fixes
+
+* **deps:** rollback to webpack-cli v3 ([9e3bcb2](https://github.com/ecomplus/admin/commit/9e3bcb2377dec6e75be99bb458f1cd2833fe7a7f))
+* **session-persist:** ensure setting EcomAuth session when starting logged ([22836cf](https://github.com/ecomplus/admin/commit/22836cfd241bbe4bf0fe147cd0fb371a7ca88050))
+
 ## [1.0.0-alpha.24](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2020-10-12)
 
 
