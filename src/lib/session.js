@@ -9,12 +9,13 @@ const getStorageItem = label => {
 }
 
 const update = () => {
-  const storeId = getStorageItem('store_id')
-  $ecomConfig.set('store_id', storeId)
+  session.store_id = parseInt(getStorageItem('store_id'), 10)
+  $ecomConfig.set('store_id', session.store_id)
   session.my_id = session.access_token = null
-  if (storeId > 0) {
-    session.my_id = getStorageItem('my_id')
-    session.access_token = getStorageItem('access_token')
+  if (session.store_id > 0) {
+    ;['my_id', 'access_token', 'expires'].forEach(label => {
+      session[label] = getStorageItem(label)
+    })
   }
 }
 
