@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.26](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.25...v1.0.0-alpha.26) (2020-10-17)
+
+
+### Features
+
+* **products-form:** preview variations quantities and prices ([90cad43](https://github.com/ecomplus/admin/commit/90cad43501228f9686d7eef349947c77a56caf53))
+
+
+### Bug Fixes
+
+* **form-input-watcher:** ensure remove last level property ([#207](https://github.com/ecomplus/admin/issues/207)) ([6caa5c2](https://github.com/ecomplus/admin/commit/6caa5c2e817cbb4964e8086e6ed2f7f274ea9526))
+* **products-form:** prevent error setting common grid options on customizations ([#227](https://github.com/ecomplus/admin/issues/227)) ([4255f30](https://github.com/ecomplus/admin/commit/4255f30127b8d8d0b02bce3923714607a547892b))
+* **products-form:** rendering variations with specs by text only ([#228](https://github.com/ecomplus/admin/issues/228)) ([3f624dc](https://github.com/ecomplus/admin/commit/3f624dce4bf8c3c481b3a3b5cba15fae0fcd4da9))
+
 ## [1.0.0-alpha.25](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.24...v1.0.0-alpha.25) (2020-10-15)
 
 
