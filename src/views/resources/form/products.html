@@ -732,14 +732,6 @@
                     min="0" max="9999999" step="any"/>
                 </div>
                 <div class="form-group">
-                  <label class="i18n">
-                    <span data-lang="en_us">Availability</span>
-                    <span data-lang="pt_br">Disponibilidade</span>
-                  </label>
-                  <input type="number" class="form-control w-140px" name="variations.production_time.days"
-                    min="0" max="9999999" step="any"/>
-                </div>
-                <div class="form-group">
                   <label>SKU</label>
                   <input type="text" class="form-control text-monospace" name="variations.sku"/>
                   <span class="i18n">
@@ -860,8 +852,8 @@
             <ul class="card-controls">
               <li>
                 <a class="card-btn-slide i18n" href="#">
-                  <span data-lang="en_us">Edit product dimensions</span>
-                  <span data-lang="pt_br">Editar dimensões do produto</span>
+                  <span data-lang="en_us">Edit dimensions and deadlines</span>
+                  <span data-lang="pt_br">Editar dimensões e prazos</span>
                 </a>
               </li>
             </ul>
@@ -963,6 +955,19 @@
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div class="form-group">
+                <label class="i18n">
+                  <span data-lang="en_us">Production time</span>
+                  <span data-lang="pt_br">Prazo de produção</span>
+                </label>
+                <input type="number" class="form-control w-140px" name="variations.production_time.days"
+                  min="0" max="99999"/>
+                <span class="i18n">
+                  <small data-lang="en_us" class="form-text">Deadline days</small>
+                  <small data-lang="pt_br" class="form-text">Dias de prazo</small>
+                </span>
               </div>
             </div>
           </div>

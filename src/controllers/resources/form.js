@@ -280,6 +280,7 @@ export default function () {
             } else {
               data.splice(prop, 1)
             }
+
             if (parts.length) {
               // remove empty parents
               data = Data()
@@ -289,6 +290,14 @@ export default function () {
                   delete data[part]
                 } else {
                   data = data[part]
+                }
+              }
+              if (data && data[parts[i]]) {
+                // remove last level property
+                if (Array.isArray(data)) {
+                  data.splice(parts[i], 1)
+                } else {
+                  delete data[parts[i]]
                 }
               }
             }
