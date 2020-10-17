@@ -1769,14 +1769,17 @@ export default function () {
           if (!data.customizations) {
             data.customizations = []
           }
-          data.customizations.push({
+          const customization = {
             _id: randomObjectId(),
             label: grid.title,
             grid_id: gridId,
-            options: grid.options,
             custom_value: grid.custom_value,
             attachment: grid.attachment
-          })
+          }
+          if (grid.options && !Array.isArray(grid.options)) {
+            customization.options = grid.options
+          }
+          data.customizations.push(customization)
           // commit new data
           commit(data, true)
         }
