@@ -5,7 +5,7 @@
 import Sortable from 'sortablejs'
 
 export default function () {
-  const { $, i18n, lang, tabId, randomObjectId, normalizeString, cutString, substringMatcher } = window
+  const { $, i18n, ecomUtils, lang, tabId, randomObjectId, normalizeString, cutString, substringMatcher } = window
 
   // current tab
   var Tab = window.Tabs[tabId]
@@ -903,13 +903,15 @@ export default function () {
                             '<label class="custom-control-label fw-400 colored"> </label>' +
                           '</div>' +
                         '</div>' +
-                        '<button class="btn btn-light" type="button">' +
-                          '<i class="fa fa-cog"></i>' +
-                          '<span class="i18n"> ' +
-                            '<span data-lang="en_us">Edit variation</span>' +
-                            '<span data-lang="pt_br">Editar variação</span>' +
-                          '</span>' +
-                        '</button>' +
+                        '<div>' +
+                          '<button class="btn btn-light" type="button">' +
+                            '<i class="fa fa-cog"></i>' +
+                            '<span class="i18n"> ' +
+                              '<span data-lang="en_us">Edit variation</span>' +
+                              '<span data-lang="pt_br">Editar variação</span>' +
+                            '</span>' +
+                          '</button>' +
+                        '</div>' +
                       '</div>'
 
     // on checkbox change event
@@ -1156,6 +1158,24 @@ export default function () {
             variationsData.push(variationObject)
             // save variation JSON on checkbox dataset
             $checkbox.data('original-variation', JSON.stringify(variationObject))
+
+            // preview variations quantities and prices
+            const { variations } = Data()
+            if (variations) {
+              const variation = variations[variationIndexFromList($li)]
+              if (variation) {
+                let html = ''
+                if (typeof variation.quantity === 'number') {
+                  html += `<small class="mr-2 text-dark">${variation.quantity} un</small>`
+                }
+                if (typeof variation.price === 'number') {
+                  html += `<small class="mr-2 text-muted">${ecomUtils.formatMoney(variation.price)}</small>`
+                }
+                if (html) {
+                  $(html).insertBefore($edit)
+                }
+              }
+            }
           }
 
           if (!skipData) {
