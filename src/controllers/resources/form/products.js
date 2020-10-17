@@ -195,7 +195,7 @@ export default function () {
                       var spec = specifications[gridId]
                       if (Array.isArray(spec)) {
                         for (var ii = 0; ii < spec.length; ii++) {
-                          strValue += ',' + spec[ii].value
+                          strValue += ',' + (spec[ii].value || spec[ii].text)
                         }
                       }
                     }
@@ -261,7 +261,7 @@ export default function () {
         var addGrids = function (item) {
           if (item.specifications) {
             for (gridId in item.specifications) {
-              if (item.specifications.hasOwnProperty(gridId) && grids.indexOf(gridId) === -1) {
+              if (item.specifications[gridId] !== undefined && grids.indexOf(gridId) === -1) {
                 grids.push(gridId)
               }
             }
@@ -290,17 +290,17 @@ export default function () {
 
               // save grid with ID and title
               var title
-              if (Grids.hasOwnProperty(gridId) && Grids[gridId].title) {
+              if (Grids[gridId] && Grids[gridId].title) {
                 title = Grids[gridId].title
-              } else if (specsTitlesObject.hasOwnProperty(gridId)) {
+              } else if (specsTitlesObject[gridId]) {
                 title = specsTitlesObject[gridId]
               } else {
                 // no title to save
                 return
               }
               var gridBody = {
-                'grid_id': gridId,
-                'title': title
+                grid_id: gridId,
+                title: title
               }
 
               // call Store API
@@ -318,7 +318,7 @@ export default function () {
       // try to match with defined grids titles
       var matched
       for (var id in Grids) {
-        if (Grids.hasOwnProperty(id) && normalizeString(Grids[id].title) === gridId) {
+        if (Grids[id] && normalizeString(Grids[id].title) === gridId) {
           // found respective grid object
           gridId = id
           matched = true
@@ -372,7 +372,7 @@ export default function () {
                             '</button>' +
                           '</div>' +
                           '<input class="form-control" type="text" name="grid" placeholder="' +
-                          i18n({ 'en_us': 'Size', 'pt_br': 'Tamanho' }) + '">' +
+                          i18n({ en_us: 'Size', pt_br: 'Tamanho' }) + '">' +
                         '</div>' +
                       '</div>' +
                     '</div>' +
@@ -852,7 +852,7 @@ export default function () {
         skipOption = true
         option = optionObject.text
         if (!optionObject.option_id) {
-          optionObject.option_id = optionObject.value
+          optionObject.option_id = optionObject.value || optionObject.text
         }
       }
 
@@ -959,7 +959,7 @@ export default function () {
               data.variations.splice(index, 0, variation)
             } else {
               // first variation
-              data.variations = [ variation ]
+              data.variations = [variation]
             }
           }
 
@@ -1022,7 +1022,7 @@ export default function () {
             var strValue = ''
             var specifications = {}
             for (gridId in combination) {
-              if (combination.hasOwnProperty(gridId)) {
+              if (combination[gridId]) {
                 var option = combination[gridId].text
                 name += ' / ' + option
                 label += '<span>' + option + '</span>'
@@ -1040,10 +1040,10 @@ export default function () {
                 // fix grid ID
                 // eg.: 'colors.2'
                 gridId = gridId.replace(/\..*/, '')
-                if (specifications.hasOwnProperty(gridId)) {
+                if (specifications[gridId]) {
                   specifications[gridId].push(specObject)
                 } else {
-                  specifications[gridId] = [ specObject ]
+                  specifications[gridId] = [specObject]
                 }
               }
             }
