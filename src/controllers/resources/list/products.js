@@ -3,6 +3,7 @@
  */
 
 import {
+  i19available,
   i19applyFilters,
   i19brands,
   i19categories,
@@ -17,8 +18,10 @@ import {
   i19price,
   i19productName,
   i19quantity,
+  i19sales,
   i19savedWithSuccess,
-  i19status
+  i19status,
+  i19visible
 } from '@ecomplus/i18n'
 
 export default function () {
@@ -344,7 +347,10 @@ export default function () {
         if (keys.length > 1) {
           if (val) {
             lastKey = keys.pop()
-            const lastObj = keys.reduce((obj, key) => obj[key] = obj[key] || {}, obj)
+            const lastObj = keys.reduce((obj, key) => {
+              obj[key] = obj[key] || {}
+              return obj
+            }, obj)
             lastObj[lastKey] = val
           } else {
             delete obj[keys[0]]
@@ -592,10 +598,14 @@ export default function () {
               '<a href="' + link + '">' + item.name + '</a>' +
               '<div class="item-price">' + priceString + '</div>' +
               '<span class="text-muted">' +
-                '<i class="mr-2 fa fa-' + (item.visible ? 'eye' : 'eye-slash') + '"></i>' +
-                '<i class="mr-2 fa fa-' + (item.available ? 'check' : 'close') + '"></i>' +
+                `<i class="mr-2 fa fa-${(item.visible ? 'eye' : 'eye-slash')}" title="${i18n(i19visible)}"></i>` +
+                `<i class="mr-2 fa fa-${(item.available ? 'check' : 'close')}" title="${i18n(i19available)}"></i>` +
               '</span>' +
-              '<span class="item-qnt">' + qntString + '</span>' +
+              `<span class="item-qnt mr-2">${qntString}</span>` +
+              (item.sales
+                ? `<span class="d-inline-block text-secondary" title="${i18n(i19sales)}: ${item.sales}">` +
+                    `<i class="fa fa-inbox"></i> ${item.sales}</span>`
+                : '') +
             '</div>',
             $('<div>', {
               class: 'custom-controls-stacked',
