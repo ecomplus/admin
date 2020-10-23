@@ -1,5 +1,4 @@
 import { skipWaiting, clientsClaim } from 'workbox-core'
-import { precacheAndRoute } from 'workbox-precaching'
 import { registerRoute } from 'workbox-routing'
 import { StaleWhileRevalidate, CacheFirst, NetworkFirst } from 'workbox-strategies'
 import { CacheableResponsePlugin } from 'workbox-cacheable-response'
@@ -7,10 +6,6 @@ import { ExpirationPlugin } from 'workbox-expiration'
 
 skipWaiting()
 clientsClaim()
-
-/* global self */
-
-precacheAndRoute(self.__WB_MANIFEST)
 
 /**
  * Runtime caching
@@ -62,11 +57,25 @@ registerRoute(
  * Same origin assets
  */
 
-// theme assets directory
+// theme core
 registerRoute(
-  /\/assets\//,
+  /\/assets\/(js|css)\//,
+  new CacheFirst({
+    cacheName: 'theme'
+  })
+)
+
+// theme assets and vendors
+registerRoute(
+  /\/assets\/(?!js|css)[^/]+\//,
   new StaleWhileRevalidate({
-    cacheName: 'assets'
+    cacheName: 'assets',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 50,
+        purgeOnQuotaError: true
+      })
+    ]
   })
 )
 
@@ -75,6 +84,27 @@ registerRoute(
   /\/img\//,
   new StaleWhileRevalidate({
     cacheName: 'logo'
+  })
+)
+
+// bundle entries
+registerRoute(
+  /\/admin\./,
+  new NetworkFirst({
+    cacheName: 'entries'
+  })
+)
+
+// bundle chunks
+registerRoute(
+  /\/chunks\//,
+  new NetworkFirst({
+    cacheName: 'chunks',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 100
+      })
+    ]
   })
 )
 
