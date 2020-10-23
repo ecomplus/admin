@@ -72,7 +72,7 @@ export default function () {
     var gridsOptions = {}
 
     // load grids and options samples
-    import('@/data/misc/variations-grids')
+    import(/* webpackChunkName: "data_misc_variations-grids" */ '@/data/misc/variations-grids')
       .then(exp => {
         const json = exp.default
         // successful

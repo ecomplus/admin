@@ -11,5 +11,5 @@ export const onLoad = () => {
     pt_br: 'Etiquetas de envio'
   }))
 
-  handleImport(import('@/controllers/shipping-tags'), true)
+  handleImport(import(/* webpackChunkName: "controllers_shipping-tags" */ '@/controllers/shipping-tags'), true)
 }

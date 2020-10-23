@@ -4,5 +4,5 @@ import brandsFormHTML from '@/views/resources/form/brands.html'
 export const html = brandsFormHTML
 
 export const onLoad = () => {
-  handleImport(import('@/controllers/resources/form'), true)
+  handleImport(import(/* webpackChunkName: "controllers_resources_form" */ '@/controllers/resources/form'), true)
 }

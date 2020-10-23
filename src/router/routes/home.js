@@ -7,6 +7,8 @@ export const onLoad = () => {
   window.routeReady('Home')
   window.Tabs[window.tabId].wait = true
 
-  handleImport(import('@/controllers/resources/form'), true)
-  handleImport(import('@/controllers/resources/form/home'), true)
+  handleImport(import(/* webpackChunkName: "controllers_resources_form" */
+    '@/controllers/resources/form'), true)
+  handleImport(import(/* webpackChunkName: "controllers_resources_form_home" */
+    '@/controllers/resources/form/home'), true)
 }

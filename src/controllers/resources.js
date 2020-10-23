@@ -117,37 +117,47 @@ export default function () {
       if (listing === true) {
         if (slug !== 'products') {
           // custom list
-          importPromise = import('@/router/routes/resources/list')
+          importPromise = import(/* webpackChunkName: "router_routes_resources_list" */
+            '@/router/routes/resources/list')
         } else {
           // products list
-          importPromise = import('@/router/routes/resources/list/products')
+          importPromise = import(/* webpackChunkName: "router_routes_resources_list_products" */
+            '@/router/routes/resources/list/products')
         }
       } else {
         // form to create and edit
         switch (slug) {
           case 'orders':
-            importPromise = import('@/router/routes/resources/form/orders')
+            importPromise = import(/* webpackChunkName: "router_routes_resources_form_orders" */
+              '@/router/routes/resources/form/orders')
             break
           case 'products':
-            importPromise = import('@/router/routes/resources/form/products')
+            importPromise = import(/* webpackChunkName: "router_routes_resources_form_products" */
+              '@/router/routes/resources/form/products')
             break
           case 'categories':
-            importPromise = import('@/router/routes/resources/form/categories')
+            importPromise = import(/* webpackChunkName: "router_routes_resources_form_categories" */
+              '@/router/routes/resources/form/categories')
             break
           case 'brands':
-            importPromise = import('@/router/routes/resources/form/brands')
+            importPromise = import(/* webpackChunkName: "router_routes_resources_form_brands" */
+              '@/router/routes/resources/form/brands')
             break
           case 'carts':
-            importPromise = import('@/router/routes/resources/form/carts')
+            importPromise = import(/* webpackChunkName: "router_routes_resources_form_carts" */
+              '@/router/routes/resources/form/carts')
             break
           case 'customers':
-            importPromise = import('@/router/routes/resources/form/customers')
+            importPromise = import(/* webpackChunkName: "router_routes_resources_form_customers" */
+              '@/router/routes/resources/form/customers')
             break
           case 'collections':
-            importPromise = import('@/router/routes/resources/form/collections')
+            importPromise = import(/* webpackChunkName: "router_routes_resources_form_collections" */
+              '@/router/routes/resources/form/collections')
             break
           case 'grids':
-            importPromise = import('@/router/routes/resources/form/grids')
+            importPromise = import(/* webpackChunkName: "router_routes_resources_form_grids" */
+              '@/router/routes/resources/form/grids')
             break
         }
 

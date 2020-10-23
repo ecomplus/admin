@@ -9,6 +9,8 @@ export const onLoad = () => {
   window.routeReady(i18n(i19configuration))
   window.Tabs[window.tabId].wait = true
 
-  handleImport(import('@/controllers/resources/form'), true)
-  handleImport(import('@/controllers/resources/form/settings'), true)
+  handleImport(import(/* webpackChunkName: "controllers_resources_form" */
+    '@/controllers/resources/form'), true)
+  handleImport(import(/* webpackChunkName: "controllers_resources_form_settings" */
+    '@/controllers/resources/form/settings'), true)
 }
