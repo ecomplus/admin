@@ -8,20 +8,20 @@ export default path => {
     case 'new':
       return Promise.resolve({ html: newPageHTML })
     case 'home':
-      return import('./routes/home')
+      return import(/* webpackChunkName: "router_routes_home" */ '@/router/routes/home')
     case 'resources':
-      return import('./routes/resources')
+      return import(/* webpackChunkName: "router_routes_resources" */ '@/router/routes/resources')
     case 'apps':
-      return import('./routes/apps')
+      return import(/* webpackChunkName: "router_routes_apps" */ '@/router/routes/apps')
     case 'invoices':
-      return import('./routes/invoices')
+      return import(/* webpackChunkName: "router_routes_invoices" */ '@/router/routes/invoices')
     case 'settings':
-      return import('./routes/settings')
+      return import(/* webpackChunkName: "router_routes_settings" */ '@/router/routes/settings')
     case 'shipping-tags':
-      return import('./routes/shipping-tags')
+      return import(/* webpackChunkName: "router_routes_shipping-tags" */ '@/router/routes/shipping-tags')
     case '500':
-      return fixHtmlImport(import('@/views/500.html'))
+      return fixHtmlImport(import(/* webpackChunkName: "views_500.html" */ '@/views/500.html'))
     default:
-      return fixHtmlImport(import('@/views/404.html'))
+      return fixHtmlImport(import(/* webpackChunkName: "views_404.html" */ '@/views/404.html'))
   }
 }

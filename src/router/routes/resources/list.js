@@ -4,5 +4,6 @@ import listHTML from '@/views/resources/list.html'
 export const html = listHTML
 
 export const onLoad = () => {
-  handleImport(import('@/controllers/resources/list'), true)
+  handleImport(import(/* webpackChunkName: "controllers_resources_list" */
+    '@/controllers/resources/list'), true)
 }

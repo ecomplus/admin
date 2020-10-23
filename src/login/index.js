@@ -13,7 +13,7 @@ const $login = $('<div>')
   .html(loginHTML)
   .prependTo($('body'))
 
-import('@/lib/i18n').catch(console.error)
+import(/* webpackChunkName: "lib_i18n" */ '@/lib/i18n').catch(console.error)
 
 const getDynamicBg = selector => {
   let images
@@ -127,7 +127,7 @@ $el.find('[data-lang="pt_br"]').text(quote.msg.pt_br)
 $el.find('cite').text(quote.author)
 
 const initDashboard = (storeId, username, session) => {
-  return import('@/dashboard')
+  return import(/* webpackChunkName: "dashboard" */ '@/dashboard')
     .then(() => {
       $login.remove()
       $dashboardStart.show()

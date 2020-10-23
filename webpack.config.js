@@ -20,8 +20,6 @@ const dirImg = path.resolve(dirPublic, 'img')
 const dirModules = path.resolve(process.cwd(), 'node_modules')
 const dirOutput = path.resolve(process.cwd(), !devMode ? 'dist' : '.serve')
 
-const filenameSchema = '[name].[contenthash]'
-
 const entry = {
   admin: [path.resolve(dirScss, 'styles.scss')]
 }
@@ -76,8 +74,8 @@ const config = {
   output: {
     path: dirOutput,
     publicPath: '/',
-    filename: devMode ? '[name].js' : `${filenameSchema}.js`,
-    chunkFilename: '[contenthash].js'
+    filename: '[name].js',
+    chunkFilename: 'chunks/[name].js'
   },
   optimization: {
     minimizer: [new TerserPlugin()]
@@ -128,8 +126,8 @@ const config = {
     new HtmlWebpackPlugin(),
 
     new MiniCssExtractPlugin({
-      filename: devMode ? '[name].css' : `${filenameSchema}.css`,
-      chunkFilename: '[contenthash].css',
+      filename: '[name].css',
+      chunkFilename: 'chunks/[name].css',
       ignoreOrder: true
     }),
 

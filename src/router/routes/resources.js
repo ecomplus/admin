@@ -4,5 +4,5 @@ import resourcesHTML from '@/views/resources.html'
 export const html = resourcesHTML
 
 export const onLoad = () => {
-  handleImport(import('@/controllers/resources'), true)
+  handleImport(import(/* webpackChunkName: "controllers_resources" */ '@/controllers/resources'), true)
 }

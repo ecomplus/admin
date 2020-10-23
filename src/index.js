@@ -12,11 +12,11 @@ const { sessionStorage, app } = window
 app.ready(() => {
   sessionStorage.setItem('go_to', window.location.href)
   if (!session.my_id || !session.access_token || !(new Date(session.expires).getTime() >= Date.now())) {
-    import('@/login/').catch(console.error)
+    import(/* webpackChunkName: "login" */ '@/login/').catch(console.error)
   } else {
     const ecomAuth = new EcomAuth()
     ecomAuth.setSession(session)
-    import('@/dashboard').catch(console.error)
+    import(/* webpackChunkName: "dashboard" */ '@/dashboard').catch(console.error)
   }
 })
 

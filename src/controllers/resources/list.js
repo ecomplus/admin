@@ -405,7 +405,7 @@ export default function () {
     var bulkEditFields = []
 
     // load lists configuration JSON
-    import('@/data/misc/config-lists')
+    import(/* webpackChunkName: "data_misc_config-lists" */ '@/data/misc/config-lists')
       .then(exp => {
         const json = exp.default
         const config = json[resourceSlug]

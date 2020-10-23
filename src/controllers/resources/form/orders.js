@@ -273,7 +273,7 @@ export default function () {
     }
 
     // reuse order status enum and respective colors from lists configuration JSON
-    import('@/data/misc/config-lists')
+    import(/* webpackChunkName: "data_misc_config-lists" */ '@/data/misc/config-lists')
       .then(exp => {
         const json = exp.default
         // order status string fields
@@ -294,7 +294,7 @@ export default function () {
 
           // add options to HTML string
           for (var status in opts) {
-            if (opts.hasOwnProperty(status)) {
+            if (opts[status]) {
               html.push($('<option>', {
                 value: status,
                 text: status,

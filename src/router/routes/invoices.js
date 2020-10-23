@@ -12,5 +12,5 @@ export const onLoad = () => {
   }))
   window.Tabs[window.tabId].wait = true
 
-  handleImport(import('@/controllers/invoices'), true)
+  handleImport(import(/* webpackChunkName: "controllers_invoices" */ '@/controllers/invoices'), true)
 }
