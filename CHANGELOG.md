@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.27](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.26...v1.0.0-alpha.27) (2020-10-23)
+
+
+### Features
+
+* **products-list:** show sales count and add titles for state icons ([#208](https://github.com/ecomplus/admin/issues/208)) ([48e1428](https://github.com/ecomplus/admin/commit/48e1428be1658d262694b7c5b901a69891ffb575))
+
+
+### Bug Fixes
+
+* **chunk-names:** set chunk filenames to properlly handle cache ([#247](https://github.com/ecomplus/admin/issues/247)) ([16ee0ec](https://github.com/ecomplus/admin/commit/16ee0ece9ce8b04e0fc7027b6f700c5339b7f3c0))
+* **sw:** remove precache and route rule, add runtime routes for bundles ([#274](https://github.com/ecomplus/admin/issues/274)) ([e3cd454](https://github.com/ecomplus/admin/commit/e3cd454306a031d7ac18278794acaff831e08a83))
+
 ## [1.0.0-alpha.26](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.25...v1.0.0-alpha.26) (2020-10-17)
 
 
