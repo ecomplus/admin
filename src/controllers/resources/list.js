@@ -8,7 +8,7 @@ export default function () {
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
 
-  var baseHash = '/' + window.location.hash + '/'
+  var baseHash = '/' + window.location.hash.replace(/\?.*$/, '') + '/'
   // create button
   $('#t' + tabId + '-create').click(function () {
     // go to 'new' route
@@ -259,6 +259,19 @@ export default function () {
       load()
     })
 
+    let presetParams = window.routeQuery
+    if (presetParams) {
+      $(`#t${tabId}-preset-params`).html($('<a>', {
+        html: `<i class="fa fa-filter mr-1"></i> <code>${presetParams.replace(/[^=]+=([^&]+)/, '$1 ')}</code>`,
+        click () {
+          presetParams = null
+          $(this).html('')
+          // reload data
+          load()
+        }
+      }))
+    }
+
     var dataUpdated = false
     var forceReload = false
     // control request queue
@@ -285,6 +298,9 @@ export default function () {
             params += '-'
           }
           params += sort.field.replace('/', '.')
+        }
+        if (presetParams) {
+          params += `&${presetParams}`
         }
 
         // object properties

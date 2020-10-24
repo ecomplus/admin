@@ -297,6 +297,9 @@ export default function () {
         // default query string
         // limit up to 60 results by default
         params = 'limit=60&sort=-updated_at'
+        if (window.routeQuery) {
+          params += `&${window.routeQuery}`
+        }
       }
     } else {
       // specific resource document

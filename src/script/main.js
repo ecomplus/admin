@@ -599,13 +599,15 @@ const { sessionStorage, localStorage, Image, $, app } = window
 
     // reset route parameters
     window.routeParams = []
-    var paths = route.split('/')
+    const [pathname, query] = route.split('?')
+    const paths = pathname.split('/')
     for (var i = 1; i < paths.length; i++) {
       // URI param
       if (paths[i] !== '') {
         window.routeParams.push(paths[i])
       }
     }
+    window.routeQuery = query
 
     $('#router > .loading').show()
     // load HTML content

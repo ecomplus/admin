@@ -595,7 +595,7 @@ export default function () {
           html: [
             `<a href="${link}" class="item-picture" title="${item.name}">${pictureHtml}</a>` +
             '<div class="item-info">' +
-              '<a href="' + link + '">' + item.name + '</a>' +
+              '<a href="' + link + '" class="item-name">' + item.name + '</a>' +
               '<div class="item-price">' + priceString + '</div>' +
               '<span class="text-muted">' +
                 `<i class="mr-2 fa fa-${(item.visible ? 'eye' : 'eye-slash')}" title="${i18n(i19visible)}"></i>` +
@@ -603,8 +603,9 @@ export default function () {
               '</span>' +
               `<span class="item-qnt mr-2">${qntString}</span>` +
               (item.sales
-                ? `<span class="d-inline-block text-secondary" title="${i18n(i19sales)}: ${item.sales}">` +
-                    `<i class="fa fa-inbox"></i> ${item.sales}</span>`
+                ? `<a class="d-inline-block" title="${i18n(i19sales)}: ${item.sales}"` +
+                    ` href="/#/resources/orders?items.product_id=${item._id}">` +
+                    `<i class="fa fa-inbox"></i> ${item.sales}</a>`
                 : '') +
             '</div>',
             $('<div>', {
