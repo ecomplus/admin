@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.28](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.27...v1.0.0-alpha.28) (2020-10-24)
+
+
+### Features
+
+* **products-list:** bulk enable/disable products from list ([#189](https://github.com/ecomplus/admin/issues/189)) ([7aa2f0e](https://github.com/ecomplus/admin/commit/7aa2f0e61b7b7931018855a7ad18e714b6aa04de))
+* **products-list:** list product\'s orders from link on products list ([8bf176b](https://github.com/ecomplus/admin/commit/8bf176b906f36658f8954295a158a0183dd8b40f))
+
+
+### Bug Fixes
+
+* **sw:** must declare `self.__WB_MANIFEST` ([d8f388d](https://github.com/ecomplus/admin/commit/d8f388d1d2686cb7996a111ce289869ddd6a0117))
+
 ## [1.0.0-alpha.27](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.26...v1.0.0-alpha.27) (2020-10-23)
 
 

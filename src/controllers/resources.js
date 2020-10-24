@@ -297,6 +297,9 @@ export default function () {
         // default query string
         // limit up to 60 results by default
         params = 'limit=60&sort=-updated_at'
+        if (window.routeQuery) {
+          params += `&${window.routeQuery}`
+        }
       }
     } else {
       // specific resource document
@@ -445,7 +448,7 @@ export default function () {
     var bulkAction = function (method, bodyObject) {
       var todo = Tab.selectedItems.length
       if (todo > 0) {
-        var cb = Tab.editItemsCallback()
+        var cb = Tab.editItemsCallback(method, bodyObject)
         // call API to delete documents
         var done = 0
         // collect all requests errors

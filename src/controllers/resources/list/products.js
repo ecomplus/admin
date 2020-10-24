@@ -503,6 +503,10 @@ export default function () {
       })
     ])
 
+    // bulk enable/disable products
+    $('#enable-products').click(() => Tab.editItems({ available: true }))
+    $('#disable-products').click(() => Tab.editItems({ available: false }))
+
     var setupItemElement = function (id, index, $item, $checkbox) {
       $checkbox.on('change', function () {
         if ($(this).is(':checked')) {
@@ -595,16 +599,19 @@ export default function () {
           html: [
             `<a href="${link}" class="item-picture" title="${item.name}">${pictureHtml}</a>` +
             '<div class="item-info">' +
-              '<a href="' + link + '">' + item.name + '</a>' +
+              '<a href="' + link + '" class="item-name">' + item.name + '</a>' +
               '<div class="item-price">' + priceString + '</div>' +
               '<span class="text-muted">' +
                 `<i class="mr-2 fa fa-${(item.visible ? 'eye' : 'eye-slash')}" title="${i18n(i19visible)}"></i>` +
-                `<i class="mr-2 fa fa-${(item.available ? 'check' : 'close')}" title="${i18n(i19available)}"></i>` +
+                '<span class="item-availability">' +
+                  `<i class="mr-2 fa fa-${(item.available ? 'check' : 'close')}" title="${i18n(i19available)}"></i>` +
+                '</span>' +
               '</span>' +
               `<span class="item-qnt mr-2">${qntString}</span>` +
               (item.sales
-                ? `<span class="d-inline-block text-secondary" title="${i18n(i19sales)}: ${item.sales}">` +
-                    `<i class="fa fa-inbox"></i> ${item.sales}</span>`
+                ? `<a class="d-inline-block" title="${i18n(i19sales)}: ${item.sales}"` +
+                    ` href="/#/resources/orders?items.product_id=${item._id}">` +
+                    `<i class="fa fa-inbox"></i> ${item.sales}</a>`
                 : '') +
             '</div>',
             $('<div>', {
@@ -873,17 +880,34 @@ export default function () {
     })
 
     // delete event effects
-    Tab.editItemsCallback = function () {
+    Tab.editItemsCallback = function (method, bodyObject) {
       // show loading spinner
       $container.addClass('ajax')
       // returns callback for delete end
       return function (errors) {
         if (Array.isArray(errors) && !errors.length) {
-          // remove selected items on DOM
-          $list.find('input:checked').closest('.item-product').fadeOut(400, function () {
-            // show content
-            $container.removeClass('ajax')
-          })
+          const $checkboxes = $list.find('input:checked')
+          const $items = $checkboxes.closest('.item-product')
+          if (method === 'PATCH' && bodyObject) {
+            if (typeof bodyObject.available === 'boolean') {
+              $items.each(function () {
+                $(this).find('.item-availability')
+                  .html(`<i class="mr-2 fa fa-${(bodyObject.available ? 'check' : 'close')}"></i>`)
+              })
+              // show content
+              $container.removeClass('ajax')
+              $checkboxes.next().click()
+            } else {
+              // reload all
+              load()
+            }
+          } else {
+            // remove selected items on DOM
+            $items.fadeOut(400, function () {
+              // show content
+              $container.removeClass('ajax')
+            })
+          }
         } else {
           // errors occurred
           // reload only

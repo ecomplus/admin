@@ -205,7 +205,8 @@ if (!devMode) {
   config.plugins.push(
     new WorkboxPlugin.InjectManifest({
       swSrc: path.resolve(dirSrc, 'sw.js'),
-      swDest: 'sw.js'
+      swDest: 'sw.js',
+      exclude: [/.*/]
     }),
 
     new WebpackPwaManifest({
