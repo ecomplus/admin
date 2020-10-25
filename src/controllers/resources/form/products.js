@@ -1542,7 +1542,7 @@ export default function () {
           for (var gridId in specifications) {
             var options = specifications[gridId]
             if (options) {
-              elSpecs += '<h4><small class="subtitle m-0">' + Grids[gridId].title + '</small>'
+              elSpecs += '<h4><small class="subtitle m-0">' + Grids[fixGridId(gridId)].title + '</small>'
               for (i = 0; i < options.length; i++) {
                 elSpecs += ' <small>·</small> ' + options[i].text
               }
