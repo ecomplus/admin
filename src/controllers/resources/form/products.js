@@ -92,7 +92,8 @@ export default function () {
 
       .finally(() => {
         // add store custom grids
-        window.callApi('grids.json?fields=title,grid_id,options,custom_value,attachment', 'GET', (err, json) => {
+        const listGridsUrl = 'grids.json?fields=title,grid_id,options,custom_value,attachment,add_to_price'
+        window.callApi(listGridsUrl, 'GET', (err, json) => {
           if (!err) {
             for (var i = 0; i < json.result.length; i++) {
               var grid = json.result[i]
@@ -1774,7 +1775,8 @@ export default function () {
             label: grid.title,
             grid_id: gridId,
             custom_value: grid.custom_value,
-            attachment: grid.attachment
+            attachment: grid.attachment,
+            add_to_price: grid.add_to_price
           }
           if (grid.options && !Array.isArray(grid.options)) {
             customization.options = grid.options
@@ -1782,6 +1784,18 @@ export default function () {
           data.customizations.push(customization)
           // commit new data
           commit(data, true)
+        }
+
+        let labelAppend = ''
+        if (type !== 'spec' && grid.add_to_price) {
+          // show customization additional price
+          const { type, addition } = grid.add_to_price
+          if (addition) {
+            labelAppend = '<br><span class="text-info">' +
+                (addition > 0 ? '+' : '') +
+                (type === 'percentage' ? `%${addition}` : ecomUtils.formatMoney(addition)) +
+              '</span>'
+          }
         }
 
         var $remove = $('<a>', {
@@ -1795,7 +1809,7 @@ export default function () {
             class: $input ? 'form-group' : null,
             html: [
               $remove,
-              '<label>' + spec + '</label>',
+              '<label>' + spec + labelAppend + '</label>',
               $input
             ]
           })
