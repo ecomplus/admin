@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.29](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.28...v1.0.0-alpha.29) (2020-10-25)
+
+
+### Features
+
+* **products-form:** show customization additional price ([fb3cbc1](https://github.com/ecomplus/admin/commit/fb3cbc14756eecec8618755539acb1bceb5a96ea))
+
+
+### Bug Fixes
+
+* **products-form:** normalize grid id to get grid title ([#250](https://github.com/ecomplus/admin/issues/250)) ([a33c505](https://github.com/ecomplus/admin/commit/a33c505b1f781e6f5a1cbec30c678fa67432164d))
+
 ## [1.0.0-alpha.28](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.27...v1.0.0-alpha.28) (2020-10-24)
 
 
