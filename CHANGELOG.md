@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.30](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.29...v1.0.0-alpha.30) (2020-11-01)
+
+
+### Bug Fixes
+
+* **duplicate-doc:** prevent duplicating slug and some other fields ([6fe8fff](https://github.com/ecomplus/admin/commit/6fe8fffabb8dfa5553a7c9a1ccbe45846ac611fc))
+* **orders-list:** fix handling status records to events array ([a9bd90d](https://github.com/ecomplus/admin/commit/a9bd90dfd8b939a8536402da0d5e3b3a30ebfa1d))
+
 ## [1.0.0-alpha.29](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.28...v1.0.0-alpha.29) (2020-10-25)
 
 

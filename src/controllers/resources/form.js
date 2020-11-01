@@ -66,8 +66,9 @@ export default function () {
         window.location = '/#/resources/' + slug + '/' + json._id
       }
       const data = Object.assign({}, Data())
+      const rand = () => Math.floor(Math.random() * (1000 - 100)) + 100
       if (data.sku) {
-        const suffixSku = () => '-C' + parseInt(Math.random() * 100, 10)
+        const suffixSku = () => '-C' + rand()
         data.sku += suffixSku()
         if (data.variations) {
           data.variations.forEach(variation => {
@@ -76,6 +77,21 @@ export default function () {
           })
         }
       }
+      if (data.slug) {
+        data.slug += `-c${rand()}`
+      }
+      ;[
+        'views',
+        'sales',
+        'total_sold',
+        'inventory_records',
+        'price_change_records',
+        'orders'
+      ].forEach(field => {
+        if (data[field] !== undefined) {
+          delete data[field]
+        }
+      })
       callApi(slug + '.json', 'POST', callback, data)
     })
 
