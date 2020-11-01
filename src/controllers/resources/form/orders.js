@@ -344,7 +344,7 @@ export default function () {
               if (index > 0 && entry.status === sortedEntries[index - 1].status) {
                 return
               }
-              var eventObj
+              let eventObj
               for (var status in opts) {
                 if (opts[status] && status === entry.status) {
                   // status found
@@ -352,9 +352,13 @@ export default function () {
                   break
                 }
               }
-              eventObj.date_time = entry.date_time
-              eventObj.type = eventType
-              events.push(eventObj)
+              if (eventObj) {
+                events.push({
+                  ...eventObj,
+                  date_time: entry.date_time,
+                  type: eventType
+                })
+              }
             })
           }
         }
