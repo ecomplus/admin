@@ -778,11 +778,12 @@ const { sessionStorage, localStorage, Image, $, app } = window
         // discard save function and action title
         tabObj.saveCallback = tabObj.actionTitle = null
       }
-    } else {
+    }
+
+    if (ignoreRoute) {
       // next will not be ignored
       ignoreRoute = false
     }
-
     if (tabObj) {
       // update current tab hash
       tabObj.hash = hash
