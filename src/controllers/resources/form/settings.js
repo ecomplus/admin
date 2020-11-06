@@ -55,8 +55,8 @@ export default function () {
         }
         if (schema.homepage) {
           $layoutStore.append(
-            '  <a target="_blank" data-lang="en_us" href="' + schema.homepage + '/admin" class="form-text">Access layout store</a>' +
-            '  <a target="_blank" data-lang="pt_br" href="' + schema.homepage + '/admin" class="form-text">Acessar visual da loja</a>'
+            '  <span data-lang="en_us"><a target="_blank" data-lang="en_us" href="' + schema.homepage + '/admin/">Edit layout store</a> | <a target="_blank" data-lang="en_us" href="' + schema.homepage + '">Access store</a></span>' +
+            '  <span data-lang="pt_br"><a target="_blank" data-lang="pt_br" href="' + schema.homepage + '/admin/">Editar visual da loja</a> | <a target="_blank" data-lang="pt_br" href="' + schema.homepage + '">Acessar loja</a></span>'
           )
         } else {
           $layoutStore.append(
@@ -100,11 +100,11 @@ export default function () {
                       '      <span data-lang="en_us">Renewal day</span> ' +
                       '      <span data-lang="pt_br">Dia da renovação</span>' +
                       '      </span>: ' + schema.$main.renewal_day)
-
-        var logo = schema.logo.url
-        if (typeof logo === 'undefined') {
+        var logo
+        if (typeof schema.logo === 'undefined') {
           logo = ''
         } else {
+          logo = schema.logo.url
           $logo.val(logo)
           imglogo(logo)
           $logoAlt.val(schema.logo.alt)
@@ -119,18 +119,19 @@ export default function () {
           $cpfDoc.val(schema.doc_number)
         }
         if (schema.doc_type === 'CNPJ') {
+          $docCPF.attr('checked', false)
+          $docCNPJ.attr('checked', true)
           $cnpj.show()
           $cpf.hide()
           $inscNumb.show()
           $inscType.show()
-          $inscNumb.val(schema.inscription_number)
           $cnpjDoc.val(schema.doc_number)
-          $docCPF.attr('checked', false)
-          $docCNPJ.attr('checked', true)
-          if (schema.inscription_number === 'state') {
+          if (schema.inscription_type === 'State') {
             $inscType.find('#inscState').attr('checked', true)
+            $inscNumb.find('input').val(schema.inscription_number)
           } else {
             $inscType.find('#inscMuni').attr('checked', true)
+            $inscNumb.find('input').val(schema.inscription_number)
           }
         }
       }
@@ -224,7 +225,7 @@ export default function () {
         Object.assign(obj[keys] = val, obj)
       }
     }
-    $('.form-group').find('input').change(function () {
+    $('.form-group').find('input,textarea').change(function () {
       var prop = $(this).attr('name')
       var value = removeMask(prop, $(this).val())
       set(objInfo, prop, value)
