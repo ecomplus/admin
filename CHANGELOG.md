@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.31](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.30...v1.0.0-alpha.31) (2020-11-06)
+
+
+### Features
+
+* **import-csv:** import new documents if no object id ([#260](https://github.com/ecomplus/admin/issues/260)) ([c5d277f](https://github.com/ecomplus/admin/commit/c5d277ff6cab77dc89e0147be7016ef3e991169e))
+* **products-form:** count product orders and list last ones ([0f6a2a3](https://github.com/ecomplus/admin/commit/0f6a2a3e9e2477aa10e402702ce595a4e4a014ff))
+* **products-list:** add mass edit visible/invisible ([#259](https://github.com/ecomplus/admin/issues/259)) ([7987f3f](https://github.com/ecomplus/admin/commit/7987f3f85aa519e911761bd35200be69fec640ca))
+* add mass edit visible or invisible ([1f7f2ad](https://github.com/ecomplus/admin/commit/1f7f2ad9b58b536aa9d685cbe711943eb07790f8))
+
+
+### Bug Fixes
+
+* **router:** fix reseting ignore route with new tabs ([97cb77b](https://github.com/ecomplus/admin/commit/97cb77b16d17272b23500ffb496da72437001885))
+* set description ([d53b229](https://github.com/ecomplus/admin/commit/d53b2297b81cd2c68897ddb88b6d285d73bcdec9))
+
 ## [1.0.0-alpha.30](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.29...v1.0.0-alpha.30) (2020-11-01)
 
 

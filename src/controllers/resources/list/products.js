@@ -506,6 +506,8 @@ export default function () {
     // bulk enable/disable products
     $('#enable-products').click(() => Tab.editItems({ available: true }))
     $('#disable-products').click(() => Tab.editItems({ available: false }))
+    $('#visible-products').click(() => Tab.editItems({ visible: true }))
+    $('#invisible-products').click(() => Tab.editItems({ visible: false }))
 
     var setupItemElement = function (id, index, $item, $checkbox) {
       $checkbox.on('change', function () {

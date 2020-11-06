@@ -3,6 +3,7 @@
  */
 
 import Sortable from 'sortablejs'
+import listOrders from './products/list-orders'
 
 export default function () {
   const { $, i18n, ecomUtils, lang, tabId, randomObjectId, normalizeString, cutString, substringMatcher } = window
@@ -2004,5 +2005,9 @@ export default function () {
         $priceEffectiveDates.val(dateRangeStr)
       }
     }
+
+    setTimeout(() => {
+      listOrders(tabId)
+    }, 1500)
   }
 }
