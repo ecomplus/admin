@@ -920,6 +920,13 @@ ul > li:nth-child(4n+4) > .badges-list li {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+@media (max-width: 400px) {
+  .row-products > .col {
+    -webkit-flex: 0 0 50%;
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+  }
+}
 .row-products .item-info {
   line-height: 1.4;
   margin-bottom: 5px;

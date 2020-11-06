@@ -6,8 +6,8 @@
 
   <div class="card">
     <div class="card-body">
-      <div class="flexbox mb-20">
-        <span class="flex-grow">
+      <div class="flexbox overflow-auto flex-nowrap mb-20">
+        <div class="flex-grow" style="min-width: 200px">
           <form id="search-products" action="javascript:;">
             <div class="input-group">
               <input type="search" class="form-control" name="search">
@@ -19,7 +19,7 @@
               </span>
             </div>
           </form>
-        </span>
+        </div>
 
         <div class="dropdown" id="order-products">
           <button class="btn btn-light" type="button" data-toggle="dropdown">
@@ -75,7 +75,7 @@
         <div class="dropdown" id="products-bulk-action">
           <button class="btn btn-success edit-selected" type="button">
             <i class="fa fa-pencil"></i>
-            <span class="i18n">
+            <span class="i18n hidden-sm-down">
               <span data-lang="en_us">
                 Edit <span class="hidden-md-down">selected</span>
               </span>
