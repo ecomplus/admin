@@ -1,69 +1,65 @@
-<div data-id="product-orders" class="row overflow-auto flex-nowrap" style="display: none">
-  <div class="col-auto">
-    <div class="mb-20">
-      <div class="fw-500 text-info">
-        <span class="text-uppercase i18n">
-          <span data-lang="en_us">Total sold</span>
-          <span data-lang="pt_br">Total vendido</span>
-        </span>
-      </div>
-      <span data-id="total-sold" class="fs-20"></span>
-      <a class="ml-2 fs-16">
-        <i class="fa fa-inbox"></i>
-        <span data-id="sales"></span>
-      </a>
-    </div>
-  </div>
-
-  <div class="col-auto">
-    <div class="mb-20">
-      <div class="fw-500 text-info">
-        <span class="text-uppercase i18n">
-          <span data-lang="en_us">Quantity</span>
-          <span data-lang="pt_br">Quantidade</span>
-        </span>
-      </div>
-      <span data-id="qnt-sold" class="fs-20"></span>
-    </div>
-  </div>
-
-  <div class="col-auto">
-    <div class="mb-20">
-      <div class="fw-500 text-info">
-        <span class="text-uppercase i18n">
-          <span data-lang="en_us">Average price</span>
-          <span data-lang="pt_br">Preço médio</span>
-        </span>
-      </div>
-      <span data-id="avg-price" class="fs-20"></span>
-    </div>
-  </div>
-
-  <div class="col-auto">
-    <div class="mb-20">
-      <div class="fw-500 text-success">
-        <span class="text-uppercase i18n">
-          <span data-lang="en_us">Finalized orders</span>
-          <span data-lang="pt_br">Pedidos finalizados</span>
-        </span>
-      </div>
-      <div class="fs-20">
-        <span data-id="total-closed-pc"></span>
-        <span data-id="total-closed" class="ml-2 text-muted fs-16"></span>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-auto mt-2">
+<div data-id="product-orders" class="row mb-20" style="display: none">
+  <div class="col-3 col-md-auto mt-2 order-md-last">
     <div class="dropdown">
       <button class="btn btn-outline-info" type="button" data-toggle="dropdown">
         <i class="fa fa-list"></i>
-        <span class="i18n">
+        <span class="i18n hidden-md-down">
           <span data-lang="en_us">Last orders</span>
           <span data-lang="pt_br">Últimos pedidos</span>
         </span>
       </button>
       <div class="dropdown-menu" data-id="last-orders"></div>
+    </div>
+  </div>
+
+  <div class="col-9 col-md">
+    <div class="row overflow-auto flex-nowrap">
+      <div class="col-auto">
+        <div class="fw-500 text-info">
+          <span class="text-uppercase i18n">
+            <span data-lang="en_us">Total sold</span>
+            <span data-lang="pt_br">Total vendido</span>
+          </span>
+        </div>
+        <span data-id="total-sold" class="fs-20"></span>
+        <a class="ml-2 fs-16">
+          <i class="fa fa-inbox"></i>
+          <span data-id="sales"></span>
+        </a>
+      </div>
+
+      <div class="col-auto">
+        <div class="fw-500 text-info">
+          <span class="text-uppercase i18n">
+            <span data-lang="en_us">Quantity</span>
+            <span data-lang="pt_br">Quantidade</span>
+          </span>
+        </div>
+        <span data-id="qnt-sold" class="fs-20"></span>
+      </div>
+
+      <div class="col-auto">
+        <div class="fw-500 text-info">
+          <span class="text-uppercase i18n">
+            <span data-lang="en_us">Average price</span>
+            <span data-lang="pt_br">Preço médio</span>
+          </span>
+        </div>
+        <span data-id="avg-price" class="fs-20"></span>
+      </div>
+
+      <div class="col-auto">
+        <div class="fw-500 text-success">
+          <span class="text-uppercase i18n">
+            <span data-lang="en_us">Finalized orders</span>
+            <span data-lang="pt_br">Pedidos finalizados</span>
+          </span>
+        </div>
+        <div class="fs-20">
+          <span data-id="total-closed-pc"></span>
+          <span data-id="total-closed" class="ml-2 text-muted fs-16"></span>
+        </div>
+      </div>
     </div>
   </div>
 </div>

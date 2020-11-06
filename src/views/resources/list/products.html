@@ -6,8 +6,8 @@
 
   <div class="card">
     <div class="card-body">
-      <div class="flexbox overflow-auto flex-nowrap mb-20">
-        <div class="flex-grow" style="min-width: 200px">
+      <div class="flexbox justify-content-end flex-wrap pb-10">
+        <div class="flex-grow mb-10" style="min-width: 200px">
           <form id="search-products" action="javascript:;">
             <div class="input-group">
               <input type="search" class="form-control" name="search">
@@ -21,7 +21,7 @@
           </form>
         </div>
 
-        <div class="dropdown" id="order-products">
+        <div class="dropdown mb-10" id="order-products">
           <button class="btn btn-light" type="button" data-toggle="dropdown">
             <i class="fa fa-sort"></i>
             <span class="i18n hidden-sm-down">
@@ -60,7 +60,7 @@
           </div>
         </div>
 
-        <a class="btn btn-light" href="#qvx" data-toggle="quickview">
+        <a class="btn btn-light mb-10" href="#qvx" data-toggle="quickview">
           <i class="fa fa-filter"></i>
           <span class="i18n hidden-sm-down">
             <span data-lang="en_us">Filter results</span>
@@ -68,14 +68,14 @@
           </span>
         </a>
 
-        <button class="btn btn-light" type="button" id="clear-products-filters">
+        <button class="btn btn-light mb-10" type="button" id="clear-products-filters">
           <i class="fa fa-eraser"></i>
         </button>
 
-        <div class="dropdown" id="products-bulk-action">
+        <div class="dropdown mb-10" id="products-bulk-action">
           <button class="btn btn-success edit-selected" type="button">
             <i class="fa fa-pencil"></i>
-            <span class="i18n hidden-sm-down">
+            <span class="i18n">
               <span data-lang="en_us">
                 Edit <span class="hidden-md-down">selected</span>
               </span>
