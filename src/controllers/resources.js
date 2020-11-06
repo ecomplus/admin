@@ -678,13 +678,13 @@ export default function () {
                     editDoc()
                   }, doc)
                 } else {
-                  if (i < data.length || i === 1) {
-                    app.toast(i18n({
-                      en_us: `Object ID not specified at line ${(i + 1)} (_id)`,
-                      pt_br: `ID do objeto não especificado na linha ${(i + 1)} (_id)`
-                    }))
-                  }
-                  editDoc()
+                  callApi(`${slug}.json`, 'POST', (err, doc) => {
+                    if (err) {
+                      console.error(err)
+                      app.toast()
+                    }
+                    editDoc()
+                  }, doc)
                 }
               }
               editDoc()
