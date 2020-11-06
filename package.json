@@ -42,7 +42,7 @@
     "postcss-loader": "^3.0.0",
     "sass": "^1.28.0",
     "sass-loader": "^10.0.4",
-    "standard": "^14.3.4",
+    "standard": "^16.0.1",
     "standard-version": "^9.0.0",
     "terser-webpack-plugin": "^4.2.3",
     "url-loader": "^4.1.1",
