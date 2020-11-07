@@ -1,3 +1,11 @@
+import {
+  i19add,
+  i19inventory,
+  i19media,
+  i19goToStore,
+  i19themes
+} from '@ecomplus/i18n'
+
 import { $ecomConfig } from '@ecomplus/utils'
 import session from '@/lib/session'
 import { handleFatalError, handleApiError } from '@/lib/errors'
@@ -19,18 +27,9 @@ const { sessionStorage, localStorage, Image, $, app } = window
       en_us: 'Resources',
       pt_br: 'Recursos'
     }),
-    media: i18n({
-      en_us: 'Media',
-      pt_br: 'Mídia'
-    }),
-    go_to_store: i18n({
-      en_us: 'Go to store',
-      pt_br: 'Ir à loja'
-    }),
-    themes: i18n({
-      en_us: 'Themes',
-      pt_br: 'Temas'
-    }),
+    media: i18n(i19media),
+    go_to_store: i18n(i19goToStore),
+    themes: i18n(i19themes),
     settings: i18n({
       en_us: 'Settings',
       pt_br: 'Configurações'
@@ -39,10 +38,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
       en_us: 'All the',
       pt_br: 'Todos os'
     }),
-    create: i18n({
-      en_us: 'Add',
-      pt_br: 'Adicionar'
-    }),
+    create: i18n(i19add),
     unknown_error: i18n({
       en_us: 'Unknown error, please try again',
       pt_br: 'Erro desconhecido, por favor tente novamente'
@@ -1072,7 +1068,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
   }
 
   var renderMenu = function () {
-    var mainResourceLink = function (slug, resources) {
+    var mainResourceLink = function (slug, resources, customLinks) {
       var resource
       // submenu with resource list
       var submenu = ''
@@ -1088,6 +1084,18 @@ const { sessionStorage, localStorage, Image, $, app } = window
                        '</a>' +
                      '</li>'
         }
+      }
+
+      if (customLinks) {
+        // custom submenu links
+        customLinks.forEach(({ name, link, icon }) => {
+          submenu += '<li class="menu-item">' +
+                       '<a class="menu-link" href="' + link + '">' +
+                         '<span class="icon fa fa-' + icon + '"></span>' +
+                         '<span class="title">' + name + '</span>' +
+                       '</a>' +
+                     '</li>'
+        })
       }
 
       // main resource
@@ -1142,6 +1150,12 @@ const { sessionStorage, localStorage, Image, $, app } = window
                'categories',
                'collections',
                'grids'
+             ], [
+               {
+                 name: i18n(i19inventory),
+                 link: '/#/inventory',
+                 icon: 'archive'
+               }
              ]) +
 
              '<li class="menu-item">' +
