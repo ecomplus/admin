@@ -74,13 +74,13 @@ export default function (tabId) {
               $(`#t${tabId}-qnt-sold`).text(`${qntSold}un`)
               $(`#t${tabId}-avg-price`).text(formatMoney(totalSold / qntSold))
             } else {
-              $(`#t${tabId}-qnt-sold, #t${tabId}-avg-price`).closest('.col-6').remove()
+              $(`#t${tabId}-qnt-sold, #t${tabId}-avg-price`).closest('.col-auto').remove()
             }
             if (totalClosed) {
               $(`#t${tabId}-total-closed`).text(formatMoney(totalClosed))
               $(`#t${tabId}-total-closed-pc`).text(`~${totalClosedPc}%`)
             } else {
-              $(`#t${tabId}-total-closed`).closest('.col-6').remove()
+              $(`#t${tabId}-total-closed`).closest('.col-auto').remove()
             }
             $(`#t${tabId}-product-orders`).slideDown()
           }

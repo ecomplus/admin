@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.32](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.31...v1.0.0-alpha.32) (2020-11-07)
+
+
+### Features
+
+* **inventory:** add new inventory route, view and controller ([0c15894](https://github.com/ecomplus/admin/commit/0c158944fdb6197f6a0ca77a19f5f05395c6f558))
+* **inventory:** add new inventory route, view and controller (new files) ([1f716d7](https://github.com/ecomplus/admin/commit/1f716d78a26c83eb89fcdf37fb8982743cadddef))
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([28787bc](https://github.com/ecomplus/admin/commit/28787bcd0e524ad5024c65b2fc5f5cfe14c0be1a))
+* **mobile-view:** responsive style fixes for products list and form ([407fd14](https://github.com/ecomplus/admin/commit/407fd145fcb8c8d6df49e8ae818c361348f5fdbb))
+* **router:** fix reseting ignore route with new tabs (overflow x dropdown) ([c81ca68](https://github.com/ecomplus/admin/commit/c81ca68ebf7ec2a9c8f3b3177d2061f77aa50583))
+
 ## [1.0.0-alpha.31](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.30...v1.0.0-alpha.31) (2020-11-06)
 
 
