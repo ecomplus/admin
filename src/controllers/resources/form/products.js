@@ -4,6 +4,7 @@
 
 import Sortable from 'sortablejs'
 import listOrders from './products/list-orders'
+import renderKitItems from './products/render-kit-items'
 
 export default function () {
   const { $, i18n, ecomUtils, lang, tabId, randomObjectId, normalizeString, cutString, substringMatcher } = window
@@ -2005,6 +2006,8 @@ export default function () {
         $priceEffectiveDates.val(dateRangeStr)
       }
     }
+
+    renderKitItems({ tabId })
 
     setTimeout(() => {
       listOrders(tabId)
