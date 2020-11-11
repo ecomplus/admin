@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.33](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.32...v1.0.0-alpha.33) (2020-11-11)
+
+
+### Features
+
+* **products-form:** add kit composition input and table ([1337a88](https://github.com/ecomplus/admin/commit/1337a881d01af9eae40decad85e0ef858e718dbd))
+
+
+### Bug Fixes
+
+* **products-list:** fix handling nested objects for mass edit ([2fc301e](https://github.com/ecomplus/admin/commit/2fc301e3c1590e1547b14c015f44dee252d18fbf))
+
 ## [1.0.0-alpha.32](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.31...v1.0.0-alpha.32) (2020-11-07)
 
 
