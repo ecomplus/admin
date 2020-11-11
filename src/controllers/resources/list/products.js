@@ -349,7 +349,7 @@ export default function () {
             lastKey = keys.pop()
             const lastObj = keys.reduce((obj, key) => {
               obj[key] = obj[key] || {}
-              return obj
+              return obj[key]
             }, obj)
             lastObj[lastKey] = val
           } else {
