@@ -110,7 +110,7 @@ export default function ({
     // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-uri-request.html
     // https://developers.e-com.plus/docs/api/#/search/items/items-search
     // remove invalid chars from term string
-    term = term.replace(/([()])/g, '\\$1').replace(/(^|\s)(AND|OR|\/)(\s|$)/g, ' ')
+    term = term.replace(/([()"])/g, '\\$1').replace(/(^|\s)(AND|OR|\/)(\s|$)/g, ' ')
     const query = `sku:"${term}" OR name:"${term}"`
     const url = `items.json?q=${encodeURIComponent(query)}`
 
@@ -177,7 +177,7 @@ export default function ({
             }))
           } else {
             // add item to table
-            addItem(product, data[docProp].length)
+            addItem(product)
             if (typeof callback === 'function') {
               callback(null, product)
             } else {
