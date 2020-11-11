@@ -306,6 +306,7 @@
                 </span>
               </p>
             </div>
+
             <div class="hidden" data-id="grids-list-header">
               <div class="flexbox">
                 <h6 class="i18n text-light">
@@ -335,6 +336,83 @@
               </span>
             </button>
             <ul class="hide-empty mt-20 options-list options-list-striped" data-id="variations-list"></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">Products kit</span>
+            <span data-lang="pt_br">Kit de produtos</span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Group products in kit</span>
+                <span data-lang="pt_br">Agrupar produtos em kit</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="callout callout-info" role="alert">
+              <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+                <span>×</span>
+              </button>
+              <p class="i18n">
+                <span data-lang="en_us">
+                  Compose a product kit below if this product represents a group of others,
+                  the <span class="text-info">quantity is optional and limited to the stock</span>
+                  of the respective items.
+                </span>
+                <span data-lang="pt_br">
+                  Componha um kit de produtos abaixo se este produto representa
+                  um agrupamento de outros, a
+                  <span class="text-info">quantidade é opcional e limitada ao estoque</span>
+                  dos respectivos itens.
+                </span>
+              </p>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" class="form-control" data-id="new-kit-item"/>
+                <span class="input-group-append">
+                  <button type="button" class="btn btn-light" data-id="add-kit-item">
+                    <i class="fa fa-tag"></i>
+                    <span class="i18n">
+                      <span data-lang="en_us">Add</span>
+                      <span data-lang="pt_br">Adicionar</span>
+                    </span>
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            <div class="kit-items-list">
+              <table class="table table-striped table-center">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>SKU</th>
+                    <th>Qnt.</th>
+                    <th class="i18n">
+                      <span data-lang="en_us">Name</span>
+                      <span data-lang="pt_br">Nome</span>
+                    </th>
+                    <th class="i18n">
+                      <span data-lang="en_us">Image</span>
+                      <span data-lang="pt_br">Imagem</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody data-id="kit-items">
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
