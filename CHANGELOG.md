@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.34](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.33...v1.0.0-alpha.34) (2020-11-12)
+
+
+### Features
+
+* **product-form:** add min quantity input ([67365ff](https://github.com/ecomplus/admin/commit/67365ffc074b12b32c93fdced7e44f77551a1a87))
+
+
+### Bug Fixes
+
+* **product-form:** preset kit product quantity ([a5483f3](https://github.com/ecomplus/admin/commit/a5483f3ffebf893e9808adcd46ea34628bf38548))
+* **products-form:** minor fix for kit products table and search term ([cabaf1d](https://github.com/ecomplus/admin/commit/cabaf1db18fd5b226f022922d4158fdc10a204c1))
+
 ## [1.0.0-alpha.33](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.32...v1.0.0-alpha.33) (2020-11-11)
 
 
