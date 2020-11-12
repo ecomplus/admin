@@ -187,6 +187,10 @@ export default function ({
                 has_variations: Boolean(product.variations && product.variations.length)
               })
             }
+            if (hasQuantity && data.quantity === undefined) {
+              // preset kit product quantity
+              data.quantity = 9999
+            }
             commit(data, true)
           }
         }
