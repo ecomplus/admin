@@ -91,10 +91,16 @@
                 <span data-lang="pt_br">Estoque e preços</span>
               </span>
             </a>
-            <a href="javascript:;" data-toggle="modal" data-target="#modal-center-1" id="setCategory" class="dropdown-item" data-edit="category">
+            <a href="javascript:;" data-toggle="modal" data-target="#set-resource" class="set-resource dropdown-item" data-edit="category">
               <span class="i18n">
-                <span data-lang="en_us">Categories</span>
-                <span data-lang="pt_br">Categorias</span>
+                <span data-resource="categories" data-lang="en_us">Categories</span>
+                <span data-resource="categories" data-lang="pt_br">Categorias</span>
+              </span>
+            </a>
+            <a href="javascript:;" data-toggle="modal" data-target="#set-resource" class="set-resource dropdown-item" data-edit="collections">
+              <span class="i18n">
+                <span data-resource="collections" data-lang="en_us">Collections</span>
+                <span data-resource="collections" data-lang="pt_br">Coleções</span>
               </span>
             </a>
             <a href="javascript:;" class="dropdown-item text-info" id="enable-products">
@@ -268,14 +274,14 @@
     </div>
   </div>
 </div>
-<div class="modal modal-center fade" id="modal-center-1" tabindex="-1" style="display: none;" aria-hidden="true">
+<div class="modal modal-center fade" id="set-resource" tabindex="-1" style="display: none;" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">
           <span class="i18n">
-            <span data-lang="en_us">Mass add to category</span>
-            <span data-lang="pt_br">Adicionar em massa categorias</span>
+            <span data-lang="en_us">Mass add</span>
+            <span data-lang="pt_br">Adicionar em massa</span>
           </span>
         </h5>
         <button type="button" class="close" data-dismiss="modal">
@@ -285,14 +291,13 @@
       <div class="modal-body">
         <div class="flexbox">
           <div class="form-group w-100">
-            <label class="i18n">
-              <span data-lang="en_us">Categories</span>
-              <span data-lang="pt_br">Categorias</span>
+            <label>
+              <span class="set-resource-name"></span>
             </label>
-            <select class="form-control show-tick" data-live-search="true" name="categories"
+            <select class="form-control show-tick" data-live-search="true" name="resource"
               placeholder="Camisas"
               data-json="true"
-              id="categoryMass">
+              id="resourceMass">
             </select>
           </div>
         </div>
@@ -309,7 +314,7 @@
             <span data-lang="pt_br">Cancelar</span>
           </span>
         </button>
-        <button type="button" class="btn btn-bold btn-pure btn-primary" id="saveModalCat">
+        <button type="button" class="btn btn-bold btn-pure btn-primary" id="saveModalResource">
           <span class="i18n">
             <span data-lang="en_us">Save</span>
             <span data-lang="pt_br">Salvar</span>
