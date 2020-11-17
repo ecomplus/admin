@@ -52,7 +52,7 @@ export default function ({
     }).click(function () {
       const { data, commit } = window.Tabs[tabId]
       for (let i = 0; i < data[docProp].length; i++) {
-        if (data[docProp][i] === objectId) {
+        if (data[docProp][i]._id === objectId) {
           // remove item from list
           data[docProp].splice(i, 1)
           presetQuantities(data)
@@ -74,7 +74,8 @@ export default function ({
         type: 'number',
         min: 0,
         max: 9999999,
-        step: 'any'
+        step: 'any',
+        value: canSetupInputs ? null : 1
       })
     }
 
@@ -183,7 +184,7 @@ export default function ({
           if (!data[docProp]) {
             data[docProp] = []
           }
-          if (data[docProp].indexOf(product._id) > -1 && !canDuplicateItem) {
+          if (data[docProp].find(({ _id }) => _id === product._id) && !canDuplicateItem) {
             app.toast(i18n({
               en_us: 'Already added this product in the collection',
               pt_br: 'Esse produto já foi inserido na coleção'
