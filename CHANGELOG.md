@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.35](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.34...v1.0.0-alpha.35) (2020-11-17)
+
+
+### Bug Fixes
+
+* **products-form:** fix checking duplicated kit items and removing ([#273](https://github.com/ecomplus/admin/issues/273)) ([db9628d](https://github.com/ecomplus/admin/commit/db9628daa0f5a5f6dad18e9c6a17368657421acc))
+* **products-form:** fix editing products with secondary color variation specs ([#275](https://github.com/ecomplus/admin/issues/275)) ([1136bc1](https://github.com/ecomplus/admin/commit/1136bc1bbf6d4451b7be86423b0447c5ae14d875))
+* **products-form:** fix preseting kit product quantities ([4b78994](https://github.com/ecomplus/admin/commit/4b7899437749fe040742de068998ffa1c498faf7))
+
 ## [1.0.0-alpha.34](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.33...v1.0.0-alpha.34) (2020-11-12)
 
 

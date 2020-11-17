@@ -15,6 +15,18 @@ export default function ({
   const { $form, data, inputToData } = window.Tabs[tabId]
   const $items = $form.find(`#t${tabId}-${tbodyId}`)
 
+  let autoSetQuantity
+  const presetQuantities = data => {
+    if (hasQuantity && autoSetQuantity === data.quantity) {
+      // preset kit product quantity
+      data.quantity = data[docProp].length
+      if (data.min_quantity === autoSetQuantity) {
+        data.min_quantity = data.quantity
+      }
+      autoSetQuantity = data.quantity
+    }
+  }
+
   const addItem = function (item, canSetupInputs) {
     const objectId = item._id
     const $Link = function (html) {
@@ -40,9 +52,10 @@ export default function ({
     }).click(function () {
       const { data, commit } = window.Tabs[tabId]
       for (let i = 0; i < data[docProp].length; i++) {
-        if (data[docProp][i] === objectId) {
+        if (data[docProp][i]._id === objectId) {
           // remove item from list
           data[docProp].splice(i, 1)
+          presetQuantities(data)
           // commit only to perform reactive actions
           commit(data, true)
           break
@@ -61,7 +74,8 @@ export default function ({
         type: 'number',
         min: 0,
         max: 9999999,
-        step: 'any'
+        step: 'any',
+        value: canSetupInputs ? null : 1
       })
     }
 
@@ -170,7 +184,7 @@ export default function ({
           if (!data[docProp]) {
             data[docProp] = []
           }
-          if (data[docProp].indexOf(product._id) > -1 && !canDuplicateItem) {
+          if (data[docProp].find(({ _id }) => _id === product._id) && !canDuplicateItem) {
             app.toast(i18n({
               en_us: 'Already added this product in the collection',
               pt_br: 'Esse produto já foi inserido na coleção'
@@ -184,13 +198,11 @@ export default function ({
               // product kit object model
               data[docProp].push({
                 _id: product._id,
-                has_variations: Boolean(product.variations && product.variations.length)
+                has_variations: Boolean(product.variations && product.variations.length),
+                quantity: 1
               })
             }
-            if (hasQuantity && data.quantity === undefined) {
-              // preset kit product quantity
-              data.quantity = 9999
-            }
+            presetQuantities(data)
             commit(data, true)
           }
         }
