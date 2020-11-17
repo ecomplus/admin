@@ -15,6 +15,18 @@ export default function ({
   const { $form, data, inputToData } = window.Tabs[tabId]
   const $items = $form.find(`#t${tabId}-${tbodyId}`)
 
+  let autoSetQuantity
+  const presetQuantities = data => {
+    if (hasQuantity && autoSetQuantity === data.quantity) {
+      // preset kit product quantity
+      data.quantity = data[docProp].length
+      if (data.min_quantity === autoSetQuantity) {
+        data.min_quantity = data.quantity
+      }
+      autoSetQuantity = data.quantity
+    }
+  }
+
   const addItem = function (item, canSetupInputs) {
     const objectId = item._id
     const $Link = function (html) {
@@ -43,6 +55,7 @@ export default function ({
         if (data[docProp][i] === objectId) {
           // remove item from list
           data[docProp].splice(i, 1)
+          presetQuantities(data)
           // commit only to perform reactive actions
           commit(data, true)
           break
@@ -184,13 +197,11 @@ export default function ({
               // product kit object model
               data[docProp].push({
                 _id: product._id,
-                has_variations: Boolean(product.variations && product.variations.length)
+                has_variations: Boolean(product.variations && product.variations.length),
+                quantity: 1
               })
             }
-            if (hasQuantity && data.quantity === undefined) {
-              // preset kit product quantity
-              data.quantity = 9999
-            }
+            presetQuantities(data)
             commit(data, true)
           }
         }
