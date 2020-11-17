@@ -178,6 +178,9 @@ export default function () {
                       gridObject = { title: gridId }
                     }
                     addOptions(addGrid(gridObject), gridId)
+                    if (gridId === 'colors' && specifications[gridId].length > 1) {
+                      addOptions(addGrid(Grids['colors.2']), gridId)
+                    }
                   }
                 }
               }
