@@ -3,7 +3,8 @@ import {
   i19inventory,
   i19media,
   i19goToStore,
-  i19themes
+  i19themes,
+  i19support
 } from '@ecomplus/i18n'
 
 import { $ecomConfig } from '@ecomplus/utils'
@@ -38,6 +39,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
       en_us: 'All the',
       pt_br: 'Todos os'
     }),
+    support: i18n(i19support),
     create: i18n(i19add),
     unknown_error: i18n({
       en_us: 'Unknown error, please try again',
@@ -1175,6 +1177,12 @@ const { sessionStorage, localStorage, Image, $, app } = window
                '<a class="menu-link" href="/#/settings">' +
                  '<span class="icon fa fa-cogs"></span>' +
                  '<span class="title">' + dictionary.settings + '</span>' +
+               '</a>' +
+             '</li>' +
+             '<li class="menu-item">' +
+               '<a class="menu-link" target="_blank" href="https://community.e-com.plus/t/regras-da-comunidade/210">' +
+                 '<span class="icon fa fa-question"></span>' +
+                 '<span class="title">' + dictionary.support + '</span>' +
                '</a>' +
              '</li>'
 
