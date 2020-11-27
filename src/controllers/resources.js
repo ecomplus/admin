@@ -341,6 +341,7 @@ export default function () {
           switch (slug) {
             case 'orders':
               fields = 'source_name,' +
+                'domain,' +
                 'number,' +
                 'status,' +
                 'financial_status.current,' +

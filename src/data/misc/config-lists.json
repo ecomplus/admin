@@ -261,12 +261,6 @@
       "items",
       "transactions"
     ],
-    "channel_id": {
-      "label": {
-        "en_us": "Channel ID",
-        "pt_br": "ID do canal"
-      }
-    },
     "code": {
       "label": {
         "en_us": "Code",

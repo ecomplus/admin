@@ -1745,7 +1745,8 @@ export default function () {
         // clear spec input
         $inputSpec.typeahead('val', '')
         // generate new grid ID
-        const gridId = fixGridId(normalizeString(spec))
+        const originalGridId = normalizeString(spec)
+        const gridId = fixGridId(originalGridId)
         const grid = Grids[gridId]
         if (grid) {
           // use default grid title
@@ -1906,13 +1907,17 @@ export default function () {
             const specData = $input.data('spec-data')
             if (specData) {
               const specs = data.specifications
-              if (specs && specs[gridId]) {
-                specs[gridId] = $.grep(specs[gridId], function (i) {
+              let currentGridId = gridId
+              if (!specs[gridId]) {
+                currentGridId = originalGridId
+              }
+              if (specs && specs[currentGridId]) {
+                specs[currentGridId] = $.grep(specs[currentGridId], function (i) {
                   return i.text !== specData
                 })
-                if (!specs[gridId].length) {
+                if (!specs[currentGridId].length) {
                   // remove empty array
-                  delete specs[gridId]
+                  delete specs[currentGridId]
                 }
                 // commit only to perform reactive actions
                 commit(data, true)
