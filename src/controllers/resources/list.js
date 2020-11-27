@@ -8,17 +8,32 @@ export default function () {
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
 
-  var baseHash = '/' + window.location.hash.replace(/\?.*$/, '') + '/'
+  const baseHash = '/' + window.location.hash.replace(/\?.*$/, '') + '/'
   // create button
   $('#t' + tabId + '-create').click(function () {
     // go to 'new' route
     window.location = baseHash + 'new'
   })
 
+  const setParams = {}
+  let presetParams = window.routeQuery
+  if (presetParams) {
+    $(`#t${tabId}-preset-params`).html($('<a>', {
+      html: `<i class="fa fa-filter mr-1"></i> <code>${presetParams.replace(/[^=]+=([^&]+)/, '$1 ')}</code>`,
+      click () {
+        presetParams = null
+        $(this).html('')
+        // reload data
+        load()
+      }
+    }))
+  }
+
   // resource list data
-  var resourceSlug = Tab.slug
-  var data, list
-  var updateData = function () {
+  const resourceSlug = Tab.slug
+  let data, list
+  const orderSources = {}
+  const updateData = function () {
     data = Tab.data
 
     // map deeper objects
@@ -109,13 +124,47 @@ export default function () {
       $(`#t${tabId}-orders-cancelled-bar`)
         .css('width', `${cancelledPc}%`)
         .attr('aria-valuenow', cancelledPc)
+
+      // sales channel selectors
+      const $orderSources = $(`#t${tabId}-orders-sources`)
+      ;['source_name', 'domain'].forEach(field => {
+        const $select = $orderSources.find(`select[name="${field}"]`)
+        list.forEach(row => {
+          const value = row[field]
+          if (value) {
+            if (!orderSources[field]) {
+              orderSources[field] = []
+            } else if (orderSources[field].indexOf(value) > -1) {
+              return
+            }
+            orderSources[field].push(value)
+            $select.append($('<option>', {
+              value,
+              text: value
+            }))
+          }
+        })
+
+        // set param and load again
+        $select.appSelectpicker('refresh').one('change', function () {
+          const value = $(this).val() === '-' ? undefined : $(this).val()
+          if (setParams[field] !== value) {
+            if (value) {
+              setParams[field] = value
+            } else {
+              delete setParams[field]
+            }
+            load()
+          }
+        })
+      })
     }
   }
   updateData()
 
   if (list.length) {
     // delete checkbox element HTML
-    var elCheckbox = '<div class="custom-controls-stacked">' +
+    const elCheckbox = '<div class="custom-controls-stacked">' +
                        '<div class="custom-control custom-checkbox">' +
                          '<input type="checkbox" class="custom-control-input" />' +
                          '<label class="custom-control-label"> </label>' +
@@ -259,28 +308,15 @@ export default function () {
       load()
     })
 
-    let presetParams = window.routeQuery
-    if (presetParams) {
-      $(`#t${tabId}-preset-params`).html($('<a>', {
-        html: `<i class="fa fa-filter mr-1"></i> <code>${presetParams.replace(/[^=]+=([^&]+)/, '$1 ')}</code>`,
-        click () {
-          presetParams = null
-          $(this).html('')
-          // reload data
-          load()
-        }
-      }))
-    }
-
-    var dataUpdated = false
-    var forceReload = false
+    let dataUpdated = false
+    let forceReload = false
     // control request queue
-    var loading = false
-    var waiting = false
+    let loading = false
+    let waiting = false
     var load = function (cb) {
       if (!loading) {
         loading = true
-        var $loading
+        let $loading
         if (!cb) {
           $loading = $grid.find('.loading')
           $loading.show()
@@ -288,7 +324,7 @@ export default function () {
 
         // mount API request query string
         // https://ecomstore.docs.apiary.io/#introduction/overview/url-params
-        var params = 'limit=' + limit
+        let params = 'limit=' + limit
         if (offset > 0) {
           params += '&offset=' + offset
         }
@@ -301,6 +337,11 @@ export default function () {
         }
         if (presetParams) {
           params += `&${presetParams}`
+        }
+        for (const field in setParams) {
+          if (setParams[field]) {
+            params += `&${field}=${setParams[field]}`
+          }
         }
 
         // object properties
