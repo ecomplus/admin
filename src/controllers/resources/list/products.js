@@ -893,15 +893,20 @@ export default function () {
           const $checkboxes = $list.find('input:checked')
           const $items = $checkboxes.closest('.item-product')
           if (method === 'PATCH' && bodyObject) {
-            if (typeof (bodyObject.available || bodyObject.visible) === 'boolean') {
+            if (typeof bodyObject.available === 'boolean') {
               $items.each(function () {
                 if (bodyObject.available) {
                   $(this).find('.item-availability')
                     .html(`<i class="mr-2 fa fa-${(bodyObject.available ? 'check' : 'close')}"></i>`)
-                } else {
-                  $(this).find('.item-visible')
-                    .html(`<i class="mr-2 fa fa-${(bodyObject.visible ? 'eye' : 'eye-slash')}"></i>`)
                 }
+              })
+              // show content
+              $container.removeClass('ajax')
+              $checkboxes.next().click()
+            } else if (typeof bodyObject.visible === 'boolean') {
+              $items.each(function () {
+                $(this).find('.item-visible')
+                  .html(`<i class="mr-2 fa fa-${(bodyObject.visible ? 'eye' : 'eye-slash')}"></i>`)
               })
               // show content
               $container.removeClass('ajax')
