@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.36](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.35...v1.0.0-alpha.36) (2020-11-27)
+
+
+### Features
+
+* **orders-list:** add selects to filter by source ([558514e](https://github.com/ecomplus/admin/commit/558514ec4f48e154caa8d0492d2b5aff2915b5b1))
+* **sidebar:** add link to rules of community ([#269](https://github.com/ecomplus/admin/issues/269)) ([30bd6e9](https://github.com/ecomplus/admin/commit/30bd6e934d6580107df6d5d03a9b70233459a1c6))
+
+
+### Bug Fixes
+
+* **product-form:** fallback to non-fixed grid id to remove specs ([#277](https://github.com/ecomplus/admin/issues/277)) ([8e1611b](https://github.com/ecomplus/admin/commit/8e1611b19a5efe58d9a5002c1dd2668a1d899803))
+
 ## [1.0.0-alpha.35](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.34...v1.0.0-alpha.35) (2020-11-17)
 
 
