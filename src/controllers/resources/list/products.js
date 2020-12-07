@@ -8,6 +8,7 @@ import {
   i19brands,
   i19categories,
   i19clear,
+  i19collections,
   i19filterProducts,
   i19massEdit,
   i19maximum,
@@ -248,57 +249,89 @@ export default function () {
     $qvEdit.find('input[data-money]').inputMoney()
     var $startDate = $('#startDate')
     var $endDate = $('#endDate')
-    var $setCategory = $('#setCategory')
+    var $setResource = $('.set-resource')
+    var $setResourceName = $('.set-resource-name')
     var $discount = $('#discountSell')
-    var $saveCat = $('#saveModalCat')
-    var $categorySelect = $('#categoryMass')
+    var $saveModalResource = $('#saveModalResource')
+    var $resourceSelect = $('#resourceMass')
 
     // call and render categories
-    $setCategory.click(function () {
-      callApi('categories.json', 'GET', function (error, data) {
-        if (!error) {
-          var $option
-          for (var i = 0; i < data.result.length; i++) {
-            var valueCategory = function () {
-              return JSON.stringify({
-                _id: data.result[i]._id
+    $setResource.click(function (item) {
+      const resourceEdit = item.target.getAttribute('data-resource')
+      $setResourceName.text(resourceEdit === 'categories' ? i18n(i19categories) : i18n(i19collections))
+      setTimeout(function () {
+        callApi(resourceEdit + '.json', 'GET', function (error, data) {
+          if (!error) {
+            let $option
+            for (let i = 0; i < data.result.length; i++) {
+              const valueCategory = function () {
+                return JSON.stringify({
+                  _id: data.result[i]._id,
+                  resource: resourceEdit
+                })
+              }
+              $option = $('<option />', {
+                text: data.result[i].name,
+                value: valueCategory(data.result[i])
               })
+              $resourceSelect.append($option).appSelectpicker('refresh').trigger('change')
             }
-            $option = $('<option />', {
-              text: data.result[i].name,
-              value: valueCategory(data.result[i])
-            })
-            $categorySelect.append($option).appSelectpicker('refresh').trigger('change')
           }
-        }
-      })
+        })
+      }, 500)
     })
 
     // save categories into selected products
-    $saveCat.click(function () {
-      var selectedCategories = $categorySelect.val()
-      var ids = Tab.selectedItems
-      var parseCategory = JSON.parse(selectedCategories)
-      ids.forEach((item, i) => {
-        setTimeout(function () {
-          callApi(`products/${item}/categories.json`, 'POST', (err, doc) => {
-            if (!err) {
-              if (ids.length === i + 1) {
-                $('#modal-center-1').modal('hide')
+    $saveModalResource.click(function () {
+      const selectedResource = $resourceSelect.val()
+      const infoResult = JSON.parse(selectedResource)
+      const ids = Tab.selectedItems
+      if (infoResult.resource === 'collections') {
+        callApi('collections/' + infoResult._id + '.json', 'GET', function (err, data) {
+          if (!err) {
+            let newProducts = []
+            data.products.length ? newProducts = ids.concat(data.products) : newProducts = ids
+            const productsToCollection = [...new Set(newProducts)]
+            const objCollection = {
+              products: productsToCollection
+            }
+            callApi('collections/' + infoResult._id + '.json', 'PATCH', (error, result) => {
+              if (!error) {
+                $('#set-resource').modal('hide')
                 app.toast(
                 `${i18n(i19savedWithSuccess)}`,
                 {
                   variant: 'success'
                 })
-                $('#spinner-wait').hide()
-                load()
-              } else {
-                $('#spinner-wait').show()
               }
-            }
-          }, parseCategory)
-        }, 400 * i)
-      })
+            }, objCollection)
+          }
+        })
+      } else {
+        const parseCategory = {
+          _id: infoResult._id
+        }
+        ids.forEach((item, i) => {
+          setTimeout(function () {
+            callApi(`products/${item}/categories.json`, 'POST', (err, doc) => {
+              if (!err) {
+                if (ids.length === i + 1) {
+                  $('#set-resource').modal('hide')
+                  app.toast(
+                  `${i18n(i19savedWithSuccess)}`,
+                  {
+                    variant: 'success'
+                  })
+                  $('#spinner-wait').hide()
+                  load()
+                } else {
+                  $('#spinner-wait').show()
+                }
+              }
+            }, parseCategory)
+          }, 400 * i)
+        })
+      }
     })
 
     if (lang === 'pt_br') {
