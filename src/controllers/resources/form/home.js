@@ -96,8 +96,8 @@ export default function () {
         const storeName = schema.name
         if (schema.homepage) {
           $storeLayout.append(
-            '  <a target="_blank" data-lang="en_us" href="' + schema.homepage + '/admin" class="form-text">Access layout store</a>' +
-            '  <a target="_blank" data-lang="pt_br" href="' + schema.homepage + '/admin" class="form-text">Acessar visual da loja</a>'
+            '  <span data-lang="en_us"><a target="_blank" data-lang="en_us" href="' + schema.homepage + '/admin/">Edit layout store</a> | <a target="_blank" data-lang="en_us" href="' + schema.homepage + '">Access store</a></span>' +
+            '  <span data-lang="pt_br"><a target="_blank" data-lang="pt_br" href="' + schema.homepage + '/admin/">Editar visual da loja</a> | <a target="_blank" data-lang="pt_br" href="' + schema.homepage + '">Acessar loja</a></span>'
           )
         } else {
           $storeLayout.append(
