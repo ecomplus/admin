@@ -637,7 +637,9 @@ export default function () {
               '<a href="' + link + '" class="item-name">' + item.name + '</a>' +
               '<div class="item-price">' + priceString + '</div>' +
               '<span class="text-muted">' +
-                `<i class="mr-2 fa fa-${(item.visible ? 'eye' : 'eye-slash')}" title="${i18n(i19visible)}"></i>` +
+                '<span class="item-visible">' +
+                  `<i class="mr-2 fa fa-${(item.visible ? 'eye' : 'eye-slash')}" title="${i18n(i19visible)}"></i>` +
+                '</span>' +
                 '<span class="item-availability">' +
                   `<i class="mr-2 fa fa-${(item.available ? 'check' : 'close')}" title="${i18n(i19available)}"></i>` +
                 '</span>' +
@@ -926,8 +928,18 @@ export default function () {
           if (method === 'PATCH' && bodyObject) {
             if (typeof bodyObject.available === 'boolean') {
               $items.each(function () {
-                $(this).find('.item-availability')
-                  .html(`<i class="mr-2 fa fa-${(bodyObject.available ? 'check' : 'close')}"></i>`)
+                if (bodyObject.available) {
+                  $(this).find('.item-availability')
+                    .html(`<i class="mr-2 fa fa-${(bodyObject.available ? 'check' : 'close')}"></i>`)
+                }
+              })
+              // show content
+              $container.removeClass('ajax')
+              $checkboxes.next().click()
+            } else if (typeof bodyObject.visible === 'boolean') {
+              $items.each(function () {
+                $(this).find('.item-visible')
+                  .html(`<i class="mr-2 fa fa-${(bodyObject.visible ? 'eye' : 'eye-slash')}"></i>`)
               })
               // show content
               $container.removeClass('ajax')
