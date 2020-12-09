@@ -928,26 +928,22 @@ export default function () {
           if (method === 'PATCH' && bodyObject) {
             if (typeof bodyObject.available === 'boolean') {
               $items.each(function () {
-                if (bodyObject.available) {
-                  $(this).find('.item-availability')
-                    .html(`<i class="mr-2 fa fa-${(bodyObject.available ? 'check' : 'close')}"></i>`)
-                }
+                $(this).find('.item-availability')
+                  .html(`<i class="mr-2 fa fa-${(bodyObject.available ? 'check' : 'close')}"></i>`)
               })
-              // show content
-              $container.removeClass('ajax')
-              $checkboxes.next().click()
             } else if (typeof bodyObject.visible === 'boolean') {
               $items.each(function () {
                 $(this).find('.item-visible')
                   .html(`<i class="mr-2 fa fa-${(bodyObject.visible ? 'eye' : 'eye-slash')}"></i>`)
               })
-              // show content
-              $container.removeClass('ajax')
-              $checkboxes.next().click()
             } else {
               // reload all
               load()
+              return
             }
+            // show content
+            $container.removeClass('ajax')
+            $checkboxes.next().click()
           } else {
             // remove selected items on DOM
             $items.fadeOut(400, function () {
