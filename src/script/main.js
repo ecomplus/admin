@@ -1223,18 +1223,17 @@ const { sessionStorage, localStorage, Image, $, app } = window
   callStorageApi(null, function (err, json) {
     if (!err) {
       // use store bucket endpoint
-      if (json.host) {
-        var domain = 'https://' + json.host + '/'
-
+      const { baseUrl } = json
+      if (baseUrl) {
         // global to return images selection
-        var imagesCallback = null
+        let imagesCallback = null
         window.setImagesCallback = function (cb) {
           imagesCallback = cb
           // reset selected images array
           selectedImages = []
         }
-        var selectedImages = []
-        var selectImagesCallback = function (err) {
+        let selectedImages = []
+        const selectImagesCallback = function (err) {
           if (typeof imagesCallback === 'function') {
             // return selected images
             imagesCallback(err, selectedImages)
@@ -1247,65 +1246,49 @@ const { sessionStorage, localStorage, Image, $, app } = window
         })
 
         // image is resized after upload
-        var imageSizes = {
-          zoom: {
-            // original size
-            // no path, domain root
-            path: ''
-          },
-          small: {
-            size: 100,
-            path: 'imgs/100px/'
-          },
-          normal: {
-            size: 400,
-            path: 'imgs/400px/'
-          },
-          big: {
-            size: 700,
-            path: 'imgs/700px/'
-          }
-        }
+        const thumbSizes = [{
+          thumb: 'normal',
+          size: 400,
+          path: 'imgs/normal/'
+        }, {
+          thumb: 'big',
+          size: 700,
+          path: 'imgs/big/'
+        }]
 
-        var deleteImages = function (keys) {
+        const deleteImages = function (keys) {
           // delete bucket object
           // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property
-          var s3Method = 'deleteObjects'
+          const s3Method = 'deleteObjects'
 
           // mount array of objects with Key property
-          var objects = []
-          for (var i = 0; i < keys.length; i++) {
+          const objects = []
+          for (let i = 0; i < keys.length; i++) {
             // delete all image sizes
             // ref.: https://github.com/ecomclub/storage-api/blob/master/bin/web.js
-            var baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
-            if (/^@v2-/.test(baseKey)) {
+            const baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
+            if (/^@v3/.test(baseKey)) {
               objects.push({ Key: baseKey })
               if (!/\.webp$/.test(baseKey)) {
-                ;['big', 'normal'].forEach(function (thumb) {
+                thumbSizes.forEach(({ path }) => {
                   objects.push(
-                    { Key: 'imgs/' + thumb + '/' + baseKey },
-                    { Key: 'imgs/' + thumb + '/' + baseKey + '.webp' }
+                    { Key: path + baseKey },
+                    { Key: path + baseKey + '.webp' }
                   )
                 })
               }
-            } else {
-              for (var thumb in imageSizes) {
-                if (imageSizes.hasOwnProperty(thumb)) {
-                  objects.push({ Key: imageSizes[thumb].path + baseKey })
-                }
-              }
             }
           }
-          var bodyObject = {
+          const bodyObject = {
             Delete: {
               Objects: objects,
               Quiet: true
             }
           }
 
-          var $ajax = $('#storage-content').closest('.ajax-content')
+          const $ajax = $('#storage-content').closest('.ajax-content')
           $ajax.addClass('ajax')
-          var callback = function (err, json) {
+          const callback = function (err, json) {
             if (!err) {
               // reload
               loadStorageContent()
@@ -1315,46 +1298,39 @@ const { sessionStorage, localStorage, Image, $, app } = window
           callStorageApi(s3Method, callback, bodyObject)
         }
 
-        var activeImages = function () {
+        const activeImages = function () {
           // mount array with keys of selected images
-          var keys = []
+          const keys = []
           $('#storage-content a.active').each(function () {
-            var key = $(this).data('key')
+            const key = $(this).data('key')
             if (key) {
               keys.push(key)
             }
           })
           return keys
         }
-        var unactivateImages = function () {
+        const unactivateImages = function () {
           // unset selected images
           $('#storage-content a.active').removeClass('active')
         }
 
         $('#storage-select').click(function () {
-          var keys = activeImages()
+          const keys = activeImages()
           if (keys.length) {
-            for (var i = 0; i < keys.length; i++) {
+            for (let i = 0; i < keys.length; i++) {
               // all image sizes
               // ref.: https://github.com/ecomclub/storage-api/blob/master/bin/web.js
-              var baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
+              const baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
               // picture object
               // based on product resource picture property
               // https://ecomstore.docs.apiary.io/#reference/products/product-object
-              var picture = {}
-              var thumb
-              if (/^@v2-/.test(baseKey)) {
-                picture.zoom = { url: domain + baseKey }
+              const picture = {}
+              if (/^@v3/.test(baseKey)) {
+                picture.zoom = { url: baseUrl + baseKey }
                 if (!/\.webp$/.test(baseKey)) {
-                  ;['big', 'normal'].forEach(function (thumb) {
-                    picture[thumb] = { url: domain + 'imgs/' + thumb + '/' + baseKey + '.webp' }
+                  thumbSizes.forEach(({ thumb, path }) => {
+                    picture[thumb] = { url: baseUrl + path + baseKey + '.webp' }
                   })
-                }
-              } else {
-                for (thumb in imageSizes) {
-                  if (imageSizes.hasOwnProperty(thumb)) {
-                    picture[thumb] = { url: domain + imageSizes[thumb].path + baseKey }
-                  }
                 }
               }
               selectedImages.push(picture)
@@ -1365,7 +1341,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
         })
 
         $('#storage-delete').click(function () {
-          var keys = activeImages()
+          const keys = activeImages()
           if (keys.length) {
             deleteImages(keys)
             unactivateImages()
@@ -1382,25 +1358,25 @@ const { sessionStorage, localStorage, Image, $, app } = window
           loadStorageContent(true)
         })
 
-        var storageNextMarker
-        var storageOffset = 0
-        var loadStorageContent = function (isLoadMore, maxImages = 15) {
+        let storageNextMarker
+        let storageOffset = 0
+        const loadStorageContent = function (isLoadMore, maxImages = 15) {
           // reset DOM element
-          var $el = $('#storage-content')
-          var $ajax = $el.closest('.ajax-content')
+          const $el = $('#storage-content')
+          const $ajax = $el.closest('.ajax-content')
           if (!isLoadMore) {
             $el.html('')
           }
           $ajax.addClass('ajax')
-          var $btn = $('#load-storage')
+          const $btn = $('#load-storage')
           $btn.attr('disabled', true)
-          var $count = $('#count-storage')
+          const $count = $('#count-storage')
           $count.text('')
 
           // get bucket objects from Storage API
           // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#listObjects-property
-          var s3Method = 'listObjects'
-          var bodyObject = {
+          const s3Method = 'listObjects'
+          const bodyObject = {
             // list base keys (zoom) only
             Prefix: '@'
           }
@@ -1413,24 +1389,25 @@ const { sessionStorage, localStorage, Image, $, app } = window
             storageOffset = 0
           }
 
-          var callback = function (err, json) {
+          const callback = function (err, json) {
             if (!err) {
               if (json && Array.isArray(json.Contents)) {
-                var list = json.Contents
+                const list = json.Contents
                   .slice(-storageOffset - maxImages, json.Contents.length - storageOffset)
                   .reverse()
                 // HTML content listing files
                 // Mansory grid
-                var content = ''
-                var todo = list.length
-                var done = 0
+                let content = ''
+                const todo = list.length
+                let done = 0
 
-                var Done = function () {
+                const Done = function () {
                   done++
                   if (done >= todo) {
                     // ready
                     storageOffset = storageOffset + list.length >= json.Contents.length
-                      ? 0 : storageOffset + maxImages
+                      ? 0
+                      : storageOffset + maxImages
                     if (json.IsTruncated || storageOffset) {
                       // there are more images to load
                       $btn.removeAttr('disabled')
@@ -1445,11 +1422,11 @@ const { sessionStorage, localStorage, Image, $, app } = window
                 }
 
                 if (todo > 0) {
-                  for (var i = 0; i < todo; i++) {
+                  for (let i = 0; i < todo; i++) {
                     (function () {
-                      var key = list[i].Key
+                      const key = list[i].Key
                       // load image first
-                      var newImg = new Image()
+                      const newImg = new Image()
                       newImg.onload = function () {
                         content = '<div class="masonry-item storage-object">' +
                                      '<a href="javascript:;" onclick="$(this).toggleClass(\'active\')" ' +
@@ -1461,12 +1438,12 @@ const { sessionStorage, localStorage, Image, $, app } = window
                         Done()
                       }
                       newImg.onerror = function () {
-                        var fallbackSrc = domain + key
+                        const fallbackSrc = baseUrl + key
                         if (this.src !== fallbackSrc) {
                           this.src = fallbackSrc
                         }
                       }
-                      newImg.src = domain + 'imgs/normal/' + key
+                      newImg.src = baseUrl + thumbSizes[0].path + key
                     }())
                   }
                 } else {
@@ -1483,7 +1460,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
         // handle dropzone with Storage API
         // http://www.dropzonejs.com/#configuration
         /* global Dropzone */
-        var dropzone = new Dropzone('#dropzone', {
+        const dropzone = new Dropzone('#dropzone', {
           url: storageApiPath + 'upload.json',
           headers: authHeaders
         })
@@ -1491,8 +1468,9 @@ const { sessionStorage, localStorage, Image, $, app } = window
         dropzone.on('complete', function (file) {
           // console.log(file)
           // API request done
+          let json
           try {
-            var json = JSON.parse(file.xhr.responseText)
+            json = JSON.parse(file.xhr.responseText)
           } catch (e) {
             // unexpected response
             handleApiError()
@@ -1509,39 +1487,39 @@ const { sessionStorage, localStorage, Image, $, app } = window
               // picture object
               // based on product resource picture property
               // https://ecomstore.docs.apiary.io/#reference/products/product-object
-              var picture, thumb
+              let picture, thumb
               if (json.picture) {
                 picture = json.picture
               } else {
-                picture = {}
-                for (thumb in imageSizes) {
-                  if (imageSizes.hasOwnProperty(thumb)) {
-                    picture[thumb] = { url: domain + imageSizes[thumb].path + json.key }
-                  }
+                picture = {
+                  zoom: { url: baseUrl + json.key }
                 }
               }
 
               if (file.height && file.width) {
                 // save image sizes
-                var w = file.width
-                var h = file.height
+                const w = file.width
+                const h = file.height
                 // original sizes
                 picture.zoom.size = w + 'x' + h
                 // calculate thumbnails sizes
-                for (thumb in imageSizes) {
-                  if (imageSizes.hasOwnProperty(thumb) && picture[thumb]) {
-                    var px = parseInt(picture[thumb].size, 10) || imageSizes[thumb].size
-                    if (px) {
-                      if (px >= Math.max(w, h)) {
-                        picture[thumb].size = picture.zoom.size
+                for (thumb in picture) {
+                  if (picture[thumb]) {
+                    const thumbObj = thumbSizes.find(thumbObj => thumbObj.thumb === thumb)
+                    if (thumbObj) {
+                      const px = parseInt(picture[thumb].size, 10) || thumbObj.size
+                      if (px) {
+                        if (px >= Math.max(w, h)) {
+                          picture[thumb].size = picture.zoom.size
+                        } else {
+                          // resize base
+                          picture[thumb].size = w > h
+                            ? px + 'x' + Math.round(h * px / w)
+                            : Math.round(w * px / h) + 'x' + px
+                        }
                       } else {
-                        // resize base
-                        picture[thumb].size = w > h
-                          ? px + 'x' + Math.round(h * px / w)
-                          : Math.round(w * px / h) + 'x' + px
+                        delete picture[thumb].size
                       }
-                    } else {
-                      delete picture[thumb].size
                     }
                   }
                 }
@@ -1549,9 +1527,9 @@ const { sessionStorage, localStorage, Image, $, app } = window
               if (file.name) {
                 // use filename as default image alt
                 // remove file extension
-                var alt = file.name.replace(/\.[^.]+$/, '')
+                const alt = file.name.replace(/\.[^.]+$/, '')
                 for (thumb in picture) {
-                  if (picture.hasOwnProperty(thumb)) {
+                  if (picture[thumb]) {
                     picture[thumb].alt = alt
                   }
                 }
@@ -1578,14 +1556,14 @@ const { sessionStorage, localStorage, Image, $, app } = window
           $('#modal-uploads').modal('show')
         }
 
-        var editImageCallback = null
+        let editImageCallback = null
         window.editImage = function (callback, picture) {
           editImageCallback = callback
           // configure image options
-          var $modal = $('#modal-edit-image')
+          const $modal = $('#modal-edit-image')
           if (picture) {
             $modal.find('input').each(function () {
-              var value = picture[$(this).attr('name')]
+              const value = picture[$(this).attr('name')]
               if (value) {
                 $(this).val(value)
               } else {
@@ -1604,9 +1582,9 @@ const { sessionStorage, localStorage, Image, $, app } = window
         $('#edit-image').click(function () {
           if (typeof editImageCallback === 'function') {
             // return JSON of edit images form
-            var data = {}
+            const data = {}
             $('#modal-edit-image input').each(function () {
-              var val = $(this).val().trim()
+              const val = $(this).val().trim()
               if (val !== '') {
                 data[$(this).attr('name')] = val
               }

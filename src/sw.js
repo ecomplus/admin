@@ -180,7 +180,7 @@ registerRoute(
 
 // normal and thumbnail sizes
 registerRoute(
-  /^https:\/\/ecom-[\w]+\.[\w]+\.digitaloceanspaces\.com\/imgs\/([12345]?[0-9]{2}px|normal|small)\//,
+  /^https:\/\/ecoms[1-9]-[\w]+\.[\w]+\.cdn\.digitaloceanspaces\.com\/imgs\/normal\//,
   new CacheFirst({
     cacheName: 'pictures',
     plugins: [
@@ -196,7 +196,7 @@ registerRoute(
 
 // big images
 registerRoute(
-  /^https:\/\/ecom-[\w]+\.[\w]+\.digitaloceanspaces\.com\/imgs\/([678]?[0-9]{2}px|big)\//,
+  /^https:\/\/ecoms[1-9]-[\w]+\.[\w]+\.cdn\.digitaloceanspaces\.com\/imgs\/big\//,
   new CacheFirst({
     cacheName: 'pictures-big',
     plugins: [
