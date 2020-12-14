@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.38](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.37...v1.0.0-alpha.38) (2020-12-14)
+
+## [1.0.0-alpha.37](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.36...v1.0.0-alpha.37) (2020-12-09)
+
+
+### Features
+
+* **products-list:** mass add collection ([#271](https://github.com/ecomplus/admin/issues/271)) ([e0a3b13](https://github.com/ecomplus/admin/commit/e0a3b13a9caa33c38a1b1627abd5754e561c25d0))
+
+
+### Bug Fixes
+
+* **deps:** update to @ecomplus/admin-marketplace@1 (alpha) ([1a99eb3](https://github.com/ecomplus/admin/commit/1a99eb351f0811ac4e281c948263a48206f264c1))
+* **products-list:** fix updating list items after mass edit ([0e8916e](https://github.com/ecomplus/admin/commit/0e8916eab7ff0540785c1eaa847b00065f3f240e))
+* **sw:** call `self.skipWaiting()` directly (workbox v6) ([#282](https://github.com/ecomplus/admin/issues/282)) ([2c73479](https://github.com/ecomplus/admin/commit/2c73479019c8fea2eb6c6565651420d027a0ec48))
+
 ## [1.0.0-alpha.36](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.35...v1.0.0-alpha.36) (2020-11-27)
 
 
