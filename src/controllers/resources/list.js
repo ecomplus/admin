@@ -113,6 +113,7 @@ export default function () {
       const cancelledPc = Math.round(cancelledAmount * 100 / totalAmount)
 
       // update order statistics
+      $(`#t${tabId}-orders-total-quantity`).text(list.length)
       $(`#t${tabId}-orders-total`).text(formatMoney(totalAmount))
       $(`#t${tabId}-orders-approved`).text(formatMoney(approvedAmount))
       $(`#t${tabId}-orders-approved-pc`).text(`~${approvedPc}%`)
