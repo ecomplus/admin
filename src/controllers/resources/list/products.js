@@ -595,7 +595,15 @@ export default function () {
         // render item price and quantity
         var priceString, qntString
         if (item.price) {
-          priceString = formatMoney(item.price, item.currency_id)
+          if (item.price_effective_date && item.price_effective_date.end) {
+            const promoDate = Date.parse(item.price_effective_date.end)
+            const nowDate = Date.parse(new Date())
+            if (nowDate > promoDate && item.base_price) {
+              priceString = formatMoney(item.base_price, item.currency_id)
+            } else {
+              priceString = formatMoney(item.price, item.currency_id)
+            }
+          }
         } else {
           priceString = `${i18n(i19noPrice)}`
         }
