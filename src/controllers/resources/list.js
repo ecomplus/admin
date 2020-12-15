@@ -82,20 +82,6 @@ export default function () {
     })
 
     if (resourceSlug === 'orders') {
-      const getAmount = statusList => {
-        let amount = 0
-        list.forEach(row => {
-          if (statusList) {
-            const status = row['financial_status/current']
-            if (!status || !statusList.includes(status)) {
-              return
-            }
-          }
-          amount += row['amount/total']
-        })
-        return amount
-      }
-
       const getOrders = statusList => {
         let amount = 0
         let countStatus = 0
