@@ -85,15 +85,13 @@ export default function () {
       const getOrders = statusList => {
         let amount = 0
         let countStatus = 0
-        list.forEach((row, i) => {
+        list.forEach(row => {
           if (statusList) {
             const status = row['financial_status/current']
             if (!status || !statusList.includes(status)) {
               return
             }
             countStatus++
-          } else {
-            countStatus = i + 1
           }
           amount += row['amount/total']
         })
@@ -106,7 +104,7 @@ export default function () {
       // sum amounts and percentage values
       const totalOrders = getOrders()
       const totalAmount = totalOrders.total
-      const totalCount = totalOrders.count
+      const totalCount = list.length
       const approvedOrders = getOrders([
         'paid',
         'partially_paid'
