@@ -29,7 +29,7 @@ export default function () {
   'use strict'
 
   // current tab ID
-  var { tabId, $, callApi, app, quickview, lang, handleInputs, stringToNumber, unsetSaveAction, Tabs, i18n, formatMoney } = window
+  const { tabId, $, callApi, app, quickview, lang, handleInputs, stringToNumber, unsetSaveAction, Tabs, i18n, formatMoney, ecomUtils } = window
   var Tab = Tabs[tabId]
   /*
   var elContainer = $('#t' + tabId + '-tab-normal')
@@ -595,15 +595,7 @@ export default function () {
         // render item price and quantity
         var priceString, qntString
         if (item.price) {
-          if (item.price_effective_date && item.price_effective_date.end) {
-            const promoDate = Date.parse(item.price_effective_date.end)
-            const nowDate = Date.parse(new Date())
-            if (nowDate > promoDate && item.base_price) {
-              priceString = formatMoney(item.base_price, item.currency_id)
-            } else {
-              priceString = formatMoney(item.price, item.currency_id)
-            }
-          }
+          priceString = formatMoney(ecomUtils.price(item), item.currency_id)
         } else {
           priceString = `${i18n(i19noPrice)}`
         }
