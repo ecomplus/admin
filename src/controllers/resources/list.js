@@ -158,6 +158,7 @@ export default function () {
           }
         })
       })
+      $orderSources.slideDown()
     }
   }
   updateData()

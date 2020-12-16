@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.39](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.38...v1.0.0-alpha.39) (2020-12-16)
+
+
+### Bug Fixes
+
+* **lists:** hide #order-sources div by default ([cf0c644](https://github.com/ecomplus/admin/commit/cf0c644e5ea141751c03c4668e7e7d31c83a91b2))
+
 ## [1.0.0-alpha.38](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.37...v1.0.0-alpha.38) (2020-12-14)
 
 ## [1.0.0-alpha.37](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.36...v1.0.0-alpha.37) (2020-12-09)
