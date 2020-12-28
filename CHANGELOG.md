@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.40](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.39...v1.0.0-alpha.40) (2020-12-28)
+
+
+### Features
+
+* **inventory:** add 'price' collumn to table ([#284](https://github.com/ecomplus/admin/issues/284)) ([4665e4c](https://github.com/ecomplus/admin/commit/4665e4cfd413f36ff0f00028f08a16d6930427e3))
+* **orders-list:** add order quantities to summary cards ([#290](https://github.com/ecomplus/admin/issues/290)) ([a655b81](https://github.com/ecomplus/admin/commit/a655b81f6635ead114cbab0bce4e3d44950a4179))
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#293](https://github.com/ecomplus/admin/issues/293)) ([8782ec9](https://github.com/ecomplus/admin/commit/8782ec9f01c8ebc87fcacb1d1d2040e4688533bf))
+* **normalize-string:** also remove dots and special chars ([d245b4e](https://github.com/ecomplus/admin/commit/d245b4ed6561305e13a6e50b60eb8e7d300dca1f))
+* **products-list:** show correct price with promo ([#291](https://github.com/ecomplus/admin/issues/291))  ([f9352a6](https://github.com/ecomplus/admin/commit/f9352a663314be681efc1a6c1f0ef8e56089f9a5))
+
 ## [1.0.0-alpha.39](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.38...v1.0.0-alpha.39) (2020-12-16)
 
 

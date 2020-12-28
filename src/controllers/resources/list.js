@@ -82,37 +82,51 @@ export default function () {
     })
 
     if (resourceSlug === 'orders') {
-      const getAmount = statusList => {
+      const getOrders = statusList => {
         let amount = 0
+        let countStatus = 0
         list.forEach(row => {
           if (statusList) {
             const status = row['financial_status/current']
             if (!status || !statusList.includes(status)) {
               return
             }
+            countStatus++
           }
           amount += row['amount/total']
         })
-        return amount
+        return {
+          total: amount,
+          count: countStatus
+        }
       }
 
       // sum amounts and percentage values
-      const totalAmount = getAmount()
-      const approvedAmount = getAmount([
+      const totalOrders = getOrders()
+      const totalAmount = totalOrders.total
+      const totalCount = list.length
+      const approvedOrders = getOrders([
         'paid',
         'partially_paid'
       ])
+      const approvedAmount = approvedOrders.total
+      const approvedCount = approvedOrders.count
       const approvedPc = Math.round(approvedAmount * 100 / totalAmount)
-      const cancelledAmount = getAmount([
+      const cancelledOrders = getOrders([
         'unauthorized',
         'voided',
         'in_dispute',
         'refunded',
         'partially_refunded'
       ])
+      const cancelledAmount = cancelledOrders.total
+      const cancelledCount = cancelledOrders.count
       const cancelledPc = Math.round(cancelledAmount * 100 / totalAmount)
 
       // update order statistics
+      $(`#t${tabId}-orders-total-quantity`).text(totalCount)
+      $(`#t${tabId}-orders-approved-quantity`).text(approvedCount)
+      $(`#t${tabId}-orders-cancelled-quantity`).text(cancelledCount)
       $(`#t${tabId}-orders-total`).text(formatMoney(totalAmount))
       $(`#t${tabId}-orders-approved`).text(formatMoney(approvedAmount))
       $(`#t${tabId}-orders-approved-pc`).text(`~${approvedPc}%`)
