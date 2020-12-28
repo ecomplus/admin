@@ -396,7 +396,7 @@
         removeSpaces = ''
       }
       // replace spaces and new lines
-      str = str.replace(/[\s\n]/g, removeSpaces)
+      str = str.replace(/[\s\n]/g, removeSpaces).replace(/[^a-z0-9_]/ig, '')
     }
     return str
   }
