@@ -1,5 +1,5 @@
 import { i19loading, i19loadMore } from '@ecomplus/i18n'
-import { $ecomConfig, i18n } from '@ecomplus/utils'
+import { $ecomConfig, i18n, price as getPrice } from '@ecomplus/utils'
 import ecomClient from '@ecomplus/client'
 
 export default function () {
@@ -50,11 +50,12 @@ export default function () {
         const { total, hits } = data.hits
         let i = 0
         const rows = []
-        const addRow = ({ sku = '', name, quantity = 0 }) => {
+        const addRow = item => {
           rows.push({
-            sku,
-            name,
-            quantity,
+            sku: item.sku || '',
+            name: item.name,
+            price: getPrice(item),
+            quantity: item.quantity || 0,
             sold: 0
           })
         }
@@ -64,7 +65,10 @@ export default function () {
             const { _id, _source } = hits[i]
             addRow(_source)
             if (_source.variations) {
-              _source.variations.forEach(addRow)
+              _source.variations.forEach(variation => addRow({
+                ..._source,
+                ...variation
+              }))
             }
 
             callApi(
@@ -100,8 +104,8 @@ export default function () {
               }
             )
           } else {
-            allRows = allRows.concat(rows.map(({ sku, name, quantity, sold }) => {
-              return [sku, name, quantity, sold]
+            allRows = allRows.concat(rows.map(({ sku, name, price, quantity, sold }) => {
+              return [sku, name, price, quantity, sold]
             }))
             datatable.clear()
             datatable.rows.add(allRows)
