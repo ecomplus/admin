@@ -2,6 +2,11 @@
   command = "npm run build"
   publish = "dist"
 
+[[headers]]
+  for = "/assets/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"
+
 [[redirects]]
   from = "/admin.28013c0e86d123a1c9bb.css"
   to = "/admin.css"
