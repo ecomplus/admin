@@ -1442,8 +1442,9 @@ const { sessionStorage, localStorage, Image, $, app } = window
                         if (this.src !== fallbackSrc) {
                           this.src = fallbackSrc
                         }
+                        Done()
                       }
-                      newImg.src = baseUrl + thumbSizes[0].path + key
+                      newImg.src = baseUrl + thumbSizes[0].path + key.replace(/^.*\/?(@.*)$/, '$1')
                     }())
                   }
                 } else {

@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.42](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.40...v1.0.0-alpha.42) (2021-01-04)
+
+
+### Bug Fixes
+
+* **images-media:** fix src concat with object key ([#297](https://github.com/ecomplus/admin/issues/297)) ([27daf1b](https://github.com/ecomplus/admin/commit/27daf1be941b2fe055139aa43ba549b677f65b77))
+
+## [1.0.0-alpha.41](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.40...v1.0.0-alpha.41) (2021-01-04)
+
+
+### Bug Fixes
+
+* **images-media:** fix src concat with object key ([#297](https://github.com/ecomplus/admin/issues/297)) ([27daf1b](https://github.com/ecomplus/admin/commit/27daf1be941b2fe055139aa43ba549b677f65b77))
+
 ## [1.0.0-alpha.40](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.39...v1.0.0-alpha.40) (2020-12-28)
 
 
