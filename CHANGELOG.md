@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.44](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.43...v1.0.0-alpha.44) (2021-01-07)
+
+
+### Features
+
+* **orders-form:** add 'access_key' field to invoice card ([15546ad](https://github.com/ecomplus/admin/commit/15546ad64351a5b6e52c823ec5e2059e674c6f04))
+
 ## [1.0.0-alpha.43](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.42...v1.0.0-alpha.43) (2021-01-04)
 
 ## [1.0.0-alpha.42](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.40...v1.0.0-alpha.42) (2021-01-04)
