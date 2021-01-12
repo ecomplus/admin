@@ -1268,12 +1268,12 @@ const { sessionStorage, localStorage, Image, $, app } = window
             // ref.: https://github.com/ecomclub/storage-api/blob/master/bin/web.js
             const baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
             if (/^@v3/.test(baseKey)) {
-              objects.push({ Key: baseKey })
+              objects.push({ Key: `${storeId}/${baseKey}` })
               if (!/\.webp$/.test(baseKey)) {
                 thumbSizes.forEach(({ path }) => {
                   objects.push(
-                    { Key: path + baseKey },
-                    { Key: path + baseKey + '.webp' }
+                    { Key: `${storeId}/${path}${baseKey}` },
+                    { Key: `${storeId}/${path}${baseKey}.webp` }
                   )
                 })
               }
