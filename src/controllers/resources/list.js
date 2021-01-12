@@ -85,6 +85,9 @@ export default function () {
       const getOrders = statusList => {
         let amount = 0
         let countStatus = 0
+        let discount = 0
+        let freight = 0
+        let subtotal = 0
         list.forEach(row => {
           if (statusList) {
             const status = row['financial_status/current']
@@ -94,10 +97,16 @@ export default function () {
             countStatus++
           }
           amount += row['amount/total']
+          discount += row['amount/discount']
+          freight += row['amount/freight']
+          subtotal += row['amount/subtotal']
         })
         return {
           total: amount,
-          count: countStatus
+          count: countStatus,
+          discount: discount,
+          freight: freight,
+          subtotal: subtotal
         }
       }
 
@@ -128,6 +137,9 @@ export default function () {
       $(`#t${tabId}-orders-approved-quantity`).text(approvedCount)
       $(`#t${tabId}-orders-cancelled-quantity`).text(cancelledCount)
       $(`#t${tabId}-orders-total`).text(formatMoney(totalAmount))
+      $(`#t${tabId}-orders-subtotal`).text(formatMoney(approvedOrders.subtotal))
+      $(`#t${tabId}-orders-freight-total`).text(formatMoney(approvedOrders.freight))
+      $(`#t${tabId}-orders-discount-total`).text(formatMoney(approvedOrders.discount))
       $(`#t${tabId}-orders-approved`).text(formatMoney(approvedAmount))
       $(`#t${tabId}-orders-approved-pc`).text(`~${approvedPc}%`)
       $(`#t${tabId}-orders-approved-bar`)
