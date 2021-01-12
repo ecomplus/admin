@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.45](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.44...v1.0.0-alpha.45) (2021-01-12)
+
+
+### Features
+
+* **cart-items:** show item customizations on cart/order forms ([197842f](https://github.com/ecomplus/admin/commit/197842fda457d01c0b3e7af97a3b0ba23e83e86a))
+* **orders-list:** more orders statics ([#303](https://github.com/ecomplus/admin/issues/303)) ([2b4c865](https://github.com/ecomplus/admin/commit/2b4c86506721b1e2e227bcb0def901277dabf606))
+* **products-form:** add `short_description` input ([52d28e6](https://github.com/ecomplus/admin/commit/52d28e6562c5b643b28622981ffd7377c836e5a2))
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#302](https://github.com/ecomplus/admin/issues/302)) ([d5a0f35](https://github.com/ecomplus/admin/commit/d5a0f3549f30ddd0d9f8af1cf41ed3ce1102dcd1))
+* **media:** fix concatenating object storage keys to delete ([#301](https://github.com/ecomplus/admin/issues/301)) ([c29f88e](https://github.com/ecomplus/admin/commit/c29f88ed1d634fc93b7f5a3258ea8e77480a96a3))
+
 ## [1.0.0-alpha.44](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.43...v1.0.0-alpha.44) (2021-01-07)
 
 

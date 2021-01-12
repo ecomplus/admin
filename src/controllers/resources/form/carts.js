@@ -1,9 +1,7 @@
-/*!
- * Copyright 2018 E-Com Club
- */
+/* eslint-disable no-var */
 
 export default function () {
-  'use strict'
+  const { $, formatMoney, handleInputs, setupInputValues } = window
 
   // current tab ID
   var tabId = window.tabId
@@ -81,7 +79,7 @@ export default function () {
       // inputs for item quantity and price
       // must update cart subtotal on change
       var $qnt = $('<input>', {
-        'class': 'form-control w-80px',
+        class: 'form-control w-80px',
         name: 'items.quantity',
         type: 'number',
         min: 0,
@@ -90,7 +88,7 @@ export default function () {
       }).change(updateSubtotal)
       // money input for item price
       var $price = $('<input>', {
-        'class': 'form-control w-120px',
+        class: 'form-control w-120px',
         // watch final price if defined
         name: 'items.' + (item.final_price !== undefined ? 'final_price' : 'price'),
         type: 'tel',
@@ -100,7 +98,7 @@ export default function () {
 
       // icon to handle item remove
       var $remove = $('<i>', {
-        'class': 'py-10 pr-10 remove fa fa-trash'
+        class: 'py-10 pr-10 remove fa fa-trash'
       }).click(function () {
         var data = Data()
         var items = data.items
@@ -119,13 +117,34 @@ export default function () {
         $tr.remove()
       })
 
+      // item name and additional info
+      const tdNameHtml = [
+        $('<input>', {
+          class: 'form-control',
+          name: 'items.name',
+          type: 'text'
+        })
+      ]
+      if (item.customizations) {
+        item.customizations.forEach(customization => {
+          let html = `<small>${customization.label}:</small> `
+          if (customization.option) {
+            html += `<mark>${customization.option.text}</mark> `
+          }
+          tdNameHtml.push($('<span>', {
+            class: 'mr-3',
+            html
+          }))
+        })
+      }
+
       // add new table row for item
-      var $tr = $('<tr>', {
+      const $tr = $('<tr>', {
         html: [
           // row count
           $('<th>', {
             scope: 'row',
-            html: [ $remove, (index + 1) ]
+            html: [$remove, (index + 1)]
           }),
           // product or variation SKU with link to edit page
           $('<td>', { html: $Link(item.sku || '') }),
@@ -134,11 +153,7 @@ export default function () {
           $('<td>', { html: $price }),
           // simple text input for item name
           $('<td>', {
-            html: $('<input>', {
-              'class': 'form-control',
-              name: 'items.name',
-              type: 'text'
-            })
+            html: tdNameHtml
           }),
           // item picture with link to edit
           $('<td>', { html: $img })
