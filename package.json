@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@brazilian-utils/brazilian-utils": "^1.0.0-rc.12",
-    "@ecomplus/admin-marketplace": "^1.0.0-beta.0",
+    "@ecomplus/admin-marketplace": "^1.0.0-beta.1",
     "@ecomplus/auth": "^0.4.1",
     "@ecomplus/client": "^2.1.4",
     "@ecomplus/i18n": "^1.18.0",
@@ -69,7 +69,7 @@
     "inputmask": "^4.0.9",
     "jquery-maskmoney": "^3.0.2",
     "papaparse": "^5.3.0",
-    "sortablejs": "^1.12.0",
+    "sortablejs": "^1.13.0",
     "vue": "^2.6.12"
   },
   "husky": {
