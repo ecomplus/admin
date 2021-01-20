@@ -1179,12 +1179,36 @@ const { sessionStorage, localStorage, Image, $, app } = window
                  '<span class="title">' + dictionary.settings + '</span>' +
                '</a>' +
              '</li>' +
-             '<li class="menu-item">' +
-               '<a class="menu-link" target="_blank" href="https://community.e-com.plus/t/regras-da-comunidade/210">' +
-                 '<span class="icon fa fa-question"></span>' +
-                 '<span class="title">' + dictionary.support + '</span>' +
-               '</a>' +
-             '</li>'
+             '<li class="menu-item" id="support-menu" data-route-param="support">' +
+                      '<a class="menu-link" href="javascript:;">' +
+                        '<span class="icon fa fa-question"></span>' +
+                        '<span class="title">' + i18n(i19support) + '</span>' +
+                        '<span class="arrow"></span>' +
+                      '</a>' +
+                      '<ul class="menu-submenu">' +
+                        '<li class="menu-item">' +
+                          '<a target="_blank" class="menu-link" href="https://www.youtube.com/channel/UCBlIxK5JAub0E1EX_qHdzmA">' +
+                            '<span class="icon fa fa-play"></span>' +
+                            '<span class="title"> Youtube' +
+                            '</span>' +
+                          '</a>' +
+                        '</li>' +
+                        '<li class="menu-item">' +
+                          '<a target="_blank" class="menu-link" href="https://community.e-com.plus/tag/tutorial">' +
+                            '<span class="icon fa fa-book"></span>' +
+                            '<span class="title"> Tutoriais' +
+                            '</span>' +
+                          '</a>' +
+                        '</li>' +
+                        '<li class="menu-item">' +
+                          '<a target="_blank" class="menu-link" href="https://community.e-com.plus/new-message?username=suporte&title=Assunto%20do%20ticket&body=Pergunta%20do%20ticket">' +
+                            '<span class="icon fa fa-inbox"></span>' +
+                            '<span class="title"> Abrir Ticket' +
+                            '</span>' +
+                          '</a>' +
+                        '</li>' +
+                      '</ul>' +
+                    '</li>'
 
     var $menu = $('#sidebar')
     $menu.append(el)
