@@ -7,7 +7,7 @@ import { ToastPlugin, VBTogglePlugin, ModalPlugin } from 'bootstrap-vue'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 export const html = `
-  <div class="main-content">
+  <div class="main-content opacity-100">
     <div id="admin-marketplace"></div>
   </div>`
 
