@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.46](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.45...v1.0.0-alpha.46) (2021-01-23)
+
+
+### Features
+
+* **sidebar:** add/update some links to support ([#306](https://github.com/ecomplus/admin/issues/306)) ([c331662](https://github.com/ecomplus/admin/commit/c3316627c6c2a3dfa74bc9175a88c3a8f32c521f))
+
+
+### Bug Fixes
+
+* **orders-list:** ensure 'Web' source on select options ([a6259d4](https://github.com/ecomplus/admin/commit/a6259d49940377f2e598e403caf35218ae2bb875))
+
 ## [1.0.0-alpha.45](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.44...v1.0.0-alpha.45) (2021-01-12)
 
 

@@ -157,7 +157,7 @@ export default function () {
         const $select = $orderSources.find(`select[name="${field}"]`)
         list.forEach(row => {
           const value = row[field]
-          if (value) {
+          if (value && value !== 'Web') {
             if (!orderSources[field]) {
               orderSources[field] = []
             } else if (orderSources[field].indexOf(value) > -1) {
