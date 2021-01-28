@@ -768,6 +768,7 @@ export default function () {
                 if (data.name && !data.slug && hasSlug) {
                   // generate slug from name
                   // prepare string and remove illegal characters
+                  console.log(clearAccents(data.name.toLowerCase(), '-'))
                   data.slug = clearAccents(data.name.toLowerCase(), '-').replace(/[^a-z0-9-_./]/g, '')
                 }
                 /*
