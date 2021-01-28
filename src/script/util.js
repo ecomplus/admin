@@ -383,7 +383,9 @@
         removeSpaces = ''
       }
       // replace spaces and new lines
-      str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[\s\n]/g, removeSpaces).replace(/[^a-z0-9_-]/ig, '')
+      str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[\s\n]/g, removeSpaces)
+        .replace(new RegExp(`[^a-z0-9_${removeSpaces}]`, 'ig'), '')
     }
     return str
   }
