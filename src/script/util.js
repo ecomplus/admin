@@ -377,14 +377,14 @@
 
   window.clearAccents = function (str, removeSpaces) {
     // replace common accents
+    str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     if (removeSpaces) {
       if (typeof removeSpaces !== 'string') {
         // just clear
         removeSpaces = ''
       }
       // replace spaces and new lines
-      str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-        .replace(/[\s\n]/g, removeSpaces)
+      str = str.replace(/[\s\n]/g, removeSpaces)
         .replace(new RegExp(`[^a-z0-9_${removeSpaces}]`, 'ig'), '')
     }
     return str
