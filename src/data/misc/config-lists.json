@@ -476,6 +476,13 @@
       },
       "type": "bold",
       "enum": {
+        "null": {
+          "class": "muted fw-300",
+          "text": {
+            "en_us": "Without status",
+            "pt_br": "Sem status"
+          }
+        },
         "invoice_issued": {
           "text": {
             "en_us": "Invoice issued",

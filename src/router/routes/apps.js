@@ -4,7 +4,6 @@ import Vue from 'vue'
 import App from '@ecomplus/admin-marketplace/src/App.vue'
 import router from '@ecomplus/admin-marketplace/src/router'
 import { ToastPlugin, VBTogglePlugin, ModalPlugin } from 'bootstrap-vue'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 export const html = `
   <div class="main-content opacity-100">

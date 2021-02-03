@@ -377,26 +377,15 @@
 
   window.clearAccents = function (str, removeSpaces) {
     // replace common accents
-    str = str
-      .replace(/[çć]/g, 'c')
-      .replace(/[ÇĆ]/g, 'C')
-      .replace(/[áâãà]/g, 'a')
-      .replace(/[ÁÂÃÀ]/g, 'A')
-      .replace(/[éêẽ]/g, 'e')
-      .replace(/[ÉÊẼ]/g, 'E')
-      .replace(/[íîĩ]/g, 'i')
-      .replace(/[ÍÎĨ]/g, 'I')
-      .replace(/[óôõ]/g, 'o')
-      .replace(/[ÓÔÕ]/g, 'O')
-      .replace(/[úûõ]/g, 'u')
-      .replace(/[ÚÛŨ]/g, 'U')
+    str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     if (removeSpaces) {
       if (typeof removeSpaces !== 'string') {
         // just clear
         removeSpaces = ''
       }
       // replace spaces and new lines
-      str = str.replace(/[\s\n]/g, removeSpaces).replace(/[^a-z0-9_]/ig, '')
+      str = str.replace(/[\s\n]/g, removeSpaces)
+        .replace(new RegExp(`[^a-z0-9_${removeSpaces}]`, 'ig'), '')
     }
     return str
   }

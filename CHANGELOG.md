@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.48](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.47...v1.0.0-alpha.48) (2021-02-03)
+
+
+### Features
+
+* **orders-list:** add 'no status' filter option on fulfillment status col ([b09a1b0](https://github.com/ecomplus/admin/commit/b09a1b0a20512a6c4716050721be650108c954ce))
+
+
+### Bug Fixes
+
+* **bootstrap-styles:** import bootstrap vue scss instead of compiled css ([ab5dfa7](https://github.com/ecomplus/admin/commit/ab5dfa7d18f7eeb6457248ce61e9a4499cc8ec83))
+* **clear-accents:** keep `removeSpaces` char (- for slugs) ([#314](https://github.com/ecomplus/admin/issues/314)) ([b3e8858](https://github.com/ecomplus/admin/commit/b3e8858aa41740348d8a40e98cd9a1f0855c361d))
+* **deps:** update all non-major dependencies ([#310](https://github.com/ecomplus/admin/issues/310)) ([0ddce14](https://github.com/ecomplus/admin/commit/0ddce1487054b845df8179f1aa47b410acb243e8))
+
 ## [1.0.0-alpha.47](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.46...v1.0.0-alpha.47) (2021-01-23)
 
 ## [1.0.0-alpha.46](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.45...v1.0.0-alpha.46) (2021-01-23)
