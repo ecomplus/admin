@@ -40,7 +40,6 @@ export default function () {
   const orderIds = routeParams[routeParams.length - 1]
 
   const renderInvoice = (store, order) => {
-    console.log(order)
     const buyer = order.buyers && order.buyers[0]
     const shippingLine = order.shipping_lines && order.shipping_lines[0]
     const transaction = order.transactions && order.transactions[0]
