@@ -43,6 +43,7 @@ export default function () {
     const buyer = order.buyers && order.buyers[0]
     const shippingLine = order.shipping_lines && order.shipping_lines[0]
     const transaction = order.transactions && order.transactions[0]
+    const { items } = order
 
     const $invoice = $('<div>', {
       class: 'mb-70 pb-3',
@@ -114,11 +115,17 @@ export default function () {
             </tr>
           </thead>
           <tbody>
-            ${(order.items
-              ? order.items.filter(item => item.quantity > 0).reduce((trsStr, item, i) => trsStr + `
+            ${(items
+              ? items.filter(item => item.quantity > 0).reduce((trsStr, item, i) => trsStr + `
                 <tr>
                   <td>${(i + 1)}</td>
-                  <td>${item.name} (${item.sku})</td>
+                  <td>${item.name} (${item.sku})
+                  ${item.customizations
+                    ? item.customizations.reduce((trs, custom, index) => trs +
+                    `<br><em>${custom.label}</em>:<mark>${(custom.option ? custom.option.text : '')}</mark>`
+                    , '')
+                    : ''}
+                  </td>
                   <td>${item.quantity}</td>
                   <td>${formatMoney(getPrice(item))}</td>
                   <td>${formatMoney(getPrice(item) * item.quantity)}</td>
