@@ -44,7 +44,6 @@ export default function () {
     const shippingLine = order.shipping_lines && order.shipping_lines[0]
     const transaction = order.transactions && order.transactions[0]
     const { items } = order
-    let htmlCustom = ''
 
     const $invoice = $('<div>', {
       class: 'mb-70 pb-3',
