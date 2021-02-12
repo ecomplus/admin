@@ -9,6 +9,7 @@ $color-purple-lighter: lighten($purple, 35%);
 @import "components/forms";
 @import "components/colorpicker";
 @import "components/print";
+@import "components/utils";
 
 .topbar-btn:hover,
 .topbar .dropdown.show .topbar-btn {
