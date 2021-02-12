@@ -11,6 +11,13 @@ $color-purple-lighter: lighten($purple, 35%);
 @import "components/print";
 @import "components/utils";
 
+@media (min-width: 2000px) {
+  .main-container {
+    max-width: 1950px;
+    margin: 0 auto !important;
+  }
+}
+
 .topbar-btn:hover,
 .topbar .dropdown.show .topbar-btn {
   border-top-color: $green;
