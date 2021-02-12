@@ -1,13 +1,13 @@
 {
   "name": "@ecomplus/admin",
-  "version": "1.0.0-alpha.48",
+  "version": "1.0.0-beta.0",
   "description": "E-Com Plus Admin dashboard PWA",
   "main": "src/index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack",
     "serve": "cross-env NODE_ENV=development webpack-dev-server",
     "start": "npm run serve",
-    "release": "standard-version --prerelease alpha"
+    "release": "standard-version --prerelease beta"
   },
   "repository": {
     "type": "git",
