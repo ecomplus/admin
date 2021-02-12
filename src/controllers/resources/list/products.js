@@ -621,7 +621,8 @@ export default function () {
             }
           }
           if (thumb) {
-            pictureHtml = '<img src="' + thumb.url + '">'
+            const src = thumb.url.replace(/(\w+\.)?(ecoms\d)\.com/i, '$2-nyc3.nyc3.cdn.digitaloceanspaces.com')
+            pictureHtml = `<img src="${src}">`
           }
         }
 
