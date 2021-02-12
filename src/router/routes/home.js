@@ -1,14 +1,11 @@
-import handleImport from '@/lib/handle-import'
-import homeHTML from '@/views/home.html'
+import setup from '@ecomplus/admin-home'
 
-export const html = homeHTML
+export const html = `
+  <div class="main-content opacity-100">
+    <div id="admin-home"></div>
+  </div>`
 
 export const onLoad = () => {
   window.routeReady('Home')
-  window.Tabs[window.tabId].wait = true
-
-  handleImport(import(/* webpackChunkName: "controllers_resources_form" */
-    '@/controllers/resources/form'), true)
-  handleImport(import(/* webpackChunkName: "controllers_resources_form_home" */
-    '@/controllers/resources/form/home'), true)
+  setup()
 }
