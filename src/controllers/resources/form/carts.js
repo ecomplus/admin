@@ -127,7 +127,7 @@ export default function () {
       ]
       if (item.customizations) {
         item.customizations.forEach(customization => {
-          let html = `<small>${customization.label}:</small> `
+          let html = `<em>${customization.label}:</em> `
           if (customization.option) {
             html += `<mark>${customization.option.text}</mark> `
           }
