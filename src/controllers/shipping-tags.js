@@ -1,5 +1,5 @@
 export default function () {
-  const { localStorage, $, ecomUtils, callApi, formatPhone, tabId, routeParams } = window
+  const { $, ecomUtils, callApi, formatPhone, tabId, routeParams } = window
   const store = window.Store || {}
 
   const $appTab = $(`#app-tab-${tabId}`)
@@ -59,16 +59,16 @@ export default function () {
               to.number = 'S/N'
             }
             if (!from.name) {
-              from.name = localStorage.getItem('fromCorporate') || localStorage.getItem('fromName') || ''
+              from.name = store.corporate_name || store.name || ''
             }
             if (!from.phone) {
-              const number = localStorage.getItem('fromContact')
+              const number = store.contact_phone
               if (number) {
                 from.phone = { number }
               }
             }
             if (!from.street || !from.borough) {
-              const localCenderAddress = localStorage.getItem('fromAddress')
+              const localCenderAddress = store.address
               if (localCenderAddress) {
                 const addressParts = localCenderAddress.split(',')
                 from.street = addressParts[0]
@@ -155,8 +155,10 @@ export default function () {
                     valor: ecomUtils.price(item)
                   })),
                   peso: pkg && pkg.weight
-                    ? (!pkg.weight.unit || pkg.weight.unit === 'kg') ? pkg.weight.value
-                      : pkg.weight.unit === 'g' ? pkg.weight.value / 1000
+                    ? (!pkg.weight.unit || pkg.weight.unit === 'kg')
+                      ? pkg.weight.value
+                      : pkg.weight.unit === 'g'
+                        ? pkg.weight.value / 1000
                         : undefined
                     : undefined
                 }))}`

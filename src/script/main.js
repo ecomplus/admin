@@ -8,6 +8,7 @@ import {
 } from '@ecomplus/i18n'
 
 import { $ecomConfig } from '@ecomplus/utils'
+import ecomAuth from '@ecomplus/auth'
 import session from '@/lib/session'
 import { handleFatalError, handleApiError } from '@/lib/errors'
 import i18n from '@/lib/i18n'
@@ -1641,37 +1642,33 @@ const { sessionStorage, localStorage, Image, $, app } = window
   })
 
   // store and user JSON body
-  var Store, User
+  let Store, User
 
   // get store object
-  callApi('stores/me.json', 'GET', function (err, body) {
-    if (err) {
-      handleFatalError(err)
-    } else {
-      window.Store = Store = body
+  ecomAuth.fetchStore()
+    .then(store => {
+      window.Store = Store = store
       // console.log(Store)
       // get authentication object
-      callApi('authentications/me.json', 'GET', function (err, body) {
-        if (err) {
-          handleFatalError(err)
-        } else {
-          User = body
+      return ecomAuth.fetchAuthentication()
+        .then(authentication => {
+          User = authentication
           if (User.notifications) {
-            var notifications = User.notifications
-            for (var i = notifications.length - 1; i > -1; i--) {
+            const notifications = User.notifications
+            for (let i = notifications.length - 1; i > -1; i--) {
               if (notifications[i].datetime) {
-                var dayNotifications = parseInt(notifications[i].datetime.substring(8, 10))
-                var monthNotifications = parseInt(notifications[i].datetime.substring(5, 7))
-                var yearNotifications = parseInt(notifications[i].datetime.substring(0, 4))
-                var miliSecAPI = Date.parse(notifications[i].datetime)
-                var todayNotifications = new Date()
-                var miliSec = Date.parse(todayNotifications)
-                var ddNotifications = todayNotifications.getDate()
-                var mmNotifications = (todayNotifications.getMonth() + 1)
-                var yyyyNotifications = todayNotifications.getFullYear()
-                var idNfcs = notifications[i]._id
-                var acao, action, urlNotification, resourcesNfcsBr, resourcesNfcsUs, htmlNotification, bgIconNfcs, iconNfcs, daysNfcBr, daysNfcUs, id, diffDays
-                var allResources = function () {
+                const dayNotifications = parseInt(notifications[i].datetime.substring(8, 10))
+                const monthNotifications = parseInt(notifications[i].datetime.substring(5, 7))
+                const yearNotifications = parseInt(notifications[i].datetime.substring(0, 4))
+                const miliSecAPI = Date.parse(notifications[i].datetime)
+                const todayNotifications = new Date()
+                const miliSec = Date.parse(todayNotifications)
+                const ddNotifications = todayNotifications.getDate()
+                const mmNotifications = (todayNotifications.getMonth() + 1)
+                const yyyyNotifications = todayNotifications.getFullYear()
+                const idNfcs = notifications[i]._id
+                let acao, action, urlNotification, resourcesNfcsBr, resourcesNfcsUs, htmlNotification, bgIconNfcs, iconNfcs, daysNfcBr, daysNfcUs, id, diffDays
+                const allResources = function () {
                   htmlNotification = '<a class="media" id="' + idNfcs + '" href="' + urlNotification + id + ' ">' +
                       '  <span class="avatar ' + bgIconNfcs + '"><i class="' + iconNfcs + '"></i></span>' +
                       '  <div class="media-body">' +
@@ -1685,7 +1682,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                       '</p>' +
                       '</div></a>'
                 }
-                var authentication = function () {
+                const authentication = function () {
                   urlNotification = 'javascript:;' // #/authentications/
                   resourcesNfcsBr = 'Autenticação'
                   resourcesNfcsUs = 'Authentication'
@@ -1693,7 +1690,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                   allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
                   $('.notification').append(htmlNotification)
                 }
-                var products = function () {
+                const products = function () {
                   urlNotification = '/#/resources/products/'
                   resourcesNfcsBr = 'Produto'
                   resourcesNfcsUs = 'Product'
@@ -1701,7 +1698,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                   allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
                   $('.notification').append(htmlNotification)
                 }
-                var orders = function () {
+                const orders = function () {
                   urlNotification = '/#/resources/orders/'
                   resourcesNfcsBr = 'Pedido'
                   resourcesNfcsUs = 'Order'
@@ -1709,7 +1706,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                   allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
                   $('.notification').append(htmlNotification)
                 }
-                var categories = function () {
+                const categories = function () {
                   urlNotification = '/#/resources/categories/'
                   resourcesNfcsBr = 'Categoria'
                   resourcesNfcsUs = 'Category'
@@ -1717,7 +1714,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                   allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
                   $('.notification').append(htmlNotification)
                 }
-                var brands = function () {
+                const brands = function () {
                   urlNotification = '/#/resources/brands/'
                   resourcesNfcsBr = 'Marca'
                   resourcesNfcsUs = 'Brand'
@@ -1725,7 +1722,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                   allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
                   $('.notification').append(htmlNotification)
                 }
-                var collections = function () {
+                const collections = function () {
                   urlNotification = '/#/resources/collections/'
                   resourcesNfcsBr = 'Coleção'
                   resourcesNfcsUs = 'Collection'
@@ -1733,7 +1730,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                   allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
                   $('.notification').append(htmlNotification)
                 }
-                var applications = function () {
+                const applications = function () {
                   urlNotification = 'javascript:;' // #/resources/collections/
                   resourcesNfcsBr = 'App'
                   resourcesNfcsUs = 'App'
@@ -1741,7 +1738,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                   allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
                   $('.notification').append(htmlNotification)
                 }
-                var grids = function () {
+                const grids = function () {
                   urlNotification = '/#/resources/grids/'
                   resourcesNfcsBr = 'Grade'
                   resourcesNfcsUs = 'Grid'
@@ -1749,7 +1746,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                   allResources(urlNotification, resourcesNfcsBr, resourcesNotifications, id, action, acao, diffDays, iconNfcs, bgIconNfcs)
                   $('.notification').append(htmlNotification)
                 }
-                var resourcesNotifications = function () {
+                const resourcesNotifications = function () {
                   if (notifications[i].content.api_event.resource === 'authentications') {
                     id = ''
                     authentication(id, diffDays)
@@ -1835,21 +1832,21 @@ const { sessionStorage, localStorage, Image, $, app } = window
                           daysNfcUs = 'days'
                           resourcesNotifications(id, diffDays, acao, action, bgIconNfcs, daysNfcUs, daysNfcBr)
                         }
-                        var infoPatch = function (idClick) {
+                        const infoPatch = function (idClick) {
                           // patch new store name
-                          var callback = function (err, body) {
+                          const callback = function (err, body) {
                             if (!err) {
                               console.log('Mudou')
                             }
                           }
-                          var url = 'authentications/' + User._id + '/notifications/' + idClick + '.json'
-                          var data = {
-                            'read': true
+                          const url = 'authentications/' + User._id + '/notifications/' + idClick + '.json'
+                          const data = {
+                            read: true
                           }
                           window.callApi(url, 'PATCH', callback, data)
                         }
                         $('.notification > a.media').click(function () {
-                          var idClick = $(this).attr('id')
+                          const idClick = $(this).attr('id')
                           if (idClick === idNfcs) {
                             console.log('deu bom')
                             infoPatch(idClick, User._id)
@@ -1866,10 +1863,9 @@ const { sessionStorage, localStorage, Image, $, app } = window
           }
           // ready to start dashboard
           Start()
-        }
-      })
-    }
-  })
+        })
+    })
+    .catch(handleFatalError)
 
   var Start = function () {
     // create first tab

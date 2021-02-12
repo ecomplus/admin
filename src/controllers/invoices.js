@@ -86,7 +86,8 @@ export default function () {
             <strong>${(buyer ? (buyer.corporate_name || getFullName(buyer)) : '')}</strong><br>
             ${(buyer
               ? buyer.registry_type === 'p'
-                ? `CPF: ${formatCPF(buyer.doc_number)}` : `CNPJ: ${formatCNPJ(buyer.doc_number)}`
+                ? `CPF: ${formatCPF(buyer.doc_number)}`
+                : `CNPJ: ${formatCNPJ(buyer.doc_number)}`
               : '')}
           </div>
 
@@ -192,33 +193,26 @@ export default function () {
 
   const ids = orderIds.split(',')
   if (ids.length) {
-    callApi('stores/me.json', 'GET', (err, store) => {
-      if (err) {
-        console.error(err)
-        app.toast()
-      } else {
-        let i = 0
-        const getDoc = () => {
-          if (i < ids.length) {
-            callApi(`orders/${ids[i]}.json`, 'GET', (err, order) => {
-              if (err) {
-                console.error(err)
-                app.toast()
-              } else {
-                renderInvoice(store, order)
-              }
-              i++
-              getDoc()
-            })
+    let i = 0
+    const getDoc = () => {
+      if (i < ids.length) {
+        callApi(`orders/${ids[i]}.json`, 'GET', (err, order) => {
+          if (err) {
+            console.error(err)
+            app.toast()
           } else {
-            $invoices.find('.loading').slideUp()
-            $appTab.find('.shipping-tags').click(() => {
-              window.location.href = `/#/shipping-tags/${orderIds}`
-            })
+            renderInvoice(window.Store, order)
           }
-        }
-        getDoc()
+          i++
+          getDoc()
+        })
+      } else {
+        $invoices.find('.loading').slideUp()
+        $appTab.find('.shipping-tags').click(() => {
+          window.location.href = `/#/shipping-tags/${orderIds}`
+        })
       }
-    })
+    }
+    getDoc()
   }
 }
