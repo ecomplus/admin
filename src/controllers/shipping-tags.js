@@ -51,7 +51,7 @@ export default function () {
           if (to && from) {
             if (!to.phone && order.buyers && order.buyers[0]) {
               const { phones } = order.buyers[0]
-              if (phones.length) {
+              if (phones && phones.length) {
                 to.phone = phones[0]
               }
             }
