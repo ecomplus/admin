@@ -49,7 +49,7 @@ export default function () {
         if (order.shipping_lines && order.shipping_lines[0]) {
           const { to, from, app } = order.shipping_lines[0]
           if (to && from) {
-            if (!to.phone && order.buyers && order.buyers[0]) {
+            if (to.phone && order.buyers && order.buyers[0]) {
               const { phones } = order.buyers[0]
               if (phones.length) {
                 to.phone = phones[0]
@@ -63,7 +63,7 @@ export default function () {
             }
             if (!from.phone) {
               const number = localStorage.getItem('fromContact')
-              if (number) {
+              if (number !== 'undefined') {
                 from.phone = { number }
               }
             }
@@ -94,7 +94,7 @@ export default function () {
                   </ul>
                   <ul class="list-unstyled mb-0 fs-16">
                     <li><strong>DESTINATÁRIO</strong></li>
-                    <li class="text-uppercase">${to.name}</li>
+                    <li class="text-uppercase">${to.name || ''}</li>
                     <li>${(to.phone ? formatPhone(to.phone) : '')}</li>
                     <li class="pt-1 fs-18"><mark>${to.zip.replace(/(\d{5})(\d{3})/, '$1-$2')}</mark></li>
                     <li class="pt-1 fs-18"><address>${ecomUtils.lineAddress(to)}</address></li>
