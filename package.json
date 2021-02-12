@@ -56,8 +56,9 @@
   },
   "dependencies": {
     "@brazilian-utils/brazilian-utils": "^1.0.0-rc.12",
-    "@ecomplus/admin-marketplace": "^1.0.0-beta.2",
-    "@ecomplus/auth": "^0.4.1",
+    "@ecomplus/admin-home": "^0.9.0",
+    "@ecomplus/admin-marketplace": "^1.0.0-rc.0",
+    "@ecomplus/auth": "^1.0.0",
     "@ecomplus/client": "^2.2.0",
     "@ecomplus/i18n": "^1.20.0",
     "@ecomplus/storefront-twbs": "^5.10.3",
