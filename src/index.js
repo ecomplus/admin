@@ -1,6 +1,6 @@
 import { name, version } from '../package.json'
 import ecomUtils from '@ecomplus/utils'
-import EcomAuth from '@ecomplus/auth'
+import ecomAuth from '@ecomplus/auth'
 import session from './lib/session'
 import '@ecomplus/storefront-twbs/src/'
 import 'inputmask/dist/inputmask/jquery.inputmask'
@@ -14,7 +14,6 @@ app.ready(() => {
   if (!session.my_id || !session.access_token || !(new Date(session.expires).getTime() >= Date.now())) {
     import(/* webpackChunkName: "login" */ '@/login/').catch(console.error)
   } else {
-    const ecomAuth = new EcomAuth()
     ecomAuth.setSession(session)
     import(/* webpackChunkName: "dashboard" */ '@/dashboard').catch(console.error)
   }
