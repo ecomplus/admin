@@ -122,8 +122,8 @@ export default function () {
                   <td>${(i + 1)}</td>
                   <td>${item.name} (${item.sku})
                   ${item.customizations
-                    ? item.customizations.reduce((trs, custom, index) => trs + `
-                    <br><em>${custom.label}</em>:<mark>${custom.option.text}</mark>`
+                    ? item.customizations.reduce((trs, custom, index) => trs +
+                    `<br><em>${custom.label}</em>:<mark>${(custom.option ? custom.option.text : '')}</mark>`
                     , '')
                     : ''}
                   </td>
