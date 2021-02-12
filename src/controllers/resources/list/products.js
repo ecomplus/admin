@@ -638,10 +638,10 @@ export default function () {
               '<div class="item-price">' + priceString + '</div>' +
               '<span class="text-muted">' +
                 '<span class="item-visible">' +
-                  `<i class="mr-2 fa fa-${(item.visible ? 'eye' : 'eye-slash')}" title="${i18n(i19visible)}"></i>` +
+                  `<i class="mr-2 fa fa-${(item.visible ? 'eye' : 'eye-slash text-danger')}" title="${i18n(i19visible)}"></i>` +
                 '</span>' +
                 '<span class="item-availability">' +
-                  `<i class="mr-2 fa fa-${(item.available ? 'check' : 'close')}" title="${i18n(i19available)}"></i>` +
+                  `<i class="mr-2 fa fa-${(item.available ? 'check' : 'close text-danger')}" title="${i18n(i19available)}"></i>` +
                 '</span>' +
               '</span>' +
               `<span class="item-qnt mr-2">${qntString}</span>` +
