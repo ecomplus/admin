@@ -1,24 +1,21 @@
 import Sortable from 'sortablejs'
 
 export default function () {
-  const { $ } = window
+  const { $, app, i18n, newTabLink } = window
 
   // current tab ID
-  var tabId = window.tabId
-  var Tab = window.Tabs[tabId]
-  var elContainer = $('#t' + tabId + '-tab-normal')
-  var $form = elContainer.children('form')
+  const tabId = window.tabId
+  const Tab = window.Tabs[tabId]
+  const elContainer = $('#t' + tabId + '-tab-normal')
+  const $form = elContainer.children('form')
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
 
-  // var lang = window.lang
-  var i18n = window.i18n
-
   // abstraction for callApi function
-  var callApi = function (endpoint, method, callback, data) {
+  const callApi = function (endpoint, method, callback, data) {
     // show loading spinner
     $form.addClass('ajax')
-    var Callback = function (err, json) {
+    const Callback = function (err, json) {
       // request done
       $form.removeClass('ajax')
       if (!err) {
@@ -102,74 +99,37 @@ export default function () {
 
     if (hasSlug) {
       // direct link and share
-      window.callApi('stores/me.json', 'GET', function (error, schema) {
-        if (!error) {
-          var link = function (link) {
-            if ((window.shopDomain || schema.domain) && Data().slug) {
-              var domain = schema.domain || window.shopDomain
-              var Link = 'https://' + domain + '/' + Data().slug
-              if (link) {
-                // add link prefix
-                Link = link + encodeURIComponent(Link)
-              }
-              newTabLink(Link)
-            } else {
-              app.toast(i18n({
-                'en_us': 'No link to share',
-                'pt_br': 'Nenhum link para compartilhar'
-              }))
-            }
+      const link = function (link) {
+        const domain = window.shopDomain || (window.Store && window.Store.domain)
+        if (domain && Data().slug) {
+          let Link = 'https://' + domain + '/' + Data().slug
+          if (link) {
+            // add link prefix
+            Link = link + encodeURIComponent(Link)
           }
-
-          $('#t' + tabId + '-view').click(function () {
-            link()
-          })
-          $('#t' + tabId + '-facebook').click(function () {
-            link('https://www.facebook.com/sharer.php?u=')
-          })
-          $('#t' + tabId + '-whatsapp').click(function () {
-            var platform
-            if ($(window).width() < 480) {
-              platform = 'api'
-            } else {
-              platform = 'web'
-            }
-            link('https://' + platform + '.whatsapp.com/send?text=')
-          })
+          newTabLink(Link)
         } else {
-          link = function (link) {
-            if ((window.shopDomain || localStorage.getItem('domain')) && Data().slug) {
-              var domain = localStorage.getItem('domain') || window.shopDomain
-              var Link = 'https://' + domain + '/' + Data().slug
-              if (link) {
-                // add link prefix
-                Link = link + encodeURIComponent(Link)
-              }
-              newTabLink(Link)
-            } else {
-              app.toast(i18n({
-                'en_us': 'No link to share',
-                'pt_br': 'Nenhum link para compartilhar'
-              }))
-            }
-          }
-
-          $('#t' + tabId + '-view').click(function () {
-            link()
-          })
-          $('#t' + tabId + '-facebook').click(function () {
-            link('https://www.facebook.com/sharer.php?u=')
-          })
-          $('#t' + tabId + '-whatsapp').click(function () {
-            var platform
-            if ($(window).width() < 480) {
-              platform = 'api'
-            } else {
-              platform = 'web'
-            }
-            link('https://' + platform + '.whatsapp.com/send?text=')
-          })
+          app.toast(i18n({
+            en_us: 'No link to share',
+            pt_br: 'Nenhum link para compartilhar'
+          }))
         }
+      }
+
+      $('#t' + tabId + '-view').click(function () {
+        link()
+      })
+      $('#t' + tabId + '-facebook').click(function () {
+        link('https://www.facebook.com/sharer.php?u=')
+      })
+      $('#t' + tabId + '-whatsapp').click(function () {
+        let platform
+        if ($(window).width() < 480) {
+          platform = 'api'
+        } else {
+          platform = 'web'
+        }
+        link('https://' + platform + '.whatsapp.com/send?text=')
       })
     } else {
       // document doest not have link

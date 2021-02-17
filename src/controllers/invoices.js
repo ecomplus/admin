@@ -43,6 +43,7 @@ export default function () {
     const buyer = order.buyers && order.buyers[0]
     const shippingLine = order.shipping_lines && order.shipping_lines[0]
     const transaction = order.transactions && order.transactions[0]
+    const { items } = order
 
     const $invoice = $('<div>', {
       class: 'mb-70 pb-3',
@@ -85,7 +86,8 @@ export default function () {
             <strong>${(buyer ? (buyer.corporate_name || getFullName(buyer)) : '')}</strong><br>
             ${(buyer
               ? buyer.registry_type === 'p'
-                ? `CPF: ${formatCPF(buyer.doc_number)}` : `CNPJ: ${formatCNPJ(buyer.doc_number)}`
+                ? `CPF: ${formatCPF(buyer.doc_number)}`
+                : `CNPJ: ${formatCNPJ(buyer.doc_number)}`
               : '')}
           </div>
 
@@ -114,11 +116,17 @@ export default function () {
             </tr>
           </thead>
           <tbody>
-            ${(order.items
-              ? order.items.filter(item => item.quantity > 0).reduce((trsStr, item, i) => trsStr + `
+            ${(items
+              ? items.filter(item => item.quantity > 0).reduce((trsStr, item, i) => trsStr + `
                 <tr>
                   <td>${(i + 1)}</td>
-                  <td>${item.name} (${item.sku})</td>
+                  <td>${item.name} (${item.sku})
+                  ${item.customizations
+                    ? item.customizations.reduce((trs, custom, index) => trs +
+                    `<br><em>${custom.label}</em>:<mark>${(custom.option ? custom.option.text : '')}</mark>`
+                    , '')
+                    : ''}
+                  </td>
                   <td>${item.quantity}</td>
                   <td>${formatMoney(getPrice(item))}</td>
                   <td>${formatMoney(getPrice(item) * item.quantity)}</td>
@@ -185,33 +193,26 @@ export default function () {
 
   const ids = orderIds.split(',')
   if (ids.length) {
-    callApi('stores/me.json', 'GET', (err, store) => {
-      if (err) {
-        console.error(err)
-        app.toast()
-      } else {
-        let i = 0
-        const getDoc = () => {
-          if (i < ids.length) {
-            callApi(`orders/${ids[i]}.json`, 'GET', (err, order) => {
-              if (err) {
-                console.error(err)
-                app.toast()
-              } else {
-                renderInvoice(store, order)
-              }
-              i++
-              getDoc()
-            })
+    let i = 0
+    const getDoc = () => {
+      if (i < ids.length) {
+        callApi(`orders/${ids[i]}.json`, 'GET', (err, order) => {
+          if (err) {
+            console.error(err)
+            app.toast()
           } else {
-            $invoices.find('.loading').slideUp()
-            $appTab.find('.shipping-tags').click(() => {
-              window.location.href = `/#/shipping-tags/${orderIds}`
-            })
+            renderInvoice(window.Store, order)
           }
-        }
-        getDoc()
+          i++
+          getDoc()
+        })
+      } else {
+        $invoices.find('.loading').slideUp()
+        $appTab.find('.shipping-tags').click(() => {
+          window.location.href = `/#/shipping-tags/${orderIds}`
+        })
       }
-    })
+    }
+    getDoc()
   }
 }

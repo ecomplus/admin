@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.0](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.48...v1.0.0-beta.0) (2021-02-12)
+
+
+### Features
+
+* **home:** setup @ecomplus/admin-home app ([994b3be](https://github.com/ecomplus/admin/commit/994b3bea3e19b71b85db5bdf77aa6d780463395d))
+* **invoices:** render items customizations ([#324](https://github.com/ecomplus/admin/issues/324)) ([a2da2ac](https://github.com/ecomplus/admin/commit/a2da2ac8a62ebfe23bb8490362d10cba28573d1c))
+
+
+### Bug Fixes
+
+* **auth:** fix handling @ecomplus/auth v1 ([5f18f1a](https://github.com/ecomplus/admin/commit/5f18f1aef3cf0b71095a3e566c5667ddc2f7c9af))
+* **deps:** update @ecomplus/admin-marketplace to v1.0.0-rc.1 ([01d8dc8](https://github.com/ecomplus/admin/commit/01d8dc8183812336128e91d43a2db3729d9abe06))
+* **deps:** update @ecomplus/auth and @ecomplus/admin-home ([3d6906e](https://github.com/ecomplus/admin/commit/3d6906ea2c294c2dd0d355175a479ce17d7fd5d5))
+* **deps:** update @ecomplus/auth to v1 ([d7e34f6](https://github.com/ecomplus/admin/commit/d7e34f6029d329a0d9891ed1af6a67119b22658f))
+* **old-scripts:** remove local storage mocks, prefer using @ecomplus/auth ([4be3221](https://github.com/ecomplus/admin/commit/4be322170078e40ac2a5261378dcd812125f5eb5))
+* **products-list:** prefer using do spaces cdn for items pictures ([ed96e0d](https://github.com/ecomplus/admin/commit/ed96e0da42158b31f6da0a15d3493186d53844c9))
+* **scss:** container fix for xl devices ([0cf05db](https://github.com/ecomplus/admin/commit/0cf05dbad12a33237ba021d03bc5c193cec4942b))
+
 ## [1.0.0-alpha.48](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.47...v1.0.0-alpha.48) (2021-02-03)
 
 

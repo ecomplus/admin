@@ -1,4 +1,4 @@
-import EcomAuth from '@ecomplus/auth'
+import ecomAuth from '@ecomplus/auth'
 import * as md5 from 'blueimp-md5'
 import { handleApiError } from '@/lib/errors'
 import { hide as hideToast } from '@/lib/toast'
@@ -32,13 +32,13 @@ const getDynamicBg = selector => {
   const changeBg = function () {
     const newImg = new Image()
     newImg.onload = function () {
-      var img = this
+      const img = this
       $(selector).fadeOut(1000, function () {
         $(this).css('background-image', 'url(' + img.src + ')').fadeIn()
       })
     }
 
-    var el = Math.floor((Math.random() * (images.length - 1)))
+    const el = Math.floor((Math.random() * (images.length - 1)))
     newImg.src = images[el]
     images.splice(el, 1)
     if (images.length === 0) {
@@ -50,8 +50,8 @@ const getDynamicBg = selector => {
 }
 getDynamicBg('#full-bg')
 
-var quote = (function () {
-  var quotes = [{
+const quote = (function () {
+  const quotes = [{
     msg: {
       en_us: 'Start where you are. Use what you have. Do what you can.',
       pt_br: 'Comece de onde você está. Use o que você tiver. Faça o que você puder.'
@@ -132,10 +132,9 @@ const initDashboard = (storeId, username, session) => {
       $login.remove()
       $dashboardStart.show()
 
-      const ecomAuth = new EcomAuth()
       ecomAuth.setSession({
         store_id: storeId,
-        user: username,
+        username,
         ...session
       })
     })
