@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.1](https://github.com/ecomplus/admin/compare/v1.0.0-beta.0...v1.0.0-beta.1) (2021-02-21)
+
+
+### Bug Fixes
+
+* **deps:** fix/udpate non-major dependencies ([9d7e2a2](https://github.com/ecomplus/admin/commit/9d7e2a2e7aaf55edf66adbcf966780e9e42ac919))
+* **deps:** update @ecomplus/admin-helpers to v1.2.4 ([5622686](https://github.com/ecomplus/admin/commit/56226864cdf5cb24fcee3dd8ed5e8feff9f833d1))
+* **deps:** update @ecomplus/admin-home and @ecomplus/admin-marketplace ([557a34a](https://github.com/ecomplus/admin/commit/557a34a3433ac9be08c9db9bc7875ff67a36fda6))
+* **shipping-tags:** prevent error with undefined `phones` ([#326](https://github.com/ecomplus/admin/issues/326)) ([3bdb048](https://github.com/ecomplus/admin/commit/3bdb048f3fcd1fe3db5c2508955606d5a0604835))
+
 ## [1.0.0-beta.0](https://github.com/ecomplus/admin/compare/v1.0.0-alpha.48...v1.0.0-beta.0) (2021-02-12)
 
 
