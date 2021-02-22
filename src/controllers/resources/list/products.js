@@ -882,7 +882,7 @@ export default function () {
         }
         unsetLastActive()
         $(this).addClass('active').append($('<i>', {
-          class: 'ml-1 fas fa-minus text-success'
+          class: 'ml-1 fa fa-minus text-success'
         }))
         sort = field
       } else {
