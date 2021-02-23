@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.2](https://github.com/ecomplus/admin/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2021-02-23)
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/admin-home to v0.9.4 ([7c7389c](https://github.com/ecomplus/admin/commit/7c7389c8229956d973d3fbf730b27a1969874ad8))
+
 ## [1.0.0-beta.1](https://github.com/ecomplus/admin/compare/v1.0.0-beta.0...v1.0.0-beta.1) (2021-02-21)
 
 
