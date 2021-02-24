@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.3](https://github.com/ecomplus/admin/compare/v1.0.0-beta.2...v1.0.0-beta.3) (2021-02-24)
+
+
+### Features
+
+* **footer:** add footer to dashboard with terms and useful links after content ([9123fc8](https://github.com/ecomplus/admin/commit/9123fc8b2d1e47c75b84fa27b3534247bad16afb))
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/admin-home to v1 rc ([02dc91a](https://github.com/ecomplus/admin/commit/02dc91acef743ce71112549eea1cc81fd951733b))
+* **shipping-tags:** add address reference (`near_to`) ([#331](https://github.com/ecomplus/admin/issues/331)) ([ee4ddb5](https://github.com/ecomplus/admin/commit/ee4ddb54849fdcb77e9b48857124a356e76d1f59))
+
 ## [1.0.0-beta.2](https://github.com/ecomplus/admin/compare/v1.0.0-beta.1...v1.0.0-beta.2) (2021-02-23)
 
 
