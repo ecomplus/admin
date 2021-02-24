@@ -250,6 +250,9 @@ a#close-current-tab {
   display: none;
   z-index: 4;
 }
+#route-content {
+  min-height: calc(100vh - 120px);
+}
 #route-content > *,
 #route-content > .app-current-tab > * {
   display: none;
