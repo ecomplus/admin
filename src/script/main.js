@@ -608,6 +608,10 @@ const { sessionStorage, localStorage, Image, $, app } = window
     }
     window.routeQuery = query
 
+    window.scroll({
+      top: 0,
+      behavior: 'smooth'
+    })
     $('#router > .loading').show()
     // load HTML content
     // only the first path
