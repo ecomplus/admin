@@ -98,6 +98,7 @@ export default function () {
                     <li>${(to.phone ? formatPhone(to.phone) : '')}</li>
                     <li class="pt-1 fs-18"><mark>${to.zip.replace(/(\d{5})(\d{3})/, '$1-$2')}</mark></li>
                     <li class="pt-1 fs-18"><address>${ecomUtils.lineAddress(to)}</address></li>
+                    ${(to.near_to ? `<li class="pb-1">Referência: ${to.near_to}</li>` : '')}
                   </ul>
                   <span class="text-muted">
                     <span class="text-monospace fs-16">#${order.number}</span>
