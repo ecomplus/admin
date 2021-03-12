@@ -123,7 +123,7 @@ export default function () {
               ? items.filter(item => item.quantity > 0).reduce((trsStr, item, i) => trsStr + `
                 <tr>
                   <td>${(i + 1)}</td>
-                  <td><img class="img-product pr-2" src="${item.picture.small.url}">${item.name} (${item.sku})
+                  <td>${(item.picture && item.picture.small ? `<img class="img-product pr-2" src="${item.picture.small.url}">` : '<span class="img-product pr-2">Sem imagem</span>')}${item.name} (${item.sku})
                   ${item.customizations
                     ? item.customizations.reduce((trs, custom, index) => trs +
                     `<br><em>${custom.label}</em>:<mark>${(custom.option ? custom.option.text : '')}</mark>`
