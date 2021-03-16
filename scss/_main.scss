@@ -752,7 +752,9 @@ body {
   line-height: 20px;
   padding: 5px 7px;
 }
-.data-list td input + input {
+.data-list td input + input,
+.data-list td div + input {
+  display: block;
   margin-top: 6px;
 }
 .data-list-control-buttons {
@@ -1164,4 +1166,15 @@ ul > li:nth-child(4n+4) > .badges-list li {
   display: inline-block;
   width: 42%;
   height: 100%;
+}
+
+.invoices {
+  .table-responsive {
+    tr > td {
+      vertical-align: middle;
+    }
+    .img-product {
+      display: none;
+    }
+  }
 }
