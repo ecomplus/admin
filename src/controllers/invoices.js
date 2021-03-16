@@ -38,6 +38,9 @@ export default function () {
   const $appTab = $(`#app-tab-${tabId}`)
   const $invoices = $appTab.find('.invoices')
   const orderIds = routeParams[routeParams.length - 1]
+  $appTab.find('.show-picture').click(() => {
+    $('.img-product').toggle()
+  })
 
   const renderInvoice = (store, order) => {
     const buyer = order.buyers && order.buyers[0]
@@ -120,7 +123,8 @@ export default function () {
               ? items.filter(item => item.quantity > 0).reduce((trsStr, item, i) => trsStr + `
                 <tr>
                   <td>${(i + 1)}</td>
-                  <td>${item.name} (${item.sku})
+                  <td>${(item.picture && item.picture.normal ? `<img class="img-product img-fluid pr-2" src="${item.picture.normal.url}" width="70">` : '')}
+                  ${item.name} (${item.sku})
                   ${item.customizations
                     ? item.customizations.reduce((trs, custom, index) => trs +
                     `<br><em>${custom.label}</em>:<mark>${(custom.option ? custom.option.text : '')}</mark>`

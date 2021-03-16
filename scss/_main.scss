@@ -1165,3 +1165,14 @@ ul > li:nth-child(4n+4) > .badges-list li {
   width: 42%;
   height: 100%;
 }
+
+.invoices {
+  .table-responsive {
+    tr > td {
+      vertical-align: middle;
+    }
+    .img-product {
+      display: none;
+    }
+  }
+}
