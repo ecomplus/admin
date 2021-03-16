@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.5](https://github.com/ecomplus/admin/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2021-03-16)
+
+
+### Features
+
+* **invoices:** btn to show/hide product pictures ([#340](https://github.com/ecomplus/admin/issues/340)) ([211c557](https://github.com/ecomplus/admin/commit/211c557da878cd8c3a8d50a4a5b5359d05778659))
+* **orders-list:** filtar by payment/shipping labels ([#295](https://github.com/ecomplus/admin/issues/295)) ([6a6955e](https://github.com/ecomplus/admin/commit/6a6955ebce3cccccaf7a4ea4b2741a2406d3a78e))
+* add new filter option ([#338](https://github.com/ecomplus/admin/issues/338)) ([d395f75](https://github.com/ecomplus/admin/commit/d395f75717208a5c581e4d2bfa3c680ddab6fdf0))
+
 ## [1.0.0-beta.4](https://github.com/ecomplus/admin/compare/v1.0.0-beta.3...v1.0.0-beta.4) (2021-02-25)
 
 
