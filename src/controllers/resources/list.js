@@ -31,7 +31,7 @@ export default function () {
 
   // resource list data
   const resourceSlug = Tab.slug
-  let data, list
+  let data, list, load, reload
   const orderSources = {}
   const updateData = function () {
     data = Tab.data
@@ -180,7 +180,7 @@ export default function () {
             } else {
               delete setParams[field]
             }
-            load()
+            reload()
           }
         })
       })
@@ -340,7 +340,7 @@ export default function () {
     // control request queue
     let loading = false
     let waiting = false
-    var load = function (cb) {
+    load = function (cb) {
       if (!loading) {
         loading = true
         let $loading
@@ -372,11 +372,11 @@ export default function () {
         }
 
         // object properties
-        for (var i = 0; i < fieldsList.length; i++) {
-          var field = fieldsList[i]
-          var value = filters[field]
+        for (let i = 0; i < fieldsList.length; i++) {
+          const field = fieldsList[i]
+          let value = filters[field]
           if (value && value !== '') {
-            var prop = field.replace(/\//g, '.')
+            let prop = field.replace(/\//g, '.')
             if (/([0-9]+)?>>([0-9]+)?/.test(value)) {
               // query by range
               value = value.split('>>')
@@ -400,7 +400,7 @@ export default function () {
           }
         }
 
-        var callback = function (err) {
+        const callback = function (err) {
           // request queue
           loading = false
           if (typeof cb !== 'function') {
@@ -426,6 +426,12 @@ export default function () {
       } else if (!waiting) {
         waiting = true
       }
+    }
+
+    // reload list on first page
+    reload = function () {
+      resetPagination()
+      load()
     }
 
     // select items from list to delete and edit
@@ -798,10 +804,10 @@ export default function () {
                 case 'bold':
                   (function (field, type, enumValues) {
                     // parse to bold text with class by each value defined from field options
-                    var genElement = function (value) {
-                      var valueObj = enumValues[value] || {}
+                    const genElement = function (value) {
+                      const valueObj = enumValues[value] || {}
                       // colored bold text
-                      var className = type + ' text-' + (valueObj.class || 'muted')
+                      const className = type + ' text-' + (valueObj.class || 'muted')
                       return $('<span>', {
                         class: className,
                         text: i18n(valueObj.text) || value
@@ -815,7 +821,7 @@ export default function () {
 
                     // render select element for filtering
                     fieldObj.filterTemplate = function () {
-                      var $options = [
+                      const $options = [
                         $('<option>', {
                           text: '--',
                           value: '',
@@ -823,7 +829,7 @@ export default function () {
                         })
                       ]
                       // render an option element for each possible value
-                      for (var value in enumValues) {
+                      for (const value in enumValues) {
                         if (enumValues[value]) {
                           $options.push($('<option>', {
                             text: value,
@@ -834,7 +840,7 @@ export default function () {
                       }
 
                       // create and return the select element
-                      var $select = $('<select>', {
+                      const $select = $('<select>', {
                         class: 'hidden',
                         html: $options,
                         change: function () {
@@ -848,6 +854,28 @@ export default function () {
                           container: elContainer
                         })
                       }, 200)
+
+                      if (extraField) {
+                        // additional text input for extra field
+                        const field = extraField
+                        fieldsList.push(field)
+                        const $extraInput = $('<input>', {
+                          change: function () {
+                            filters[field] = $(this).val()
+                          },
+                          keydown: function (e) {
+                            switch (e.which) {
+                              // enter
+                              case 13:
+                                if (filters[field] !== $(this).val()) {
+                                  filters[field] = $(this).val()
+                                  reload()
+                                }
+                            }
+                          }
+                        })
+                        return [$select, $extraInput]
+                      }
                       return $select
                     }
                   }(field, fieldOpts.type, fieldOpts.enum))
@@ -1157,9 +1185,8 @@ export default function () {
                   }
 
                   if (changed) {
-                    resetPagination()
                     // reload data with different filters
-                    load()
+                    reload()
                   } else if (editing && !edited) {
                     // click on pencil icon without any changed input (?)
                     app.toast(i18n({
