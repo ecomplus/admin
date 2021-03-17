@@ -5,7 +5,7 @@ export default function () {
   const $appTab = $(`#app-tab-${tabId}`)
   const orderIds = routeParams[routeParams.length - 1]
   const endpoint = `orders.json?_id=${orderIds}` +
-    '&fields=buyers.phones,buyers.doc_number,shipping_lines,number,' +
+    '&fields=buyers.name,buyers.phones,buyers.doc_number,shipping_lines,number,' +
       'items.name,items.quantity,items.price,items.final_price'
 
   callApi(endpoint, 'GET', (error, data) => {
@@ -49,10 +49,16 @@ export default function () {
         if (order.shipping_lines && order.shipping_lines[0]) {
           const { to, from, app } = order.shipping_lines[0]
           if (to && from) {
-            if (!to.phone && order.buyers && order.buyers[0]) {
-              const { phones } = order.buyers[0]
-              if (phones && phones.length) {
-                to.phone = phones[0]
+            const buyer = order.buyers && order.buyers[0]
+            if (buyer) {
+              if (!to.phone) {
+                const { phones } = buyer
+                if (phones && phones.length) {
+                  to.phone = phones[0]
+                }
+              }
+              if (!to.name) {
+                to.name = ecomUtils.fullName(buyer)
               }
             }
             if (!to.number) {

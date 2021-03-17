@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.6](https://github.com/ecomplus/admin/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2021-03-17)
+
+
+### Bug Fixes
+
+* **shipping-tags:** use buyer fullname when recipient name not set ([73c5f20](https://github.com/ecomplus/admin/commit/73c5f20740f0d1f3d7bf443907947a3834d30122))
+
 ## [1.0.0-beta.5](https://github.com/ecomplus/admin/compare/v1.0.0-beta.4...v1.0.0-beta.5) (2021-03-16)
 
 
