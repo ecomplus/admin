@@ -1,10 +1,10 @@
 export default function () {
-  const { $, app, i18n, cutString, formatMoney, formatDate, stringToNumber } = window
+  const { localStorage, $, app, i18n, cutString, formatMoney, formatDate, stringToNumber } = window
 
   // current tab ID
-  var tabId = window.tabId
-  var Tab = window.Tabs[tabId]
-  var elContainer = $('#t' + tabId + '-tab-normal')
+  const tabId = window.tabId
+  const Tab = window.Tabs[tabId]
+  const elContainer = $('#t' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
 
@@ -171,9 +171,21 @@ export default function () {
           }
         })
 
+        const storageKey = `orders:${field}`
+        const storedValue = localStorage.getItem(storageKey)
+        if (storedValue) {
+          $select.val(storedValue)
+          setParams[field] = storedValue
+        }
+
         // set param and load again
         $select.appSelectpicker('refresh').one('change', function () {
           const value = $(this).val() === '-' ? undefined : $(this).val()
+          if (value) {
+            localStorage.setItem(storageKey, value)
+          } else {
+            localStorage.removeItem(storageKey)
+          }
           if (setParams[field] !== value) {
             if (value) {
               setParams[field] = value

@@ -2,32 +2,30 @@ import Papa from 'papaparse'
 import * as dot from 'dot-object'
 
 export default function () {
-  const { $, app, i18n, callApi, formatDate, askConfirmation } = window
+  const { localStorage, $, app, lang, i18n, callApi, formatDate, askConfirmation } = window
 
   // current tab ID
-  var tabId = window.tabId
-  var Tab = window.Tabs[tabId]
+  const tabId = window.tabId
+  const Tab = window.Tabs[tabId]
   // prefix tab ID on content elements IDs
   window.renderContentIds()
 
-  var slug = window.routeParams[0]
+  const slug = window.routeParams[0]
   if (slug === undefined) {
     // first URI param is required
     window.e404()
     return
   }
-  var resource = window.apiResources[slug]
+  const resource = window.apiResources[slug]
   if (resource === undefined) {
     // invalid resource slug
     window.e404()
     return
   }
 
-  var lang = window.lang
-
-  var tabLabel, tabTitle
-  var resourceId = window.routeParams[1]
-  var creating, listing
+  let tabLabel, tabTitle
+  let resourceId = window.routeParams[1]
+  let creating, listing
   if (resourceId === undefined) {
     // resource root URI
     // default action
@@ -109,7 +107,7 @@ export default function () {
     })
   }
 
-  var loadContent = function (err) {
+  const loadContent = function (err) {
     // check err if callback
     if (!err) {
       // HTML card content
@@ -168,7 +166,7 @@ export default function () {
         if (editor) {
           editor.on('blur', function () {
             // code editor manually changed (?)
-            var json
+            let json
             try {
               json = JSON.parse(editor.session.getValue())
             } catch (e) {
@@ -185,7 +183,7 @@ export default function () {
       // show loading spinner
       const $el = $(`#t${tabId}-tab-normal`)
       $el.hide()
-      var $parent = $el.closest('.ajax-content')
+      const $parent = $el.closest('.ajax-content')
       $parent.addClass('ajax')
 
       importPromise
@@ -205,7 +203,7 @@ export default function () {
     window.routeReady(tabTitle)
   }
 
-  var commit = function (data, updated) {
+  const commit = function (data, updated) {
     if (!updated) {
       // pass JSON data
       Tab.data = data
@@ -224,7 +222,7 @@ export default function () {
   Tab.slug = slug
 
   if (creating !== true) {
-    var endpoint, load, params
+    let endpoint, load, params
     if (resourceId === undefined) {
       if (editor) {
         // disable edition
@@ -236,7 +234,7 @@ export default function () {
         // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-body.html
         // default body
         // ref: https://github.com/ecomclub/ecomplus-sdk-js/blob/master/main.js
-        var Body = {
+        const Body = {
           sort: [
             { _id: { order: 'desc' } }
           ],
@@ -255,7 +253,7 @@ export default function () {
 
         // specific load function for products listing
         load = function (callback, query, sort, page, size) {
-          var cb = function (err, json) {
+          const cb = function (err, json) {
             if (!err) {
               // set tab JSON data
               commit(json)
@@ -266,7 +264,7 @@ export default function () {
           }
 
           // body data
-          var body
+          let body
           if (query) {
             // merge params without changing original default body
             // query object with search results conditions
@@ -300,14 +298,21 @@ export default function () {
         if (window.routeQuery) {
           params += `&${window.routeQuery}`
         }
+        // get optional stored filters
+        ;['source_name', 'domain', 'channel_id'].forEach(field => {
+          const filterValue = localStorage.getItem(`${slug}:${field}`)
+          if (filterValue) {
+            params += `&${field}=${filterValue}`
+          }
+        })
       }
     } else {
       // specific resource document
       endpoint = slug + '/' + resourceId + '.json'
 
       // handle pagination buttons
-      var $next = $('#t' + tabId + '-pagination-next')
-      var $prev = $('#t' + tabId + '-pagination-prev')
+      const $next = $('#t' + tabId + '-pagination-next')
+      const $prev = $('#t' + tabId + '-pagination-prev')
       if (Tab.state.pagination) {
         if (Tab.state.page === 0) {
           $prev.addClass('disabled')
@@ -334,7 +339,7 @@ export default function () {
     if (!load) {
       // default load function
       load = function (callback, params) {
-        var uri = endpoint
+        let uri = endpoint
         if (resourceId === undefined) {
           // mocking some resources list fields here
           let fields
@@ -365,6 +370,7 @@ export default function () {
                 'created_at,' +
                 'updated_at'
               break
+
             case 'customers':
               fields = 'enabled,' +
                 'status,' +
@@ -379,6 +385,7 @@ export default function () {
                 'updated_at'
               break
           }
+
           if (fields) {
             params = (params ? `${params}&fields=` : 'fields=') + fields
           }
@@ -394,7 +401,7 @@ export default function () {
               // editing
               // show modification timestamps
               if (json.created_at) {
-                var dateList = ['day', 'month', 'year', 'hour', 'minute', 'second']
+                const dateList = ['day', 'month', 'year', 'hour', 'minute', 'second']
                 if (json.updated_at) {
                   $('#t' + tabId + '-updated-at').text(formatDate(json.updated_at, dateList))
                 }
@@ -446,17 +453,17 @@ export default function () {
     }
 
     // handle bulk items edit
-    var bulkAction = function (method, bodyObject) {
-      var todo = Tab.selectedItems.length
+    const bulkAction = function (method, bodyObject) {
+      const todo = Tab.selectedItems.length
       if (todo > 0) {
-        var cb = Tab.editItemsCallback(method, bodyObject)
+        const cb = Tab.editItemsCallback(method, bodyObject)
         // call API to delete documents
-        var done = 0
+        let done = 0
         // collect all requests errors
-        var errors = []
+        const errors = []
 
-        var next = function () {
-          var callback = function (err) {
+        const next = function () {
+          const callback = function (err) {
             if (err) {
               errors.push(err)
             }
@@ -473,7 +480,7 @@ export default function () {
             }
           }
 
-          var id = Tab.selectedItems[done]
+          const id = Tab.selectedItems[done]
           if (id) {
             askConfirmation(
               `https://api.e-com.plus/v1/${slug}/${id}.json`,
@@ -496,17 +503,17 @@ export default function () {
     }
 
     // handle bulk items delet
-    var bulkActionDelete = function (method, bodyObject) {
-      var todo = Tab.selectedItems.length
+    const bulkActionDelete = function (method, bodyObject) {
+      const todo = Tab.selectedItems.length
       if (todo > 0) {
-        var cb = Tab.editItemsCallback()
+        const cb = Tab.editItemsCallback()
         // call API to delete documents
-        var done = 0
+        let done = 0
         // collect all requests errors
-        var errors = []
+        const errors = []
 
-        var next = function () {
-          var callback = function (err) {
+        const next = function () {
+          const callback = function (err) {
             if (err) {
               errors.push(err)
             }
@@ -522,7 +529,7 @@ export default function () {
               next()
             }
           }
-          var id = Tab.selectedItems[done]
+          const id = Tab.selectedItems[done]
           window.callApi(slug + '/' + id + '.json', method, callback, bodyObject)
         }
         next()
@@ -654,10 +661,12 @@ export default function () {
                   } else if (row[head] !== undefined) {
                     // fix var type and field name
                     const field = head.replace(/\w+\(([^)]+)\)/i, '$1')
-                    row[field] = head.startsWith('Number') ? Number(row[head])
+                    row[field] = head.startsWith('Number')
+                      ? Number(row[head])
                       : head.startsWith('Boolean')
-                        ? typeof row[head] === 'string' ? row[head].toUpperCase().indexOf('TRUE') > -1
-                          : Boolean(row[head])
+                        ? typeof row[head] === 'string'
+                            ? row[head].toUpperCase().indexOf('TRUE') > -1
+                            : Boolean(row[head])
                         : row[head]
                     delete row[head]
                   }
