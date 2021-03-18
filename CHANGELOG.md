@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.7](https://github.com/ecomplus/admin/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2021-03-18)
+
+
+### Features
+
+* **orders-list:** store source name and domain to local storage ([8469a75](https://github.com/ecomplus/admin/commit/8469a75ebc199b55cbcff5fdf77efa0b33525c31))
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/admin-marketplace to v1.0.0-rc.5 ([ec94b56](https://github.com/ecomplus/admin/commit/ec94b5686d03cb3aff025f777eb2a9819acfb502))
+* **orders-list:** fix handling first request params with stored filters ([c741cce](https://github.com/ecomplus/admin/commit/c741cce9fd7c7a8ea8d7b3b8c6b9416b96604367))
+
 ## [1.0.0-beta.6](https://github.com/ecomplus/admin/compare/v1.0.0-beta.5...v1.0.0-beta.6) (2021-03-17)
 
 
