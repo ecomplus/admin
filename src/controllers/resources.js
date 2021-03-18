@@ -222,8 +222,7 @@ export default function () {
   Tab.slug = slug
 
   if (creating !== true) {
-    let endpoint, load
-    let params = ''
+    let endpoint, load, params
     if (resourceId === undefined) {
       if (editor) {
         // disable edition
@@ -299,6 +298,13 @@ export default function () {
         if (window.routeQuery) {
           params += `&${window.routeQuery}`
         }
+        // get optional stored filters
+        ;['source_name', 'domain', 'channel_id'].forEach(field => {
+          const filterValue = localStorage.getItem(`${slug}:${field}`)
+          if (filterValue) {
+            params += `&${field}=${filterValue}`
+          }
+        })
       }
     } else {
       // specific resource document
@@ -339,12 +345,6 @@ export default function () {
           let fields
           switch (slug) {
             case 'orders':
-              ;['source_name', 'domain', 'channel_id'].forEach(field => {
-                const filterValue = localStorage.getItem(`${slug}:${field}`)
-                if (filterValue) {
-                  params += `&${field}=${filterValue}`
-                }
-              })
               fields = 'source_name,' +
                 'domain,' +
                 'number,' +
