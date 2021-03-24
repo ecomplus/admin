@@ -323,9 +323,11 @@ export default function () {
                     variant: 'success'
                   })
                   $('#spinner-wait').hide()
+                  $container.removeClass('ajax')
                   load()
                 } else {
                   $('#spinner-wait').show()
+                  $container.addClass('ajax')
                 }
               }
             }, parseCategory)
@@ -461,11 +463,13 @@ export default function () {
                       })
                       $('#spinner-wait-edit').hide()
                       $('#modal-mass-edit').modal('hide')
+                      $container.removeClass('ajax')
                       setTimeout(function () {
                         load(true)
                       }, 500)
                     } else {
                       $('#spinner-wait-edit').show()
+                      $container.addClass('ajax')
                     }
                   }
                 }
