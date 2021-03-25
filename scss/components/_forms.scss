@@ -67,6 +67,12 @@ select,
 
   .dropdown-menu .selected {
     background-color: $light;
+    a:after {
+      content: "\f058";
+      color: $color-success;
+      font: normal normal normal 16px/1 FontAwesome;
+      padding-left: .5rem
+    }
   }
 }
 
