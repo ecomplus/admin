@@ -140,7 +140,7 @@
               </div>
 
               <div class="row">
-                <div class="col-md-7">
+                <div class="col-md">
                   <div class="form-group">
                     <label class="i18n">
                       <span data-lang="en_us">Type</span>
@@ -157,6 +157,8 @@
                       <option value="digital">Digital</option>
                     </select>
                   </div>
+                </div>
+                <div class="col-md">
                   <div class="form-group">
                     <label class="i18n">
                       <span data-lang="en_us">Condition</span>
@@ -194,8 +196,10 @@
                     </select>
                   </div>
                 </div>
+              </div>
 
-                <div class="col-md-5">
+              <div class="row">
+                <div class="col-md">
                   <div class="form-group">
                     <label class="i18n">
                       <span data-lang="en_us">Quantity</span>
@@ -203,7 +207,13 @@
                     </label>
                     <input type="number" class="form-control" name="quantity"
                       min="0" max="9999999" step="any" placeholder="0"/>
+                    <span class="i18n">
+                      <small data-lang="en_us" class="form-text">Available stock</small>
+                      <small data-lang="pt_br" class="form-text">Estoque disponível</small>
+                    </span>
                   </div>
+                </div>
+                <div class="col-md">
                   <div class="form-group">
                     <label class="i18n">
                       <span data-lang="en_us">Min quantity</span>
@@ -240,7 +250,7 @@
                   <span data-lang="pt_br">Compare ao preço</span>
                 </label>
                 <input type="tel" class="form-control" name="base_price"
-                  style="text-decoration: line-through dashed rgba(0, 0, 0, .25)"
+                  style="text-decoration: line-through dashed rgba(0, 0, 0, .5)"
                   data-is-number="true" data-money="true"/>
                 <span class="i18n">
                   <small data-lang="en_us" class="form-text">Price without discount</small>
@@ -926,7 +936,7 @@
                     <span data-lang="pt_br">Compare ao preço</span>
                   </label>
                   <input type="tel" class="form-control" name="variations.base_price"
-                    style="text-decoration: line-through dashed rgba(0, 0, 0, .25)"
+                    style="text-decoration: line-through dashed rgba(0, 0, 0, .5)"
                     data-is-number="true" data-money="true"/>
                   <span class="i18n">
                     <small data-lang="en_us" class="form-text">Price without discount</small>
