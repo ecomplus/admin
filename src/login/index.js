@@ -141,14 +141,17 @@ const initDashboard = (storeId, username, session) => {
     .catch(console.error)
 }
 
-const accessToken = localStorage.getItem('access_token')
-if (accessToken) {
-  const storeId = localStorage.getItem('store_id')
-  let myId = localStorage.getItem('my_id')
+const urlParams = new URLSearchParams(window.location.search)
+const getAuthState = name => (urlParams.get(name) || localStorage.getItem(name))
 
-  const expires = localStorage.getItem('expires')
+const accessToken = getAuthState('access_token')
+if (accessToken) {
+  const storeId = getAuthState('store_id')
+  let myId = getAuthState('my_id')
+
+  const expires = getAuthState('expires')
   if (expires) {
-    const dateExpires = new Date(localStorage.getItem('expires'))
+    const dateExpires = new Date(expires)
     if (dateExpires.getTime() < Date.now()) {
       localStorage.removeItem('access_token')
       myId = null
@@ -211,12 +214,13 @@ $('#login-form').submit(function () {
       handleApiError(jqXHR.responseJSON)
       form.removeClass('ajax')
     }
+    const contentType = 'application/json; charset=UTF-8'
 
     $.ajax({
       url: 'https://api.e-com.plus/v1/_login.json?username',
       method: 'POST',
       dataType: 'json',
-      contentType: 'application/json; charset=UTF-8',
+      contentType,
       headers: {
         'X-Store-ID': 1
       },
@@ -240,7 +244,7 @@ $('#login-form').submit(function () {
           url: 'https://api.e-com.plus/v1/_authenticate.json',
           method: 'POST',
           dataType: 'json',
-          contentType: 'application/json; charset=UTF-8',
+          contentType,
           headers: {
             'X-Store-ID': storeId
           },
@@ -251,10 +255,15 @@ $('#login-form').submit(function () {
         })
 
           .done(function (json) {
+            setStorageItem('my_id', json.my_id)
+            setStorageItem('access_token', json.access_token)
+            setStorageItem('expires', json.expires)
+            setStorageItem('username', username)
+
             $.ajax({
               url: 'https://admin.e-com.plus/session/new',
               method: 'PUT',
-              contentType: 'application/json; charset=UTF-8',
+              contentType,
               headers: {
                 'X-Store-ID': storeId,
                 'X-My-ID': json.my_id,
@@ -266,14 +275,38 @@ $('#login-form').submit(function () {
             })
 
               .always(function () {
-                const ssoUrl = window.location.search.split('sso_url=')[1]
-                if (ssoUrl && ssoUrl !== '') {
-                  window.location = 'https://admin.e-com.plus' + decodeURIComponent(ssoUrl)
+                if (urlParams.get('sso_service') === 'cms') {
+                  return $.ajax({
+                    url: 'https://admin.e-com.plus/session/gotrue/v1/token',
+                    xhrFields: {
+                      withCredentials: true
+                    }
+                  })
+
+                    .done(function (json) {
+                      const gotrueToken = json.access_token
+                      $.ajax({
+                        url: `https://api.e-com.plus/v1/stores/${storeId}.json`,
+                        headers: {
+                          'X-Store-ID': storeId
+                        }
+                      })
+
+                        .done(function ({ domain }) {
+                          if (domain) {
+                            window.location = `https://${domain}/admin/?token=${gotrueToken}`
+                          } else {
+                            initDashboard(storeId, username, json)
+                          }
+                        })
+                        .fail(authFail)
+                    })
+                    .fail(authFail)
+                }
+
+                if (urlParams.get('sso_url')) {
+                  window.location = `https://admin.e-com.plus${urlParams.get('sso_url')}`
                 } else {
-                  setStorageItem('my_id', json.my_id)
-                  setStorageItem('access_token', json.access_token)
-                  setStorageItem('expires', json.expires)
-                  setStorageItem('username', username)
                   initDashboard(storeId, username, json)
                 }
               })
