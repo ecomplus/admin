@@ -67,11 +67,14 @@ select,
 
   .dropdown-menu .selected {
     background-color: $light;
+
     a:after {
-      content: "\f058";
-      color: $color-success;
-      font: normal normal normal 16px/1 FontAwesome;
-      padding-left: .5rem
+      position: absolute;
+      top: .6rem;
+      right: .5rem;
+      content: "\f00c";
+      color: $gray-800;
+      font: normal normal normal 13px/1 FontAwesome;
     }
   }
 }
