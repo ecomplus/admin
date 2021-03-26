@@ -11,7 +11,12 @@ const { sessionStorage, app } = window
 
 app.ready(() => {
   sessionStorage.setItem('go_to', window.location.href)
-  if (!session.my_id || !session.access_token || !(new Date(session.expires).getTime() >= Date.now())) {
+  if (
+    !session.my_id ||
+    !session.access_token ||
+    !(new Date(session.expires).getTime() >= Date.now()) ||
+    window.location.search.indexOf('sso_service') > -1
+  ) {
     import(/* webpackChunkName: "login" */ '@/login/').catch(console.error)
   } else {
     ecomAuth.setSession(session)
