@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.10](https://github.com/ecomplus/admin/compare/v1.0.0-beta.9...v1.0.0-beta.10) (2021-03-26)
+
+
+### Bug Fixes
+
+* **app:** check 'sso_service' url param to show login page ([0342fa1](https://github.com/ecomplus/admin/commit/0342fa1c0515916a90ab13f5b151d342cdfc3c57))
+* **login:** try gotrue token on new session success only ([206dfe4](https://github.com/ecomplus/admin/commit/206dfe484c1fe9e5fa5533f411681148a6ace9c4))
+
 ## [1.0.0-beta.9](https://github.com/ecomplus/admin/compare/v1.0.0-beta.8...v1.0.0-beta.9) (2021-03-26)
 
 

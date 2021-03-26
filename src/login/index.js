@@ -151,7 +151,7 @@ const handleSso = (storeId, username, session) => {
     }
   })
 
-    .always(function () {
+    .done(function () {
       if (urlParams.get('sso_service') === 'cms') {
         return $.ajax({
           url: 'https://admin.e-com.plus/session/gotrue/v1/token',
@@ -180,7 +180,9 @@ const handleSso = (storeId, username, session) => {
           })
           .fail(authFail)
       }
+    })
 
+    .always(function () {
       if (urlParams.get('sso_url')) {
         window.location = `https://admin.e-com.plus${urlParams.get('sso_url')}`
       } else {
