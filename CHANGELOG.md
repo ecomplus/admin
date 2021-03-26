@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.8](https://github.com/ecomplus/admin/compare/v1.0.0-beta.7...v1.0.0-beta.8) (2021-03-26)
+
+
+### Features
+
+* **deps:** update @ecomplus/admin-marketplace to v1.0.0-rc.6 ([b325dcc](https://github.com/ecomplus/admin/commit/b325dccf541af9a364e1ff6eb19cbfde6cfe7021))
+* **login:** handling sso for cms with gotrue access token ([cfa9082](https://github.com/ecomplus/admin/commit/cfa908270e0f9bd21468570f303fff0b6a598fe4))
+
+
+### Bug Fixes
+
+* **products-list:** show ajax overlay while mass edit is running ([#348](https://github.com/ecomplus/admin/issues/348)) ([d54c952](https://github.com/ecomplus/admin/commit/d54c952ece1adc407ca4d44318e9c8e5be96b1d0))
+* **setup-input-values:** match array of nested objects by _id instead of entire json ([dbc6627](https://github.com/ecomplus/admin/commit/dbc66276aa8c4683c28273f9020382aeb7739db5))
+
 ## [1.0.0-beta.7](https://github.com/ecomplus/admin/compare/v1.0.0-beta.6...v1.0.0-beta.7) (2021-03-18)
 
 
