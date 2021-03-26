@@ -1,6 +1,6 @@
-(function () {
-  'use strict'
+const { $ } = window
 
+;(function () {
   window.startMony = function (store, user, session) {
     /*
     // https://github.com/ecomclub/mony
@@ -793,14 +793,26 @@
               // select fields ?
               if (Array.isArray(val)) {
                 if (!$el.hasClass('tagsinput')) {
-                  var list = []
-                  for (i = 0; i < val.length; i++) {
-                    var item = val[i]
-                    if (typeof item !== 'string') {
-                      // array of objects
-                      list.push(JSON.stringify(item))
-                    } else {
-                      list.push(item)
+                  const list = []
+                  if (val.length) {
+                    const options = {}
+                    if (val[0]._id) {
+                      $el.find('option').each(function () {
+                        try {
+                          options[JSON.parse(this.value)._id] = this.value
+                        } catch (e) {
+                        }
+                      })
+                    }
+                    for (i = 0; i < val.length; i++) {
+                      const item = val[i]
+                      if (typeof item !== 'string') {
+                        // array of objects
+                        const option = item._id && options[item._id]
+                        list.push(option || JSON.stringify(item))
+                      } else {
+                        list.push(item)
+                      }
                     }
                   }
                   $el.val(list)

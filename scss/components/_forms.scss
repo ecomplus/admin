@@ -67,6 +67,15 @@ select,
 
   .dropdown-menu .selected {
     background-color: $light;
+
+    a:after {
+      position: absolute;
+      top: .6rem;
+      right: .7rem;
+      content: "\f00c";
+      color: $gray-800;
+      font: normal normal normal 12px/1 FontAwesome;
+    }
   }
 }
 
