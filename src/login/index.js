@@ -126,6 +126,69 @@ $el.find('[data-lang="en_us"]').text(quote.msg.en_us)
 $el.find('[data-lang="pt_br"]').text(quote.msg.pt_br)
 $el.find('cite').text(quote.author)
 
+const $form = $('#login-form')
+const authFail = function (jqXHR, textStatus, err) {
+  if (jqXHR.status !== 403) {
+    console.error(err)
+  }
+  handleApiError(jqXHR.responseJSON)
+  $form.removeClass('ajax')
+}
+const contentType = 'application/json; charset=UTF-8'
+
+const handleSso = (storeId, username, session) => {
+  $.ajax({
+    url: 'https://admin.e-com.plus/session/new',
+    method: 'PUT',
+    contentType,
+    headers: {
+      'X-Store-ID': storeId,
+      'X-My-ID': session.my_id,
+      'X-Access-Token': session.access_token
+    },
+    xhrFields: {
+      withCredentials: true
+    }
+  })
+
+    .always(function () {
+      if (urlParams.get('sso_service') === 'cms') {
+        return $.ajax({
+          url: 'https://admin.e-com.plus/session/gotrue/v1/token',
+          xhrFields: {
+            withCredentials: true
+          }
+        })
+
+          .done(function (json) {
+            const gotrueToken = json.access_token
+            $.ajax({
+              url: `https://api.e-com.plus/v1/stores/${storeId}.json`,
+              headers: {
+                'X-Store-ID': storeId
+              }
+            })
+
+              .done(function ({ domain }) {
+                if (domain) {
+                  window.location = `https://${domain}/admin/?token=${gotrueToken}`
+                } else {
+                  initDashboard(storeId, username, json)
+                }
+              })
+              .fail(authFail)
+          })
+          .fail(authFail)
+      }
+
+      if (urlParams.get('sso_url')) {
+        window.location = `https://admin.e-com.plus${urlParams.get('sso_url')}`
+      } else {
+        initDashboard(storeId, username, session)
+      }
+    })
+}
+
 const initDashboard = (storeId, username, session) => {
   return import(/* webpackChunkName: "dashboard" */ '@/dashboard')
     .then(() => {
@@ -159,7 +222,7 @@ if (accessToken) {
   }
 
   if (storeId && myId) {
-    initDashboard(storeId, localStorage.getItem('username'), {
+    handleSso(storeId, localStorage.getItem('username'), {
       my_id: myId,
       access_token: accessToken,
       expires
@@ -186,8 +249,9 @@ $('#username, #password')
   })
   .trigger('change')
 
-$('#login-form').submit(function () {
+$form.submit(function () {
   if (!$(this).hasClass('ajax')) {
+    $(this).addClass('ajax')
     hideToast()
     const username = $('#username').val()
     const password = $('#md5').is(':checked') ? $('#password').val() : md5($('#password').val())
@@ -203,18 +267,6 @@ $('#login-form').submit(function () {
         localStorage.removeItem(itemName)
       }
     })
-
-    const form = $(this)
-    form.addClass('ajax')
-
-    const authFail = function (jqXHR, textStatus, err) {
-      if (jqXHR.status !== 403) {
-        console.error(err)
-      }
-      handleApiError(jqXHR.responseJSON)
-      form.removeClass('ajax')
-    }
-    const contentType = 'application/json; charset=UTF-8'
 
     $.ajax({
       url: 'https://api.e-com.plus/v1/_login.json?username',
@@ -254,62 +306,12 @@ $('#login-form').submit(function () {
           })
         })
 
-          .done(function (json) {
-            setStorageItem('my_id', json.my_id)
-            setStorageItem('access_token', json.access_token)
-            setStorageItem('expires', json.expires)
+          .done(function (session) {
+            setStorageItem('my_id', session.my_id)
+            setStorageItem('access_token', session.access_token)
+            setStorageItem('expires', session.expires)
             setStorageItem('username', username)
-
-            $.ajax({
-              url: 'https://admin.e-com.plus/session/new',
-              method: 'PUT',
-              contentType,
-              headers: {
-                'X-Store-ID': storeId,
-                'X-My-ID': json.my_id,
-                'X-Access-Token': json.access_token
-              },
-              xhrFields: {
-                withCredentials: true
-              }
-            })
-
-              .always(function () {
-                if (urlParams.get('sso_service') === 'cms') {
-                  return $.ajax({
-                    url: 'https://admin.e-com.plus/session/gotrue/v1/token',
-                    xhrFields: {
-                      withCredentials: true
-                    }
-                  })
-
-                    .done(function (json) {
-                      const gotrueToken = json.access_token
-                      $.ajax({
-                        url: `https://api.e-com.plus/v1/stores/${storeId}.json`,
-                        headers: {
-                          'X-Store-ID': storeId
-                        }
-                      })
-
-                        .done(function ({ domain }) {
-                          if (domain) {
-                            window.location = `https://${domain}/admin/?token=${gotrueToken}`
-                          } else {
-                            initDashboard(storeId, username, json)
-                          }
-                        })
-                        .fail(authFail)
-                    })
-                    .fail(authFail)
-                }
-
-                if (urlParams.get('sso_url')) {
-                  window.location = `https://admin.e-com.plus${urlParams.get('sso_url')}`
-                } else {
-                  initDashboard(storeId, username, json)
-                }
-              })
+            handleSso(storeId, username, session)
           })
           .fail(authFail)
       })

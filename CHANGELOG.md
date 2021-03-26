@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.9](https://github.com/ecomplus/admin/compare/v1.0.0-beta.8...v1.0.0-beta.9) (2021-03-26)
+
+
+### Bug Fixes
+
+* **login:** ensure handling sso when session is recovered ([4081a0a](https://github.com/ecomplus/admin/commit/4081a0a5a0b0f3d1f197bc8f99404c7bfb3a135f))
+
 ## [1.0.0-beta.8](https://github.com/ecomplus/admin/compare/v1.0.0-beta.7...v1.0.0-beta.8) (2021-03-26)
 
 
