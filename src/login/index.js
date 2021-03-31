@@ -137,6 +137,8 @@ const authFail = function (jqXHR, textStatus, err) {
 const contentType = 'application/json; charset=UTF-8'
 
 const handleSso = (storeId, username, session) => {
+  const isCmsLogin = urlParams.get('sso_service') === 'cms'
+
   $.ajax({
     url: 'https://admin.e-com.plus/session/new',
     method: 'PUT',
@@ -152,7 +154,7 @@ const handleSso = (storeId, username, session) => {
   })
 
     .done(function () {
-      if (urlParams.get('sso_service') === 'cms') {
+      if (isCmsLogin) {
         return $.ajax({
           url: 'https://admin.e-com.plus/session/gotrue/v1/token',
           xhrFields: {
@@ -183,10 +185,12 @@ const handleSso = (storeId, username, session) => {
     })
 
     .always(function () {
-      if (urlParams.get('sso_url')) {
-        window.location = `https://admin.e-com.plus${urlParams.get('sso_url')}`
-      } else {
-        initDashboard(storeId, username, session)
+      if (!isCmsLogin) {
+        if (urlParams.get('sso_url')) {
+          window.location = `https://admin.e-com.plus${urlParams.get('sso_url')}`
+        } else {
+          initDashboard(storeId, username, session)
+        }
       }
     })
 }
