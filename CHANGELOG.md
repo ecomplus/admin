@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.11](https://github.com/ecomplus/admin/compare/v1.0.0-beta.10...v1.0.0-beta.11) (2021-03-31)
+
+
+### Bug Fixes
+
+* **sso:** prevent unexpected redirect on cms login ([9960b71](https://github.com/ecomplus/admin/commit/9960b71056c97c96ae168d1e0f3c1645f023d32e))
+
 ## [1.0.0-beta.10](https://github.com/ecomplus/admin/compare/v1.0.0-beta.9...v1.0.0-beta.10) (2021-03-26)
 
 
