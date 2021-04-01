@@ -1,5 +1,6 @@
 import {
   i19add,
+  i19apps,
   i19inventory,
   i19media,
   i19goToStore,
@@ -582,7 +583,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
     closeTab(currentTab)
   })
 
-  var router = function (route, internal) {
+  const router = function (route, internal, isLoaded) {
     if (!internal) {
       if (routeInProgress === true) {
         // routing in progress
@@ -600,7 +601,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
     window.routeParams = []
     const [pathname, query] = route.split('?')
     const paths = pathname.split('/')
-    for (var i = 1; i < paths.length; i++) {
+    for (let i = 1; i < paths.length; i++) {
       // URI param
       if (paths[i] !== '') {
         window.routeParams.push(paths[i])
@@ -613,50 +614,59 @@ const { sessionStorage, localStorage, Image, $, app } = window
       behavior: 'smooth'
     })
     $('#router > .loading').show()
-    // load HTML content
-    // only the first path
-    loadRoute(paths[0])
 
-      .then(({ html, onLoad }) => {
-        // successful response
-        var elTab = $('#app-tab-' + currentTab)
-        // global to identify tab on route scripts
-        window.tabId = currentTab
-        window.elTab = elTab
+    let elTab
+    const fixWindowTabs = () => {
+      elTab = $('#app-tab-' + currentTab)
+      // global to identify tab on route scripts
+      window.tabId = currentTab
+      window.elTab = elTab
 
-        // store data when necessary
-        // commit changes on tab data globally
-        // get tab JSON data globally
-        // improve reactivity
-        window.Tabs[currentTab] = {
-          /*
-          data: {},
-          commit: function () {},
-          load: function () {},
-          pagination: function () {},
-          */
-          state: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {},
-          emitter: new EventEmitter()
-        }
+      // store data when necessary
+      // commit changes on tab data globally
+      // get tab JSON data globally
+      // improve reactivity
+      window.Tabs[currentTab] = {
+        /*
+        data: {},
+        commit: function () {},
+        load: function () {},
+        pagination: function () {},
+        */
+        state: window.Tabs[currentTab] ? window.Tabs[currentTab].state : {},
+        emitter: new EventEmitter()
+      }
+    }
 
-        if (!internal) {
-          // have to force routeReady call after 10s
-          routeReadyTimeout = setTimeout(function () {
-            router('408', true)
-          }, 10000)
-        }
-        // put HTML content
-        elTab.html(html)
-        // load callback
-        if (onLoad) {
-          onLoad()
-        }
-      })
+    if (!isLoaded) {
+      // load HTML content
+      // only the first path
+      loadRoute(paths[0])
 
-      .catch(err => {
-        console.error(err)
-        router('500', true)
-      })
+        .then(({ html, onLoad }) => {
+          // successful response
+          fixWindowTabs()
+          if (!internal) {
+            // have to force routeReady call after 10s
+            routeReadyTimeout = setTimeout(function () {
+              router('408', true)
+            }, 10000)
+          }
+          // put HTML content
+          elTab.html(html)
+          // load callback
+          if (onLoad) {
+            onLoad()
+          }
+        })
+
+        .catch(err => {
+          console.error(err)
+          router('500', true)
+        })
+    } else {
+      fixWindowTabs()
+    }
   }
 
   var contentPagination = function (prev) {
@@ -738,11 +748,11 @@ const { sessionStorage, localStorage, Image, $, app } = window
     return true
   }
 
-  var hashChange = function () {
-    var hash = window.location.hash
+  const hashChange = function () {
+    const hash = window.location.hash
     // eg.: #/any
     // cut prefix #/
-    var route = hash.slice(2)
+    const route = hash.slice(2)
     // handle URL rewrites
     if (route === '') {
       // default index
@@ -752,7 +762,9 @@ const { sessionStorage, localStorage, Image, $, app } = window
     }
 
     // work with current tab object
-    var tabObj = appTabs[currentTab]
+    const tabObj = appTabs[currentTab]
+    const isAppsRouter = hash.startsWith('#/apps') && tabObj.hash && tabObj.hash.startsWith('#/apps')
+
     // route
     if (!ignoreRoute || tabObj.isWaiting) {
       // check if a tab already have this route
@@ -773,7 +785,22 @@ const { sessionStorage, localStorage, Image, $, app } = window
         return
       }
 
-      router(route)
+      router(route, false, isAppsRouter)
+      if (isAppsRouter) {
+        // post handle admin marketplace router
+        if (route !== 'apps') {
+          setTimeout(() => {
+            const appTitle = document.title.replace(/\[([^\]]+)\].*/, '$1')
+            if (appTitle !== document.title) {
+              tabObj.title += `: ${appTitle}`
+              window.routeReady(`App: ${appTitle}`)
+            }
+          }, 1000)
+        } else {
+          window.routeReady(i18n(i19apps))
+        }
+      }
+
       // unset save action
       if (tabObj && tabObj.saveAction) {
         // leaving form page
@@ -1168,7 +1195,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
              '<li class="menu-item">' +
                '<a class="menu-link" href="/#/apps">' +
                  '<span class="icon fa fa-puzzle-piece"></span>' +
-                 '<span class="title"> Aplicativos </span>' +
+                 '<span class="title">' + i18n(i19apps) + '</span>' +
                '</a>' +
              '</li>' +
              '<li class="menu-item">' +
