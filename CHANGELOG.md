@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.12](https://github.com/ecomplus/admin/compare/v1.0.0-beta.11...v1.0.0-beta.12) (2021-04-01)
+
+
+### Features
+
+* **login:** handle optional 'sso_store_id' url param to prevent login with wrong store (for cms) ([0a43fd2](https://github.com/ecomplus/admin/commit/0a43fd206432d9b54606fcfd84c7610b92de2f88))
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/admin-marketplace to v1.0.0-rc.7 ([3c29da0](https://github.com/ecomplus/admin/commit/3c29da03c098d94966d7e3675d58d80a25815d86))
+* **router:** properlly handling inner admin marketplace router ([0521a98](https://github.com/ecomplus/admin/commit/0521a9870b581d8e11c19755821c9effef939b79))
+
 ## [1.0.0-beta.11](https://github.com/ecomplus/admin/compare/v1.0.0-beta.10...v1.0.0-beta.11) (2021-03-31)
 
 

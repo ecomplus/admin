@@ -228,11 +228,14 @@ if (accessToken) {
   }
 
   if (storeId && myId) {
-    handleSso(storeId, localStorage.getItem('username'), {
-      my_id: myId,
-      access_token: accessToken,
-      expires
-    })
+    const ssoStoreId = urlParams.get('sso_store_id')
+    if (!ssoStoreId || ssoStoreId === storeId) {
+      handleSso(storeId, localStorage.getItem('username'), {
+        my_id: myId,
+        access_token: accessToken,
+        expires
+      })
+    }
   }
 }
 
