@@ -1,3 +1,8 @@
+import {
+  i19reference,
+  i19number,
+  i19complement
+} from '@ecomplus/i18n'
 export default function () {
   const { $, ecomUtils, callApi, formatPhone, tabId, routeParams } = window
   const store = window.Store || {}
@@ -104,7 +109,9 @@ export default function () {
                     <li>${(to.phone ? formatPhone(to.phone) : '')}</li>
                     <li class="pt-1 fs-18"><mark>${to.zip.replace(/(\d{5})(\d{3})/, '$1-$2')}</mark></li>
                     <li class="pt-1 fs-18"><address>${ecomUtils.lineAddress(to)}</address></li>
-                    ${(to.near_to ? `<li class="pb-1">Referência: ${to.near_to}</li>` : '')}
+                    ${(to.line_address && to.line_address.split('-').length === 4 && to.number ? `<li class="fs-15">${ecomUtils.i18n(i19number)} : ${to.number}</li>` : '')}
+                    ${(to.line_address && to.line_address.split('-').length === 4 && to.complement ? `<li class="fs-15">${ecomUtils.i18n(i19complement)} : ${to.complement}</li>` : '')}
+                    ${(to.near_to ? `<li class="pb-1">${ecomUtils.i18n(i19reference)}: ${to.near_to}</li>` : '')}
                   </ul>
                   <span class="text-muted">
                     <span class="text-monospace fs-16">#${order.number}</span>
