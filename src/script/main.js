@@ -704,11 +704,13 @@ const { sessionStorage, localStorage, Image, $, app } = window
     routeReadyTimeout = null
 
     // display content
-    $('#router > .loading').fadeOut()
-    window.elTab.children().fadeIn()
     if (tabTitle) {
       // change tab nav title
       $('#app-nav-' + window.tabId + ' > a').text(tabTitle)
+    }
+    $('#router > .loading').fadeOut()
+    window.elTab.children().fadeIn()
+    if (tabTitle !== null) {
       // save title for further tab changes
       appTabs[currentTab].tabTitle = tabTitle
       changeBrowserTabTitle(tabTitle)
@@ -795,7 +797,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
               tabObj.title += `: ${appTitle}`
               window.routeReady(`App: ${appTitle}`)
             } else {
-              window.routeReady()
+              window.routeReady(null)
             }
           }, 1000)
         } else {
