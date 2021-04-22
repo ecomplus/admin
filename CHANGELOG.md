@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.13](https://github.com/ecomplus/admin/compare/v1.0.0-beta.12...v1.0.0-beta.13) (2021-04-22)
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/admin-marketplace to v1.0.0 ([b915b20](https://github.com/ecomplus/admin/commit/b915b20a4b4bab8095815bb5fae29aa73e987750))
+* **router:** ensure `routeReady` sent on apps spa ([1a6fb16](https://github.com/ecomplus/admin/commit/1a6fb161925d101e5ef61adb4cd915e6f203c590))
+* **router:** skip changing browser title on when tab title null only ([c3cfac6](https://github.com/ecomplus/admin/commit/c3cfac6d0ff4d94b9a8ce9aba92ac8e6d36e432d))
+
 ## [1.0.0-beta.12](https://github.com/ecomplus/admin/compare/v1.0.0-beta.11...v1.0.0-beta.12) (2021-04-01)
 
 
