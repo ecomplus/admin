@@ -704,15 +704,17 @@ const { sessionStorage, localStorage, Image, $, app } = window
     routeReadyTimeout = null
 
     // display content
-    if (tabTitle !== undefined) {
+    if (tabTitle) {
       // change tab nav title
       $('#app-nav-' + window.tabId + ' > a').text(tabTitle)
     }
     $('#router > .loading').fadeOut()
     window.elTab.children().fadeIn()
-    // save title for further tab changes
-    appTabs[currentTab].tabTitle = tabTitle
-    changeBrowserTabTitle(tabTitle)
+    if (tabTitle !== null) {
+      // save title for further tab changes
+      appTabs[currentTab].tabTitle = tabTitle
+      changeBrowserTabTitle(tabTitle)
+    }
   }
 
   var changeBrowserTabTitle = function (title) {
@@ -794,6 +796,8 @@ const { sessionStorage, localStorage, Image, $, app } = window
             if (appTitle !== document.title) {
               tabObj.title += `: ${appTitle}`
               window.routeReady(`App: ${appTitle}`)
+            } else {
+              window.routeReady(null)
             }
           }, 1000)
         } else {
