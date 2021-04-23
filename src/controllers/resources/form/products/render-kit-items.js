@@ -229,7 +229,7 @@ export default function ({
   const products = data[docProp]
   if (products && products.length) {
     const query = `_id:("${(products[0]._id ? products.map(({ _id }) => _id) : products).join('" "')}")`
-    callSearchApi(`items.json?q=${encodeURIComponent(query)}`, 'GET', function (err, data) {
+    callSearchApi(`items.json?q=${encodeURIComponent(query)}&size=${products.length}`, 'GET', function (err, data) {
       if (!err && data.hits) {
         data.hits.hits.forEach(({ _source, _id }, i) => {
           let { quantity } = _source
