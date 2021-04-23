@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.14](https://github.com/ecomplus/admin/compare/v1.0.0-beta.13...v1.0.0-beta.14) (2021-04-23)
+
+
+### Features
+
+* **orders-form:** show order carrier name and doc number inputs ([5632b53](https://github.com/ecomplus/admin/commit/5632b536dc16c3041d198ef4eb026ea7fcd40119))
+
+
+### Bug Fixes
+
+* **products-form:** fetch kit items on search api with `size` param ([#363](https://github.com/ecomplus/admin/issues/363)) ([7c4b3c7](https://github.com/ecomplus/admin/commit/7c4b3c7bce9ddf14d209ab254d2269c5b2235706))
+
 ## [1.0.0-beta.13](https://github.com/ecomplus/admin/compare/v1.0.0-beta.12...v1.0.0-beta.13) (2021-04-22)
 
 
