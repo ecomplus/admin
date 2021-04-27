@@ -545,6 +545,8 @@ export default function () {
     $('#disable-products').click(() => Tab.editItems({ available: false }))
     $('#visible-products').click(() => Tab.editItems({ visible: true }))
     $('#invisible-products').click(() => Tab.editItems({ visible: false }))
+    $('#enable-stock-products').click(() => Tab.editItems({ manage_stock: true }))
+    $('#disable-stock-products').click(() => Tab.editItems({ manage_stock: false }))
 
     var setupItemElement = function (id, index, $item, $checkbox) {
       $checkbox.on('change', function () {
