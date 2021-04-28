@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.15](https://github.com/ecomplus/admin/compare/v1.0.0-beta.14...v1.0.0-beta.15) (2021-04-27)
+
+
+### Features
+
+* **products-list:** enable/disable manage stock in mass ([#366](https://github.com/ecomplus/admin/issues/366)) ([a26be59](https://github.com/ecomplus/admin/commit/a26be5985aee760962031053bdd18a1e400de6a5))
+
 ## [1.0.0-beta.14](https://github.com/ecomplus/admin/compare/v1.0.0-beta.13...v1.0.0-beta.14) (2021-04-23)
 
 
