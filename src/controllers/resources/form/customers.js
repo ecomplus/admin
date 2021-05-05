@@ -318,19 +318,6 @@ export default function () {
       resumeContent()
     })
 
-    // Get and save value of staff notes
-    $note.change(function () {
-      var data = Data()
-      var note = $note.val()
-      if (!data.hasOwnProperty('staff_notes')) {
-        data.staff_notes = {}
-        data.staff_notes = note
-        commit(data, true)
-      } else {
-        data.staff_notes = {}
-      }
-    })
-
     if (data.gender) {
     // get gender value
       if (data.gender === 'f') {

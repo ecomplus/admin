@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.16](https://github.com/ecomplus/admin/compare/v1.0.0-beta.15...v1.0.0-beta.16) (2021-05-05)
+
+
+### Features
+
+* **lists:** persist sort option when changed ([8f57ffc](https://github.com/ecomplus/admin/commit/8f57ffcc4294ef0d8591b3c91097b2062f6b9567))
+
+
+### Bug Fixes
+
+* **customers-form:** stop parsing `staff_notes` to object ([#368](https://github.com/ecomplus/admin/issues/368)) ([a1e3bbf](https://github.com/ecomplus/admin/commit/a1e3bbf81d0ad1a9058505ff59a3631fdd99e1c8))
+* **orders-form:** set `number` field readonly by default ([58f6f99](https://github.com/ecomplus/admin/commit/58f6f9929b4a2dac92cd07b9f0838f6b0c1c64f4))
+
 ## [1.0.0-beta.15](https://github.com/ecomplus/admin/compare/v1.0.0-beta.14...v1.0.0-beta.15) (2021-04-27)
 
 

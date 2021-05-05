@@ -252,13 +252,13 @@ export default function () {
     }
 
     // current list filters
-    var filters = {}
+    const filters = {}
     // start default sorting
-    var defaultSortField = 'updated_at'
-    var defaultSortOrder = 'desc'
-    var sort = {
-      field: defaultSortField,
-      order: defaultSortOrder
+    const defaultSortField = 'updated_at'
+    const defaultSortOrder = 'desc'
+    const sort = {
+      field: localStorage.getItem(`${resourceSlug}:sort.field`) || defaultSortField,
+      order: localStorage.getItem(`${resourceSlug}:sort.field`) || defaultSortOrder
     }
 
     // control pagination
@@ -1185,12 +1185,15 @@ export default function () {
                   // check current order
                   if (!query.sortField) {
                     // default sorting
-                    query.sortField = defaultSortField
-                    query.sortOrder = defaultSortOrder
+                    query.sortField = sort.field
+                    query.sortOrder = sort.order
+                    $grid.jsGrid('sort', query.sortField, query.sortOrder)
                   }
                   if (sort.field !== query.sortField || sort.order !== query.sortOrder) {
                     sort.field = query.sortField
                     sort.order = query.sortOrder
+                    localStorage.setItem(`${resourceSlug}:sort.field`, sort.field)
+                    localStorage.setItem(`${resourceSlug}:sort.order`, sort.order)
                     if (!changed) {
                       changed = true
                     }

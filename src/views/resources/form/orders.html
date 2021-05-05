@@ -84,8 +84,15 @@
                   <span data-lang="en_us">Order number</span>
                   <span data-lang="pt_br">Número do pedido</span>
                 </label>
-                <input type="number" min="0" max="999999999"
-                  class="form-control action-title text-monospace" name="number"/>
+                <div class="input-group">
+                  <input type="number" min="0" max="999999999" placeholder="auto"
+                    class="form-control action-title text-monospace" name="number" readonly />
+                  <span class="input-group-append">
+                    <button class="btn btn-light" type="button" data-id="switch-number">
+                      <i class="fa fa-pencil"></i>
+                    </button>
+                  </span>
+                </div>
               </div>
               <div class="form-group">
                 <label class="i18n">

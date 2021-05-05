@@ -294,7 +294,9 @@ export default function () {
         endpoint = slug + '.json'
         // default query string
         // limit up to 60 results by default
-        params = 'limit=60&sort=-updated_at'
+        params = 'limit=60&sort=' +
+          (localStorage.getItem(`${slug}:sort.order`) !== 'asc' ? '-' : '') +
+          (localStorage.getItem(`${slug}:sort.field`) || 'updated_at')
         if (window.routeQuery) {
           params += `&${window.routeQuery}`
         }
