@@ -10,12 +10,12 @@ export default function () {
     return Tab.data
   }
 
-  var setup = function () {
+  const setup = function () {
     // setup basic order data
-    var data = Data()
-    var orderId = routeParams[routeParams.length - 1]
+    const data = Data()
+    const orderId = routeParams[routeParams.length - 1]
 
-    var elContainer = $('#t' + tabId + '-tab-normal')
+    const elContainer = $('#t' + tabId + '-tab-normal')
     elContainer.find('#t' + tabId + '-open-invoice').click(function () {
       window.location.href = '/#/invoices/' + orderId
     })
@@ -23,7 +23,16 @@ export default function () {
       window.location.href = '/#/shipping-tags/' + orderId
     })
 
-    var $orderBase = $('#t' + tabId + '-order-base')
+    const $orderBase = $('#t' + tabId + '-order-base')
+
+    $orderBase.find('#t' + tabId + '-switch-number').click(() => {
+      const $input = $orderBase.find('input[name="number"]')
+      if ($input.attr('readonly')) {
+        $input.removeAttr('readonly')
+      } else {
+        $input.attr('readonly', true)
+      }
+    })
 
     // watch amount values
     var $amount = $orderBase.find('#t' + tabId + '-order-amount')
@@ -334,8 +343,7 @@ export default function () {
             opts = json.orders[eventTypes[eventType]].enum
             const sortedEntries = data[eventType].sort((a, b) => {
               if (a.date_time && b.date_time) {
-                return a.date_time > b.date_time
-                  ? 1 : -1
+                return a.date_time > b.date_time ? 1 : -1
               }
               return 0
             })
