@@ -262,15 +262,18 @@ $form.submit(function () {
   if (!$(this).hasClass('ajax')) {
     $(this).addClass('ajax')
     hideToast()
+    const canRememberSession = $('#remember').is(':checked')
+    const isAdvancedDash = $('#advanced').is(':checked')
+    const isMd5Password = $('#md5').is(':checked')
     const username = $('#username').val()
-    const password = $('#md5').is(':checked') ? $('#password').val() : md5($('#password').val())
+    const password = isMd5Password ? $('#password').val() : md5($('#password').val())
 
     ;[
-      ['remember', 'username'],
-      ['advanced', 'advanced_dash'],
-      ['md5', 'using_pass_md5']
-    ].forEach(([checkboxId, itemName]) => {
-      if ($(`#${checkboxId}`).is(':checked')) {
+      [canRememberSession, 'username'],
+      [isAdvancedDash, 'advanced_dash'],
+      [isMd5Password, 'using_pass_md5']
+    ].forEach(([isChecked, itemName]) => {
+      if (isChecked) {
         localStorage.setItem(itemName, username)
       } else {
         localStorage.removeItem(itemName)
@@ -297,7 +300,9 @@ $form.submit(function () {
 
         const setStorageItem = (label, value) => {
           sessionStorage.setItem(label, value)
-          localStorage.setItem(label, value)
+          if (canRememberSession) {
+            localStorage.setItem(label, value)
+          }
         }
         setStorageItem('store_id', storeId)
 
