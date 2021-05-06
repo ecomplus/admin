@@ -1485,7 +1485,7 @@ export default function () {
       })
     })
 
-    var editVariation = function (index) {
+    const editVariation = function (index) {
       var data = Data()
       var variations = data.variations
       if (variations && index >= 0 && variations.length > index) {
@@ -1574,18 +1574,12 @@ export default function () {
             // handle select image for current variation
             var $html = []
             for (i = 0; i < pictures.length; i++) {
-              var src
-              var picture = pictures[i]
-              if (picture.hasOwnProperty('normal')) {
-                // show thumbnail only
-                src = picture.normal.url
-              } else {
-                src = picture.zoom.url
-              }
-              var objectId = picture._id
+              const picture = pictures[i]
+              const src = ecomUtils.img(picture).url
+              const objectId = picture._id
 
               // add span block with image content
-              var spanObject = {
+              const spanObject = {
                 html: '<img src="' + src + '">',
                 click: (function (id) {
                   return function () {
