@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.17](https://github.com/ecomplus/admin/compare/v1.0.0-beta.16...v1.0.0-beta.17) (2021-05-06)
+
+
+### Bug Fixes
+
+* **forms:** prevent fatal error with picture without normal size ([71c811c](https://github.com/ecomplus/admin/commit/71c811c6715cdd49d902339f11e388cd57c07ec2))
+* **login:** ensure storage items are set on sso or dashboard login ([6923e2f](https://github.com/ecomplus/admin/commit/6923e2f2e021e06fdc223c1bb43fa1022e77e8e6))
+
 ## [1.0.0-beta.16](https://github.com/ecomplus/admin/compare/v1.0.0-beta.15...v1.0.0-beta.16) (2021-05-05)
 
 

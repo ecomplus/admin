@@ -1,7 +1,7 @@
 import Sortable from 'sortablejs'
 
 export default function () {
-  const { $, app, i18n, newTabLink } = window
+  const { $, app, ecomUtils, i18n, newTabLink } = window
 
   // current tab ID
   const tabId = window.tabId
@@ -629,9 +629,9 @@ export default function () {
                   if (!isSummernote) {
                     todo++
                     // show thumbnail only
-                    url = pictures[i].normal.url
+                    url = ecomUtils.img(pictures[i]).url
                   } else {
-                    url = pictures[i].zoom.url
+                    url = ecomUtils.img(pictures[i], null, 'zoom').url
                   }
 
                   if (!isSummernote) {
