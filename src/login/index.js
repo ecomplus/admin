@@ -138,6 +138,11 @@ const contentType = 'application/json; charset=UTF-8'
 
 const handleSso = (storeId, username, session) => {
   const isCmsLogin = urlParams.get('sso_service') === 'cms'
+  setStorageItem('store_id', storeId)
+  setStorageItem('my_id', session.my_id)
+  setStorageItem('access_token', session.access_token)
+  setStorageItem('expires', session.expires)
+  setStorageItem('username', username)
 
   $.ajax({
     url: 'https://admin.e-com.plus/session/new',
@@ -196,6 +201,10 @@ const handleSso = (storeId, username, session) => {
 }
 
 const initDashboard = (storeId, username, session) => {
+  if (window.history.pushState) {
+    window.history.pushState({}, document.title, window.location.pathname)
+  }
+
   return import(/* webpackChunkName: "dashboard" */ '@/dashboard')
     .then(() => {
       $login.remove()
@@ -212,6 +221,14 @@ const initDashboard = (storeId, username, session) => {
 
 const urlParams = new URLSearchParams(window.location.search)
 const getAuthState = name => (urlParams.get(name) || localStorage.getItem(name))
+
+let canRememberSession
+const setStorageItem = (label, value) => {
+  sessionStorage.setItem(label, value)
+  if (canRememberSession) {
+    localStorage.setItem(label, value)
+  }
+}
 
 const accessToken = getAuthState('access_token')
 if (accessToken) {
@@ -230,7 +247,7 @@ if (accessToken) {
   if (storeId && myId) {
     const ssoStoreId = urlParams.get('sso_store_id')
     if (!ssoStoreId || ssoStoreId === storeId) {
-      handleSso(storeId, localStorage.getItem('username'), {
+      handleSso(storeId, getAuthState('username'), {
         my_id: myId,
         access_token: accessToken,
         expires
@@ -262,7 +279,7 @@ $form.submit(function () {
   if (!$(this).hasClass('ajax')) {
     $(this).addClass('ajax')
     hideToast()
-    const canRememberSession = $('#remember').is(':checked')
+    canRememberSession = $('#remember').is(':checked')
     const isAdvancedDash = $('#advanced').is(':checked')
     const isMd5Password = $('#md5').is(':checked')
     const username = $('#username').val()
@@ -298,14 +315,6 @@ $form.submit(function () {
         const storeId = data.store_id
         console.log(`Logged ${username} for #${storeId}`)
 
-        const setStorageItem = (label, value) => {
-          sessionStorage.setItem(label, value)
-          if (canRememberSession) {
-            localStorage.setItem(label, value)
-          }
-        }
-        setStorageItem('store_id', storeId)
-
         $.ajax({
           url: 'https://api.e-com.plus/v1/_authenticate.json',
           method: 'POST',
@@ -319,12 +328,7 @@ $form.submit(function () {
             api_key: data.api_key
           })
         })
-
           .done(function (session) {
-            setStorageItem('my_id', session.my_id)
-            setStorageItem('access_token', session.access_token)
-            setStorageItem('expires', session.expires)
-            setStorageItem('username', username)
             handleSso(storeId, username, session)
           })
           .fail(authFail)
