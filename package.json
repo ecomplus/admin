@@ -65,7 +65,7 @@
     "@ecomplus/storefront-twbs": "^5.10.4",
     "@ecomplus/utils": "^1.4.1",
     "blueimp-md5": "^2.18.0",
-    "bootstrap": "^4.6.0",
+    "bootstrap": "^5.0.1",
     "dot-object": "^2.1.4",
     "eventemitter3": "^4.0.7",
     "inputmask": "^4.0.9",
