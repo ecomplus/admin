@@ -2,46 +2,40 @@
  * Copyright 2018 E-Com Club
  */
 
-export default function () {
+export default () => {
   'use strict'
-  var { tabId, $, localStorage, app, i18n, callApi } = window
-  var Tab = window.Tabs[tabId]
+  const { tabId, $, localStorage, app, i18n, callApi } = window
+  const Tab = window.Tabs[tabId]
   window.renderContentIds()
 
-  var setup = function () {
-    var $storeNameConfig = $('#storeNameConfig')
-    var $storeIdConfig = $('#storeIdConfig')
-    var $layoutStore = $('#layoutStore')
-    var $cpfDoc = $('#cpfDoc')
-    var $cnpjDoc = $('#cnpjDoc')
+  const setup = () => {
+    const $storeNameConfig = $('#storeNameConfig')
+    const $cpfDoc = $('#cpfDoc')
+    const $xml = $('#xml')
+    const $cnpjDoc = $('#cnpjDoc')
     const $actionSave = $('#actionSave')
-    var $cpf = $('#cpf')
+    const $cpf = $('#cpf')
     const $inscType = $('#inscType')
     const $docType = $('#docType')
-    var $cnpj = $('#cnpj')
-    var $inscNumb = $('#inscNumb')
-    var objInfo = {}
-    var $docCPF = $('#docCPF')
-    var $docCNPJ = $('#docCNPJ')
-    var $financialEmail = $('#financialEmail')
-    var $contactEmail = $('#contactEmail')
-    var $corpName = $('#corpName')
-    var $celphone = $('#cel')
-    var $address = $('#address')
-    var $description = $('#description')
-    var $logo = $('#logotype')
-    var $logoAlt = $('#logoAlt')
-    var $imglogo = $('#image-logo')
-    var $plan = $('#plan')
-    var $domain = $('#domain')
-    var $urlHomepage = $('#urlHomepage')
-    var $firstColor = $('#firstColor')
-    var $secondColor = $('#secondColor')
-    var urlStore = 'stores/me.json'
-    callApi(urlStore, 'GET', function (error, schema) {
+    const $cnpj = $('#cnpj')
+    const $inscNumb = $('#inscNumb')
+    const objInfo = {}
+    const $docCPF = $('#docCPF')
+    const $docCNPJ = $('#docCNPJ')
+    const $financialEmail = $('#financialEmail')
+    const $contactEmail = $('#contactEmail')
+    const $corpName = $('#corpName')
+    const $celphone = $('#cel')
+    const $address = $('#address')
+    const $description = $('#description')
+    const $domain = $('#domain')
+    const $urlHomepage = $('#urlHomepage')
+    const $firstColor = $('#firstColor')
+    const $secondColor = $('#secondColor')
+    const urlStore = 'stores/me.json'
+    callApi(urlStore, 'GET', (error, schema) => {
       if (!error) {
         $storeNameConfig.val(schema.name)
-        $storeIdConfig.val(schema.store_id)
         $corpName.val(schema.corporate_name)
         $contactEmail.val(schema.contact_email)
         $financialEmail.val(schema.financial_email)
@@ -52,21 +46,11 @@ export default function () {
         $domain.val(schema.domain)
         if (schema.domain) {
           localStorage.setItem('domain', schema.domain)
-        }
-        if (schema.homepage) {
-          $layoutStore.append(
-            '  <span data-lang="en_us"><a target="_blank" data-lang="en_us" href="' + schema.homepage + '/admin/">Edit layout store</a> | <a target="_blank" data-lang="en_us" href="' + schema.homepage + '">Access store</a></span>' +
-            '  <span data-lang="pt_br"><a target="_blank" data-lang="pt_br" href="' + schema.homepage + '/admin/">Editar visual da loja</a> | <a target="_blank" data-lang="pt_br" href="' + schema.homepage + '">Acessar loja</a></span>'
-          )
-        } else {
-          $layoutStore.append(
-            '  <span data-lang="en_us">Set homepage url to edit your layout</span>' +
-            '  <span data-lang="pt_br">Configure a url da homepage para editar o layout</span>'
-          )
+          $xml.val(`https://storefront.e-com.plus/products-feed.xml?store_id=${schema.store_id}&domain=${schema.domain}`)
         }
         if (schema.brand_colors) {
-          var swapFirst = schema.brand_colors.primary
-          var swapSecond = schema.brand_colors.secondary
+          const swapFirst = schema.brand_colors.primary
+          const swapSecond = schema.brand_colors.secondary
           if (swapFirst || swapSecond) {
             $firstColor.val(schema.brand_colors.primary)
             $secondColor.val(schema.brand_colors.secondary)
@@ -77,37 +61,6 @@ export default function () {
               'background-color': swapSecond
             })
           }
-        }
-        if (schema.$main.plan === 1) {
-          var namePlan = 'Plano Basic'
-        } else {
-          namePlan = 'Plano Plus'
-        }
-        $plan.replaceWith(
-          '<span class="i18n"> ' +
-                      '      <span data-lang="en_us">Plan</span> ' +
-                      '      <span data-lang="pt_br">Plano</span>' +
-                      '      </span>: ' + namePlan + '<br>' +
-                      '<span class="i18n"> ' +
-                      '      <span data-lang="en_us">Plan value</span> ' +
-                      '      <span data-lang="pt_br">Valor do plano</span>' +
-                      '      </span>: R$ ' + schema.$main.plan_value + '<br>' +
-                      '<span class="i18n"> ' +
-                      '      <span data-lang="en_us">Orders limit</span> ' +
-                      '      <span data-lang="pt_br">Limite de pedido</span>' +
-                      '      </span>: ' + schema.$main.orders_limit + '<br>' +
-                      '<span class="i18n"> ' +
-                      '      <span data-lang="en_us">Renewal day</span> ' +
-                      '      <span data-lang="pt_br">Dia da renovação</span>' +
-                      '      </span>: ' + schema.$main.renewal_day)
-        var logo
-        if (typeof schema.logo === 'undefined') {
-          logo = ''
-        } else {
-          logo = schema.logo.url
-          $logo.val(logo)
-          imglogo(logo)
-          $logoAlt.val(schema.logo.alt)
         }
         if (schema.doc_type === 'CPF') {
           $docCPF.attr('checked', true)
@@ -136,19 +89,22 @@ export default function () {
         }
       }
     })
-    $docCPF.change(function () {
+    $domain.change(function (schema) {
+      $xml.val(`https://storefront.e-com.plus/products-feed.xml?store_id=${localStorage.getItem('store_id')}&domain=${$domain.val()}`)
+    })
+    $docCPF.change(function() {
       $cpf.show()
       $cnpj.hide()
       $inscNumb.hide()
       $inscType.hide()
     })
-    $docCNPJ.change(function () {
+    $docCNPJ.change(function() {
       $cnpj.show()
       $cpf.hide()
       $inscNumb.show()
       $inscType.show()
     })
-    $docType.find('input').change(function () {
+    $docType.find('input').change(function() {
       if ($(this).val() === 'CPF') {
         $cpf.show()
         $cnpj.hide()
@@ -159,17 +115,21 @@ export default function () {
         $cpf.hide()
       }
     })
-    $firstColor.change(function () {
-      var primaryColor = $firstColor.val()
-      var secondColor = $secondColor.val()
+    $firstColor.on('change', (event) => {
+      const primaryColor = $firstColor.val()
+      const secondColor = $secondColor.val()
+      objInfo.brand_colors = {}
+      objInfo.brand_colors.secondary = secondColor
       selectColors(primaryColor, secondColor)
     })
-    $secondColor.change(function () {
-      var primaryColor = $firstColor.val()
-      var secondColor = $secondColor.val()
+    $secondColor.on('change', (event) => {
+      const primaryColor = $firstColor.val()
+      const secondColor = $secondColor.val()
+      objInfo.brand_colors = {}
+      objInfo.brand_colors.primary = primaryColor
       selectColors(primaryColor, secondColor)
     })
-    var selectColors = function (color1, color2) {
+    const selectColors = (color1, color2) => {
       if (color1.length === 7 && color2.length === 7) {
         $('#swapSecond').css({
           'background-color': color2
@@ -188,7 +148,7 @@ export default function () {
         })
       }
     }
-    const removeMask = function (prop, value) {
+    const removeMask = (prop, value) => {
       if (prop === 'doc_number') {
         if (value.split('').length > 14) {
           return value.replace(/(\d{2}).(\d{3}).(\d{3})\/(\d{4})-(\d{2})/, '$1$2$3$4$5')
@@ -210,9 +170,6 @@ export default function () {
       // generic for international phone numbers
       '99999[9{1,10}]'
     ])
-    var imglogo = function (logo) {
-      $imglogo.replaceWith('<img src="' + logo + '" alt="logotipo" id="image-logo">')
-    }
     const set = (obj, path, val) => {
       const keys = path.split('.')
       let lastKey
@@ -225,15 +182,15 @@ export default function () {
         Object.assign(obj[keys] = val, obj)
       }
     }
-    $('.form-group').find('input,textarea').change(function () {
-      var prop = $(this).attr('name')
-      var value = removeMask(prop, $(this).val())
+    $('.form-group').find('input,textarea').on('change', (event) => {
+      const prop = $(event.currentTarget).attr('name')
+      const value = removeMask(prop, $(event.currentTarget).val())
       set(objInfo, prop, value)
       $actionSave.show()
     })
-    var infoPatch = function () {
+    const infoPatch = () => {
       // patch new store name
-      var callback = function (err, body) {
+      const callback = (err, body) => {
         if (!err) {
           app.toast(i18n({
             en_us: 'Save with success',
@@ -250,11 +207,11 @@ export default function () {
           }))
         }
       }
-      var data = objInfo
+      const data = objInfo
       callApi('stores/me.json', 'PATCH', callback, data)
     }
 
-    $actionSave.click(function () {
+    $actionSave.click(() => {
       infoPatch(objInfo)
     })
   }
