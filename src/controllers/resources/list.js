@@ -120,7 +120,7 @@ export default function () {
       ])
       const approvedAmount = approvedOrders.total
       const approvedCount = approvedOrders.count
-      const approvedPc = Math.round(approvedAmount * 100 / totalAmount)
+      const approvedPc = Math.round(approvedAmount * 100 / totalAmount) || 0
       const cancelledOrders = getOrders([
         'unauthorized',
         'voided',
@@ -130,7 +130,7 @@ export default function () {
       ])
       const cancelledAmount = cancelledOrders.total
       const cancelledCount = cancelledOrders.count
-      const cancelledPc = Math.round(cancelledAmount * 100 / totalAmount)
+      const cancelledPc = Math.round(cancelledAmount * 100 / totalAmount) || 0
 
       // update order statistics
       $(`#t${tabId}-orders-total-quantity`).text(totalCount)
