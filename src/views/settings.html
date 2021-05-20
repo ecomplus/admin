@@ -31,7 +31,7 @@
         <div class="card-body">
           <div data-id="config-info">
             <div class="row">
-              <div class="col-lg-4 col-sm-6">
+              <div class="col-lg-4 col-sm-6 col-12">
                 <div class="form-group">
                   <label class="fw-500 i18n">
                     <span data-lang="en_us">Store Name</span>
@@ -40,24 +40,19 @@
                   <input type="tel" id="storeNameConfig" name="name" class="form-control" maxlength="255" placeholder="Loja Teste">
                 </div>
               </div>
-              <div class="col-lg-4 col-sm-6">
+              <div class="col-lg-8 col-sm-6 col-12">
                 <div class="form-group">
                   <label class="i18n">
-                    <span data-lang="en_us">Store ID</span>
-                    <span data-lang="pt_br">Store ID</span>
+                    <span data-lang="en_us">XML Google Shopping/Facebook</span>
+                    <span data-lang="pt_br">XML Google Shopping/Facebook</span>
                   </label>
-                  <input type="tel" id="storeIdConfig" name="store_id" readonly="true" class="form-control" placeholder="0000">
-                </div>
-              </div>
-              <div class="col-lg-4 col-sm-6">
-                <div class="form-group">
-                  <label class="i18n">
-                    <span data-lang="en_us">Set layout store</span>
-                    <span data-lang="pt_br">Configurar layout da loja</span>
-                  </label>
-                  <br>
-                  <label class="i18n" id="layoutStore">
-                  </label>
+                  <input type="tel" id="xml" name="xml" readonly="true" class="form-control" placeholder="Necessário configuração do domínio para funcionar">
+                  <div class="col-12">
+                    <span class="i18n">
+                      <small data-lang="en_us" class="form-text">If you have more than 500 products, contact us in to support</small>
+                      <small data-lang="pt_br" class="form-text">Caso tenha mais de 500 produtos, entre em contato com o suporte</small>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -226,7 +221,7 @@
                   <span data-lang="en_us">*Address format: Street, number, neighboor, city, state, complement</span>
                   <span data-lang="pt_br">*Endereço no formato: Rua, número, bairro, cidade, (UF), complemento</span>
                 </label>
-                <input type="tel" class="form-control" name="address" data-mask="tel" id="address"/>
+                <input type="text" class="form-control" name="address" id="address"/>
               </div>
             </div>
           </div>
@@ -262,81 +257,6 @@
                   <span data-lang="pt_br">Escreva uma descrição sobre sua loja</span>
                 </label>
                 <textarea class="form-control" maxlength="3000" name="description" rows="6" id="description"></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card card-slided-up">
-        <header class="card-header">
-          <h4 class="card-title i18n">
-            <span data-lang="pt_br">Configurações Logotipo</span>
-            <span data-lang="en_us">Logo settings</span>
-          </h4>
-          <ul class="card-controls">
-            <li>
-              <a class="card-btn-slide" href="#"></a>
-            </li>
-          </ul>
-        </header>
-        <div class="card-content">
-          <div class="card-body">
-            <div class="form-group">
-              <label class="i18n">
-                <span data-lang="en_us">Logo URL</span>
-                <span data-lang="pt_br">URL do Logotipo</span>
-              </label>
-              <input type="text" class="form-control" name="logo.url" id="logotype" maxlength="255"/>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="i18n">
-                    <span data-lang="en_us">Logo image</span>
-                    <span data-lang="pt_br">Logotipo</span>
-                  </label>
-                  <figure class="img-hov-zoomin">
-                    <img src="https://imgur.com/TWxPsBC.png" alt="logotipo" id="image-logo">
-                  </figure>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="i18n">
-                    <span data-lang="en_us">Alt text (Important for SEO)</span>
-                    <span data-lang="pt_br">Tag Alt de SEO</span>
-                  </label>
-                  <input type="text" class="form-control" name="logo.alt" id="logoAlt" maxlength="255"/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="card card-slided-up">
-        <header class="card-header">
-          <h4 class="card-title i18n">
-            <span data-lang="en_us">Actual Plan</span>
-            <span data-lang="pt_br">Plano atual</span>
-          </h4>
-          <ul class="card-controls">
-            <li>
-              <a class="card-btn-slide" href="#"></a>
-            </li>
-          </ul>
-        </header>
-        <div class="card-content">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-12">
-                <span id="plan">
-                </span>
               </div>
             </div>
           </div>

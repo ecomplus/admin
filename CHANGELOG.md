@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.18](https://github.com/ecomplus/admin/compare/v1.0.0-beta.17...v1.0.0-beta.18) (2021-05-20)
+
+
+### Features
+
+* **settings:** products feed xml link and general fixes ([#376](https://github.com/ecomplus/admin/issues/376)) ([78b50cd](https://github.com/ecomplus/admin/commit/78b50cd786c8e03b0beaccc606e4c71465dae1e4))
+
+
+### Bug Fixes
+
+* **orders-list:** prevent rendering NaN on order statistics ([#380](https://github.com/ecomplus/admin/issues/380)) ([bfb9a22](https://github.com/ecomplus/admin/commit/bfb9a22459b2cb0ebc464e8ef65e2c534ee3833a))
+* **settings:** address input must be type text ([59cc035](https://github.com/ecomplus/admin/commit/59cc035a6bc92f36c52073633281c73dd449cc53))
+
 ## [1.0.0-beta.17](https://github.com/ecomplus/admin/compare/v1.0.0-beta.16...v1.0.0-beta.17) (2021-05-06)
 
 
