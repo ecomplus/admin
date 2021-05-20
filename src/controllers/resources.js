@@ -2,7 +2,7 @@ import Papa from 'papaparse'
 import * as dot from 'dot-object'
 
 export default function () {
-  const { localStorage, $, app, lang, i18n, callApi, formatDate, askConfirmation } = window
+  const { localStorage, $, app, lang, i18n, callApi, formatDate, askConfirmation, randomObjectId } = window
 
   // current tab ID
   const tabId = window.tabId
@@ -663,13 +663,20 @@ export default function () {
                   } else if (row[head] !== undefined) {
                     // fix var type and field name
                     const field = head.replace(/\w+\(([^)]+)\)/i, '$1')
-                    row[field] = head.startsWith('Number')
-                      ? Number(row[head])
-                      : head.startsWith('Boolean')
-                        ? typeof row[head] === 'string'
-                            ? row[head].toUpperCase().indexOf('TRUE') > -1
-                            : Boolean(row[head])
-                        : row[head]
+                    if (field.endsWith('._id')) {
+                      const objectId = String(row[head])
+                      row[field] = objectId && /^[a-f0-9]{24}$/.test(objectId)
+                        ? objectId
+                        : randomObjectId()
+                    } else {
+                      row[field] = head.startsWith('Number')
+                        ? Number(row[head])
+                        : head.startsWith('Boolean')
+                          ? typeof row[head] === 'string'
+                              ? row[head].toUpperCase().indexOf('TRUE') > -1
+                              : Boolean(row[head])
+                          : row[head]
+                    }
                     delete row[head]
                   }
                 }
