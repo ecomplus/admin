@@ -1,12 +1,6 @@
-/*!
- * Copyright 2018 E-Com Club
- */
-
 export default () => {
-  'use strict'
-  const { tabId, $, localStorage, app, i18n, callApi } = window
+  const { $, localStorage, app, i18n, callApi, tabId } = window
   const Tab = window.Tabs[tabId]
-  window.renderContentIds()
 
   const setup = () => {
     const $storeNameConfig = $('#storeNameConfig')
@@ -215,11 +209,5 @@ export default () => {
       infoPatch(objInfo)
     })
   }
-
-  // wait for the form to be ready
-  if (Tab.$form) {
-    setup()
-  } else {
-    $(document).one('form-' + tabId, setup)
-  }
+  setup()
 }
