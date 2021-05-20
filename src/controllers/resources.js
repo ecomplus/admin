@@ -676,19 +676,26 @@ export default function () {
                 const doc = dot.object(data[i])
                 i++
 
-                const _id = doc._id
-                if (_id) {
-                  delete doc._id
-                  delete doc.store_id
-                  delete doc.created_at
-                  delete doc.updated_at
-                  callApi(`${slug}/${_id}.json`, 'PATCH', (err, doc) => {
-                    if (err) {
-                      console.error(err)
-                      app.toast()
-                    }
-                    editDoc()
-                  }, doc)
+                const { _id } = doc
+                delete doc._id
+                delete doc.store_id
+                delete doc.created_at
+                delete doc.updated_at
+                if (_id && _id.length > 2) {
+                  if (/^[a-f0-9]{24}$/.test(_id)) {
+                    callApi(`${slug}/${_id}.json`, 'PATCH', (err, doc) => {
+                      if (err) {
+                        console.error(err)
+                        app.toast()
+                      }
+                      editDoc()
+                    }, doc)
+                  } else {
+                    app.toast(i18n({
+                      en_us: `Ignored invalid ID: '${_id}'`,
+                      pt_br: `ID inválido ignorado: '${_id}'`
+                    }))
+                  }
                 } else {
                   callApi(`${slug}.json`, 'POST', (err, doc) => {
                     if (err) {
