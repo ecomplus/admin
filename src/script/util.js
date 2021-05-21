@@ -767,6 +767,9 @@ const { $ } = window
             case 'string':
               if ($el.attr('type') !== 'radio') {
                 $el.val(val)
+                if ($el.minicolors && $el.hasClass('minicolors-input')) {
+                  $el.minicolors('value', val)
+                }
                 // toggle related blocks based on current value
                 if ($el.data('toggle-update')) {
                   toggleBlocksByValue($form, $el)
