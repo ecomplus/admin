@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.19](https://github.com/ecomplus/admin/compare/v1.0.0-beta.18...v1.0.0-beta.19) (2021-05-21)
+
+
+### Bug Fixes
+
+* **resources:** better handling nested object ids on table import ([79e42f1](https://github.com/ecomplus/admin/commit/79e42f1f1cd32066ed185a446ddf75deb7ee6173))
+* **resources:** ensure no unaceptable fields not on table import ([adcfd38](https://github.com/ecomplus/admin/commit/adcfd384a601c801340e460ad7c8c313eb5714d7))
+* **resources:** remove fields not editable on export ([93e2b90](https://github.com/ecomplus/admin/commit/93e2b90a5e4308a7fad2fb914a1ebd00a8c7fd8e))
+* **setup-input-values:** properly handle minicolor inputs ([c375448](https://github.com/ecomplus/admin/commit/c375448459103b3e7a4590e43b4a33e2813eb028))
+
 ## [1.0.0-beta.18](https://github.com/ecomplus/admin/compare/v1.0.0-beta.17...v1.0.0-beta.18) (2021-05-20)
 
 
