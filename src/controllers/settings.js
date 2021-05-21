@@ -1,213 +1,99 @@
+import { i19settings } from '@ecomplus/i18n'
+import ecomAuth from '@ecomplus/auth'
+
 export default () => {
-  const { $, localStorage, app, i18n, callApi, tabId } = window
-  const Tab = window.Tabs[tabId]
+  const { $, i18n, tabId, callApi } = window
 
-  const setup = () => {
-    const $storeNameConfig = $('#storeNameConfig')
-    const $cpfDoc = $('#cpfDoc')
-    const $xml = $('#xml')
-    const $cnpjDoc = $('#cnpjDoc')
-    const $actionSave = $('#actionSave')
-    const $cpf = $('#cpf')
-    const $inscType = $('#inscType')
-    const $docType = $('#docType')
-    const $cnpj = $('#cnpj')
-    const $inscNumb = $('#inscNumb')
-    const objInfo = {}
-    const $docCPF = $('#docCPF')
-    const $docCNPJ = $('#docCNPJ')
-    const $financialEmail = $('#financialEmail')
-    const $contactEmail = $('#contactEmail')
-    const $corpName = $('#corpName')
-    const $celphone = $('#cel')
-    const $address = $('#address')
-    const $description = $('#description')
-    const $domain = $('#domain')
-    const $urlHomepage = $('#urlHomepage')
-    const $firstColor = $('#firstColor')
-    const $secondColor = $('#secondColor')
-    const urlStore = 'stores/me.json'
-    callApi(urlStore, 'GET', (error, schema) => {
-      if (!error) {
-        $storeNameConfig.val(schema.name)
-        $corpName.val(schema.corporate_name)
-        $contactEmail.val(schema.contact_email)
-        $financialEmail.val(schema.financial_email)
-        $celphone.val(schema.contact_phone)
-        $address.val(schema.address)
-        $description.val(schema.description)
-        $urlHomepage.val(schema.homepage)
-        $domain.val(schema.domain)
-        if (schema.domain) {
-          localStorage.setItem('domain', schema.domain)
-          $xml.val(`https://storefront.e-com.plus/products-feed.xml?store_id=${schema.store_id}&domain=${schema.domain}`)
-        }
-        if (schema.brand_colors) {
-          const swapFirst = schema.brand_colors.primary
-          const swapSecond = schema.brand_colors.secondary
-          if (swapFirst || swapSecond) {
-            $firstColor.val(schema.brand_colors.primary)
-            $secondColor.val(schema.brand_colors.secondary)
-            $('#swapFirst').css({
-              'background-color': swapFirst
-            })
-            $('#swapSecond').css({
-              'background-color': swapSecond
-            })
-          }
-        }
-        if (schema.doc_type === 'CPF') {
-          $docCPF.attr('checked', true)
-          $docCNPJ.attr('checked', false)
-          $cpf.show()
-          $cnpj.hide()
-          $inscNumb.hide()
-          $inscType.hide()
-          $cpfDoc.val(schema.doc_number)
-        }
-        if (schema.doc_type === 'CNPJ') {
-          $docCPF.attr('checked', false)
-          $docCNPJ.attr('checked', true)
-          $cnpj.show()
-          $cpf.hide()
-          $inscNumb.show()
-          $inscType.show()
-          $cnpjDoc.val(schema.doc_number)
-          if (schema.inscription_type === 'State') {
-            $inscType.find('#inscState').attr('checked', true)
-            $inscNumb.find('input').val(schema.inscription_number)
-          } else {
-            $inscType.find('#inscMuni').attr('checked', true)
-            $inscNumb.find('input').val(schema.inscription_number)
-          }
-        }
-      }
+  const storeId = window.Store.store_id
+  const $form = $('#settings-form')
+
+  let areInputsSet = false
+  ecomAuth.fetchStore()
+    .then(store => {
+      window.Store = store
+      window.setupInputValues($form, store)
+      areInputsSet = true
     })
-    $domain.change(function (schema) {
-      $xml.val(`https://storefront.e-com.plus/products-feed.xml?store_id=${localStorage.getItem('store_id')}&domain=${$domain.val()}`)
+    .catch(console.error)
+
+  setTimeout(() => {
+    $form.find('#settings-store-id').text(storeId)
+    if (!areInputsSet) {
+      window.setupInputValues($form, window.Store)
+    }
+  }, 100)
+
+  $form.find('input.action-title').val(i18n(i19settings))
+
+  $form.find('[data-mask=tel]').inputmask([
+    '(99) 9999-9999',
+    '(99) 9 9999-9999',
+    '99999[9{1,10}]'
+  ])
+
+  $form.find('[name=doc_type]').change(function () {
+    const docType = $(this).val()
+    $form.find('[data-doc-type]').slideUp(200, function () {
+      $form.find('[name=doc_number]')
+        .inputmask(docType === 'CPF' ? '999.999.999-99' : '99.999.999/9999-99')
+      $form.find(`[data-doc-type=${docType}]`).slideDown()
     })
-    $docCPF.change(function() {
-      $cpf.show()
-      $cnpj.hide()
-      $inscNumb.hide()
-      $inscType.hide()
-    })
-    $docCNPJ.change(function() {
-      $cnpj.show()
-      $cpf.hide()
-      $inscNumb.show()
-      $inscType.show()
-    })
-    $docType.find('input').change(function() {
-      if ($(this).val() === 'CPF') {
-        $cpf.show()
-        $cnpj.hide()
-        $inscNumb.hide()
-      } else {
-        $inscNumb.show()
-        $cnpj.show()
-        $cpf.hide()
-      }
-    })
-    $firstColor.on('change', (event) => {
-      const primaryColor = $firstColor.val()
-      const secondColor = $secondColor.val()
-      objInfo.brand_colors = {}
-      objInfo.brand_colors.secondary = secondColor
-      selectColors(primaryColor, secondColor)
-    })
-    $secondColor.on('change', (event) => {
-      const primaryColor = $firstColor.val()
-      const secondColor = $secondColor.val()
-      objInfo.brand_colors = {}
-      objInfo.brand_colors.primary = primaryColor
-      selectColors(primaryColor, secondColor)
-    })
-    const selectColors = (color1, color2) => {
-      if (color1.length === 7 && color2.length === 7) {
-        $('#swapSecond').css({
-          'background-color': color2
-        })
-        $('#swapFirst').css({
-          'background-color': color1
-        })
-      }
-      if (color2.length < 7) {
-        color2 = '#ffffff'
-      }
-      if (color1.length < 7) {
-        color1 = '#ffffff'
-        $('#swapFirst').css({
-          'background-color': color1
-        })
+  })
+
+  window.setSaveAction($form, cb => {
+    const data = Object.assign({}, window.Store)
+    delete data.$main
+    delete data._id
+    delete data.store_id
+    delete data.created_at
+    delete data.updated_at
+    delete data.resources
+
+    const callback = () => {
+      if (typeof cb === 'function') {
+        cb(tabId)
       }
     }
-    const removeMask = (prop, value) => {
-      if (prop === 'doc_number') {
-        if (value.split('').length > 14) {
-          return value.replace(/(\d{2}).(\d{3}).(\d{3})\/(\d{4})-(\d{2})/, '$1$2$3$4$5')
-        } else {
-          return value.replace(/(\d{3}).(\d{3}).(\d{3})-(\d{2})/, '$1$2$3$4')
+    callApi('stores/me.json', 'PATCH', callback, data)
+  })
+
+  window.handleInputs($form, ($input, isCheckbox) => {
+    let data = window.Store
+    let prop = $input.attr('name')
+    const nestedProps = prop.split('.')
+    const val = $input.data('digits') ? $input.val().replace(/\D/g, '') : $input.val()
+
+    if (nestedProps.length > 1) {
+      let i = 0
+      while (true) {
+        const nestedProp = nestedProps[i]
+        if (nestedProp !== '' && i > 0) {
+          data = data[nestedProps[i - 1]]
         }
-      } else if (prop === 'contact_phone') {
-        return value.replace('(', '').replace(')', '').replace('-', '').replace(/\s+/g, '')
-      } else {
-        return value
-      }
-    }
-    $cpf.find('#cpfDoc').inputmask('999.999.999-99')
-    $cnpj.find('#cnpjDoc').inputmask('99.999.999/9999-99')
-    $celphone.inputmask([
-      // array of phone number formats
-      '(99) 9999-9999',
-      '(99) 9 9999-9999',
-      // generic for international phone numbers
-      '99999[9{1,10}]'
-    ])
-    const set = (obj, path, val) => {
-      const keys = path.split('.')
-      let lastKey
-      if (keys.length > 1) {
-        lastKey = keys.pop()
-        const lastObj = keys.reduce((obj, key) => obj[key] = obj[key] || {}, obj)
-        lastObj[lastKey] = val
-      } else {
-        lastKey = keys
-        Object.assign(obj[keys] = val, obj)
-      }
-    }
-    $('.form-group').find('input,textarea').on('change', (event) => {
-      const prop = $(event.currentTarget).attr('name')
-      const value = removeMask(prop, $(event.currentTarget).val())
-      set(objInfo, prop, value)
-      $actionSave.show()
-    })
-    const infoPatch = () => {
-      // patch new store name
-      const callback = (err, body) => {
-        if (!err) {
-          app.toast(i18n({
-            en_us: 'Save with success',
-            pt_br: 'Salvo com sucesso'
-          }),
-          {
-            variant: 'success'
-          })
-          $actionSave.hide()
-        } else {
-          app.toast(i18n({
-            en_us: 'Nothing to save',
-            pt_br: 'Nada para salvar'
-          }))
+        if (i === nestedProps.length - 1) {
+          prop = nestedProp
+          break
         }
+        if (!data[nestedProp]) {
+          data[nestedProp] = {}
+        }
+        i++
       }
-      const data = objInfo
-      callApi('stores/me.json', 'PATCH', callback, data)
     }
 
-    $actionSave.click(() => {
-      infoPatch(objInfo)
-    })
+    if (data[prop] !== val) {
+      data[prop] = val
+      window.triggerUnsaved(tabId)
+    }
+  })
+
+  const setProductsFeedUri = () => {
+    setTimeout(() => {
+      const uri = 'https://storefront.e-com.plus/products-feed.xml' +
+        `?store_id=${storeId}&domain=${window.Store.domain}`
+      $form.find('#products-feed-uri').val(uri)
+    }, 300)
   }
-  setup()
+  $form.find('[name=domain]').change(setProductsFeedUri)
+  setProductsFeedUri()
 }

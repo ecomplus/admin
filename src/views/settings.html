@@ -1,346 +1,315 @@
-<header class="header pt-3" style="display: block;">
-  <div class="header-bar no-border row" id="settings-info">
-      <div class="header-bar no-border">
-        <h1>
-          <span data-lang="en_us" style="display: none">Configurations</span>
-          <span data-lang="pt_br"><strong>Configurações</strong></span>
-        </h1>
-        <span class="pagination-arrows">
-          <i data-id="pagination-prev" class="ti-arrow-left"></i>
-          <i data-id="pagination-next" class="ti-arrow-right"></i>
-        </span>
-        <span class="document-dates">
-          <i class="ti-calendar"></i><span data-id="created-at"></span>
-          <i class="ti-save"></i><span data-id="updated-at"></span>
-        </span>
-        <ol class="breadcrumb" id="breadcrumbs">
-          <li class="breadcrumb-item">
-            <a href="/#/">
-              <i class="fa fa-home"></i> Home
-            </a>
-          </li>
-          <li class="breadcrumb-item"><i class="fa fa-cog"></i> Configurações</li>
-      </div>
-  </div>
-</header>
+<div class="main-content">
+  <form id="settings-form" action="javascript:;" class="mb-30">
+    <input type="hidden" class="action-title">
 
-<div class="main-content" style="display: block;">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body">
-          <div data-id="config-info">
-            <div class="row">
-              <div class="col-lg-4 col-sm-6 col-12">
-                <div class="form-group">
-                  <label class="fw-500 i18n">
-                    <span data-lang="en_us">Store Name</span>
-                    <span data-lang="pt_br">Nome da loja</span>
-                  </label>
-                  <input type="tel" id="storeNameConfig" name="name" class="form-control" maxlength="255" placeholder="Loja Teste">
-                </div>
-              </div>
-              <div class="col-lg-8 col-sm-6 col-12">
-                <div class="form-group">
-                  <label class="i18n">
-                    <span data-lang="en_us">XML Google Shopping/Facebook</span>
-                    <span data-lang="pt_br">XML Google Shopping/Facebook</span>
-                  </label>
-                  <input type="tel" id="xml" name="xml" readonly="true" class="form-control" placeholder="Necessário configuração do domínio para funcionar">
-                  <div class="col-12">
-                    <span class="i18n">
-                      <small data-lang="en_us" class="form-text">If you have more than 500 products, contact us in to support</small>
-                      <small data-lang="pt_br" class="form-text">Caso tenha mais de 500 produtos, entre em contato com o suporte</small>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="i18n">
-                  <span data-lang="en_us">Financial email</span>
-                  <span data-lang="pt_br">E-mail financeiro</span>
-                </label>
-                <input type="email" class="form-control" name="financial_email" id="financialEmail"/>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group">
-                <label class="i18n">
-                  <span data-lang="en_us">Contact email</span>
-                  <span data-lang="pt_br">E-mail de contato</span>
-                </label>
-                <input type="email" class="form-control" name="contact_email" id="contactEmail"/>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="i18n">
-              <span data-lang="en_us">Corporate Name</span>
-              <span data-lang="pt_br">Nome Corporativo</span>
-            </label>
-            <input type="text" class="form-control" name="corporate_name" id="corpName" maxlength="255"/>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-content">
+    <div class="row">
+      <div class="col-xl-3 col-md-6 col-12">
+        <div class="card">
           <div class="card-body">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="form-group" id="docType">
-                  <label class="i18n">
-                    <span data-lang="en_us">Type of Register</span>
-                    <span data-lang="pt_br">Tipo de Registro</span>
-                  </label><br>
-                  <div class="custom-controls-stacked">
-                    <div class="custom-control custom-radio d-inline">
-                      <input type="radio" class="custom-control-input" id="docCPF" name="doc_type" value="CPF" />
-                      <label class="custom-control-label i18n pr-15">
-                        <span data-lang="en_us">Physical</span>
-                        <span data-lang="pt_br">Física</span>
-                      </label>
-                    </div>
-                    <div class="custom-control custom-radio d-inline">
-                      <input type="radio" class="custom-control-input" id="docCNPJ" name="doc_type" value="CNPJ" />
-                      <label class="custom-control-label i18n">
-                        <span data-lang="en_us">Juridical</span>
-                        <span data-lang="pt_br">Jurídica</span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group" >
-                  <label class="i18n">
-                    <span data-lang="en_us">Telephone Contact</span>
-                    <span data-lang="pt_br">Telefone de Contato</span>
-                  </label>
-                  <input type="tel" class="form-control" name="contact_phone" data-mask="tel" id="cel"/>
-                </div>
-              </div>
+            <div class="form-group">
+              <label class="i18n require">
+                <span data-lang="en_us">Store name</span>
+                <span data-lang="pt_br">Nome da loja</span>
+              </label>
+              <input type="text" name="name" class="form-control" maxlength="255"
+                placeholder="CoolShop" required />
             </div>
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="form-group" id="cpf">
+
+            <div class="form-group">
+              <label class="i18n require">
+                <span data-lang="en_us">Store domain</span>
+                <span data-lang="pt_br">Domínio da loja</span>
+              </label>
+              <input type="text" name="domain" class="form-control" minlength="4" maxlength="255"
+                pattern="[0-9a-z-.]+" required />
+            </div>
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Shop homepage</span>
+                <span data-lang="pt_br">Link da página inicial</span>
+              </label>
+              <input type="text" name="homepage" class="form-control" maxlength="255"
+                pattern="https?:\/\/[0-9a-z-.]+\/?.*">
+            </div>
+
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Contact email</span>
+                <span data-lang="pt_br">E-mail de contato</span>
+              </label>
+              <input type="email" name="contact_email" class="form-control">
+            </div>
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Contact phone</span>
+                <span data-lang="pt_br">Telefone de contato</span>
+              </label>
+              <input type="tel" name="contact_phone" class="form-control" data-mask="tel" data-digits="true">
+            </div>
+          </div>
+
+          <footer class="card-footer">
+            <p class="fs-16 my-2">
+              <samp>
+                <span class="opacity-60">Store ID</span>
+                <span id="settings-store-id">#</span>
+              </samp>
+            </p>
+          </footer>
+        </div>
+      </div>
+
+      <div class="col-xl-4 col-md-6 col-12">
+        <div class="card">
+          <header class="card-header">
+            <h4 class="card-title i18n">
+              <span data-lang="en_us">Brand colors</span>
+              <span data-lang="pt_br">Cores da marca</span>
+            </h4>
+            <ul class="card-controls">
+              <li>
+                <a class="card-btn-slide" href="#"></a>
+              </li>
+            </ul>
+          </header>
+
+          <div class="card-content">
+            <div class="card-body">
+              <div class="form-row">
+                <div class="col-lg-6">
+                  <div class="form-group">
                     <label class="i18n">
-                      <span data-lang="en_us">CPF</span>
-                      <span data-lang="pt_br">CPF</span>
+                      <span data-lang="en_us">Primary Color</span>
+                      <span data-lang="pt_br">Cor primária</span>
                     </label>
-                    <input type="tel" class="form-control" name="doc_number" id="cpfDoc"/>
+                    <div class="minicolors minicolors-theme-bootstrap">
+                      <input type="text" class="form-control minicolors-input"
+                        name="brand_colors.primary" data-control="wheel" size="7"
+                        data-provide="colorpicker" data-position="top left">
+                    </div>
+                  </div>
                 </div>
-                <div class="form-group" id="cnpj">
+                <div class="col-lg-6">
+                  <div class="form-group">
                     <label class="i18n">
-                      <span data-lang="en_us">CNPJ</span>
-                      <span data-lang="pt_br">CNPJ</span>
+                      <span data-lang="en_us">Secondary color</span>
+                      <span data-lang="pt_br">Cor secundária</span>
                     </label>
-                    <input type="tel" class="form-control" name="doc_number" id="cnpjDoc"/>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="form-group" id="inscType">
-                  <label class="i18n">
-                    <span data-lang="en_us">Type of Inscription</span>
-                    <span data-lang="pt_br">Tipo de Inscrição</span>
-                  </label><br>
-                  <div class="custom-controls-stacked">
-                    <div class="custom-control custom-radio d-inline">
-                      <input type="radio" class="custom-control-input" id="inscState" name="inscription_type" value="State" />
-                      <label class="custom-control-label i18n pr-15">
-                        <span data-lang="en_us">State</span>
-                        <span data-lang="pt_br">Estadual</span>
-                      </label>
-                    </div>
-                    <div class="custom-control custom-radio d-inline">
-                      <input type="radio" class="custom-control-input" id="inscMuni" name="inscription_type" value="Municipal" />
-                      <label class="custom-control-label i18n">
-                        <span data-lang="en_us">Municipal</span>
-                        <span data-lang="pt_br">Municipal</span>
-                      </label>
+                    <div class="minicolors minicolors-theme-bootstrap">
+                      <input type="text" class="form-control minicolors-input"
+                        name="brand_colors.secondary" data-control="wheel" size="7"
+                        data-provide="colorpicker" data-position="top left">
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-lg-6">
-                <div class="form-group" id="inscNumb">
-                    <label class="i18n">
-                      <span data-lang="en_us">Inscription Number</span>
-                      <span data-lang="pt_br">Número da Inscrição</span>
-                    </label>
-                    <input type="number" class="form-control" name="inscription_number" maxlength="50"/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card card-slided-up">
-        <header class="card-header">
-          <h6 class="card-title i18n">
-            <span data-lang="en_us">
-              Store Address
-            </span>
-            <span data-lang="pt_br">
-              Endereço da Loja
-            </span>
-          </h6>
-          <ul class="card-controls">
-            <li>
-              <a class="card-btn-slide i18n" href="#">
-                <span data-lang="en_us">Edit store address</span>
-                <span data-lang="pt_br">Editar endereço da loja</span>
-              </a>
-            </li>
-          </ul>
-        </header>
-        <div class="card-content">
-          <div class="card-body">
-            <div data-id="staff-notes">
-              <div class="form-group">
-                <label class="i18n">
-                  <span data-lang="en_us">*Address format: Street, number, neighboor, city, state, complement</span>
-                  <span data-lang="pt_br">*Endereço no formato: Rua, número, bairro, cidade, (UF), complemento</span>
-                </label>
-                <input type="text" class="form-control" name="address" id="address"/>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="card card-slided-up">
-        <header class="card-header">
-          <h6 class="card-title i18n">
-            <span data-lang="en_us">
-              Store description
-            </span>
-            <span data-lang="pt_br">
-              Descrição da loja
-            </span>
-          </h6>
-          <ul class="card-controls">
-            <li>
-              <a class="card-btn-slide i18n" href="#">
-                <span data-lang="en_us">Edit store description</span>
-                <span data-lang="pt_br">Editar descrição da loja</span>
-              </a>
-            </li>
-          </ul>
-        </header>
-        <div class="card-content">
-          <div class="card-body">
-            <div data-id="staff-notes">
-              <div class="form-group">
-                <label class="i18n" for="textarea">
-                  <span data-lang="en_us">Let some information about your store</span>
-                  <span data-lang="pt_br">Escreva uma descrição sobre sua loja</span>
-                </label>
-                <textarea class="form-control" maxlength="3000" name="description" rows="6" id="description"></textarea>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card">
-        <header class="card-header">
-          <h4 class="card-title i18n">
-            <span data-lang="pt_br">Configurações de cores</span>
-            <span data-lang="en_us">Colors settings</span>
-          </h4>
-          <ul class="card-controls">
-            <li>
-              <a class="card-btn-slide" href="#"></a>
-            </li>
-          </ul>
-        </header>
-        <div class="card-content">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label class="i18n">
-                    <span data-lang="en_us">First Color</span>
-                    <span data-lang="pt_br">Cor primária</span>
-                  </label>
-                  <div class="minicolors minicolors-theme-bootstrap minicolors-position-top minicolors-position-left">
-                    <input type="text" class="form-control minicolors-input" data-provide="colorpicker" name="brand_colors.primary" data-control="wheel" size="7" id="firstColor" data-position="top left">
-                    <span class="minicolors-swatch minicolors-sprite minicolors-input-swatch">
-                      <span class="minicolors-swatch-color"  id="swapFirst"></span>
-                    </span>
-                    <div class="minicolors-panel minicolors-slider-wheel">
-                      <div class="minicolors-slider minicolors-sprite" style="background-color: rgb(64, 255, 236);">
-                        <div class="minicolors-picker" style="top: 31.17647058823529px;"></div>
-                      </div>
-                      <div class="minicolors-opacity-slider minicolors-sprite">
-                        <div class="minicolors-picker"></div>
-                      </div>
-                      <div class="minicolors-grid minicolors-sprite">
-                        <div class="minicolors-grid-inner"></div>
-                        <div class="minicolors-picker" style="top: 69.0811924478375px; left: 131.69186641098054px;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label class="i18n">
-                    <span data-lang="en_us">Second Color</span>
-                    <span data-lang="pt_br">Cor secundária</span>
-                  </label>
-                  <div class="minicolors minicolors-theme-bootstrap minicolors-position-top minicolors-position-left">
-                    <input type="text" class="form-control minicolors-input" name="brand_colors.secondary" data-provide="colorpicker" data-control="wheel" size="7" id="secondColor" data-position="top left">
-                    <span class="minicolors-swatch minicolors-sprite minicolors-input-swatch">
-                      <span class="minicolors-swatch-color" id="swapSecond"></span>
-                    </span>
-                    <div class="minicolors-panel minicolors-slider-wheel">
-                      <div class="minicolors-slider minicolors-sprite" style="background-color: rgb(64, 255, 236);">
-                        <div class="minicolors-picker" style="top: 31.17647058823529px;"></div>
-                      </div>
-                      <div class="minicolors-opacity-slider minicolors-sprite">
-                        <div class="minicolors-picker"></div>
-                      </div>
-                      <div class="minicolors-grid minicolors-sprite">
-                        <div class="minicolors-grid-inner"></div>
-                        <div class="minicolors-picker" style="top: 69.0811924478375px; left: 131.69186641098054px;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-12">
+
+              <div class="callout callout-info" role="alert">
                 <span class="i18n">
-                  <small data-lang="en_us" class="form-text">It's colors for your brand</small>
-                  <small data-lang="pt_br" class="form-text">São cores da sua marca</small>
-                </span><br>
+                  <span data-lang="en_us" class="form-text">
+                    Colors used on storefront and email templates by default.
+                  </span>
+                  <span data-lang="pt_br" class="form-text">
+                    Cores usadas na frente de loja e templates de e-mail por padrão.
+                  </span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <header class="card-header">
+            <h4 class="card-title i18n">
+              <span data-lang="en_us">Full address</span>
+              <span data-lang="pt_br">Endereço completo</span>
+            </h4>
+            <ul class="card-controls">
+              <li>
+                <a class="card-btn-slide" href="#"></a>
+              </li>
+            </ul>
+          </header>
+
+          <div class="card-content">
+            <div class="card-body">
+              <div class="form-group">
+                <textarea class="form-control" maxlength="255" name="address" rows="2"></textarea>
                 <span class="i18n">
-                  <small data-lang="en_us" class="form-text">*Obs: normally used at email templates</small>
-                  <small data-lang="pt_br" class="form-text">*Obs: normalmente usado nos templates de e-mail</small>
+                  <small data-lang="en_us" class="form-text">
+                    Street, number, neighboor, city, state, complement
+                  </small>
+                  <small data-lang="pt_br" class="form-text">
+                    Rua, número, bairro, cidade, estado (UF), complemento
+                  </small>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <header class="card-header">
+            <h4 class="card-title i18n">
+              <span data-lang="en_us">Shop description</span>
+              <span data-lang="pt_br">Descrição da loja</span>
+            </h4>
+            <ul class="card-controls">
+              <li>
+                <a class="card-btn-slide" href="#"></a>
+              </li>
+            </ul>
+          </header>
+
+          <div class="card-content">
+            <div class="card-body">
+              <div class="form-group">
+                <textarea class="form-control" maxlength="3000" name="description" rows="6"></textarea>
+                <span class="i18n">
+                  <small data-lang="en_us" class="form-text">
+                    Short description about your store and company
+                  </small>
+                  <small data-lang="pt_br" class="form-text">
+                    Descrição curta sobre sua loja e empresa
+                  </small>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xl-5 col-12">
+        <div class="card card-slided-up">
+          <header class="card-header">
+            <h6 class="card-title i18n">
+              <span data-lang="en_us">Financial</span>
+              <span data-lang="pt_br">Financeiro</span>
+            </h6>
+            <ul class="card-controls">
+              <li>
+                <a class="card-btn-slide i18n" href="#">
+                  <span data-lang="en_us">Edit corporate info</span>
+                  <span data-lang="pt_br">Editar informações da empresa</span>
+                </a>
+              </li>
+            </ul>
+          </header>
+
+          <div class="card-content">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="i18n">
+                      <span data-lang="en_us">Type of Register</span>
+                      <span data-lang="pt_br">Tipo de Registro</span>
+                    </label>
+                    <div class="custom-controls-stacked">
+                      <div class="custom-control custom-radio d-inline">
+                        <input type="radio" class="custom-control-input" name="doc_type" value="CPF">
+                        <label class="custom-control-label i18n pr-15">
+                          <span data-lang="en_us">Physical</span>
+                          <span data-lang="pt_br">Física</span>
+                        </label>
+                      </div>
+                      <div class="custom-control custom-radio d-inline">
+                        <input type="radio" class="custom-control-input" name="doc_type" value="CNPJ">
+                        <label class="custom-control-label i18n">
+                          <span data-lang="en_us">Juridical</span>
+                          <span data-lang="pt_br">Jurídica</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="require">
+                      <span data-doc-type="CPF">CPF</span>
+                      <span style="display: none" data-doc-type="CNPJ">CNPJ</span>
+                    </label>
+                    <input type="tel" class="form-control" name="doc_number" data-digits="true" required />
+                  </div>
+                  <div style="display: none" data-doc-type="CNPJ">
+                    <div class="form-group">
+                      <label class="i18n">
+                        <span data-lang="en_us">Inscription type</span>
+                        <span data-lang="pt_br">Tipo de inscrição</span>
+                      </label>
+                      <div class="custom-controls-stacked">
+                        <div class="custom-control custom-radio d-inline">
+                          <input type="radio" class="custom-control-input" name="inscription_type" value="State">
+                          <label class="custom-control-label i18n pr-15">
+                            <span data-lang="en_us">State</span>
+                            <span data-lang="pt_br">Estadual</span>
+                          </label>
+                        </div>
+                        <div class="custom-control custom-radio d-inline">
+                          <input type="radio" class="custom-control-input" name="inscription_type" value="Municipal">
+                          <label class="custom-control-label">Municipal</label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="i18n">
+                        <span data-lang="en_us">Inscription number</span>
+                        <span data-lang="pt_br">Número de inscrição</span>
+                      </label>
+                      <input type="tel" class="form-control" name="inscription_number" maxlength="50">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="i18n require">
+                      <span data-lang="en_us">Financial email</span>
+                      <span data-lang="pt_br">E-mail financeiro</span>
+                    </label>
+                    <input type="email" class="form-control" name="financial_email" required />
+                  </div>
+                  <div class="form-group">
+                    <label class="i18n require">
+                      <span data-lang="en_us">Corporate name</span>
+                      <span data-lang="pt_br">
+                        <span data-doc-type="CPF">Nome completo</span>
+                        <span style="display: none" data-doc-type="CNPJ">Razão social</span>
+                      </span>
+                    </label>
+                    <input type="text" class="form-control" name="corporate_name" maxlength="255" required />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <header class="card-header">
+            <h4 class="card-title i18n">
+              <span data-lang="en_us">Products feed</span>
+              <span data-lang="pt_br">Feed de produtos</span>
+            </h4>
+            <ul class="card-controls">
+              <li>
+                <a class="card-btn-slide" href="#"></a>
+              </li>
+            </ul>
+          </header>
+
+          <div class="card-content">
+            <div class="card-body">
+              <div class="form-group">
+                <label>XML Google Shopping / Facebook</label>
+                <input id="products-feed-uri" type="text" class="form-control"
+                  placeholder="Necessário configurar o domínio primeiro" readonly />
+                <span class="i18n">
+                  <small data-lang="en_us">
+                    If you have more than 500 products, contact us in to support
+                  </small>
+                  <small data-lang="pt_br">
+                    Caso tenha mais de 500 produtos, entre em contato com o suporte
+                  </small>
                 </span>
               </div>
             </div>
@@ -348,50 +317,12 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="card">
-        <header class="card-header">
-          <h4 class="card-title i18n">
-            <span data-lang="pt_br">Configuração de domínio</span>
-            <span data-lang="en_us">Domain settings</span>
-          </h4>
-          <ul class="card-controls">
-            <li>
-              <a class="card-btn-slide" href="#"></a>
-            </li>
-          </ul>
-        </header>
-        <div class="card-content">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label class="i18n">
-                    <span data-lang="en_us">Shop URL</span>
-                    <span data-lang="pt_br">URL da loja</span>
-                  </label>
-                  <input type="text" class="form-control" name="homepage" id="urlHomepage" maxlength="255"/>
-                </div>
-              </div>
-              <div class="col-lg-6">
-                <div class="form-group">
-                  <label class="i18n">
-                    <span data-lang="en_us">Domain URL</span>
-                    <span data-lang="pt_br">Domínio da loja</span>
-                  </label>
-                  <input type="text" class="form-control" name="domain" id="domain" maxlength="255"/>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+
+    <div class="bt-1 pt-20">
+      <button class="btn btn-success i18n mr-10">
+        <span data-lang="en_us">Save settings</span>
+        <span data-lang="pt_br">Salvar configurações</span>
+      </button>
     </div>
-  </div>
-  <div class="bt-1 pt-20">
-    <button class="btn btn-success i18n mr-10" id="actionSave" style="display: none">
-      <span data-lang="en_us">Save</span>
-      <span data-lang="pt_br">Salvar</span>
-    </button>
-  </div>
+  </form>
 </div>
