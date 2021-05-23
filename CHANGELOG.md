@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.20](https://github.com/ecomplus/admin/compare/v1.0.0-beta.19...v1.0.0-beta.20) (2021-05-23)
+
+
+### Features
+
+* **inputs-handler:** dynamicly render char count on inputs with specified maxlength ([#311](https://github.com/ecomplus/admin/issues/311)) ([1f216a4](https://github.com/ecomplus/admin/commit/1f216a4bf111a0e9c49a96ccba19de8317c60dde))
+* **products-form:** add `notes` textarea field ([#378](https://github.com/ecomplus/admin/issues/378)) ([0d6e4ef](https://github.com/ecomplus/admin/commit/0d6e4efb300bf8605b30264436a026c866f7d3c3))
+
+
+### Bug Fixes
+
+* **products-form:** fix handling new grid options when some combinations are disabled ([#360](https://github.com/ecomplus/admin/issues/360)) ([1decc1b](https://github.com/ecomplus/admin/commit/1decc1bc1122392d570fc62d038e7b4c53c526bd))
+* **products-form:** limit spec/customization grid id string size ([#383](https://github.com/ecomplus/admin/issues/383)) ([475e308](https://github.com/ecomplus/admin/commit/475e308b55f90c98bb352baa52b2c330ca0b1e72))
+* **resource-lists:** fix retrieving sort order and reset on force reload (after edit) ([2e19488](https://github.com/ecomplus/admin/commit/2e19488277a44642a1228c34a5210ff533c4bc19))
+
 ## [1.0.0-beta.19](https://github.com/ecomplus/admin/compare/v1.0.0-beta.18...v1.0.0-beta.19) (2021-05-21)
 
 
