@@ -544,18 +544,20 @@ const { $ } = window
       if ($formGroup.find('input,textarea').length === 1) {
         const counterHtml = `<samp class="text-dark">${$(this).val().length}</samp> / ` +
           `<samp>${$(this).attr('maxlength')}</samp>`
-        const $counter = $formGroup.find('[data-counter]')
+        let $counter = $formGroup.find('[data-counter]')
         if (!$counter.length) {
-          $formGroup
-            .css('position', 'relative')
-            .append($('<div>', {
-              'data-counter': true,
-              class: 'position-absolute fs-10 text-muted',
-              style: 'bottom: -20px; right: 4px',
-              html: counterHtml
-            }))
+          $counter = $('<div>', {
+            'data-counter': true,
+            class: 'position-absolute fs-11 text-muted',
+            style: 'bottom: -21px; right: 4px',
+            html: counterHtml
+          })
+          $formGroup.css('position', 'relative').append($counter)
+          $(this).blur(function () {
+            $counter.hide()
+          })
         } else {
-          $counter.html(counterHtml)
+          $counter.html(counterHtml).show()
         }
       }
     })
