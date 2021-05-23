@@ -539,6 +539,29 @@ const { $ } = window
       }
     })
 
+    $form.find('input[maxlength],textarea[maxlength]').keyup(function () {
+      const $formGroup = $(this).closest('.form-group')
+      if ($formGroup.find('input,textarea').length === 1) {
+        const counterHtml = `<samp class="text-dark">${$(this).val().length}</samp> / ` +
+          `<samp>${$(this).attr('maxlength')}</samp>`
+        let $counter = $formGroup.find('[data-counter]')
+        if (!$counter.length) {
+          $counter = $('<div>', {
+            'data-counter': true,
+            class: 'position-absolute fs-11 text-muted',
+            style: 'bottom: -21px; right: 4px',
+            html: counterHtml
+          })
+          $formGroup.css('position', 'relative').append($counter)
+          $(this).blur(function () {
+            $counter.hide()
+          })
+        } else {
+          $counter.html(counterHtml).show()
+        }
+      }
+    })
+
     $form.find('input[type="tel"],input[type="number"]').change(function () {
       if ($(this).data('numeric-string')) {
         $(this).data('value', $(this).val().replace(/\D/g, ''))

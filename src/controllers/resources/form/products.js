@@ -320,7 +320,7 @@ export default function () {
       }
     }
 
-    var fixGridId = function (gridId) {
+    const fixGridId = function (gridId) {
       // try to match with defined grids titles
       var matched
       for (var id in Grids) {
@@ -403,7 +403,6 @@ export default function () {
 
       // listen update event to update saved grids and regenerate variations
       onUpdate: function (e) {
-        // console.log(e)
         // move array elements
         // object to array, then mount object reordered again
         var gridsArray = Object.keys(gridsOptions)
@@ -491,7 +490,6 @@ export default function () {
           if (oldGridId !== gridId) {
             // update options for autocomplete
             options = optionsTitles(gridId)
-            // console.log(gridId, options)
             if (options.length) {
               $inputOption.attr('placeholder', options[0])
             }
@@ -736,7 +734,6 @@ export default function () {
           // https://github.com/RubaXa/Sortable
           Sortable.create($li.find('.badges-list')[0], {
             onUpdate: function (e) {
-              // console.log(e)
               // move array elements
               var options = gridsOptions[gridId]
               var x = options.splice(e.oldIndex, 1)[0]
@@ -891,7 +888,7 @@ export default function () {
 
       if (newOption && !skipOption) {
         // grid option(s) added
-        generateVariations()
+        setTimeout(generateVariations, 100)
       }
     }
 
@@ -921,11 +918,12 @@ export default function () {
                       '</div>'
 
     // on checkbox change event
-    var liVariationControl = function ($li, $edit) {
+    const uncheckedVariations = []
+    const liVariationControl = function ($li, $edit) {
       return function () {
         // add or remove variation from data
-        var data = Data()
-        var skipData
+        const data = Data()
+        let skipData
         if ($(this).data('skip-data')) {
           // don't make changes
           skipData = true
@@ -933,7 +931,8 @@ export default function () {
           $(this).removeData('skip-data')
         }
         // variation index
-        var index
+        let index
+        const strValue = $(this).data('value')
 
         if (!$(this).is(':checked')) {
           if (!skipData) {
@@ -955,6 +954,9 @@ export default function () {
           // disable edition
           $li.addClass('disabled')
           $edit.attr('disabled', true)
+          if (!uncheckedVariations.includes(strValue)) {
+            uncheckedVariations.push(strValue)
+          }
         } else {
           // remove disabled class first
           // li most be enabled to get correct index
@@ -962,7 +964,7 @@ export default function () {
           if (!skipData) {
             index = variationIndexFromList($li)
             // add variation again
-            var variation = JSON.parse($(this).data('variation'))
+            const variation = JSON.parse($(this).data('variation'))
             if (data.variations) {
               data.variations.splice(index, 0, variation)
             } else {
@@ -973,6 +975,10 @@ export default function () {
 
           // enable edit button again
           $edit.removeAttr('disabled')
+          const uncheckedListIndex = uncheckedVariations.indexOf(strValue)
+          if (uncheckedListIndex > -1) {
+            uncheckedVariations.splice(uncheckedListIndex, 1)
+          }
         }
 
         if (!skipData) {
@@ -990,7 +996,12 @@ export default function () {
       }
     }
 
-    var generateVariations = function (skipData) {
+    let isResetingVariations = false
+    const generateVariations = function (skipData) {
+      if (isResetingVariations) {
+        return
+      }
+      isResetingVariations = true
       // remove empty grids
       var GridsOptions = {}
       var gridId
@@ -1015,7 +1026,7 @@ export default function () {
 
         // create new options matches
         var combinations = getCombinations(GridsOptions)
-        // console.log(variations)
+        const $disableCheckboxes = []
         if (combinations.length > 0) {
           var variationsData = []
           for (i = 0; i < combinations.length; i++) {
@@ -1068,6 +1079,9 @@ export default function () {
             // handle checkbox to add or remove variation
             var $checkbox = $li.find('input[type="checkbox"]')
               .data('value', strValue).change(liVariationControl($li, $edit))
+            if (uncheckedVariations.includes(strValue)) {
+              $disableCheckboxes.push($checkbox)
+            }
             $listVariations.append($li)
             // show added list element
             $li.slideDown()
@@ -1109,13 +1123,16 @@ export default function () {
                       matches++
                     } else {
                       // specification changed
-                      // should to create new variation
+                      // should create new variation
                       matches = 0
                       break
                     }
                   }
                 }
 
+                if (!matches && Object.keys(specifications).length === Object.keys(specs).length) {
+                  continue
+                }
                 if (!(matches < bestMatchedVariation.matches)) {
                   if (matches === bestMatchedVariation.matches) {
                     // prefer same or lowest index
@@ -1222,10 +1239,12 @@ export default function () {
 
         // show list again
         $(this).slideDown()
+        $disableCheckboxes.forEach($checkbox => $checkbox.next().click())
         if (!skipData) {
           // commit only to perform reactive actions
           commit(data, true)
         }
+        isResetingVariations = false
       })
     }
 
@@ -1739,7 +1758,7 @@ export default function () {
         // clear spec input
         $inputSpec.typeahead('val', '')
         // generate new grid ID
-        const originalGridId = normalizeString(spec)
+        const originalGridId = normalizeString(spec).substring(0, 30)
         const gridId = fixGridId(originalGridId)
         const grid = Grids[gridId]
         if (grid) {
