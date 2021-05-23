@@ -320,7 +320,7 @@ export default function () {
       }
     }
 
-    var fixGridId = function (gridId) {
+    const fixGridId = function (gridId) {
       // try to match with defined grids titles
       var matched
       for (var id in Grids) {
@@ -1758,7 +1758,7 @@ export default function () {
         // clear spec input
         $inputSpec.typeahead('val', '')
         // generate new grid ID
-        const originalGridId = normalizeString(spec)
+        const originalGridId = normalizeString(spec).substring(0, 30)
         const gridId = fixGridId(originalGridId)
         const grid = Grids[gridId]
         if (grid) {
