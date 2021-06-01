@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.21](https://github.com/ecomplus/admin/compare/v1.0.0-beta.20...v1.0.0-beta.21) (2021-06-01)
+
+
+### Bug Fixes
+
+* **products-form:** limit variations names to 100 maxlength when automatically generating ([#390](https://github.com/ecomplus/admin/issues/390)) ([0cc0ec0](https://github.com/ecomplus/admin/commit/0cc0ec024e8549c0c16051eac28342adcc94a5f5))
+
 ## [1.0.0-beta.20](https://github.com/ecomplus/admin/compare/v1.0.0-beta.19...v1.0.0-beta.20) (2021-05-23)
 
 
