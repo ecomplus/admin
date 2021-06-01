@@ -1036,14 +1036,19 @@ export default function () {
             // variation name
             // regex to test variations names
             // check if variation name was generated automatically by pattern
-            var nameRegex = new RegExp('^' + Name.replace(/([^\w\s])/ig, '\\$1') + '(\\s\\/\\s.*)$')
-            var name = Name
+            const baseName = Name.length > 80
+              ? Name.substring(0, 77) + '...'
+              : Name
+            var nameRegex = new RegExp('^' + baseName.replace(/([^\w\s])/ig, '\\$1') + '(\\s\\/\\s.*)?$')
+            var name = baseName
             var strValue = ''
             var specifications = {}
             for (gridId in combination) {
               if (combination[gridId]) {
                 var option = combination[gridId].text
-                name += ' / ' + option
+                if (`${name} / ${option}`.length <= 100) {
+                  name += ' / ' + option
+                }
                 label += '<span>' + option + '</span>'
 
                 // data specifications
