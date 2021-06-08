@@ -298,6 +298,18 @@ export default function () {
               var title
               if (Grids[gridId] && Grids[gridId].title) {
                 title = Grids[gridId].title
+                if (gridId === 'colors') {
+                  switch (title) {
+                    case 'Cor primária':
+                    case 'Cor secundária':
+                      title = 'Cores'
+                      break
+                    case 'Primary color':
+                    case 'Secondary color':
+                      title = 'Colors'
+                      break
+                  }
+                }
               } else if (specsTitlesObject[gridId]) {
                 title = specsTitlesObject[gridId]
               } else {
