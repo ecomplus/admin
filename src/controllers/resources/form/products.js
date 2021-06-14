@@ -298,6 +298,18 @@ export default function () {
               var title
               if (Grids[gridId] && Grids[gridId].title) {
                 title = Grids[gridId].title
+                if (gridId === 'colors') {
+                  switch (title) {
+                    case 'Cor primária':
+                    case 'Cor secundária':
+                      title = 'Cores'
+                      break
+                    case 'Primary color':
+                    case 'Secondary color':
+                      title = 'Colors'
+                      break
+                  }
+                }
               } else if (specsTitlesObject[gridId]) {
                 title = specsTitlesObject[gridId]
               } else {
@@ -1275,16 +1287,19 @@ export default function () {
       generateVariations()
     }
 
-    var updateVariations = function (prop) {
+    const updateVariations = function (prop) {
       // update variations properties
-      var data = Data()
+      const data = Data()
       // use empty string when undefined or null
-      var newValue = data[prop] || ''
-      var variations = data.variations
+      let newValue = data[prop] || ''
+      const variations = data.variations
       // local (backup) variable
-      var oldValue
+      let oldValue
       if (prop === 'name') {
-        oldValue = Name
+        oldValue = Name.length > 80 ? Name.substring(0, 77) : Name
+        if (newValue.length > 80) {
+          newValue = newValue.substring(0, 77) + '...'
+        }
       } else {
         oldValue = Sku
       }
@@ -1292,11 +1307,11 @@ export default function () {
       if (variations) {
         // regex pattern for random variations
         // check if variation property starts with respective product property
-        var regex = new RegExp('^' + oldValue)
-        for (var i = 0; i < variations.length; i++) {
-          var variation = variations[i]
+        const regex = new RegExp('^' + oldValue + '(\\.{3})?')
+        for (let i = 0; i < variations.length; i++) {
+          const variation = variations[i]
           if (typeof variation[prop] === 'string') {
-            variation[prop] = variation[prop].replace(regex, newValue)
+            variation[prop] = variation[prop].replace(regex, newValue).substring(0, 100)
           }
         }
         // commit only to perform reactive actions

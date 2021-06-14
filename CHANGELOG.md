@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.22](https://github.com/ecomplus/admin/compare/v1.0.0-beta.21...v1.0.0-beta.22) (2021-06-14)
+
+
+### Features
+
+* **deps:** update @ecomplus/admin-marketplace to v1.1.0 ([d070b4c](https://github.com/ecomplus/admin/commit/d070b4c9220b7cad8ff82b404561bd3bdafdc673))
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#393](https://github.com/ecomplus/admin/issues/393)) ([a7f55ce](https://github.com/ecomplus/admin/commit/a7f55cec306ba751b7aa9a6982ff0481b7a29445))
+* **product-form:** better default title for colors grid when used ([82ee149](https://github.com/ecomplus/admin/commit/82ee14924969f78d2f2f82ab3faf4784432b7a90))
+* **products-form:** check max length to replace product name on variations names ([#392](https://github.com/ecomplus/admin/issues/392)) ([dfea0d6](https://github.com/ecomplus/admin/commit/dfea0d6982e6737bbad487a56e1d083b8d3237f9))
+
 ## [1.0.0-beta.21](https://github.com/ecomplus/admin/compare/v1.0.0-beta.20...v1.0.0-beta.21) (2021-06-01)
 
 
