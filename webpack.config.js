@@ -166,7 +166,7 @@ const config = {
             presets: [
               ['@babel/preset-env', {
                 useBuiltIns: 'usage',
-                corejs: '3.13',
+                corejs: '3.15',
                 modules: false
               }]
             ],
