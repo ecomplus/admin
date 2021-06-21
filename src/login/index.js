@@ -221,6 +221,10 @@ const initDashboard = (storeId, username, session) => {
 
 const urlParams = new URLSearchParams(window.location.search)
 const getAuthState = name => (urlParams.get(name) || localStorage.getItem(name))
+const goTo = urlParams.get('go_to')
+if (goTo) {
+  sessionStorage.setItem('go_to', goTo)
+}
 
 let canRememberSession
 const setStorageItem = (label, value) => {

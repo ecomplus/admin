@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.23](https://github.com/ecomplus/admin/compare/v1.0.0-beta.22...v1.0.0-beta.23) (2021-06-21)
+
+
+### Features
+
+* **login:** optionally get initial route from `go_to` url param ([c3eb087](https://github.com/ecomplus/admin/commit/c3eb087981ca9e34b96ea0d2ed5ea8aaf2372c80))
+
+
+### Bug Fixes
+
+* **recorevy-route:** better handling `go_to` session item ([4c9a481](https://github.com/ecomplus/admin/commit/4c9a481b55ba3becf556120d8f41c833a8172ad1))
+
 ## [1.0.0-beta.22](https://github.com/ecomplus/admin/compare/v1.0.0-beta.21...v1.0.0-beta.22) (2021-06-14)
 
 

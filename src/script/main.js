@@ -53,7 +53,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
   const storeId = $ecomConfig.get('store_id')
   if (!session.my_id || !session.access_token) {
     // redirect to login
-    sessionStorage.setItem('go_to', window.location.href)
+    sessionStorage.setItem('go_to', window.location.hash.slice(1))
     window.location.reload()
     // force stop
     return
