@@ -4,6 +4,7 @@ const { sessionStorage, localStorage, $ } = window
 
 let goTo = sessionStorage.getItem('go_to')
 if (goTo) {
+  window.location = `/#${goTo}`
   sessionStorage.removeItem('go_to')
 } else {
   goTo = '/'

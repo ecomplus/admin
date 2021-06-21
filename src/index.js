@@ -10,7 +10,10 @@ import './lib/forms/selectpicker'
 const { sessionStorage, app } = window
 
 app.ready(() => {
-  sessionStorage.setItem('go_to', window.location.href)
+  const { pathname } = window.location
+  if (pathname !== '/' && pathname.indexOf('/login/') === -1 && !sessionStorage.getItem('go_to')) {
+    sessionStorage.setItem('go_to', pathname)
+  }
   if (
     !session.my_id ||
     !session.access_token ||
