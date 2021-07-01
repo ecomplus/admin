@@ -41,20 +41,26 @@ export default () => {
   })
 
   window.setSaveAction($form, cb => {
-    const data = Object.assign({}, window.Store)
-    delete data.$main
-    delete data._id
-    delete data.store_id
-    delete data.created_at
-    delete data.updated_at
-    delete data.resources
+    const isFormValid = typeof $form[0].reportValidity === 'function'
+      ? $form[0].reportValidity()
+      : $form[0].checkValidity()
 
-    const callback = () => {
-      if (typeof cb === 'function') {
-        cb(tabId)
+    if (isFormValid) {
+      const data = Object.assign({}, window.Store)
+      delete data.$main
+      delete data._id
+      delete data.store_id
+      delete data.created_at
+      delete data.updated_at
+      delete data.resources
+
+      const callback = () => {
+        if (typeof cb === 'function') {
+          cb(tabId)
+        }
       }
+      callApi('stores/me.json', 'PATCH', callback, data)
     }
-    callApi('stores/me.json', 'PATCH', callback, data)
   })
 
   window.handleInputs($form, ($input, isCheckbox) => {
