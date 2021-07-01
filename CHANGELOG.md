@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.26](https://github.com/ecomplus/admin/compare/v1.0.0-beta.25...v1.0.0-beta.26) (2021-07-01)
+
+
+### Bug Fixes
+
+* **settings:** checking settings form fields with `reportValidity` ([5a9c553](https://github.com/ecomplus/admin/commit/5a9c5531eb5bfede3873fa7bb99540a98f9588f4))
+
 ## [1.0.0-beta.25](https://github.com/ecomplus/admin/compare/v1.0.0-beta.24...v1.0.0-beta.25) (2021-06-30)
 
 ## [1.0.0-beta.24](https://github.com/ecomplus/admin/compare/v1.0.0-beta.23...v1.0.0-beta.24) (2021-06-28)
