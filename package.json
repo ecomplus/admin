@@ -62,7 +62,7 @@
     "@ecomplus/auth": "^1.0.1",
     "@ecomplus/client": "^2.2.1",
     "@ecomplus/i18n": "^1.22.0",
-    "@ecomplus/storefront-twbs": "^5.10.4",
+    "@ecomplus/storefront-twbs": "^5.11.0",
     "@ecomplus/utils": "^1.4.1",
     "blueimp-md5": "^2.18.0",
     "bootstrap": "^4.6.0",
@@ -71,7 +71,7 @@
     "inputmask": "^4.0.9",
     "jquery-maskmoney": "^3.0.2",
     "papaparse": "^5.3.1",
-    "sortablejs": "^1.13.0",
+    "sortablejs": "^1.14.0",
     "vue": "^2.6.14"
   },
   "husky": {
