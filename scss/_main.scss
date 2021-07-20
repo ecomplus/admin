@@ -11,7 +11,7 @@ $color-purple-lighter: lighten($purple, 35%);
 @import "components/print";
 @import "components/utils";
 
-@media (min-width: 2000px) {
+@media (min-width: 2250px) {
   .main-container {
     max-width: 1950px;
     margin: 0 auto !important;
