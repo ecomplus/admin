@@ -153,7 +153,6 @@ export default function () {
     $(`#t${tabId}-loading`).hide()
   }
   $exportInventory.click(() => {
-    let exportInventory = datatable.rows().data()
-    downloadCsv(exportInventory)
+    downloadCsv(datatable.rows().data())
   })
 }
