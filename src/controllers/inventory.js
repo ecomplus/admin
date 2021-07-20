@@ -136,7 +136,7 @@ export default function () {
   
   const $exportInventory = $('#export-inventory')
   const downloadCsv = exportData => {
-    const columns = [`${i18n(i19sku)}`, `${i18n(i19name)}`, `${i18n(i19price)}`, `${i18n(i19unitsInStock)}`]
+    const columns = [i18n(i19sku), i18n(i19name), i18n(i19price), i18n(i19unitsInStock), i18n(i19sales)]
     const csv = Papa.unparse({
       data: exportData,
       fields: columns
