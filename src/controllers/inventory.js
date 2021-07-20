@@ -10,12 +10,7 @@ export default function () {
   let from = 0
   const datatableOptions = {
     pageLength: size,
-    bLengthChange: false,
-    dom: 'Bfrtip',
-    buttons: [
-      'csv', 
-      'excel'
-    ]
+    bLengthChange: false
   }
   if ($ecomConfig.get('lang') === 'pt_br') {
     datatableOptions.language = {
