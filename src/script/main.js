@@ -1237,7 +1237,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                           '</a>' +
                         '</li>' +
                         '<li class="menu-item">' +
-                          '<a target="_blank" class="menu-link" href="https://community.e-com.plus/new-message?username=suporte&title=Assunto%20do%20ticket&body=Pergunta%20do%20ticket">' +
+                          '<a target="_blank" class="menu-link" href="https://community.e-com.plus/new-message?username=matheus&title=Assunto%20do%20ticket&body=Pergunta%20do%20ticket">' +
                             '<span class="icon fa fa-inbox"></span>' +
                             '<span class="title"> Abrir Ticket' +
                             '</span>' +
