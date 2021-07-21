@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.27](https://github.com/ecomplus/admin/compare/v1.0.0-beta.26...v1.0.0-beta.27) (2021-07-20)
+
+
+### Features
+
+* **deps:** update @ecomplus/admin-marketplace to v1.2.0 ([85dad91](https://github.com/ecomplus/admin/commit/85dad91c7f4b7a8105a82da46811974ec6beb575))
+* **inventory:** export inventory to csv with papaparse ([#412](https://github.com/ecomplus/admin/issues/412)) ([763501a](https://github.com/ecomplus/admin/commit/763501a83e82e76ca4483b6a04dce356dbf52ded))
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([07a4064](https://github.com/ecomplus/admin/commit/07a40647c3c165266728474be81d85a5bda34b98))
+* **scss:** minor fix for main container xlg responsiveness ([a5d7a4d](https://github.com/ecomplus/admin/commit/a5d7a4da16df754c808ddd8e572d668917e462e5))
+
 ## [1.0.0-beta.26](https://github.com/ecomplus/admin/compare/v1.0.0-beta.25...v1.0.0-beta.26) (2021-07-01)
 
 

@@ -1,9 +1,10 @@
-import { i19loading, i19loadMore } from '@ecomplus/i18n'
+import { i19loading, i19loadMore, i19sku, i19name, i19price, i19unitsInStock, i19sales } from '@ecomplus/i18n'
 import { $ecomConfig, i18n, price as getPrice } from '@ecomplus/utils'
+import Papa from 'papaparse'
 import ecomClient from '@ecomplus/client'
 
 export default function () {
-  const { $, app, callApi } = window
+  const { $, app, callApi, tabId } = window
 
   const size = 20
   let from = 0
@@ -132,4 +133,26 @@ export default function () {
       })
   }
   loadMore()
+  const $exportInventory = $('#export-inventory')
+  const downloadCsv = exportData => {
+    const columns = [i18n(i19sku), i18n(i19name), i18n(i19price), i18n(i19unitsInStock), i18n(i19sales)]
+    const csv = Papa.unparse({
+      data: exportData,
+      fields: columns
+    })
+    const csvData = new window.Blob([csv], {
+      type: 'text/csv;charset=utf-8;'
+    })
+    const csvURL = navigator.msSaveBlob
+      ? navigator.msSaveBlob(csvData, 'download.csv')
+      : window.URL.createObjectURL(csvData)
+    const $link = document.createElement('a')
+    $link.href = csvURL
+    $link.setAttribute('download', 'export-inventory.csv')
+    $link.click()
+    $(`#t${tabId}-loading`).hide()
+  }
+  $exportInventory.click(() => {
+    downloadCsv(datatable.rows().data())
+  })
 }
