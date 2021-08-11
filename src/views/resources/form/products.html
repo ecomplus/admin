@@ -453,8 +453,8 @@
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
-            <span data-lang="en_us">Product images</span>
-            <span data-lang="pt_br">Imagens do produto</span>
+            <span data-lang="en_us">Product gallery</span>
+            <span data-lang="pt_br">Galeria do produto</span>
           </h4>
           <ul class="card-controls">
             <li>
@@ -465,7 +465,16 @@
 
         <div class="card-content">
           <div class="card-body">
-            <input type="file" name="pictures" multiple data-thumbnails="true" />
+            <div class="form-group">
+              <input type="file" name="pictures" multiple data-thumbnails="true" />
+            </div>
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Video</span>
+                <span data-lang="pt_br">Vídeo</span>
+              </label>
+              <input type="url" class="form-control" name="videos[].0.url" maxlength="255" placeholder="https://youtu.be/id">
+            </div>
           </div>
         </div>
       </div>
