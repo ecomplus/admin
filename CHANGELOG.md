@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.28](https://github.com/ecomplus/admin/compare/v1.0.0-beta.27...v1.0.0-beta.28) (2021-08-11)
+
+
+### Features
+
+* **products-form:** add video url input ([757bb47](https://github.com/ecomplus/admin/commit/757bb47c37aa0e05f3fb4d7d33e2f7114a69e5f2))
+
+
+### Bug Fixes
+
+* **resource-forms:** double check slug field even with name not set ([91efae6](https://github.com/ecomplus/admin/commit/91efae6757cd4692eed6051f766fb180d0061d98))
+
 ## [1.0.0-beta.27](https://github.com/ecomplus/admin/compare/v1.0.0-beta.26...v1.0.0-beta.27) (2021-07-20)
 
 
