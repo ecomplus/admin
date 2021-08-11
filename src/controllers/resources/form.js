@@ -725,10 +725,12 @@ export default function () {
                 method = 'POST'
 
                 // try to auto fill important fields when undefined
-                if (data.name && !data.slug && hasSlug) {
+                if (hasSlug && (!data.slug || !data.slug.trim().length)) {
                   // generate slug from name
                   // prepare string and remove illegal characters
-                  data.slug = clearAccents(data.name.toLowerCase(), '-').replace(/[^a-z0-9-_./]/g, '')
+                  data.slug = data.name
+                    ? clearAccents(data.name.toLowerCase(), '-').replace(/[^a-z0-9-_./]/g, '')
+                    : String(parseInt(Math.random() * 1000000))
                 }
                 /*
                   Do not copy name and short description (prevent outdating)
