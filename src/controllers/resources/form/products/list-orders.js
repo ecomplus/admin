@@ -4,11 +4,13 @@ const { $, callApi } = window
 
 export default function (tabId) {
   const listProductOrders = () => {
-    const { resourceId } = window.Tabs[tabId]
+    const { resourceId, data } = window.Tabs[tabId]
+    const isKit = data.kit_composition && data.kit_composition.length
+    const itemsQuery = `items.${(isKit ? 'kit_product._id' : 'product_id')}=${resourceId}`
 
     callApi(
-      `orders.json?items.product_id=${resourceId}&status!=cancelled` +
-        '&fields=created_at,number,status,items.product_id,items.quantity,items.final_price,items.price' +
+      `orders.json?${itemsQuery}&status!=cancelled` +
+        '&fields=created_at,number,status,items.product_id,items.kit_product,items.quantity,items.final_price,items.price' +
         '&sort=-number',
       'GET',
 
@@ -54,13 +56,22 @@ export default function (tabId) {
 
               if (sales <= 1000) {
                 order.items.forEach(item => {
-                  if (item.product_id === resourceId) {
-                    qntSold += item.quantity
-                    const subtotal = getPrice(item) * item.quantity
-                    totalSold += subtotal
-                    if (isClosed) {
-                      totalClosed += subtotal
+                  if (isKit) {
+                    if (!item.kit_product || item.kit_product._id !== resourceId) {
+                      return
                     }
+                  } else if (item.product_id !== resourceId) {
+                    return
+                  }
+                  if (isKit && item.kit_product.pack_quantity) {
+                    qntSold += (item.quantity / item.kit_product.pack_quantity)
+                  } else {
+                    qntSold += item.quantity
+                  }
+                  const subtotal = getPrice(item) * item.quantity
+                  totalSold += subtotal
+                  if (isClosed) {
+                    totalClosed += subtotal
                   }
                 })
               }
@@ -69,7 +80,7 @@ export default function (tabId) {
             const totalClosedPc = Math.round(totalClosed * 100 / totalSold)
             $(`#t${tabId}-total-sold`).text(formatMoney(totalSold))
             $(`#t${tabId}-sales`).text(sales)
-              .closest('a').attr('href', `/#/resources/orders?items.product_id=${resourceId}`)
+              .closest('a').attr('href', `/#/resources/orders?${itemsQuery}`)
             if (qntSold) {
               $(`#t${tabId}-qnt-sold`).text(`${qntSold}un`)
               $(`#t${tabId}-avg-price`).text(formatMoney(totalSold / qntSold))
