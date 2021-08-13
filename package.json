@@ -52,7 +52,7 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.2",
     "webpack-pwa-manifest": "^4.3.0",
-    "workbox-webpack-plugin": "^6.2.3"
+    "workbox-webpack-plugin": "^6.2.4"
   },
   "dependencies": {
     "@brazilian-utils/brazilian-utils": "^1.0.0-rc.12",
