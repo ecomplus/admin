@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.29](https://github.com/ecomplus/admin/compare/v1.0.0-beta.28...v1.0.0-beta.29) (2021-08-13)
+
+
+### Features
+
+* **carts-form:** add permalink to cart spa view with shop domain and cart id ([0b28f15](https://github.com/ecomplus/admin/commit/0b28f15338d7815287d082eeec38aa10156fd601))
+* **products-form:** count metrics and list orders also for kit products [[#423](https://github.com/ecomplus/admin/issues/423)] ([949be6d](https://github.com/ecomplus/admin/commit/949be6d750b6b96595184a659f5373917d56c340))
+* **resource-forms:** add link to checkout on page header for carts and products ([4f15aec](https://github.com/ecomplus/admin/commit/4f15aece0d38a7ec8803f3787cfa8739c297332a))
+
 ## [1.0.0-beta.28](https://github.com/ecomplus/admin/compare/v1.0.0-beta.27...v1.0.0-beta.28) (2021-08-11)
 
 
