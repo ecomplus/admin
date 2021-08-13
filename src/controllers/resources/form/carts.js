@@ -1,14 +1,14 @@
 /* eslint-disable no-var */
 
 export default function () {
-  const { $, formatMoney, handleInputs, setupInputValues } = window
+  const { $, formatMoney, handleInputs, setupInputValues, randomObjectId } = window
 
   // current tab ID
-  var tabId = window.tabId
-  var Tab = window.Tabs[tabId]
+  const tabId = window.tabId
+  const Tab = window.Tabs[tabId]
   // edit JSON document
-  var commit = Tab.commit
-  var Data = function () {
+  const { resourceId, commit } = Tab
+  const Data = function () {
     // current data from global variable
     return Tab.data
   }
@@ -197,12 +197,12 @@ export default function () {
             var item = searchResults[i]._source
             if (!item.variations || !item.variations.length) {
               // add product to matches
-              add([ item.name + ' (' + item.sku + ')' ])
+              add([item.name + ' (' + item.sku + ')'])
             } else {
               // add variations only
               for (var ii = 0; ii < item.variations.length; ii++) {
                 var variation = item.variations[ii]
-                add([ variation.name + ' (' + variation.sku + ')' ])
+                add([variation.name + ' (' + variation.sku + ')'])
               }
             }
           }
@@ -281,7 +281,7 @@ export default function () {
                 for (i = 0; i < product.pictures.length; i++) {
                   var picture = product.pictures[i]
                   if (picture._id === variation.picture_id) {
-                    variation.pictures = [ picture ]
+                    variation.pictures = [picture]
                     break
                   }
                 }
@@ -332,6 +332,15 @@ export default function () {
           break
       }
     })
+
+    if (resourceId && !Data().permalink) {
+      const domain = window.shopDomain || (window.Store && window.Store.domain)
+      if (domain) {
+        const $permalink = $('input[name=permalink]')
+        $permalink.val(`https://${domain}/app/#/${resourceId}`)
+        setTimeout(() => $permalink.trigger('change'), 1000)
+      }
+    }
   }
 
   // wait for the form to be ready
