@@ -97,28 +97,60 @@ export default function () {
       window.location = '/#/resources/' + slug + '/new'
     })
 
-    if (hasSlug) {
+    const domain = window.shopDomain || (window.Store && window.Store.domain)
+    let checkoutLink
+    if (domain && resourceId) {
+      checkoutLink = slug === 'products'
+        ? `https://${domain}/app/#/lp/${resourceId}`
+        : slug === 'carts'
+          ? `https://${domain}/app/#/checkout/${resourceId}`
+          : null
+    }
+
+    if (hasSlug || checkoutLink) {
       // direct link and share
       const link = function (link) {
-        const domain = window.shopDomain || (window.Store && window.Store.domain)
-        if (domain && Data().slug) {
-          let Link = 'https://' + domain + '/' + Data().slug
-          if (link) {
-            // add link prefix
-            Link = link + encodeURIComponent(Link)
+        let Link
+        if (domain) {
+          if (Data().slug) {
+            Link = 'https://' + domain + '/' + Data().slug
+          } else {
+            Link = (Data().permalink || checkoutLink)
           }
-          newTabLink(Link)
-        } else {
-          app.toast(i18n({
-            en_us: 'No link to share',
-            pt_br: 'Nenhum link para compartilhar'
-          }))
+          if (Link) {
+            if (link) {
+              // add link prefix
+              Link = link + encodeURIComponent(Link)
+            }
+            newTabLink(Link)
+            return Link
+          }
         }
+        app.toast(i18n({
+          en_us: 'No link to share',
+          pt_br: 'Nenhum link para compartilhar'
+        }))
       }
 
-      $('#t' + tabId + '-view').click(function () {
+      const $view = $('#t' + tabId + '-view')
+      $view.click(function () {
         link()
       })
+      if (checkoutLink) {
+        setTimeout(() => {
+          const $checkout = $('<a>', {
+            href: 'javascript:;',
+            class: 'nav-link edit-btn',
+            html: '<i class="ti-credit-card"></i>',
+            click () {
+              newTabLink(checkoutLink)
+            }
+          })
+          $view.after($checkout)
+          $checkout.fadeIn()
+        }, 800)
+      }
+
       $('#t' + tabId + '-facebook').click(function () {
         link('https://www.facebook.com/sharer.php?u=')
       })
