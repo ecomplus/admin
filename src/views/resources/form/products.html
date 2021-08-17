@@ -469,11 +469,12 @@
               <input type="file" name="pictures" multiple data-thumbnails="true" />
             </div>
             <div class="form-group">
-              <label class="i18n">
-                <span data-lang="en_us">Video</span>
-                <span data-lang="pt_br">Vídeo</span>
-              </label>
-              <input type="url" class="form-control" name="videos[].0.url" maxlength="255" placeholder="https://youtu.be/id">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-play"></i></span>
+                </div>
+                <input type="url" class="form-control" name="videos[].0.url" maxlength="255" placeholder="https://www.youtube.com/embed/id">
+              </div>
             </div>
           </div>
         </div>
