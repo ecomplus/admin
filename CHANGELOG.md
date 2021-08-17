@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.30](https://github.com/ecomplus/admin/compare/v1.0.0-beta.29...v1.0.0-beta.30) (2021-08-17)
+
+
+### Bug Fixes
+
+* **products-form:** minor fix video input placeholder and label ([0759d67](https://github.com/ecomplus/admin/commit/0759d674075e805b4188925da1b4e623d61d255f))
+
 ## [1.0.0-beta.29](https://github.com/ecomplus/admin/compare/v1.0.0-beta.28...v1.0.0-beta.29) (2021-08-13)
 
 
