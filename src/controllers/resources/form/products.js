@@ -5,6 +5,7 @@
 import Sortable from 'sortablejs'
 import listOrders from './products/list-orders'
 import renderKitItems from './products/render-kit-items'
+import renderRelatedItems from './products/render-related-items'
 
 export default function () {
   const { $, i18n, ecomUtils, lang, tabId, randomObjectId, normalizeString, cutString, substringMatcher } = window
@@ -2049,6 +2050,7 @@ export default function () {
     }
 
     renderKitItems({ tabId })
+    renderRelatedItems({ tabId })
 
     setTimeout(() => {
       listOrders(tabId)
