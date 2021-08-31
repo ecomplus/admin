@@ -150,7 +150,7 @@ export default function () {
               ? items
                 .map((item) => item.quantity)
                 .reduce((acumulative, quantity) => (acumulative += quantity))
-              : '0'} </strong><br>
+              : '0')}</strong><br>
           ${i18n(i19shippingMethod)}:
             <strong>${(shippingLine && shippingLine.app
               ? `${shippingLine.app.label} (${shippingLine.app.carrier})`
