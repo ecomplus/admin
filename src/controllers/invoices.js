@@ -145,7 +145,7 @@ export default function () {
           ${(order.notes
             ? `<p><span class="text-muted">${i18n(i19additionalNotes)}</span>:<br>${order.notes}</p>`
             : '')}
-          ${i18n(i19quantity) + " " + i18n(i19total)}:
+          ${i18n(i19quantity)} ${i18n(i19total).toLowerCase()}:
             <strong>${items
               ? items
                 .map((item) => item.quantity)
