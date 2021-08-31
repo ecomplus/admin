@@ -146,7 +146,7 @@ export default function () {
             ? `<p><span class="text-muted">${i18n(i19additionalNotes)}</span>:<br>${order.notes}</p>`
             : '')}
           ${i18n(i19quantity)} ${i18n(i19total).toLowerCase()}:
-            <strong>${items
+            <strong>${(items && items.length
               ? items
                 .map((item) => item.quantity)
                 .reduce((acumulative, quantity) => (acumulative += quantity))
