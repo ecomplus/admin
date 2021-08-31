@@ -148,8 +148,7 @@ export default function () {
           ${i18n(i19quantity)} ${i18n(i19total).toLowerCase()}:
             <strong>${(items && items.length
               ? items
-                .map((item) => item.quantity)
-                .reduce((acumulative, quantity) => (acumulative += quantity))
+                .reduce((total, { quantity }) => (total += quantity))
               : '0')}</strong><br>
           ${i18n(i19shippingMethod)}:
             <strong>${(shippingLine && shippingLine.app
