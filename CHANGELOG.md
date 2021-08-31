@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.31](https://github.com/ecomplus/admin/compare/v1.0.0-beta.30...v1.0.0-beta.31) (2021-08-31)
+
+
+### Features
+
+* **invoice:** add total quantity ([#436](https://github.com/ecomplus/admin/issues/436)) ([593140d](https://github.com/ecomplus/admin/commit/593140d700f2a5e01c43270caad37e5440ebdabb))
+
+
+### Bug Fixes
+
+* **dev-deps:** rollback to webpack-dev-server v3 ([d608758](https://github.com/ecomplus/admin/commit/d608758e5736779504b3cbaeb815940534311975))
+
 ## [1.0.0-beta.30](https://github.com/ecomplus/admin/compare/v1.0.0-beta.29...v1.0.0-beta.30) (2021-08-17)
 
 
