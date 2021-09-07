@@ -299,6 +299,7 @@ export default function () {
               // use the first image from list and remove ID
               item.picture = product.pictures[0]
               delete item.picture._id
+              delete item.picture.tag
             }
 
             // add the new item to cart data
