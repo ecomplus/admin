@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.32](https://github.com/ecomplus/admin/compare/v1.0.0-beta.31...v1.0.0-beta.32) (2021-09-07)
+
+
+### Bug Fixes
+
+* **cart-form:** ensure `item[].picture.tag` is not set ([f8272ed](https://github.com/ecomplus/admin/commit/f8272ed78936d7298a68d0541ca5b6e223b938ba))
+* **carts-form:** increase items typeahed limit to 30 [[#438](https://github.com/ecomplus/admin/issues/438)] ([23d2428](https://github.com/ecomplus/admin/commit/23d2428229a5bb8c7ccd2edbdfdc42667e3df235))
+
 ## [1.0.0-beta.31](https://github.com/ecomplus/admin/compare/v1.0.0-beta.30...v1.0.0-beta.31) (2021-08-31)
 
 
