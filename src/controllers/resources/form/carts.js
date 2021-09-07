@@ -178,36 +178,42 @@ export default function () {
 
     // handle items search
     var searchResults = []
+    let typingTimer
     var source = function (term, _, add) {
-      // query by name or SKU
-      // search and process resultant hits
-      // ELS URI Search
-      // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-uri-request.html
-      // https://developers.e-com.plus/docs/api/#/search/items/items-search
-      // remove invalid chars from term string
-      term = term.replace(/([()])/g, '\\$1').replace(/(^|\s)(AND|OR|\/)(\s|$)/g, ' ')
-      var query = 'sku:' + term + ' OR name:' + term
-      var url = 'items.json?q=' + encodeURIComponent(query)
+      if (typingTimer) {
+        clearTimeout(typingTimer)
+      }
+      typingTimer = setTimeout(() => {
+        // query by name or SKU
+        // search and process resultant hits
+        // ELS URI Search
+        // https://www.elastic.co/guide/en/elasticsearch/reference/current/search-uri-request.html
+        // https://developers.e-com.plus/docs/api/#/search/items/items-search
+        // remove invalid chars from term string
+        term = term.replace(/([()])/g, '\\$1').replace(/(^|\s)(AND|OR|\/)(\s|$)/g, ' ')
+        var query = 'sku:' + term + ' OR name:' + term
+        var url = 'items.json?sort=_score:desc&size=4&q=' + encodeURIComponent(query)
 
-      // run search API request
-      window.callSearchApi(url, 'GET', function (err, data) {
-        if (!err && data.hits) {
-          searchResults = data.hits.hits
-          for (var i = 0; i < searchResults.length; i++) {
-            var item = searchResults[i]._source
-            if (!item.variations || !item.variations.length) {
-              // add product to matches
-              add([item.name + ' (' + item.sku + ')'])
-            } else {
-              // add variations only
-              for (var ii = 0; ii < item.variations.length; ii++) {
-                var variation = item.variations[ii]
-                add([variation.name + ' (' + variation.sku + ')'])
+        // run search API request
+        window.callSearchApi(url, 'GET', function (err, data) {
+          if (!err && data.hits) {
+            searchResults = data.hits.hits
+            for (var i = 0; i < searchResults.length; i++) {
+              var item = searchResults[i]._source
+              if (!item.variations || !item.variations.length) {
+                // add product to matches
+                add([item.name + ' (' + item.sku + ')'])
+              } else {
+                // add variations only
+                for (var ii = 0; ii < item.variations.length; ii++) {
+                  var variation = item.variations[ii]
+                  add([variation.name + ' (' + variation.sku + ')'])
+                }
               }
             }
           }
-        }
-      })
+        })
+      }, 300)
     }
 
     // setup new item input
@@ -219,7 +225,8 @@ export default function () {
       minLength: 3
     }, {
       name: 'items',
-      source: source
+      source: source,
+      limit: 30
     })
 
     // handle new cart item
