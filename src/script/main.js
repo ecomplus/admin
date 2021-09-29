@@ -3,11 +3,13 @@
 import {
   i19add,
   i19apps,
+  i19goToStore,
   i19inventory,
   i19media,
-  i19goToStore,
-  i19themes,
-  i19support
+  i19payment,
+  i19shipping,
+  i19support,
+  i19themes
 } from '@ecomplus/i18n'
 
 import { $ecomConfig } from '@ecomplus/utils'
@@ -1185,6 +1187,18 @@ const { sessionStorage, localStorage, Image, $, app } = window
                  '<span class="title">' + i18n(i19apps) + '</span>' +
                '</a>' +
              '</li>' +
+            '<li class="menu-item">' +
+               '<a class="menu-link" href="/#/apps/tab/sales">' +
+                 '<span class="icon fa fa-credit-card"></span>' +
+                 '<span class="title">' + i18n(i19payment) + '</span>' +
+               '</a>' +
+             '</li>' +
+            '<li class="menu-item">' +
+               '<a class="menu-link" href="/#/apps/tab/shipping">' +
+                 '<span class="icon fa fa-truck"></span>' +
+                 '<span class="title">' + i18n(i19shipping) + '</span>' +
+               '</a>' +
+             '</li>' +
              '<li class="menu-item">' +
                '<a class="menu-link" href="javascript:;" onclick="initStorageLib()" ' +
                'data-toggle="quickview" data-target="#qv-storage">' +
@@ -1200,34 +1214,37 @@ const { sessionStorage, localStorage, Image, $, app } = window
              '</li>' +
              '<li class="menu-item" id="support-menu" data-route-param="support">' +
                 '<a class="menu-link" href="javascript:;">' +
-                        '<span class="icon fa fa-question"></span>' +
-                        '<span class="title">' + i18n(i19support) + '</span>' +
-                        '<span class="arrow"></span>' +
-                      '</a>' +
-                      '<ul class="menu-submenu">' +
-                        '<li class="menu-item">' +
-                          '<a target="_blank" class="menu-link" href="https://www.youtube.com/channel/UCBlIxK5JAub0E1EX_qHdzmA">' +
-                            '<span class="icon fa fa-play"></span>' +
-                            '<span class="title"> Youtube' +
-                            '</span>' +
-                          '</a>' +
-                        '</li>' +
-                        '<li class="menu-item">' +
-                          '<a target="_blank" class="menu-link" href="https://community.e-com.plus/tag/tutorial">' +
-                            '<span class="icon fa fa-book"></span>' +
-                            '<span class="title"> Tutoriais' +
-                            '</span>' +
-                          '</a>' +
-                        '</li>' +
-                        '<li class="menu-item">' +
-                          '<a target="_blank" class="menu-link" href="https://community.e-com.plus/new-message?username=matheus&title=Assunto%20do%20ticket&body=Pergunta%20do%20ticket">' +
-                            '<span class="icon fa fa-inbox"></span>' +
-                            '<span class="title"> Abrir Ticket' +
-                            '</span>' +
-                          '</a>' +
-                        '</li>' +
-                      '</ul>' +
-                    '</li>'
+                  '<span class="icon fa fa-question"></span>' +
+                  '<span class="title">' + i18n(i19support) + '</span>' +
+                  '<span class="arrow"></span>' +
+                '</a>' +
+                '<ul class="menu-submenu">' +
+                  '<li class="menu-item">' +
+                    '<a target="_blank" class="menu-link" href="https://community.e-com.plus/tag/tutorial">' +
+                      '<span class="icon fa fa-book"></span>' +
+                      '<span class="title">Tutoriais</span>' +
+                    '</a>' +
+                  '</li>' +
+                  '<li class="menu-item">' +
+                    '<a target="_blank" class="menu-link" href="https://www.youtube.com/channel/UCBlIxK5JAub0E1EX_qHdzmA">' +
+                      '<span class="icon fa fa-play"></span>' +
+                      '<span class="title">Youtube</span>' +
+                    '</a>' +
+                  '</li>' +
+                  '<li class="menu-item">' +
+                    '<a target="_blank" class="menu-link" href="https://community.e-com.plus/new-topic">' +
+                      '<span class="icon fa fa-life-ring"></span>' +
+                      '<span class="title">Abrir tópico</span>' +
+                    '</a>' +
+                  '</li>' +
+                  '<li class="menu-item">' +
+                    '<a target="_blank" class="menu-link" href="https://community.e-com.plus/new-message?username=matheus&title=Assunto%20do%20ticket&body=Pergunta%20do%20ticket">' +
+                      '<span class="icon fa fa-ticket"></span>' +
+                      '<span class="title">Abrir ticket</span>' +
+                    '</a>' +
+                  '</li>' +
+                '</ul>' +
+              '</li>'
 
     var $menu = $('#sidebar')
     $menu.append(el)
