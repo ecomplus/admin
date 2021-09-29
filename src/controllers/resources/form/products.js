@@ -1,3 +1,5 @@
+/* eslint-disable no-var, quote-props, no-prototype-builtins */
+
 /*!
  * Copyright 2018 E-Com Club
  */
@@ -7,7 +9,22 @@ import listOrders from './products/list-orders'
 import renderKitItems from './products/render-kit-items'
 
 export default function () {
-  const { $, i18n, ecomUtils, lang, tabId, randomObjectId, normalizeString, cutString, substringMatcher } = window
+  const {
+    $,
+    app,
+    i18n,
+    ecomUtils,
+    lang,
+    tabId,
+    randomObjectId,
+    objectIdPad,
+    normalizeString,
+    cutString,
+    substringMatcher,
+    randomInt,
+    setupInputValues,
+    getCombinations
+  } = window
 
   // current tab
   var Tab = window.Tabs[tabId]
@@ -150,6 +167,33 @@ export default function () {
 
             // setup variations
             if (Array.isArray(variations) && variations.length) {
+              // sum quantity from variations
+              const $inputQnt = $form.find('input[name="quantity"]')
+                .attr('readonly', true)
+                .val(variations.reduce((totalQnt, { quantity }) => {
+                  return totalQnt + (quantity || 0)
+                }, 0))
+
+              // dynamically update variation qnt preview and total qnt
+              $form.find('input[name="variations.quantity"]').change(() => {
+                setTimeout(() => {
+                  let totalQnt = 0
+                  const { variations } = Data()
+                  if (variations) {
+                    variations.forEach(({ _id, quantity }) => {
+                      const $qntPreview = $(`#t${tabId}-v${_id}-qnt`)
+                      if (quantity) {
+                        totalQnt += quantity
+                        $qntPreview.text(`${quantity} un`)
+                      } else {
+                        $qntPreview.text('')
+                      }
+                      $inputQnt.val(totalQnt)
+                    })
+                  }
+                }, 300)
+              })
+
               // add all options in use
               var addOptions = function (addOption, gridId) {
                 // delay to wait grid full setup
@@ -1206,7 +1250,8 @@ export default function () {
               if (variation) {
                 let html = ''
                 if (typeof variation.quantity === 'number') {
-                  html += `<small class="mr-2 text-dark">${variation.quantity} un</small>`
+                  html += `<small class="mr-2 text-dark" id="t${tabId}-v${variation._id}-qnt">` +
+                    `${variation.quantity} un</small>`
                 }
                 if (typeof variation.price === 'number') {
                   html += `<small class="mr-2 text-muted">${ecomUtils.formatMoney(variation.price)}</small>`
@@ -2019,9 +2064,32 @@ export default function () {
         commit(data, true)
       })
 
-    if (Data().price_effective_date) {
+    const data = Data()
+    if (data.inventory && Object.keys(data.inventory).length) {
+      // multi warehouses stock fields
+      const $inputQnt = $form.find('input[name="quantity"]')
+      const $formGroupQnt = $inputQnt.closest('.form-group')
+      for (const warehouse in data.inventory) {
+        const qnt = data.inventory[warehouse]
+        if (qnt >= 0) {
+          $formGroupQnt.after($('<div>', {
+            class: 'form-group',
+            html: [
+              `<label>${warehouse}</label>`,
+              $inputQnt.clone().attr('name', `inventory.${warehouse}`).val(qnt)
+            ],
+            change ({ target }) {
+              $inputQnt.val($inputQnt.val() - qnt + target.valueAsNumber)
+            }
+          }))
+        }
+      }
+      $inputQnt.attr('readonly', true)
+    }
+
+    if (data.price_effective_date) {
       // manually reset date range
-      const { start, end } = Data().price_effective_date
+      const { start, end } = data.price_effective_date
       if (start || end) {
         let dateRangeStr = ''
         ;[start, end].forEach((isoDate, i) => {
