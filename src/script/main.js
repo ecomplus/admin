@@ -1,3 +1,5 @@
+/* eslint-disable no-var, quote-props */
+
 import {
   i19add,
   i19apps,
@@ -242,25 +244,6 @@ const { sessionStorage, localStorage, Image, $, app } = window
     addRequest(options, bodyObject, callback, skipError)
   }
 
-  var callMainApi = function (endpoint, method, callback, bodyObject) {
-    // E-Com Plus Main API
-    // https://ecomplus.docs.apiary.io/#
-    var apiHost = 'https://e-com.plus/api/v1/'
-    // API endpoint full URL
-    var uri = apiHost + endpoint
-    if (method === 'GET') {
-      // specify store on URL query string
-      uri += '?store_id=' + storeId
-    }
-    // console.log(uri)
-
-    var options = {
-      url: uri,
-      method: method
-    }
-    addRequest(options, bodyObject, callback)
-  }
-
   var storageApiPath = 'https://apx-storage.e-com.plus/' + storeId + '/api/v1/'
   var callStorageApi = function (s3Method, callback, bodyObject) {
     var uri = storageApiPath
@@ -327,7 +310,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
   var requestControl = function (confirm) {
     // handle request confirmation or rejection
     var id = $('#api-request-control').data('request-id')
-    if (id && confirmRequest.hasOwnProperty(id)) {
+    if (id && confirmRequest[id]) {
       var req = confirmRequest[id]
 
       // set timeout for in-stream requests
@@ -738,7 +721,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
     if (hash !== '#/new') {
       // check if a tab have this route
       for (var tabId in appTabs) {
-        if (appTabs.hasOwnProperty(tabId) && appTabs[tabId].hash === hash) {
+        if (appTabs[tabId] && appTabs[tabId].hash === hash) {
           // do not permit multiple tabs with same route
           // change to this tab
           $('#app-nav-' + tabId + ' > a').click()
@@ -1216,7 +1199,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                '</a>' +
              '</li>' +
              '<li class="menu-item" id="support-menu" data-route-param="support">' +
-                      '<a class="menu-link" href="javascript:;">' +
+                '<a class="menu-link" href="javascript:;">' +
                         '<span class="icon fa fa-question"></span>' +
                         '<span class="title">' + i18n(i19support) + '</span>' +
                         '<span class="arrow"></span>' +
@@ -1275,7 +1258,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
     if ($('.sidebar-toggler').is(':visible')) {
       // mobile
       // unfold sidebar by default
-      sidebar.unfold()
+      window.sidebar.unfold()
     }
   }
   renderMenu()
@@ -1911,7 +1894,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
 
     // global quickview
     $('.qv-close').click(function () {
-      quickview.close($(this).closest('.quickview'))
+      window.quickview.close($(this).closest('.quickview'))
     })
 
     // logout buttons
@@ -2068,7 +2051,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
             case 77:
               // m
               // open or close Mony
-              dock.toggleMinimize('#dock-chat')
+              window.dock.toggleMinimize('#dock-chat')
               $('#mony-publish input').focus()
               break
             case 74:
