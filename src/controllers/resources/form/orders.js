@@ -1,5 +1,21 @@
+/* eslint-disable no-var, quote-props, no-prototype-builtins */
+
 export default function () {
-  const { $, i18n, lang, tabId, routeParams, formatMoney, formatDate, formatPhone, callApi, app, getFromDotNotation, handleNestedObjects } = window
+  const {
+    $,
+    app,
+    i18n,
+    lang,
+    tabId,
+    routeParams,
+    randomObjectId,
+    formatMoney,
+    formatDate,
+    formatPhone,
+    callApi,
+    getFromDotNotation,
+    handleNestedObjects
+  } = window
 
   // current tab ID
   var Tab = window.Tabs[tabId]
@@ -493,6 +509,21 @@ export default function () {
       'shipping_lines',
       handleShippingObj
     )
+
+    $('input[name="shipping_lines.app.carrier"],input[name="shipping_lines.app.carrier_doc_number"]')
+      .change(function () {
+        if ($(this).val()) {
+          setTimeout(() => {
+            const data = Data()
+            data.shipping_lines.forEach(({ app }) => {
+              if (app && !app._id) {
+                app._id = randomObjectId()
+                commit(data, true)
+              }
+            })
+          }, 300)
+        }
+      })
 
     // handle collapse for payment address and shipping from address
     $('div[data-link-collapse]').each(function () {

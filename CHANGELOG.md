@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.33](https://github.com/ecomplus/admin/compare/v1.0.0-beta.32...v1.0.0-beta.33) (2021-09-30)
+
+
+### Features
+
+* **deps:** update @ecomplus/admin-marketplace to v1.3.0 ([e59ec54](https://github.com/ecomplus/admin/commit/e59ec54ad378c5a2cfd9a06dfa5c20c3e38f04c2))
+* **menu:** new menu items for payment, shipping and support ([d4af95c](https://github.com/ecomplus/admin/commit/d4af95c8a52871c4003d02807b3ac51b427b96c9))
+* **products-form:** handle multi warehouses inventory inputs [[#444](https://github.com/ecomplus/admin/issues/444)] ([cf98e00](https://github.com/ecomplus/admin/commit/cf98e00eb5a0122574e834237262311338fefbdc))
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/admin-marketplace to v1.3.1 ([44283de](https://github.com/ecomplus/admin/commit/44283ded7240411a88f662081f482b706ad7e4eb))
+* **orders-form:** hardset required `app._id` when `shipping_lines[].app` is set [[#442](https://github.com/ecomplus/admin/issues/442)] ([b501c8d](https://github.com/ecomplus/admin/commit/b501c8d4678dee6547dee8f6a284493edbe9b19e))
+
 ## [1.0.0-beta.32](https://github.com/ecomplus/admin/compare/v1.0.0-beta.31...v1.0.0-beta.32) (2021-09-07)
 
 

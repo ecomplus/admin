@@ -1,11 +1,15 @@
+/* eslint-disable no-var, quote-props */
+
 import {
   i19add,
   i19apps,
+  i19goToStore,
   i19inventory,
   i19media,
-  i19goToStore,
-  i19themes,
-  i19support
+  i19payment,
+  i19shipping,
+  i19support,
+  i19themes
 } from '@ecomplus/i18n'
 
 import { $ecomConfig } from '@ecomplus/utils'
@@ -242,25 +246,6 @@ const { sessionStorage, localStorage, Image, $, app } = window
     addRequest(options, bodyObject, callback, skipError)
   }
 
-  var callMainApi = function (endpoint, method, callback, bodyObject) {
-    // E-Com Plus Main API
-    // https://ecomplus.docs.apiary.io/#
-    var apiHost = 'https://e-com.plus/api/v1/'
-    // API endpoint full URL
-    var uri = apiHost + endpoint
-    if (method === 'GET') {
-      // specify store on URL query string
-      uri += '?store_id=' + storeId
-    }
-    // console.log(uri)
-
-    var options = {
-      url: uri,
-      method: method
-    }
-    addRequest(options, bodyObject, callback)
-  }
-
   var storageApiPath = 'https://apx-storage.e-com.plus/' + storeId + '/api/v1/'
   var callStorageApi = function (s3Method, callback, bodyObject) {
     var uri = storageApiPath
@@ -327,7 +312,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
   var requestControl = function (confirm) {
     // handle request confirmation or rejection
     var id = $('#api-request-control').data('request-id')
-    if (id && confirmRequest.hasOwnProperty(id)) {
+    if (id && confirmRequest[id]) {
       var req = confirmRequest[id]
 
       // set timeout for in-stream requests
@@ -738,7 +723,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
     if (hash !== '#/new') {
       // check if a tab have this route
       for (var tabId in appTabs) {
-        if (appTabs.hasOwnProperty(tabId) && appTabs[tabId].hash === hash) {
+        if (appTabs[tabId] && appTabs[tabId].hash === hash) {
           // do not permit multiple tabs with same route
           // change to this tab
           $('#app-nav-' + tabId + ' > a').click()
@@ -1202,6 +1187,18 @@ const { sessionStorage, localStorage, Image, $, app } = window
                  '<span class="title">' + i18n(i19apps) + '</span>' +
                '</a>' +
              '</li>' +
+            '<li class="menu-item">' +
+               '<a class="menu-link" href="/#/apps/tab/sales">' +
+                 '<span class="icon fa fa-credit-card"></span>' +
+                 '<span class="title">' + i18n(i19payment) + '</span>' +
+               '</a>' +
+             '</li>' +
+            '<li class="menu-item">' +
+               '<a class="menu-link" href="/#/apps/tab/shipping">' +
+                 '<span class="icon fa fa-truck"></span>' +
+                 '<span class="title">' + i18n(i19shipping) + '</span>' +
+               '</a>' +
+             '</li>' +
              '<li class="menu-item">' +
                '<a class="menu-link" href="javascript:;" onclick="initStorageLib()" ' +
                'data-toggle="quickview" data-target="#qv-storage">' +
@@ -1216,35 +1213,38 @@ const { sessionStorage, localStorage, Image, $, app } = window
                '</a>' +
              '</li>' +
              '<li class="menu-item" id="support-menu" data-route-param="support">' +
-                      '<a class="menu-link" href="javascript:;">' +
-                        '<span class="icon fa fa-question"></span>' +
-                        '<span class="title">' + i18n(i19support) + '</span>' +
-                        '<span class="arrow"></span>' +
-                      '</a>' +
-                      '<ul class="menu-submenu">' +
-                        '<li class="menu-item">' +
-                          '<a target="_blank" class="menu-link" href="https://www.youtube.com/channel/UCBlIxK5JAub0E1EX_qHdzmA">' +
-                            '<span class="icon fa fa-play"></span>' +
-                            '<span class="title"> Youtube' +
-                            '</span>' +
-                          '</a>' +
-                        '</li>' +
-                        '<li class="menu-item">' +
-                          '<a target="_blank" class="menu-link" href="https://community.e-com.plus/tag/tutorial">' +
-                            '<span class="icon fa fa-book"></span>' +
-                            '<span class="title"> Tutoriais' +
-                            '</span>' +
-                          '</a>' +
-                        '</li>' +
-                        '<li class="menu-item">' +
-                          '<a target="_blank" class="menu-link" href="https://community.e-com.plus/new-message?username=matheus&title=Assunto%20do%20ticket&body=Pergunta%20do%20ticket">' +
-                            '<span class="icon fa fa-inbox"></span>' +
-                            '<span class="title"> Abrir Ticket' +
-                            '</span>' +
-                          '</a>' +
-                        '</li>' +
-                      '</ul>' +
-                    '</li>'
+                '<a class="menu-link" href="javascript:;">' +
+                  '<span class="icon fa fa-question"></span>' +
+                  '<span class="title">' + i18n(i19support) + '</span>' +
+                  '<span class="arrow"></span>' +
+                '</a>' +
+                '<ul class="menu-submenu">' +
+                  '<li class="menu-item">' +
+                    '<a target="_blank" class="menu-link" href="https://community.e-com.plus/tag/tutorial">' +
+                      '<span class="icon fa fa-book"></span>' +
+                      '<span class="title">Tutoriais</span>' +
+                    '</a>' +
+                  '</li>' +
+                  '<li class="menu-item">' +
+                    '<a target="_blank" class="menu-link" href="https://www.youtube.com/channel/UCBlIxK5JAub0E1EX_qHdzmA">' +
+                      '<span class="icon fa fa-play"></span>' +
+                      '<span class="title">Youtube</span>' +
+                    '</a>' +
+                  '</li>' +
+                  '<li class="menu-item">' +
+                    '<a target="_blank" class="menu-link" href="https://community.e-com.plus/new-topic">' +
+                      '<span class="icon fa fa-life-ring"></span>' +
+                      '<span class="title">Abrir tópico</span>' +
+                    '</a>' +
+                  '</li>' +
+                  '<li class="menu-item">' +
+                    '<a target="_blank" class="menu-link" href="https://community.e-com.plus/new-message?username=matheus&title=Assunto%20do%20ticket&body=Pergunta%20do%20ticket">' +
+                      '<span class="icon fa fa-ticket"></span>' +
+                      '<span class="title">Abrir ticket</span>' +
+                    '</a>' +
+                  '</li>' +
+                '</ul>' +
+              '</li>'
 
     var $menu = $('#sidebar')
     $menu.append(el)
@@ -1275,7 +1275,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
     if ($('.sidebar-toggler').is(':visible')) {
       // mobile
       // unfold sidebar by default
-      sidebar.unfold()
+      window.sidebar.unfold()
     }
   }
   renderMenu()
@@ -1911,7 +1911,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
 
     // global quickview
     $('.qv-close').click(function () {
-      quickview.close($(this).closest('.quickview'))
+      window.quickview.close($(this).closest('.quickview'))
     })
 
     // logout buttons
@@ -2068,7 +2068,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
             case 77:
               // m
               // open or close Mony
-              dock.toggleMinimize('#dock-chat')
+              window.dock.toggleMinimize('#dock-chat')
               $('#mony-publish input').focus()
               break
             case 74:
