@@ -1,4 +1,6 @@
-
+ports:
+  - port: 9016
+    visibility: public
 vscode:
   extensions:
     - standard.vscode-standard
