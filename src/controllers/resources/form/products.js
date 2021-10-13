@@ -2070,7 +2070,7 @@ export default function () {
       const $inputQnt = $form.find('input[name="quantity"]')
       const $formGroupQnt = $inputQnt.closest('.form-group')
       for (const warehouse in data.inventory) {
-        const qnt = data.inventory[warehouse]
+        let qnt = data.inventory[warehouse]
         if (qnt >= 0) {
           $formGroupQnt.after($('<div>', {
             class: 'form-group',
@@ -2079,7 +2079,14 @@ export default function () {
               $inputQnt.clone().attr('name', `inventory.${warehouse}`).val(qnt)
             ],
             change ({ target }) {
-              $inputQnt.val($inputQnt.val() - qnt + target.valueAsNumber)
+              const newQnt = target.valueAsNumber
+              const data = Data()
+              Object.assign(data.inventory, {
+                [warehouse]: newQnt
+              })
+              commit(data, true)
+              $inputQnt.val($inputQnt.val() - qnt + newQnt)
+              qnt = newQnt
             }
           }))
         }
