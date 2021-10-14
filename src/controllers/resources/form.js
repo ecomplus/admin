@@ -329,6 +329,8 @@ export default function () {
             if (typeof val === 'string') {
               if ($input.data('is-number')) {
                 obj = stringToNumber(val)
+              } else if ($input.data('is-digits')) {
+                obj = val.replace(/\D/g, '')
               } else if ($input.attr('type') === 'number') {
                 obj = parseFloat(val)
               } else {
