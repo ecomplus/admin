@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.34](https://github.com/ecomplus/admin/compare/v1.0.0-beta.33...v1.0.0-beta.34) (2021-10-14)
+
+
+### Bug Fixes
+
+* **phone-fields:** phone numbers saved as strings [[#451](https://github.com/ecomplus/admin/issues/451)] ([79db01e](https://github.com/ecomplus/admin/commit/79db01e73151cc7b08268988e30680089f61d0f5))
+* **products-form:** must commit warehouses stock changes ([5e1d5dd](https://github.com/ecomplus/admin/commit/5e1d5dde1930ad82359fdb380449649c6bac4a41))
+
 ## [1.0.0-beta.33](https://github.com/ecomplus/admin/compare/v1.0.0-beta.32...v1.0.0-beta.33) (2021-09-30)
 
 
