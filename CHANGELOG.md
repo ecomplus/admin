@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.35](https://github.com/ecomplus/admin/compare/v1.0.0-beta.34...v1.0.0-beta.35) (2021-10-14)
+
+
+### Bug Fixes
+
+* **phone-fields:** phone numbers must be strings with digits only [[#451](https://github.com/ecomplus/admin/issues/451)] ([6132dc0](https://github.com/ecomplus/admin/commit/6132dc0228edcf7127cbc3bd098386a962364845))
+
 ## [1.0.0-beta.34](https://github.com/ecomplus/admin/compare/v1.0.0-beta.33...v1.0.0-beta.34) (2021-10-14)
 
 
