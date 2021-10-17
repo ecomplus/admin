@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.36](https://github.com/ecomplus/admin/compare/v1.0.0-beta.35...v1.0.0-beta.36) (2021-10-14)
+
+
+### Bug Fixes
+
+* **startup:** redirect to site when store not able to login ([dcc54cf](https://github.com/ecomplus/admin/commit/dcc54cf30e4757a127e3e591ae75716306247b0d))
+
 ## [1.0.0-beta.35](https://github.com/ecomplus/admin/compare/v1.0.0-beta.34...v1.0.0-beta.35) (2021-10-14)
 
 
