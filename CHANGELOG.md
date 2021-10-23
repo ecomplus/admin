@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.37](https://github.com/ecomplus/admin/compare/v1.0.0-beta.36...v1.0.0-beta.37) (2021-10-22)
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/admin-marketplace v1.4.0 ([9a05ef5](https://github.com/ecomplus/admin/commit/9a05ef5d9e39e2df3b9d2759823de4dffd10ac3e))
+
 ## [1.0.0-beta.36](https://github.com/ecomplus/admin/compare/v1.0.0-beta.35...v1.0.0-beta.36) (2021-10-14)
 
 
