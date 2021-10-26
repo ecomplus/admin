@@ -151,6 +151,58 @@ export default function () {
         .css('width', `${cancelledPc}%`)
         .attr('aria-valuenow', cancelledPc)
 
+      // export orders
+      const $sendOrders = $(`#t${tabId}-send-to-app`)
+      $sendOrders.click(function () {
+        const selectedOrders = Tab.selectedItems
+        if (!selectedOrders.length > 0) {
+          app.toast(`Nenhum pedido selecionado`)
+        } else {
+          $sendOrders.find('button').attr('data-toggle', 'dropdown')
+          callApi(`applications.json`, 'GET', (err, data) => {
+            if (err) {
+              console.error(err)
+              app.toast()
+            } else {
+              const erpApps = [105922, 114142]
+              const applications = data.result.filter(item => item.state === 'active' && erpApps.includes(item.app_id)) 
+              applications.forEach(application => {
+                $sendOrders.find('.dropdown-menu').append($('<a>', {
+                  class: 'dropdown-item i18n',
+                  href: '#',
+                  'data-app-id': application.app_id,
+                  id: application._id,
+                  html: `<span data-lang="pt_br">${application.title}</span><span data-lang="en_us">${application.title}</span>`
+                }))
+              })
+              $sendOrders.find('.dropdown-menu a').click((event) => {
+                const idFromApp = event.currentTarget.id
+                let body
+                body = {
+                  "_exportation": {},
+                  "exportation": {
+                      "order_ids": selectedOrders
+                  },
+                  "importation": {},
+                  "___importation": {
+                      "order_numbers": []
+                  }
+                }
+                if (idFromApp) {
+                  callApi(`applications/${idFromApp}/data.json`, 'PATCH', (err, data) => {
+                    if (!err) {
+                      console.log(data)
+                    } else {
+                      console.log(err)
+                    }
+                  }, body)
+                }
+              })  
+            }
+          })
+        }
+      })
+
       // sales channel selectors
       const $orderSources = $(`#t${tabId}-orders-sources`)
       ;['source_name', 'domain'].forEach(field => {
