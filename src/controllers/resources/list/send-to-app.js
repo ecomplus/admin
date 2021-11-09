@@ -27,7 +27,6 @@ export default (navClick, resourceBlock, selectedExportData, selectedImportData,
               body.importation = { [objectPropImport]: selectedImportData }
             }
             if (idFromApp) {
-              console.log(body)
               callApi(`applications/${idFromApp}/data.json`, 'PATCH', (err, data) => {
                 if (!err) {
                   setTimeout(() => {
