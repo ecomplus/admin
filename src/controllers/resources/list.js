@@ -1,13 +1,13 @@
+import sendToApp from './list/send-to-app'
+
 export default function () {
   const { localStorage, $, app, i18n, cutString, formatMoney, formatDate, stringToNumber } = window
-
   // current tab ID
   const tabId = window.tabId
   const Tab = window.Tabs[tabId]
   const elContainer = $('#t' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
-
   const baseHash = '/' + window.location.hash.replace(/\?.*$/, '') + '/'
   // create button
   $('#t' + tabId + '-create').click(function () {
@@ -33,9 +33,9 @@ export default function () {
   const resourceSlug = Tab.slug
   let data, list, load, reload
   const orderSources = {}
+
   const updateData = function () {
     data = Tab.data
-
     // map deeper objects
     list = data.result.map(function (doc, index) {
       var newDoc = { _index: index }
@@ -151,58 +151,6 @@ export default function () {
         .css('width', `${cancelledPc}%`)
         .attr('aria-valuenow', cancelledPc)
 
-      // export orders
-      const $sendOrders = $(`#t${tabId}-send-to-app`)
-      $sendOrders.click(function () {
-        const selectedOrders = Tab.selectedItems
-        if (!selectedOrders.length > 0) {
-          app.toast(`Nenhum pedido selecionado`)
-        } else {
-          $sendOrders.find('button').attr('data-toggle', 'dropdown')
-          callApi(`applications.json`, 'GET', (err, data) => {
-            if (err) {
-              console.error(err)
-              app.toast()
-            } else {
-              const erpApps = [105922, 114142]
-              const applications = data.result.filter(item => item.state === 'active' && erpApps.includes(item.app_id)) 
-              applications.forEach(application => {
-                $sendOrders.find('.dropdown-menu').append($('<a>', {
-                  class: 'dropdown-item i18n',
-                  href: '#',
-                  'data-app-id': application.app_id,
-                  id: application._id,
-                  html: `<span data-lang="pt_br">${application.title}</span><span data-lang="en_us">${application.title}</span>`
-                }))
-              })
-              $sendOrders.find('.dropdown-menu a').click((event) => {
-                const idFromApp = event.currentTarget.id
-                let body
-                body = {
-                  "_exportation": {},
-                  "exportation": {
-                      "order_ids": selectedOrders
-                  },
-                  "importation": {},
-                  "___importation": {
-                      "order_numbers": []
-                  }
-                }
-                if (idFromApp) {
-                  callApi(`applications/${idFromApp}/data.json`, 'PATCH', (err, data) => {
-                    if (!err) {
-                      console.log(data)
-                    } else {
-                      console.log(err)
-                    }
-                  }, body)
-                }
-              })  
-            }
-          })
-        }
-      })
-
       // sales channel selectors
       const $orderSources = $(`#t${tabId}-orders-sources`)
       ;['source_name', 'domain'].forEach(field => {
@@ -254,6 +202,9 @@ export default function () {
   updateData()
 
   if (list.length) {
+    // export orders
+    sendToApp($(`#t${tabId}-send-to-app`), $(`#t${tabId}-orders-sources`), Tab.selectedItems, Tab.selectedItems, 'order_ids', 'numbers')
+
     // delete checkbox element HTML
     const elCheckbox = '<div class="custom-controls-stacked">' +
                        '<div class="custom-control custom-checkbox">' +
