@@ -200,11 +200,7 @@ export default function () {
     }
   }
   updateData()
-
   if (list.length) {
-    // export orders
-    sendToApp($(`#t${tabId}-send-to-app`), $(`#t${tabId}-orders-sources`), Tab.selectedItems, Tab.selectedItems, 'order_ids', 'numbers')
-
     // delete checkbox element HTML
     const elCheckbox = '<div class="custom-controls-stacked">' +
                        '<div class="custom-control custom-checkbox">' +
@@ -214,13 +210,13 @@ export default function () {
                      '</div>'
 
     // setup jsGrid
-    var $grid = $('#t' + tabId + '-resource-list')
+    const $grid = $('#t' + tabId + '-resource-list')
     // current grid row
-    var row = 0
+    let row = 0
     // offset and limit
     // control pagination
-    var offset = 0
-    var limit
+    let offset = 0
+    let limit
     if (data.meta.limit) {
       limit = data.meta.limit
     } else {
@@ -242,6 +238,10 @@ export default function () {
         }
         return Tab.selectedItems
       }
+      // export orders
+      $(`#t${tabId}-send-to-app`).find('.dropdown-menu a').click((event) => {
+        sendToApp($(`#t${tabId}-orders-sources`), event, Tab.selectedItems, Tab.selectedItems, 'order_ids', 'numbers')
+      })
       $(`#t${tabId}-invoices`).click(() => checkSelectedOrders('invoices'))
       $(`#t${tabId}-shipping-tags`).click(() => checkSelectedOrders('shipping-tags'))
       $(`#t${tabId}-correios-enderecador`).click(() => {

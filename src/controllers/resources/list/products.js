@@ -551,9 +551,10 @@ export default function () {
     $('#enable-stock-products').click(() => Tab.editItems({ manage_stock: true }))
     $('#disable-stock-products').click(() => Tab.editItems({ manage_stock: false }))
 
-    sendToApp($(`#t${tabId}-send-to-application`), $container, Tab.selectedItems, Tab.selectedSkus, 'product_ids', 'skus')
-
-    var setupItemElement = function (id, sku, index, $item, $checkbox) {
+    $(`#t${tabId}-send-to-application`).find('.dropdown-menu a').click((event) => {
+      sendToApp($container, event, Tab.selectedItems, Tab.selectedSkus, 'product_ids', 'skus')
+    })
+    const setupItemElement = function (id, sku, index, $item, $checkbox) {
       $checkbox.on('change', function () {
         if ($(this).is(':checked')) {
           // select item
