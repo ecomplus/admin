@@ -552,7 +552,7 @@ export default function () {
     $('#disable-stock-products').click(() => Tab.editItems({ manage_stock: false }))
 
     $(`#t${tabId}-send-to-application`).find('.dropdown-menu a').click((event) => {
-      sendToApp($container, event, Tab.selectedItems, Tab.selectedSkus, 'product_ids', 'skus')
+      sendToApp($container, event, Tab.selectedItems, Tab.selectedSkus, 'product_ids', 'skus', load)
     })
     const setupItemElement = function (id, sku, index, $item, $checkbox) {
       $checkbox.on('change', function () {

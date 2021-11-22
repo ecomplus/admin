@@ -1,10 +1,11 @@
-export default ($resourceBlock, event, selectedExportData, selectedImportData, objectPropExport, objectPropImport) => {
+export default ($resourceBlock, event, selectedExportData, selectedImportData, objectPropExport, objectPropImport, load) => {
   const { app, i18n, callApi } = window
   const tabId = window.tabId
   const Tab = window.Tabs[tabId]
   const clearInformation = () => {
     $resourceBlock.closest('.ajax-content').removeClass('ajax')
     Tab.selectedItems = []
+    load()
   }
   const selectedResource = selectedExportData
   console.log(selectedExportData)

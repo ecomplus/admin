@@ -240,7 +240,7 @@ export default function () {
       }
       // export orders
       $(`#t${tabId}-send-to-app`).find('.dropdown-menu a').click((event) => {
-        sendToApp($(`#t${tabId}-orders-sources`), event, Tab.selectedItems, Tab.selectedItems, 'order_ids', 'numbers')
+        sendToApp($(`#t${tabId}-orders-sources`), event, Tab.selectedItems, Tab.selectedItems, 'order_ids', 'numbers', load)
       })
       $(`#t${tabId}-invoices`).click(() => checkSelectedOrders('invoices'))
       $(`#t${tabId}-shipping-tags`).click(() => checkSelectedOrders('shipping-tags'))
