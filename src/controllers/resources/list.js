@@ -238,10 +238,6 @@ export default function () {
         }
         return Tab.selectedItems
       }
-      // export orders
-      $(`#t${tabId}-send-to-app`).find('.dropdown-menu a').click((event) => {
-        sendToApp($(`#t${tabId}-orders-sources`), event, Tab.selectedItems, Tab.selectedItems, 'order_ids', 'numbers', load)
-      })
       $(`#t${tabId}-invoices`).click(() => checkSelectedOrders('invoices'))
       $(`#t${tabId}-shipping-tags`).click(() => checkSelectedOrders('shipping-tags'))
       $(`#t${tabId}-correios-enderecador`).click(() => {
@@ -252,6 +248,11 @@ export default function () {
         checkSelectedOrders('shipping-tags/correios')
       })
       $(`#t${tabId}-orders-statistics`).slideDown()
+
+      // export orders
+      $(`#t${tabId}-send-to-app`).find('.dropdown-menu a').click((event) => {
+        sendToApp($(`#t${tabId}-orders-sources`), event, Tab.selectedItems, Tab.selectedItems, 'order_ids', 'numbers', $grid)
+      })
     }
 
     // current list filters

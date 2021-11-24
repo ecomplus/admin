@@ -1,16 +1,20 @@
-export default ($resourceBlock, event, selectedExportData, selectedImportData, objectPropExport, objectPropImport, load) => {
-  const { app, i18n, callApi } = window
+export default ($resourceBlock, event, selectedExportData, selectedImportData, objectPropExport, objectPropImport, $grid) => {
+  const { $, app, i18n, callApi } = window
   const tabId = window.tabId
   const Tab = window.Tabs[tabId]
+
   const clearInformation = () => {
     $resourceBlock.closest('.ajax-content').removeClass('ajax')
     Tab.selectedItems = []
-    load()
+    $grid.find('input[type="checkbox"]:checked').each(function (index) {
+      const $checkbox = $(this)
+      setTimeout(function () {
+        $checkbox.next().click()
+      }, index * 20)
+    })
   }
+
   const selectedResource = selectedExportData
-  console.log(selectedExportData)
-  console.log(selectedImportData)
-  console.log(Tab.selectedItems)
   if (!selectedResource.length > 0) {
     app.toast(i18n({
       en_us: 'No items selected',
@@ -25,6 +29,7 @@ export default ($resourceBlock, event, selectedExportData, selectedImportData, o
   const action = btnDataset.action
   const appId = btnDataset.appId
   const appName = btnDataset.id
+
   callApi('applications.json', 'GET', (err, data) => {
     if (!err) {
       $resourceBlock.closest('.ajax-content').addClass('ajax')
