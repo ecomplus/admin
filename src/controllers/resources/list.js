@@ -1,13 +1,13 @@
+import sendToApp from './list/send-to-app'
+
 export default function () {
   const { localStorage, $, app, i18n, cutString, formatMoney, formatDate, stringToNumber } = window
-
   // current tab ID
   const tabId = window.tabId
   const Tab = window.Tabs[tabId]
   const elContainer = $('#t' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
   window.renderContentIds(elContainer)
-
   const baseHash = '/' + window.location.hash.replace(/\?.*$/, '') + '/'
   // create button
   $('#t' + tabId + '-create').click(function () {
@@ -33,9 +33,9 @@ export default function () {
   const resourceSlug = Tab.slug
   let data, list, load, reload
   const orderSources = {}
+
   const updateData = function () {
     data = Tab.data
-
     // map deeper objects
     list = data.result.map(function (doc, index) {
       var newDoc = { _index: index }
@@ -200,7 +200,6 @@ export default function () {
     }
   }
   updateData()
-
   if (list.length) {
     // delete checkbox element HTML
     const elCheckbox = '<div class="custom-controls-stacked">' +
@@ -211,13 +210,13 @@ export default function () {
                      '</div>'
 
     // setup jsGrid
-    var $grid = $('#t' + tabId + '-resource-list')
+    const $grid = $('#t' + tabId + '-resource-list')
     // current grid row
-    var row = 0
+    let row = 0
     // offset and limit
     // control pagination
-    var offset = 0
-    var limit
+    let offset = 0
+    let limit
     if (data.meta.limit) {
       limit = data.meta.limit
     } else {
@@ -249,6 +248,11 @@ export default function () {
         checkSelectedOrders('shipping-tags/correios')
       })
       $(`#t${tabId}-orders-statistics`).slideDown()
+
+      // export orders
+      $(`#t${tabId}-send-to-app`).find('.dropdown-menu a').click((event) => {
+        sendToApp($(`#t${tabId}-orders-sources`), event, Tab.selectedItems, Tab.selectedItems, 'order_ids', 'numbers', $grid)
+      })
     }
 
     // current list filters

@@ -25,12 +25,15 @@ import {
   i19visible
 } from '@ecomplus/i18n'
 
+import sendToApp from './send-to-app'
+
 export default function () {
   'use strict'
 
   // current tab ID
   const { tabId, $, callApi, app, quickview, lang, handleInputs, stringToNumber, unsetSaveAction, Tabs, i18n, formatMoney, ecomUtils } = window
   var Tab = Tabs[tabId]
+  Tab.selectedSkus = []
   /*
   var elContainer = $('#t' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
@@ -548,11 +551,16 @@ export default function () {
     $('#enable-stock-products').click(() => Tab.editItems({ manage_stock: true }))
     $('#disable-stock-products').click(() => Tab.editItems({ manage_stock: false }))
 
-    var setupItemElement = function (id, index, $item, $checkbox) {
+    $(`#t${tabId}-send-to-application`).find('.dropdown-menu a').click((event) => {
+      sendToApp($container, event, Tab.selectedItems, Tab.selectedSkus, 'product_ids', 'skus', $list)
+    })
+
+    const setupItemElement = function (id, sku, index, $item, $checkbox) {
       $checkbox.on('change', function () {
         if ($(this).is(':checked')) {
           // select item
           Tab.selectedItems.push(id)
+          Tab.selectedSkus.push(sku)
         } else {
           // unselect item
           Tab.selectedItems = $.grep(Tab.selectedItems, function (i) {
@@ -675,7 +683,7 @@ export default function () {
         })
         $items.push($item)
         // handle select checkbox and item click
-        setupItemElement(item._id, index, $item, $checkbox)
+        setupItemElement(item._id, item.sku, index, $item, $checkbox)
       }
 
       // fill products list content

@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.38](https://github.com/ecomplus/admin/compare/v1.0.0-beta.37...v1.0.0-beta.38) (2021-11-24)
+
+
+### Features
+
+* **send-to-app:** export/import orders and products from lists to erp apps ([#459](https://github.com/ecomplus/admin/issues/459)) ([baa6271](https://github.com/ecomplus/admin/commit/baa627157fa99e0cc19610ef2e68096eb9daae13))
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#457](https://github.com/ecomplus/admin/issues/457)) ([411b054](https://github.com/ecomplus/admin/commit/411b0546810b83189af9851d184b86742b530a96))
+
 ## [1.0.0-beta.37](https://github.com/ecomplus/admin/compare/v1.0.0-beta.36...v1.0.0-beta.37) (2021-10-22)
 
 
