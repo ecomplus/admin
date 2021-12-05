@@ -86,7 +86,7 @@ export default function () {
     const { products } = Data()
     if (products && products.length) {
       const query = `_id:("${products.join('" "')}")`
-      callSearchApi(`items.json?q=${encodeURIComponent(query)}`, 'GET', function (err, data) {
+      callSearchApi(`items.json?q=${encodeURIComponent(query)}&size=${Math.min(products.length, 100)}`, 'GET', function (err, data) {
         if (!err && data.hits) {
           data.hits.hits.forEach(({ _source, _id }, i) => addItem({
             _id,
