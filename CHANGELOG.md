@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.39](https://github.com/ecomplus/admin/compare/v1.0.0-beta.38...v1.0.0-beta.39) (2021-12-06)
+
+
+### Bug Fixes
+
+* **collections-form:** render all items in collection ([#486](https://github.com/ecomplus/admin/issues/486)) ([18f40a7](https://github.com/ecomplus/admin/commit/18f40a7dda764d7b0428d2d1c1ee5bb014df3879))
+
 ## [1.0.0-beta.38](https://github.com/ecomplus/admin/compare/v1.0.0-beta.37...v1.0.0-beta.38) (2021-11-24)
 
 
