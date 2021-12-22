@@ -20,7 +20,7 @@ const update = () => {
 }
 
 const reload = () => {
-  for (var prop in session) {
+  for (const prop in session) {
     if (session[prop] !== undefined) {
       sessionStorage.setItem(prop, session[prop])
     }
