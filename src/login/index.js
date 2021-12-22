@@ -220,7 +220,23 @@ const initDashboard = (storeId, username, session) => {
 }
 
 const urlParams = new URLSearchParams(window.location.search)
-const getAuthState = name => (urlParams.get(name) || localStorage.getItem(name))
+const getAuthState = (name, storeId, myId) => {
+  const fromUrl = urlParams.get(name)
+  if (fromUrl) {
+    return fromUrl
+  }
+  const fromStorage = localStorage.getItem(name)
+  if (fromStorage) {
+    if (
+      (myId && localStorage.getItem(name) !== myId) ||
+      (storeId && localStorage.getItem(name) !== storeId)
+    ) {
+      return null
+    }
+  }
+  return fromStorage
+}
+
 const goTo = urlParams.get('go_to')
 if (goTo) {
   sessionStorage.setItem('go_to', goTo)
@@ -237,15 +253,19 @@ const setStorageItem = (label, value) => {
 const accessToken = getAuthState('access_token')
 if (accessToken) {
   const storeId = getAuthState('store_id')
-  let myId = getAuthState('my_id')
+  let myId = getAuthState('my_id', storeId)
 
-  const expires = getAuthState('expires')
+  let expires = getAuthState('expires', storeId, myId)
   if (expires) {
     const dateExpires = new Date(expires)
     if (dateExpires.getTime() < Date.now()) {
       localStorage.removeItem('access_token')
       myId = null
     }
+  } else {
+    const d = new Date()
+    d.setHours(d.getHours() + 1)
+    expires = d.toISOString()
   }
 
   if (storeId && myId) {
