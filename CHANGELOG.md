@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.40](https://github.com/ecomplus/admin/compare/v1.0.0-beta.39...v1.0.0-beta.40) (2021-12-22)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#489](https://github.com/ecomplus/admin/issues/489)) ([aefe98e](https://github.com/ecomplus/admin/commit/aefe98ea4401570b04a86359447b8f074134928e))
+* **login:** better handling auth state from different stores ([3ecc847](https://github.com/ecomplus/admin/commit/3ecc84778f270f0a005973ac6b87f9fefac09b38))
+
 ## [1.0.0-beta.39](https://github.com/ecomplus/admin/compare/v1.0.0-beta.38...v1.0.0-beta.39) (2021-12-06)
 
 
