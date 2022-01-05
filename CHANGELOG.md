@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.41](https://github.com/ecomplus/admin/compare/v1.0.0-beta.40...v1.0.0-beta.41) (2022-01-05)
+
+
+### Bug Fixes
+
+* **login:** handle token expires as timestamp ([1731524](https://github.com/ecomplus/admin/commit/1731524cf99b8b77617597f327c2273a1560f8c0))
+
 ## [1.0.0-beta.40](https://github.com/ecomplus/admin/compare/v1.0.0-beta.39...v1.0.0-beta.40) (2021-12-22)
 
 
