@@ -257,10 +257,13 @@ if (accessToken) {
 
   let expires = getAuthState('expires', storeId, myId)
   if (expires) {
-    const dateExpires = new Date(expires)
+    let isExpiresTimestamp = !/\D/.test(expires)
+    const dateExpires = new Date(isExpiresTimestamp ? Number(expires) : expires)
     if (dateExpires.getTime() < Date.now()) {
       localStorage.removeItem('access_token')
       myId = null
+    } else if (isExpiresTimestamp) {
+      expires = dateExpires.toISOString()
     }
   } else {
     const d = new Date()
