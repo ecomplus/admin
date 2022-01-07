@@ -245,18 +245,18 @@ export default function () {
     })
 
     // use global dynamic quickview
-    var $qv = $('#qvx')
+    const $qv = $('#qvx')
     $qv.find('#qvx-title').text(i18n(i19filterProducts))
     // use quickview for mass edit
-    var $qvEdit = $('#modal-mass-edit')
+    const $qvEdit = $('#modal-mass-edit')
     $qvEdit.find('input[data-money]').inputMoney()
-    var $startDate = $('#startDate')
-    var $endDate = $('#endDate')
-    var $setResource = $('.set-resource')
-    var $setResourceName = $('.set-resource-name')
-    var $discount = $('#discountSell')
-    var $saveModalResource = $('#saveModalResource')
-    var $resourceSelect = $('#resourceMass')
+    const $startDate = $('#startDate')
+    const $endDate = $('#endDate')
+    const $setResource = $('.set-resource')
+    const $setResourceName = $('.set-resource-name')
+    const $discount = $('#discountSell')
+    const $saveModalResource = $('#saveModalResource')
+    const $resourceSelect = $('#resourceMass')
 
     // call and render categories
     $setResource.click(function (item) {
@@ -284,6 +284,16 @@ export default function () {
       }, 500)
     })
 
+    const clearData = () => {
+      $container.closest('.ajax-content').removeClass('ajax')
+      Tab.selectedItems = []
+      $list.find('input[type="checkbox"]:checked').each(function (index) {
+        const $checkbox = $(this)
+        setTimeout(function () {
+          $checkbox.next().click()
+        }, index * 20)
+      })
+    }
     // save categories into selected products
     $saveModalResource.click(function () {
       const selectedResource = $resourceSelect.val()
@@ -301,6 +311,8 @@ export default function () {
             callApi('collections/' + infoResult._id + '.json', 'PATCH', (error, result) => {
               if (!error) {
                 $('#set-resource').modal('hide')
+                delete objCollection.products
+                clearData()
                 app.toast(
                 `${i18n(i19savedWithSuccess)}`,
                 {
@@ -326,8 +338,8 @@ export default function () {
                     variant: 'success'
                   })
                   $('#spinner-wait').hide()
-                  $container.removeClass('ajax')
-                  load()
+                  clearData()
+                  delete parseCategory._id
                 } else {
                   $('#spinner-wait').show()
                   $container.addClass('ajax')
@@ -352,7 +364,7 @@ export default function () {
     const calcDiscount = function (price, discount) {
       return (price - price * stringToNumber(discount) / 100).toFixed(2)
     }
-    var $editMass = $('#products-bulk-action')
+    const $editMass = $('#products-bulk-action')
     $editMass.find('.edit-selected').click(function () {
       if (!Tab.selectedItems.length > 0) {
         app.toast(`${i18n(i19noItemSelected)}`)
