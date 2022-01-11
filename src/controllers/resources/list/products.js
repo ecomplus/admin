@@ -245,18 +245,20 @@ export default function () {
     })
 
     // use global dynamic quickview
-    var $qv = $('#qvx')
+    const $qv = $('#qvx')
     $qv.find('#qvx-title').text(i18n(i19filterProducts))
     // use quickview for mass edit
-    var $qvEdit = $('#modal-mass-edit')
+    const $qvEdit = $('#modal-mass-edit')
     $qvEdit.find('input[data-money]').inputMoney()
-    var $startDate = $('#startDate')
-    var $endDate = $('#endDate')
-    var $setResource = $('.set-resource')
-    var $setResourceName = $('.set-resource-name')
-    var $discount = $('#discountSell')
-    var $saveModalResource = $('#saveModalResource')
-    var $resourceSelect = $('#resourceMass')
+    const $startDate = $('#startDate')
+    const $endDate = $('#endDate')
+    const $setResource = $('.set-resource')
+    const $setResourceName = $('.set-resource-name')
+    const $discount = $('#discountSell')
+    const $saveModalResource = $('#saveModalResource')
+    const $resourceSelect = $('#resourceMass')
+    const $countRequests = $('.count__requests')
+    const $countTotal = $('.count__total')
 
     // call and render categories
     $setResource.click(function (item) {
@@ -284,6 +286,16 @@ export default function () {
       }, 500)
     })
 
+    const clearData = () => {
+      $container.closest('.ajax-content').removeClass('ajax')
+      Tab.selectedItems = []
+      $list.find('input[type="checkbox"]:checked').each(function (index) {
+        const $checkbox = $(this)
+        setTimeout(function () {
+          $checkbox.next().click()
+        }, index * 20)
+      })
+    }
     // save categories into selected products
     $saveModalResource.click(function () {
       const selectedResource = $resourceSelect.val()
@@ -301,6 +313,8 @@ export default function () {
             callApi('collections/' + infoResult._id + '.json', 'PATCH', (error, result) => {
               if (!error) {
                 $('#set-resource').modal('hide')
+                clearData()
+                load()
                 app.toast(
                 `${i18n(i19savedWithSuccess)}`,
                 {
@@ -314,21 +328,24 @@ export default function () {
         const parseCategory = {
           _id: infoResult._id
         }
+        $countTotal.text(ids.length)
         ids.forEach((item, i) => {
           setTimeout(function () {
             callApi(`products/${item}/categories.json`, 'POST', (err, doc) => {
               if (!err) {
                 if (ids.length === i + 1) {
-                  $('#set-resource').modal('hide')
+                  $countRequests.text(i + 1)
                   app.toast(
                   `${i18n(i19savedWithSuccess)}`,
                   {
                     variant: 'success'
                   })
                   $('#spinner-wait').hide()
-                  $container.removeClass('ajax')
+                  $('#set-resource').modal('hide')
+                  clearData()
                   load()
                 } else {
+                  $countRequests.text(i + 1)
                   $('#spinner-wait').show()
                   $container.addClass('ajax')
                 }
@@ -352,7 +369,7 @@ export default function () {
     const calcDiscount = function (price, discount) {
       return (price - price * stringToNumber(discount) / 100).toFixed(2)
     }
-    var $editMass = $('#products-bulk-action')
+    const $editMass = $('#products-bulk-action')
     $editMass.find('.edit-selected').click(function () {
       if (!Tab.selectedItems.length > 0) {
         app.toast(`${i18n(i19noItemSelected)}`)
@@ -370,7 +387,7 @@ export default function () {
       if (prop === 'price' || prop === 'quantity') {
         return stringToNumber(value)
       } else if (prop === 'price_effective_date.start' || prop === 'price_effective_date.end') {
-        var date = value.split('/')
+        const date = value.split('/')
         return new Date(date[2], date[1] - 1, date[0]).toISOString()
       } else {
         if (value) {
@@ -399,26 +416,27 @@ export default function () {
         }
       }
     }
-    var objChange = {}
-    var objVariation = {}
-    var objSimple = {}
+    const objChange = {}
+    const objVariation = {}
+    let objSimple = {}
     $('#modal-mass-edit').find('input').change(function () {
-      var prop = $(this).attr('name')
-      var value = removeMask(prop, $(this).val())
+      const prop = $(this).attr('name')
+      const value = removeMask(prop, $(this).val())
       setObjChange(objChange, prop, value)
       removeEmpty(objChange)
       $('#saveModalMass').show()
     })
 
     $qvEdit.find('#saveModalMass').click(function () {
-      var ids = Tab.selectedItems
-      var i = 0
+      const ids = Tab.selectedItems
+      $countTotal.text(ids.length)
+      let i = 0
       if (ids) {
-        var don = 0
-        var startAgain = function () {
+        let don = 0
+        const startAgain = function () {
           callApi('products/' + ids[i] + '.json', 'GET', function (error, schema) {
             if (!error) {
-              var price, discount
+              let price, discount
               if (schema.base_price) {
                 price = schema.base_price
               } else {
@@ -431,7 +449,7 @@ export default function () {
               }
               objSimple = Object.assign(objSimple, objChange)
               if (schema.variations && (discount || objChange.price || objChange.quantity)) {
-                var done
+                let done
                 const { variations } = schema
                 variations.forEach((variation, ii) => {
                   if (variation.base_price) {
@@ -449,33 +467,33 @@ export default function () {
                   if (objChange.price || discount) {
                     objVariation.price = objChange.price || discount
                   }
+                  const callbackVariation = function (err, body) {
+                    if (!err) {
+                      if (variations.length === done) {
+                        delete objVariation.price
+                        delete objVariation.quantity
+                        delete objVariation.base_price
+                        delete objVariation.price_effective_date
+                        app.toast(
+                        `${i18n(i19savedWithSuccess)}`,
+                        {
+                          variant: 'success'
+                        })
+                        $('#spinner-wait-edit').hide()
+                        $('#modal-mass-edit').modal('hide')
+                        $container.removeClass('ajax')
+                        setTimeout(function () {
+                          load(true)
+                        }, 500)
+                      } else {
+                        $('#spinner-wait-edit').show()
+                        $container.addClass('ajax')
+                      }
+                    }
+                  }
                   callApi('products/' + schema._id + '/variations/' + variation._id + '.json', 'PATCH', callbackVariation, objVariation)
                   done = ii
                 })
-                var callbackVariation = function (err, body) {
-                  if (!err) {
-                    if (variations.length === done) {
-                      delete objVariation.price
-                      delete objVariation.quantity
-                      delete objVariation.base_price
-                      delete objVariation.price_effective_date
-                      app.toast(
-                      `${i18n(i19savedWithSuccess)}`,
-                      {
-                        variant: 'success'
-                      })
-                      $('#spinner-wait-edit').hide()
-                      $('#modal-mass-edit').modal('hide')
-                      $container.removeClass('ajax')
-                      setTimeout(function () {
-                        load(true)
-                      }, 500)
-                    } else {
-                      $('#spinner-wait-edit').show()
-                      $container.addClass('ajax')
-                    }
-                  }
-                }
               }
               setTimeout(function () {
                 callApi('products/' + schema._id + '.json', 'PATCH', callback, objSimple)
@@ -486,10 +504,11 @@ export default function () {
           })
         }
         startAgain()
-        var callback = function (err, body) {
+        const callback = function (err, body) {
           if (!err) {
             i++
             don++
+            $countRequests.text(don)
             if (objSimple) {
               delete objSimple.price
               delete objSimple.quantity
@@ -507,6 +526,7 @@ export default function () {
               setTimeout(function () {
                 load(true)
               }, 500)
+              clearData()
             } else {
               $('#spinner-wait-edit').show()
               startAgain()
