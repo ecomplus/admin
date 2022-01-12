@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.42](https://github.com/ecomplus/admin/compare/v1.0.0-beta.41...v1.0.0-beta.42) (2022-01-12)
+
+
+### Features
+
+* **products-list:** count edit in mass requests, prevent data reload ([#497](https://github.com/ecomplus/admin/issues/497)) ([ebb433e](https://github.com/ecomplus/admin/commit/ebb433e6d26825f955d2fd5e9b0558eea4af6fb5))
+
+
+### Bug Fixes
+
+* **products-form:** create new category or brand with slug ([#500](https://github.com/ecomplus/admin/issues/500)) ([1dfd2b2](https://github.com/ecomplus/admin/commit/1dfd2b28b0e14a972e9721c6a7824e960d6df8f6))
+
 ## [1.0.0-beta.41](https://github.com/ecomplus/admin/compare/v1.0.0-beta.40...v1.0.0-beta.41) (2022-01-05)
 
 

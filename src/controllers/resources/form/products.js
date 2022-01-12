@@ -12,6 +12,7 @@ export default function () {
   const {
     $,
     app,
+    clearAccents,
     i18n,
     ecomUtils,
     lang,
@@ -1453,7 +1454,8 @@ export default function () {
         var optionValue = function (objectId) {
           return JSON.stringify({
             _id: objectId,
-            name: term
+            name: term,
+            slug: clearAccents(term.toLowerCase(), '-').replace(/[^a-z0-9-_./]/g, '')
           })
         }
 
