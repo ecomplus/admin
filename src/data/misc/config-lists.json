@@ -564,7 +564,7 @@
           }
         }
       },
-      "extra_field": "shipping_method_label"
+      "extra_field": "shipping_lines/scheduled_delivery/end"
     }
   }
 }

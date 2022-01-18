@@ -361,6 +361,7 @@ export default function () {
                 'buyers.display_name,' +
                 'buyers.phones,' +
                 'buyers.doc_number,' +
+                'shipping_lines.scheduled_delivery.end,' +
                 'transactions.payment_link,' +
                 'transactions.intermediator.transaction_code,' +
                 'items.product_id,' +
