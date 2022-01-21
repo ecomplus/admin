@@ -1551,6 +1551,9 @@ const { sessionStorage, localStorage, Image, $, app } = window
               let picture, thumb
               if (json.picture) {
                 picture = json.picture
+                if (!picture.normal) {
+                  console.log(`WARN: Image uploaded at ${new Date().toISOString()} was not fully resized / optimized`)
+                }
               } else {
                 picture = {
                   zoom: { url: baseUrl + json.key }

@@ -257,7 +257,7 @@ if (accessToken) {
 
   let expires = getAuthState('expires', storeId, myId)
   if (expires) {
-    let isExpiresTimestamp = !/\D/.test(expires)
+    const isExpiresTimestamp = !/\D/.test(expires)
     const dateExpires = new Date(isExpiresTimestamp ? Number(expires) : expires)
     if (dateExpires.getTime() < Date.now()) {
       localStorage.removeItem('access_token')
@@ -324,18 +324,23 @@ $form.submit(function () {
       }
     })
 
+    const data = { pass_md5_hash: password }
+    let url = 'https://api.e-com.plus/v1/_login.json'
+    if (username.indexOf('@') !== -1) {
+      data.email = username
+    } else {
+      data.username = username
+      url += `?username=${username}`
+    }
     $.ajax({
-      url: 'https://api.e-com.plus/v1/_login.json?username',
+      url,
       method: 'POST',
       dataType: 'json',
       contentType,
       headers: {
         'X-Store-ID': 1
       },
-      data: JSON.stringify({
-        username,
-        pass_md5_hash: password
-      })
+      data: JSON.stringify(data)
     })
 
       .done(function (data) {
