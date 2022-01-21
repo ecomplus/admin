@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.44](https://github.com/ecomplus/admin/compare/v1.0.0-beta.43...v1.0.0-beta.44) (2022-01-21)
+
+
+### Features
+
+* **login:** also support login by email address ([f1cfee5](https://github.com/ecomplus/admin/commit/f1cfee5ad1ea46007f90df4ff69d4183613f7822))
+
+
+### Bug Fixes
+
+* **resources-lists:** set item props going deeper on nested objects inside arrays also ([f994ecd](https://github.com/ecomplus/admin/commit/f994ecd8ff59f0f042dc3b31a5af242d9b928b60))
+
 ## [1.0.0-beta.43](https://github.com/ecomplus/admin/compare/v1.0.0-beta.42...v1.0.0-beta.43) (2022-01-12)
 
 
