@@ -41,29 +41,37 @@ export default function () {
       var newDoc = { _index: index }
       for (var prop in doc) {
         var deepObj = doc[prop]
-        const goDeeper = (loopObj, prop) => {
-          for (const deepProp in loopObj) {
-            if (loopObj[deepProp] !== undefined) {
-              // assign to object
-              // using / to separate properties because jsGrid converts dot notation
-              const newProp = prop + `/${deepProp}`
-              if (
-                typeof loopObj[deepProp] === 'object' &&
-                loopObj[deepProp] &&
-                !Array.isArray(loopObj[deepProp])
-              ) {
-                goDeeper(Object.assign({}, loopObj[deepProp]), newProp)
-              } else {
-                newDoc[newProp] = loopObj[deepProp]
+        if (deepObj !== null && Array.isArray(deepObj)) {
+          for (var i = 0; i < deepObj.length; i++) {
+            for (var deepProp in deepObj[i]) {
+              if (deepObj[i][deepProp] !== undefined) {
+                // assign to object
+                // using / to separate properties because jsGrid converts dot notation
+                newDoc[prop + '/' + deepProp] = deepObj[i][deepProp]
               }
             }
           }
         }
-        if (Array.isArray(deepObj)) {
-          for (let i = 0; i < deepObj.length; i++) {
-            goDeeper(Object.assign({}, deepObj[i]), prop)
+        if (typeof deepObj === 'object' && deepObj !== null && !Array.isArray(deepObj)) {
+          // is object
+          const goDeeper = (loopObj, prop) => {
+            for (deepProp in loopObj) {
+              if (loopObj[deepProp] !== undefined) {
+                // assign to object
+                // using / to separate properties because jsGrid converts dot notation
+                const newProp = prop + `/${deepProp}`
+                if (
+                  typeof loopObj[deepProp] === 'object' &&
+                  loopObj[deepProp] &&
+                  !Array.isArray(loopObj[deepProp])
+                ) {
+                  goDeeper(Object.assign({}, loopObj[deepProp]), newProp)
+                } else {
+                  newDoc[newProp] = loopObj[deepProp]
+                }
+              }
+            }
           }
-        } else if (typeof deepObj === 'object' && deepObj !== null) {
           goDeeper(Object.assign({}, deepObj), prop)
         } else {
           // just keep the original property
