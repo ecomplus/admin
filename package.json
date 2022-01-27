@@ -58,7 +58,7 @@
     "@brazilian-utils/brazilian-utils": "^1.0.0-rc.12",
     "@ecomplus/admin-helpers": "^1.2.4",
     "@ecomplus/admin-home": "^1.1.0-rc.0",
-    "@ecomplus/admin-marketplace": "^2.0.2",
+    "@ecomplus/admin-marketplace": "^2.0.3",
     "@ecomplus/auth": "^1.0.1",
     "@ecomplus/client": "^2.2.1",
     "@ecomplus/i18n": "^1.26.0",
