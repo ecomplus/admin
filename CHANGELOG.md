@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.46](https://github.com/ecomplus/admin/compare/v1.0.0-beta.45...v1.0.0-beta.46) (2022-01-28)
+
+
+### Features
+
+* **customers-form:** show loyalty points resume, better presentation for orders list ([020097e](https://github.com/ecomplus/admin/commit/020097e71f8d1477255d51b6a319ca8986638070))
+
+
+### Bug Fixes
+
+* **deps:** update @ecomplus/admin-marketplace to v2.0.3 ([c867817](https://github.com/ecomplus/admin/commit/c867817750ee3c832a489fde354c31dade7708ed))
+
 ## [1.0.0-beta.45](https://github.com/ecomplus/admin/compare/v1.0.0-beta.44...v1.0.0-beta.45) (2022-01-24)
 
 

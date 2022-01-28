@@ -1,13 +1,13 @@
+/* eslint-disable no-var, quote-props, no-prototype-builtins */
+
 /*!
  * Copyright 2018 E-Com Club
  */
 
 export default function () {
-  'use strict'
-  // lang of page
-  var lang = window.lang
-  // current tab ID
-  var tabId = window.tabId
+  const { $, lang, tabId, handleInputs, setupInputValues, handleNestedObjects } = window
+
+  // current tab
   var Tab = window.Tabs[tabId]
   // edit JSON document
   var commit = Tab.commit
@@ -356,6 +356,24 @@ export default function () {
                     '      <span data-lang="en_us">CPF/CNPJ</span> ' +
                     '      <span data-lang="pt_br">CPF/CNPJ</span>' +
                     '      </span>: ' + maskDocNumber(data))
+
+    const loyaltyPointsEntries = data.loyalty_points_entries
+    if (loyaltyPointsEntries && loyaltyPointsEntries.length) {
+      $abstractText.append(String.raw`
+      <hr><h4 class="i18n">
+        <span data-lang="en_us">Loyalty points</span>
+        <span data-lang="pt_br">Pontos de fidelidade</span>
+      </h4>
+      <span class="i18n">
+        <span data-lang="en_us">Earned points:</span>
+        <span data-lang="pt_br">Pontos ganhos:</span>
+      </span> ${loyaltyPointsEntries.reduce((acc, entry) => acc + entry.earned_points, 0).toFixed(2)}
+      <br><span class="i18n">
+        <span data-lang="en_us">Active points:</span>
+        <span data-lang="pt_br">Pontos ativos:</span>
+      </span> ${loyaltyPointsEntries.reduce((acc, entry) => acc + entry.active_points, 0).toFixed(2)}`)
+    }
+
     if (data.orders_count) {
       $abstractStatistic.append(
         '<span class="i18n"> ' +
@@ -365,14 +383,17 @@ export default function () {
                       '<span class="i18n"> ' +
                                   '      <span data-lang="en_us">Amount of money in order: </span> ' +
                                   '      <span data-lang="pt_br">Valor total de pedidos: </span>' +
-                                  '      </span>' + window.ecomUtils.formatMoney(data.orders_total_value || 0, data.currency_id) + '<br>' +
-                                  '<span class="i18n"> ')
-      for (var i = 0; i < data.orders.length; i++) {
-        $abstractStatistic.append('<span class="i18n"> ' +
-                      '      <span data-lang="en_us">Order</span> ' +
-                      '      <span data-lang="pt_br">Pedido</span>' +
-                      '      </span>: <a href="/#/resources/orders/' + data.orders[i]._id + '">' + data.orders[i].number + '</a><br>' +
-                      '<span class="i18n"> ')
+                                  '      </span>' + window.ecomUtils.formatMoney(data.orders_total_value || 0, data.currency_id) + '<br>')
+      if (data.orders.length) {
+        $abstractStatistic.append(String.raw`
+        <hr><h4 class="i18n">
+          <span data-lang="en_us">Orders</span>
+          <span data-lang="pt_br">Pedidos</span>
+        </h4>`)
+        for (var i = 0; i < data.orders.length; i++) {
+          const { _id, number } = data.orders[i]
+          $abstractStatistic.append(`<a href="/#/resources/orders/${_id}" class="text-monospace mr-2 d-inline-block">#${number}</a>`)
+        }
       }
     }
   }
