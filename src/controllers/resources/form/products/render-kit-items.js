@@ -113,6 +113,9 @@ export default function ({
         setupInputValues($tr, item, `${docProp}.`)
       }
     }
+
+    // no kit and variations together
+    $(`#t${tabId}-variations`).slideUp()
   }
 
   // handle items search
@@ -244,5 +247,6 @@ export default function ({
         })
       }
     })
+    $(`#t${tabId}-kit`).find('.card-btn-slide').click()
   }
 }

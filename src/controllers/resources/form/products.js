@@ -1262,6 +1262,9 @@ export default function () {
                 }
               }
             }
+
+            // no kit and variations together
+            $(`#t${tabId}-kit`).hide()
           }
 
           if (!skipData) {
