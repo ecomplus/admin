@@ -611,7 +611,7 @@ export default function () {
       })
     }
 
-    var updateContent = function () {
+    const updateContent = function () {
       // update list content
       // generate grid
       var $items = []
@@ -655,7 +655,9 @@ export default function () {
             }
           }
           if (thumb) {
-            const src = thumb.url.replace(/(\w+\.)?(ecoms\d)\.com/i, '$2-nyc3.nyc3.cdn.digitaloceanspaces.com')
+            const src = thumb.url
+              .replace(/(\w+\.)?(ecoms\d)\.com/i, '$2-nyc3.nyc3.cdn.digitaloceanspaces.com')
+              .replace(/\.avif$/, '.webp')
             pictureHtml = `<img src="${src}">`
           }
         }
