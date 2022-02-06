@@ -1689,7 +1689,12 @@ const { sessionStorage, localStorage, Image, $, app } = window
         window.location.href = 'https://www.e-com.plus/'
       }
       window.Store = Store = store
-      // console.log(Store)
+      const storeHomepage = store.homepage || (store.domain && `https://${store.domain}/`)
+      if (storeHomepage) {
+        $('img.avatar').attr('src', `https://v1.indieweb-avatar.11ty.dev/${encodeURIComponent(storeHomepage)}/`)
+      }
+
+      console.log(Store.domain)
       // get authentication object
       return ecomAuth.fetchAuthentication()
         .then(authentication => {
