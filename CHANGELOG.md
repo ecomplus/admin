@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.47](https://github.com/ecomplus/admin/compare/v1.0.0-beta.46...v1.0.0-beta.47) (2022-02-06)
+
+
+### Features
+
+* **avatar-icon:** try to get store icon from storefront using https://www.11ty.dev/docs/services/indieweb-avatar/ :thumb: ([457d9c3](https://github.com/ecomplus/admin/commit/457d9c39d8e6f657e06cb68768d733741f97f61d))
+
+
+### Bug Fixes
+
+* **products-form:** no both kit & variations together ([c4d6708](https://github.com/ecomplus/admin/commit/c4d6708f81f5288d854ae1715bd5dc5f427976f5))
+* **products-list:** replace .avif thumb images whith webp for better browser support (out of ecoms1 cdn) ([8d7b15d](https://github.com/ecomplus/admin/commit/8d7b15d652089a2a8d93f17c585598a170a54ce9))
+
 ## [1.0.0-beta.46](https://github.com/ecomplus/admin/compare/v1.0.0-beta.45...v1.0.0-beta.46) (2022-01-28)
 
 
