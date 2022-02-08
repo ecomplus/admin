@@ -1504,7 +1504,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                         }
                         Done()
                       }
-                      newImg.src = baseUrl + thumbSizes[0].path + key.replace(/^.*\/?(@.*)$/, '$1')
+                      newImg.src = baseUrl + thumbSizes[0].path + key.replace(/^.*\/?(@.*)$/, '$1') + '.webp'
                     }())
                   }
                 } else {

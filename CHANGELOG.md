@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.48](https://github.com/ecomplus/admin/compare/v1.0.0-beta.47...v1.0.0-beta.48) (2022-02-08)
+
+
+### Bug Fixes
+
+* **media-lib:** force webp thumb images on media aside ([c4836b9](https://github.com/ecomplus/admin/commit/c4836b91394bcd03fd85018b74c77a5d78ea0313))
+
 ## [1.0.0-beta.47](https://github.com/ecomplus/admin/compare/v1.0.0-beta.46...v1.0.0-beta.47) (2022-02-06)
 
 
