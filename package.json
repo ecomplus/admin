@@ -62,7 +62,7 @@
     "@ecomplus/auth": "^1.0.1",
     "@ecomplus/client": "^2.2.1",
     "@ecomplus/i18n": "^1.27.0",
-    "@ecomplus/storefront-twbs": "^5.12.1",
+    "@ecomplus/storefront-twbs": "^7.1.0",
     "@ecomplus/utils": "^1.4.1",
     "blueimp-md5": "^2.19.0",
     "bootstrap": "^4.6.1",
