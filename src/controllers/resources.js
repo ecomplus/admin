@@ -757,7 +757,6 @@ export default function () {
               result.forEach(doc => {
                 // add to list parsed to dot notation
                 delete doc.store_id
-                delete doc.created_at
                 delete doc.updated_at
                 exportData.push(parseDocToRow(doc))
               })
