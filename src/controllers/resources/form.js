@@ -66,16 +66,16 @@ export default function () {
       const rand = () => Math.floor(Math.random() * (1000 - 100)) + 100
       if (data.sku) {
         const suffixSku = () => '-C' + rand()
-        data.sku += suffixSku()
+        data.sku = (data.sku + suffixSku()).slice(0, 100)
         if (data.variations) {
           data.variations.forEach(variation => {
-            variation.sku += suffixSku()
+            variation.sku = (variation.sku + suffixSku()).slice(0, 100)
             variation._id = randomObjectId()
           })
         }
       }
       if (data.slug) {
-        data.slug += `-c${rand()}`
+        data.slug = (data.slug + `-c${rand()}`).slice(0, 255)
       }
       ;[
         'views',
