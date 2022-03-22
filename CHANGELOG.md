@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.49](https://github.com/ecomplus/admin/compare/v1.0.0-beta.48...v1.0.0-beta.49) (2022-03-16)
+
+
+### Bug Fixes
+
+* **form:** slice `slug` and `sku` generated string to max length ([#527](https://github.com/ecomplus/admin/issues/527)) ([634ca4b](https://github.com/ecomplus/admin/commit/634ca4bc8988e3dfc324b6bff0ca16aa2a3416ae))
+
 ## [1.0.0-beta.48](https://github.com/ecomplus/admin/compare/v1.0.0-beta.47...v1.0.0-beta.48) (2022-02-08)
 
 
