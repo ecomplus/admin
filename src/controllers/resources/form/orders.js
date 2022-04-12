@@ -217,7 +217,7 @@ export default function () {
       // call Store API
       var uri = 'customers.json?main_email=' + encodeURIComponent($addBuyerInput.val().trim())
       // specify properties to return
-      uri += '&fields=_id,main_email,doc_number,name,display_name,phones,addresses'
+      uri += '&fields=_id,main_email,doc_number,name,display_name,phones,addresses,registry_type'
 
       callApi(uri, 'GET', function (err, json) {
         // hide spinner
