@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.50](https://github.com/ecomplus/admin/compare/v1.0.0-beta.49...v1.0.0-beta.50) (2022-04-12)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#532](https://github.com/ecomplus/admin/issues/532)) ([ff3eebe](https://github.com/ecomplus/admin/commit/ff3eebecb4246d3fb5a2898b701501c57c4dd4f8))
+
 ## [1.0.0-beta.49](https://github.com/ecomplus/admin/compare/v1.0.0-beta.48...v1.0.0-beta.49) (2022-03-16)
 
 

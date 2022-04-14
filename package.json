@@ -1,6 +1,6 @@
 {
   "name": "@ecomplus/admin",
-  "version": "1.0.0-beta.49",
+  "version": "1.0.0-beta.50",
   "description": "E-Com Plus Admin dashboard PWA",
   "main": "src/index.js",
   "scripts": {
@@ -21,13 +21,13 @@
   },
   "homepage": "https://app-dev.e-com.plus",
   "devDependencies": {
-    "@babel/core": "^7.17.8",
+    "@babel/core": "^7.17.9",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/preset-env": "^7.16.11",
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
     "autoprefixer": "^9.8.8",
-    "babel-loader": "^8.2.3",
+    "babel-loader": "^8.2.4",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^6.4.1",
     "core-js": "^3.21.1",
@@ -40,7 +40,7 @@
     "husky": "^7.0.4",
     "mini-css-extract-plugin": "^1.6.2",
     "postcss-loader": "^3.0.0",
-    "sass": "^1.49.9",
+    "sass": "^1.50.0",
     "sass-loader": "^10.2.1",
     "standard": "^16.0.4",
     "standard-version": "^9.3.2",
@@ -52,7 +52,7 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.3",
     "webpack-pwa-manifest": "^4.3.0",
-    "workbox-webpack-plugin": "^6.5.1"
+    "workbox-webpack-plugin": "^6.5.2"
   },
   "dependencies": {
     "@brazilian-utils/brazilian-utils": "^1.0.0-rc.12",
@@ -61,7 +61,7 @@
     "@ecomplus/admin-marketplace": "^2.0.3",
     "@ecomplus/auth": "^1.0.1",
     "@ecomplus/client": "^2.2.1",
-    "@ecomplus/i18n": "^1.28.0",
+    "@ecomplus/i18n": "^1.29.0",
     "@ecomplus/storefront-twbs": "^5.12.1",
     "@ecomplus/utils": "^1.4.1",
     "blueimp-md5": "^2.19.0",
