@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.51](https://github.com/ecomplus/admin/compare/v1.0.0-beta.50...v1.0.0-beta.51) (2022-04-27)
+
+
+### Bug Fixes
+
+* **apps:** update skipped app ids for default ecom admin ([d1991de](https://github.com/ecomplus/admin/commit/d1991de8f39e0caff03f231937161994f0109357))
+
 ## [1.0.0-beta.50](https://github.com/ecomplus/admin/compare/v1.0.0-beta.49...v1.0.0-beta.50) (2022-04-12)
 
 
