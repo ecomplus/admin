@@ -268,7 +268,7 @@ export default function () {
           if (query) {
             // merge params without changing original default body
             // query object with search results conditions
-            body = Object.assign({ query: query }, Body)
+            body = Object.assign({ query }, Body)
           } else {
             body = Body
           }
@@ -673,8 +673,8 @@ export default function () {
                         ? Number(row[head])
                         : head.startsWith('Boolean')
                           ? typeof row[head] === 'string'
-                              ? row[head].toUpperCase().indexOf('TRUE') > -1
-                              : Boolean(row[head])
+                            ? row[head].toUpperCase().indexOf('TRUE') > -1
+                            : Boolean(row[head])
                           : row[head]
                     }
                     delete row[head]
@@ -688,6 +688,24 @@ export default function () {
                 delete doc.store_id
                 delete doc.created_at
                 delete doc.updated_at
+                Object.keys(doc).forEach(field => {
+                  // remove nested arrays empty objects
+                  if (Array.isArray(doc[field])) {
+                    for (let i = 0; i < doc[field].length; i++) {
+                      const item = doc[field][i]
+                      if (item && typeof item === 'object') {
+                        const countItemFields = Object.keys(item).length
+                        if (!countItemFields || (countItemFields === 1 && item._id)) {
+                          doc[field].splice(i, 1)
+                          i--
+                        }
+                      } else {
+                        break
+                      }
+                    }
+                  }
+                })
+
                 if (_id && _id.length > 2) {
                   if (/^[a-f0-9]{24}$/.test(_id)) {
                     callApi(`${slug}/${_id}.json`, 'PATCH', (err, doc) => {
