@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.52](https://github.com/ecomplus/admin/compare/v1.0.0-beta.51...v1.0.0-beta.52) (2022-05-12)
+
+
+### Bug Fixes
+
+* **csv-table-upload:** remove nested arrays empty objects [[#542](https://github.com/ecomplus/admin/issues/542)] ([527debf](https://github.com/ecomplus/admin/commit/527debf770086bca86cbd298da97b13bd7326375))
+
 ## [1.0.0-beta.51](https://github.com/ecomplus/admin/compare/v1.0.0-beta.50...v1.0.0-beta.51) (2022-04-27)
 
 
