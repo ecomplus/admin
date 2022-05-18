@@ -92,7 +92,7 @@ export default function () {
             }
             const $containerTags = `
               <div class="tags" style="break-after: page; break-inside: avoid; display: block">
-                <div id="${i % 9 === 0 ? `line${i}` : ''}" class="row" style="break-inside: avoid;"></div>
+                <div${(i % 9 === 0 ? ` id="line${i}"` : '')} class="row" style="break-inside: avoid;"></div>
               </div>`
             if (i % 9 === 0) {
               $appTab.find('.shipping-tags').append($containerTags)
