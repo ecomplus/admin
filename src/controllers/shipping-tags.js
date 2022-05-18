@@ -90,13 +90,16 @@ export default function () {
             } else if (!from.number) {
               from.number = 'S/N'
             }
-            const $containerTags = `<div class="tags" style="page-break-after: always;page-break-before: always; page-break-inside: avoid; display: block"><div id="${i % 9 === 0 ? `linha${i}` : ''}" class="row" style="page-break-after: always; page-break-inside: avoid;"></div></div>`
+            const $containerTags = `
+              <div class="tags" style="break-after: page; break-inside: avoid; display: block">
+                <div id="${i % 9 === 0 ? `line${i}` : ''}" class="row" style="break-inside: avoid;"></div>
+              </div>`
             if (i % 9 === 0) {
               $appTab.find('.shipping-tags').append($containerTags)
             }
             $shippingTags.push(`
               <div class="col-md-4" style="border: 2px dashed #ccc; break-inside: avoid;">
-                <div class="p-2 pt-3" style="page-break-inside: avoid; display: block">
+                <div class="p-2 pt-3" style="break-inside: avoid; display: block">
                   <ul class="list-unstyled  border-bottom">
                     <li><strong>REMETENTE</strong></li>
                     <li class="text-uppercase">${from.name}</li>
@@ -114,13 +117,13 @@ export default function () {
                   </ul>
                   <span class="text-muted">
                     <span class="text-monospace fs-16">#${order.number}</span>
-                    ${(order.amount && order.amount.total ? `<span style="display: none" class="total-price">(${order.amount.total})</span>` : '')}
-                    <span class="fs-14 float-right">${((app && app.carrier) || '')} ${((app && app.carrier && app.label && (app.carrier !== app.label)) ? ` / ${app.label}` : '')}</span>
+                    <span style="display: none" class="total-price">(${order.amount && order.amount.total})</span>
+                    <span class="fs-14 float-right">${((app && app.carrier) || '')} / ${((app && app.label) || '')}</span>
                   </span>
                 </div>
               </div>`)
             if (indexChanged % 9 === 0) {
-              const blockOfTags = $appTab.find(`#linha${indexChanged - 9}`)
+              const blockOfTags = $appTab.find(`#line${indexChanged - 9}`)
               blockOfTags.html($shippingTags)
               const paddingBottomNumb = 1480 - blockOfTags.height()
               const paddingBottom = paddingBottomNumb > 0 ? paddingBottomNumb : 0
