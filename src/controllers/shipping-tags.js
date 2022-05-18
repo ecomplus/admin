@@ -117,7 +117,7 @@ export default function () {
                   </ul>
                   <span class="text-muted">
                     <span class="text-monospace fs-16">#${order.number}</span>
-                    <span style="display: none" class="total-price">(${order.amount && order.amount.total})</span>
+                    <span style="display: none" class="total-price">(${(order.amount && order.amount.total)})</span>
                     <span class="fs-14 float-right">${((app && app.carrier) || '')} / ${((app && app.label) || '')}</span>
                   </span>
                 </div>
