@@ -6,12 +6,14 @@ export default function () {
   const orderIds = routeParams[routeParams.length - 1]
   const endpoint = `orders.json?_id=${orderIds}` +
     '&fields=buyers.name,buyers.phones,buyers.doc_number,shipping_lines,number,' +
-      'items.name,items.quantity,items.price,items.final_price'
+      'items.name,items.quantity,items.price,items.final_price,amount.total'
 
   callApi(endpoint, 'GET', (error, data) => {
     if (!error) {
-      const $shippingTags = []
-
+      let $shippingTags = []
+      $appTab.find('.show-total').click(() => {
+        $('.total-price').toggle()
+      })
       const $correiosEnderecador = $appTab.find('.correios-enderecador')
       const fillCorreiosForm = (from, to, count) => {
         $correiosEnderecador.append(`
@@ -44,8 +46,9 @@ export default function () {
           <input type="hidden" name="aut_${count}" checked="">
           <input type="hidden" name="num_${count}" value="">`)
       }
-
-      data.result.forEach((order, i) => {
+      const { result } = data
+      result.forEach((order, i) => {
+        const indexChanged = i + 1
         if (order.shipping_lines && order.shipping_lines[0]) {
           const { to, from, app } = order.shipping_lines[0]
           if (to && from) {
@@ -87,10 +90,25 @@ export default function () {
             } else if (!from.number) {
               from.number = 'S/N'
             }
-
+            const $containerTags = `
+              <div class="tags" style="break-after: page; break-inside: avoid; display: block">
+                <div${(i % 9 === 0 ? ` id="line${i}"` : '')} class="row" style="break-inside: avoid;"></div>
+              </div>`
+            if (i % 9 === 0) {
+              $appTab.find('.shipping-tags').append($containerTags)
+            }
+            let carrierLabel = ''
+            if (app) {
+              if (app.carrier) {
+                carrierLabel = app.carrier
+              }
+              if (app.label && app.label !== app.carrier) {
+                carrierLabel += ` / ${app.label}`
+              }
+            }
             $shippingTags.push(`
-              <div class="col-md-4" style="border: 2px dashed #ccc; page-break-inside: avoid">
-                <div class="p-2 pt-3">
+              <div class="col-md-4" style="border: 2px dashed #ccc; break-inside: avoid;">
+                <div class="p-2 pt-3" style="break-inside: avoid; display: block">
                   <ul class="list-unstyled  border-bottom">
                     <li><strong>REMETENTE</strong></li>
                     <li class="text-uppercase">${from.name}</li>
@@ -108,10 +126,19 @@ export default function () {
                   </ul>
                   <span class="text-muted">
                     <span class="text-monospace fs-16">#${order.number}</span>
-                    <span class="fs-14 float-right">${((app && app.carrier) || '')}</span>
+                    <span style="display: none" class="total-price">(${(order.amount && order.amount.total)})</span>
+                    <span class="fs-14 float-right">${carrierLabel}</span>
                   </span>
                 </div>
               </div>`)
+            if (indexChanged % 9 === 0) {
+              const blockOfTags = $appTab.find(`#line${indexChanged - 9}`)
+              blockOfTags.html($shippingTags)
+              const paddingBottomNumb = 1480 - blockOfTags.height()
+              const paddingBottom = paddingBottomNumb > 0 ? paddingBottomNumb : 0
+              blockOfTags[0].style.paddingBottom = `${paddingBottom}px`
+              $shippingTags = []
+            }
 
             if (i >= 4) {
               return
@@ -131,9 +158,9 @@ export default function () {
       if (routeParams[0] === 'correios') {
         $correiosEnderecador.submit()
       } else {
-        $appTab.find('.shipping-tags').html($shippingTags)
         $appTab.find('.print-correios').click(() => $correiosEnderecador.submit())
-
+        $appTab.find('.tags:last-child').after($shippingTags)
+        $appTab.find('.spinner-linear').remove()
         $appTab.find('.doc-correios').click(() => {
           let url = 'https://declaracao-correios.netlify.app/?'
           data.result.forEach((order, i) => {
