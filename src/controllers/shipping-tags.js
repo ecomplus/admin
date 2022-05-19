@@ -97,6 +97,15 @@ export default function () {
             if (i % 9 === 0) {
               $appTab.find('.shipping-tags').append($containerTags)
             }
+            let carrierLabel = ''
+            if (app) {
+              if (app.carrier) {
+                carrierLabel = app.carrier
+              }
+              if (app.label && app.label !== app.carrier) {
+                carrierLabel += ` / ${app.label}`
+              }
+            }
             $shippingTags.push(`
               <div class="col-md-4" style="border: 2px dashed #ccc; break-inside: avoid;">
                 <div class="p-2 pt-3" style="break-inside: avoid; display: block">
@@ -118,7 +127,7 @@ export default function () {
                   <span class="text-muted">
                     <span class="text-monospace fs-16">#${order.number}</span>
                     <span style="display: none" class="total-price">(${(order.amount && order.amount.total)})</span>
-                    <span class="fs-14 float-right">${((app && app.carrier) || '')} / ${((app && app.label) || '')}</span>
+                    <span class="fs-14 float-right">${carrierLabel}</span>
                   </span>
                 </div>
               </div>`)
