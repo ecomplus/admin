@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.53](https://github.com/ecomplus/admin/compare/v1.0.0-beta.52...v1.0.0-beta.53) (2022-05-19)
+
+
+### Features
+
+* **shipping-tags:** optionally add order amount to tags ([#545](https://github.com/ecomplus/admin/issues/545)) ([f56c402](https://github.com/ecomplus/admin/commit/f56c4020b76c37b1f66103543d15bb556bd8becd))
+
+
+### Bug Fixes
+
+* **shipping-tags:** keep buttons responsive ([e40b9e8](https://github.com/ecomplus/admin/commit/e40b9e82103026402077f629e79262edb0530772))
+
 ## [1.0.0-beta.52](https://github.com/ecomplus/admin/compare/v1.0.0-beta.51...v1.0.0-beta.52) (2022-05-12)
 
 
