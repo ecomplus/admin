@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.54](https://github.com/ecomplus/admin/compare/v1.0.0-beta.53...v1.0.0-beta.54) (2022-05-20)
+
+
+### Bug Fixes
+
+* **customers-form:** province code input fixed to uppercase [[#431](https://github.com/ecomplus/admin/issues/431)] ([#547](https://github.com/ecomplus/admin/issues/547)) ([84ee7d2](https://github.com/ecomplus/admin/commit/84ee7d2578af426e9b543264c46faa07c3ffc7a7))
+* **deps:** update @ecomplus/admin-marketplace to v2.0.5 ([dd99305](https://github.com/ecomplus/admin/commit/dd99305fbfb7b3e44b5005df7be3cfc16294f57d))
+
 ## [1.0.0-beta.53](https://github.com/ecomplus/admin/compare/v1.0.0-beta.52...v1.0.0-beta.53) (2022-05-19)
 
 
