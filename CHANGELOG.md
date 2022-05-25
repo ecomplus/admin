@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.55](https://github.com/ecomplus/admin/compare/v1.0.0-beta.54...v1.0.0-beta.55) (2022-05-25)
+
+
+### Features
+
+* **orders-form:** handle new `amount.balance` field for points ([2c0e8ad](https://github.com/ecomplus/admin/commit/2c0e8ad8671c26cecb352d7b032dbf2dcb7d9d44)), closes [#537](https://github.com/ecomplus/admin/issues/537)
+
 ## [1.0.0-beta.54](https://github.com/ecomplus/admin/compare/v1.0.0-beta.53...v1.0.0-beta.54) (2022-05-20)
 
 
