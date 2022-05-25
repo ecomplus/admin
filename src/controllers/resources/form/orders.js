@@ -61,6 +61,9 @@ export default function () {
         if (amount.tax) {
           total += amount.tax
         }
+        if (amount.balance) {
+          total -= amount.balance
+        }
         if (amount.extra) {
           total += amount.extra
         }
