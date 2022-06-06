@@ -39,7 +39,7 @@
     "html-webpack-plugin": "^4.5.2",
     "husky": "^8.0.1",
     "mini-css-extract-plugin": "^1.6.2",
-    "postcss-loader": "^3.0.0",
+    "postcss-loader": "^7.0.0",
     "sass": "^1.52.2",
     "sass-loader": "^10.2.1",
     "standard": "^17.0.0",
