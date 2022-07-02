@@ -11,7 +11,7 @@ export const html = `
   </div>`
 
 export const onLoad = () => {
-  window.ecomMarketSkippedApps = [126945, 126946, 126947, 131671]
+  window.ecomMarketSkippedApps = [126946, 126947, 131671]
   window.routeReady(i18n(i19apps))
   Vue.use(ToastPlugin)
   Vue.use(VBTogglePlugin)
