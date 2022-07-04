@@ -496,13 +496,13 @@
       </div>
 
       <footer class="quickview-footer flex-row-reverse">
-        <a class="btn btn-sm btn-info btn-label text-white qv-close" href="/#/profile">
+       <!--  <a class="btn btn-sm btn-info btn-label text-white qv-close" href="/#/profile">
           <label><i class="ti-user"></i></label>
           <span class="i18n">
             <span data-lang="en_us">Profile</span>
             <span data-lang="pt_br">Perfil</span>
           </span>
-        </a>
+        </a> -->
         <button class="btn btn-sm btn-secondary btn-label qv-close logout">
           <label><i class="ti-power-off"></i></label>
           <span class="i18n">
@@ -839,5 +839,27 @@
         cacheBust: ''
       })
     </script>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+      var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+      (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/62bf57feb0d10b6f3e7a608a/1g6tmvev0';
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+      })();
+      </script>
+      <!--End of Tawk.to Script-->
+      <script>
+        window.Tawk_API.onLoad = function(){
+            window.Tawk_API.setAttributes({
+                'id'    : Store.store_id,
+                'store' : Store.name,
+                'email' : Store.contact_email
+            }, function(error){});
+        };
+      </script>
   </body>
 </html>
