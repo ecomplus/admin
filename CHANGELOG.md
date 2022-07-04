@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.57](https://github.com/ecomplus/admin/compare/v1.0.0-beta.56...v1.0.0-beta.57) (2022-07-04)
+
+
+### Features
+
+* **chat:** setup tawkto embed chat ([#563](https://github.com/ecomplus/admin/issues/563)) ([e9a64c5](https://github.com/ecomplus/admin/commit/e9a64c5d5a4f9a403acc769ae44cf21823be8a73))
+
 ## [1.0.0-beta.56](https://github.com/ecomplus/admin/compare/v1.0.0-beta.55...v1.0.0-beta.56) (2022-07-02)
 
 
