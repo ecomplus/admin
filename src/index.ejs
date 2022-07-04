@@ -393,22 +393,24 @@
     <div id="qv-global" class="quickview backdrop-light">
       <ul class="quickview-header nav nav-tabs nav-justified nav-tabs-info">
         <li class="nav-item">
-          <a class="nav-link i18n" data-toggle="tab" href="#qv-tab-settings">
+          <a class="nav-link i18n active" data-toggle="tab" href="#qv-tab-settings">
             <span data-lang="en_us">Preferences</span>
             <span data-lang="pt_br">Preferências</span>
           </a>
         </li>
+        <!--
         <li class="nav-item">
           <a class="nav-link i18n active" data-toggle="tab" href="#qv-tab-notifications">
             <span data-lang="en_us">Notifications</span>
             <span data-lang="pt_br">Notificações</span>
           </a>
         </li>
+        -->
       </ul>
 
       <div class="quickview-body">
         <div class="tab-content">
-          <div class="tab-pane fade" id="qv-tab-settings">
+          <div class="tab-pane fade active show" id="qv-tab-settings">
             <div class="media-list media-list-divided media-list-hover">
               <div class="media">
                 <div class="media-body">
@@ -479,7 +481,7 @@
             </div>
           </div>
 
-          <div class="tab-pane fade active show" id="qv-tab-notifications">
+          <div class="tab-pane fade" id="qv-tab-notifications">
             <div class="bg-lightest py-10 px-20 text-right fs-14 bb-2">
               <a href="#" class="text-lighter mr-10">
                 <i class="fa fa-trash"></i>
@@ -850,15 +852,7 @@
       s1.setAttribute('crossorigin','*');
       s0.parentNode.insertBefore(s1,s0);
       })();
-      </script>
-      <!--End of Tawk.to Script-->
-      <script>
-        window.Tawk_API.onLoad = function(){
-            window.Tawk_API.setAttributes({
-                'id' : Store.store_id,
-                'store' : Store.name
-            }, function(error){});
-        };
-      </script>
+    </script>
+    <!--End of Tawk.to Script-->
   </body>
 </html>
