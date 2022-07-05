@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.58](https://github.com/ecomplus/admin/compare/v1.0.0-beta.57...v1.0.0-beta.58) (2022-07-05)
+
+
+### Bug Fixes
+
+* properly setup tawkto with metadata and name/email after login ([b12f966](https://github.com/ecomplus/admin/commit/b12f966ce2b8927bfe387414b100f9da635ca2bc))
+* removing not well handled notifications for now ([5fa8a16](https://github.com/ecomplus/admin/commit/5fa8a16f47b83b9373dc5f323e71223a990835a6))
+
+## [1.0.0-beta.57](https://github.com/ecomplus/admin/compare/v1.0.0-beta.56...v1.0.0-beta.57) (2022-07-04)
+
+
+### Features
+
+* **chat:** setup tawkto embed chat ([#563](https://github.com/ecomplus/admin/issues/563)) ([e9a64c5](https://github.com/ecomplus/admin/commit/e9a64c5d5a4f9a403acc769ae44cf21823be8a73))
+
 ## [1.0.0-beta.56](https://github.com/ecomplus/admin/compare/v1.0.0-beta.55...v1.0.0-beta.56) (2022-07-02)
 
 
