@@ -346,6 +346,9 @@ export default function () {
                       data.push(obj)
                     }
                   }
+                  if (prop === 'current') {
+                    data['updated_at'] = new Date().toISOString()
+                  }
                   data[prop] = obj
                 } else {
                   Object.assign(data[prop], obj)
