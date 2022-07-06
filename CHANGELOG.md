@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.60](https://github.com/ecomplus/admin/compare/v1.0.0-beta.59...v1.0.0-beta.60) (2022-07-06)
+
+
+### Bug Fixes
+
+* **orders-form:** fix financial/fulfillment status `updated_at` on change ([#567](https://github.com/ecomplus/admin/issues/567)) ([967a8dc](https://github.com/ecomplus/admin/commit/967a8dcab52e9da2543d5e3e3c36a98ad6bdc805))
+
+## [1.0.0-beta.59](https://github.com/ecomplus/admin/compare/v1.0.0-beta.58...v1.0.0-beta.59) (2022-07-06)
+
+
+### Bug Fixes
+
+* **deps:** revert vue to 2.6 (semver) ([ddf9401](https://github.com/ecomplus/admin/commit/ddf9401886ecbdc9cd2e1ebe8dc79c5200c40192))
+
 ## [1.0.0-beta.58](https://github.com/ecomplus/admin/compare/v1.0.0-beta.57...v1.0.0-beta.58) (2022-07-05)
 
 

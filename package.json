@@ -1,6 +1,6 @@
 {
   "name": "@ecomplus/admin",
-  "version": "1.0.0-beta.58",
+  "version": "1.0.0-beta.60",
   "description": "E-Com Plus Admin dashboard PWA",
   "main": "src/index.js",
   "scripts": {
@@ -47,7 +47,7 @@
     "terser-webpack-plugin": "^4.2.3",
     "url-loader": "^4.1.1",
     "vue-loader": "^15.10.0",
-    "vue-template-compiler": "^2.7.1",
+    "vue-template-compiler": "2.6.x",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.3",
@@ -57,8 +57,8 @@
   "dependencies": {
     "@brazilian-utils/brazilian-utils": "^1.0.0-rc.12",
     "@ecomplus/admin-helpers": "^1.2.4",
-    "@ecomplus/admin-home": "^1.1.0-rc.0",
-    "@ecomplus/admin-marketplace": "^2.0.7",
+    "@ecomplus/admin-home": "^1.1.0-rc.2",
+    "@ecomplus/admin-marketplace": "^2.0.8",
     "@ecomplus/auth": "^1.0.1",
     "@ecomplus/client": "^2.2.1",
     "@ecomplus/i18n": "^1.29.0",
@@ -72,6 +72,6 @@
     "jquery-maskmoney": "^3.0.2",
     "papaparse": "^5.3.2",
     "sortablejs": "^1.15.0",
-    "vue": "^2.7.1"
+    "vue": "2.6.x"
   }
 }
