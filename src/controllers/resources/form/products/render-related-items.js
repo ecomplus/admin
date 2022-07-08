@@ -1,21 +1,21 @@
+import { randomObjectId } from '@ecomplus/utils'
+
 import {
-  presetQuantities,
   addItem,
-  toastNotification,
+  inputTypeAhead,
   listItems,
-  watchAddItem,
-  inputTypeAhead
+  toastNotification,
+  watchAddItem
 } from './inc/render'
 
 const { callSearchApi } = window
 
 export default function ({
   tabId,
-  tbodyId = 'kit-items',
-  inputId = 'new-kit-item',
-  btnId = 'add-kit-item',
-  docProp = 'kit_composition',
-  hasQuantity = true,
+  tbodyId = 'related-items',
+  inputId = 'new-related-item',
+  btnId = 'add-related-item',
+  docProp = 'related_products',
   canDuplicateItem,
   callback
 }) {
@@ -83,24 +83,24 @@ export default function ({
           // add the new product ID to collection data
           if (!data[docProp]) {
             data[docProp] = []
+            data[docProp].push({
+              _id: randomObjectId(),
+              product_ids: []
+            })
           }
-          if (data[docProp].find(({ _id }) => _id === product._id) && !canDuplicateItem) {
+          if (data[docProp][0].product_ids.find(id => id === product._id) && !canDuplicateItem) {
             toastNotification()
           } else {
             // add item to table
-            addItem(tabId, hasQuantity, docProp, $items, product, inputToData)
+            addItem(tabId, false, docProp, $items, product, inputToData)
             if (typeof callback === 'function') {
               callback(null, product)
             } else {
               // product kit object model
-              data[docProp].push({
-                _id: product._id,
-                has_variations: Boolean(product.variations && product.variations.length),
-                quantity: 1
-              })
+              data[docProp][0].product_ids.push(
+                product._id
+              )
             }
-            let autoSetQuantity
-            presetQuantities(data, hasQuantity, docProp, autoSetQuantity)
             commit(data, true)
           }
         }
@@ -113,10 +113,10 @@ export default function ({
   watchAddItem($newInput, newItem)
 
   // list current items on table element
-  const products = data[docProp]
+  const products = data[docProp] && data[docProp][0] && data[docProp][0].product_ids
   if (products && products.length) {
-    const query = `_id:("${(products[0]._id ? products.map(({ _id }) => _id) : products).join('" "')}")`
+    const query = `_id:("${(products).join('" "')}")`
     let item
-    listItems(query, tabId, hasQuantity, docProp, $items, item, inputToData, true, products, addItem)
+    listItems(query, tabId, false, docProp, $items, item, inputToData, true, products, addItem)
   }
 }
