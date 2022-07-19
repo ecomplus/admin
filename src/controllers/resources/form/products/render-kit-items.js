@@ -1,13 +1,7 @@
-import {
-  presetQuantities,
-  addItem,
-  toastNotification,
-  listItems,
-  watchAddItem,
-  inputTypeAhead
-} from './inc/render'
+// render-kit-items.js
+import { i18n, img as getImg } from '@ecomplus/utils'
 
-const { callSearchApi } = window
+const { $, app, callSearchApi, handleInputs, setupInputValues } = window
 
 export default function ({
   tabId,
@@ -15,12 +9,118 @@ export default function ({
   inputId = 'new-kit-item',
   btnId = 'add-kit-item',
   docProp = 'kit_composition',
+  onQuery,
   hasQuantity = true,
   canDuplicateItem,
-  callback
+  callback,
+  onPropSet,
+  onItemAdd
 }) {
   const { $form, data, inputToData } = window.Tabs[tabId]
   const $items = $form.find(`#t${tabId}-${tbodyId}`)
+
+  let autoSetQuantity
+  const presetQuantities = data => {
+    if (hasQuantity && autoSetQuantity === data.quantity) {
+      // preset kit product quantity
+      data.quantity = data[docProp].length
+      if (data.min_quantity === autoSetQuantity) {
+        data.min_quantity = data.quantity
+      }
+      autoSetQuantity = data.quantity
+    }
+  }
+
+  const addItem = function (item, canSetupInputs) {
+    const objectId = item._id
+    const $Link = function (html) {
+      // link to edit product
+      return $('<a>', {
+        href: `/#/resources/products/${item._id}`,
+        html: html
+      })
+    }
+
+    // render product picture if defined
+    let $img = ''
+    // try small image or use any size
+    const thumb = getImg(item, 'small')
+    if (thumb) {
+      $img = $Link('<img src="' + thumb.url + '">')
+      $img.addClass('cart-item-picture')
+    }
+
+    // icon to handle item remove
+    const $remove = $('<i>', {
+      class: 'py-10 pr-10 remove fa fa-trash'
+    }).click(function () {
+      const { data, commit } = window.Tabs[tabId]
+      for (let i = 0; i < data[docProp].length; i++) {
+        if (data[docProp][i]._id === objectId) {
+          // remove item from list
+          data[docProp].splice(i, 1)
+          presetQuantities(data)
+          // commit only to perform reactive actions
+          commit(data, true)
+          break
+        }
+      }
+      // remove table row
+      $tr.remove()
+    })
+
+    let $qnt
+    if (hasQuantity) {
+      // input for item quantity
+      $qnt = $('<input>', {
+        class: 'form-control w-80px',
+        name: `${docProp}.quantity`,
+        type: 'number',
+        min: 0,
+        max: 9999999,
+        step: 'any',
+        value: canSetupInputs ? null : 1
+      })
+    }
+
+    // add new table row for item
+    const $tr = $('<tr>', {
+      html: [
+        // row count
+        $('<th>', {
+          scope: 'row',
+          html: $remove
+        }),
+        // product SKU with link to edit page
+        $('<td>', {
+          html: $('<code>', { html: $Link(item.sku || '') })
+        }),
+        // inputs
+        $('<td>', { html: $qnt }),
+        // simple text input for item name
+        $('<td>', {
+          title: item.name,
+          html: $Link(`${item.name.substring(0, 50)}${(item.name.length > 50 ? '...' : '')}`)
+        }),
+        // item picture with link to edit
+        $('<td>', { html: $img })
+      ]
+    })
+    $items.append($tr)
+
+    // setup quantity, name and price inputs
+    const $inputs = $tr.find('input')
+    if ($inputs.length) {
+      $inputs.data('object-id', objectId)
+      handleInputs($tr, inputToData)
+      if (canSetupInputs) {
+        setupInputValues($tr, item, `${docProp}.`)
+      }
+    }
+
+    // no kit and variations together
+    $(`#t${tabId}-variations`).slideUp()
+  }
 
   // handle items search
   let searchResults = []
@@ -51,7 +151,14 @@ export default function ({
   // setup new item input
   // autocomplete with typeahead addon
   const $newInput = $form.find(`#t${tabId}-${inputId}`)
-  inputTypeAhead($newInput, source)
+  $newInput.typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 3
+  }, {
+    name: 'items',
+    source: source
+  })
 
   // handle new collection item
   const newItem = function () {
@@ -82,25 +189,35 @@ export default function ({
           const { data, commit } = window.Tabs[tabId]
           // add the new product ID to collection data
           if (!data[docProp]) {
-            data[docProp] = []
+            if (typeof onPropSet === 'function') {
+              onPropSet(data)
+            } else {
+              data[docProp] = []
+            }
           }
           if (data[docProp].find(({ _id }) => _id === product._id) && !canDuplicateItem) {
-            toastNotification()
+            app.toast(i18n({
+              en_us: 'Already added this product in the collection',
+              pt_br: 'Esse produto já foi inserido na coleção'
+            }))
           } else {
             // add item to table
-            addItem(tabId, hasQuantity, docProp, $items, product, inputToData)
-            if (typeof callback === 'function') {
-              callback(null, product)
+            addItem(product)
+            if (typeof onItemAdd === 'function') {
+              onItemAdd(data[docProp], product)
             } else {
-              // product kit object model
-              data[docProp].push({
-                _id: product._id,
-                has_variations: Boolean(product.variations && product.variations.length),
-                quantity: 1
-              })
+              if (typeof callback === 'function') {
+                callback(null, product)
+              } else {
+                // product kit object model
+                data[docProp].push({
+                  _id: product._id,
+                  has_variations: Boolean(product.variations && product.variations.length),
+                  quantity: 1
+                })
+              }
+              presetQuantities(data)
             }
-            let autoSetQuantity
-            presetQuantities(data, hasQuantity, docProp, autoSetQuantity)
             commit(data, true)
           }
         }
@@ -110,13 +227,50 @@ export default function ({
 
   // watch add item button and enter on new item input
   $form.find(`#t${tabId}-${btnId}`).click(newItem)
-  watchAddItem($newInput, newItem)
+  $newInput.click(function () {
+    $(this).select()
+  }).keydown(function (e) {
+    switch (e.which) {
+      // enter
+      case 13:
+        // do not submit form
+        e.preventDefault()
+        newItem()
+        break
+    }
+  })
 
   // list current items on table element
   const products = data[docProp]
   if (products && products.length) {
-    const query = `_id:("${(products[0]._id ? products.map(({ _id }) => _id) : products).join('" "')}")`
+    let query
+    if (typeof onQuery === 'function') {
+      query = onQuery(products)
+    } else {
+      query = `_id:("${(products[0]._id ? products.map(({ _id }) => _id) : products).join('" "')}")`
+    }
+    const length = query.split(' ').length
     let item
-    listItems(query, tabId, hasQuantity, docProp, $items, item, inputToData, true, products, addItem)
+    callSearchApi(`items.json?q=${encodeURIComponent(query)}&size=${length}`, 'GET', function (err, data) {
+      if (!err && data.hits) {
+        data.hits.hits.forEach(({ _source, _id }, i) => {
+          let quantity
+          if (hasQuantity) {
+            quantity = _source.quantity
+            quantity = products.find(item => _id === item._id).quantity
+          }
+          item = {
+            _id,
+            ..._source,
+            quantity
+          }
+          addItem(
+            item,
+            true
+          )
+        })
+      }
+    })
+    $(`#t${tabId}-kit`).find('.card-btn-slide').click()
   }
 }
