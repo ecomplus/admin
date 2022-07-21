@@ -2130,7 +2130,7 @@ export default function () {
     }
 
     renderKitItems({ tabId })
-    renderRelatedItems({ tabId })
+    renderRelatedItems(tabId)
 
     setTimeout(() => {
       listOrders(tabId)
