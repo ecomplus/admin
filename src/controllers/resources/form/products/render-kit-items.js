@@ -243,15 +243,8 @@ export default function ({
   // list current items on table element
   const products = typeof getProducts === 'function' ? getProducts() : data[docProp]
   if (products && products.length) {
-    let query
-    if (typeof onQuery === 'function') {
-      query = onQuery(products)
-    } else {
-      query = `_id:("${(products[0]._id ? products.map(({ _id }) => _id) : products).join('" "')}")`
-    }
-    const length = query.split(' ').length
-    let item
-    callSearchApi(`items.json?q=${encodeURIComponent(query)}&size=${length}`, 'GET', function (err, data) {
+    const query = `_id:("${(products[0]._id ? products.map(({ _id }) => _id) : products).join('" "')}")`
+    callSearchApi(`items.json?q=${encodeURIComponent(query)}&size=${products.length}`, 'GET', function (err, data) {
       if (!err && data.hits) {
         data.hits.hits.forEach(({ _source, _id }, i) => {
           let quantity
