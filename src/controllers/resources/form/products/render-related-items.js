@@ -4,7 +4,7 @@ import renderKitItems from './render-kit-items'
 
 export default function (tabId) {
   renderKitItems({
-    tabId: window.tabId,
+    tabId,
     tbodyId: 'related-items',
     inputId: 'new-related-item',
     btnId: 'add-related-item',
