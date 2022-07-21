@@ -241,7 +241,7 @@ export default function ({
   })
 
   // list current items on table element
-  const products = data[docProp]
+  const products = typeof getProducts === 'function' ? getProducts() : data[docProp]
   if (products && products.length) {
     let query
     if (typeof onQuery === 'function') {
