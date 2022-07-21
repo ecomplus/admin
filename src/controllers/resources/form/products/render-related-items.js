@@ -9,11 +9,11 @@ export default function (tabId) {
     inputId: 'new-related-item',
     btnId: 'add-related-item',
     docProp: 'related_products',
-    onQuery (products) {
-      if (products && products[0] && products[0].product_ids) {
-        const joinProducts = products[0].product_ids.join('" "')
-        return `_id:("${joinProducts}")`
+    getProducts (relatedProducts) {
+      if (relatedProducts && relatedProducts[0]) {
+        return relatedProducts[0].product_ids
       }
+      return []
     },
     hasQuantity: false,
     onPropSet (data) {
