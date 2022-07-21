@@ -9,7 +9,7 @@ export default function ({
   inputId = 'new-kit-item',
   btnId = 'add-kit-item',
   docProp = 'kit_composition',
-  onQuery,
+  getProducts,
   hasQuantity = true,
   canDuplicateItem,
   callback,
