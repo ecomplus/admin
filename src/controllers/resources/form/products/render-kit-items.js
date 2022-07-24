@@ -241,26 +241,21 @@ export default function ({
   })
 
   // list current items on table element
-  const products = typeof getProducts === 'function' ? getProducts() : data[docProp]
+  const products = typeof getProducts === 'function' ? getProducts(data[docProp]) : data[docProp]
   if (products && products.length) {
     const query = `_id:("${(products[0]._id ? products.map(({ _id }) => _id) : products).join('" "')}")`
     callSearchApi(`items.json?q=${encodeURIComponent(query)}&size=${products.length}`, 'GET', function (err, data) {
       if (!err && data.hits) {
         data.hits.hits.forEach(({ _source, _id }, i) => {
-          let quantity
+          let { quantity } = _source
           if (hasQuantity) {
-            quantity = _source.quantity
             quantity = products.find(item => _id === item._id).quantity
           }
-          item = {
+          addItem({
             _id,
             ..._source,
             quantity
-          }
-          addItem(
-            item,
-            true
-          )
+          }, true)
         })
       }
     })
