@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.61](https://github.com/ecomplus/admin/compare/v1.0.0-beta.60...v1.0.0-beta.61) (2022-07-25)
+
+
+### Features
+
+* **products-form:** add related items selector ([#569](https://github.com/ecomplus/admin/issues/569)) ([423f9d8](https://github.com/ecomplus/admin/commit/423f9d8cba54af7fcef3ff1ec6000dcc7a7c08f7))
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#573](https://github.com/ecomplus/admin/issues/573)) ([c4fc912](https://github.com/ecomplus/admin/commit/c4fc912430f4c9222bbbf8e33b4d97d7c380a0bf))
+
 ## [1.0.0-beta.60](https://github.com/ecomplus/admin/compare/v1.0.0-beta.59...v1.0.0-beta.60) (2022-07-06)
 
 
