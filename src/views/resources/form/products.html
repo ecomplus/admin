@@ -447,6 +447,77 @@
           </div>
         </div>
       </div>
+
+      <div class="card card-slided-up" data-id="related-products">
+        <header class="card-header">
+          <h6 class="card-title i18n">
+            <span data-lang="en_us">Related products</span>
+            <span data-lang="pt_br">Produtos relacionados</span>
+          </h6>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Choose items</span>
+                <span data-lang="pt_br">Escolher produtos</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+
+        <div class="card-content">
+          <div class="card-body">
+            <div class="callout callout-info" role="alert">
+              <button type="button" class="close" data-dismiss="callout" aria-label="Close">
+                <span>×</span>
+              </button>
+              <p class="i18n">
+                <span data-lang="en_us">
+                  Select items related to the product, these will appear on the product page. If not, products related by brands/categories will appear
+                </span>
+                <span data-lang="pt_br">
+                  Selecione itens relacionados para aparecer na página do produto. Por padrão serão mostrados itens com categorias/marcas em comum.
+                </span>
+              </p>
+            </div>
+
+            <div class="form-group">
+              <div class="input-group">
+                <input type="text" class="form-control" data-id="new-related-item"/>
+                <span class="input-group-append">
+                  <button type="button" class="btn btn-light" data-id="add-related-item">
+                    <i class="fa fa-tag"></i>
+                    <span class="i18n">
+                      <span data-lang="en_us">Add</span>
+                      <span data-lang="pt_br">Adicionar</span>
+                    </span>
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            <div class="related-items-list">
+              <table class="table table-striped table-center">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>SKU</th>
+                    <th class="i18n">
+                      <span data-lang="en_us">Name</span>
+                      <span data-lang="pt_br">Nome</span>
+                    </th>
+                    <th class="i18n">
+                      <span data-lang="en_us">Image</span>
+                      <span data-lang="pt_br">Imagem</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody data-id="related-items">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="col-md-5">
