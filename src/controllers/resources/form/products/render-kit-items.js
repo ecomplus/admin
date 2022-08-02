@@ -1,3 +1,4 @@
+// render-kit-items.js
 import { i18n, img as getImg } from '@ecomplus/utils'
 
 const { $, app, callSearchApi, handleInputs, setupInputValues } = window
@@ -8,9 +9,12 @@ export default function ({
   inputId = 'new-kit-item',
   btnId = 'add-kit-item',
   docProp = 'kit_composition',
+  getProducts,
   hasQuantity = true,
   canDuplicateItem,
-  callback
+  callback,
+  onPropSet,
+  onItemAdd
 }) {
   const { $form, data, inputToData } = window.Tabs[tabId]
   const $items = $form.find(`#t${tabId}-${tbodyId}`)
@@ -185,7 +189,11 @@ export default function ({
           const { data, commit } = window.Tabs[tabId]
           // add the new product ID to collection data
           if (!data[docProp]) {
-            data[docProp] = []
+            if (typeof onPropSet === 'function') {
+              onPropSet(data)
+            } else {
+              data[docProp] = []
+            }
           }
           if (data[docProp].find(({ _id }) => _id === product._id) && !canDuplicateItem) {
             app.toast(i18n({
@@ -195,17 +203,21 @@ export default function ({
           } else {
             // add item to table
             addItem(product)
-            if (typeof callback === 'function') {
-              callback(null, product)
+            if (typeof onItemAdd === 'function') {
+              onItemAdd(data[docProp], product)
             } else {
-              // product kit object model
-              data[docProp].push({
-                _id: product._id,
-                has_variations: Boolean(product.variations && product.variations.length),
-                quantity: 1
-              })
+              if (typeof callback === 'function') {
+                callback(null, product)
+              } else {
+                // product kit object model
+                data[docProp].push({
+                  _id: product._id,
+                  has_variations: Boolean(product.variations && product.variations.length),
+                  quantity: 1
+                })
+              }
+              presetQuantities(data)
             }
-            presetQuantities(data)
             commit(data, true)
           }
         }
@@ -229,7 +241,7 @@ export default function ({
   })
 
   // list current items on table element
-  const products = data[docProp]
+  const products = typeof getProducts === 'function' ? getProducts(data[docProp]) : data[docProp]
   if (products && products.length) {
     const query = `_id:("${(products[0]._id ? products.map(({ _id }) => _id) : products).join('" "')}")`
     callSearchApi(`items.json?q=${encodeURIComponent(query)}&size=${products.length}`, 'GET', function (err, data) {
