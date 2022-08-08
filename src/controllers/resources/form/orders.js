@@ -51,8 +51,8 @@ export default function () {
     })
 
     // watch amount values
-    var $amount = $orderBase.find('#t' + tabId + '-order-amount')
-    var $total = $amount.find('input[name="amount.total"]')
+    const $amount = $orderBase.find('#t' + tabId + '-order-amount')
+    const $total = $amount.find('input[name="amount.total"]')
     $amount.find('input:not([name="amount.total"])').change(function () {
       setTimeout(function () {
         // recalculate order total value
@@ -84,6 +84,54 @@ export default function () {
       }
     }
     */
+
+    // render subscriptions
+    const parseStatus = status => {
+      if (status === 'open') return 'Em aberto'
+      else if (status === 'closed') return 'Finalizado'
+      else return 'Cancelado'
+    }
+    const $listOfSubscriptions = elContainer.find('#t' + tabId + '-order-subscription')
+    const renderSubs = orders => {
+      if (orders.length) {
+        return orders.reduce((trsStr, order, i) => trsStr + `
+              <tr>
+                <td>${(i + 1)}</td>
+                <td><a href="/resources/orders/${order._id}">${(order.number)}</a></td>
+                ${order.status
+                  ? `<td>${parseStatus(order.status)}</td>`
+                  : ''
+                }
+                <td>${formatMoney(order.amount.total)}</td>
+                <td>${formatDate(order.created_at)}</td>
+              </tr>`, '')
+      }
+    }
+    if (orderId) {
+      let url
+      if (Data().transactions[0].type === 'recurrence') {
+        url = `orders.json?subscription_order._id=${orderId}`
+        callApi(url, 'GET', (err, json) => {
+          if (!err) {
+            const orders = json.result
+            console.log(orders)
+            $listOfSubscriptions.append(renderSubs(orders))
+          }
+        })
+      } else if (Data().subscription_order && Data().subscription_order._id) {
+        const order = Data().subscription_order.number
+        url = `orders.json?number=${order}`
+        callApi(url, 'GET', (err, json) => {
+          if (!err) {
+            console.log(json)
+            const order = json.result
+            $listOfSubscriptions.append(renderSubs(order))
+          }
+        })
+      } else {
+        document.getElementById('subscriptions').style.display = 'none'
+      }
+    }
 
     // render buyers blocks
     var $buyers, $buyerInfo
@@ -436,6 +484,8 @@ export default function () {
           // show timeline element on DOM
           $timeline.closest('.hidden').slideDown()
         }
+
+
       })
       .catch(console.error)
 
