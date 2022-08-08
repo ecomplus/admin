@@ -360,6 +360,7 @@ export default function () {
           if (eventTypes[eventType] && data[eventType]) {
             // get enum from JSON to set color and text by event
             opts = json.orders[eventTypes[eventType]].enum
+            console.log(data)
             const sortedEntries = data[eventType].sort((a, b) => {
               if (a.date_time && b.date_time) {
                 return a.date_time > b.date_time ? 1 : -1
@@ -383,7 +384,8 @@ export default function () {
                 events.push({
                   ...eventObj,
                   date_time: entry.date_time,
-                  type: eventType
+                  type: eventType,
+                  transaction_id: entry.transaction_id
                 })
               }
             })
@@ -391,6 +393,14 @@ export default function () {
         }
 
         if (events.length) {
+          // get transaction
+          events.map(event => {
+            if (data.transactions.length) {
+              const getTransaction = data.transactions.find(transaction => event.transaction_id === transaction._id)
+              event.payment_method = (getTransaction.payment_method && getTransaction.payment_method.name) || undefined
+            }
+            return event
+          })
           // order events by date
           events.sort(function (a, b) {
             if (a.date_time > b.date_time) {
@@ -406,6 +416,7 @@ export default function () {
           // update timeline element
           // show full timestamp of each event
           var dateList = ['day', 'month', 'year', 'hour', 'minute', 'second']
+          console.log(events)
           events.forEach(function (eventObj) {
             // color by status
             var badgeColor = eventObj.class || 'default'
@@ -415,8 +426,7 @@ export default function () {
               blockContent += '<time datetime="' + eventObj.date_time + '">' +
                 formatDate(eventObj.date_time, dateList) + '</time>'
             }
-            blockContent += '<p>' + i18n(eventObj.text) + '</p>'
-
+            blockContent += `<p> ${i18n(eventObj.text)} ${eventObj.payment_method ? `<small>(${eventObj.payment_method})</small>` : ''} </p> `
             // add block to timeline element
             $timeline.append($('<li>', {
               class: 'timeline-block',
