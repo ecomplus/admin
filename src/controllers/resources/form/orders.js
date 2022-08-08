@@ -360,7 +360,6 @@ export default function () {
           if (eventTypes[eventType] && data[eventType]) {
             // get enum from JSON to set color and text by event
             opts = json.orders[eventTypes[eventType]].enum
-            console.log(data)
             const sortedEntries = data[eventType].sort((a, b) => {
               if (a.date_time && b.date_time) {
                 return a.date_time > b.date_time ? 1 : -1
@@ -395,7 +394,7 @@ export default function () {
         if (events.length) {
           // get transaction
           events.map(event => {
-            if (data.transactions.length) {
+            if (data.transactions.length > 1 && event.type === 'payments_history') {
               const getTransaction = data.transactions.find(transaction => event.transaction_id === transaction._id)
               event.payment_method = (getTransaction.payment_method && getTransaction.payment_method.name) || undefined
             }
@@ -416,7 +415,6 @@ export default function () {
           // update timeline element
           // show full timestamp of each event
           var dateList = ['day', 'month', 'year', 'hour', 'minute', 'second']
-          console.log(events)
           events.forEach(function (eventObj) {
             // color by status
             var badgeColor = eventObj.class || 'default'
