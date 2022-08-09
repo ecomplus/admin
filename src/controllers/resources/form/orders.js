@@ -420,7 +420,7 @@ export default function () {
             let paymentMethod
             if (data.transactions.length > 1 && eventObj.type === 'payments_history') {
               const getTransaction = data.transactions.find(transaction => eventObj.transaction_id === transaction._id)
-              paymentMethod = (getTransaction.payment_method && getTransaction.payment_method.name) || undefined
+              paymentMethod = getTransaction && getTransaction.payment_method.name
             }
             blockContent += `<p> ${i18n(eventObj.text)} ${paymentMethod ? `<small>(${paymentMethod})</small>` : ''} </p> `
             // add block to timeline element
