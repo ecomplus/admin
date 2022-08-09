@@ -301,7 +301,7 @@ export default function () {
     }
 
     // render subscriptions
-    const $listOfSubscriptions = elContainer.find('#t' + tabId + '-invoices')
+    const $listOfSubscriptions = elContainer.find('#t' + tabId + '-invoice-list')
     if (orderId) {
       let url
       const data = Data()
