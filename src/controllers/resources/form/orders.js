@@ -304,6 +304,7 @@ export default function () {
     import(/* webpackChunkName: "data_misc_config-lists" */ '@/data/misc/config-lists')
       .then(exp => {
         const json = exp.default
+        const data = Data()
         // order status string fields
         var financialStatus = 'financial_status/current'
         var fulfillmentStatus = 'fulfillment_status/current'
@@ -383,7 +384,8 @@ export default function () {
                 events.push({
                   ...eventObj,
                   date_time: entry.date_time,
-                  type: eventType
+                  type: eventType,
+                  transaction_id: entry.transaction_id
                 })
               }
             })
@@ -415,8 +417,12 @@ export default function () {
               blockContent += '<time datetime="' + eventObj.date_time + '">' +
                 formatDate(eventObj.date_time, dateList) + '</time>'
             }
-            blockContent += '<p>' + i18n(eventObj.text) + '</p>'
-
+            let paymentMethod
+            if (data.transactions.length > 1 && eventObj.type === 'payments_history') {
+              const transaction = data.transactions.find(transaction => eventObj.transaction_id === transaction._id)
+              paymentMethod = transaction && transaction.payment_method.name
+            }
+            blockContent += `<p> ${i18n(eventObj.text)} ${paymentMethod ? `<small>(${paymentMethod})</small>` : ''} </p> `
             // add block to timeline element
             $timeline.append($('<li>', {
               class: 'timeline-block',
