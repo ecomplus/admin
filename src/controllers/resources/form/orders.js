@@ -97,11 +97,8 @@ export default function () {
         return orders.reduce((trsStr, order, i) => trsStr + `
               <tr>
                 <td>${(i + 1)}</td>
-                <td><a href="/resources/orders/${order._id}">${(order.number)}</a></td>
-                ${order.status
-                  ? `<td>${parseStatus(order.status)}</td>`
-                  : ''
-                }
+                <td><a href="/resources/orders/${order._id}">${order.number}</a></td>
+                ${(order.status ? `<td>${parseStatus(order.status)}</td>` : '')}
                 <td>${formatMoney(order.amount.total)}</td>
                 <td>${formatDate(order.created_at)}</td>
               </tr>`, '')
