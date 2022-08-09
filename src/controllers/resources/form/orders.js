@@ -484,8 +484,6 @@ export default function () {
           // show timeline element on DOM
           $timeline.closest('.hidden').slideDown()
         }
-
-
       })
       .catch(console.error)
 
