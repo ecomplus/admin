@@ -17,6 +17,15 @@ export default function () {
     handleNestedObjects
   } = window
 
+  const {
+    i19OrderStatus
+    // i19subscription
+  } = require('@ecomplus/i18n')
+  const i19subscription = {
+    'en_us': 'Subscription',
+    'pt_br': 'Assinatura'
+  }
+
   // current tab ID
   var Tab = window.Tabs[tabId]
   // edit JSON document
@@ -51,8 +60,8 @@ export default function () {
     })
 
     // watch amount values
-    var $amount = $orderBase.find('#t' + tabId + '-order-amount')
-    var $total = $amount.find('input[name="amount.total"]')
+    const $amount = $orderBase.find('#t' + tabId + '-order-amount')
+    const $total = $amount.find('input[name="amount.total"]')
     $amount.find('input:not([name="amount.total"])').change(function () {
       setTimeout(function () {
         // recalculate order total value
@@ -86,13 +95,12 @@ export default function () {
     */
 
     // render buyers blocks
-    var $buyers, $buyerInfo
+    let $buyers, $buyerInfo
     // BUG: sometimes $buyers and $buyerInfo was empty
     // FIX: delay to fix bug
     setTimeout(function () {
       $buyers = $orderBase.find('#t' + tabId + '-order-buyers')
       $buyerInfo = $buyers.find('#t' + tabId + '-buyer-info')
-
       // show current buyers from list if any
       if (data.buyers) {
         for (var i = 0; i < data.buyers.length; i++) {
@@ -300,10 +308,47 @@ export default function () {
       callApi(uri, 'GET', callback, null, skipError)
     }
 
+    // render subscriptions
+    const $listOfSubscriptions = elContainer.find('#t' + tabId + '-invoice-list')
+    if (orderId) {
+      let url
+      const data = Data()
+      if (data.transactions[0].type === 'recurrence') {
+        $(`#t${tabId}-subscription-invoices`).slideDown()
+        url = `orders.json?subscription_order._id=${orderId}&fields=_id,number,status,amount,created_at`
+        callApi(url, 'GET', (err, json) => {
+          if (!err) {
+            const orders = json.result
+            console.log(orders)
+            $listOfSubscriptions.append(
+              orders.reduce((trsStr, order, i) => trsStr + `
+              <tr>
+                <td>${(i + 1)}</td>
+                <td><a href="/resources/orders/${order._id}">${order.number}</a></td>
+                ${(order.status ? `<td>${i18n(i19OrderStatus)[order.status]}</td>` : '')}
+                <td>${formatMoney(order.amount.total)}</td>
+                <td>${formatDate(order.created_at)}</td>
+              </tr>`, '')
+            )
+          }
+        })
+      } else if (data.subscription_order && data.subscription_order._id) {
+        url = `orders.json?_id=${data.subscription_order._id}&limit=1&fields=_id,number`
+        callApi(url, 'GET', (err, json) => {
+          if (!err) {
+            const order = json.result[0]
+            $buyers.after(`
+            <h4 class="mt-30"><a href="/resources/orders/${order._id}">${i18n(i19subscription)} #${order.number}</a></h4>
+            `)
+          }
+        })
+      }
+    }
     // reuse order status enum and respective colors from lists configuration JSON
     import(/* webpackChunkName: "data_misc_config-lists" */ '@/data/misc/config-lists')
       .then(exp => {
         const json = exp.default
+        const data = Data()
         // order status string fields
         var financialStatus = 'financial_status/current'
         var fulfillmentStatus = 'fulfillment_status/current'
@@ -383,7 +428,8 @@ export default function () {
                 events.push({
                   ...eventObj,
                   date_time: entry.date_time,
-                  type: eventType
+                  type: eventType,
+                  transaction_id: entry.transaction_id
                 })
               }
             })
@@ -415,8 +461,12 @@ export default function () {
               blockContent += '<time datetime="' + eventObj.date_time + '">' +
                 formatDate(eventObj.date_time, dateList) + '</time>'
             }
-            blockContent += '<p>' + i18n(eventObj.text) + '</p>'
-
+            let paymentMethod
+            if (data.transactions.length > 1 && eventObj.type === 'payments_history') {
+              const transaction = data.transactions.find(transaction => eventObj.transaction_id === transaction._id)
+              paymentMethod = transaction && transaction.payment_method.name
+            }
+            blockContent += `<p> ${i18n(eventObj.text)} ${paymentMethod ? `<small>(${paymentMethod})</small>` : ''} </p> `
             // add block to timeline element
             $timeline.append($('<li>', {
               class: 'timeline-block',

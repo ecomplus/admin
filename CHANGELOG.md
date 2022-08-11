@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.63](https://github.com/ecomplus/admin/compare/v1.0.0-beta.62...v1.0.0-beta.63) (2022-08-11)
+
+
+### Features
+
+* **orders-form:** add payment method name on status timeline ([#578](https://github.com/ecomplus/admin/issues/578)) ([3615071](https://github.com/ecomplus/admin/commit/36150715e5200eda284f6093939679774e12b6e5))
+* **orders-from:** render order subscriptions ([#577](https://github.com/ecomplus/admin/issues/577)) [skip ci] ([9e0e554](https://github.com/ecomplus/admin/commit/9e0e5544e904fae17d06243b66e543dfbced2ddc))
+
 ## [1.0.0-beta.62](https://github.com/ecomplus/admin/compare/v1.0.0-beta.61...v1.0.0-beta.62) (2022-08-02)
 
 
