@@ -17,7 +17,14 @@ export default function () {
     handleNestedObjects
   } = window
 
-  const { i19OrderStatus, i19subscriptions } = require('@ecomplus/i18n')
+  const {
+    i19OrderStatus
+    // i19subscription
+  } = require('@ecomplus/i18n')
+  const i19subscription = {
+    'en_us': 'Subscription',
+    'pt_br': 'Assinatura'
+  }
 
   // current tab ID
   var Tab = window.Tabs[tabId]
@@ -88,11 +95,12 @@ export default function () {
     */
 
     // render buyers blocks
-    const $buyers = $orderBase.find('#t' + tabId + '-order-buyers')
-    const $buyerInfo = $buyers.find('#t' + tabId + '-buyer-info')
+    let $buyers, $buyerInfo
     // BUG: sometimes $buyers and $buyerInfo was empty
     // FIX: delay to fix bug
     setTimeout(function () {
+      $buyers = $orderBase.find('#t' + tabId + '-order-buyers')
+      $buyerInfo = $buyers.find('#t' + tabId + '-buyer-info')
       // show current buyers from list if any
       if (data.buyers) {
         for (var i = 0; i < data.buyers.length; i++) {
@@ -306,11 +314,13 @@ export default function () {
       let url
       const data = Data()
       if (data.transactions[0].type === 'recurrence') {
-        $(`#${tabId}-subscription-invoices`).slideDown()
+        console.log(orderId)
+        $(`#t${tabId}-subscription-invoices`).slideDown()
         url = `orders.json?subscription_order._id=${orderId}&fields=_id,number,status,amount,created_at`
         callApi(url, 'GET', (err, json) => {
           if (!err) {
             const orders = json.result
+            console.log(orders)
             $listOfSubscriptions.append(
               orders.reduce((trsStr, order, i) => trsStr + `
               <tr>
@@ -329,7 +339,7 @@ export default function () {
           if (!err) {
             const order = json.result[0]
             $buyers.after(`
-            <h4 class="mt-30"><a href="/resources/orders/${order._id}">${i18n(i19subscriptions)} #${order.number}</a></h4>
+            <h4 class="mt-30"><a href="/resources/orders/${order._id}">${i18n(i19subscription)} #${order.number}</a></h4>
             `)
           }
         })
