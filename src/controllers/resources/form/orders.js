@@ -306,7 +306,7 @@ export default function () {
       let url
       const data = Data()
       if (data.transactions[0].type === 'recurrence') {
-        document.getElementById('subscription-invoices').style.display = 'block'
+        $(`#${tabId}-subscription-invoices`).slideDown()
         url = `orders.json?subscription_order._id=${orderId}&fields=_id,number,status,amount,created_at`
         callApi(url, 'GET', (err, json) => {
           if (!err) {
