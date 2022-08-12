@@ -310,10 +310,10 @@ export default function () {
 
     // render subscriptions
     const $listOfSubscriptions = elContainer.find('#t' + tabId + '-invoice-list')
-    if (orderId && Object.keys(Data()).length) {
+    if (orderId) {
       let url
       const data = Data()
-      if (data && data.transactions[0] && data.transactions[0].type === 'recurrence') {
+      if (Object.keys(data).length && data && data.transactions[0] && data.transactions[0].type === 'recurrence') {
         $(`#t${tabId}-subscription-invoices`).slideDown()
         url = `orders.json?subscription_order._id=${orderId}&fields=_id,number,status,amount,created_at`
         callApi(url, 'GET', (err, json) => {
