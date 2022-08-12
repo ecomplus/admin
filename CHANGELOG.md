@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.64](https://github.com/ecomplus/admin/compare/v1.0.0-beta.63...v1.0.0-beta.64) (2022-08-12)
+
+
+### Bug Fixes
+
+* **orders-form:** properly checking `transactions` prop to handle subscription ([4ded0a5](https://github.com/ecomplus/admin/commit/4ded0a5ebd00c1e0261bd63dfc0a98eb02dd7ea3))
+
 ## [1.0.0-beta.63](https://github.com/ecomplus/admin/compare/v1.0.0-beta.62...v1.0.0-beta.63) (2022-08-11)
 
 
