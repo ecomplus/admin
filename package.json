@@ -40,14 +40,14 @@
     "husky": "^8.0.1",
     "mini-css-extract-plugin": "^1.6.2",
     "postcss-loader": "^3.0.0",
-    "sass": "^1.54.3",
+    "sass": "^1.54.4",
     "sass-loader": "^10.3.1",
     "standard": "^17.0.0",
     "standard-version": "^9.3.2",
     "terser-webpack-plugin": "^4.2.3",
     "url-loader": "^4.1.1",
     "vue-loader": "^15.10.0",
-    "vue-template-compiler": "2.6.x",
+    "vue-template-compiler": "2.7.x",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.3",
@@ -61,7 +61,7 @@
     "@ecomplus/admin-marketplace": "^2.1.1",
     "@ecomplus/auth": "^1.0.1",
     "@ecomplus/client": "^2.2.1",
-    "@ecomplus/i18n": "^1.30.0",
+    "@ecomplus/i18n": "^1.31.0",
     "@ecomplus/storefront-twbs": "^5.12.1",
     "@ecomplus/utils": "^1.4.1",
     "blueimp-md5": "^2.19.0",
@@ -72,6 +72,6 @@
     "jquery-maskmoney": "^3.0.2",
     "papaparse": "^5.3.2",
     "sortablejs": "^1.15.0",
-    "vue": "2.6.x"
+    "vue": "2.7.x"
   }
 }
