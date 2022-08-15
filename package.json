@@ -1,6 +1,6 @@
 {
   "name": "@ecomplus/admin",
-  "version": "1.0.0-beta.64",
+  "version": "1.0.0-beta.65",
   "description": "E-Com Plus Admin dashboard PWA",
   "main": "src/index.js",
   "scripts": {
@@ -40,7 +40,7 @@
     "husky": "^8.0.1",
     "mini-css-extract-plugin": "^1.6.2",
     "postcss-loader": "^3.0.0",
-    "sass": "^1.54.3",
+    "sass": "^1.54.4",
     "sass-loader": "^10.3.1",
     "standard": "^17.0.0",
     "standard-version": "^9.3.2",
@@ -61,7 +61,7 @@
     "@ecomplus/admin-marketplace": "^2.1.1",
     "@ecomplus/auth": "^1.0.1",
     "@ecomplus/client": "^2.2.1",
-    "@ecomplus/i18n": "^1.30.0",
+    "@ecomplus/i18n": "^1.31.0",
     "@ecomplus/storefront-twbs": "^5.12.1",
     "@ecomplus/utils": "^1.4.1",
     "blueimp-md5": "^2.19.0",
