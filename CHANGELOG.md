@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.65](https://github.com/ecomplus/admin/compare/v1.0.0-beta.64...v1.0.0-beta.65) (2022-08-15)
+
+
+### Features
+
+* calling store api v2 with `api_v=2` url param ([b2ed4fb](https://github.com/ecomplus/admin/commit/b2ed4fbd14d370f38ed0cc797024985cda5694d9))
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#582](https://github.com/ecomplus/admin/issues/582)) [skip ci] ([2027821](https://github.com/ecomplus/admin/commit/2027821873e4dad8af9edf419c8a808caa415985))
+* prevent 404 route after login from `/pages/login` static url ([75862b0](https://github.com/ecomplus/admin/commit/75862b00d46a06359a73226dc28f0f50b2d1caec))
+
 ## [1.0.0-beta.64](https://github.com/ecomplus/admin/compare/v1.0.0-beta.63...v1.0.0-beta.64) (2022-08-12)
 
 
