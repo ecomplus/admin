@@ -136,6 +136,26 @@ const authFail = function (jqXHR, textStatus, err) {
 }
 const contentType = 'application/json; charset=UTF-8'
 
+const urlParams = new URLSearchParams(window.location.search)
+const getAuthState = (name, storeId, myId) => {
+  const fromUrl = urlParams.get(name)
+  if (fromUrl) {
+    return fromUrl
+  }
+  const fromStorage = localStorage.getItem(name)
+  if (fromStorage) {
+    if (
+      (myId && localStorage.getItem(name) !== myId) ||
+      (storeId && localStorage.getItem(name) !== storeId)
+    ) {
+      return null
+    }
+  }
+  return fromStorage
+}
+const isApiv2 = Number(getAuthState('api_v')) === 2
+const apiBaseUri = isApiv2 ? 'https://ecomplus.io/v2' : 'https://api.e-com.plus/v1'
+
 const handleSso = (storeId, username, session) => {
   const isCmsLogin = urlParams.get('sso_service') === 'cms'
   setStorageItem('store_id', storeId)
@@ -170,7 +190,7 @@ const handleSso = (storeId, username, session) => {
           .done(function (json) {
             const gotrueToken = json.access_token
             $.ajax({
-              url: `https://api.e-com.plus/v1/stores/${storeId}.json`,
+              url: `${apiBaseUri}/stores/${storeId}.json`,
               headers: {
                 'X-Store-ID': storeId
               }
@@ -204,6 +224,10 @@ const initDashboard = (storeId, username, session) => {
   if (window.history.pushState) {
     window.history.pushState({}, document.title, window.location.pathname)
   }
+  if (isApiv2) {
+    window.ECOMCLIENT_API_STORE = 'https://ecomplus.io/v2/'
+    sessionStorage.setItem('api_v', '2')
+  }
 
   return import(/* webpackChunkName: "dashboard" */ '@/dashboard')
     .then(() => {
@@ -217,24 +241,6 @@ const initDashboard = (storeId, username, session) => {
       })
     })
     .catch(console.error)
-}
-
-const urlParams = new URLSearchParams(window.location.search)
-const getAuthState = (name, storeId, myId) => {
-  const fromUrl = urlParams.get(name)
-  if (fromUrl) {
-    return fromUrl
-  }
-  const fromStorage = localStorage.getItem(name)
-  if (fromStorage) {
-    if (
-      (myId && localStorage.getItem(name) !== myId) ||
-      (storeId && localStorage.getItem(name) !== storeId)
-    ) {
-      return null
-    }
-  }
-  return fromStorage
 }
 
 const goTo = urlParams.get('go_to')
@@ -325,7 +331,7 @@ $form.submit(function () {
     })
 
     const data = { pass_md5_hash: password }
-    let url = 'https://api.e-com.plus/v1/_login.json'
+    let url = `${apiBaseUri}/_login.json`
     if (username.indexOf('@') !== -1) {
       data.email = username
     } else {
@@ -348,7 +354,7 @@ $form.submit(function () {
         console.log(`Logged ${username} for #${storeId}`)
 
         $.ajax({
-          url: 'https://api.e-com.plus/v1/_authenticate.json',
+          url: `${apiBaseUri}/_authenticate.json`,
           method: 'POST',
           dataType: 'json',
           contentType,
