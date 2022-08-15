@@ -4,7 +4,11 @@ const { sessionStorage, localStorage, $ } = window
 
 let goTo = sessionStorage.getItem('go_to')
 if (goTo) {
-  window.location = `/#${goTo}`
+  if (!goTo.startsWith('/pages/')) {
+    window.location = `/#${goTo}`
+  } else {
+    window.location = '/#/home'
+  }
   sessionStorage.removeItem('go_to')
 } else {
   goTo = '/'
