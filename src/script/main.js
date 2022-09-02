@@ -1685,9 +1685,9 @@ const { sessionStorage, localStorage, Image, $, app } = window
   // get store object
   ecomAuth.fetchStore()
     .then(store => {
-      /* if (store.$main && store.$main.plan === 0) {
+      if (store.$main && store.$main.plan === 0) {
         window.location.href = 'https://www.e-com.plus/'
-      } */
+      }
       window.Store = Store = store
       const storeHomepage = store.homepage || (store.domain && `https://${store.domain}/`)
       if (storeHomepage) {
