@@ -227,6 +227,10 @@ const initDashboard = (storeId, username, session) => {
   if (isApiv2) {
     window.ECOMCLIENT_API_STORE = 'https://ecomplus.io/v2/'
     sessionStorage.setItem('api_v', '2')
+    const cloudcommercePid = getAuthState('cc_pid')
+    if (cloudcommercePid) {
+      sessionStorage.setItem('cloudcomm_pid', cloudcommercePid)
+    }
   }
 
   return import(/* webpackChunkName: "dashboard" */ '@/dashboard')

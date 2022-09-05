@@ -305,7 +305,8 @@ export default function () {
         callApi('collections/' + infoResult._id + '.json', 'GET', function (err, data) {
           if (!err) {
             let newProducts = []
-            data.products.length ? newProducts = ids.concat(data.products) : newProducts = ids
+            const productsFromCollection = data.products
+            Array.isArray(productsFromCollection) ? newProducts = ids.concat(productsFromCollection) : newProducts = ids
             const productsToCollection = [...new Set(newProducts)]
             const objCollection = {
               products: productsToCollection

@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.66](https://github.com/ecomplus/admin/compare/v1.0.0-beta.65...v1.0.0-beta.66) (2022-09-05)
+
+
+### Features
+
+* **deps:** bump `@ecomplus/admin-marketplace` to v2.2.0 ([9cfedc6](https://github.com/ecomplus/admin/commit/9cfedc61bc00d3c3b4dd655a8eb8bf437ba7c2fd))
+* **deps:** bump `@ecomplus/admin-marketplace` to v2.3.0 ([f2fbcd1](https://github.com/ecomplus/admin/commit/f2fbcd1a311090363454e488e9881973d968a641))
+* set up new cloudcommerce apps with `cc_pid=x` url param ([400afe9](https://github.com/ecomplus/admin/commit/400afe9f659936fdc9e56f4a81cd726f835f3df2))
+
 ## [1.0.0-beta.65](https://github.com/ecomplus/admin/compare/v1.0.0-beta.64...v1.0.0-beta.65) (2022-08-15)
 
 

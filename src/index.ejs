@@ -30,6 +30,9 @@
       if (sessionStorage.getItem('api_v') === '2') {
         ECOMCLIENT_API_STORE = 'https://ecomplus.io/v2/'
       }
+      if (sessionStorage.getItem('cloudcomm_pid')) {
+        CLOUDCOMMERCE_PROJECT_ID = sessionStorage.getItem('cloudcomm_pid')
+      }
     </script>
   </head>
 
