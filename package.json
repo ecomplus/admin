@@ -24,7 +24,7 @@
     "@babel/core": "^7.18.13",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/preset-env": "^7.18.10",
-    "@commitlint/cli": "^17.1.1",
+    "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "autoprefixer": "^9.8.8",
     "babel-loader": "^8.2.5",
@@ -40,14 +40,14 @@
     "husky": "^8.0.1",
     "mini-css-extract-plugin": "^1.6.2",
     "postcss-loader": "^3.0.0",
-    "sass": "^1.54.5",
+    "sass": "^1.54.8",
     "sass-loader": "^10.3.1",
     "standard": "^17.0.0",
     "standard-version": "^9.3.2",
     "terser-webpack-plugin": "^4.2.3",
     "url-loader": "^4.1.1",
     "vue-loader": "^15.10.0",
-    "vue-template-compiler": "2.6.x",
+    "vue-template-compiler": "2.7.x",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.3",
@@ -72,6 +72,6 @@
     "jquery-maskmoney": "^3.0.2",
     "papaparse": "^5.3.2",
     "sortablejs": "^1.15.0",
-    "vue": "2.6.x"
+    "vue": "2.7.x"
   }
 }
