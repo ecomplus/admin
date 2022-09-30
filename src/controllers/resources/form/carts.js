@@ -1,7 +1,9 @@
 /* eslint-disable no-var */
+import { i19shopNow } from '@ecomplus/i18n'
+import { name } from 'file-loader'
 
 export default function () {
-  const { $, formatMoney, handleInputs, setupInputValues, randomObjectId } = window
+  const { $, formatMoney, handleInputs, setupInputValues, randomObjectId, callApi, callSearchApi, ecomUtils } = window
 
   // current tab ID
   const tabId = window.tabId
@@ -19,8 +21,9 @@ export default function () {
     var $items = $itemsContainer.find('#t' + tabId + '-cart-items')
     var $count = $itemsContainer.find('#t' + tabId + '-cart-items-count')
     var $subtotal = $itemsContainer.find('#t' + tabId + '-cart-subtotal')
-    var $subtotalInput = $itemsContainer.closest('form')
-      .find('input[name="subtotal"],input[name="amount.subtotal"]')
+    var $subtotalInput = $itemsContainer.closest('form').find('input[name="subtotal"],input[name="amount.subtotal"]')
+    const $customerInformation = Tab.$form.find('#t' + tabId + '-personal-information')
+    const $permalink = $('input[name=permalink]')
 
     var updateSubtotal = function () {
       setTimeout(function () {
@@ -195,7 +198,7 @@ export default function () {
         var url = 'items.json?sort=_score:desc&size=4&q=' + encodeURIComponent(query)
 
         // run search API request
-        window.callSearchApi(url, 'GET', function (err, data) {
+        callSearchApi(url, 'GET', function (err, data) {
           if (!err && data.hits) {
             searchResults = data.hits.hits
             for (var i = 0; i < searchResults.length; i++) {
@@ -344,10 +347,34 @@ export default function () {
     if (resourceId && !Data().permalink) {
       const domain = window.shopDomain || (window.Store && window.Store.domain)
       if (domain) {
-        const $permalink = $('input[name=permalink]')
         $permalink.val(`https://${domain}/app/#/${resourceId}`)
         setTimeout(() => $permalink.trigger('change'), 1000)
       }
+    }
+    if (Array.isArray(Data().customers)) {
+      const customerId = Data().customers[0]
+      callApi(`customers/${customerId}.json`, 'GET', (error, data) => {
+        if (!error) {
+          console.log(data)
+          let html = ''
+          let name
+          if (data.name) {
+            name = ecomUtils.fullName(data)
+            html += name
+          }
+          const email = data.main_email
+          if (email) {
+            html += `<br><a href="mailto:${email}" target="_blank">${email}</a>`
+          }
+          if (Array.isArray(data.phones)) {
+            const permalink = $permalink.val()
+            const cellphone = ecomUtils.phone(data)
+            html += `<br><a class="text-muted" href="https://web.whatsapp.com/send?phone=${cellphone}&text=${name}, ${ecomUtils.i18n(i19shopNow)} ${permalink}" target="_blank"><i class="fa fa-whatsapp"></i> ${cellphone}</a>`
+            html += `<br><a class="text-muted" href="tel:${cellphone}" target="_blank"><i class="fa fa-phone"></i> ${cellphone}</a>`
+          }
+          $customerInformation.append(html)
+        }
+      })
     }
   }
 

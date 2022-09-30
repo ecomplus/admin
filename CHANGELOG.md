@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.68](https://github.com/ecomplus/admin/compare/v1.0.0-beta.67...v1.0.0-beta.68) (2022-09-30)
+
+
+### Features
+
+* **carts-form:** show customer information ([#592](https://github.com/ecomplus/admin/issues/592)) ([b4075ea](https://github.com/ecomplus/admin/commit/b4075eac7d8c379cd874d9443a36ecedc84f2692))
+
+
+### Bug Fixes
+
+* **customers-form:** fix `inscription_number` input type ([#591](https://github.com/ecomplus/admin/issues/591)) ([a3ab6b2](https://github.com/ecomplus/admin/commit/a3ab6b285f1d5c85e9545c3daf0bbfc37e199ef2))
+* update skipped marketplace apps ([f046a06](https://github.com/ecomplus/admin/commit/f046a0648e6659e41f47d394ecd58add07688296))
+
 ## [1.0.0-beta.67](https://github.com/ecomplus/admin/compare/v1.0.0-beta.66...v1.0.0-beta.67) (2022-09-08)
 
 
