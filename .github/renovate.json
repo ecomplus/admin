@@ -5,5 +5,10 @@
   "ignorePaths": [
     "**/node_modules/**",
     "**/public/**"
+  ],
+  "packageRules": [
+    {
+      "excludePackageNames": ["vue", "vue-template-compiler"]
+    }
   ]
 }
