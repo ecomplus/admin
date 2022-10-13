@@ -119,7 +119,9 @@ export default function ({
     }
 
     // no kit and variations together
-    $(`#t${tabId}-variations`).slideUp()
+    if (tbodyId === 'kit-items') {
+      $(`#t${tabId}-variations`).slideUp()
+    }
   }
 
   // handle items search
