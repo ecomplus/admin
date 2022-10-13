@@ -1835,6 +1835,12 @@ export default function () {
         if (grid) {
           // use default grid title
           spec = grid.title
+        } else {
+          const typeSpec = type === 'spec' ? { en_us: 'specification', pt_br: 'especificação' } : { en_us: 'customization', pt_br: 'customização' }
+          app.toast(i18n({
+            'en_us': `Grid id from ${i18n(typeSpec)} was chenged, now he is ${gridId}. Go to your grid configuration and change grid id for ${gridId}`,
+            'pt_br': `O ID da grade de ${i18n(typeSpec)} foi alterada, agora é ${gridId}. Vá para a configuração do grid e altere grid id para ${gridId}`
+          }))
         }
         // save grid title
         specsTitlesObject[gridId] = spec
@@ -1877,7 +1883,7 @@ export default function () {
         }
 
         let labelAppend = ''
-        if (type !== 'spec' && grid.add_to_price) {
+        if (type !== 'spec' && grid && grid.add_to_price) {
           // show customization additional price
           const { type, addition } = grid.add_to_price
           if (addition) {
