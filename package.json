@@ -27,7 +27,7 @@
     "@commitlint/cli": "^17.1.2",
     "@commitlint/config-conventional": "^17.1.0",
     "autoprefixer": "^9.8.8",
-    "babel-loader": "^8.2.5",
+    "babel-loader": "^9.0.1",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^6.4.1",
     "core-js": "^3.25.2",
