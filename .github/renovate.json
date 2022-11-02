@@ -1,6 +1,11 @@
 {
   "extends": [
-    "github>ecomclub/renovate-config"
+    "config:base",
+    "schedule:earlyMondays"
+  ],
+  "rangeStrategy": "bump",
+  "labels": [
+    "dependencies"
   ],
   "ignorePaths": [
     "**/node_modules/**",
@@ -8,7 +13,19 @@
   ],
   "packageRules": [
     {
-      "excludePackageNames": ["vue", "vue-template-compiler"]
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "excludePackagePatterns": [
+        "vue",
+        "vue-template-compiler"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch"
     }
   ]
 }
