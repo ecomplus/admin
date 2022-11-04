@@ -487,12 +487,12 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
-            <span data-lang="en_us">Customer abstract info</span>
-            <span data-lang="pt_br">Resumo do cliente</span>
+            <span data-lang="en_us">Orders</span>
+            <span data-lang="pt_br">Pedidos</span>
           </h4>
           <ul class="card-controls">
             <li>
@@ -500,16 +500,83 @@
             </li>
           </ul>
         </header>
-        <div class="card-content" data-id="abstract">
+        <div class="card-content">
+          <div class="card-body" data-id="orders">
+            <div class="row">
+              <div class="col-md-12">
+                <table data-id="list-orders" class="display" style="width:100%">
+                  <thead>
+                      <tr>
+                          <th class="i18n">
+                            <span data-lang="en_us">Date</span>
+                            <span data-lang="pt_br">Data</span>
+                          </th>
+                          <th class="i18n">
+                            <span data-lang="en_us">Number</span>
+                            <span data-lang="pt_br">Número</span>
+                          </th>
+                          <th class="i18n">
+                            <span data-lang="en_us">Freight</span>
+                            <span data-lang="pt_br">Frete</span>
+                          </th>
+                          <th class="i18n">
+                            <span data-lang="en_us">Discount</span>
+                            <span data-lang="pt_br">Desconto</span>
+                          </th>
+                          <th class="i18n">
+                            <span data-lang="en_us">Total</span>
+                            <span data-lang="pt_br">Total</span>
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody data-id="resume-order"></tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6" style="display: none" data-id="points">
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Fidelity points</span>
+            <span data-lang="pt_br">Pontos de fidelidade</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+        <div class="card-content">
           <div class="card-body">
             <div class="row">
-              <div class="col-md-6">
-                <span data-id="personalAbs">
-                </span>
-              </div>
-              <div class="col-md-6">
-                <span data-id="statisAbs">
-                </span>
+              <div class="col-md-12">
+                <table data-id="list-of-points" class="display" style="width:100%">
+                  <thead>
+                      <tr>
+                          <th class="i18n">
+                            <span data-lang="en_us">Program</span>
+                            <span data-lang="pt_br">Programa</span>
+                          </th>
+                          <th class="i18n">
+                            <span data-lang="en_us">Earned points</span>
+                            <span data-lang="pt_br">Pontos ganhados</span>
+                          </th>
+                          <th class="i18n">
+                            <span data-lang="en_us">Active points</span>
+                            <span data-lang="pt_br">Pontos ativos</span>
+                          </th>
+                          <th class="i18n">
+                            <span data-lang="en_us">Origin</span>
+                            <span data-lang="pt_br">Origem</span>
+                          </th>
+                      </tr>
+                    </thead>
+                  <tbody></tbody>
+                </table>
               </div>
             </div>
           </div>

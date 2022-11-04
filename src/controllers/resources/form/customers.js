@@ -3,9 +3,8 @@
 /*!
  * Copyright 2018 E-Com Club
  */
-
 export default function () {
-  const { $, lang, tabId, handleInputs, setupInputValues, handleNestedObjects } = window
+  const { $, lang, tabId, handleInputs, setupInputValues, handleNestedObjects, ecomUtils, formatMoney } = window
 
   // current tab
   var Tab = window.Tabs[tabId]
@@ -18,6 +17,7 @@ export default function () {
 
   // render customers on table
   var setup = function () {
+    const $customer = $(`#t${tabId}-customer-form`)
     var $infoCustomer = $('#t' + tabId + '-info-customer')
     var $inputRegister = $infoCustomer.find('#t' + tabId + '-registry-type')
     var $registryType = $inputRegister.find('input[name="registry_type"]')
@@ -37,6 +37,9 @@ export default function () {
     var $abstract = $('#t' + tabId + '-abstract')
     var $abstractText = $abstract.find('#t' + tabId + '-personalAbs')
     var $abstractStatistic = $abstract.find('#t' + tabId + '-statisAbs')
+    const $listOrders = $(`#t${tabId}-list-orders`)
+    const $points = $customer.find(`#t${tabId}-points`)
+    const $listOfPoints = $points.find(`#t${tabId}-list-of-points`)
     var addOption = function (phones) {
       // add input element for new telephones
       var $input = $('<div />', {
@@ -318,84 +321,67 @@ export default function () {
       resumeContent()
     })
 
-    if (data.gender) {
-    // get gender value
-      if (data.gender === 'f') {
-        var gender = '<span class="i18n"> ' +
-        '      <span data-lang="en_us">Female</span> ' +
-        '      <span data-lang="pt_br">Feminino</span>' +
-        '      </span> '
-      } else if (data.gender === 'm') {
-        gender = '<span class="i18n"> ' +
-        '      <span data-lang="en_us">Male</span> ' +
-        '      <span data-lang="pt_br">Masculino</span>' +
-        '      </span> '
-      }
-      if (data.gender === 'x') {
-        gender = '<span class="i18n"> ' +
-        '      <span data-lang="en_us">Others</span> ' +
-        '      <span data-lang="pt_br">Outros</span>' +
-        '      </span> '
-      }
-    }
     // create and show all information about the costumer
-    $abstractText.append(
-      '<span class="i18n"> ' +
-                    '      <span data-lang="en_us">Name</span> ' +
-                    '      <span data-lang="pt_br">Nome</span>' +
-                    '      </span>: ' + (fullName || '') + '<br>' +
-                    '<span class="i18n"> ' +
-                    '      <span data-lang="en_us">Birth Date</span> ' +
-                    '      <span data-lang="pt_br">Data de Nascimento</span>' +
-                    '      </span>: ' + (date || '') + '<br>' +
-                    '<span class="i18n"> ' +
-                    '      <span data-lang="en_us">Gender</span> ' +
-                    '      <span data-lang="pt_br">Gênero</span>' +
-                    '      </span>: ' + (gender || '') + '<br>' +
-                    '<span class="i18n"> ' +
-                    '      <span data-lang="en_us">CPF/CNPJ</span> ' +
-                    '      <span data-lang="pt_br">CPF/CNPJ</span>' +
-                    '      </span>: ' + maskDocNumber(data))
-
-    const loyaltyPointsEntries = data.loyalty_points_entries
-    if (loyaltyPointsEntries && loyaltyPointsEntries.length) {
-      $abstractText.append(String.raw`
-      <hr><h4 class="i18n">
-        <span data-lang="en_us">Loyalty points</span>
-        <span data-lang="pt_br">Pontos de fidelidade</span>
-      </h4>
+    const datatableOptions = {
+      scrollY: '200px',
+      scrollCollapse: true,
+      paging: false
+    }
+    datatableOptions.language = {
+      infoEmpty: '',
+      infoFiltered: '',
+      lengthMenu: 'Mostrar _MENU_ resultados',
+      search: 'Buscar',
+      zeroRecords: 'Nenhum resultado encontrado'
+    }
+    if (data.loyalty_points_entries && data.loyalty_points_entries.length) {
+      $points.slideDown()
+      data.loyalty_points_entries.forEach(entry => {
+        $listOfPoints.find('tbody').append(`<tr>
+        <td>${entry.name}</td>
+        <td>${entry.earned_points.toFixed(2)}</td>
+        <td>${entry.active_points.toFixed(2)}</td>
+        <td><a href="/#/resources/orders/${entry.order_id}">${entry.order_id}</a></td>
+        </tr>`)
+      })
+      $points.find('.card-body').append(`
       <span class="i18n">
-        <span data-lang="en_us">Earned points:</span>
-        <span data-lang="pt_br">Pontos ganhos:</span>
-      </span> ${loyaltyPointsEntries.reduce((acc, entry) => acc + entry.earned_points, 0).toFixed(2)}
+        <span data-lang="en_us">Total earned points:</span>
+        <span data-lang="pt_br">Total de pontos ganhos:</span>
+      </span> ${data.loyalty_points_entries.reduce((acc, entry) => acc + entry.earned_points, 0).toFixed(2)}
       <br><span class="i18n">
-        <span data-lang="en_us">Active points:</span>
-        <span data-lang="pt_br">Pontos ativos:</span>
-      </span> ${loyaltyPointsEntries.reduce((acc, entry) => acc + entry.active_points, 0).toFixed(2)}`)
+        <span data-lang="en_us">Total active points:</span>
+        <span data-lang="pt_br">Total de pontos ativos:</span>
+      </span> ${data.loyalty_points_entries.reduce((acc, entry) => acc + entry.active_points, 0).toFixed(2)}`)
+      datatableOptions.language.emptyTable = 'Nenhum ponto contabilizado'
+      datatableOptions.language.info = 'Mostrando _START_ a _END_ de _TOTAL_ pontuações carregadas'
+      $listOfPoints.DataTable(datatableOptions)
     }
 
     if (data.orders_count) {
-      $abstractStatistic.append(
-        '<span class="i18n"> ' +
-                      '      <span data-lang="en_us">Number of orders</span> ' +
-                      '      <span data-lang="pt_br">Quantidade de pedidos</span>' +
-                      '      </span>: ' + data.orders_count + '<br>' +
-                      '<span class="i18n"> ' +
-                                  '      <span data-lang="en_us">Amount of money in order: </span> ' +
-                                  '      <span data-lang="pt_br">Valor total de pedidos: </span>' +
-                                  '      </span>' + window.ecomUtils.formatMoney(data.orders_total_value || 0, data.currency_id) + '<br>')
+      $(`#t${tabId}-orders`).append(`<span class="i18n">
+    <span data-lang="en_us">Amount of money in order: </span>
+    <span data-lang="pt_br">Valor total de pedidos: </span
+    </span>${formatMoney(data.orders_total_value || 0)}`)
       if (data.orders.length) {
-        $abstractStatistic.append(String.raw`
-        <hr><h4 class="i18n">
-          <span data-lang="en_us">Orders</span>
-          <span data-lang="pt_br">Pedidos</span>
-        </h4>`)
-        for (var i = 0; i < data.orders.length; i++) {
-          const { _id, number } = data.orders[i]
-          $abstractStatistic.append(`<a href="/#/resources/orders/${_id}" class="text-monospace mr-2 d-inline-block">#${number}</a>`)
-        }
+        data.orders.forEach(order => {
+          const { _id, number } = order
+          const total = (order && order.amount && order.amount.total) || '0'
+          const freight = (order && order.amount && order.amount.freight) || '0'
+          const discount = (order && order.amount && order.amount.discount) || '0'
+          $listOrders.find('tbody').append(`<tr>
+        <td>${ecomUtils.formatDate(order)}</td>
+        <td><a href="/#/resources/orders/${_id}">${number}</a></td>
+        <td>${formatMoney(freight)}</td>
+        <td>${formatMoney(discount)}</td>
+        <td>${formatMoney(total)}</td>
+        </tr>`)
+        })
       }
     }
+    datatableOptions.language.emptyTable = 'Nenhum pedido realizado'
+    datatableOptions.language.info = 'Mostrando _START_ a _END_ de _TOTAL_ pedidos carregados'
+    $listOrders.DataTable(datatableOptions)
   }
 
   // wait for the form to be ready
