@@ -41,6 +41,14 @@ const { sessionStorage, localStorage, Image, $, app } = window
       en_us: 'Settings',
       pt_br: 'Configurações'
     }),
+    account: i18n({
+      en_us: 'Account',
+      pt_br: 'Conta'
+    }),
+    users: i18n({
+      en_us: 'Users',
+      pt_br: 'Usuários'
+    }),
     all_the: i18n({
       en_us: 'All the',
       pt_br: 'Todos os'
@@ -1206,11 +1214,26 @@ const { sessionStorage, localStorage, Image, $, app } = window
                  '<span class="title">' + dictionary.media + '</span>' +
                '</a>' +
              '</li>' +
-             '<li class="menu-item">' +
-               '<a class="menu-link" href="/#/settings">' +
+             '<li class="menu-item" id="settings" data-route-param="settings">' +
+               '<a class="menu-link" href="javascript:;">' +
                  '<span class="icon fa fa-cogs"></span>' +
                  '<span class="title">' + dictionary.settings + '</span>' +
+                 '<span class="arrow"></span>' +
                '</a>' +
+               '<ul class="menu-submenu">' +
+                  '<li class="menu-item">' +
+                    '<a class="menu-link" href="/#/settings">' +
+                    '<span class="icon fa fa-user"></span>' +
+                    '<span class="title">' + dictionary.account + '</span>' +
+                    '</a>' +
+                  '</li>' +
+                  '<li class="menu-item">' +
+                    '<a class="menu-link" href="/#/resources/authentications">' +
+                      '<span class="icon fa fa-users"></span>' +
+                      '<span class="title">' + dictionary.users + '</span>' +
+                    '</a>' +
+                  '</li>' +
+                '</ul>' +
              '</li>' +
              '<li class="menu-item" id="support-menu" data-route-param="support">' +
                 '<a class="menu-link" href="javascript:;">' +
