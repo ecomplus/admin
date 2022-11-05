@@ -1,0 +1,117 @@
+<form action="javascript:;" data-id="authentication-form" class="ajax-cards ajax-form ajax mb-30">
+  <div class="spinner-linear">
+    <div class="line"></div>
+  </div>
+  <div class="ajax-overlay"></div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group">
+            <label class="i18n require">
+              <span data-lang="en_us">Email</span>
+              <span data-lang="pt_br">E-mail</span>
+            </label>
+            <input type="email" class="form-control action-title" name="email" required />
+          </div>
+          <div class="form-group">
+            <label class="i18n">
+              <span data-lang="en_us">Name</span>
+              <span data-lang="pt_br">Nome</span>
+            </label>
+            <input type="text" class="form-control" name="name"/>
+          </div>
+          <div class="form-group">
+            <label class="i18n require">
+              <span data-lang="en_us">Username</span>
+              <span data-lang="pt_br">Nome do usuário</span>
+            </label>
+            <input type="text" class="form-control" name="username" required />
+          </div>
+          <div class="form-group">
+            <div class="custom-controls-stacked">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input"
+                  name="edit_storefront" checked />
+                <label class="custom-control-label i18n">
+                  <span data-lang="en_us">Edit storefront</span>
+                  <span data-lang="pt_br">Editar storefront</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Password</span>
+            <span data-lang="pt_br">Senha</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide" href="#"></a>
+            </li>
+          </ul>
+        </header>
+        <div class="card-content" data-id="password">
+          <div class="card-body">
+            <div class="form-group">
+              <label class="i18n require">
+                <span data-lang="en_us">New password</span>
+                <span data-lang="pt_br">Senha nova</span>
+              </label>
+              <input class="form-control" type="password" data-provide="pwstrength" id="n-password"/>
+              <i id="n-password-eye" class="fa position-absolute fa-eye" style="cursor: pointer; right: 35px; top: 120px;"></i>
+              <div class="progress"></div>
+            </div>
+            <div class="form-group">
+              <label class="i18n require">
+                <span data-lang="en_us">Repeat new password</span>
+                <span data-lang="pt_br">Repetir nova senha</span>
+              </label>
+              <input class="form-control" type="password" data-provide="pwstrength" id="r-password"/>
+              <i id="r-password-eye" class="fa position-absolute fa-eye" style="cursor: pointer; right: 35px; bottom: 50px;"></i>
+              <div class="progress"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="display: none" data-id="permissions">
+    <div class="col-md-12">
+      <div class="card card-slided-up">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Permission</span>
+            <span data-lang="pt_br">Permissões</span>
+          </h4>
+          <ul class="card-controls">
+            <li>
+              <a class="card-btn-slide i18n" href="#">
+                <span data-lang="en_us">Edit permissions</span>
+                <span data-lang="pt_br">Editar permissões</span>
+              </a>
+            </li>
+          </ul>
+        </header>
+        <div class="card-content">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12" data-id="list-permissions">
+                <div class="form-group d-flex flex-wrap" data-id="permission-resources">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>

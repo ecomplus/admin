@@ -23,6 +23,29 @@
       "pt_br": "Atualização"
     }
   },
+  "authentications": {
+    "_fields": [ "username", "email" ],
+    "logo/url": {
+      "label": {
+        "en_us": "Logo URL",
+        "pt_br": "URL do logo"
+      },
+      "type": "link"
+    },
+    "username": {
+      "label": {
+        "en_us": "Username",
+        "pt_br": "Usuário"
+      },
+      "type": "link"
+    },
+    "email": {
+      "label": {
+        "en_us": "Register email",
+        "pt_br": "Email de cadastro"
+      }
+    }
+  },
   "brands": {
     "_fields": [ "name", "slug", "logo/url" ],
     "logo/url": {

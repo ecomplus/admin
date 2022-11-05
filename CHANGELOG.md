@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.70](https://github.com/ecomplus/admin/compare/v1.0.0-beta.69...v1.0.0-beta.70) (2022-11-05)
+
+
+### Features
+
+* **authentications:** add list, edit and create authentications ([#601](https://github.com/ecomplus/admin/issues/601)) ([c5dbb9b](https://github.com/ecomplus/admin/commit/c5dbb9ba476208e6d70635c1211f71ff61708b53))
+* **customers:** change edit customers page points and orders cards ([#603](https://github.com/ecomplus/admin/issues/603)) ([dfa6196](https://github.com/ecomplus/admin/commit/dfa6196945496f56d5f30158a639cccbb7cdc42a))
+
+
+### Bug Fixes
+
+* **render-kit-items:** only hide variation if its a kit ([#596](https://github.com/ecomplus/admin/issues/596)) ([52f8bf4](https://github.com/ecomplus/admin/commit/52f8bf493e0977bbfa3fb092e0af4b83d57a8773))
+
 ## [1.0.0-beta.69](https://github.com/ecomplus/admin/compare/v1.0.0-beta.68...v1.0.0-beta.69) (2022-10-13)
 
 ## [1.0.0-beta.68](https://github.com/ecomplus/admin/compare/v1.0.0-beta.67...v1.0.0-beta.68) (2022-09-30)
