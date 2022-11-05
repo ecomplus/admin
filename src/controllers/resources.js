@@ -113,10 +113,14 @@ export default function () {
       // HTML card content
       let importPromise
       if (listing === true) {
-        if (slug !== 'products') {
+        if (slug !== 'products' && slug !== 'authentications') {
           // custom list
           importPromise = import(/* webpackChunkName: "router_routes_resources_list" */
             '@/router/routes/resources/list')
+        } else if (slug === 'authentications') {
+          // authentications list
+          importPromise = import(/* webpackChunkName: "router_routes_resources_list_authentications" */
+            '@/router/routes/resources/list/authentications')
         } else {
           // products list
           importPromise = import(/* webpackChunkName: "router_routes_resources_list_products" */
@@ -156,6 +160,10 @@ export default function () {
           case 'grids':
             importPromise = import(/* webpackChunkName: "router_routes_resources_form_grids" */
               '@/router/routes/resources/form/grids')
+            break
+          case 'authentications':
+            importPromise = import(/* webpackChunkName: "router_routes_resources_form_authentications" */
+              '@/router/routes/resources/form/authentications')
             break
         }
 
