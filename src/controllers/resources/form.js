@@ -753,7 +753,7 @@ export default function () {
               var data = Data()
               if (!creating) {
                 // overwrite
-                if (slug === 'orders') {
+                if (slug === 'orders' || slug === 'authentications') {
                   method = 'PATCH'
                 } else {
                   method = 'PUT'
