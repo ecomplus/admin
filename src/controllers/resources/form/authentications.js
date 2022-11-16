@@ -201,7 +201,7 @@ export default function () {
             callApi(`authentications/${authenticationId}/permissions.json`, 'PATCH', (err, result) => {
               if (err) {
                 app.toast(i18n({
-                  'en_us': 'Error! Permissions doesnt save!',
+                  'en_us': 'Error! Permissions does not save!',
                   'pt_br': 'Erro! Permissões não salvas!'
                 }))
               } else {
