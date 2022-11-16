@@ -98,7 +98,6 @@ export default function () {
     $cpf.change(function () {
       var data = Data()
       var docNumber = $cpf.val().replace(/(\d{3}).(\d{3}).(\d{3})-(\d{2})/, '$1$2$3$4')
-      console.log(docNumber)
       data.doc_number = docNumber
       commit(data, true)
     })
@@ -107,7 +106,6 @@ export default function () {
     $cnpj.change(function () {
       var data = Data()
       var docNumber = $cnpj.val().replace(/(\d{2}).(\d{3}).(\d{3})\/(\d{4})-(\d{2})/, '$1$2$3$4$5')
-      console.log(docNumber)
       data.doc_number = docNumber
       commit(data, true)
     })
