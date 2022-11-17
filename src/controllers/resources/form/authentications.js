@@ -6,7 +6,7 @@
 import * as md5 from 'blueimp-md5'
 
 export default function () {
-  const { $, i18n, tabId, callApi, routeParams, app } = window
+  const { $, i18n, tabId, callApi, routeParams, app, localStorage } = window
 
   // current tab
   const Tab = window.Tabs[tabId]
@@ -25,6 +25,10 @@ export default function () {
     const $listPermissions = $permissions.find(`#t${tabId}-list-permissions`)
     const $permissionResources = $listPermissions.find(`#t${tabId}-permission-resources`)
     const $password = $authenticationForm.find(`#t${tabId}-password`)
+    const $editStorefront = $(`#t${tabId}-edit-storefront`)
+    const myId = localStorage.getItem('my_id')
+    const data = Data()
+    delete data['pass_md5_hash']
     const dictionary = {
       all: i18n({
         en_us: 'All',
@@ -101,7 +105,9 @@ export default function () {
       'stores'
     ]
     const checkPermission = (permissions, permissionToCheck) => {
-      return permissions.some(permission => permission.indexOf(permissionToCheck) > -1)
+      if (Array.isArray(permissions[permissionToCheck])) {
+        return Boolean(permissions[permissionToCheck][0] === 'all')
+      }
     }
     const checkedAll = (resource, checkboxInputs) => {
       if (resource === '*') {
@@ -147,16 +153,14 @@ export default function () {
         delete data.pass_md5_hash
       }
     })
-
     // Handle permissions
-    if (authenticationId !== 'new') {
+    if (authenticationId !== 'new' && (authenticationId !== myId)) {
       callApi(`authentications/${authenticationId}/permissions.json`, 'GET', (err, json) => {
         if (!err) {
           $permissions.slideDown()
+          $editStorefront.slideDown()
           const saveButton = $('#action-save')
-          const permissions = Object.keys(json).filter(permission => {
-            return permission.indexOf('authentications/') === -1
-          })
+          const permissions = json
           const isAllAllowed = checkPermission(permissions, '*')
           $permissionResources.before(`
           <div class="form-group">
@@ -190,21 +194,33 @@ export default function () {
               checkedAll(resource, $allResouceInputs)
             } else {
               checkedAll(resource, $allResouceInputs)
-              delete json[resource]
+              json[resource] = []
             }
           })
           saveButton.click(() => {
             callApi(`authentications/${authenticationId}/permissions.json`, 'PATCH', (err, result) => {
               if (err) {
                 app.toast(i18n({
-                  'en_us': 'Error! Permissions doesnt save!',
+                  'en_us': 'Error! Permissions does not save!',
                   'pt_br': 'Erro! Permissões não salvas!'
                 }))
+              } else {
+                const $done = $('#action-done')
+                $done.fadeIn(400, function () {
+                  setTimeout(function () {
+                    $done.fadeOut(200, function () {
+                    })
+                  }, 800)
+                })
               }
             }, json)
           })
         }
       })
+    } else if (authenticationId === 'new') {
+      $editStorefront.slideDown()
+    } else {
+      delete data['edit_storefront']
     }
   }
 
