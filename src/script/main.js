@@ -1173,8 +1173,21 @@ const { sessionStorage, localStorage, Image, $, app } = window
 
              // resources links
              mainResourceLink('orders', [
-               'customers',
                'carts'
+             ]) +
+             mainResourceLink('customers', [], [{
+               name: i18n({
+                 pt_br: 'Aniversariantes',
+                 en_us: 'Birthdays'
+               }),
+               link: '/#/birth-report',
+               icon: 'birthday-cake'
+             } /* ,
+              {
+                name: 'Pontos',
+                link: '/#/inventory',
+                icon: 'archive'
+              } */
              ]) +
              mainResourceLink('products', [
                'brands',

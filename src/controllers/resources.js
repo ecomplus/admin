@@ -121,7 +121,7 @@ export default function () {
           // authentications list
           importPromise = import(/* webpackChunkName: "router_routes_resources_list_authentications" */
             '@/router/routes/resources/list/authentications')
-        } else {
+        } else if (slug === 'products') {
           // products list
           importPromise = import(/* webpackChunkName: "router_routes_resources_list_products" */
             '@/router/routes/resources/list/products')

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.71](https://github.com/ecomplus/admin/compare/v1.0.0-beta.70...v1.0.0-beta.71) (2022-11-18)
+
+
+### Features
+
+* **customers:** add birthdate report view ([#611](https://github.com/ecomplus/admin/issues/611)) ([ece458c](https://github.com/ecomplus/admin/commit/ece458c8ae63254133d30c7f86fcdc0f9f2e481b))
+
+
+### Bug Fixes
+
+* **authentications:** allow partial edit permissions  ([#612](https://github.com/ecomplus/admin/issues/612)) ([953fa00](https://github.com/ecomplus/admin/commit/953fa00a9fb475fcc97a809ea38947776b2eb2f1))
+* **deps:** pin vue 2.6.14, ddp ([08dfdae](https://github.com/ecomplus/admin/commit/08dfdae7c60575ae1f116c2f10e7ed68cfb8d6f5))
+
 ## [1.0.0-beta.70](https://github.com/ecomplus/admin/compare/v1.0.0-beta.69...v1.0.0-beta.70) (2022-11-05)
 
 
