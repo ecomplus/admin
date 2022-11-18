@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.72](https://github.com/ecomplus/admin/compare/v1.0.0-beta.71...v1.0.0-beta.72) (2022-11-18)
+
+
+### Bug Fixes
+
+* removing duplicated (and not working) change password on setttings view ([064d14b](https://github.com/ecomplus/admin/commit/064d14b1cfbcb13b9934032acba936a6b16f9a36))
+
 ## [1.0.0-beta.71](https://github.com/ecomplus/admin/compare/v1.0.0-beta.70...v1.0.0-beta.71) (2022-11-18)
 
 
