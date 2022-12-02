@@ -98,7 +98,6 @@ export default function () {
     $cpf.change(function () {
       var data = Data()
       var docNumber = $cpf.val().replace(/(\d{3}).(\d{3}).(\d{3})-(\d{2})/, '$1$2$3$4')
-      console.log(docNumber)
       data.doc_number = docNumber
       commit(data, true)
     })
@@ -107,7 +106,6 @@ export default function () {
     $cnpj.change(function () {
       var data = Data()
       var docNumber = $cnpj.val().replace(/(\d{2}).(\d{3}).(\d{3})\/(\d{4})-(\d{2})/, '$1$2$3$4$5')
-      console.log(docNumber)
       data.doc_number = docNumber
       commit(data, true)
     })
@@ -344,15 +342,21 @@ export default function () {
         <td><a href="/#/resources/orders/${entry.order_id}">${entry.order_id}</a></td>
         </tr>`)
       })
+      const earnedPoints = data.loyalty_points_entries.reduce((acc, entry) => acc + entry.earned_points, 0)
+      const activePoints = data.loyalty_points_entries.reduce((acc, entry) => acc + entry.active_points, 0)
       $points.find('.card-body').append(`
       <span class="i18n">
         <span data-lang="en_us">Total earned points:</span>
         <span data-lang="pt_br">Total de pontos ganhos:</span>
-      </span> ${data.loyalty_points_entries.reduce((acc, entry) => acc + entry.earned_points, 0).toFixed(2)}
+      </span> <b>${earnedPoints.toFixed(2)}</b>
       <br><span class="i18n">
         <span data-lang="en_us">Total active points:</span>
         <span data-lang="pt_br">Total de pontos ativos:</span>
-      </span> ${data.loyalty_points_entries.reduce((acc, entry) => acc + entry.active_points, 0).toFixed(2)}`)
+      </span> <b>${activePoints.toFixed(2)}</b>
+      <br><span class="i18n">
+        <span data-lang="en_us">Total used points:</span>
+        <span data-lang="pt_br">Total de pontos usados:</span>
+      </span> <b>${(earnedPoints - activePoints).toFixed(2)}</b>`)
       datatableOptions.language.emptyTable = 'Nenhum ponto contabilizado'
       datatableOptions.language.info = 'Mostrando _START_ a _END_ de _TOTAL_ pontuações carregadas'
       $listOfPoints.DataTable(datatableOptions)
