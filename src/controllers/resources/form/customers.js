@@ -346,17 +346,17 @@ export default function () {
       const activePoints = data.loyalty_points_entries.reduce((acc, entry) => acc + entry.active_points, 0)
       $points.find('.card-body').append(`
       <span class="i18n">
-        <span data-lang="en_us"><b>Total earned points:</b></span>
-        <span data-lang="pt_br"><b>Total de pontos ganhos:</b></span>
-      </span> ${earnedPoints.toFixed(2)}
+        <span data-lang="en_us">Total earned points:</span>
+        <span data-lang="pt_br">Total de pontos ganhos:</span>
+      </span> <b>${earnedPoints.toFixed(2)}</b>
       <br><span class="i18n">
-        <span data-lang="en_us"><b>Total active points:</b></span>
-        <span data-lang="pt_br"><b>Total de pontos ativos:</b></span>
-      </span> ${activePoints.toFixed(2)}
+        <span data-lang="en_us">Total active points:</span>
+        <span data-lang="pt_br">Total de pontos ativos:</span>
+      </span> <b>${activePoints.toFixed(2)}</b>
       <br><span class="i18n">
-        <span data-lang="en_us"><b>Total used points:</b></span>
-        <span data-lang="pt_br"><b>Total de pontos usados:</b></span>
-      </span> ${(earnedPoints - activePoints).toFixed(2)}`)
+        <span data-lang="en_us">Total used points:</span>
+        <span data-lang="pt_br">Total de pontos usados:</span>
+      </span> <b>${(earnedPoints - activePoints).toFixed(2)}</b>`)
       datatableOptions.language.emptyTable = 'Nenhum ponto contabilizado'
       datatableOptions.language.info = 'Mostrando _START_ a _END_ de _TOTAL_ pontuações carregadas'
       $listOfPoints.DataTable(datatableOptions)
