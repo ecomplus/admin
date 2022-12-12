@@ -67,7 +67,7 @@
     "blueimp-md5": "^2.19.0",
     "bootstrap": "^4.6.2",
     "dot-object": "^2.1.4",
-    "eventemitter3": "^4.0.7",
+    "eventemitter3": "^5.0.0",
     "inputmask": "^4.0.9",
     "jquery-maskmoney": "^3.0.2",
     "papaparse": "^5.3.2",
