@@ -1182,12 +1182,12 @@ const { sessionStorage, localStorage, Image, $, app } = window
                }),
                link: '/#/birth-report',
                icon: 'birthday-cake'
-             } /* ,
-              {
-                name: 'Pontos',
-                link: '/#/inventory',
-                icon: 'archive'
-              } */
+             },
+             {
+                name: 'Cashback',
+                link: '/#/cashback',
+                icon: 'money'
+             }
              ]) +
              mainResourceLink('products', [
                'brands',
