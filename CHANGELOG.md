@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.74](https://github.com/ecomplus/admin/compare/v1.0.0-beta.73...v1.0.0-beta.74) (2022-12-24)
+
+
+### Features
+
+* **customers:** cashback report ([ff60c99](https://github.com/ecomplus/admin/commit/ff60c995b4ce6ee31bfacae129e257773bc8a041))
+
+
+### Bug Fixes
+
+* **deps:** update dependency eventemitter3 to v5 ([#626](https://github.com/ecomplus/admin/issues/626)) ([edbdf0e](https://github.com/ecomplus/admin/commit/edbdf0e0f58814b201a143c2ebb314e35106a35c))
+
 ## [1.0.0-beta.73](https://github.com/ecomplus/admin/compare/v1.0.0-beta.72...v1.0.0-beta.73) (2022-12-02)
 
 ## [1.0.0-beta.72](https://github.com/ecomplus/admin/compare/v1.0.0-beta.71...v1.0.0-beta.72) (2022-11-18)
