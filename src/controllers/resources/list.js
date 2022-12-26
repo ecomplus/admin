@@ -38,12 +38,12 @@ export default function () {
     data = Tab.data
     // map deeper objects
     list = data.result.map(function (doc, index) {
-      var newDoc = { _index: index }
-      for (var prop in doc) {
-        var deepObj = doc[prop]
+      const newDoc = { _index: index }
+      for (const prop in doc) {
+        const deepObj = doc[prop]
         if (deepObj !== null && Array.isArray(deepObj)) {
-          for (var i = 0; i < deepObj.length; i++) {
-            for (var deepProp in deepObj[i]) {
+          for (let i = 0; i < deepObj.length; i++) {
+            for (const deepProp in deepObj[i]) {
               if (deepObj[i][deepProp] !== undefined) {
                 // assign to object
                 // using / to separate properties because jsGrid converts dot notation
@@ -55,7 +55,7 @@ export default function () {
         if (typeof deepObj === 'object' && deepObj !== null && !Array.isArray(deepObj)) {
           // is object
           const goDeeper = (loopObj, prop) => {
-            for (deepProp in loopObj) {
+            for (const deepProp in loopObj) {
               if (loopObj[deepProp] !== undefined) {
                 // assign to object
                 // using / to separate properties because jsGrid converts dot notation
@@ -104,9 +104,9 @@ export default function () {
         return {
           total: amount,
           count: countStatus,
-          discount: discount,
-          freight: freight,
-          subtotal: subtotal
+          discount,
+          freight,
+          subtotal
         }
       }
 
@@ -598,10 +598,10 @@ export default function () {
                       for (var ii = 0; ii < item[field].length; ii++) {
                         var nested = item[field][ii]
                         var template = config[field].template
-                        for (var prop in nested) {
+                        for (const prop in nested) {
                           if (nested[prop] !== undefined) {
                             // replace variables on string HTML template
-                            var regex = new RegExp('{{' + prop + '}}', 'g')
+                            const regex = new RegExp('{{' + prop + '}}', 'g')
                             let text
                             if (typeof nested[prop] === 'object') {
                               // parse JSON to field values only
