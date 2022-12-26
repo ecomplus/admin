@@ -1,0 +1,63 @@
+<div class="main-content">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-title d-inline">
+          <big class="text-secondary mr-1">
+            <i class="fa icon fa fa-money"></i>
+          </big>
+          <big class="i18n fw-400">
+            <span data-lang="en_us">Cashback report</span>
+            <span data-lang="pt_br">Relatório de cashback</span>
+          </big>
+          <div class="input-group float-right" style="width: 150px">
+            <div class="input-group-append">
+              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+            </div>
+            <input type="text" id="datepicker" class="form-control" data-date-format="yyyy">
+          </div>
+        </div>
+        <div class="card-body">
+          <canvas id="cashback-year" class="chartjs" style="display: block; height: 192px; width: 384px;"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-12">
+      <div class="card">
+        <div class="card-title">
+          <big class="text-secondary mr-1">
+            <i class="fa icon fa fa-money"></i>
+          </big>
+          <big class="i18n fw-400">
+            <span data-lang="en_us">Anual - Cashback</span>
+            <span data-lang="pt_br">Cashback anual</span>
+          </big>
+        </div>
+    
+        <div class="card-body">
+          <canvas id="anual-cashback" class="chartjs" style="display: block; height: 192px; width: 384px;"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-12">
+      <div class="card">
+        <div class="card-title">
+          <big class="text-secondary mr-1">
+            <i class="fa icon fa fa-money"></i>
+          </big>
+          <big class="i18n fw-400">
+            <span data-lang="en_us">Points total distribution</span>
+            <span data-lang="pt_br">Distribuição total de pontos</span>
+          </big>
+        </div>
+    
+        <div class="card-body">
+          <canvas id="all-cashbacks" class="chartjs" style="display: block; height: 192px; width: 384px;"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
