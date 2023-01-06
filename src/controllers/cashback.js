@@ -83,8 +83,8 @@ export default function () {
             const resultado = json.result
             let result
             if (resultado.length !== 12) {
-              let value = 0
               result = Array.from(Array(12)).map((item, index) => {
+                let value = 0
                 const existingMonth = resultado.find(month => month._id ===  index + 1);
                 value = (existingMonth || {money:value}).money;
                 return existingMonth || { _id:  index + 1, money: value, count: value, points: value }; 
