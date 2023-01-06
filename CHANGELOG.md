@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.75](https://github.com/ecomplus/admin/compare/v1.0.0-beta.74...v1.0.0-beta.75) (2023-01-06)
+
+
+### Bug Fixes
+
+* **cashback:** re-initialize cashback ([53260eb](https://github.com/ecomplus/admin/commit/53260ebae85ea750e644b955d7e9cd08ebdf27c1))
+* **orders:** show same status with different transaction ([#633](https://github.com/ecomplus/admin/issues/633)) ([1b2e847](https://github.com/ecomplus/admin/commit/1b2e8472a2a9e11354852a53c89baca5094d7ac6))
+* replace some var with conts/let to fix babel build ([206a8b9](https://github.com/ecomplus/admin/commit/206a8b9e97f67316776eb1981b1c150b7e627120))
+
 ## [1.0.0-beta.74](https://github.com/ecomplus/admin/compare/v1.0.0-beta.73...v1.0.0-beta.74) (2022-12-24)
 
 
