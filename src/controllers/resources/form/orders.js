@@ -319,7 +319,6 @@ export default function () {
         callApi(url, 'GET', (err, json) => {
           if (!err) {
             const orders = json.result
-            console.log(orders)
             $listOfSubscriptions.append(
               orders.reduce((trsStr, order, i) => trsStr + `
               <tr>
@@ -399,7 +398,6 @@ export default function () {
           payments_history: financialStatus,
           fulfillments: fulfillmentStatus
         }
-
         // merge payment and fulfillment status changes
         for (var eventType in eventTypes) {
           if (eventTypes[eventType] && data[eventType]) {
@@ -413,11 +411,11 @@ export default function () {
             })
 
             sortedEntries.forEach(function (entry, index) {
-              if (index > 0 && entry.status === sortedEntries[index - 1].status) {
+              if (index > 0 && entry.status === sortedEntries[index - 1].status && (entry.transaction_id === sortedEntries[index - 1].transaction_id)) {
                 return
               }
               let eventObj
-              for (var status in opts) {
+              for (let status in opts) {
                 if (opts[status] && status === entry.status) {
                   // status found
                   eventObj = opts[status]
