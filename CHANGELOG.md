@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.76](https://github.com/ecomplus/admin/compare/v1.0.0-beta.75...v1.0.0-beta.76) (2023-01-11)
+
+
+### Bug Fixes
+
+* **products-list:** fix row cols width to 50% (2 cols) on mobile view ([7fcfb05](https://github.com/ecomplus/admin/commit/7fcfb058ed8ba64aeac165e11cba6aead0ce2234))
+* **products-list:** get more options from categories and brands ([#634](https://github.com/ecomplus/admin/issues/634)) ([3b74074](https://github.com/ecomplus/admin/commit/3b740740cfc0673c1b9255ad0d8710ee08b95e29))
+
 ## [1.0.0-beta.75](https://github.com/ecomplus/admin/compare/v1.0.0-beta.74...v1.0.0-beta.75) (2023-01-06)
 
 
