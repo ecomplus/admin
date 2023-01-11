@@ -247,8 +247,8 @@ export default function () {
             { _id: { order: 'desc' } }
           ],
           aggs: {
-            'brands.name': { terms: { field: 'brands.name' } },
-            'categories.name': { terms: { field: 'categories.name' } },
+            'brands.name': { terms: { field: 'brands.name', size: 100 } },
+            'categories.name': { terms: { field: 'categories.name', size: 300 } },
             status: { terms: { field: 'status' } },
             // Metric Aggregations
             min_price: { min: { field: 'price' } },
