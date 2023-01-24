@@ -3,57 +3,9 @@ import { i18n } from '@ecomplus/utils'
 import Chart from 'chart.js'
 
 export default function () {
-  const { $, callApi, tabId, formatMoney } = window
+  const { $, callApi, tabId, formatMoney, moment } = window
 
   const dictionary = {
-    january: i18n({
-      en_us: 'January',
-      pt_br: 'Janeiro'
-    }),
-    february: i18n({
-      en_us: 'February',
-      pt_br: 'Fevereiro'
-    }),
-    march: i18n({
-      en_us: 'March',
-      pt_br: 'Março'
-    }),
-    april: i18n({
-      en_us: 'April',
-      pt_br: 'Abril'
-    }),
-    may: i18n({
-      en_us: 'May',
-      pt_br: 'Maio'
-    }),
-    june: i18n({
-      en_us: 'June',
-      pt_br: 'Junho'
-    }),
-    august: i18n({
-      en_us: 'August',
-      pt_br: 'Agosto'
-    }),
-    july: i18n({
-      en_us: 'July',
-      pt_br: 'Julho'
-    }),
-    september: i18n({
-      en_us: 'September',
-      pt_br: 'Setembro'
-    }),
-    october: i18n({
-      en_us: 'October',
-      pt_br: 'Outubro'
-    }),
-    november: i18n({
-      en_us: 'November',
-      pt_br: 'Novembro'
-    }),
-    december: i18n({
-      en_us: 'December',
-      pt_br: 'Dezembro'
-    }),
     usedCashback: i18n({
       en_us: 'Used cashback',
       pt_br: 'Cashback utilizado'
@@ -110,10 +62,11 @@ export default function () {
                 }
               })
             }
+            const labelMonths = moment.months()
             new Chart($('#cashback-year'), {
               type: 'bar',
               data: {
-                labels: [i18n(dictionary.january), i18n(dictionary.february), i18n(dictionary.march), i18n(dictionary.april), i18n(dictionary.may), i18n(dictionary.june), i18n(dictionary.july), i18n(dictionary.august), i18n(dictionary.september), i18n(dictionary.october), i18n(dictionary.november), i18n(dictionary.december)],
+                labels: labelMonths,
                 datasets: [     
                   {
                     type: 'line',
