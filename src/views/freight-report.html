@@ -18,109 +18,122 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-12 col-md-9">
+          <div class="col-12 col-md-8">
             <div class="card-body">
               <canvas id="freight-year" class="chartjs" style="display: block; height: 192px; width: 384px;"></canvas>
             </div>
           </div>
-          <div class="col-md-3 col-12 pt-5">
-            <div class="metrics">
-              <big class="i18n fw-400 pb-2">
-                <span data-lang="en_us">Summary: Annual</span>
-                <span data-lang="pt_br">Resumo: Anual</span>
-              </big>
-              <div class="pb-2 pt-2">
-                <big class="i18n fw-400">
-                  <span data-lang="en_us">Freight cost</span>
-                  <span data-lang="pt_br">Custo com frete</span>
+          <div class="col-md-4 col-12">
+            <div class="card">
+              <h5 class="card-title i18n">
+                <strong data-lang="en_us">Summary: Annual</strong>
+                <strong data-lang="pt_br">Resumo: Anual</strong>
+              </h5>
+              <div class="media-list media-list-hover media-list-divided">
+                <big class="media media-single">
+                  <span class="title i18n">
+                    <span data-lang="en_us">Freight cost</span>
+                    <span data-lang="pt_br">Custo com frete</span>
+                  </span>
+                  <span class="badge badge-pill badge-success" id="totalFreight"></span>
                 </big>
-                <span style="font-size: .9rem;" class="badge badge-pill badge-info" id="totalFreight"></span>
-              </div>
-              <div class="pb-2">
-                <big class="i18n fw-400">
-                  <span data-lang="en_us">Average cost</span>
-                  <span data-lang="pt_br">Custo médio</span>
+
+                <big class="media media-single">
+                  <span class="title i18n">
+                    <span data-lang="en_us">Average cost</span>
+                    <span data-lang="pt_br">Custo médio</span>
+                  </span>
+                  <span class="badge badge-pill badge-primary" id="averageFreight"></span>
                 </big>
-                <span style="font-size: .9rem;" class="badge badge-pill badge-info" id="averageFreight"></span>
-              </div>
-              <div class="pb-2">
-                <big class="i18n fw-400">
-                  <span data-lang="en_us">Orders with freight</span>
-                  <span data-lang="pt_br">Pedidos com frete</span>
+
+                <big class="media media-single">
+                  <span class="title i18n">
+                    <span data-lang="en_us">Orders with freight</span>
+                    <span data-lang="pt_br">Pedidos com frete</span>
+                  </span>
+                  <span class="badge badge-pill badge-purple" style="color: #fff" id="countFreight"></span>
                 </big>
-                <span style="font-size: .9rem;" class="badge badge-pill badge-info" id="countFreight"></span>
-              </div>
-              <div class="pb-2">
-                <big class="i18n fw-400">
-                  <span data-lang="en_us">Freight / Total amount</span>
-                  <span data-lang="pt_br">Frete / Montante total </span>
+
+                <big class="media media-single">
+                  <span class="title i18n">
+                    <span data-lang="en_us">Freight / Total amount</span>
+                    <span data-lang="pt_br">Frete / Montante total </span>
+                  </span> 
+                  <span class="badge badge-pill badge-secondary" id="percentFreight"></span>
                 </big>
-                <span style="font-size: .9rem;" class="badge badge-pill badge-info" id="percentFreight"></span>
-              </div>
-              <div class="pb-2">
-                <big class="i18n fw-400">
-                  <span data-lang="en_us">Highest cost month</span>
-                  <span data-lang="pt_br">Mês de maior custo</span>
+
+                <big class="media media-single">
+                  <span class="title i18n">
+                    <span data-lang="en_us">Highest cost month</span>
+                    <span data-lang="pt_br">Mês de maior custo</span>
+                  </span>
+                  <span class="badge badge-pill badge-danger" id="highestFreight"></span>
                 </big>
-                <span style="font-size: .9rem;" class="badge badge-pill badge-info" id="highestFreight"></span>
-              </div>
-              <div class="pb-2">
-                <big class="i18n fw-400">
-                  <span data-lang="en_us">Lowest cost month</span>
-                  <span data-lang="pt_br">Mês de menor custo</span>
+
+                <big class="media media-single">
+                  <span class="title i18n">
+                    <span data-lang="en_us">Lowest cost month</span>
+                    <span data-lang="pt_br">Mês de menor custo</span>
+                  </span>
+                  <span class="badge badge-pill badge-info" id="lowestFreight"></span>
                 </big>
-                <span style="font-size: .9rem;" class="badge badge-pill badge-info" id="lowestFreight"></span>
               </div>
             </div>
           </div>
         </div>
         <hr>
         <div class="row">
-          <div class="col-md-9 col-12">
+          <div class="col-md-8 col-12">
             <div class="card-body">
               <canvas id="free-freight-year" class="chartjs" style="display: block; height: 192px; width: 384px;"></canvas>
             </div>
           </div>
-          <div class="col-md-3 col-12 pt-5">
-            <div class="metrics">
-              <big class="i18n fw-400 pb-2">
-                <span data-lang="en_us">Summary: Annual</span>
-                <span data-lang="pt_br">Resumo: Anual</span>
-              </big>
-              <div class="pb-2">
-                <big class="i18n fw-400">
-                  <span data-lang="en_us">Orders free freight</span>
-                  <span data-lang="pt_br">Pedidos frete grátis</span>
+          <div class="col-md-4 col-12">
+            <div class="card">
+              <h5 class="card-title i18n">
+                <strong data-lang="en_us">Summary: Annual</strong>
+                <strong data-lang="pt_br">Resumo: Anual</strong>
+              </h5>
+              <div class="media-list media-list-hover media-list-divided">
+                <big class="media media-single">
+                  <span class="title i18n">
+                    <span data-lang="en_us">Orders free freight</span>
+                    <span data-lang="pt_br">Pedidos frete grátis</span>
+                  </span>
+                  <span class="badge badge-pill badge-success" id="countFreeFreight"></span>
                 </big>
-                <span style="font-size: .9rem;" class="badge badge-pill badge-info" id="countFreeFreight"></span>
-              </div>
-              <div class="pb-2">
-                <big class="i18n fw-400">
-                  <span data-lang="en_us">Average free freight</span>
-                  <span data-lang="pt_br">Média frete grátis</span>
+
+                <big class="media media-single">
+                  <span class="title i18n">
+                    <span data-lang="en_us">Average free freight</span>
+                    <span data-lang="pt_br">Média frete grátis</span>
+                  </span>
+                  <span class="badge badge-pill badge-primary" id="averageFreeFreight"></span>
                 </big>
-                <span style="font-size: .9rem;" class="badge badge-pill badge-info" id="averageFreeFreight"></span>
-              </div>
-              <div class="pb-2">
-                <big class="i18n fw-400">
-                  <span data-lang="en_us">Free freight from all freight</span>
-                  <span data-lang="pt_br">Frete grátis do total de frete</span>
+
+                <big class="media media-single">
+                  <span class="title i18n">
+                    <span data-lang="en_us">Free freight from all freight</span>
+                    <span data-lang="pt_br">Frete grátis do total de frete</span>
+                  </span>
+                  <span class="badge badge-pill badge-purple" style="color: #fff" id="percentFreeFreight"></span>
                 </big>
-                <span style="font-size: .9rem;" class="badge badge-pill badge-info" id="percentFreeFreight"></span>
-              </div>
-              <div class="pb-2">
-                <big class="i18n fw-400">
-                  <span data-lang="en_us">Highest month quantity</span>
-                  <span data-lang="pt_br">Mês de maior quantidade</span>
+
+                <big class="media media-single">
+                  <span class="title i18n">
+                    <span data-lang="en_us">Highest month quantity</span>
+                    <span data-lang="pt_br">Mês de maior quantidade</span>
+                  </span> 
+                  <span class="badge badge-pill badge-info" id="highestFreeFreight"></span>
                 </big>
-                <span style="font-size: .9rem;" class="badge badge-pill badge-info" id="highestFreeFreight"></span>
-              </div>
-              <div class="pb-2">
-                <big class="i18n fw-400">
-                  <span data-lang="en_us">Lowest month quantity</span>
-                  <span data-lang="pt_br">Mês de menor quantidade</span>
+
+                <big class="media media-single">
+                  <span class="title i18n">
+                    <span data-lang="en_us">Lowest month quantity</span>
+                    <span data-lang="pt_br">Mês de menor quantidade</span>
+                  </span>
+                  <span class="badge badge-pill badge-danger" id="lowestFreeFreight"></span>
                 </big>
-                <span style="font-size: .9rem;" class="badge badge-pill badge-info" id="lowestFreeFreight"></span>
               </div>
             </div>
           </div>
