@@ -161,7 +161,7 @@ export default function () {
           const chart = new Chart($('#birth-year'), {
             type: 'bar',
             data: {
-              labels: [i18n(dictionary.january), i18n(dictionary.february), i18n(dictionary.march), i18n(dictionary.april), i18n(dictionary.may), i18n(dictionary.june), i18n(dictionary.july), i18n(dictionary.august), i18n(dictionary.september), i18n(dictionary.october), i18n(dictionary.november), i18n(dictionary.december)],
+              labels: [dictionary.january, dictionary.february, dictionary.march, dictionary.april, dictionary.may, dictionary.june, dictionary.july, dictionary.august, dictionary.september, dictionary.october, dictionary.november, dictionary.december],
               datasets: [
                 {
                   label: i18n(i19month),
