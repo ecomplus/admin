@@ -3,10 +3,59 @@ import { i18n } from '@ecomplus/utils'
 import Chart from 'chart.js'
 
 export default function () {
-  const { $, callApi, formatMoney, moment } = window
+  const { $, callApi, formatMoney } = window
 
   const dictionary = {
-    averageFreight: i18n({
+    january: i18n({
+      en_us: 'January',
+      pt_br: 'Janeiro'
+    }),
+    february: i18n({
+      en_us: 'February',
+      pt_br: 'Fevereiro'
+    }),
+    march: i18n({
+      en_us: 'March',
+      pt_br: 'Março'
+    }),
+    april: i18n({
+      en_us: 'April',
+      pt_br: 'Abril'
+    }),
+    may: i18n({
+      en_us: 'May',
+      pt_br: 'Maio'
+    }),
+    june: i18n({
+      en_us: 'June',
+      pt_br: 'Junho'
+    }),
+    august: i18n({
+      en_us: 'August',
+      pt_br: 'Agosto'
+    }),
+    july: i18n({
+      en_us: 'July',
+      pt_br: 'Julho'
+    }),
+    september: i18n({
+      en_us: 'September',
+      pt_br: 'Setembro'
+    }),
+    october: i18n({
+      en_us: 'October',
+      pt_br: 'Outubro'
+    }),
+    november: i18n({
+      en_us: 'November',
+      pt_br: 'Novembro'
+    }),
+    december: i18n({
+      en_us: 'December',
+      pt_br: 'Dezembro'
+    }),
+    averageFreight: i18n(
+    {
       en_us: 'Average freight',
       pt_br: 'Média de frete'
     }),
@@ -171,15 +220,14 @@ export default function () {
                 }
               })
             }
-            const labelMonths = moment.months()
             new Chart($('#freight-year'), {
               type: 'bar',
               data: {
-                labels: labelMonths,
+                labels: [dictionary.january, dictionary.february, dictionary.march, dictionary.april, dictionary.may, dictionary.june, dictionary.july, dictionary.august, dictionary.september, dictionary.october, dictionary.november, dictionary.december],
                 datasets: [     
                   {
                     type: 'line',
-                    label: i18n(dictionary.ordersWithFreight),
+                    label: dictionary.ordersWithFreight,
                     lineTension: 0,
                     fill: false,
                     borderWidth: 3,
@@ -189,7 +237,7 @@ export default function () {
                     data: totalCountMonth
                   },
                   {
-                    label: `${i18n(dictionary.usedFreight)} - ${year}`,
+                    label: `${dictionary.usedFreight} - ${year}`,
                     fill: false,
                     borderWidth: 3,
                     pointRadius: 0,
@@ -199,7 +247,7 @@ export default function () {
                   },
                   {
                     type: 'line',
-                    label: i18n(dictionary.averageFreight),
+                    label: dictionary.averageFreight,
                     lineTension: 0,
                     fill: false,
                     borderWidth: 3,
@@ -217,11 +265,11 @@ export default function () {
                   callbacks: {
                     label: ({ yLabel, datasetIndex }) => {
                       if (datasetIndex  === 1) {
-                        return `${formatMoney(yLabel)} ${i18n(dictionary.usedFreight)}`
+                        return `${formatMoney(yLabel)} ${dictionary.usedFreight}`
                       } else if (datasetIndex  === 2) {
-                        return `${formatMoney(yLabel)} ${i18n(dictionary.averageFreight)}`
+                        return `${formatMoney(yLabel)} ${dictionary.averageFreight}`
                       }
-                      return `${yLabel} ${i18n(dictionary.ordersWithFreight)}`
+                      return `${yLabel} ${dictionary.ordersWithFreight}`
                     }
                   }
                 }
@@ -231,7 +279,7 @@ export default function () {
             new Chart($('#free-freight-year'), {
               type: 'bar',
               data: {
-                labels: labelMonths,
+                labels: [dictionary.january, dictionary.february, dictionary.march, dictionary.april, dictionary.may, dictionary.june, dictionary.july, dictionary.august, dictionary.september, dictionary.october, dictionary.november, dictionary.december],
                 datasets: [     
                   {
                     label: `${i18n(i19orders)} ${i18n(i19freeShipping)}`,

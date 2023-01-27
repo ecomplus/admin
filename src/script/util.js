@@ -84,10 +84,6 @@ const { $ } = window
       $.getScript('/assets/vendor/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.min.js', function () {
         $.fn.datepicker.defaults.language = 'pt-BR'
       })
-      $.getScript('/assets/vendor/moment/moment-with-locales.min.js', function () {
-        const lang = (window.lang || 'pt_br').replace('_', '-')
-        moment.locale(lang)
-      })
       decimalPoint = ','
     } else {
       // default en-US

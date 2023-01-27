@@ -4,7 +4,7 @@ import Papa from 'papaparse'
 import Chart from 'chart.js'
 
 export default function () {
-  const { $, callApi, tabId, moment } = window
+  const { $, callApi, tabId } = window
   const $spinner = $('#spinner-wait-api')
   const datatableOptions = {
     pageLength: 10
@@ -27,6 +27,56 @@ export default function () {
       search: 'Buscar',
       zeroRecords: 'Nenhum resultado encontrado'
     }
+  }
+  const dictionary = {
+    january: i18n({
+      en_us: 'January',
+      pt_br: 'Janeiro'
+    }),
+    february: i18n({
+      en_us: 'February',
+      pt_br: 'Fevereiro'
+    }),
+    march: i18n({
+      en_us: 'March',
+      pt_br: 'Março'
+    }),
+    april: i18n({
+      en_us: 'April',
+      pt_br: 'Abril'
+    }),
+    may: i18n({
+      en_us: 'May',
+      pt_br: 'Maio'
+    }),
+    june: i18n({
+      en_us: 'June',
+      pt_br: 'Junho'
+    }),
+    august: i18n({
+      en_us: 'August',
+      pt_br: 'Agosto'
+    }),
+    july: i18n({
+      en_us: 'July',
+      pt_br: 'Julho'
+    }),
+    september: i18n({
+      en_us: 'September',
+      pt_br: 'Setembro'
+    }),
+    october: i18n({
+      en_us: 'October',
+      pt_br: 'Outubro'
+    }),
+    november: i18n({
+      en_us: 'November',
+      pt_br: 'Novembro'
+    }),
+    december: i18n({
+      en_us: 'December',
+      pt_br: 'Dezembro'
+    })
   }
   const datatable = $('#birth-table').DataTable(datatableOptions)
   const renderListBirthReports = month => {
@@ -108,11 +158,10 @@ export default function () {
           result.forEach(month => {
             totalByMonth.push(month.total)
           })
-          const labelMonths = moment.months()
           const chart = new Chart($('#birth-year'), {
             type: 'bar',
             data: {
-              labels: labelMonths,
+              labels: [dictionary.january, dictionary.february, dictionary.march, dictionary.april, dictionary.may, dictionary.june, dictionary.july, dictionary.august, dictionary.september, dictionary.october, dictionary.november, dictionary.december],
               datasets: [
                 {
                   label: i18n(i19month),
