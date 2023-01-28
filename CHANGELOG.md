@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.77](https://github.com/ecomplus/admin/compare/v1.0.0-beta.76...v1.0.0-beta.77) (2023-01-28)
+
+
+### Features
+
+* **report:** insert freight report ([fe31d31](https://github.com/ecomplus/admin/commit/fe31d312550f957fb234f042bda29ddecf851a0b))
+
 ## [1.0.0-beta.76](https://github.com/ecomplus/admin/compare/v1.0.0-beta.75...v1.0.0-beta.76) (2023-01-11)
 
 
