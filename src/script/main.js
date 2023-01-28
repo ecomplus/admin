@@ -34,6 +34,10 @@ const { sessionStorage, localStorage, Image, $, app } = window
       en_us: 'Resources',
       pt_br: 'Recursos'
     }),
+    freightReport: i18n({
+      en_us: 'Freight report',
+      pt_br: 'Relatório de fretes'
+    }),
     media: i18n(i19media),
     go_to_store: i18n(i19goToStore),
     themes: i18n(i19themes),
@@ -1174,7 +1178,14 @@ const { sessionStorage, localStorage, Image, $, app } = window
              // resources links
              mainResourceLink('orders', [
                'carts'
-             ]) +
+              ], [
+                {
+                name: i18n(dictionary.freightReport),
+                link: '/#/freight-report',
+                icon: 'truck'
+               }
+              ]
+               ) +
              mainResourceLink('customers', [], [{
                name: i18n({
                  pt_br: 'Aniversariantes',
