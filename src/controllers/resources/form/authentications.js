@@ -19,8 +19,11 @@ export default function () {
 
   // render customers on table
   const setup = function () {
+    const $tabNav = $(`#t${tabId}-nav`)
+    $tabNav.find('[data-id=duplicate]').remove()
     const authenticationId = routeParams[routeParams.length - 1]
     const $authenticationForm = $(`#t${tabId}-authentication-form`)
+    const $buttonPermission = $authenticationForm.find(`#t${tabId}-action-save-permission`)
     const $permissions = $authenticationForm.find(`#t${tabId}-permissions`)
     const $listPermissions = $permissions.find(`#t${tabId}-list-permissions`)
     const $permissionResources = $listPermissions.find(`#t${tabId}-permission-resources`)
@@ -29,6 +32,9 @@ export default function () {
     const myId = localStorage.getItem('my_id')
     const data = Data()
     delete data['pass_md5_hash']
+    if (myId === authenticationId) {
+      $tabNav.find('[data-id=delete]').remove()  
+    }
     const dictionary = {
       all: i18n({
         en_us: 'All',
@@ -109,8 +115,13 @@ export default function () {
         return Boolean(permissions[permissionToCheck][0] === 'all')
       }
     }
-    const checkedAll = (resource, checkboxInputs) => {
+    const checkedAll = (resource, checkboxInputs, checked) => {
       if (resource === '*') {
+        if (checked) {
+          checkboxInputs.prop('checked', false)
+        } else {
+          checkboxInputs.prop('checked', true)
+        }
         setTimeout(() => {
           checkboxInputs.next().click()
         }, 50)
@@ -178,7 +189,7 @@ export default function () {
             $permissionResources.append(`<div class="custom-controls-stacked">
               <div class="custom-control custom-checkbox pr-20 pb-10">
                 <input type="checkbox" class="custom-control-input checkbox-permissions"
-                  name="${resource}" ${isAllAllowed || checkPermission(permissions, resource) ? 'checked' : ''} />
+                  name="${resource}" ${checkPermission(permissions, resource) ? 'checked' : ''} />
                 <label class="custom-control-label">
                   <span class="title">${dictionary[resource]}</span>
                 </label>
@@ -190,14 +201,17 @@ export default function () {
             const resource = el.target.name
             const checked = el.target.checked
             if (checked) {
+              json['stores'] = ['GET']
               json[resource] = ['all']
-              checkedAll(resource, $allResouceInputs)
+              checkedAll(resource, $allResouceInputs, true)
+              delete json['*']
             } else {
-              checkedAll(resource, $allResouceInputs)
+              checkedAll(resource, $allResouceInputs, false)
               json[resource] = []
+              json['stores'] = ['GET']
             }
           })
-          saveButton.click(() => {
+          $buttonPermission.click(() => {
             callApi(`authentications/${authenticationId}/permissions.json`, 'PATCH', (err, result) => {
               if (err) {
                 app.toast(i18n({
@@ -205,13 +219,10 @@ export default function () {
                   'pt_br': 'Erro! Permissões não salvas!'
                 }))
               } else {
-                const $done = $('#action-done')
-                $done.fadeIn(400, function () {
-                  setTimeout(function () {
-                    $done.fadeOut(200, function () {
-                    })
-                  }, 800)
-                })
+                app.toast(i18n({
+                  'en_us': 'Permission save with success!',
+                  'pt_br': 'Permissões salvas com sucesso!'
+                }))
               }
             }, json)
           })
