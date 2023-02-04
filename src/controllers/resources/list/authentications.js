@@ -74,12 +74,12 @@ export default function () {
   updateData()
   if (list.length) {
     // delete checkbox element HTML
-    const elCheckbox = '<div class="custom-controls-stacked">' +
-                       '<div class="custom-control custom-checkbox">' +
-                         '<input type="checkbox" class="custom-control-input" />' +
-                         '<label class="custom-control-label"> </label>' +
-                       '</div>' +
-                     '</div>'
+    const elCheckbox = `<div class="custom-controls-stacked">
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" />
+                            <label class="custom-control-label"> </label>
+                          </div>
+                        </div>`
 
     // setup jsGrid
     const $grid = $('#t' + tabId + '-authentication-list')
@@ -307,6 +307,9 @@ export default function () {
               const el = $(elCheckbox)
               const id = item._id
               const $checkbox = el.find('input')
+              if (item._id === myId) {
+                $checkbox.prop('disabled', true)
+              }
               if ($.inArray(id, Tab.selectedItems) > -1) {
                 // item already selected
                 $checkbox.prop('checked', true)
@@ -320,7 +323,6 @@ export default function () {
               return el
             }
           })
-
           for (let i = 0; i < config._fields.length; i++) {
             const field = config._fields[i]
             const fieldOpts = config[field] || {}

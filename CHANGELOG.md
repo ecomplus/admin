@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.78](https://github.com/ecomplus/admin/compare/v1.0.0-beta.77...v1.0.0-beta.78) (2023-02-04)
+
+
+### Bug Fixes
+
+* **authentications:** correct stores me ([#642](https://github.com/ecomplus/admin/issues/642)) ([7844858](https://github.com/ecomplus/admin/commit/784485848aa224806b67f08a48e81b69b4e11ba7))
+* **orders-form:** fix status entries order with different timezones ([417176b](https://github.com/ecomplus/admin/commit/417176b82ef7b59ee53a891978c9f9a241bddd44))
+
 ## [1.0.0-beta.77](https://github.com/ecomplus/admin/compare/v1.0.0-beta.76...v1.0.0-beta.77) (2023-01-28)
 
 
