@@ -405,7 +405,7 @@ export default function () {
             opts = json.orders[eventTypes[eventType]].enum
             const sortedEntries = data[eventType].sort((a, b) => {
               if (a.date_time && b.date_time) {
-                return a.date_time > b.date_time ? 1 : -1
+                return new Date(a.date_time).getTime() > new Date(b.date_time).getTime() ? 1 : -1
               }
               return 0
             })
@@ -437,10 +437,10 @@ export default function () {
         if (events.length) {
           // order events by date
           events.sort(function (a, b) {
-            if (a.date_time > b.date_time) {
+            if (new Date(a.date_time).getTime() > new Date(b.date_time).getTime()) {
               return 1
             }
-            if (a.date_time < b.date_time) {
+            if (new Date(a.date_time).getTime() < new Date(b.date_time).getTime()) {
               return -1
             }
             // a must be equal to b
