@@ -3,6 +3,7 @@
 import {
   i19add,
   i19apps,
+  i19bestSellers,
   i19goToStore,
   i19inventory,
   i19media,
@@ -1210,7 +1211,12 @@ const { sessionStorage, localStorage, Image, $, app } = window
                  name: i18n(i19inventory),
                  link: '/#/inventory',
                  icon: 'archive'
-               }
+               },
+               {
+                name: i18n(i19bestSellers),
+                link: '/#/best-sellers',
+                icon: 'line-chart'
+              }
              ]) +
 
              '<li class="menu-item">' +
