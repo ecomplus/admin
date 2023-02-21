@@ -1,4 +1,4 @@
-import { i19sku, i19name, i19price, i19sales } from '@ecomplus/i18n'
+import { i19sku, i19name, i19price, i19sales, i19total } from '@ecomplus/i18n'
 import { $ecomConfig, i18n, formatMoney } from '@ecomplus/utils'
 import Papa from 'papaparse'
 
@@ -40,23 +40,18 @@ export default function () {
           const { result } = json
           const rows = []
           if (Array.isArray(result) && result.length) {
-            const finalQuery = result[0]
-            for (let query in finalQuery) {
-              let currentQuery = finalQuery[query]
-              if (currentQuery && Array.isArray(currentQuery) && currentQuery.length) {
-                currentQuery.forEach(item => {
-                  if (item.summary && Array.isArray(item.summary) && item.summary.length) {
-                    let summary = item.summary[item.summary.length - 1]
-                    rows.push([
-                      summary.sku || '',
-                      summary.name,
-                      formatMoney(item.amount / (item.count || 1)),
-                      item.count || 0,
-                    ])
-                  }
-                })
+            result.forEach(item => {
+              if (item.summary && Array.isArray(item.summary) && item.summary.length) {
+                let summary = item.summary[item.summary.length - 1]
+                rows.push([
+                  item._id,
+                  summary.name,
+                  formatMoney(item.amount / (item.count || 1)),
+                  item.count || 0,
+                  formatMoney(item.amount)
+                ])
               }
-            }
+            })
             datatable.clear()
             datatable.rows.add(rows)
             datatable.draw()
@@ -80,76 +75,28 @@ export default function () {
             $unwind: '$items'
           },
           {
-            $facet: {
-              'bestSellersByProductId': [
-                {
-                  $match: {
-                    'items.variation_id': { 
-                      '$exists': false
-                    }
-                  }
-                },
-                {
-                  $group: {
-                    _id: '$items.product_id',
-                    count: {
-                      $sum: '$items.quantity'
-                    },
-                    amount: {
-                      $sum: {
-                        $multiply: ['$items.price', '$items.quantity']
-                      }
-                    },
-                    summary: {
-                      $addToSet: {
-                        sku: '$items.sku',
-                        name: '$items.name',
-                        price: '$items.price'
-                      }
-                    }
-                  }
-                },
-                {
-                  $sort: {
-                    count: -1
-                  }
+            $group: {
+              _id: '$items.sku',
+              count: {
+                $sum: '$items.quantity'
+              },
+              amount: {
+                $sum: {
+                  $multiply: ['$items.price', '$items.quantity']
                 }
-              ],
-              'bestSellersByVariationId': [
-                {
-                  $match: {
-                    'items.variation_id': { 
-                      '$exists': true 
-                    }
-                  }
-                },
-                {
-                  $group: {
-                    _id: '$items.variation_id',
-                    count: {
-                      $sum: '$items.quantity'
-                    },
-                    amount: {
-                      $sum: {
-                        $multiply: ['$items.price', '$items.quantity']
-                      }
-                    },
-                    summary: {
-                      $addToSet: {
-                        sku: '$items.sku',
-                        name: '$items.name',
-                        price: '$items.price',
-                        variation: '$items.variation_id'
-                      }
-                    }
-                  }
-                },
-                {
-                  $sort: {
-                    count: -1
-                  }
+              },
+              summary: {
+                $addToSet: {
+                  sku: '$items.sku',
+                  name: '$items.name',
+                  price: '$items.price'
                 }
-              ]
+              }
+            }
+          },
+          {
+            $sort: {
+              count: -1
             }
           }
         ]
@@ -157,14 +104,16 @@ export default function () {
     )
   }
   const currentYear = new Date().getFullYear()
-  renderGraphByDate(`${currentYear}-01-01`, `${currentYear}-12-31`)
-  let start, end, type, count
-  count = 0
+  let start, end, type
+  start = `${currentYear}-01-01`
+  end = `${currentYear}-12-31`
+  renderGraphByDate(start, end)
+  
   $('#datepicker [data-when="start"]').datepicker('setDate', `01/01/${currentYear}`);
   $('#datepicker [data-when="end"]').datepicker('setDate', `31/12/${currentYear}`);
+
   $('#datepicker').datepicker({}).on('changeDate', (e) => {
     if (e.date) {
-      count++
       if (e.target && e.target.dataset && e.target.dataset.when) {
         type = e.target.dataset.when
         if (type === 'start') {
@@ -172,7 +121,7 @@ export default function () {
         } else if (type === 'end') {
           end = e.date.toISOString().slice(0,10)
         }
-        if (start && end && count > 1) {
+        if (start && end) {
           datatable.clear()
           $('#most-sellers-table-load').show()
           renderGraphByDate(start, end)
@@ -182,7 +131,7 @@ export default function () {
   })
   const $exportBestSeller = $('#export-best-seller')
   const downloadCsv = exportData => {
-    const columns = [i18n(i19sku), i18n(i19name), i18n(i19price), i18n(i19sales)]
+    const columns = [i18n(i19sku), i18n(i19name), i18n(i19price), i18n(i19sales), i18n(i19total)]
     const csv = Papa.unparse({
       data: exportData,
       fields: columns
