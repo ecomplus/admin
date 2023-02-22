@@ -97,8 +97,8 @@ export default function () {
             countStatus++
           }
           amount += row['amount/total']
-          discount += row['amount/discount']
-          freight += row['amount/freight']
+          discount += row['amount/discount'] || 0
+          freight += row['amount/freight'] || 0
           subtotal += row['amount/subtotal']
         })
         return {
