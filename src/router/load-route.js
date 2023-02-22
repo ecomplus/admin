@@ -13,6 +13,8 @@ export default path => {
       return import(/* webpackChunkName: "router_routes_resources" */ '@/router/routes/resources')
     case 'apps':
       return import(/* webpackChunkName: "router_routes_apps" */ '@/router/routes/apps')
+    case 'best-sellers':
+      return import(/* webpackChunkName: "router_routes_best-sellers" */ '@/router/routes/best-sellers')
     case 'birth-report':
       return import(/* webpackChunkName: "router_routes_inventory" */ '@/router/routes/birth-report')
     case 'cashback':
