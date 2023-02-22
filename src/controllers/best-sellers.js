@@ -86,11 +86,8 @@ export default function () {
                 }
               },
               summary: {
-                $addToSet: {
-                  sku: '$items.sku',
-                  name: '$items.name',
-                  price: '$items.price'
-                }
+                sku: { $first: '$items.sku' },
+                name: { $first:  '$items.name' }
               }
             }
           },
