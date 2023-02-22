@@ -41,16 +41,13 @@ export default function () {
           const rows = []
           if (Array.isArray(result) && result.length) {
             result.forEach(item => {
-              if (item.summary && Array.isArray(item.summary) && item.summary.length) {
-                let summary = item.summary[item.summary.length - 1]
-                rows.push([
-                  item._id,
-                  summary.name,
-                  formatMoney(item.amount / (item.count || 1)),
-                  item.count || 0,
-                  formatMoney(item.amount)
-                ])
-              }
+              rows.push([
+                item._id,
+                item.name,
+                formatMoney(item.amount / (item.count || 1)),
+                item.count || 0,
+                formatMoney(item.amount)
+              ])
             })
             datatable.clear()
             datatable.rows.add(rows)
@@ -85,10 +82,8 @@ export default function () {
                   $multiply: ['$items.price', '$items.quantity']
                 }
               },
-              summary: {
-                sku: { $first: '$items.sku' },
-                name: { $first:  '$items.name' }
-              }
+              sku: { $first: '$items.sku' },
+              name: { $first:  '$items.name' }
             }
           },
           {
