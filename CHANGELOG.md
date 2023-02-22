@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.79](https://github.com/ecomplus/admin/compare/v1.0.0-beta.78...v1.0.0-beta.79) (2023-02-22)
+
+
+### Features
+
+* **products-best-seller:** new report best seller by date ([#646](https://github.com/ecomplus/admin/issues/646)) ([c52998e](https://github.com/ecomplus/admin/commit/c52998e9623ea5749e246368bf544078b7f7a196))
+
+
+### Bug Fixes
+
+* **orders-list:** set 0 to freight and discount to summary list when undefined ([#647](https://github.com/ecomplus/admin/issues/647)) ([46675e0](https://github.com/ecomplus/admin/commit/46675e087d925c0129fcc9e3a88627b0c4f6f188))
+
 ## [1.0.0-beta.78](https://github.com/ecomplus/admin/compare/v1.0.0-beta.77...v1.0.0-beta.78) (2023-02-04)
 
 
