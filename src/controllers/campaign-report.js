@@ -41,12 +41,13 @@ export default function () {
   const sourceDatatable = $('#source-list').DataTable(datatableOptions)
   const campaignDatatable = $('#campaign-list').DataTable(datatableOptions)
 
-  const renderList = (array, datatable) => {
+  const renderList = (array, datatable, total) => {
     const rows = []
     array.forEach(entry => {
       rows.push([
         entry._id,
         entry.count,
+        `${(entry.count * 100 / (total || 1)) .toFixed(2)} %`,
         formatMoney(entry.discounts),
         formatMoney(entry.subtotal),
         formatMoney(entry.total)
@@ -79,20 +80,21 @@ export default function () {
             if (Array.isArray(campaign) && campaign.length) {
               let arrCamp = []
               let arrLabel = []
-              const campaignSliced = campaign.slice(0, 9)
-              campaignSliced.forEach(camp => {
+              let total = 0
+              campaign.forEach(camp => {
                 arrCamp.push(camp.count)
                 arrLabel.push(camp._id)
               })
+              total = arrCamp.reduce((acc, curr) => Number(acc) + Number(curr), 0)
               if (res === 'source') {
-                renderList(campaign, sourceDatatable)
+                renderList(campaign, sourceDatatable, total)
               } else if (res === 'campaign') {
-                renderList(campaign, campaignDatatable)
+                renderList(campaign, campaignDatatable, total)
               }
               new Chart($(`#${res}`), {
                 type: 'bar',
                 data: {
-                  labels: arrLabel,
+                  labels: arrLabel.slice(0,9),
                   datasets: [
                     {
                       label: dictionary[res],
@@ -110,7 +112,7 @@ export default function () {
                         '#20c997',
                         '#6610f2'
                       ],
-                      data: arrCamp
+                      data: arrCamp.slice(0, 9)
                     }
                   ]
                 },
@@ -213,7 +215,7 @@ export default function () {
   const $exportSource = $('#export-source')
   const $exportCampaign = $('#export-campaign')
   const downloadCsv = (exportData, name) => {
-    const columns = [dictionary[name], i18n(i19orders), i18n(i19discount), i18n(i19subtotal), i18n(i19total)]
+    const columns = [dictionary[name], i18n(i19orders), '%', i18n(i19discount), i18n(i19subtotal), i18n(i19total)]
     const csv = Papa.unparse({
       data: exportData,
       fields: columns
