@@ -1,0 +1,157 @@
+<div class="main-content">
+  <div class="card">
+    <div class="card-title">
+      <big class="text-secondary mr-1">
+        <i class="icon fa fa-bar-chart"></i>
+      </big>
+      <big class="i18n fw-400">
+        <span data-lang="en_us">Campaign report</span>
+        <span data-lang="pt_br">Relatório de campanhas</span>
+      </big>
+
+      <div class="input-group float-right" id="datepicker" data-provide="datepicker" style="width: 300px">
+        <div class="input-group-prepend">
+          <span class="input-group-text i18n">
+            <span data-lang="en_us">From</span>
+            <span data-lang="pt_br">De</span>
+          </span>
+        </div>
+        <input type="text" class="form-control" data-when="start">
+        <div class="input-group-prepend input-group-append">
+          <span class="input-group-text i18n">
+            <span data-lang="en_us">To</span>
+            <span data-lang="pt_br">Até</span>
+          </span>
+        </div>
+        <input type="text" class="form-control" data-when="end">
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <canvas id="source" class="chartjs" style="display: block; height: 192px; width: 384px;"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <header class="card-header">
+              <h4 class="card-title i18n">
+                <span data-lang="en_us">Source report</span>
+                <span data-lang="pt_br">Relatório por origem</span>
+              </h4>
+              <ul class="card-controls">
+                <li>
+                  <a class="card-btn-slide" href="#"></a>
+                </li>
+              </ul>
+            </header>
+            <div class="card-content">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="mb-3 mt-4">
+                      <a href="#" class="btn btn-info" id="export-source">
+                        <span class="i18n">
+                          <span data-lang="pt_br">Exportar</span>
+                          <span data-lang="en_us">Export</span>
+                        </span>
+                      </a>
+                    </div>
+                    <table id="source-list" class="display" style="width:100%">
+                      <thead>
+                          <tr>
+                              <th class="i18n">
+                                <span data-lang="en_us">Source</span>
+                                <span data-lang="pt_br">Origem</span>
+                              </th>
+                              <th class="i18n">
+                                <span data-lang="en_us">Orders</span>
+                                <span data-lang="pt_br">Pedidos</span>
+                              </th>
+                              <th class="i18n">
+                                <span data-lang="en_us">Discounts</span>
+                                <span data-lang="pt_br">Descontos</span>
+                              </th>
+                              <th>
+                                <span>Subtotal</span>
+                              </th>
+                              <th>
+                                <span>Total</span>
+                              </th>
+                          </tr>
+                        </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <canvas id="campaign" class="chartjs" style="display: block; height: 192px; width: 384px;"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <header class="card-header">
+              <h4 class="card-title i18n">
+                <span data-lang="en_us">Campaign report</span>
+                <span data-lang="pt_br">Relatório por campanha</span>
+              </h4>
+              <ul class="card-controls">
+                <li>
+                  <a class="card-btn-slide" href="#"></a>
+                </li>
+              </ul>
+            </header>
+            <div class="card-content">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="mb-3 mt-4">
+                      <a href="#" class="btn btn-info" id="export-campaign">
+                        <span class="i18n">
+                          <span data-lang="pt_br">Exportar</span>
+                          <span data-lang="en_us">Export</span>
+                        </span>
+                      </a>
+                    </div>
+                    <table id="campaign-list" class="display" style="width:100%">
+                      <thead>
+                          <tr>
+                              <th class="i18n" width="50%">
+                                <span data-lang="en_us">Campaign</span>
+                                <span data-lang="pt_br">Campanha</span>
+                              </th>
+                              <th class="i18n">
+                                <span data-lang="en_us">Orders</span>
+                                <span data-lang="pt_br">Pedidos</span>
+                              </th>
+                              <th class="i18n">
+                                <span data-lang="en_us">Discounts</span>
+                                <span data-lang="pt_br">Descontos</span>
+                              </th>
+                              <th>
+                                <span>Subtotal</span>
+                              </th>
+                              <th>
+                                <span>Total</span>
+                              </th>
+                          </tr>
+                        </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
