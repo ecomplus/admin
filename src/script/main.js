@@ -35,6 +35,10 @@ const { sessionStorage, localStorage, Image, $, app } = window
       en_us: 'Resources',
       pt_br: 'Recursos'
     }),
+    campaignReport: i18n({
+      en_us: 'Campaign report',
+      pt_br: 'Relatório de campanhas'
+    }),
     freightReport: i18n({
       en_us: 'Freight report',
       pt_br: 'Relatório de fretes'
@@ -1184,6 +1188,11 @@ const { sessionStorage, localStorage, Image, $, app } = window
                 name: i18n(dictionary.freightReport),
                 link: '/#/freight-report',
                 icon: 'truck'
+               },
+               {
+                name: i18n(dictionary.campaignReport),
+                link: '/#/campaign-report',
+                icon: 'bar-chart'
                }
               ]
                ) +
