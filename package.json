@@ -70,7 +70,7 @@
     "eventemitter3": "^5.0.0",
     "inputmask": "^4.0.9",
     "jquery-maskmoney": "^3.0.2",
-    "papaparse": "^5.3.2",
+    "papaparse": "^5.4.0",
     "sortablejs": "^1.15.0",
     "vue": "2.6.14"
   }
