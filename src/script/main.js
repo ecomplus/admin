@@ -1693,9 +1693,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
           dropzone.removeAllFiles()
           // reset
           // selectedImages = []
-          if (document.getElementById('copyURL')) {
-            document.getElementById('copyURL').remove()
-          }
+          document.getElementById('uploads-copy-url')?.remove()
           $('#modal-uploads').modal('show')
         }
 
