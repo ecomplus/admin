@@ -1595,15 +1595,13 @@ const { sessionStorage, localStorage, Image, $, app } = window
           try {
             json = JSON.parse(file.xhr.responseText)
             if (json.uri) {
-              document.getElementById('uploads-done').insertAdjacentHTML('beforebegin', 
-              `
-            <button class="btn btn-bold btn-pure btn-primary" id="copyURL" data-clipboard-text="${json.uri}" data-dismiss="modal">
-              <span class="i18n">
-                <span data-lang="en_us">Copy url</span>
-                <span data-lang="pt_br">Copiar url</span>
-              </span>
-            </button>
-          `)
+              document.getElementById('uploads-done').insertAdjacentHTML('beforebegin', `
+              <button class="btn btn-bold btn-pure btn-primary" id="uploads-copy-url" data-clipboard-text="${json.uri}">
+                <span class="i18n">
+                  <span data-lang="en_us">Copy url</span>
+                  <span data-lang="pt_br">Copiar url</span>
+                </span>
+              </button>`)
             }
 
             console.log(json)
