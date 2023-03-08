@@ -19,6 +19,8 @@ export default path => {
       return import(/* webpackChunkName: "router_routes_inventory" */ '@/router/routes/birth-report')
     case 'cashback':
       return import(/* webpackChunkName: "router_routes_inventory" */ '@/router/routes/cashback')
+    case 'campaign-report':
+      return import(/* webpackChunkName: "router_routes_campaign-report" */ '@/router/routes/campaign-report')
     case 'freight-report':
       return import(/* webpackChunkName: "router_routes_inventory" */ '@/router/routes/freight-report')
     case 'inventory':

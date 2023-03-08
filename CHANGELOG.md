@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.80](https://github.com/ecomplus/admin/compare/v1.0.0-beta.79...v1.0.0-beta.80) (2023-03-08)
+
+
+### Features
+
+* **campaign-report:** campaigns (utm) reports by date range ([#650](https://github.com/ecomplus/admin/issues/650)) ([6bec45b](https://github.com/ecomplus/admin/commit/6bec45b565f1f87301c4bb3a9ce1eb94f6bff3dd))
+* **uploads:** add button to copy uploaded image url ([#652](https://github.com/ecomplus/admin/issues/652)) ([#653](https://github.com/ecomplus/admin/issues/653)) ([eda51af](https://github.com/ecomplus/admin/commit/eda51afc828cfa57b82821153bf4de054ade653e))
+
+
+### Bug Fixes
+
+* **deps:** update dependency papaparse to ^5.4.0 ([#654](https://github.com/ecomplus/admin/issues/654)) ([6747600](https://github.com/ecomplus/admin/commit/6747600066f2488930edbfe2d5e33bd62dd3234c))
+
 ## [1.0.0-beta.79](https://github.com/ecomplus/admin/compare/v1.0.0-beta.78...v1.0.0-beta.79) (2023-02-22)
 
 

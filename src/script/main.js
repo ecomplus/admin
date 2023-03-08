@@ -35,6 +35,10 @@ const { sessionStorage, localStorage, Image, $, app } = window
       en_us: 'Resources',
       pt_br: 'Recursos'
     }),
+    campaignReport: i18n({
+      en_us: 'Campaign report',
+      pt_br: 'Relatório de campanhas'
+    }),
     freightReport: i18n({
       en_us: 'Freight report',
       pt_br: 'Relatório de fretes'
@@ -1184,6 +1188,11 @@ const { sessionStorage, localStorage, Image, $, app } = window
                 name: i18n(dictionary.freightReport),
                 link: '/#/freight-report',
                 icon: 'truck'
+               },
+               {
+                name: i18n(dictionary.campaignReport),
+                link: '/#/campaign-report',
+                icon: 'bar-chart'
                }
               ]
                ) +
@@ -1585,6 +1594,15 @@ const { sessionStorage, localStorage, Image, $, app } = window
           let json
           try {
             json = JSON.parse(file.xhr.responseText)
+            if (json.uri) {
+              document.getElementById('uploads-done').insertAdjacentHTML('beforebegin', `
+              <button class="btn btn-bold btn-pure btn-primary" id="uploads-copy-url" data-clipboard-text="${json.uri}">
+                <span class="i18n">
+                  <span data-lang="en_us">Copy url</span>
+                  <span data-lang="pt_br">Copiar url</span>
+                </span>
+              </button>`)
+            }
           } catch (e) {
             // unexpected response
             handleApiError()
@@ -1670,6 +1688,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
           dropzone.removeAllFiles()
           // reset
           // selectedImages = []
+          document.getElementById('uploads-copy-url')?.remove()
           $('#modal-uploads').modal('show')
         }
 
