@@ -1603,9 +1603,6 @@ const { sessionStorage, localStorage, Image, $, app } = window
                 </span>
               </button>`)
             }
-
-            console.log(json)
-
           } catch (e) {
             // unexpected response
             handleApiError()
