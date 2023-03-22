@@ -93,6 +93,15 @@ export default function () {
       }
     }
     */
+    $orderBase.find('#t' + tabId + '-discount-coupon').change(function () {
+      if (typeof Data().extra_discount.value === 'undefined') {
+        setTimeout(() => {
+          const data = Data()
+          data.extra_discount.value = data.extra_discount.value || 0
+          commit(data)
+        }, 200)
+      }
+    })
 
     // render buyers blocks
     let $buyers, $buyerInfo
@@ -415,7 +424,7 @@ export default function () {
                 return
               }
               let eventObj
-              for (let status in opts) {
+              for (const status in opts) {
                 if (opts[status] && status === entry.status) {
                   // status found
                   eventObj = opts[status]
