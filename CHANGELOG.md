@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.81](https://github.com/ecomplus/admin/compare/v1.0.0-beta.80...v1.0.0-beta.81) (2023-03-22)
+
+
+### Features
+
+* **logs:** listing past 100 logs and details on edit advanced tab ([2012b4a](https://github.com/ecomplus/admin/commit/2012b4a19df3448ce60d472a4b3c7169bf167e22))
+* **orders-form:** add discount coupon input ([65108aa](https://github.com/ecomplus/admin/commit/65108aafadf06413294b6da7e712ae1753d3c2cd))
+
+
+### Bug Fixes
+
+* **orders-form:** set discount value 0 to save coupon if not set ([72d5f42](https://github.com/ecomplus/admin/commit/72d5f42f438574708a2d53cc8a7872d7487f0ed2))
+
 ## [1.0.0-beta.80](https://github.com/ecomplus/admin/compare/v1.0.0-beta.79...v1.0.0-beta.80) (2023-03-08)
 
 
