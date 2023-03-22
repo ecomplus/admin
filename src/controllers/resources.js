@@ -3,6 +3,7 @@ import * as dot from 'dot-object'
 
 export default function () {
   const { localStorage, $, app, lang, i18n, callApi, formatDate, askConfirmation, randomObjectId } = window
+  const dateList = ['day', 'month', 'year', 'hour', 'minute', 'second']
 
   // current tab ID
   const tabId = window.tabId
@@ -211,6 +212,7 @@ export default function () {
     window.routeReady(tabTitle)
   }
 
+  let isFirstCommit = true
   const commit = function (data, updated) {
     if (!updated) {
       // pass JSON data
@@ -223,6 +225,66 @@ export default function () {
       editor.session.setValue(JSON.stringify(data, null, 2))
     }
     Tab.emitter.emit('commit', { data })
+
+    if (isFirstCommit) {
+      isFirstCommit = false
+      // try to load list document logs on advanced tab
+      if (!editor || creating === true || !resourceId || slug === 'customers') {
+        return
+      }
+      setTimeout(() => {
+        if (Tab.resourceId !== resourceId) return
+        const logsEndpoint = `@logs.json?resource_id=${resourceId}&limit=100`
+        window.callApi(logsEndpoint, 'GET', function (err, json) {
+          if (!err) {
+            const { result } = json
+            if (result.length) {
+              const $logs = $(`#t${tabId}-logs`)
+              const $tbody = $logs.find('tbody')
+              result.forEach(log => {
+                $tbody.append($('<tr>', {
+                  html: [
+                    $('<th>', {
+                      scope: 'row',
+                      html: [
+                        $('<a>', {
+                          class: 'd-block fw-600',
+                          html: `<i class="ti-angle-right mr-1"></i>${log.id}`,
+                          href: 'javascript:;',
+                          click () {
+                            const $logDetails = $(`#t${tabId}-log-details`)
+                            window.callApi(`@logs/${log.id}.json`, 'GET', function (err, json) {
+                              if (!err) {
+                                const jsonString = JSON.stringify(json, null, 2)
+                                  .replace(/\n/g, '<br>')
+                                  .replace(/\s/g, '&nbsp;')
+                                $logDetails.find('code').html(jsonString)
+                                $logDetails.fadeIn()
+                              }
+                            })
+                          }
+                        }),
+                        (log.authentication_id
+                          ? $('<a>', {
+                            style: 'white-space: nowrap',
+                            href: `/#/resources/authentications/${log.authentication_id}`,
+                            html: `<i class="ti-user"></i> ${log.authentication_id}</a>`
+                          })
+                          : '')
+                      ]
+                    }),
+                    `<td>${formatDate(log.date_time, dateList)}</td>`,
+                    `<td>${(log.ip_addr.startsWith('127.9') ? '-' : log.ip_addr)}<br>` +
+                      `${log.method}<br>${log.api_resource}</td>`
+                  ]
+                }))
+              })
+              $logs.slideDown()
+            }
+          }
+        }, null, true)
+      }, 1000)
+    }
   }
 
   // set resource params globally
@@ -411,7 +473,6 @@ export default function () {
               // editing
               // show modification timestamps
               if (json.created_at) {
-                const dateList = ['day', 'month', 'year', 'hour', 'minute', 'second']
                 if (json.updated_at) {
                   $('#t' + tabId + '-updated-at').text(formatDate(json.updated_at, dateList))
                 }
