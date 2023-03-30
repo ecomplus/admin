@@ -1,9 +1,34 @@
-import { i19orders, i19quantity, i19pointsEarned, i19total } from '@ecomplus/i18n'
-import { i18n } from '@ecomplus/utils'
+import { i19orders, i19quantity, i19pointsEarned, i19name, i19email, i19phone } from '@ecomplus/i18n'
+import { $ecomConfig, i18n, phone } from '@ecomplus/utils'
+import Papa from 'papaparse'
 import Chart from 'chart.js'
 
 export default function () {
   const { $, callApi, tabId, formatMoney } = window
+
+  const datatableOptions = {
+    pageLength: 10
+  }
+  if ($ecomConfig.get('lang') === 'pt_br') {
+    datatableOptions.language = {
+      aria: {
+        sortAscending: ': ative para colocar a coluna em ordem crescente',
+        sortDescending: ': ative para colocar a coluna em ordem decrescente'
+      },
+      paginate: {
+        next: 'Próxima',
+        previous: 'Anterior'
+      },
+      emptyTable: 'Tabela vazia',
+      info: 'Mostrando _START_ a _END_ de _TOTAL_ Clientes carregados',
+      infoEmpty: '',
+      infoFiltered: '',
+      lengthMenu: 'Mostrar _MENU_ resultados',
+      search: 'Buscar',
+      zeroRecords: 'Nenhum resultado encontrado'
+    }
+  }
+  const datatable = $('#cashback-clients-list').DataTable(datatableOptions)
 
   const dictionary = {
     january: i18n({
@@ -269,6 +294,21 @@ export default function () {
                     0
                   ]
                 }
+              },
+              clients: {
+                $addToSet: {
+                  id: '$_id',
+                  name: {
+                    $concat: [
+                      '$name.given_name',
+                      ' ',
+                      '$name.family_name'
+                    ]
+                  },
+                  day: '$birth_date.day',
+                  email: '$main_email',
+                  phones: '$phones'
+                }
               }
             }
           },
@@ -303,11 +343,11 @@ export default function () {
     'POST',
     (err, json) => {
       if (!err) {
-        if (Array.isArray(json.result)) {
+        if (json && Array.isArray(json.result)) {
           const { result } = json
           const activePoints = result[0].active_points.toFixed(2)
           const earnedPoints = result[0].earned_points.toFixed(2)
-          const usedPoints = earnedPoints - activePoints 
+          const usedPoints = (earnedPoints - activePoints).toFixed(2) 
           const data = [earnedPoints, activePoints, usedPoints]
           new Chart($('#all-cashbacks'), {
             type: 'doughnut',
@@ -325,6 +365,27 @@ export default function () {
               ]
             }
           })
+          if (result && result.length && Array.isArray(result[0].clients)) {
+            const { clients } = result[0]
+            const size = clients.length
+            if (datatableOptions.pageLength > 20) {
+              datatableOptions.pageLength = size
+            }
+            const rows = []
+            clients.forEach(client => {
+              const phoneNumber = client.phones && client.phones.length && client.phones[0]
+              rows.push([
+                client.name,
+                client.email,
+                phoneNumber || 0,
+                client.activePoints.toFixed(2),
+                (client.earnedPoints - client.activePoints).toFixed(2)
+              ])
+            })
+            datatable.clear()
+            datatable.rows.add(rows)
+            datatable.draw()
+          }
         }
       }
     },
@@ -376,7 +437,16 @@ export default function () {
                    } 
                 }
               }
-            }
+            },
+            name: {
+              $concat: [
+                '$name.given_name',
+                ' ',
+                '$name.family_name'
+              ]
+            },
+            email: '$main_email',
+            phone: '$phones.number'
           }
         }, {
           $group: {
@@ -384,10 +454,41 @@ export default function () {
             active_points: { $sum: "$activePoints" },
             earned_points: { $sum: "$earnedPoints" },
             active_money: { $sum: "$activeMoney" },
-            earned_money: { $sum: "$earnedMoney" }
+            earned_money: { $sum: "$earnedMoney" },
+            clients: {
+              $addToSet: {
+                id: '$_id',
+                name: '$name',
+                email: '$email',
+                phones: '$phone',
+                activePoints: '$activePoints',
+                earnedPoints: '$earnedPoints'
+              }
+            }
           }
         }
       ]
     }
   )
+  const $exportBirth = $('#export-cashback-clients')
+  const downloadCsv = exportData => {
+    const columns = [i18n(i19name), i18n(i19email), i18n(i19phone), dictionary.pointsActive, dictionary.pointsUsed]
+    const csv = Papa.unparse({
+      data: exportData,
+      fields: columns
+    })
+    const csvData = new window.Blob([csv], {
+      type: 'text/csv;charset=utf-8;'
+    })
+    const csvURL = navigator.msSaveBlob
+      ? navigator.msSaveBlob(csvData, 'download.csv')
+      : window.URL.createObjectURL(csvData)
+    const $link = document.createElement('a')
+    $link.href = csvURL
+    $link.setAttribute('download', 'export-cashback-clients.csv')
+    $link.click()
+  }
+  $exportBirth.click(() => {
+    downloadCsv(datatable.rows().data())
+  })
 }
