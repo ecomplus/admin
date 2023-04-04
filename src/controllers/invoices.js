@@ -98,7 +98,7 @@ export default function () {
           ${(shippingLine
             ? `
             ${i18n(i19zipCode)}: ${formatCEP(shippingLine.to.zip)}<br>
-            <address>${getLineAddress(shippingLine.to)} ${shippingLine.to && shippingLine.to.near_to ? `<br>Referência: ${shippingLine.to.near_to}` : ''}</address>`
+            <address>${getLineAddress(shippingLine.to)} ${(shippingLine.to.near_to ? `<br>Referência: ${shippingLine.to.near_to}` : '')}</address>`
             : '')}
             ${(buyer ? `${buyer.main_email}<br>` : '')}
             ${(buyer && buyer.phones ? buyer.phones.map(phone => formatPhone(phone)).join(' / ') : '')}
