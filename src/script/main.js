@@ -41,7 +41,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
     }),
     deviceReport: i18n({
       en_us: 'Device report',
-      pt_br: 'Relatório de dispostivos'
+      pt_br: 'Relatório de dispositivos'
     }),
     freightReport: i18n({
       en_us: 'Freight report',
@@ -1199,7 +1199,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                 icon: 'bar-chart'
                },
                {
-                name: i18n(dictionary.campaignReport),
+                name: i18n(dictionary.deviceReport),
                 link: '/#/device-report',
                 icon: 'mobile'
                }
