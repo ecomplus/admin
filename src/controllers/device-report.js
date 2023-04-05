@@ -1,10 +1,15 @@
-import {i19orders } from '@ecomplus/i18n'
-import { i18n, formatMoney } from '@ecomplus/utils'
+import { i19orders } from '@ecomplus/i18n'
+import { $ecomConfig, i18n, formatMoney } from '@ecomplus/utils'
 import Chart from 'chart.js'
+import Papa from 'papaparse'
 
 export default function () {
   const { $, callApi } = window
   const dictionary = {
+    averageTicket: i18n({
+      en_us: 'Average ticket',
+      pt_br: 'Ticket médio'
+    }),
     mobile: i18n({
       en_us: 'Mobile',
       pt_br: 'Celular'
@@ -23,6 +28,31 @@ export default function () {
     })
   }
 
+  const datatableOptions = {
+    pageLength: 10,
+    bLengthChange: false,
+    order: [[1, 'desc']]
+  }
+  if ($ecomConfig.get('lang') === 'pt_br') {
+    datatableOptions.language = {
+      aria: {
+        sortAscending: ': ative para colocar a coluna em ordem crescente',
+        sortDescending: ': ative para colocar a coluna em ordem decrescente'
+      },
+      paginate: {
+        next: 'Próxima',
+        previous: 'Anterior'
+      },
+      emptyTable: 'Tabela vazia',
+      infoEmpty: '',
+      infoFiltered: '',
+      lengthMenu: 'Mostrar _MENU_ resultados',
+      search: 'Buscar',
+      zeroRecords: 'Nenhum resultado encontrado'
+    }
+  }
+
+  const datatable = $('#device-list').DataTable(datatableOptions)
   const currentYear = new Date().getFullYear()
   let start, end, type
   start = `${currentYear}-01-01`
@@ -76,6 +106,39 @@ export default function () {
             const percentMobileValue = (isMobileInfo.value * 100 / (totalValue || 1)).toFixed(2)
             const percentTabletValue = (isTabletInfo.value * 100 / (totalValue || 1)).toFixed(2)
             const percentDesktopValue = (isDesktopInfo.value * 100 / (totalValue || 1)).toFixed(2)
+            const averageTicketMobile = (isMobileInfo.value / (isMobileInfo.count || 1)).toFixed(2)
+            const averageTicketTablet = (isTabletInfo.value / (isTabletInfo.count || 1)).toFixed(2)
+            const averageTicketDesktop = (isDesktopInfo.value / (isDesktopInfo.count || 1)).toFixed(2)
+            const rows = [
+              [
+                dictionary.mobile,
+                isMobileInfo.count,
+                percentMobileCount,
+                formatMoney(averageTicketMobile),
+                formatMoney(isMobileInfo.value),
+                percentMobileValue
+              ],
+              [
+                dictionary.tablet,
+                isTabletInfo.count,
+                percentTabletCount,
+                formatMoney(averageTicketTablet),
+                formatMoney(isTabletInfo.value),
+                percentTabletValue
+              ],
+              [
+                dictionary.desktop,
+                isDesktopInfo.count,
+                percentDesktopCount,
+                formatMoney(averageTicketDesktop),
+                formatMoney(isDesktopInfo.value),
+                percentDesktopValue
+              ]
+            ]
+
+            datatable.clear()
+            datatable.rows.add(rows)
+            datatable.draw()
             if (change) {
               const { instances } = window.Chart
               const props = Object.keys(instances)
@@ -230,6 +293,27 @@ export default function () {
         }
       }
     }
+  })
+  const $exportDevice = $('#export-device')
+  const downloadCsv = (exportData, name) => {
+    const columns = [dictionary.devices, i18n(i19orders), `${i18n(i19orders)} %`, dictionary.averageTicket, 'Total', 'Total %']
+    const csv = Papa.unparse({
+      data: exportData,
+      fields: columns
+    })
+    const csvData = new window.Blob([csv], {
+      type: 'text/csv;charset=utf-8;'
+    })
+    const csvURL = navigator.msSaveBlob
+      ? navigator.msSaveBlob(csvData, 'download.csv')
+      : window.URL.createObjectURL(csvData)
+    const $link = document.createElement('a')
+    $link.href = csvURL
+    $link.setAttribute('download', `${name}.csv`)
+    $link.click()
+  }
+  $exportDevice.click(() => {
+    downloadCsv(datatable.rows().data(), 'relatorio-dispositivos')
   })
 
   
