@@ -21,10 +21,10 @@ export default path => {
       return import(/* webpackChunkName: "router_routes_inventory" */ '@/router/routes/cashback')
     case 'campaign-report':
       return import(/* webpackChunkName: "router_routes_campaign-report" */ '@/router/routes/campaign-report')
+    case 'coupon-report':
+      return import(/* webpackChunkName: "router_routes_coupon-report" */ '@/router/routes/coupon-report')
     case 'device-report':
       return import(/* webpackChunkName: "router_routes_device-report" */ '@/router/routes/device-report')
-    case 'discount-report':
-      return import(/* webpackChunkName: "router_routes_discount-report" */ '@/router/routes/discount-report')
     case 'freight-report':
       return import(/* webpackChunkName: "router_routes_inventory" */ '@/router/routes/freight-report')
     case 'inventory':

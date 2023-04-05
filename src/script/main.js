@@ -43,9 +43,9 @@ const { sessionStorage, localStorage, Image, $, app } = window
       en_us: 'Device report',
       pt_br: 'Relatório de dispositivos'
     }),
-    discountReport: i18n({
-      en_us: 'Discount report',
-      pt_br: 'Relatório de descontos'
+    couponReport: i18n({
+      en_us: 'Coupon report',
+      pt_br: 'Relatório de cupons'
     }),
     freightReport: i18n({
       en_us: 'Freight report',
@@ -1208,8 +1208,8 @@ const { sessionStorage, localStorage, Image, $, app } = window
                 icon: 'mobile'
                },
                {
-                name: i18n(dictionary.discountReport),
-                link: '/#/discount-report',
+                name: i18n(dictionary.couponReport),
+                link: '/#/coupon-report',
                 icon: 'percent'
                }
               ]
