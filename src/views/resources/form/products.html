@@ -592,6 +592,21 @@
                     data-json="true">
                   </select>
                 </div>
+                <a class="i18n" href="javascript:;" onclick="document.getElementById('ad_relevance').classList.remove('d-none');this.classList.add('d-none')">
+                  <span data-lang="en_us">Config relevance</span>
+                  <span data-lang="pt_br">Configurar relevância</span>
+                </a>
+                <div class="form-group d-none" id="ad_relevance">
+                  <label class="i18n">
+                    <span data-lang="en_us">Search relevance</span>
+                    <span data-lang="pt_br">Relevância na busca</span>
+                  </label>
+                  <input type="number" class="form-control" name="ad_relevance" />
+                  <span class="i18n">
+                    <small data-lang="en_us">Higher number, more relevant in the search</small>
+                    <small data-lang="pt_br">Quanto maior número, mais relevante na busca</small>
+                  </span>
+                </div>
               </div>
               <div class="col-sm-7 col-md-12 col-lg-7">
                 <div class="form-group">
@@ -607,17 +622,6 @@
                   </select>
                 </div>
               </div>
-            </div>
-            <a class="i18n" href="javascript:;" onclick="document.getElementById('ad_relevance').classList.remove('d-none');this.classList.add('d-none')">
-              <span data-lang="en_us">Config search relevance</span>
-              <span data-lang="pt_br">Configurar relevância na busca</span>
-            </a>
-            <div class="form-group d-none" id="ad_relevance">
-              <label class="i18n">
-                <span data-lang="en_us">Search relevance</span>
-                <span data-lang="pt_br">Relevância na busca</span>
-              </label>
-              <input type="number" class="form-control" name="ad_relevance" />
             </div>
           </div>
         </div>
