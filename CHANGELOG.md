@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.82](https://github.com/ecomplus/admin/compare/v1.0.0-beta.81...v1.0.0-beta.82) (2023-04-06)
+
+
+### Features
+
+* **cashback:** add list for download ([#663](https://github.com/ecomplus/admin/issues/663)) ([9dabe62](https://github.com/ecomplus/admin/commit/9dabe62e4c39a12daae2d8ae034a42959f2dc6e2))
+* **orders:** add new device report ([#665](https://github.com/ecomplus/admin/issues/665)) ([c098ecb](https://github.com/ecomplus/admin/commit/c098ecba05a84a751efdb8ab47bf108a24e04dec))
+
 ## [1.0.0-beta.81](https://github.com/ecomplus/admin/compare/v1.0.0-beta.80...v1.0.0-beta.81) (2023-03-22)
 
 

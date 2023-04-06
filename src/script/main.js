@@ -39,6 +39,10 @@ const { sessionStorage, localStorage, Image, $, app } = window
       en_us: 'Campaign report',
       pt_br: 'Relatório de campanhas'
     }),
+    deviceReport: i18n({
+      en_us: 'Device report',
+      pt_br: 'Relatório de dispositivos'
+    }),
     freightReport: i18n({
       en_us: 'Freight report',
       pt_br: 'Relatório de fretes'
@@ -1193,9 +1197,14 @@ const { sessionStorage, localStorage, Image, $, app } = window
                 name: i18n(dictionary.campaignReport),
                 link: '/#/campaign-report',
                 icon: 'bar-chart'
+               },
+               {
+                name: i18n(dictionary.deviceReport),
+                link: '/#/device-report',
+                icon: 'mobile'
                }
               ]
-               ) +
+            ) +
              mainResourceLink('customers', [], [{
                name: i18n({
                  pt_br: 'Aniversariantes',
