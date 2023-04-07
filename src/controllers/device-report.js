@@ -31,7 +31,8 @@ export default function () {
   const datatableOptions = {
     pageLength: 10,
     bLengthChange: false,
-    order: [[1, 'desc']]
+    order: [[1, 'desc']],
+    responsive: true
   }
   if ($ecomConfig.get('lang') === 'pt_br') {
     datatableOptions.language = {
@@ -113,26 +114,20 @@ export default function () {
               [
                 dictionary.mobile,
                 isMobileInfo.count,
-                percentMobileCount,
                 formatMoney(averageTicketMobile),
-                formatMoney(isMobileInfo.value),
-                percentMobileValue
+                formatMoney(isMobileInfo.value)
               ],
               [
                 dictionary.tablet,
                 isTabletInfo.count,
-                percentTabletCount,
                 formatMoney(averageTicketTablet),
-                formatMoney(isTabletInfo.value),
-                percentTabletValue
+                formatMoney(isTabletInfo.value)
               ],
               [
                 dictionary.desktop,
                 isDesktopInfo.count,
-                percentDesktopCount,
                 formatMoney(averageTicketDesktop),
-                formatMoney(isDesktopInfo.value),
-                percentDesktopValue
+                formatMoney(isDesktopInfo.value)
               ]
             ]
 
@@ -259,10 +254,10 @@ export default function () {
                 $lte: `${end}T02:59:59.999Z`,
               },
               'financial_status.current': 'paid'
-            } 
+            }
           },
-          { 
-            $group: { 
+          {
+            $group: {
               _id: '$client_user_agent',
               count: {
                 $sum: 1
@@ -270,7 +265,7 @@ export default function () {
               total: {
                 $sum: '$amount.total'
               }
-            } 
+            }
           },
           { $sort: { _id: 1 } }
         ]
@@ -284,9 +279,9 @@ export default function () {
       if (e.target && e.target.dataset && e.target.dataset.when) {
         type = e.target.dataset.when
         if (type === 'start') {
-          start = e.date.toISOString().slice(0,10)
+          start = e.date.toISOString().slice(0, 10)
         } else if (type === 'end') {
-          end = e.date.toISOString().slice(0,10)
+          end = e.date.toISOString().slice(0, 10)
         }
         if (start && end) {
           renderGraph(start, end, true)
@@ -315,6 +310,4 @@ export default function () {
   $exportDevice.click(() => {
     downloadCsv(datatable.rows().data(), 'relatorio-dispositivos')
   })
-
-  
 }
