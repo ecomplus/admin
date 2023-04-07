@@ -1,4 +1,4 @@
-import { i19freight, i19discount, i19quantity } from '@ecomplus/i18n'
+import { i19discount, i19quantity } from '@ecomplus/i18n'
 import { $ecomConfig, i18n } from '@ecomplus/utils'
 import Papa from 'papaparse'
 
@@ -7,7 +7,8 @@ export default function () {
   const datatableOptions = {
     pageLength: 10,
     bLengthChange: false,
-    order: [[1, 'desc']]
+    order: [[1, 'desc']],
+    responsive: true
   }
   if ($ecomConfig.get('lang') === 'pt_br') {
     datatableOptions.language = {
@@ -54,7 +55,6 @@ export default function () {
                 entry._id,
                 entry.count,
                 formatMoney(entry.discount),
-                formatMoney(entry.freight),
                 formatMoney(entry.total)
               ])
             })
@@ -96,9 +96,6 @@ export default function () {
             },
             discount: {
               $sum: '$extra_discount.value'
-            },
-            freight: {
-              $sum: '$amount.freight'
             }
           } 
         }
@@ -133,7 +130,7 @@ export default function () {
 
   const $exportCoupon = $('#export-coupon')
   const downloadCsv = (exportData, name) => {
-    const columns = [dictionary.coupon, i18n(i19quantity), i18n(i19discount), i18n(i19freight), dictionary.revenue]
+    const columns = [dictionary.coupon, i18n(i19quantity), i18n(i19discount), dictionary.revenue]
     const csv = Papa.unparse({
       data: exportData,
       fields: columns
