@@ -25,6 +25,10 @@ export default function () {
     devices: i18n({
       en_us: 'Devices',
       pt_br: 'Dispositivos'
+    }),
+    revenue: i18n({
+      en_us: 'Revenue',
+      pt_br: 'Receita'
     })
   }
 
@@ -291,7 +295,7 @@ export default function () {
   })
   const $exportDevice = $('#export-device')
   const downloadCsv = (exportData, name) => {
-    const columns = [dictionary.devices, i18n(i19orders), `${i18n(i19orders)} %`, dictionary.averageTicket, 'Total', 'Total %']
+    const columns = [dictionary.devices, i18n(i19orders), dictionary.averageTicket, dictionary.revenue]
     const csv = Papa.unparse({
       data: exportData,
       fields: columns
