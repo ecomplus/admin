@@ -74,10 +74,6 @@ export default function () {
               $lte: `${end}T02:59:59.999Z`,
             },
             'financial_status.current': 'paid',
-            'extra_discount.discount_coupon': {
-              $exists: true,
-              $ne: ''
-            },
             'extra_discount.flags': {
               $in: ['COUPON']
             }
