@@ -1,5 +1,5 @@
 import { i19orders } from '@ecomplus/i18n'
-import { $ecomConfig, i18n, formatMoney } from '@ecomplus/utils'
+import { i18n, formatMoney } from '@ecomplus/utils'
 import Chart from 'chart.js'
 import Papa from 'papaparse'
 
@@ -33,28 +33,17 @@ export default function () {
   }
 
   const datatableOptions = {
-    pageLength: 10,
+    pageLength: 3,
     bLengthChange: false,
-    order: [[1, 'desc']],
-    responsive: true
-  }
-  if ($ecomConfig.get('lang') === 'pt_br') {
-    datatableOptions.language = {
-      aria: {
-        sortAscending: ': ative para colocar a coluna em ordem crescente',
-        sortDescending: ': ative para colocar a coluna em ordem decrescente'
-      },
-      paginate: {
-        next: 'Próxima',
-        previous: 'Anterior'
-      },
-      emptyTable: 'Tabela vazia',
-      infoEmpty: '',
-      infoFiltered: '',
-      lengthMenu: 'Mostrar _MENU_ resultados',
-      search: 'Buscar',
-      zeroRecords: 'Nenhum resultado encontrado'
-    }
+    responsive: true,
+    columnDefs: [
+      { 
+        orderable: false, 
+        targets: '_all'
+      }
+    ],
+    paging: false,
+    info: false
   }
 
   const datatable = $('#device-list').DataTable(datatableOptions)
