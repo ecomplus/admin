@@ -2135,10 +2135,8 @@ export default function () {
     setTimeout(() => {
       listOrders(tabId)
     }, 1500)
-    document.getElementById(`t${tabId}-ad-relevance-link`).addEventListener('click', ($el) => {
-      $el.currentTarget.classList.add('d-none')
+    document.getElementById(`t${tabId}-ad-relevance-link`).addEventListener('click', () => {
       document.getElementById(`t${tabId}-ad-relevance`).classList.remove('d-none')
-
     })
   }
 }
