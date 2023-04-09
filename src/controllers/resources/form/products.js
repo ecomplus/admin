@@ -2137,6 +2137,6 @@ export default function () {
     }, 1500)
     document.getElementById(`t${tabId}-ad-relevance-link`).addEventListener('click', () => {
       $(`t${tabId}-ad-relevance`).slideToggle()
-    })
+    }, false)
   }
 }
