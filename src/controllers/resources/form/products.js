@@ -2136,7 +2136,7 @@ export default function () {
       listOrders(tabId)
     }, 1500)
     document.getElementById(`t${tabId}-ad-relevance-link`).addEventListener('click', () => {
-      document.getElementById(`t${tabId}-ad-relevance`).classList.remove('d-none')
+      $(`t${tabId}-ad-relevance`).slideToggle()
     })
   }
 }
