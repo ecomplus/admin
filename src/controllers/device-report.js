@@ -1,10 +1,15 @@
-import {i19orders } from '@ecomplus/i18n'
+import { i19orders } from '@ecomplus/i18n'
 import { i18n, formatMoney } from '@ecomplus/utils'
 import Chart from 'chart.js'
+import Papa from 'papaparse'
 
 export default function () {
   const { $, callApi } = window
   const dictionary = {
+    averageTicket: i18n({
+      en_us: 'Average ticket',
+      pt_br: 'Ticket médio'
+    }),
     mobile: i18n({
       en_us: 'Mobile',
       pt_br: 'Celular'
@@ -20,9 +25,28 @@ export default function () {
     devices: i18n({
       en_us: 'Devices',
       pt_br: 'Dispositivos'
+    }),
+    revenue: i18n({
+      en_us: 'Revenue',
+      pt_br: 'Receita'
     })
   }
 
+  const datatableOptions = {
+    pageLength: 3,
+    bLengthChange: false,
+    responsive: true,
+    columnDefs: [
+      { 
+        orderable: false, 
+        targets: '_all'
+      }
+    ],
+    paging: false,
+    info: false
+  }
+
+  const datatable = $('#device-list').DataTable(datatableOptions)
   const currentYear = new Date().getFullYear()
   let start, end, type
   start = `${currentYear}-01-01`
@@ -76,6 +100,33 @@ export default function () {
             const percentMobileValue = (isMobileInfo.value * 100 / (totalValue || 1)).toFixed(2)
             const percentTabletValue = (isTabletInfo.value * 100 / (totalValue || 1)).toFixed(2)
             const percentDesktopValue = (isDesktopInfo.value * 100 / (totalValue || 1)).toFixed(2)
+            const averageTicketMobile = (isMobileInfo.value / (isMobileInfo.count || 1)).toFixed(2)
+            const averageTicketTablet = (isTabletInfo.value / (isTabletInfo.count || 1)).toFixed(2)
+            const averageTicketDesktop = (isDesktopInfo.value / (isDesktopInfo.count || 1)).toFixed(2)
+            const rows = [
+              [
+                dictionary.mobile,
+                isMobileInfo.count,
+                formatMoney(averageTicketMobile),
+                formatMoney(isMobileInfo.value)
+              ],
+              [
+                dictionary.tablet,
+                isTabletInfo.count,
+                formatMoney(averageTicketTablet),
+                formatMoney(isTabletInfo.value)
+              ],
+              [
+                dictionary.desktop,
+                isDesktopInfo.count,
+                formatMoney(averageTicketDesktop),
+                formatMoney(isDesktopInfo.value)
+              ]
+            ]
+
+            datatable.clear()
+            datatable.rows.add(rows)
+            datatable.draw()
             if (change) {
               const { instances } = window.Chart
               const props = Object.keys(instances)
@@ -196,10 +247,10 @@ export default function () {
                 $lte: `${end}T02:59:59.999Z`,
               },
               'financial_status.current': 'paid'
-            } 
+            }
           },
-          { 
-            $group: { 
+          {
+            $group: {
               _id: '$client_user_agent',
               count: {
                 $sum: 1
@@ -207,7 +258,7 @@ export default function () {
               total: {
                 $sum: '$amount.total'
               }
-            } 
+            }
           },
           { $sort: { _id: 1 } }
         ]
@@ -221,9 +272,9 @@ export default function () {
       if (e.target && e.target.dataset && e.target.dataset.when) {
         type = e.target.dataset.when
         if (type === 'start') {
-          start = e.date.toISOString().slice(0,10)
+          start = e.date.toISOString().slice(0, 10)
         } else if (type === 'end') {
-          end = e.date.toISOString().slice(0,10)
+          end = e.date.toISOString().slice(0, 10)
         }
         if (start && end) {
           renderGraph(start, end, true)
@@ -231,6 +282,25 @@ export default function () {
       }
     }
   })
-
-  
+  const $exportDevice = $('#export-device')
+  const downloadCsv = (exportData, name) => {
+    const columns = [dictionary.devices, i18n(i19orders), dictionary.averageTicket, dictionary.revenue]
+    const csv = Papa.unparse({
+      data: exportData,
+      fields: columns
+    })
+    const csvData = new window.Blob([csv], {
+      type: 'text/csv;charset=utf-8;'
+    })
+    const csvURL = navigator.msSaveBlob
+      ? navigator.msSaveBlob(csvData, 'download.csv')
+      : window.URL.createObjectURL(csvData)
+    const $link = document.createElement('a')
+    $link.href = csvURL
+    $link.setAttribute('download', `${name}.csv`)
+    $link.click()
+  }
+  $exportDevice.click(() => {
+    downloadCsv(datatable.rows().data(), 'relatorio-dispositivos')
+  })
 }
