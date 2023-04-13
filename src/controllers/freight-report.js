@@ -59,21 +59,13 @@ export default function () {
       en_us: 'Average freight',
       pt_br: 'Média de frete'
     }),
-    usedFreight: i18n({
-      en_us: 'Used freight',
-      pt_br: 'Frete utilizado'
+    freightCost: i18n({
+      en_us: 'Freight cost',
+      pt_br: 'Custo com frete'
     }),
     ordersWithFreight: i18n({
       en_us: `${i18n(i19orders)} with ${i18n(i19freight)}`,
       pt_br: `${i18n(i19orders)} com ${i18n(i19freight)}`
-    }),
-    pointsActive: i18n({
-      en_us: 'Available points',
-      pt_br: 'Pontos disponiveis'
-    }),
-    pointsUsed: i18n({
-      en_us: 'Used points',
-      pt_br: 'Pontos utilizados'
     })
   }
 
@@ -237,7 +229,7 @@ export default function () {
                     data: totalCountMonth
                   },
                   {
-                    label: `${dictionary.usedFreight} - ${year}`,
+                    label: `${dictionary.freightCost} - ${year}`,
                     fill: false,
                     borderWidth: 3,
                     pointRadius: 0,
@@ -265,7 +257,7 @@ export default function () {
                   callbacks: {
                     label: ({ yLabel, datasetIndex }) => {
                       if (datasetIndex  === 1) {
-                        return `${formatMoney(yLabel)} ${dictionary.usedFreight}`
+                        return `${formatMoney(yLabel)} ${dictionary.freightCost}`
                       } else if (datasetIndex  === 2) {
                         return `${formatMoney(yLabel)} ${dictionary.averageFreight}`
                       }
