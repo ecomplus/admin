@@ -178,7 +178,7 @@ const handleSso = (storeId, username, session) => {
     }
   })
 
-    .done(function (e) {
+    .done(function () {
       if (isCmsLogin) {
         return $.ajax({
           url: 'https://admin.e-com.plus/session/gotrue/v1/token',
@@ -280,7 +280,7 @@ if (accessToken) {
     d.setHours(d.getHours() + 1)
     expires = d.toISOString()
   }
-  
+
   if (storeId && myId) {
     const ssoStoreId = urlParams.get('sso_store_id')
     if (!ssoStoreId || ssoStoreId === storeId) {
