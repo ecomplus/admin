@@ -163,12 +163,13 @@ const handleSso = (storeId, username, session) => {
   setStorageItem('access_token', session.access_token)
   setStorageItem('expires', session.expires)
   setStorageItem('username', username)
+
   $.ajax({
     url: 'https://admin.e-com.plus/session/new',
     method: 'PUT',
     contentType,
     headers: {
-      'X-Store-ID': Number(storeId),
+      'X-Store-ID': storeId,
       'X-My-ID': session.my_id,
       'X-Access-Token': session.access_token
     },
@@ -176,6 +177,7 @@ const handleSso = (storeId, username, session) => {
       withCredentials: true
     }
   })
+
     .done(function (e) {
       if (isCmsLogin) {
         return $.ajax({
@@ -262,6 +264,7 @@ const accessToken = getAuthState('access_token')
 if (accessToken) {
   const storeId = getAuthState('store_id')
   let myId = getAuthState('my_id', storeId)
+
   let expires = getAuthState('expires', storeId, myId)
   if (expires) {
     const isExpiresTimestamp = !/\D/.test(expires)
@@ -277,6 +280,7 @@ if (accessToken) {
     d.setHours(d.getHours() + 1)
     expires = d.toISOString()
   }
+  
   if (storeId && myId) {
     const ssoStoreId = urlParams.get('sso_store_id')
     if (!ssoStoreId || ssoStoreId === storeId) {
