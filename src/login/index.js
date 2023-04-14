@@ -145,8 +145,8 @@ const getAuthState = (name, storeId, myId) => {
   const fromStorage = localStorage.getItem(name)
   if (fromStorage) {
     if (
-      (myId && localStorage.getItem(name) !== myId) ||
-      (storeId && localStorage.getItem(name) !== storeId)
+      (myId && localStorage.getItem('my_id') !== myId) ||
+      (storeId && localStorage.getItem('store_id') !== storeId)
     ) {
       return null
     }
