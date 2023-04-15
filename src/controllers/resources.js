@@ -706,6 +706,8 @@ export default function () {
           $(`#t${tabId}-loading`).show()
           const cb = Tab.editItemsCallback()
           const file = $modal.find('input[type="file"]')[0].files[0]
+          const isPut = $modal.find('#method-put').is(':checked')
+          const importMethod = isPut ? 'PUT' : 'PATCH'
           Papa.parse(file, {
             header: true,
             error: (err, file, inputElem, reason) => {
@@ -777,7 +779,7 @@ export default function () {
 
                 if (_id && _id.length > 2) {
                   if (/^[a-f0-9]{24}$/.test(_id)) {
-                    callApi(`${slug}/${_id}.json`, 'PATCH', (err, doc) => {
+                    callApi(`${slug}/${_id}.json`, importMethod, (err, doc) => {
                       if (err) {
                         console.error(err)
                         app.toast()
