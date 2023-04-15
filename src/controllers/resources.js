@@ -698,14 +698,6 @@ export default function () {
       })
 
       // import CSV table
-      $('#method-put').change((e) => {
-        if ($('#method-put').is(':checked')) {
-          window.alert(i18n({
-            en_us: 'Will delete properties that are not in the table and change the ones that are',
-            pt_br: 'Irá deletar propriedades que não estão na tabela e mudar as que estiverem'
-          }))
-        } 
-      })
       $(`#t${tabId}-import`).click(function () {
         const $modal = $('#table-upload')
         $modal.modal('toggle')

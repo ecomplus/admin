@@ -810,8 +810,15 @@
                 <label class="custom-control-label i18n" for="method-put">
                   <span class="text-danger" data-lang="en_us">Overwrite</span>
                   <span class="text-danger" data-lang="pt_br">Sobrescrever</span>
-                </label>
+                </label>               
               </div>
+              <div id="overwrite-alert" class="alert alert-danger i18n alert-dismissible fade show" role="alert">
+                <span data-lang="en_us">If active <b>overwrite</b>, will delete properties that are not in the table and change the ones that are</span>
+                <span data-lang="pt_br">Se <b>sobrescrever</b> ativo, irá deletar propriedades que não estão na tabela e mudar as que estiverem</span>
+                <button type="button" class="close d-block" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>              
+              </div> 
             </div>
           </div>
           <div class="modal-footer">
