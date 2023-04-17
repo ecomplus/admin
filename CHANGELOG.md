@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.83](https://github.com/ecomplus/admin/compare/v1.0.0-beta.82...v1.0.0-beta.83) (2023-04-17)
+
+
+### Features
+
+* **devices-report:** add list with summary ([#667](https://github.com/ecomplus/admin/issues/667)) ([474d034](https://github.com/ecomplus/admin/commit/474d034907332f74a12ae670530e6d8d7e870e14))
+* **form/product:** add search ad relevance toggleable input ([#666](https://github.com/ecomplus/admin/issues/666)) ([c7d8e74](https://github.com/ecomplus/admin/commit/c7d8e749f69b88bd96c7c6898ace088094ca9ea9))
+* **orders-report:** add new orders report by discount coupon ([#668](https://github.com/ecomplus/admin/issues/668)) ([01494ba](https://github.com/ecomplus/admin/commit/01494ba6c7ab1227e3552032fcc60f79b7154c40))
+* **resources-list:** insert checkbox to import table with PUT instead of PATCH ([#670](https://github.com/ecomplus/admin/issues/670)) ([2907ea7](https://github.com/ecomplus/admin/commit/2907ea7a27538850e4f584a74341f09fcb816eea))
+
+
+### Bug Fixes
+
+* **login:** properly checking session auth fields for sso ([#671](https://github.com/ecomplus/admin/issues/671)) ([5dbb95f](https://github.com/ecomplus/admin/commit/5dbb95fb4143f1e93c708ac2342401c19d6da761))
+* **products-form:** fix toggling search relevance input ([#672](https://github.com/ecomplus/admin/issues/672)) ([c0bb600](https://github.com/ecomplus/admin/commit/c0bb6001899cbdd61fee16d64af061fd5cc947b0))
+
 ## [1.0.0-beta.82](https://github.com/ecomplus/admin/compare/v1.0.0-beta.81...v1.0.0-beta.82) (2023-04-06)
 
 

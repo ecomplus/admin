@@ -39,7 +39,8 @@
         <div class="col-12 col-md-6">
           <div class="card">
             <div class="card-body">
-              <canvas id="count-distributed" class="chartjs" style="display: block; height: 192px; width: 384px;"></canvas>
+              <canvas id="count-distributed" class="chartjs"
+                style="display: block; height: 192px; width: 384px;"></canvas>
             </div>
           </div>
         </div>
@@ -59,14 +60,72 @@
         <div class="col-12 col-md-6">
           <div class="card">
             <div class="card-body">
-              <canvas id="amount-distributed-percent" class="chartjs" style="display: block; height: 192px; width: 384px;"></canvas>
+              <canvas id="amount-distributed-percent" class="chartjs"
+                style="display: block; height: 192px; width: 384px;"></canvas>
             </div>
           </div>
         </div>
         <div class="col-12 col-md-6">
           <div class="card">
             <div class="card-body">
-              <canvas id="amount-distributed" class="chartjs" style="display: block; height: 192px; width: 384px;"></canvas>
+              <canvas id="amount-distributed" class="chartjs"
+                style="display: block; height: 192px; width: 384px;"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <header class="card-header">
+              <h4 class="card-title i18n">
+                <span data-lang="en_us">Summary</span>
+                <span data-lang="pt_br">Resumo</span>
+              </h4>
+              <ul class="card-controls">
+                <li>
+                  <a class="card-btn-slide" href="#"></a>
+                </li>
+              </ul>
+            </header>
+            <div class="card-content">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="mb-3 mt-4">
+                      <a href="#" class="btn btn-info" id="export-device">
+                        <span class="i18n">
+                          <span data-lang="pt_br">Exportar</span>
+                          <span data-lang="en_us">Export</span>
+                        </span>
+                      </a>
+                    </div>
+                    <table id="device-list" class="cell-border compact display" style="width:100%">
+                      <thead>
+                        <tr>
+                          <th class="i18n" width="25%">
+                            <span data-lang="en_us">Type</span>
+                            <span data-lang="pt_br">Tipo</span>
+                          </th>
+                          <th class="i18n" width="25%">
+                            <span data-lang="en_us">Orders</span>
+                            <span data-lang="pt_br">Pedidos</span>
+                          </th>
+                          <th class="i18n" width="25%">
+                            <span data-lang="en_us">Average ticket</span>
+                            <span data-lang="pt_br">Ticket médio</span>
+                          </th>
+                          <th class="i18n" width="25%">
+                            <span data-lang="en_us">Revenue</span>
+                            <span data-lang="pt_br">Receita</span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
