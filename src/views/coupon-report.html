@@ -34,7 +34,7 @@
             <div class="card-content">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-12 d-block">
                     <div class="mb-3">
                       <a href="#" class="btn btn-info" id="export-coupon">
                         <span class="i18n">
@@ -42,30 +42,37 @@
                           <span data-lang="en_us">Export</span>
                         </span>
                       </a>
+                      <div class="lookup float-right" style="max-width: 50%">
+                        <input type="text" id="search-coupon" class="form-control" placeholder="PRIMEIRA10">
+                      </div>
                     </div>
-                    <table id="coupon-list" class="display" style="width:100%">
+                    <table id="coupon-list" data-toggle="table" class="report-table table table-responsive-sm table-striped table-bordered">
                       <thead>
-                          <tr>
-                              <th class="i18n">
-                                <span data-lang="en_us">Coupon</span>
-                                <span data-lang="pt_br">Cupom</span>
-                              </th>
-                              <th class="i18n">
-                                <span data-lang="en_us">Quantity</span>
-                                <span data-lang="pt_br">Quantidade</span>
-                              </th>
-                              <th class="i18n">
-                                <span data-lang="en_us">Discount</span>
-                                <span data-lang="pt_br">Desconto</span>
-                              </th>
-                              <th class="i18n">
-                                <span data-lang="en_us">Revenue</span>
-                                <span data-lang="pt_br">Receita</span>
-                              </th>
-                          </tr>
-                        </thead>
+                        <tr>
+                            <th class="i18n">
+                              <span data-lang="en_us">Coupon</span>
+                              <span data-lang="pt_br">Cupom</span>
+                            </th>
+                            <th class="i18n">
+                              <span data-lang="en_us">Quantity</span>
+                              <span data-lang="pt_br">Quantidade</span>
+                            </th>
+                            <th class="i18n">
+                              <span data-lang="en_us">Discount</span>
+                              <span data-lang="pt_br">Desconto</span>
+                            </th>
+                            <th class="i18n">
+                              <span data-lang="en_us">Revenue</span>
+                              <span data-lang="pt_br">Receita</span>
+                            </th>
+                        </tr>
+                      </thead>
                       <tbody></tbody>
                     </table>
+                    <nav>
+                      <ul id="pagination-coupon" class="pagination justify-content-center">
+                      </ul>
+                    </nav>
                     <span class="i18n">
                       <strong data-lang="pt_br">Observação: Se sua loja tiver a possibilidade de acumular descontos de diferentes campanhas, o valor do desconto mostrado irá incluir essas outras modalidades.</strong>
                       <strong data-lang="en_us">Note: If your store has the possibility of accumulating discounts from different campaigns, the discount amount shown will include these other modalities.</strong>
