@@ -3,7 +3,7 @@ import { i18n } from '@ecomplus/utils'
 import Papa from 'papaparse'
 
 export default function () {
-  const { $, callApi } = window
+  const { $, callApi, formatMoney } = window
   const dictionary = {
     coupon: i18n({
       en_us: 'Coupon',
@@ -19,32 +19,31 @@ export default function () {
 
   const renderTable = (data, currentPage, pageSize) => {
     // create html
-    let result = '';
-    let paging = '';
+    let result = ''
+    let paging = ''
     data.filter((row, index) => {
-          let start = (currentPage - 1) * pageSize;
-          let end = currentPage * pageSize;
-          if(index >= start && index < end) return true;
+      const start = (currentPage - 1) * pageSize
+      const end = currentPage * pageSize
+      return (index >= start && index < end)
     }).forEach(entry => {
-       result += `
+      result += `
        <tr>
          <td>${entry._id}</td>
          <td>${entry.count}</td>
          <td>${formatMoney(entry.discount)}</td>
          <td>${formatMoney(entry.total)}</td>
-       </tr>
-     `;
-    });
-    let numOfPaging = Math.ceil(data.length / pageSize)
+       </tr>`
+    })
+    const numOfPaging = Math.ceil(data.length / pageSize)
     for (let i = 1; i <= numOfPaging; i++) {
       paging += `
-      <li class="page-item${i === 1 ? ' active': ''}">
+      <li class="page-item${i === 1 ? ' active' : ''}">
         <a class="page-link" href="#">${i}</a>
       </li>
       `
     }
     document.querySelector('#pagination-coupon').innerHTML = paging
-    document.querySelector('#coupon-list tbody').innerHTML = result;
+    document.querySelector('#coupon-list tbody').innerHTML = result
   }
 
   $('#pagination-coupon').click((e) => {
@@ -79,7 +78,7 @@ export default function () {
       (err, json) => {
         if (!err) {
           const { result } = json
-          if (Array.isArray(result) && result.length) {
+          if (Array.isArray(result)) {
             $('#coupon-list tbody').remove()
             $('#coupon-list').append('<tbody></tbody>')
             dataQuery = []
