@@ -48,17 +48,17 @@ export default function () {
   }
 
   $('#pagination-coupon').click((e) => {
-    const childrenElement = e.currentTarget.children
+    const { children } = e.currentTarget
     const option = e.target && e.target.text
     if (option) {
-      const pageSizeChoice = Number(option)
-      renderTable(dataQuery, pageSizeChoice, 10)
-      for (const key in childrenElement) {
-        if (Object.hasOwnProperty.call(childrenElement, key)) {
-          if (key == (pageSizeChoice - 1)) {
-            childrenElement[key].classList.add('active')
+      const pageNumber = Number(option)
+      renderTable(dataQuery, pageNumber, 10)
+      for (const key in children) {
+        if (Object.hasOwnProperty.call(children, key)) {
+          if (key == (pageNumber - 1)) {
+            children[key].classList.add('active')
           } else {
-            childrenElement[key].classList.remove('active') 
+            children[key].classList.remove('active') 
           } 
         }
       }
