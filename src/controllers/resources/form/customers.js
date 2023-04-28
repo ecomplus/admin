@@ -34,9 +34,6 @@ export default function () {
     var optionsIndex = 0
     var $staffNotes = $('#t' + tabId + '-staff-notes')
     var $note = $staffNotes.find('#t' + tabId + '-note')
-    var $abstract = $('#t' + tabId + '-abstract')
-    var $abstractText = $abstract.find('#t' + tabId + '-personalAbs')
-    var $abstractStatistic = $abstract.find('#t' + tabId + '-statisAbs')
     const $listOrders = $(`#t${tabId}-list-orders`)
     const $points = $customer.find(`#t${tabId}-points`)
     const $listOfPoints = $points.find(`#t${tabId}-list-of-points`)
@@ -334,12 +331,12 @@ export default function () {
     }
     if (data.loyalty_points_entries && data.loyalty_points_entries.length) {
       $points.slideDown()
-      data.loyalty_points_entries.forEach(entry => {
+      data.loyalty_points_entries.forEach((entry, i) => {
         $listOfPoints.find('tbody').append(`<tr>
         <td>${entry.name}</td>
-        <td>${entry.earned_points.toFixed(2)}</td>
-        <td>${entry.active_points.toFixed(2)}</td>
-        <td><a href="/#/resources/orders/${entry.order_id}">${entry.order_id}</a></td>
+        <td><input class="form-control" name="earned_points" data-index="${i}" type="number" min="0" max="9999999" step="any" value="${entry.earned_points}"></td>
+        <td><input class="form-control" name="active_points" data-index="${i}" type="number" min="0" max="${entry.earned_points}" step="any" value="${entry.active_points}"></td>
+        <td>${entry.order_id ? `<a href="/#/resources/orders/${entry.order_id}">${entry.order_id}</a>` : `${entry.name}`}</td>
         </tr>`)
       })
       const earnedPoints = data.loyalty_points_entries.reduce((acc, entry) => acc + entry.earned_points, 0)
@@ -357,10 +354,25 @@ export default function () {
         <span data-lang="en_us">Total used points:</span>
         <span data-lang="pt_br">Total de pontos usados:</span>
       </span> <b>${(earnedPoints - activePoints).toFixed(2)}</b>`)
-      datatableOptions.language.emptyTable = 'Nenhum ponto contabilizado'
-      datatableOptions.language.info = 'Mostrando _START_ a _END_ de _TOTAL_ pontuações carregadas'
-      $listOfPoints.DataTable(datatableOptions)
     }
+
+    $listOfPoints.on('input', (e) => {
+      const { target } = e
+      const nameAtt = target.getAttribute('name')
+      let activePoints = Number(target.value)
+      const index = target.dataset && target.dataset.index
+      data.loyalty_points_entries[index][nameAtt] = activePoints
+      if (nameAtt === 'active_points') {
+        const earnedPoints = data.loyalty_points_entries[index].earned_points
+        if (earnedPoints < activePoints) {
+          activePoints = earnedPoints
+          data.loyalty_points_entries[index][nameAtt] = activePoints
+          target.value = activePoints
+          target.disabled = true
+        }
+      }
+      commit(data, true)
+    })    
 
     if (data.orders_count) {
       $(`#t${tabId}-orders`).append(`<span class="i18n">
