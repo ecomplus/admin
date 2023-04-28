@@ -1016,6 +1016,10 @@ ul > li:nth-child(4n+4) > .badges-list li {
   border-radius: 2px;
 }
 
+.dataTables_scroll {
+  overflow-x: auto;
+}
+
 // storage items async load
 .storage-object {
   display: none;
