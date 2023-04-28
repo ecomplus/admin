@@ -1185,4 +1185,9 @@ ul > li:nth-child(4n+4) > .badges-list li {
     overflow-y: auto;
   }
 }
+.tiny-table {
+  display: block;
+  max-height: 350px;
+  overflow: auto;
+}
  
