@@ -49,16 +49,19 @@ export default function () {
 
   $('#pagination-coupon').click((e) => {
     const childrenElement = e.currentTarget.children
-    for (const key in childrenElement) {
-      if (Object.hasOwnProperty.call(childrenElement, key)) {
-        childrenElement[key].classList.remove('active')    
-      }
-    }
-    const parent = e.target && e.target.parentElement
-    parent.classList.add('active')
     const option = e.target && e.target.text
     if (option) {
-      renderTable(dataQuery, Number(option), 10)
+      const pageSizeChoice = Number(option)
+      renderTable(dataQuery, pageSizeChoice, 10)
+      for (const key in childrenElement) {
+        if (Object.hasOwnProperty.call(childrenElement, key)) {
+          if (key == (pageSizeChoice - 1)) {
+            childrenElement[key].classList.add('active')
+          } else {
+            childrenElement[key].classList.remove('active') 
+          } 
+        }
+      }
     }
   })
 
@@ -172,8 +175,17 @@ export default function () {
     $link.setAttribute('download', `${name}.csv`)
     $link.click()
   }
-  console.log(dataQuery)
   $exportCoupon.click(() => {
-    downloadCsv(dataQuery, 'coupon-report')
+    renderTable(dataQuery, 1, dataQuery.length)
+    const data = []
+    $('#coupon-list').find('tr:not(:first)').each(function(i, row) {
+      const cols = []
+      $(this).find('td').each(function(i, col) {
+        cols.push($(this).text())
+      })
+      data.push(cols)
+    })
+    downloadCsv(data, 'coupon-report')
+    renderTable(dataQuery, 1, 10)
   })
 }
