@@ -107,17 +107,6 @@ export default function () {
       commit(data, true)
     })
 
-    var maskDocNumber = function (data) {
-      if (!data.doc_number) {
-        return ''
-      }
-      if (data.registry_type === 'j') {
-        return data.doc_number.replace(/(\d{2})(\d{3})(\d{3})\/(\d{4})(\d{2})/, '$1.$2.$3.$4-$5')
-      } else {
-        return data.doc_number.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
-      }
-    }
-
     // separate fullname
     $fullName.change(function () {
       var data = Data()
@@ -318,7 +307,7 @@ export default function () {
 
     // create and show all information about the costumer
     const datatableOptions = {
-      scrollY: '200px',
+      scrollY: '400px',
       scrollCollapse: true,
       paging: false
     }
@@ -334,8 +323,14 @@ export default function () {
       data.loyalty_points_entries.forEach((entry, i) => {
         $listOfPoints.find('tbody').append(`<tr>
         <td>${entry.name}</td>
-        <td><input class="form-control" name="earned_points" data-index="${i}" type="number" min="0" max="9999999" step="any" value="${entry.earned_points}"></td>
-        <td><input class="form-control" name="active_points" data-index="${i}" type="number" min="0" max="${entry.earned_points}" step="any" value="${entry.active_points}"></td>
+        <td>
+          <input class="form-control" style="min-width: 90px; max-width: 120px"
+            name="earned_points" data-index="${i}" type="number" min="0" max="9999999" step="any" value="${entry.earned_points}">
+        </td>
+        <td>
+          <input class="form-control" style="min-width: 90px; max-width: 120px"
+            name="active_points" data-index="${i}" type="number" min="0" max="${entry.earned_points}" step="any" value="${entry.active_points}">
+        </td>
         <td>${entry.order_id ? `<a href="/#/resources/orders/${entry.order_id}">${entry.order_id}</a>` : `${entry.name}`}</td>
         </tr>`)
       })
@@ -372,7 +367,7 @@ export default function () {
         }
       }
       commit(data, true)
-    })    
+    })
 
     if (data.orders_count) {
       $(`#t${tabId}-orders`).append(`<span class="i18n">
