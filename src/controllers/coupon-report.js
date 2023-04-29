@@ -1,34 +1,9 @@
 import { i19discount, i19quantity } from '@ecomplus/i18n'
-import { $ecomConfig, i18n } from '@ecomplus/utils'
+import { i18n } from '@ecomplus/utils'
 import Papa from 'papaparse'
 
 export default function () {
-  const { $, callApi } = window
-  const datatableOptions = {
-    pageLength: 10,
-    bLengthChange: false,
-    order: [[1, 'desc']],
-    responsive: true
-  }
-  if ($ecomConfig.get('lang') === 'pt_br') {
-    datatableOptions.language = {
-      aria: {
-        sortAscending: ': ative para colocar a coluna em ordem crescente',
-        sortDescending: ': ative para colocar a coluna em ordem decrescente'
-      },
-      paginate: {
-        next: 'Próxima',
-        previous: 'Anterior'
-      },
-      emptyTable: 'Tabela vazia',
-      infoEmpty: '',
-      infoFiltered: '',
-      info: 'Mostrando _START_ a _END_ de _TOTAL_ cupons carregados',
-      lengthMenu: 'Mostrar _MENU_ resultados',
-      search: 'Buscar',
-      zeroRecords: 'Nenhum resultado encontrado'
-    }
-  }
+  const { $, callApi, formatMoney } = window
   const dictionary = {
     coupon: i18n({
       en_us: 'Coupon',
@@ -39,7 +14,62 @@ export default function () {
       pt_br: 'Receita'
     })
   }
-  const datatable = $('#coupon-list').DataTable(datatableOptions)
+
+  let dataQuery = []
+
+  const renderTable = (data, currentPage, pageSize) => {
+    // create html
+    let result = ''
+    let paging = ''
+    data.filter((row, index) => {
+      const start = (currentPage - 1) * pageSize
+      const end = currentPage * pageSize
+      return (index >= start && index < end)
+    }).forEach(entry => {
+      result += `
+       <tr>
+         <td>${entry._id}</td>
+         <td>${entry.count}</td>
+         <td>${formatMoney(entry.discount)}</td>
+         <td>${formatMoney(entry.total)}</td>
+       </tr>`
+    })
+    const numOfPaging = Math.ceil(data.length / pageSize)
+    for (let i = 1; i <= numOfPaging; i++) {
+      paging += `
+      <li class="page-item${i === 1 ? ' active' : ''}">
+        <a class="page-link" href="#">${i}</a>
+      </li>
+      `
+    }
+    document.querySelector('#pagination-coupon').innerHTML = paging
+    document.querySelector('#coupon-list tbody').innerHTML = result
+  }
+
+  $('#pagination-coupon').click((e) => {
+    const { children } = e.currentTarget
+    const option = e.target && e.target.text
+    if (option) {
+      const pageNumber = Number(option)
+      renderTable(dataQuery, pageNumber, 10)
+      for (const key in children) {
+        if (Object.hasOwnProperty.call(children, key)) {
+          if (key == (pageNumber - 1)) {
+            children[key].classList.add('active')
+          } else {
+            children[key].classList.remove('active') 
+          } 
+        }
+      }
+    }
+  })
+
+  $('#search-coupon').on('input', (e) => {
+    let filter, searched;
+    filter = e.currentTarget.value.toUpperCase();
+    searched = dataQuery.filter(option => option._id.indexOf(filter) > -1)
+    renderTable(searched, 1, 10)
+  })
 
   const renderList = (start, end) => {
     callApi(
@@ -48,19 +78,12 @@ export default function () {
       (err, json) => {
         if (!err) {
           const { result } = json
-          if (Array.isArray(result) && result.length) {
-            const rows = []
-            result.forEach(entry => {
-              rows.push([
-                entry._id,
-                entry.count,
-                formatMoney(entry.discount),
-                formatMoney(entry.total)
-              ])
-            })
-            datatable.clear()
-            datatable.rows.add(rows)
-            datatable.draw()
+          if (Array.isArray(result)) {
+            $('#coupon-list tbody').remove()
+            $('#coupon-list').append('<tbody></tbody>')
+            dataQuery = []
+            result.forEach(entry => dataQuery.push(entry))
+            renderTable(dataQuery, 1, 10)
           }
         }
       },
@@ -70,8 +93,8 @@ export default function () {
           { 
             $match : {
             created_at: {
-              $gte: `${start}T03:00:00.000Z`,
-              $lte: `${end}T02:59:59.999Z`,
+              $gte: start.toISOString(),
+              $lte: end.toISOString(),
             },
             'financial_status.current': 'paid',
             'extra_discount.flags': {
@@ -98,24 +121,33 @@ export default function () {
       ]
     }) 
   }
-
-  const currentYear = new Date().getFullYear()
+  const normalizeDate = (hour, min, sec, ms, sub, date) => {
+    const currentDate = date || new Date()
+    if (sub) {
+      const dateWithSub = currentDate.getDate() - sub
+      currentDate.setDate(dateWithSub)
+    }
+    const finalDate = new Date(currentDate)
+    const dateWithHours = finalDate.setHours(hour, min, sec, ms)
+    return new Date(dateWithHours)
+  }
   let start, end, type
-  start = `${currentYear}-01-01`
-  end = `${currentYear}-12-31`
+  start = normalizeDate(0, 0, 0, 0, 30, false)
+  end = normalizeDate(23, 59, 59, 59, false, false)
+
   renderList(start, end)
-  
-  $('#datepicker-coupon [data-when="start"]').datepicker('setDate', `01/01/${currentYear}`);
-  $('#datepicker-coupon [data-when="end"]').datepicker('setDate', `31/12/${currentYear}`);
+
+  $('#datepicker-coupon [data-when="start"]').datepicker('setDate', new Intl.DateTimeFormat('pt-br').format(start));
+  $('#datepicker-coupon [data-when="end"]').datepicker('setDate', new Intl.DateTimeFormat('pt-br').format(end));
 
   $('#datepicker-coupon').datepicker({}).on('changeDate', (e) => {
     if (e.date) {
       if (e.target && e.target.dataset && e.target.dataset.when) {
         type = e.target.dataset.when
         if (type === 'start') {
-          start = e.date.toISOString().slice(0,10)
+          start = normalizeDate(0, 0, 0, 0, false, e.date)
         } else if (type === 'end') {
-          end = e.date.toISOString().slice(0,10)
+          end = normalizeDate(23, 59, 59, 59, false, e.date)
         }
         if (start && end) {
           renderList(start, end)
@@ -143,6 +175,16 @@ export default function () {
     $link.click()
   }
   $exportCoupon.click(() => {
-    downloadCsv(datatable.rows().data(), 'coupon-report')
+    renderTable(dataQuery, 1, dataQuery.length)
+    const data = []
+    $('#coupon-list').find('tr:not(:first)').each(function(i, row) {
+      const cols = []
+      $(this).find('td').each(function(i, col) {
+        cols.push($(this).text())
+      })
+      data.push(cols)
+    })
+    downloadCsv(data, 'coupon-report')
+    renderTable(dataQuery, 1, 10)
   })
 }
