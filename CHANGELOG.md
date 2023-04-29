@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.84](https://github.com/ecomplus/admin/compare/v1.0.0-beta.83...v1.0.0-beta.84) (2023-04-29)
+
+
+### Features
+
+* **customers-form:** edit customer loyalty points ([#676](https://github.com/ecomplus/admin/issues/676)) ([6718c66](https://github.com/ecomplus/admin/commit/6718c667f64027b6e5043a0193d11174b1fa73c9))
+
+
+### Bug Fixes
+
+* **coupon-report:** parsed date and improved ui/ux ([#675](https://github.com/ecomplus/admin/issues/675)) ([a839caf](https://github.com/ecomplus/admin/commit/a839caf46619a26f0e2d84df1fa9c8143987f6e5))
+* **coupon-report:** properly reset table on update if empty ([cf9f09c](https://github.com/ecomplus/admin/commit/cf9f09c8af9289d4a36898e52c84b23b43cc90ab))
+* **customers-form:** improving tables on mobile view ([8f5d7fa](https://github.com/ecomplus/admin/commit/8f5d7fa116a5cde6913e29d5ec90f481612948d3))
+* **scss:** fixing datatable to horizontal scroll (responsive) on mobile view ([0475d0f](https://github.com/ecomplus/admin/commit/0475d0f645c2cb93f034c82583b39b60b7a22277))
+
 ## [1.0.0-beta.83](https://github.com/ecomplus/admin/compare/v1.0.0-beta.82...v1.0.0-beta.83) (2023-04-17)
 
 
