@@ -35,6 +35,10 @@ const { sessionStorage, localStorage, Image, $, app } = window
       en_us: 'Resources',
       pt_br: 'Recursos'
     }),
+    abandonedCart: i18n({
+      en_us: 'Abandoned cart',
+      pt_br: 'Carrinho abandonado'
+    }),
     campaignReport: i18n({
       en_us: 'Campaign report',
       pt_br: 'Relatório de campanhas'
@@ -1214,6 +1218,15 @@ const { sessionStorage, localStorage, Image, $, app } = window
                }
               ]
             ) +
+            mainResourceLink('carts', [], 
+            [
+              {
+                name: i18n(dictionary.abandonedCart),
+                link: '/#/abandoned-cart',
+                icon: 'cart-arrow-down'
+              },
+            ]
+           ) +
              mainResourceLink('customers', [], [{
                name: i18n({
                  pt_br: 'Aniversariantes',
