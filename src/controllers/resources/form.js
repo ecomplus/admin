@@ -419,6 +419,7 @@ export default function () {
             toolbar: [
               [ 'style', [ 'style' ] ],
               [ 'font', [ 'bold', 'italic', 'underline', 'strikethrough', 'clear' ] ],
+              ['fontsize', ['fontsize']],
               [ 'color', [ 'color' ] ],
               [ 'insert', [ 'picture', 'link', 'video', 'hr', 'table' ] ],
               [ 'paragraph', [ 'ul', 'ol', 'paragraph' ] ],
