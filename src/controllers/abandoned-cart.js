@@ -91,7 +91,7 @@ export default function () {
             const rows = []
             for (let index = 0; index < loops; index++) {
               init++
-              arraySliced = ids.slice(index * sizeArray, sizeArray * init)
+              arraySliced = ids.slice(index * sizeArray, sizeArray * (index + 1))
               callApi(
                 '$aggregate.json',
                 'POST',
