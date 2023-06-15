@@ -54,7 +54,7 @@ export default function () {
             name,
             selectedCustomer.email,
             selectedCustomer.phone && selectedCustomer.phone.length && selectedCustomer.phone[0] || 'Sem número',
-            urlCart ? urlCart + cart.cartId : 'Sem url configurada',
+            cartUrl ? cartUrl + cart.cartId : 'Sem URL configurada',
             formatMoney(cart.subtotal)
           ])
         }
