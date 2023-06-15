@@ -5,10 +5,7 @@ import Papa from 'papaparse'
 export default function () {
   const { $, callApi, tabId, Store } = window
   const { domain } = Store
-  let urlCart
-  if (domain) {
-    urlCart = `https://${domain}/app/#/cart/`
-  }
+  const cartUrl = domain && `https://${domain}/app/#/cart/`
 
   const datatableOptions = {
     pageLength: 20,
