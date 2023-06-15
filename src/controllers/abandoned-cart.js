@@ -87,7 +87,7 @@ export default function () {
             const sizeArray = 200
             let arraySliced
             let init = 0
-            const loops = ids.length > 200 ? Math.ceil(ids.length / sizeArray) : 1
+            const loops = ids.length > sizeArray ? Math.ceil(ids.length / sizeArray) : 1
             const rows = []
             for (let index = 0; index < loops; index++) {
               init++
