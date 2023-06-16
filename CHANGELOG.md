@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.85](https://github.com/ecomplus/admin/compare/v1.0.0-beta.84...v1.0.0-beta.85) (2023-06-16)
+
+
+### Features
+
+* **abandoned-cart:** abandoned cart list with customer info ([#680](https://github.com/ecomplus/admin/issues/680)) ([226b709](https://github.com/ecomplus/admin/commit/226b709c1f5dcd3e5557a3d6e1f415d374d245ad))
+* **products:** add new innventory report without sales count (much faster) ([1bc0969](https://github.com/ecomplus/admin/commit/1bc09699f0a45e6b2cdee70b7407e094d0809870))
+
 ## [1.0.0-beta.84](https://github.com/ecomplus/admin/compare/v1.0.0-beta.83...v1.0.0-beta.84) (2023-04-29)
 
 
