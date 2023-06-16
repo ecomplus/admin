@@ -10,6 +10,7 @@ import {
   i19payment,
   i19shipping,
   i19support,
+  // i19stock,
   i19themes
 } from '@ecomplus/i18n'
 
@@ -34,6 +35,10 @@ const { sessionStorage, localStorage, Image, $, app } = window
     resources: i18n({
       en_us: 'Resources',
       pt_br: 'Recursos'
+    }),
+    abandonedCart: i18n({
+      en_us: 'Abandoned cart',
+      pt_br: 'Carrinho abandonado'
     }),
     campaignReport: i18n({
       en_us: 'Campaign report',
@@ -1193,6 +1198,11 @@ const { sessionStorage, localStorage, Image, $, app } = window
                'carts'
               ], [
                 {
+                  name: i18n(dictionary.abandonedCart),
+                  link: '/#/abandoned-cart',
+                  icon: 'cart-arrow-down'
+                },
+                {
                 name: i18n(dictionary.freightReport),
                 link: '/#/freight-report',
                 icon: 'truck'
@@ -1214,6 +1224,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                }
               ]
             ) +
+
              mainResourceLink('customers', [], [{
                name: i18n({
                  pt_br: 'Aniversariantes',
@@ -1236,6 +1247,14 @@ const { sessionStorage, localStorage, Image, $, app } = window
              ], [
                {
                  name: i18n(i19inventory),
+                 link: '/#/inventory/stock',
+                 icon: 'database'
+               },
+               {
+                 name: i18n({
+                  pt_br: 'Inventário e vendas',
+                  en_us: 'Inventory and sales'
+                 }),
                  link: '/#/inventory',
                  icon: 'archive'
                },
