@@ -13,6 +13,17 @@ export default function () {
     order: [[3, 'desc']]
   }
 
+  const dictionary = {
+    withoutNumber: i18n({
+      en_us: 'Without number',
+      pt_br: 'Sem número'
+    }),
+    withoutUrl: i18n({
+      en_us: 'Without url configured',
+      pt_br: 'Sem URL configurada'
+    })
+  }
+
   if ($ecomConfig.get('lang') === 'pt_br') {
     datatableOptions.language = {
       aria: {
@@ -43,18 +54,13 @@ export default function () {
         if (selectedCustomer) {
           let name = ''
           if (selectedCustomer.name) {
-            if (selectedCustomer.name.given_name) {
-              name += selectedCustomer.name.given_name
-            }
-            if (selectedCustomer.name.family_name) {
-              name += ' ' + selectedCustomer.name.family_name
-            } 
+            name = selectedCustomer.name
           }
           rows.push([
             name,
             selectedCustomer.email,
-            selectedCustomer.phone && selectedCustomer.phone.length && selectedCustomer.phone[0] || 'Sem número',
-            cartUrl ? cartUrl + cart.cartId : 'Sem URL configurada',
+            selectedCustomer.phone && selectedCustomer.phone.length && selectedCustomer.phone[0] || dictionary.withoutNumber,
+            cartUrl ? cartUrl + cart.cartId : dictionary.withoutUrl,
             formatMoney(cart.subtotal)
           ])
         }
@@ -86,11 +92,8 @@ export default function () {
             })
             const sizeArray = 200
             let arraySliced
-            let init = 0
             const loops = ids.length > sizeArray ? Math.ceil(ids.length / sizeArray) : 1
-            const rows = []
             for (let index = 0; index < loops; index++) {
-              init++
               arraySliced = ids.slice(index * sizeArray, sizeArray * (index + 1))
               callApi(
                 '$aggregate.json',
@@ -121,7 +124,7 @@ export default function () {
                           $first: '$main_email'
                         },
                         name: {
-                          $first: '$name'
+                          $first: '$display_name'
                         },
                         phone: {
                           $first: '$phones.number'
@@ -159,11 +162,6 @@ export default function () {
               subtotal: {
                 $last: '$subtotal'
               }
-            }
-          },
-          {
-            $sort: {
-              count: -1
             }
           }
         ]

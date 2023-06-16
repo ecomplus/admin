@@ -1197,6 +1197,11 @@ const { sessionStorage, localStorage, Image, $, app } = window
                'carts'
               ], [
                 {
+                  name: i18n(dictionary.abandonedCart),
+                  link: '/#/abandoned-cart',
+                  icon: 'cart-arrow-down'
+                },
+                {
                 name: i18n(dictionary.freightReport),
                 link: '/#/freight-report',
                 icon: 'truck'
@@ -1218,15 +1223,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
                }
               ]
             ) +
-            mainResourceLink('carts', [], 
-            [
-              {
-                name: i18n(dictionary.abandonedCart),
-                link: '/#/abandoned-cart',
-                icon: 'cart-arrow-down'
-              },
-            ]
-           ) +
+
              mainResourceLink('customers', [], [{
                name: i18n({
                  pt_br: 'Aniversariantes',
