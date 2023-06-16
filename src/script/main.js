@@ -10,6 +10,7 @@ import {
   i19payment,
   i19shipping,
   i19support,
+  // i19stock,
   i19themes
 } from '@ecomplus/i18n'
 
@@ -1246,6 +1247,14 @@ const { sessionStorage, localStorage, Image, $, app } = window
              ], [
                {
                  name: i18n(i19inventory),
+                 link: '/#/inventory/stock',
+                 icon: 'database'
+               },
+               {
+                 name: i18n({
+                  pt_br: 'Inventário e vendas',
+                  en_us: 'Inventory and sales'
+                 }),
                  link: '/#/inventory',
                  icon: 'archive'
                },

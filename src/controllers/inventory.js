@@ -5,6 +5,7 @@ import ecomClient from '@ecomplus/client'
 
 export default function () {
   const { $, app, callApi, tabId } = window
+  window.renderContentIds()
 
   const size = 20
   let from = 0
@@ -32,13 +33,18 @@ export default function () {
     }
   }
 
-  const $btnLoad = $('#inventory-load')
+  const $btnLoad = $(`#t${tabId}-inventory-load`)
+  console.log($btnLoad)
   $btnLoad.click(() => {
     from += size
     loadMore()
   })
 
-  const datatable = $('#inventory-table').DataTable(datatableOptions)
+  const isCountSales = !window.location.hash.endsWith('/stock')
+  if (!isCountSales) {
+    $(`#t${tabId}-inventory-table th:last-child`).remove()
+  }
+  const datatable = $(`#t${tabId}-inventory-table`).DataTable(datatableOptions)
   let allRows = []
 
   const loadMore = () => {
@@ -52,13 +58,16 @@ export default function () {
         let i = 0
         const rows = []
         const addRow = item => {
-          rows.push({
+          const row = {
             sku: item.sku || '',
             name: item.name,
             price: getPrice(item),
-            quantity: item.quantity || 0,
-            sold: 0
-          })
+            quantity: item.quantity || 0
+          }
+          if (isCountSales) {
+            row.sold = 0
+          }
+          rows.push(row)
         }
 
         const next = () => {
@@ -72,38 +81,43 @@ export default function () {
               }))
             }
 
-            callApi(
-              `orders.json?items.product_id=${_id}&status!=cancelled` +
-                '&fields=items.product_id,items.sku,items.quantity',
-              'GET',
+            if (isCountSales) {
+              callApi(
+                `orders.json?items.product_id=${_id}&status!=cancelled` +
+                  '&fields=items.product_id,items.sku,items.quantity',
+                'GET',
 
-              (err, json) => {
-                let delay
-                if (!err) {
-                  const { result } = json
-                  result.forEach(order => {
-                    order.items.forEach(item => {
-                      if (item.product_id === _id) {
-                        const row = rows.find(({ sku }) => sku === item.sku)
-                        if (row) {
-                          row.sold += item.quantity
+                (err, json) => {
+                  let delay
+                  if (!err) {
+                    const { result } = json
+                    result.forEach(order => {
+                      order.items.forEach(item => {
+                        if (item.product_id === _id) {
+                          const row = rows.find(({ sku }) => sku === item.sku)
+                          if (row) {
+                            row.sold += item.quantity
+                          }
                         }
-                      }
+                      })
                     })
-                  })
-                  delay = 0
-                } else {
-                  console.error(err)
-                  app.toast()
-                  delay = 300
-                }
+                    delay = 0
+                  } else {
+                    console.error(err)
+                    app.toast()
+                    delay = 300
+                  }
 
-                setTimeout(() => {
-                  i++
-                  next()
-                }, delay)
-              }
-            )
+                  setTimeout(() => {
+                    i++
+                    next()
+                  }, delay)
+                }
+              )
+            } else {
+              i++
+              next()
+            }
           } else {
             allRows = allRows.concat(rows.map(({ sku, name, price, quantity, sold }) => {
               return [sku, name, price, quantity, sold]
@@ -133,9 +147,13 @@ export default function () {
       })
   }
   loadMore()
-  const $exportInventory = $('#export-inventory')
+
+  const $exportInventory = $(`#t${tabId}-export-inventory`)
   const downloadCsv = exportData => {
-    const columns = [i18n(i19sku), i18n(i19name), i18n(i19price), i18n(i19unitsInStock), i18n(i19sales)]
+    const columns = [i18n(i19sku), i18n(i19name), i18n(i19price), i18n(i19unitsInStock)]
+    if (isCountSales) {
+      columns.push(i18n(i19sales))
+    }
     const csv = Papa.unparse({
       data: exportData,
       fields: columns
