@@ -320,7 +320,7 @@ $form.submit(function () {
     const isAdvancedDash = $('#advanced').is(':checked')
     const isMd5Password = $('#md5').is(':checked')
     const username = $('#username').val()
-    const password = isMd5Password ? $('#password').val() : md5($('#password').val())
+    let password = $('#password').val()
 
     ;[
       [canRememberSession, 'username'],
@@ -334,48 +334,58 @@ $form.submit(function () {
       }
     })
 
-    const data = { pass_md5_hash: password }
-    let url = `${apiBaseUri}/_login.json`
-    if (username.indexOf('@') !== -1) {
-      data.email = username
-    } else {
-      data.username = username
-      url += `?username=${username}`
-    }
-    $.ajax({
-      url,
-      method: 'POST',
-      dataType: 'json',
-      contentType,
-      headers: {
-        'X-Store-ID': 1
-      },
-      data: JSON.stringify(data)
-    })
-
-      .done(function (data) {
-        const storeId = data.store_id
-        console.log(`Logged ${username} for #${storeId}`)
-
-        $.ajax({
-          url: `${apiBaseUri}/_authenticate.json`,
-          method: 'POST',
-          dataType: 'json',
-          contentType,
-          headers: {
-            'X-Store-ID': storeId
-          },
-          data: JSON.stringify({
-            _id: data._id,
-            api_key: data.api_key
-          })
+    const authenticate = (storeId, myId, apiKey) => {
+      $.ajax({
+        url: `${apiBaseUri}/_authenticate.json`,
+        method: 'POST',
+        dataType: 'json',
+        contentType,
+        headers: {
+          'X-Store-ID': storeId
+        },
+        data: JSON.stringify({
+          _id: myId,
+          api_key: apiKey
         })
-          .done(function (session) {
-            handleSso(storeId, username, session)
-          })
-          .fail(authFail)
       })
-      .fail(authFail)
+        .done(function (session) {
+          handleSso(storeId, username, session)
+        })
+        .fail(authFail)
+    }
+
+    if (password.length >= 128 && /^[\d]+:[\w]+$/.test(username)) {
+      const [storeId, myId] = username.split(':')
+      authenticate(Number(storeId), myId, password)
+    } else {
+      if (!isMd5Password) {
+        password = md5(password)
+      }
+      const data = { pass_md5_hash: password }
+      let url = `${apiBaseUri}/_login.json`
+      if (username.indexOf('@') !== -1) {
+        data.email = username
+      } else {
+        data.username = username
+        url += `?username=${username}`
+      }
+      $.ajax({
+        url,
+        method: 'POST',
+        dataType: 'json',
+        contentType,
+        headers: {
+          'X-Store-ID': 1
+        },
+        data: JSON.stringify(data)
+      })
+        .done(function (data) {
+          const storeId = data.store_id
+          console.log(`Logged ${username} for #${storeId}`)
+          authenticate(storeId, data._id, data.api_key)
+        })
+        .fail(authFail)
+    }
   }
 })
 
