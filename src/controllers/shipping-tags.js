@@ -6,7 +6,7 @@ export default function () {
   const orderIds = routeParams[routeParams.length - 1]
   const endpoint = `orders.json?_id=${orderIds}` +
     '&fields=buyers.name,buyers.phones,buyers.doc_number,shipping_lines,number,' +
-      'items.name,items.quantity,items.price,items.final_price,amount.total'
+      'items.name,items.quantity,items.price,items.final_price,items.sku,amount.total'
 
   callApi(endpoint, 'GET', (error, data) => {
     if (!error) {
@@ -184,7 +184,7 @@ export default function () {
                   desCep: to.zip,
                   desDoc: order.buyers && order.buyers[0] && order.buyers[0].doc_number,
                   itens: order.items.map(item => ({
-                    conteudo: item.name,
+                    conteudo: `${item.name} (${item.sku})`,
                     quant: item.quantity,
                     valor: ecomUtils.price(item)
                   })),
