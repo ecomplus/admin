@@ -37,7 +37,7 @@ export default function ({
       // link to edit product
       return $('<a>', {
         href: `/#/resources/products/${item._id}`,
-        html: html
+        html
       })
     }
 
@@ -134,7 +134,10 @@ export default function ({
     // https://developers.e-com.plus/docs/api/#/search/items/items-search
     // remove invalid chars from term string
     term = term.replace(/([()"])/g, '\\$1').replace(/(^|\s)(AND|OR|\/)(\s|$)/g, ' ')
-    const query = `sku:"${term}" OR name:"${term}"`
+    let query = `sku:"${term}"`
+    if (window.Store.store_id !== 4566 && (term.length < 30 || term.indexOf(' ') > -1)) {
+      query += ` OR name:"${term}"`
+    }
     const url = `items.json?q=${encodeURIComponent(query)}`
 
     // run search API request
@@ -159,7 +162,7 @@ export default function ({
     minLength: 3
   }, {
     name: 'items',
-    source: source
+    source
   })
 
   // handle new collection item
