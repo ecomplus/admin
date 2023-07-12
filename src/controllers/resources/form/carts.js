@@ -193,7 +193,7 @@ export default function () {
         // https://developers.e-com.plus/docs/api/#/search/items/items-search
         // remove invalid chars from term string
         term = term.replace(/([()])/g, '\\$1').replace(/(^|\s)(AND|OR|\/)(\s|$)/g, ' ')
-        let query = `sku:"${term}"`
+        let query = `skus:"${term}"`
         if (window.Store.store_id !== 4566 && (term.length < 30 || term.indexOf(' ') > -1)) {
           query += ` OR name:"${term}"`
         }
@@ -210,9 +210,14 @@ export default function () {
                 add([item.name + ' (' + item.sku + ')'])
               } else {
                 // add variations only
-                for (var ii = 0; ii < item.variations.length; ii++) {
-                  var variation = item.variations[ii]
+                const variation = item.variations.find(({ sku }) => sku === term)
+                if (variation) {
                   add([variation.name + ' (' + variation.sku + ')'])
+                } else {
+                  for (var ii = 0; ii < item.variations.length; ii++) {
+                    var { name, sku } = item.variations[ii]
+                    add([name + ' (' + sku + ')'])
+                  }
                 }
               }
             }
