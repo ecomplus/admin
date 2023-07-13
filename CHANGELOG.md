@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.86](https://github.com/ecomplus/admin/compare/v1.0.0-beta.85...v1.0.0-beta.86) (2023-07-13)
+
+
+### Features
+
+* **login:** direct authentication with api key "as password" ([0d32773](https://github.com/ecomplus/admin/commit/0d32773f9bab3b984aba02020fb2bce1e6954910))
+
+
+### Bug Fixes
+
+* prefer match by exact sku on cart/order items search ([cf6f50f](https://github.com/ecomplus/admin/commit/cf6f50f7b1d024fb2f8fa75f8e72aa9373cc1f75))
+* search cart/order item by sku only for specific store ids or terms ([fedf009](https://github.com/ecomplus/admin/commit/fedf0092d06a23b6c794c3cd488488593680d69d))
+
 ## [1.0.0-beta.85](https://github.com/ecomplus/admin/compare/v1.0.0-beta.84...v1.0.0-beta.85) (2023-06-16)
 
 

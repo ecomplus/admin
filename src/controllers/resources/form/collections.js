@@ -1,6 +1,4 @@
-/*!
- * Copyright 2018 E-Com Club
- */
+/* eslint-disable no-var */
 
 export default function () {
   const { $, app, i18n, tabId, ecomUtils, callSearchApi } = window
@@ -106,8 +104,11 @@ export default function () {
       // https://developers.e-com.plus/docs/api/#/search/items/items-search
       // remove invalid chars from term string
       term = term.replace(/([()])/g, '\\$1').replace(/(^|\s)(AND|OR|\/)(\s|$)/g, ' ')
-      var query = 'sku:' + term + ' OR name:' + term
-      var url = 'items.json?q=' + encodeURIComponent(query)
+      let query = `sku:"${term}"`
+      if (window.Store.store_id !== 4566 && (term.length < 30 || term.indexOf(' ') > -1)) {
+        query += ` OR name:"${term}"`
+      }
+      const url = 'items.json?q=' + encodeURIComponent(query)
 
       // run search API request
       callSearchApi(url, 'GET', function (err, data) {
@@ -131,7 +132,7 @@ export default function () {
       minLength: 3
     }, {
       name: 'items',
-      source: source
+      source
     })
 
     // handle new collection item

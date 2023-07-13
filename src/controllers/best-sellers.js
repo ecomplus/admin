@@ -83,7 +83,7 @@ export default function () {
                 }
               },
               sku: { $first: '$items.sku' },
-              name: { $first:  '$items.name' }
+              name: { $first: '$items.name' }
             }
           },
           {
