@@ -310,7 +310,7 @@ export default function () {
 
             // properties from matched product or variation
             item.price = product.price
-            item.quantity = product.quantity
+            item.quantity = product.quantity >= 100 ? 1 : product.quantity
             item.name = product.name
             if (product.pictures && product.pictures.length) {
               // use the first image from list and remove ID
