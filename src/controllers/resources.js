@@ -553,8 +553,10 @@ export default function () {
 
           const id = Tab.selectedItems[done]
           if (id) {
+            const isApiv2 = Number(window.sessionStorage.setItem('api_v', '2')) === 2
+            const apiBaseUri = isApiv2 ? 'https://ecomplus.io/v2' : 'https://api.e-com.plus/v1'
             askConfirmation(
-              `https://api.e-com.plus/v1/${slug}/${id}.json`,
+              `${apiBaseUri}/${slug}/${id}.json`,
               method,
               callback,
               bodyObject,
