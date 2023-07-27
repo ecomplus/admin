@@ -222,9 +222,10 @@ const { sessionStorage, localStorage, Image, $, app } = window
     hideToast()
     // E-Com Plus Store API
     // https://ecomstore.docs.apiary.io/#
-    var apiHost = 'https://api.e-com.plus/v1/'
+    const isApiv2 = Number(sessionStorage.setItem('api_v', '2')) === 2
+    const apiBaseUri = isApiv2 ? 'https://ecomplus.io/v2' : 'https://api.e-com.plus/v1'
     // API endpoint full URL
-    var uri = apiHost + endpoint
+    var uri = apiBaseUri + '/' + endpoint
 
     // request not confirmed
     switch (method) {
@@ -313,9 +314,19 @@ const { sessionStorage, localStorage, Image, $, app } = window
   var callSearchApi = function (endpoint, method, callback, bodyObject) {
     // E-Com Plus Search API
     // https://ecomsearch.docs.apiary.io/#
-    var apiHost = 'https://apx-search.e-com.plus/api/v1/'
+    const isApiv2 = Number(sessionStorage.setItem('api_v', '2')) === 2
+    const apiBaseUri = isApiv2 ? 'https://ecomplus.io/v2/search/_els' : 'https://apx-search.e-com.plus/api/v1'
     // API endpoint full URL
-    var uri = apiHost + endpoint
+    let uri
+    if (isApiv2) {
+      if (method.toLowerCase() === 'get' && endpoint) {
+        uri = apiBaseUri + '/' + endpoint
+      } else {
+        uri = apiBaseUri
+      }
+    } else {
+      uri = apiBaseUri + '/' + endpoint
+    }
 
     var options = {
       url: uri,
