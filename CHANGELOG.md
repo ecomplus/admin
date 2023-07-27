@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.87](https://github.com/ecomplus/admin/compare/v1.0.0-beta.86...v1.0.0-beta.87) (2023-07-27)
+
+
+### Bug Fixes
+
+* new cart/order item with quantity 1 if stock greater than 100 ([701085e](https://github.com/ecomplus/admin/commit/701085e49552a520bb15340751cf2d52cf9a3969))
+* update `callApi` methods to handle v2 base URI by session ([060e5ad](https://github.com/ecomplus/admin/commit/060e5ad6194842b5ab3965a794a69b2f92ad9589))
+
 ## [1.0.0-beta.86](https://github.com/ecomplus/admin/compare/v1.0.0-beta.85...v1.0.0-beta.86) (2023-07-13)
 
 
