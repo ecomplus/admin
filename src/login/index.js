@@ -153,6 +153,8 @@ const getAuthState = (name, storeId, myId) => {
   }
   return fromStorage
 }
+sessionStorage.removeItem('api_v')
+// remove v2 api_v until next version to return normal request
 const isApiv2 = Number(getAuthState('api_v')) === 2
 const apiBaseUri = isApiv2 ? 'https://ecomplus.io/v2' : 'https://api.e-com.plus/v1'
 

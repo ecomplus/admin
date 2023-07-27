@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.88](https://github.com/ecomplus/admin/compare/v1.0.0-beta.87...v1.0.0-beta.88) (2023-07-27)
+
+
+### Bug Fixes
+
+* **api-version:** remove api version from storage to use normal v1 ([f72dd3b](https://github.com/ecomplus/admin/commit/f72dd3b32a4db71c23ae611da239778d80e32f75))
+
 ## [1.0.0-beta.87](https://github.com/ecomplus/admin/compare/v1.0.0-beta.86...v1.0.0-beta.87) (2023-07-27)
 
 
