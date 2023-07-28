@@ -553,8 +553,6 @@ export default function () {
 
           const id = Tab.selectedItems[done]
           if (id) {
-            window.sessionStorage.removeItem('api_v')
-            // remove v2 api_v until next version to return normal request
             const isApiv2 = Number(window.sessionStorage.getItem('api_v')) === 2
             const apiBaseUri = isApiv2 ? 'https://ecomplus.io/v2' : 'https://api.e-com.plus/v1'
             askConfirmation(
