@@ -20,7 +20,15 @@ export default function () {
     order: [[3, 'desc']],
     columnDefs: [{
       "targets": 2,
-      render: (data, type, row) => `<a href="https://${platform}.whatsapp.com/send?phone=${data}text=${i18n(i19shopNow)} ${row[3]}" target="_blank">${data}</a>`
+      render: (data, type, row) => {
+        if (data !== 'Sem número' && data !== 'Without number') {
+          if (!data.includes('+')) {
+            data = '+55' + data
+          }
+          return `<a href="https://${platform}.whatsapp.com/send?phone=${data}&text=${i18n(i19shopNow)} ${row[3]}" target="_blank">${data}</a>`
+        }
+        return data
+      }
     }]
   }
 
