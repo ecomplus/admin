@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.89](https://github.com/ecomplus/admin/compare/v1.0.0-beta.88...v1.0.0-beta.89) (2023-09-11)
+
+
+### Bug Fixes
+
+* **products-list:** search by product or variation sku ([#704](https://github.com/ecomplus/admin/issues/704)) ([79d8f8f](https://github.com/ecomplus/admin/commit/79d8f8f06f2348a1ebcc2708b1b74ff797c4c30e))
+* stop removing session storge `api_v` item ([08bdda6](https://github.com/ecomplus/admin/commit/08bdda6f2629ed3ffba388405f96ae0ff89f3ffa))
+
 ## [1.0.0-beta.88](https://github.com/ecomplus/admin/compare/v1.0.0-beta.87...v1.0.0-beta.88) (2023-07-27)
 
 
