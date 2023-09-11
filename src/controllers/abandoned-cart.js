@@ -1,4 +1,4 @@
-import { i19number, i19email, i19permalink, i19name, i19total } from '@ecomplus/i18n'
+import { i19number, i19email, i19permalink, i19name, i19total, i19shopNow } from '@ecomplus/i18n'
 import { $ecomConfig, i18n, formatMoney } from '@ecomplus/utils'
 import Papa from 'papaparse'
 
@@ -7,10 +7,29 @@ export default function () {
   const { domain } = Store
   const cartUrl = domain && `https://${domain}/app/#/cart/`
 
+  let platform
+  if ($(window).width() < 480) {
+    platform = 'api'
+  } else {
+    platform = 'web'
+  }
+
   const datatableOptions = {
     pageLength: 20,
     bLengthChange: false,
-    order: [[3, 'desc']]
+    order: [[3, 'desc']],
+    columnDefs: [{
+      "targets": 2,
+      render: (data, type, row) => {
+        if (data !== 'Sem número' && data !== 'Without number') {
+          if (!data.includes('+')) {
+            data = '+55' + data
+          }
+          return `<a href="https://${platform}.whatsapp.com/send?phone=${data}&text=${i18n(i19shopNow)} ${row[3]}" target="_blank">${data}</a>`
+        }
+        return data
+      }
+    }]
   }
 
   const dictionary = {
