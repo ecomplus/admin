@@ -93,7 +93,7 @@ registerRoute(
 
 // bundle entries
 registerRoute(
-  /\/admin\./,
+  /\/admin(-\d+)?\./,
   new NetworkFirst({
     cacheName: 'entries'
   })

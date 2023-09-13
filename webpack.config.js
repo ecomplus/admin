@@ -76,7 +76,7 @@ const config = {
     path: dirOutput,
     publicPath: '/',
     filename: '[name].js',
-    chunkFilename: 'chunks/[name].js'
+    chunkFilename: 'chunks/[name].[contenthash].js'
   },
   optimization: {
     minimizer: [new TerserPlugin()]
@@ -128,7 +128,7 @@ const config = {
 
     new MiniCssExtractPlugin({
       filename: '[name].css',
-      chunkFilename: 'chunks/[name].css',
+      chunkFilename: 'chunks/[name].[contenthash].css',
       ignoreOrder: true
     }),
 
