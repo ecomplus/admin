@@ -23,6 +23,16 @@
   status = 301
 
 [[redirects]]
+  from = "/admin-*.js"
+  to = "/admin.js"
+  status = 302
+
+[[redirects]]
+  from = "/admin-*.css"
+  to = "/admin.css"
+  status = 302
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200

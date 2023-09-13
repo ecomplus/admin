@@ -20,13 +20,14 @@ const dirImg = path.resolve(dirPublic, 'img')
 const dirModules = path.resolve(process.cwd(), 'node_modules')
 const dirOutput = path.resolve(process.cwd(), !devMode ? 'dist' : '.serve')
 
+const entryName = `admin-${parseInt(Math.random() * 1000000, 10)}`
 const entry = {
-  admin: [path.resolve(dirScss, 'styles.scss')]
+  [entryName]: [path.resolve(dirScss, 'styles.scss')]
 }
 if (!devMode) {
-  entry.admin.push(path.resolve(dirSrc, 'starter.js'))
+  entry[entryName].push(path.resolve(dirSrc, 'starter.js'))
 }
-entry.admin.push(path.resolve(dirSrc, 'index.js'))
+entry[entryName].push(path.resolve(dirSrc, 'index.js'))
 
 const baseScssModule = [
   {
@@ -166,7 +167,7 @@ const config = {
             presets: [
               ['@babel/preset-env', {
                 useBuiltIns: 'usage',
-                corejs: '3.18',
+                corejs: '3.32',
                 modules: false
               }]
             ],

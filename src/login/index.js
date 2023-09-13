@@ -153,7 +153,7 @@ const getAuthState = (name, storeId, myId) => {
   }
   return fromStorage
 }
-const isApiv2 = Number(getAuthState('api_v')) === 2
+const isApiv2 = Number(getAuthState('api_version')) === 2
 const apiBaseUri = isApiv2 ? 'https://ecomplus.io/v2' : 'https://api.e-com.plus/v1'
 
 const handleSso = (storeId, username, session) => {
@@ -226,7 +226,7 @@ const initDashboard = (storeId, username, session) => {
   }
   if (isApiv2) {
     window.ECOMCLIENT_API_STORE = 'https://ecomplus.io/v2/'
-    sessionStorage.setItem('api_v', '2')
+    sessionStorage.setItem('api_version', '2')
     const cloudcommercePid = getAuthState('cc_pid')
     if (cloudcommercePid) {
       sessionStorage.setItem('cloudcomm_pid', cloudcommercePid)
