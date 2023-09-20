@@ -3,8 +3,12 @@
 /*!
  * Copyright 2018 E-Com Club
  */
+import {
+  i19order
+} from '@ecomplus/i18n'
+
 export default function () {
-  const { $, lang, tabId, handleInputs, setupInputValues, handleNestedObjects, ecomUtils, formatMoney } = window
+  const { $, lang, tabId, handleInputs, setupInputValues, handleNestedObjects, ecomUtils, formatDate, formatMoney, i18n, callApi } = window
 
   // current tab
   var Tab = window.Tabs[tabId]
@@ -318,56 +322,113 @@ export default function () {
       search: 'Buscar',
       zeroRecords: 'Nenhum resultado encontrado'
     }
-    if (data.loyalty_points_entries && data.loyalty_points_entries.length) {
-      $points.slideDown()
-      data.loyalty_points_entries.forEach((entry, i) => {
-        $listOfPoints.find('tbody').append(`<tr>
-        <td>${entry.name}</td>
-        <td>
-          <input class="form-control" style="min-width: 90px; max-width: 120px"
-            name="earned_points" data-index="${i}" type="number" min="0" max="9999999" step="any" value="${entry.earned_points}">
-        </td>
-        <td>
-          <input class="form-control" style="min-width: 90px; max-width: 120px"
-            name="active_points" data-index="${i}" type="number" min="0" max="${entry.earned_points}" step="any" value="${entry.active_points}">
-        </td>
-        <td>${entry.order_id ? `<a href="/#/resources/orders/${entry.order_id}">${entry.order_id}</a>` : `${entry.name}`}</td>
-        </tr>`)
-      })
-      const earnedPoints = data.loyalty_points_entries.reduce((acc, entry) => acc + entry.earned_points, 0)
-      const activePoints = data.loyalty_points_entries.reduce((acc, entry) => acc + entry.active_points, 0)
-      $points.find('.card-body').append(`
-      <span class="i18n">
-        <span data-lang="en_us">Total earned points:</span>
-        <span data-lang="pt_br">Total de pontos ganhos:</span>
-      </span> <b>${earnedPoints.toFixed(2)}</b>
-      <br><span class="i18n">
-        <span data-lang="en_us">Total active points:</span>
-        <span data-lang="pt_br">Total de pontos ativos:</span>
-      </span> <b>${activePoints.toFixed(2)}</b>
-      <br><span class="i18n">
-        <span data-lang="en_us">Total used points:</span>
-        <span data-lang="pt_br">Total de pontos usados:</span>
-      </span> <b>${(earnedPoints - activePoints).toFixed(2)}</b>`)
-    }
-
-    $listOfPoints.on('input', (e) => {
-      const { target } = e
-      const nameAtt = target.getAttribute('name')
-      let activePoints = Number(target.value)
-      const index = target.dataset && target.dataset.index
-      data.loyalty_points_entries[index][nameAtt] = activePoints
-      if (nameAtt === 'active_points') {
-        const earnedPoints = data.loyalty_points_entries[index].earned_points
-        if (earnedPoints < activePoints) {
-          activePoints = earnedPoints
-          data.loyalty_points_entries[index][nameAtt] = activePoints
-          target.value = activePoints
-          target.disabled = true
-        }
+    const lengthPoints = data.loyalty_points_entries && data.loyalty_points_entries.length || 0
+    $listOfPoints.find('tbody').append(
+    `<tr>
+       <td>Pontos</td>
+       <td>
+         <input class="form-control" style="min-width: 80px; max-width: 120px"
+           name="earned_points" data-index="${lengthPoints}" type="number" min="0" max="9999999" step="any" value="">
+       </td>
+       <td>
+         <input class="form-control" style="min-width: 80px; max-width: 120px"
+           name="active_points" data-index="${lengthPoints}" type="number" min="0" max="9999999" step="any" value="">
+       </td>
+       <td style="text-align: center">--</td>
+       <td>
+         <input class="form-control" style="min-width: 98px; max-width: 120px"
+           name="valid_thru" data-index="${lengthPoints}" type="text" data-provide="datepicker" data-date-today-highlight="true" value="">
+       </td>
+   </tr>`)
+    $points.slideDown()
+    if (lengthPoints >= 0) {
+      if (lengthPoints > 0) {
+        data.loyalty_points_entries.forEach((entry, i) => {
+          $listOfPoints.find('tbody').append(`<tr>
+          <td>${entry.name}</td>
+          <td>
+            <input class="form-control" style="min-width: 80px; max-width: 120px"
+              name="earned_points" data-index="${i}" type="number" min="0" max="9999999" step="any" value="${entry.earned_points}">
+          </td>
+          <td>
+            <input class="form-control" style="min-width: 80px; max-width: 120px"
+              name="active_points" data-index="${i}" type="number" min="0" max="${entry.earned_points}" step="any" value="${entry.active_points}">
+          </td>
+          <td style="text-align: center">${entry.order_id ? `<a href="/#/resources/orders/${entry.order_id}">${i18n(i19order)}</a>` : `--`}</td>
+          <td>
+            <input class="form-control" style="min-width: 98px; max-width: 120px"
+              name="valid_thru" data-index="${i}" type="text" data-provide="datepicker" data-date-today-highlight="true" value="${formatDate(entry.valid_thru, [ 'day', 'month', 'year' ]) || ''}">
+          </td>
+          </tr>`)
+        })
+  
+        const earnedPoints = data.loyalty_points_entries.reduce((acc, entry) => acc + entry.earned_points, 0)
+        const activePoints = data.loyalty_points_entries.reduce((acc, entry) => acc + entry.active_points, 0)
+        $points.find('.card-body').append(`
+        <span class="i18n">
+          <span data-lang="en_us">Total earned points:</span>
+          <span data-lang="pt_br">Total de pontos ganhos:</span>
+        </span> <b>${earnedPoints.toFixed(2)}</b>
+        <br><span class="i18n">
+          <span data-lang="en_us">Total active points:</span>
+          <span data-lang="pt_br">Total de pontos ativos:</span>
+        </span> <b>${activePoints.toFixed(2)}</b>
+        <br><span class="i18n">
+          <span data-lang="en_us">Total used points:</span>
+          <span data-lang="pt_br">Total de pontos usados:</span>
+        </span> <b>${(earnedPoints - activePoints).toFixed(2)}</b>`)
+      } else {
+        data.loyalty_points_entries = []
       }
-      commit(data, true)
-    })
+
+      callApi('applications.json?app_id=124890&fields=_id', 'GET', (err, json) => {
+        if (!err) {
+          const appId = json.result && json.result.length && json.result[0]._id
+          if (appId) {
+              callApi(`applications/${appId}.json`, 'GET', (err, json) => {
+                if (!err) {
+                  const appBody = json.data
+                  if (Array.isArray(appBody.programs_rules) && appBody.programs_rules.length) {
+                    const program = appBody.programs_rules[0]
+                    let edit = 0
+                    $listOfPoints.change('input', (e) => {
+                      const { target } = e
+                      const nameAtt = target.getAttribute('name')
+                      const index = target.dataset && target.dataset.index
+                      if (index == lengthPoints && edit === 0) {
+                        edit++
+                        data.loyalty_points_entries.splice(lengthPoints, 0, {
+                          _id: ecomUtils.randomObjectId(),
+                          name: program.name,
+                          program_id: program.program_id ? program.program_id : 'p0_pontos', 
+                          ratio: program.ratio,
+                        })
+                      }
+                      let prop = Number(target.value)
+                      data.loyalty_points_entries[index][nameAtt] = prop
+                      if (nameAtt === 'active_points') {
+                        const earnedPoints = data.loyalty_points_entries[index].earned_points
+                        if (earnedPoints < prop) {
+                          prop = earnedPoints
+                          data.loyalty_points_entries[index][nameAtt] = prop
+                          target.value = prop
+                        }
+                      } else if (nameAtt === 'valid_thru') {
+                        const [day, month, year] = target.value.split('/')
+                        const validDate = new Date(year, month - 1, day, 23, 59, 59, 59)
+                        data.loyalty_points_entries[index].valid_thru = validDate.toISOString()
+                      }
+                      if (data.loyalty_points_entries[index].active_points && data.loyalty_points_entries[index].earned_points) {
+                        commit(data, true)
+                      }
+                    })
+                  }
+                }
+              })
+            }
+          }
+      })
+    }
 
     if (data.orders_count) {
       $(`#t${tabId}-orders`).append(`<span class="i18n">
@@ -381,7 +442,7 @@ export default function () {
           const freight = (order && order.amount && order.amount.freight) || '0'
           const discount = (order && order.amount && order.amount.discount) || '0'
           $listOrders.find('tbody').append(`<tr>
-        <td>${ecomUtils.formatDate(order)}</td>
+        <td>${formatDate(order.created_at)}</td>
         <td><a href="/#/resources/orders/${_id}">${number}</a></td>
         <td>${formatMoney(freight)}</td>
         <td>${formatMoney(discount)}</td>
