@@ -128,10 +128,10 @@ export default function () {
         })
       ]
       if (item.customizations) {
-        item.customizations.forEach(customization => {
-          let html = `<em>${customization.label}</em> `
-          if (customization.option) {
-            html += `<mark>${customization.option.text}</mark> `
+        item.customizations.forEach(({ label, option }) => {
+          let html = `<em>${(label && label.replace(/<script/ig, ''))}</em> `
+          if (option) {
+            html += `<mark>${(option && option.text.replace(/<script/ig, ''))}</mark> `
           }
           tdNameHtml.push($('<span>', {
             class: 'mr-3',
@@ -367,9 +367,9 @@ export default function () {
           let name
           if (data.name) {
             name = ecomUtils.fullName(data)
-            html += name
+            html += name.replace(/[=<>]/ig, '')
           }
-          const email = data.main_email
+          const email = data.main_email && data.main_email.replace(/[=<>]/ig, '')
           if (email) {
             html += `<br><a href="mailto:${email}" target="_blank">${email}</a>`
           }
