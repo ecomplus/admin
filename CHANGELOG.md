@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.91](https://github.com/ecomplus/admin/compare/v1.0.0-beta.90...v1.0.0-beta.91) (2023-09-26)
+
+
+### Bug Fixes
+
+* general string clearfixes ([17de6a2](https://github.com/ecomplus/admin/commit/17de6a2707f623b07fc8092edd1638931213c0f5))
+
+## [1.0.0-beta.90](https://github.com/ecomplus/admin/compare/v1.0.0-beta.89...v1.0.0-beta.90) (2023-09-26)
+
+
+### Features
+
+* **customer-form:** add option to insert loyalty points ([#712](https://github.com/ecomplus/admin/issues/712)) ([ea86e10](https://github.com/ecomplus/admin/commit/ea86e108512fec978ec090ba7169ad0a6aeb412e))
+
+
+### Bug Fixes
+
+* update sw cache routes for new output files ([fc78899](https://github.com/ecomplus/admin/commit/fc788994284780812a56b2eca9538ae2bfca88f2))
+
 ## [1.0.0-beta.89](https://github.com/ecomplus/admin/compare/v1.0.0-beta.88...v1.0.0-beta.89) (2023-09-11)
 
 

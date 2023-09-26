@@ -142,8 +142,8 @@ export default function () {
           { 
             $match : {
             created_at: {
-              $gte: `${start}T03:00:00.000Z`,
-              $lte: `${end}T02:59:59.999Z`,
+              $gte: start.toISOString(),
+              $lte: end.toISOString(),
             },
             'financial_status.current': 'paid',
             'utm.campaign': {
@@ -156,11 +156,11 @@ export default function () {
             source: [
               {
                 $group: { 
-                  _id: { $toLower: '$utm.source'}, 
+                  _id: '$utm.source', 
                   count: { $sum: 1 },
                   total: { $sum: '$amount.total' },
                   subtotal: { $sum: '$amount.subtotal' },
-                  discounts: { $sum: '$amount.discount' },
+                  discounts: { $sum: '$amount.discount' }
                 }
               },
               {
@@ -170,7 +170,7 @@ export default function () {
             campaign: [
               {
                 $group: { 
-                  _id: { $toLower: '$utm.campaign'},  
+                  _id: '$utm.campaign',  
                   count: { $sum: 1 },
                   total: { $sum: '$amount.total' },
                   subtotal: { $sum: '$amount.subtotal' },
@@ -187,29 +187,50 @@ export default function () {
     }) 
   }
 
-  const currentYear = new Date().getFullYear()
+  const normalizeDate = (hour, min, sec, ms, sub, date) => {
+    const currentDate = date || new Date()
+    if (sub) {
+      const dateWithSub = currentDate.getDate() - sub
+      currentDate.setDate(dateWithSub)
+    }
+    const finalDate = new Date(currentDate)
+    const dateWithHours = finalDate.setHours(hour, min, sec, ms)
+    return new Date(dateWithHours)
+  }
   let start, end, type
-  start = `${currentYear}-01-01`
-  end = `${currentYear}-12-31`
+  start = normalizeDate(0, 0, 0, 0, 30, false)
+  end = normalizeDate(23, 59, 59, 999, false, false)
   renderGraphs(start, end)
   
-  $('#datepicker [data-when="start"]').datepicker('setDate', `01/01/${currentYear}`);
-  $('#datepicker [data-when="end"]').datepicker('setDate', `31/12/${currentYear}`);
+  $('#datepicker-utm [data-when="start"]').datepicker('setDate', new Intl.DateTimeFormat('pt-br').format(start));
+  $('#datepicker-utm [data-when="end"]').datepicker('setDate', new Intl.DateTimeFormat('pt-br').format(end));
 
-  $('#datepicker').datepicker({}).on('changeDate', (e) => {
+  $('#datepicker-utm').datepicker({}).on('changeDate', (e) => {
     if (e.date) {
       if (e.target && e.target.dataset && e.target.dataset.when) {
         type = e.target.dataset.when
         if (type === 'start') {
-          start = e.date.toISOString().slice(0,10)
+          start = normalizeDate(0, 0, 0, 0, false, e.date)
         } else if (type === 'end') {
-          end = e.date.toISOString().slice(0,10)
+          end = normalizeDate(23, 59, 59, 59, false, e.date)
         }
         if (start && end) {
           renderGraphs(start, end, true)
         }
       }
     }
+  })
+
+  $('#source-list').on('click', 'td', function () {
+    const table = $('#source-list').DataTable();
+    const data = table.cell( this ).data();
+    window.location.href = `/#/resources/orders?utm.source=${data}&financial_status.current=paid&created_at>=${start.toISOString()}&created_at<=${end.toISOString()}`
+  })
+
+  $('#campaign-list').on('click', 'td', function () {
+    const table = $('#campaign-list').DataTable();
+    const data = table.cell( this ).data();
+    window.location.href = `/#/resources/orders?utm.campaign=${data}&financial_status.current=paid&created_at>=${start.toISOString()}&created_at<=${end.toISOString()}`
   })
 
   const $exportSource = $('#export-source')

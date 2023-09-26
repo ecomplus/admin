@@ -123,7 +123,7 @@ export default function () {
       var objectId = buyer._id
       // basic info only: email, name, phone numbers, doc_number
       var html = ''
-      var email = buyer.main_email
+      var email = buyer.main_email && buyer.main_email.replace(/[=<>]/ig, '')
       if (email) {
         html += '<a href="mailto:' + email + '" target="_blank">' + email + '</a>'
       }
@@ -145,7 +145,7 @@ export default function () {
         name = buyer.display_name
       }
       if (name) {
-        html += '<br>' + name
+        html += '<br>' + name.replace(/[=<>]/ig, '')
       }
 
       // render list of phone numbers
