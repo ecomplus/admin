@@ -15,9 +15,23 @@ export default function () {
     })
   }
 
+  const normalizeDate = (hour, min, sec, ms, sub, date) => {
+    const currentDate = date || new Date()
+    if (sub) {
+      const dateWithSub = currentDate.getDate() - sub
+      currentDate.setDate(dateWithSub)
+    }
+    const finalDate = new Date(currentDate)
+    const dateWithHours = finalDate.setHours(hour, min, sec, ms)
+    return new Date(dateWithHours)
+  }
+  let start, end, type
+  start = normalizeDate(0, 0, 0, 0, 30, false)
+  end = normalizeDate(23, 59, 59, 59, false, false)
+
   let dataQuery = []
 
-  const renderTable = (data, currentPage, pageSize) => {
+  const renderTable = (data, currentPage, pageSize, startDate, endDate) => {
     // create html
     let result = ''
     let paging = ''
@@ -28,7 +42,7 @@ export default function () {
     }).forEach(entry => {
       result += `
        <tr>
-         <td>${entry._id}</td>
+         <td><a href="/#/resources/orders?extra_discount.discount_coupon%=${entry._id}&financial_status.current=paid&created_at>=${startDate.toISOString()}&created_at<=${endDate.toISOString()}">${entry._id}</a></td>
          <td>${entry.count}</td>
          <td>${formatMoney(entry.discount)}</td>
          <td>${formatMoney(entry.total)}</td>
@@ -51,7 +65,7 @@ export default function () {
     const option = e.target && e.target.text
     if (option) {
       const pageNumber = Number(option)
-      renderTable(dataQuery, pageNumber, 10)
+      renderTable(dataQuery, pageNumber, 10, start, end)
       for (const key in children) {
         if (Object.hasOwnProperty.call(children, key)) {
           if (key == (pageNumber - 1)) {
@@ -68,7 +82,7 @@ export default function () {
     let filter, searched;
     filter = e.currentTarget.value.toUpperCase();
     searched = dataQuery.filter(option => option._id.indexOf(filter) > -1)
-    renderTable(searched, 1, 10)
+    renderTable(searched, 1, 10, start, end)
   })
 
   const renderList = (start, end) => {
@@ -83,7 +97,7 @@ export default function () {
             $('#coupon-list').append('<tbody></tbody>')
             dataQuery = []
             result.forEach(entry => dataQuery.push(entry))
-            renderTable(dataQuery, 1, 10)
+            renderTable(dataQuery, 1, 10, start, end)
           }
         }
       },
@@ -121,19 +135,6 @@ export default function () {
       ]
     }) 
   }
-  const normalizeDate = (hour, min, sec, ms, sub, date) => {
-    const currentDate = date || new Date()
-    if (sub) {
-      const dateWithSub = currentDate.getDate() - sub
-      currentDate.setDate(dateWithSub)
-    }
-    const finalDate = new Date(currentDate)
-    const dateWithHours = finalDate.setHours(hour, min, sec, ms)
-    return new Date(dateWithHours)
-  }
-  let start, end, type
-  start = normalizeDate(0, 0, 0, 0, 30, false)
-  end = normalizeDate(23, 59, 59, 59, false, false)
 
   renderList(start, end)
 
@@ -175,7 +176,7 @@ export default function () {
     $link.click()
   }
   $exportCoupon.click(() => {
-    renderTable(dataQuery, 1, dataQuery.length)
+    renderTable(dataQuery, 1, dataQuery.length, start, end)
     const data = []
     $('#coupon-list').find('tr:not(:first)').each(function(i, row) {
       const cols = []
@@ -185,6 +186,6 @@ export default function () {
       data.push(cols)
     })
     downloadCsv(data, 'coupon-report')
-    renderTable(dataQuery, 1, 10)
+    renderTable(dataQuery, 1, 10, start, end)
   })
 }
