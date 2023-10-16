@@ -174,6 +174,7 @@
   "customers": {
     "_fields": [
       "display_name",
+      "name/family_name",
       "doc_number",
       "accepts_marketing",
       "enabled",
@@ -209,6 +210,13 @@
         "pt_br": "Nome / E-mail"
       },
       "extra_field": "main_email"
+    },
+    "name/family_name": {
+      "cut_string": 50,
+      "label": {
+        "en_us": "Family name",
+        "pt_br": "Sobrenome"
+      }
     },
     "doc_number": {
       "width": 135,

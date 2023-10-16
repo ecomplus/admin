@@ -449,6 +449,7 @@ export default function () {
                 'main_email,' +
                 'accepts_marketing,' +
                 'display_name,' +
+                'name.family_name,' +
                 'phones,' +
                 'doc_number,' +
                 'orders_count,' +
