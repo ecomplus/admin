@@ -1,4 +1,4 @@
-import { i19settings } from '@ecomplus/i18n'
+import { i19settings, i19categories, i19collections } from '@ecomplus/i18n'
 import ecomAuth from '@ecomplus/auth'
 
 export default () => {
@@ -53,7 +53,7 @@ export default () => {
       delete data.created_at
       delete data.updated_at
       delete data.resources
-
+      delete data.resource_slug
       const callback = () => {
         if (typeof cb === 'function') {
           cb(tabId)
@@ -66,7 +66,8 @@ export default () => {
   window.handleInputs($form, ($input, isCheckbox) => {
     let data = window.Store
     let prop = $input.attr('name')
-    const nestedProps = prop.split('.')
+    if (prop) {
+      const nestedProps = prop.split('.')
     const val = $input.data('digits') ? $input.val().replace(/\D/g, '') : $input.val()
 
     if (nestedProps.length > 1) {
@@ -91,15 +92,63 @@ export default () => {
       data[prop] = val
       window.triggerUnsaved(tabId)
     }
+    }
   })
 
-  const setProductsFeedUri = () => {
+  const setProductsFeedUri = (isAllProducts, googleProductCategory, filter) => {
     setTimeout(() => {
-      const uri = 'https://storefront.e-com.plus/products-feed.xml' +
-        `?store_id=${storeId}&domain=${window.Store.domain}`
+      const uri = `https://storefront.e-com.plus/products-feed${isAllProducts ? '/all' : ''}.xml?store_id=${storeId}&domain=${window.Store.domain}${googleProductCategory ? `&set_properties={"google_product_category_id":${googleProductCategory}}` : ''}${filter && filter.resource ? `&search_field=${filter.resource}.slug&search_value=${filter.slug}` : ''}`
       $form.find('#products-feed-uri').val(uri)
     }, 300)
   }
+  const $allProductsInput = $form.find('#all-products-input')
+  const $googleCategoryInput = $form.find('#id-categoria-google-input')
+  const $selectedResource = $form.find('#filter-resource-input')
   $form.find('[name=domain]').change(setProductsFeedUri)
   setProductsFeedUri()
+  $form.find('#xml-more-options').click((e) => {
+    $('#xml-options').slideToggle()
+  })
+  $form.find('#all-products').change(function () {
+    setProductsFeedUri($(this).find('input').is(':checked'), $googleCategoryInput.val())
+  })
+  $form.find('#id-categoria-google').on('input', function () {
+    const isAllProducts = $allProductsInput.prop('checked')
+    setProductsFeedUri(isAllProducts, $(this).find('input').val(), isAllProducts ? undefined : JSON.parse($selectedResource.val()))
+  })
+  $form.find('#filter-resource-option input').change(function (e) {
+    $form.find('#filter-resource').slideUp()
+    $form.find('#filter-resource-input').empty()
+    $(this).each(function (e) {
+      let resource
+      if ($(this).prop('checked')) {
+        resource = $(this).val()
+        setTimeout(function () {
+          callApi(resource + '.json', 'GET', function (error, data) {
+            if (!error) {
+              let $option
+              const valueResource = function (result) {
+                return JSON.stringify({
+                  slug: result.slug,
+                  resource
+                })
+              }
+              for (let i = 0; i < data.result.length; i++) {
+                $option = $('<option />', {
+                  text: data.result[i].name,
+                  value: valueResource(data.result[i])
+                })
+                $form.find('#filter-resource-input').append($option).appSelectpicker('refresh').trigger('change')
+                $form.find('.filter-resource-name').text(resource === 'categories' ? i18n(i19categories) : i18n(i19collections))
+                $form.find('#filter-resource').slideDown()
+              }
+            }
+          })
+        }, 500)
+      }
+    })
+  })
+  $form.find('#filter-resource').change(function () {
+    setProductsFeedUri(false, $googleCategoryInput.val(), JSON.parse($(this).find('#filter-resource-input').val()))
+  })
 }

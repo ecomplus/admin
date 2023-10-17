@@ -311,6 +311,68 @@
                     Caso tenha mais de 500 produtos, entre em contato com o suporte
                   </small>
                 </span>
+                <br>
+                <a class="i18n" href="javascript:;" id="xml-more-options">
+                  <span data-lang="en_us">Config more options in xml</span>
+                  <span data-lang="pt_br">Configurar mais opções no xml</span>
+                </a>
+                <div class="form-group mt-3" style="display: none;" id="xml-options">
+                  <div class="custom-controls-stacked" id="all-products">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="all-products-input">
+                      <label class="custom-control-label i18n">
+                        <span data-lang="en_us">List all products <small data-lang="en_us">
+                          Only if has +500 products
+                        </small></span>
+                        <span data-lang="pt_br">Mostrar todos produtos <small data-lang="pt_br">
+                          Apenas se tiver +500 produtos
+                        </small></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="form-group" id="id-categoria-google">
+                    <label class="i18n">
+                      <span data-lang="en_us">Google category ID</span>
+                      <span data-lang="pt_br">ID da categoria Google</span>
+                    </label>
+                    <input type="number" class="form-control" id="id-categoria-google-input"/>
+                    <span class="i18n">
+                      <small data-lang="en_us"><a target="_blank" href="http://www.google.com/basepages/producttype/taxonomy-with-ids.en-US.xls">List with Google Taxonomy to download</a></small>
+                      <small data-lang="pt_br"><a target="_blank" href="http://www.google.com/basepages/producttype/taxonomy-with-ids.pt-BR.xls">Download de lista com ID da categoria Google</a></small>
+                    </span>
+                  </div>
+                  <div class="form-group" id="filter-resource-option">
+                    <label class="i18n">
+                      <span data-lang="en_us">Filter</span>
+                      <span data-lang="pt_br">Filtro</span>
+                    </label>
+                    <div class="custom-controls-stacked">
+                      <div class="custom-control custom-radio d-inline">
+                        <input type="radio" class="custom-control-input" name="resource_slug" value="categories">
+                        <label class="custom-control-label i18n">
+                          <span data-lang="en_us">Category</span>
+                          <span data-lang="pt_br">Categoria</span>
+                        </label>
+                      </div>
+                      <div class="custom-control custom-radio d-inline">
+                        <input type="radio" class="custom-control-input" name="resource_slug" value="collections">
+                        <label class="custom-control-label i18n">
+                          <span data-lang="en_us">Collection</span>
+                          <span data-lang="pt_br">Coleção</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group" style="display: none" id="filter-resource">
+                    <label>
+                      <span class="filter-resource-name"></span>
+                    </label>
+                    <select class="form-control show-tick" data-live-search="true"
+                      placeholder="Camisas"
+                      id="filter-resource-input">
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
