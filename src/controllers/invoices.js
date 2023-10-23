@@ -36,7 +36,7 @@ export default function () {
   const { $, app, ecomUtils, callApi, tabId, routeParams, formatPhone } = window
   const i19creditCardInterest = i18n({
     en_us: 'Credit card interest',
-    pt_br: 'Juros Parcelas do Cartão de Crédito'
+    pt_br: 'Juros de Parcelas do Cartão de Crédito'
   })
   const $appTab = $(`#app-tab-${tabId}`)
   const $invoices = $appTab.find('.invoices')
