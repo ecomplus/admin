@@ -3,6 +3,8 @@
  */
 
 import {
+  i19add,
+  i19remove,
   i19available,
   i19applyFilters,
   i19brands,
@@ -259,14 +261,21 @@ export default function () {
     const $resourceSelect = $('#resourceMass')
     const $countRequests = $('.count__requests')
     const $countTotal = $('.count__total')
+    let resourceAction
 
     // call and render categories
     $setResource.click(function (item) {
       const resourceEdit = item.target.getAttribute('data-resource')
+      resourceAction = item.target.getAttribute('data-action')
+      let labelMassEdit = resourceAction === 'add' ? i18n(i19add) : i18n(i19remove)
+      labelMassEdit += resourceEdit === 'categories' ? ' ' + i18n(i19categories) : ' ' + i18n(i19collections)
+      $('#label-mass').text(labelMassEdit)
+      $setResourceName.text(resourceEdit === 'categories' ? i18n(i19categories) : i18n(i19collections))
       $setResourceName.text(resourceEdit === 'categories' ? i18n(i19categories) : i18n(i19collections))
       setTimeout(function () {
         callApi(resourceEdit + '.json', 'GET', function (error, data) {
           if (!error) {
+            $resourceSelect.empty()
             let $option
             for (let i = 0; i < data.result.length; i++) {
               const valueCategory = function () {
@@ -301,12 +310,21 @@ export default function () {
       const selectedResource = $resourceSelect.val()
       const infoResult = JSON.parse(selectedResource)
       const ids = Tab.selectedItems
+      const methodResource = resourceAction === 'delete' ? 'DELETE' : 'POST'
       if (infoResult.resource === 'collections') {
         callApi('collections/' + infoResult._id + '.json', 'GET', function (err, data) {
           if (!err) {
             let newProducts = []
             const productsFromCollection = data.products
-            Array.isArray(productsFromCollection) ? newProducts = ids.concat(productsFromCollection) : newProducts = ids
+            if (methodResource === 'DELETE') {
+              productsFromCollection.forEach(product => {
+                if (!ids.includes(product)) {
+                  newProducts.push(product)
+                }
+              })
+            } else {
+              Array.isArray(productsFromCollection) ? newProducts = ids.concat(productsFromCollection) : newProducts = ids
+            }
             const productsToCollection = [...new Set(newProducts)]
             const objCollection = {
               products: productsToCollection
@@ -330,30 +348,33 @@ export default function () {
           _id: infoResult._id
         }
         $countTotal.text(ids.length)
-        ids.forEach((item, i) => {
-          setTimeout(function () {
-            callApi(`products/${item}/categories.json`, 'POST', (err, doc) => {
-              if (!err) {
-                if (ids.length === i + 1) {
-                  $countRequests.text(i + 1)
-                  app.toast(
-                  `${i18n(i19savedWithSuccess)}`,
-                  {
-                    variant: 'success'
-                  })
-                  $('#spinner-wait').hide()
-                  $('#set-resource').modal('hide')
-                  clearData()
-                  load()
-                } else {
-                  $countRequests.text(i + 1)
-                  $('#spinner-wait').show()
-                  $container.addClass('ajax')
-                }
+        let count = 0
+        const setCategory = () => {
+          const endpoint = `products/${ids[count]}/categories${methodResource === 'DELETE' ? `/${infoResult._id}` : ''}.json`
+          callApi(endpoint, methodResource, (err, doc) => {
+            if (!err) {
+              if (ids.length === count + 1) {
+                $countRequests.text(count + 1)
+                app.toast(
+                `${i18n(i19savedWithSuccess)}`,
+                {
+                  variant: 'success'
+                })
+                $('#spinner-wait').hide()
+                $('#set-resource').modal('hide')
+                clearData()
+                load()
+              } else {
+                $countRequests.text(count + 1)
+                $('#spinner-wait').show()
+                $container.addClass('ajax')
+                setCategory()
               }
-            }, parseCategory)
-          }, 400 * i)
-        })
+              count++
+            }
+          }, parseCategory)
+        }
+        setCategory()
       }
     })
 
