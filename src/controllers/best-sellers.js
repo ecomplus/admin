@@ -54,9 +54,18 @@ export default function () {
   $('#pagination-best-seller').click((e) => {
     const { children } = e.currentTarget
     const option = e.target && e.target.text
+    let filter, searched;
+    filter = $('#search-best-seller').val()
+    searched = dataQuery
+    if (filter) {
+      filter = filter.toLowerCase();
+      searched = dataQuery.filter(option => {
+        return option._id.indexOf(filter) > -1 || option.name.toLowerCase().indexOf(filter) > -1
+      })
+    }
     if (option) {
       const pageNumber = Number(option)
-      renderTable(dataQuery, pageNumber, 10, start, end)
+      renderTable(searched, pageNumber, 10, start, end)
       for (const key in children) {
         if (Object.hasOwnProperty.call(children, key)) {
           if (key == (pageNumber - 1)) {
@@ -75,7 +84,7 @@ export default function () {
     searched = dataQuery.filter(option => {
       return option._id.indexOf(filter) > -1 || option.name.toLowerCase().indexOf(filter) > -1
     })
-    renderTable(searched, 1, 1000, start, end)
+    renderTable(searched, 1, 10, start, end)
   })
 
   const renderGraphByDate = (start, end) => {
@@ -176,6 +185,16 @@ export default function () {
     $(`#t${tabId}-loading`).hide()
   }
   $exportBestSeller.click(() => {
-    downloadCsv(datatable.rows().data())
+    renderTable(dataQuery, 1, dataQuery.length, start, end)
+    const data = []
+    $('#best-seller-list').find('tr:not(:first)').each(function(i, row) {
+      const cols = []
+      $(this).find('td').each(function(i, col) {
+        cols.push($(this).text())
+      })
+      data.push(cols)
+    })
+    downloadCsv(data, 'best-seller-report')
+    renderTable(dataQuery, 1, 10, start, end)
   })
 }
