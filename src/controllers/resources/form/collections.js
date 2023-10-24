@@ -1,5 +1,7 @@
 /* eslint-disable no-var */
 
+import Sortable from 'sortablejs'
+
 export default function () {
   const { $, app, i18n, tabId, ecomUtils, callSearchApi } = window
 
@@ -33,7 +35,7 @@ export default function () {
       // try small image or use any size
       const thumb = ecomUtils.img(item, 'small')
       if (thumb) {
-        $img = $Link('<img src="' + thumb.url + '">')
+        $img = $Link(`<img src="${thumb.url}">`)
         $img.addClass('cart-item-picture')
       }
 
@@ -56,7 +58,7 @@ export default function () {
       })
 
       // add new table row for item
-      var $tr = $('<tr>', {
+      var $tr = $('<tr>', { 
         html: [
           // row count
           $('<th>', {
@@ -86,10 +88,15 @@ export default function () {
       const query = `_id:("${products.join('" "')}")`
       callSearchApi(`items.json?q=${encodeURIComponent(query)}&size=${Math.min(products.length, 100)}`, 'GET', function (err, data) {
         if (!err && data.hits) {
-          data.hits.hits.forEach(({ _source, _id }, i) => addItem({
-            _id,
-            ..._source
-          }, i))
+          const orderedProduct = []
+          data.hits.hits.forEach(({ _source, _id }, i) => {
+            const index = products.findIndex(id => id === _id)
+            orderedProduct[index] = {
+              _id,
+              ..._source
+            }
+          })
+          orderedProduct.forEach(item => addItem(item)) 
         }
       })
     }
@@ -194,6 +201,20 @@ export default function () {
           e.preventDefault()
           newItem()
           break
+      }
+    })
+
+    Sortable.create($items[0], {
+      // handle sorting on drag icon only
+      handle: '.cart-item-picture',
+      onUpdate: function (e) {
+        const { newIndex, oldIndex } = e
+        var data = Data()
+        const id = data.products.splice(oldIndex, 1)
+        if (id && id.length) {
+          data.products.splice(newIndex, 0, id[0])
+          commit(data, true)
+        }
       }
     })
   }
