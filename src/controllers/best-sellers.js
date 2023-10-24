@@ -1,36 +1,92 @@
 import { i19sku, i19name, i19price, i19sales, i19total } from '@ecomplus/i18n'
-import { $ecomConfig, i18n, formatMoney } from '@ecomplus/utils'
+import { i18n, formatMoney } from '@ecomplus/utils'
 import Papa from 'papaparse'
 
 export default function () {
   const { $, callApi, tabId } = window
 
-  const datatableOptions = {
-    pageLength: 20,
-    bLengthChange: false,
-    order: [[3, 'desc']]
-  }
-  if ($ecomConfig.get('lang') === 'pt_br') {
-    datatableOptions.language = {
-      aria: {
-        sortAscending: ': ative para colocar a coluna em ordem crescente',
-        sortDescending: ': ative para colocar a coluna em ordem decrescente'
-      },
-      paginate: {
-        next: 'Próxima',
-        previous: 'Anterior'
-      },
-      emptyTable: 'Tabela vazia',
-      info: 'Mostrando _START_ a _END_ de _TOTAL_ SKUs carregados',
-      infoEmpty: '',
-      infoFiltered: '',
-      lengthMenu: 'Mostrar _MENU_ resultados',
-      search: 'Buscar',
-      zeroRecords: 'Nenhum resultado encontrado'
+  const normalizeDate = (hour, min, sec, ms, sub, date) => {
+    const currentDate = date || new Date()
+    if (sub) {
+      const dateWithSub = currentDate.getDate() - sub
+      currentDate.setDate(dateWithSub)
     }
+    const finalDate = new Date(currentDate)
+    const dateWithHours = finalDate.setHours(hour, min, sec, ms)
+    return new Date(dateWithHours)
+  }
+  let start, end, type
+  start = normalizeDate(0, 0, 0, 0, 30, false)
+  end = normalizeDate(23, 59, 59, 59, false, false)
+
+  let dataQuery = []
+
+  const renderTable = (data, currentPage, pageSize) => {
+    // create html
+    let result = ''
+    let paging = ''
+    data.filter((row, index) => {
+      const start = (currentPage - 1) * pageSize
+      const end = currentPage * pageSize
+      return (index >= start && index < end)
+    }).forEach(entry => {
+      result += `
+       <tr>
+         <td>${entry._id}</td>
+         <td>${entry.name}</td>
+         <td>${formatMoney(entry.amount / (entry.count || 1))}</td>
+         <td>${formatMoney(entry.count || 0)}</td>
+         <td>${formatMoney(entry.amount)}</td>
+       </tr>`
+    })
+    const numOfPaging = Math.ceil(data.length / pageSize)
+    for (let i = 1; i <= numOfPaging; i++) {
+      paging += `
+      <li class="page-item${i === 1 ? ' active' : ''}">
+        <a class="page-link" href="#">${i}</a>
+      </li>
+      `
+    }
+    document.querySelector('#pagination-best-seller').innerHTML = paging
+    document.querySelector('#best-seller-list tbody').innerHTML = result
   }
 
-  const datatable = $('#most-sellers-table').DataTable(datatableOptions)
+  $('#pagination-best-seller').click((e) => {
+    const { children } = e.currentTarget
+    const option = e.target && e.target.text
+    let filter, searched;
+    filter = $('#search-best-seller').val()
+    searched = dataQuery
+    if (filter) {
+      filter = filter.toLowerCase();
+      searched = dataQuery.filter(option => {
+        return option._id.indexOf(filter) > -1 || option.name.toLowerCase().indexOf(filter) > -1
+      })
+    }
+    if (option) {
+      const pageNumber = Number(option)
+      renderTable(searched, pageNumber, 10, start, end)
+      for (const key in children) {
+        if (Object.hasOwnProperty.call(children, key)) {
+          if (key == (pageNumber - 1)) {
+            children[key].classList.add('active')
+          } else {
+            children[key].classList.remove('active') 
+          } 
+        }
+      }
+    }
+  })
+
+  $('#search-best-seller').on('input', (e) => {
+    let filter, searched;
+    filter = e.currentTarget.value.toLowerCase();
+    searched = dataQuery.filter(option => {
+      return option._id.indexOf(filter) > -1 || option.name.toLowerCase().indexOf(filter) > -1
+    })
+    renderTable(searched, 1, 10, start, end)
+  })
+
   const renderGraphByDate = (start, end) => {
     callApi(
       '$aggregate.json',
@@ -38,21 +94,12 @@ export default function () {
       (err, json) => {
         if (!err) {
           const { result } = json
-          const rows = []
-          if (Array.isArray(result) && result.length) {
-            result.forEach(item => {
-              rows.push([
-                item._id,
-                item.name,
-                formatMoney(item.amount / (item.count || 1)),
-                item.count || 0,
-                formatMoney(item.amount)
-              ])
-            })
-            datatable.clear()
-            datatable.rows.add(rows)
-            datatable.draw()
-            $('#most-sellers-table-load').hide()
+          if (Array.isArray(result)) {
+            $('#best-seller-list tbody').remove()
+            $('#best-seller-list').append('<tbody></tbody>')
+            dataQuery = []
+            result.forEach(entry => dataQuery.push(entry))
+            renderTable(dataQuery, 1, 10, start, end)
           }
         }
       },
@@ -62,8 +109,8 @@ export default function () {
           {
             $match: {
               created_at: {
-                $gte: `${start}T03:00:00.000Z`,
-                $lte: `${end}T02:59:59.999Z`,
+                $gte: start.toISOString(),
+                $lte: end.toISOString(),
               },
               'financial_status.current': 'paid',
             }
@@ -95,23 +142,20 @@ export default function () {
       }
     )
   }
-  const currentYear = new Date().getFullYear()
-  let start, end, type
-  start = `${currentYear}-01-01`
-  end = `${currentYear}-12-31`
+
   renderGraphByDate(start, end)
   
-  $('#datepicker [data-when="start"]').datepicker('setDate', `01/01/${currentYear}`);
-  $('#datepicker [data-when="end"]').datepicker('setDate', `31/12/${currentYear}`);
+  $('#datepicker-best-seller [data-when="start"]').datepicker('setDate', new Intl.DateTimeFormat('pt-br').format(start));
+  $('#datepicker-best-seller [data-when="end"]').datepicker('setDate', new Intl.DateTimeFormat('pt-br').format(end));
 
-  $('#datepicker').datepicker({}).on('changeDate', (e) => {
+  $('#datepicker-best-seller').datepicker({}).on('changeDate', (e) => {
     if (e.date) {
       if (e.target && e.target.dataset && e.target.dataset.when) {
         type = e.target.dataset.when
         if (type === 'start') {
-          start = e.date.toISOString().slice(0,10)
+          start = normalizeDate(0, 0, 0, 0, false, e.date)
         } else if (type === 'end') {
-          end = e.date.toISOString().slice(0,10)
+          end = normalizeDate(23, 59, 59, 59, false, e.date)
         }
         if (start && end) {
           datatable.clear()
@@ -141,6 +185,16 @@ export default function () {
     $(`#t${tabId}-loading`).hide()
   }
   $exportBestSeller.click(() => {
-    downloadCsv(datatable.rows().data())
+    renderTable(dataQuery, 1, dataQuery.length, start, end)
+    const data = []
+    $('#best-seller-list').find('tr:not(:first)').each(function(i, row) {
+      const cols = []
+      $(this).find('td').each(function(i, col) {
+        cols.push($(this).text())
+      })
+      data.push(cols)
+    })
+    downloadCsv(data, 'best-seller-report')
+    renderTable(dataQuery, 1, 10, start, end)
   })
 }

@@ -103,6 +103,13 @@ export default function () {
       commit(data, true)
     })
 
+    $(`#t${tabId}-referral`).on('input', function () {
+      if ($(this).val() === '') {
+        delete data.referral
+        commit(data, true)
+      }
+    })
+
     // save doc number juridical person
     $cnpj.change(function () {
       var data = Data()

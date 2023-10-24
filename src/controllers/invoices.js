@@ -34,7 +34,10 @@ import {
 
 export default function () {
   const { $, app, ecomUtils, callApi, tabId, routeParams, formatPhone } = window
-
+  const i19creditCardInterest = i18n({
+    en_us: 'Credit card interest',
+    pt_br: 'Juros de Parcelas do Cartão de Crédito'
+  })
   const $appTab = $(`#app-tab-${tabId}`)
   const $invoices = $appTab.find('.invoices')
   const orderIds = routeParams[routeParams.length - 1]
@@ -183,7 +186,7 @@ export default function () {
                 <td>${formatMoney(order.amount.tax || 0)}</td>
               </tr>
               <tr>
-                <td>${i18n(i19additionalCost)}</td>
+                <td>${i18n(i19additionalCost)} (${i18n(i19creditCardInterest)})</td>
                 <td>${formatMoney(order.amount.extra || 0)}</td>
               </tr>
             </tbody>
