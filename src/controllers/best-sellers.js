@@ -35,7 +35,7 @@ export default function () {
          <td>${entry._id}</td>
          <td>${entry.name}</td>
          <td>${formatMoney(entry.amount / (entry.count || 1))}</td>
-         <td>${formatMoney(entry.count || 0)}</td>
+         <td>${entry.count || 0}</td>
          <td>${formatMoney(entry.amount)}</td>
        </tr>`
     })
@@ -185,7 +185,16 @@ export default function () {
     $(`#t${tabId}-loading`).hide()
   }
   $exportBestSeller.click(() => {
-    renderTable(dataQuery, 1, dataQuery.length, start, end)
+    let filter, searched;
+    filter = $('#search-best-seller').val()
+    searched = dataQuery
+    if (filter) {
+      filter = filter.toLowerCase();
+      searched = dataQuery.filter(option => {
+        return option._id.indexOf(filter) > -1 || option.name.toLowerCase().indexOf(filter) > -1
+      })
+    }
+    renderTable(searched, 1, searched.length, start, end)
     const data = []
     $('#best-seller-list').find('tr:not(:first)').each(function(i, row) {
       const cols = []
