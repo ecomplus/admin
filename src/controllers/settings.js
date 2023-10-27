@@ -95,26 +95,31 @@ export default () => {
     }
   })
 
-  const setProductsFeedUri = (isAllProducts, googleProductCategory, filter) => {
+  const setProductsFeedUri = (isAllProducts, googleProductCategory, filter, skipVariations) => {
     setTimeout(() => {
-      const uri = `https://storefront.e-com.plus/products-feed${isAllProducts ? '/all' : ''}.xml?store_id=${storeId}&domain=${window.Store.domain}${googleProductCategory ? `&set_properties={"google_product_category_id":${googleProductCategory}}` : ''}${filter && filter.resource ? `&search_field=${filter.resource}.slug&search_value=${filter.slug}` : ''}`
+      const uri = `https://storefront.e-com.plus/products-feed${isAllProducts ? '/all' : ''}.xml?store_id=${storeId}&domain=${window.Store.domain}${googleProductCategory ? `&set_properties={"google_product_category_id":${googleProductCategory}}` : ''}${filter && filter.resource ? `&search_field=${filter.resource}.slug&search_value=${filter.slug}` : ''}${skipVariations ? '&skip_variations=true' : ''}`
       $form.find('#products-feed-uri').val(uri)
     }, 300)
   }
   const $allProductsInput = $form.find('#all-products-input')
   const $googleCategoryInput = $form.find('#id-categoria-google-input')
   const $selectedResource = $form.find('#filter-resource-input')
+  const $skipVariations = $form.find('#without-variations-input')
   $form.find('[name=domain]').change(setProductsFeedUri)
   setProductsFeedUri()
   $form.find('#xml-more-options').click((e) => {
     $('#xml-options').slideToggle()
   })
   $form.find('#all-products').change(function () {
-    setProductsFeedUri($(this).find('input').is(':checked'), $googleCategoryInput.val())
+    setProductsFeedUri($(this).find('input').is(':checked'), $googleCategoryInput.val(), undefined, $skipVariations.prop('checked'))
+  })
+  $form.find('#without-variations').change(function () {
+    const isAllProducts = $allProductsInput.prop('checked')
+    setProductsFeedUri(isAllProducts, $googleCategoryInput.val(), isAllProducts ? undefined : JSON.parse($selectedResource.val()) , $(this).find('input').is(':checked'))
   })
   $form.find('#id-categoria-google').on('input', function () {
     const isAllProducts = $allProductsInput.prop('checked')
-    setProductsFeedUri(isAllProducts, $(this).find('input').val(), isAllProducts ? undefined : JSON.parse($selectedResource.val()))
+    setProductsFeedUri(isAllProducts, $(this).find('input').val(), isAllProducts ? undefined : JSON.parse($selectedResource.val()), $skipVariations.prop('checked'))
   })
   $form.find('#filter-resource-option input').change(function (e) {
     $form.find('#filter-resource').slideUp()
@@ -149,6 +154,6 @@ export default () => {
     })
   })
   $form.find('#filter-resource').change(function () {
-    setProductsFeedUri(false, $googleCategoryInput.val(), JSON.parse($(this).find('#filter-resource-input').val()))
+    setProductsFeedUri(false, $googleCategoryInput.val(), JSON.parse($(this).find('#filter-resource-input').val()), $skipVariations.prop('checked'))
   })
 }

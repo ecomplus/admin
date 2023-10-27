@@ -175,6 +175,9 @@ a:focus {
 #app-nav-container > .scrollable > .ps-scrollbar-x-rail {
   top: 2px !important;
 }
+.select-image.scrollable.scrollable-x .ps-scrollbar-x {
+  height: 15px;
+}
 #app-nav-container > .scrollable > .ps-scrollbar-y-rail {
   display: none !important;
 }
