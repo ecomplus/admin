@@ -36,6 +36,20 @@ export default function () {
   const { tabId, $, callApi, app, quickview, lang, handleInputs, stringToNumber, unsetSaveAction, Tabs, i18n, formatMoney, ecomUtils } = window
   var Tab = Tabs[tabId]
   Tab.selectedSkus = []
+
+  const Typeahead = function ($el, name, source) {
+    // abstraction to setup typeahead addon
+    // input autocomplete
+    $el.typeahead({
+      hint: true,
+      highlight: true,
+      minLength: 1
+    }, {
+      name: name,
+      source: source
+    })
+  }
+
   /*
   var elContainer = $('#t' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
@@ -155,6 +169,10 @@ export default function () {
           '<input class="form-control text-monospace" placeholder="SKU" type="text" name="sku" ' +
           'data-filter="term"/>' +
         '</div>',
+        '<div class="form-group">' +
+          '<input class="form-control text-monospace" placeholder="tamanho: M" type="text" name="specs" ' +
+          'data-filter="term"/>' +
+        '</div>',
         $customFilters,
         '<label>' +
           '<span>' + `${i18n(i19price)}` + '</span>' +
@@ -224,6 +242,13 @@ export default function () {
               '<label class="custom-control-label i18n">' +
                 '<span data-lang="en_us">Unavailable</span>' +
                 '<span data-lang="pt_br">Indisponíveis</span>' +
+              '</label>' +
+            '</div>' +
+            '<div class="custom-control custom-radio mb-0">' +
+              '<input type="radio" class="custom-control-input" name="offers" data-filter="term" value="false"/>' +
+              '<label class="custom-control-label i18n">' +
+                '<span data-lang="en_us">Offers</span>' +
+                '<span data-lang="pt_br">Ofertas</span>' +
               '</label>' +
             '</div>' +
           '</div>' +
@@ -797,7 +822,7 @@ export default function () {
           var agg = aggs[prop]
           // create select element for current aggregation field
           var buckets = Aggs[prop].buckets
-          if (buckets.length) {
+          if (buckets && buckets.length) {
             var elOptions = ''
             for (i = 0; i < buckets.length; i++) {
               // field value
@@ -858,6 +883,32 @@ export default function () {
                 value = value.trim()
             }
           }
+          if (prop === 'specs' && value.includes(':')) {
+            const gridsOptions = value.split(':')
+            filters.push({
+              nested: {
+                path: "specs",
+                query: {
+                  bool: {
+                    filter: [
+                      {
+                        term: {
+                          "specs.grid": gridsOptions[0].trim()
+                        }
+                      },
+                      {
+                        terms: {
+                          "specs.text": [
+                            gridsOptions[1].trim()
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            })
+          }
           if (isNaN(value) || value === '') {
             value = null
           }
@@ -901,7 +952,24 @@ export default function () {
             filter[filterType][prop] = {}
             filter[filterType][prop][operator] = value
           }
-          filters.push(filter)
+          if (prop === 'offers') {
+            const timestamp = Date.now()
+            filters.push({
+              script: {
+                script: {
+                  lang: 'painless',
+                  source: "doc['price'].value > 0 && doc['base_price'].value > 0" +
+                    " && (doc['price_effective_date.start'].empty || " +
+                      `doc['price_effective_date.start'].date.millis <= ${timestamp}L)` +
+                    " && (doc['price_effective_date.end'].empty || " +
+                      `doc['price_effective_date.end'].date.millis >= ${timestamp}L)` +
+                    " ? doc['base_price'].value > doc['price'].value : false"
+                }
+              }
+            })
+          } else {
+            filters.push(filter)
+          }
         }
       })
     }
@@ -1017,6 +1085,8 @@ export default function () {
         }
       }
     }
+
+    $('#spec-search').click($('.search-specifications').slideToggle())
 
     // checkbox to select all
     $('#select-all-products').on('change', function () {
