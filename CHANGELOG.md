@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.93](https://github.com/ecomplus/admin/compare/v1.0.0-beta.92...v1.0.0-beta.93) (2023-10-27)
+
+
+### Features
+
+* add filter spec and offer ([fce83b7](https://github.com/ecomplus/admin/commit/fce83b711a558660a10b0fbbd83e25bf753a07a8))
+* **settings:** option to skip variations ([18b2dab](https://github.com/ecomplus/admin/commit/18b2dab09c3de24b25337d803a6c71f0cc10e456))
+
+
+### Bug Fixes
+
+* get filter table to export ([ed4c933](https://github.com/ecomplus/admin/commit/ed4c933abbce3a0b72b418768f6ff69d8f4c7cfe))
+* **product:** scroller image too tiny and could not delete video ([8392e81](https://github.com/ecomplus/admin/commit/8392e8136f543a7b698f16c4ca56ba8c8e983a71))
+
 ## [1.0.0-beta.92](https://github.com/ecomplus/admin/compare/v1.0.0-beta.91...v1.0.0-beta.92) (2023-10-24)
 
 
