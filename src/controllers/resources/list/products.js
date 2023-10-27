@@ -1073,8 +1073,6 @@ export default function () {
       }
     }
 
-    $('#spec-search').click($('.search-specifications').slideToggle())
-
     // checkbox to select all
     $('#select-all-products').on('change', function () {
       // check or uncheck all list items
