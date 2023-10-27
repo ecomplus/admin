@@ -37,19 +37,6 @@ export default function () {
   var Tab = Tabs[tabId]
   Tab.selectedSkus = []
 
-  const Typeahead = function ($el, name, source) {
-    // abstraction to setup typeahead addon
-    // input autocomplete
-    $el.typeahead({
-      hint: true,
-      highlight: true,
-      minLength: 1
-    }, {
-      name: name,
-      source: source
-    })
-  }
-
   /*
   var elContainer = $('#t' + tabId + '-tab-normal')
   // prefix tab ID on content elements IDs
