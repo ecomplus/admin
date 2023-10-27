@@ -18,18 +18,26 @@ export default function () {
     pageLength: 20,
     bLengthChange: false,
     order: [[3, 'desc']],
-    columnDefs: [{
-      "targets": 2,
-      render: (data, type, row) => {
-        if (data !== 'Sem número' && data !== 'Without number') {
-          if (!data.includes('+')) {
-            data = '+55' + data
+    columnDefs: [
+      {
+        "targets": 2,
+        render: (data, type, row) => {
+          if (data !== 'Sem número' && data !== 'Without number') {
+            if (!data.includes('+')) {
+              data = '+55' + data
+            }
+            return `<a href="https://${platform}.whatsapp.com/send?phone=${data}&text=${window.sessionStorage.getItem('whatsapp') || i18n(i19shopNow)} ${row[3]}" target="_blank">${data}</a>`
           }
-          return `<a href="https://${platform}.whatsapp.com/send?phone=${data}&text=${i18n(i19shopNow)} ${row[3]}" target="_blank">${data}</a>`
+          return data
         }
-        return data
-      }
-    }]
+      },
+      {
+        "targets": 3,
+        render: (data, type, row) => {
+          return `<a href="${data}" target="_blank">${data}</a>`
+        }
+      } 
+    ]
   }
 
   const dictionary = {
