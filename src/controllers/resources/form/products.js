@@ -2100,6 +2100,8 @@ export default function () {
       $inputQnt.attr('readonly', true)
     }
 
+
+
     if (data.price_effective_date) {
       // manually reset date range
       const { start, end } = data.price_effective_date
@@ -2131,6 +2133,14 @@ export default function () {
 
     renderKitItems({ tabId })
     renderRelatedItems(tabId)
+
+    $form.find('input[name="videos[].0.url"]').on('input', function () {
+      if ($(this).val() === '') {
+        const data = Data()
+        delete data.videos
+        commit(data, true)
+      }
+    })
 
     setTimeout(() => {
       listOrders(tabId)
