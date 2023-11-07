@@ -1650,6 +1650,26 @@ const { sessionStorage, localStorage, Image, $, app } = window
                   <span data-lang="pt_br">Copiar url</span>
                 </span>
               </button>`)
+              document.getElementById('uploads-copy-url').addEventListener(
+                'click',
+                function (event) {          
+                  if (!navigator.clipboard) {
+                    // Clipboard API not available
+                    return;
+                  }
+                  const text = this.dataset && this.dataset.clipboardText
+                  try {
+                    navigator.clipboard.writeText(text);
+                    $('#uploads-copy-url span').text('Copiado')
+                    setTimeout(() => {
+                      $('#uploads-copy-url span').text('Copiar Url')
+                    }, 1200)
+                  } catch (err) {
+                    console.error("Failed to copy!", err);
+                  }
+                },
+                false
+              );
             }
           } catch (e) {
             // unexpected response
