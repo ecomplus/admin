@@ -44,6 +44,9 @@ export default function () {
   $appTab.find('.show-picture').click(() => {
     $('.img-product').toggle()
   })
+  $appTab.find('.show-tax').click(() => {
+    $('.tax-extra').toggle()
+  })
 
   const renderInvoice = (store, order) => {
     const buyer = order.buyers && order.buyers[0]
@@ -75,7 +78,7 @@ export default function () {
 
       <div class="row px-3 pt-4 fs-15">
         <div class="col-md-3">
-          ${(store.logo ? `<img src="${store.logo.url}" class="mb-4">` : '')}
+          ${(store.logo ? `<img style="max-width: 250px" src="${store.logo.url}" class="mb-4">` : '')}
           <h4 class="fw-400">${(store.corporate_name || store.name)}</h4>
           ${store.doc_type}:
           <strong>
@@ -181,11 +184,11 @@ export default function () {
                 <td>${i18n(i19discount)}</td>
                 <td>${formatMoney(order.amount.discount || 0)}</td>
               </tr>
-              <tr>
+              <tr class="tax-extra">
                 <td>${i18n(i19tax)}</td>
                 <td>${formatMoney(order.amount.tax || 0)}</td>
               </tr>
-              <tr>
+              <tr class="tax-extra">
                 <td>${i18n(i19additionalCost)} (${i18n(i19creditCardInterest)})</td>
                 <td>${formatMoney(order.amount.extra || 0)}</td>
               </tr>
