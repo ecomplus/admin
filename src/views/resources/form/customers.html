@@ -303,10 +303,12 @@
                     <small><i class="ti-exchange-vertical text-primary mr-1"></i></small>
                     <span class="i18n">
                       <span data-lang="en_us">
-                        Delivery address
+                        Delivery address:
+                        <small>Click here to edir</small>
                       </span>
                       <span data-lang="pt_br">
-                        Endereço de entrega
+                        Endereço de entrega:
+                        <small>Clique aqui para editar</small>
                       </span>
                     </span>
                   </span>
@@ -321,7 +323,7 @@
                           <span data-lang="en_us">ZIP code</span>
                           <span data-lang="pt_br">CEP</span>
                         </label>
-                        <input type="tel" class="form-control" data-mask="zip"
+                        <input type="tel" data-id="zip-code" class="form-control" data-mask="zip"
                           name="addresses.zip" required />
                       </div>
                     </div>
@@ -341,7 +343,7 @@
                           <span data-lang="en_us">Street</span>
                           <span data-lang="pt_br">Rua</span>
                         </label>
-                        <input type="text" class="form-control" name="addresses.street"/>
+                        <input type="text" data-id="street" class="form-control" name="addresses.street"/>
                       </div>
                     </div>
                     <div class="col-xl-3 col-sm-4">
@@ -369,7 +371,7 @@
                           <span data-lang="en_us">Borough</span>
                           <span data-lang="pt_br">Bairro</span>
                         </label>
-                        <input type="text" class="form-control" name="addresses.borough"/>
+                        <input data-id="borough" type="text" class="form-control" name="addresses.borough"/>
                       </div>
                     </div>
                     <div class="col-lg-6 col-md-12 col-sm-6">
@@ -387,7 +389,7 @@
                           <span data-lang="en_us">City</span>
                           <span data-lang="pt_br">Cidade</span>
                         </label>
-                        <input type="text" class="form-control" name="addresses.city"/>
+                        <input data-id="city" type="text" class="form-control" name="addresses.city"/>
                       </div>
                     </div>
                     <div class="col-xl-3 col-sm-4">
@@ -396,7 +398,7 @@
                           <span data-lang="en_us">Province code</span>
                           <span data-lang="pt_br">Estado (UF)</span>
                         </label>
-                        <input type="text" class="form-control" name="addresses.province_code" maxlength="2"
+                        <input data-id="province-code" type="text" class="form-control" name="addresses.province_code" maxlength="2"
                           oninput="this.value = this.value.toUpperCase()" pattern="[A-Z]{2}" placeholder="MG"/>
                       </div>
                     </div>

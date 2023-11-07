@@ -273,6 +273,7 @@ export default function () {
         }
       }
       obj.zip = Object.assign({ zip: '00000000' }, addressNew)
+      
 
       // remove excedent properties
       delete obj.zip.default
@@ -288,6 +289,28 @@ export default function () {
       'addresses',
       handleShippingObj
     )
+
+    $('#t' + tabId + '-add-shipping').click()
+    $(`#t${tabId}-zip-code`).on('input', async function() {
+      const zipCode = this.value.replace(/\D/g, '')
+      if (zipCode && zipCode.length === 8) {
+        fetch(`https://viacep.com.br/ws/${zipCode}/json/`).then(response => {
+          return response.json()
+        }).then(data => {
+          const { logradouro, bairro, localidade, uf } = data
+          if (data) {
+            const combinationsAddress = [['street', logradouro], ['borough', bairro], ['city', localidade], ['province-code', uf]]
+            combinationsAddress.forEach(each => {
+              if (each[1]) {
+                $(`#t${tabId}-${each[0]}`).val(each[1])
+              }
+            })
+          }
+        })
+        
+
+      }
+    })
     // handle collapse for shipping address
     $('div[data-link-collapse]').each(function () {
       var $block = $(this)
