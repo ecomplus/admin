@@ -3,7 +3,7 @@ import { i18n, formatMoney } from '@ecomplus/utils'
 import Papa from 'papaparse'
 
 export default function () {
-  const { $, callApi, tabId } = window
+  const { $, callApi, tabId, callSearchApi } = window
 
   const normalizeDate = (hour, min, sec, ms, sub, date) => {
     const currentDate = date || new Date()
@@ -20,6 +20,8 @@ export default function () {
   end = normalizeDate(23, 59, 59, 59, false, false)
 
   let dataQuery = []
+
+  let searchedProductsByCategory = []
 
   const renderTable = (data, currentPage, pageSize) => {
     // create html
@@ -57,10 +59,15 @@ export default function () {
     let filter, searched;
     filter = $('#search-best-seller').val()
     searched = dataQuery
+    if (searchedProductsByCategory.length) {
+      searched = searched.filter(({ id }) => {
+        return searchedProductsByCategory.some(({ _id }) => _id === id)
+      })
+    }
     if (filter) {
       filter = filter.toLowerCase();
-      searched = dataQuery.filter(option => {
-        return option._id.indexOf(filter) > -1 || option.name.toLowerCase().indexOf(filter) > -1
+      searched = searched.filter(({ _id, name }) => {
+        return _id.indexOf(filter) > -1 || name.toLowerCase().indexOf(filter) > -1
       })
     }
     if (option) {
@@ -78,10 +85,67 @@ export default function () {
     }
   })
 
+  callApi('categories.json', 'GET', function (error, data) {
+    if (!error) {
+      let $option
+      $option = $('<option />', {
+        text: '--',
+        value: 'undefined'
+      })
+      $('#searchCategory').append($option).appSelectpicker('refresh').trigger('change')
+      for (let i = 0; i < data.result.length; i++) {
+        const valueCategory = function () {
+          return JSON.stringify({
+            name: data.result[i].name,
+            resource: 'categories'
+          })
+        }
+        $option = $('<option />', {
+          text: data.result[i].name,
+          value: valueCategory(data.result[i])
+        })
+        $('#searchCategory').append($option).appSelectpicker('refresh').trigger('change')
+      }
+    }
+  })
+
+  $('#searchCategory').change(function () {
+    const selectedCategory = $(this).val()
+    let searched = dataQuery
+    if (selectedCategory !== 'undefined') {
+      const body = {"query":{"bool":{"filter":[{"terms":{"categories.name":[JSON.parse(selectedCategory).name]}}]}},"sort":[{"_id":{"order":"desc"}}],"aggs":{"brands.name":{"terms":{"field":"brands.name","size":100}},"categories.name":{"terms":{"field":"categories.name","size":300}},"status":{"terms":{"field":"status"}},"min_price":{"min":{"field":"price"}},"max_price":{"max":{"field":"price"}},"avg_price":{"avg":{"field":"price"}}},"size":500,"from":0}
+      callSearchApi('items.json', 'POST', function (err, data) {
+        if (!err && data.hits) {
+          searchedProductsByCategory = [...data.hits.hits]
+          let filter
+          filter = $('#search-best-seller').val()
+          searched = searched.filter(({ id }) => {
+            return searchedProductsByCategory.some(({ _id }) => _id === id)
+          })
+          if (filter) {
+            filter = filter.toLowerCase();
+            searched = searched.filter(({ _id, name }) => {
+              return _id.indexOf(filter) > -1 || name.toLowerCase().indexOf(filter) > -1
+            })
+          }
+          renderTable(searched, 1, 10, start, end)
+        }
+      }, body)
+    }
+    searchedProductsByCategory = []
+    renderTable(searched, 1, 10, start, end)
+  })
+
   $('#search-best-seller').on('input', (e) => {
     let filter, searched;
     filter = e.currentTarget.value.toLowerCase();
-    searched = dataQuery.filter(option => {
+    searched = dataQuery
+    if (searchedProductsByCategory.length) {
+      searched = searched.filter(({ id }) => {
+        return searchedProductsByCategory.some(({ _id }) => _id === id)
+      })
+    }
+    searched = searched.filter(option => {
       return option._id.indexOf(filter) > -1 || option.name.toLowerCase().indexOf(filter) > -1
     })
     renderTable(searched, 1, 10, start, end)
@@ -130,7 +194,8 @@ export default function () {
                 }
               },
               sku: { $first: '$items.sku' },
-              name: { $first: '$items.name' }
+              name: { $first: '$items.name' },
+              id: { $first: '$items.product_id' }
             }
           },
           {
@@ -158,7 +223,6 @@ export default function () {
           end = normalizeDate(23, 59, 59, 59, false, e.date)
         }
         if (start && end) {
-          datatable.clear()
           $('#most-sellers-table-load').show()
           renderGraphByDate(start, end)
         }
@@ -188,10 +252,15 @@ export default function () {
     let filter, searched;
     filter = $('#search-best-seller').val()
     searched = dataQuery
+    if (searchedProductsByCategory.length) {
+      searched = searched.filter(({ id }) => {
+        return searchedProductsByCategory.some(({ _id }) => _id === id)
+      })
+    }
     if (filter) {
       filter = filter.toLowerCase();
-      searched = dataQuery.filter(option => {
-        return option._id.indexOf(filter) > -1 || option.name.toLowerCase().indexOf(filter) > -1
+      searched = searched.filter(({ _id, name }) => {
+        return _id.indexOf(filter) > -1 || name.toLowerCase().indexOf(filter) > -1
       })
     }
     renderTable(searched, 1, searched.length, start, end)
@@ -204,6 +273,6 @@ export default function () {
       data.push(cols)
     })
     downloadCsv(data, 'best-seller-report')
-    renderTable(dataQuery, 1, 10, start, end)
+    renderTable(searched, 1, 10, start, end)
   })
 }

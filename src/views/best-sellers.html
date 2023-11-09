@@ -35,13 +35,29 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-12 d-block">
-                    <div class="mb-3">
-                      <a href="#" class="btn btn-info" id="export-best-seller">
-                        <span class="i18n">
-                          <span data-lang="pt_br">Exportar</span>
-                          <span data-lang="en_us">Export</span>
-                        </span>
-                      </a>
+                    <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center;">
+                      <div class="export pr-2 pl-2">
+                        <a href="#" class="btn btn-info" id="export-best-seller">
+                          <span class="i18n">
+                            <span data-lang="pt_br">Exportar</span>
+                            <span data-lang="en_us">Export</span>
+                          </span>
+                        </a>
+                      </div>
+                      <div class="form-group pr-2 pl-2 d-none d-md-block" style="min-width: 33%;">
+                        <label>
+                          <span class="search-category i18n">
+                            <span data-lang="pt_br">Filtrar por categoria</span>
+                            <span data-lang="en_us">Filter by category</span>
+                          </span>
+                        </label>
+            
+                        <select class="form-control show-tick pr-2 pl-2" data-live-search="true" name="resource"
+                          placeholder="Camisas"
+                          data-json="true"
+                          id="searchCategory">
+                        </select>
+                      </div>
                       <div class="lookup float-right" style="max-width: 50%">
                         <input type="text" id="search-best-seller" class="form-control" placeholder="SKU">
                       </div>
