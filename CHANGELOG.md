@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.95](https://github.com/ecomplus/admin/compare/v1.0.0-beta.94...v1.0.0-beta.95) (2023-11-09)
+
+
+### Features
+
+* **best-seller:** add category filter ([5d5c473](https://github.com/ecomplus/admin/commit/5d5c47339f954ca0d6de46d2041bfcd774dd0a77))
+
+
+### Bug Fixes
+
+* **index:** change footer links ([8784c77](https://github.com/ecomplus/admin/commit/8784c77c61f741d2516b3c9c3c7d745bc01bbdc2))
+
 ## [1.0.0-beta.94](https://github.com/ecomplus/admin/compare/v1.0.0-beta.93...v1.0.0-beta.94) (2023-11-07)
 
 ## [1.0.0-beta.93](https://github.com/ecomplus/admin/compare/v1.0.0-beta.92...v1.0.0-beta.93) (2023-10-27)
