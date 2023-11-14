@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.96](https://github.com/ecomplus/admin/compare/v1.0.0-beta.95...v1.0.0-beta.96) (2023-11-14)
+
 ## [1.0.0-beta.95](https://github.com/ecomplus/admin/compare/v1.0.0-beta.94...v1.0.0-beta.95) (2023-11-09)
 
 
