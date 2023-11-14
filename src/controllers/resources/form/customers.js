@@ -290,19 +290,26 @@ export default function () {
       handleShippingObj
     )
 
-    $('#t' + tabId + '-add-shipping').click()
+    //$('#t' + tabId + '-add-shipping').click()
     $(`#t${tabId}-zip-code`).on('input', async function() {
       const zipCode = this.value.replace(/\D/g, '')
       if (zipCode && zipCode.length === 8) {
         fetch(`https://viacep.com.br/ws/${zipCode}/json/`).then(response => {
           return response.json()
-        }).then(data => {
-          const { logradouro, bairro, localidade, uf } = data
-          if (data) {
-            const combinationsAddress = [['street', logradouro], ['borough', bairro], ['city', localidade], ['province-code', uf]]
+        }).then(res => {
+          const { logradouro, bairro, localidade, uf } = res
+          if (res) {
+            const combinationsAddress = [['street', logradouro], ['borough', bairro], ['city', localidade], ['province_code', uf]]
+            const data = Data()
+            let index = 0
+            if (data.addresses && data.addresses.length) {
+              index = data.addresses.findIndex(address => !address.street)
+            }
             combinationsAddress.forEach(each => {
               if (each[1]) {
                 $(`#t${tabId}-${each[0]}`).val(each[1])
+                data.addresses[index][each[0]] = each[1]
+                commit(data, true)
               }
             })
           }
