@@ -2044,8 +2044,31 @@ export default function () {
     })
 
     // price effective date range
+    const $addHourPattern = $(`#t${tabId}-add-hour-pattern`)
+    let hasHourPattern = false
+    $addHourPattern.change(function () {
+      hasHourPattern = $(this).is(':checked')
+      const hourPattern = hasHourPattern ? ' 99:99:99' : ''
+      if (hasHourPattern) {
+        $(`#t${tabId}-price-effective-dates`)
+        .val(null)
+        .inputmask(lang === 'pt_br' ? `99/99/9999${hourPattern} ~ 99/99/9999${hourPattern}` : `99-99-9999${hourPattern} ~ 99-99-9999${hourPattern}`)
+      }
+    })
+    const parseHourDate = (dateStr) => {
+      const [datePart, timePart] = dateStr.split(' ');
+      const [day, month, year] = datePart.split(/[/-]/).map(s => Number(s));
+    
+      if (timePart) {
+        const [hour, min, sec] = timePart.split(':').map(s => Number(s));
+        return { day, month, year, hour, min, sec };
+      }
+    
+      return { day, month, year };
+    }
+    
     const $priceEffectiveDates = $(`#t${tabId}-price-effective-dates`)
-      .inputmask(lang === 'pt_br' ? '99/99/9999 ~ 99/99/9999' : '99-99-9999 ~ 99-99-9999')
+      .inputmask(lang === 'pt_br' ? `99/99/9999 ~ 99/99/9999` : `99-99-9999 ~ 99-99-9999`)
       .change(function () {
         const val = $(this).val()
         const data = Data()
@@ -2054,9 +2077,13 @@ export default function () {
           const dateStrs = val.split(' ~ ')
           if (dateStrs.length === 2) {
             dateStrs.forEach((dateStr, i) => {
-              const [day, month, year] = dateStr.split(/[/-]/).map(s => Number(s))
+              const { day, month, year, hour, min, sec } = parseHourDate(dateStr)
+              console.log(day, month, year, hour, min, sec)
               if (day && month && year) {
                 const date = new Date(year, month - 1, day)
+                if (hour >= 0 && min >= 0 && sec >= 0) {
+                  date.setHours(hour, min, sec)
+                }
                 if (!isNaN(date.getTime())) {
                   if (!data.price_effective_date) {
                     data.price_effective_date = {}
