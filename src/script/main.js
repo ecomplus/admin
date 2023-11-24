@@ -8,6 +8,7 @@ import {
   i19inventory,
   i19media,
   i19payment,
+  i19discount,
   i19shipping,
   i19support,
   // i19stock,
@@ -1292,6 +1293,12 @@ const { sessionStorage, localStorage, Image, $, app } = window
                '<a class="menu-link" href="/#/apps/tab/shipping">' +
                  '<span class="icon fa fa-truck"></span>' +
                  '<span class="title">' + i18n(i19shipping) + '</span>' +
+               '</a>' +
+             '</li>' +
+             '<li class="menu-item">' +
+               '<a class="menu-link" href="/#/apps/edit/1252/">' +
+                 '<span class="icon fa fa-percent"></span>' +
+                 '<span class="title">' + i18n(i19discount) + '</span>' +
                '</a>' +
              '</li>' +
              '<li class="menu-item">' +
