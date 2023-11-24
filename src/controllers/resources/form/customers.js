@@ -8,7 +8,7 @@ import {
 } from '@ecomplus/i18n'
 
 export default function () {
-  const { $, lang, tabId, handleInputs, setupInputValues, handleNestedObjects, ecomUtils, formatDate, formatMoney, i18n, callApi } = window
+  const { $, lang, tabId, handleInputs, setupInputValues, handleNestedObjects, ecomUtils, formatDate, formatMoney, i18n, callApi, app } = window
 
   // current tab
   var Tab = window.Tabs[tabId]
@@ -22,6 +22,9 @@ export default function () {
   // render customers on table
   var setup = function () {
     const $customer = $(`#t${tabId}-customer-form`)
+    const $setPoints = $(`#t${tabId}-set-points`)
+    const $addPoints = $(`#t${tabId}-add-points`)
+    const $removePoints = $(`#t${tabId}-remove-points`)
     var $infoCustomer = $('#t' + tabId + '-info-customer')
     var $inputRegister = $infoCustomer.find('#t' + tabId + '-registry-type')
     var $registryType = $inputRegister.find('input[name="registry_type"]')
@@ -314,8 +317,6 @@ export default function () {
             })
           }
         })
-        
-
       }
     })
     // handle collapse for shipping address
@@ -346,40 +347,10 @@ export default function () {
       resumeContent()
     })
 
-    // create and show all information about the costumer
-    const datatableOptions = {
-      scrollY: '400px',
-      scrollCollapse: true,
-      paging: false
-    }
-    datatableOptions.language = {
-      infoEmpty: '',
-      infoFiltered: '',
-      lengthMenu: 'Mostrar _MENU_ resultados',
-      search: 'Buscar',
-      zeroRecords: 'Nenhum resultado encontrado'
-    }
-    const lengthPoints = data.loyalty_points_entries && data.loyalty_points_entries.length || 0
-    $listOfPoints.find('tbody').append(
-    `<tr>
-       <td>Pontos</td>
-       <td>
-         <input class="form-control" style="min-width: 80px; max-width: 120px"
-           name="earned_points" data-index="${lengthPoints}" type="number" min="0" max="9999999" step="any" value="">
-       </td>
-       <td>
-         <input class="form-control" style="min-width: 80px; max-width: 120px"
-           name="active_points" data-index="${lengthPoints}" type="number" min="0" max="9999999" step="any" value="">
-       </td>
-       <td style="text-align: center">--</td>
-       <td>
-         <input class="form-control" style="min-width: 98px; max-width: 120px"
-           name="valid_thru" data-index="${lengthPoints}" type="text" data-provide="datepicker" data-date-today-highlight="true" value="">
-       </td>
-   </tr>`)
-    $points.slideDown()
-    if (lengthPoints >= 0) {
-      if (lengthPoints > 0) {
+    const loadPointsList = () => {
+      if (data.loyalty_points_entries && data.loyalty_points_entries.length) {
+        $listOfPoints.find('tbody').empty()
+        $listOfPoints.find('tfoot').remove()
         data.loyalty_points_entries.forEach((entry, i) => {
           $listOfPoints.find('tbody').append(`<tr>
           <td>${entry.name}</td>
@@ -398,22 +369,50 @@ export default function () {
           </td>
           </tr>`)
         })
-  
+
         const earnedPoints = data.loyalty_points_entries.reduce((acc, entry) => acc + entry.earned_points, 0)
         const activePoints = data.loyalty_points_entries.reduce((acc, entry) => acc + entry.active_points, 0)
-        $points.find('.card-body').append(`
-        <span class="i18n">
-          <span data-lang="en_us">Total earned points:</span>
-          <span data-lang="pt_br">Total de pontos ganhos:</span>
-        </span> <b>${earnedPoints.toFixed(2)}</b>
-        <br><span class="i18n">
-          <span data-lang="en_us">Total active points:</span>
-          <span data-lang="pt_br">Total de pontos ativos:</span>
-        </span> <b>${activePoints.toFixed(2)}</b>
-        <br><span class="i18n">
-          <span data-lang="en_us">Total used points:</span>
-          <span data-lang="pt_br">Total de pontos usados:</span>
-        </span> <b>${(earnedPoints - activePoints).toFixed(2)}</b>`)
+        $points.find('tbody').after(`<tfoot style="color: #000"><tr>
+        <td><b>Total<b></td>
+        <td style="text-align: center">
+          <b>${earnedPoints}</b>
+        </td>
+        <td style="text-align: center">
+          <b>${activePoints}</b>
+        </td>
+        <td style="text-align: center">--</td>
+        <td>
+          --
+        </td>
+        </tr></tfoot>`)
+      } else {
+        $listOfPoints.find('tbody').empty()
+      }
+    }
+
+    // create and show all information about the costumer
+    const datatableOptions = {
+      scrollY: '400px',
+      scrollCollapse: true,
+      paging: false
+    }
+    datatableOptions.language = {
+      infoEmpty: '',
+      infoFiltered: '',
+      lengthMenu: 'Mostrar _MENU_ resultados',
+      search: 'Buscar',
+      zeroRecords: 'Nenhum resultado encontrado'
+    }
+  let lengthPoints = data.loyalty_points_entries && data.loyalty_points_entries.length || 0
+  let newLengthPoints = lengthPoints
+  const dataPoints = {
+    name: 'pontos',
+    ratio: 1,
+    program_id: 'p0_pontos'
+  }
+  if (lengthPoints >= 0) {
+      if (lengthPoints > 0) {
+        loadPointsList()
       } else {
         data.loyalty_points_entries = []
       }
@@ -427,47 +426,110 @@ export default function () {
                   const appBody = json.data
                   if (Array.isArray(appBody.programs_rules) && appBody.programs_rules.length) {
                     const program = appBody.programs_rules[0]
-                    let edit = 0
-                    $listOfPoints.change('input', (e) => {
-                      const { target } = e
-                      const nameAtt = target.getAttribute('name')
-                      const index = target.dataset && target.dataset.index
-                      if (index == lengthPoints && edit === 0) {
-                        edit++
-                        data.loyalty_points_entries.splice(lengthPoints, 0, {
-                          _id: ecomUtils.randomObjectId(),
-                          name: program.name,
-                          program_id: program.program_id ? program.program_id : 'p0_pontos', 
-                          ratio: program.ratio,
-                        })
-                      }
-                      let prop = Number(target.value)
-                      data.loyalty_points_entries[index][nameAtt] = prop
-                      if (nameAtt === 'active_points') {
-                        const earnedPoints = data.loyalty_points_entries[index].earned_points
-                        if (earnedPoints < prop) {
-                          prop = earnedPoints
-                          data.loyalty_points_entries[index][nameAtt] = prop
-                          target.value = prop
-                        }
-                      } else if (nameAtt === 'valid_thru') {
-                        const [day, month, year] = target.value.split('/')
-                        const validDate = new Date(year, month - 1, day, 23, 59, 59, 59)
-                        data.loyalty_points_entries[index].valid_thru = validDate.toISOString()
-                      }
-                      if (data.loyalty_points_entries[index].active_points && data.loyalty_points_entries[index].earned_points) {
-                        commit(data, true)
-                      }
-                    })
+                    if (program.name) {
+                      dataPoints['name'] = program.name 
+                    }
+                    if (program.ratio) {
+                      dataPoints['ratio'] = program.ratio
+                    }
+                    if (program.program_id) {
+                      dataPoints['program_id'] = program.program_id
+                    }
                   }
                 }
               })
             }
           }
       })
-    }
+  }
 
-    if (data.orders_count) {
+  let edit = 0
+  $listOfPoints.change('input', (e) => {
+    const { target } = e
+    const nameAtt = target.getAttribute('name')
+    const index = target.dataset && target.dataset.index
+    if (index == lengthPoints && edit === 0) {
+      edit++
+      data.loyalty_points_entries.splice(lengthPoints, 0, dataPoints)
+    }
+    let prop = Number(target.value)
+    data.loyalty_points_entries[index][nameAtt] = prop
+    if (nameAtt === 'active_points') {
+      const earnedPoints = data.loyalty_points_entries[index].earned_points
+      if (earnedPoints < prop) {
+        prop = earnedPoints
+        data.loyalty_points_entries[index][nameAtt] = prop
+        target.value = prop
+      }
+    } else if (nameAtt === 'valid_thru') {
+      const [day, month, year] = target.value.split('/')
+      const validDate = new Date(year, month - 1, day, 23, 59, 59, 59)
+      data.loyalty_points_entries[index].valid_thru = validDate.toISOString()
+    }
+    if (data.loyalty_points_entries[index].active_points && data.loyalty_points_entries[index].earned_points) {
+      commit(data, true)
+    }
+  })
+
+  const invalidPoints = () => {
+    return app.toast(i18n({
+      'en_us': 'Invalid points amount! Need to insert at least 1 point.',
+      'pt_br': 'Montante de pontos inválida! Necessário inserir pelo menos 1.'
+    }))
+  }
+
+  $addPoints.on('click', () => {
+    const points = $setPoints.val()
+    const cloneObject = Object.assign({}, dataPoints)
+    if (!points) {
+      invalidPoints()
+    }
+    cloneObject._id = ecomUtils.randomObjectId(),
+    cloneObject.active_points = cloneObject.earned_points = Number(points)
+    data.loyalty_points_entries.push(cloneObject)
+    commit(data, true)
+    newLengthPoints = data.loyalty_points_entries.length
+    if (newLengthPoints !== lengthPoints) {
+      loadPointsList()
+      lengthPoints = newLengthPoints
+    }
+  })
+
+
+  $removePoints.on('click', () => {
+    let pointsToRemove = Number($setPoints.val());
+    if (!pointsToRemove || pointsToRemove <= 0) {
+      return invalidPoints();
+    } else if (data.loyalty_points_entries.length === 0) {
+      return app.toast(i18n({
+        'en_us': 'No points to remove!',
+        'pt_br': 'Não há pontos a serem removidos!'
+      }));
+    }
+  
+    let remainingPoints = pointsToRemove;
+  
+    const updatedEntries = data.loyalty_points_entries.map(entry => {
+      if (entry.active_points > 0) {
+        if (remainingPoints >= entry.active_points) {
+          remainingPoints -= entry.active_points;
+          entry.active_points = 0;
+        } else {
+          entry.active_points -= remainingPoints;
+          remainingPoints = 0;
+        }
+      }
+      return entry;
+    });
+  
+    // Remove entries with active_points <= 0
+    data.loyalty_points_entries = updatedEntries.filter(entry => entry.active_points > 0);
+    commit(data, true)
+    loadPointsList()
+  });
+  
+
+  if (data.orders_count) {
       $(`#t${tabId}-orders`).append(`<span class="i18n">
     <span data-lang="en_us">Amount of money in order: </span>
     <span data-lang="pt_br">Valor total de pedidos: </span
