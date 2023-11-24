@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.97](https://github.com/ecomplus/admin/compare/v1.0.0-beta.96...v1.0.0-beta.97) (2023-11-24)
+
+
+### Features
+
+* **customers:** option to add or remove points from customer ([dcc7c61](https://github.com/ecomplus/admin/commit/dcc7c61410f1012d694ebf1dd8347150f09c4e7b))
+
 ## [1.0.0-beta.96](https://github.com/ecomplus/admin/compare/v1.0.0-beta.95...v1.0.0-beta.96) (2023-11-14)
 
 ## [1.0.0-beta.95](https://github.com/ecomplus/admin/compare/v1.0.0-beta.94...v1.0.0-beta.95) (2023-11-09)
