@@ -548,7 +548,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6" style="display: none" data-id="points">
+    <div class="col-md-6" data-id="points">
       <div class="card">
         <header class="card-header">
           <h4 class="card-title i18n">
@@ -594,6 +594,14 @@
                   <tbody>
                   </tbody>
                 </table>
+              </div>
+              <div class="col-12">
+                <label>Adicione ou remova pontos</label>
+                <div class="d-flex">
+                  <input class="form-control" data-id="set-points" type="number" min="0" max="9999999" step="any">
+                  <button class="btn btn-w-md btn-info ml-3 mr-2" data-id="add-points">Adicionar</button>
+                  <button class="btn btn-w-md btn-danger ml-2" data-id="remove-points">Remover</button>
+                </div>
               </div>
             </div>
           </div>
