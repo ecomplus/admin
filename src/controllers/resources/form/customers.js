@@ -529,11 +529,14 @@ export default function () {
   });
   
 
-  if (data.orders_count) {
+  if (data.orders_count || (data.orders && data.orders.length)) {
+    const totalPaid = data.orders.reduce((total, order) => {
+      return total + (order.amount && order.amount.total || 0)
+    }, 0)
       $(`#t${tabId}-orders`).append(`<span class="i18n">
     <span data-lang="en_us">Amount of money in order: </span>
     <span data-lang="pt_br">Valor total de pedidos: </span
-    </span>${formatMoney(data.orders_total_value || 0)}`)
+    </span>${formatMoney(data.orders_total_value || totalPaid)}`)
       if (data.orders.length) {
         data.orders.forEach(order => {
           const { _id, number } = order
