@@ -340,7 +340,7 @@
       "template": "<a href='#/resources/customers/{{_id}}'>{{display_name}}</a> - <a href='mailto:{{main_email}}' target='_blank' rel='noopener'>{{main_email}}</a> <span class='ml-3'>{{phones}}</span>"
     },
     "items": {
-      "template": "{{quantity}}x <a href='#/resources/products/{{product_id}}'>{{name}}</a> ({{sku}})"
+      "template": "{{quantity}}x <a href='#/resources/products/{{product_id}}'>{{name}} </a> <img style='height: 40px; width: 40px' src='{{picture}}'> ({{sku}})"
     },
     "transactions": {
       "template": "<a href='{{payment_link}}' target='_blank' rel='noopener' class='mr-3'>{{payment_link}}</a> <code>{{intermediator}}</code>"
