@@ -603,13 +603,15 @@ export default function () {
                             // replace variables on string HTML template
                             const regex = new RegExp('{{' + prop + '}}', 'g')
                             let text
-                            if (typeof nested[prop] === 'object') {
+                            if (typeof nested[prop] === 'object' && prop !== 'picture') {
                               // parse JSON to field values only
                               text = JSON.stringify(nested[prop])
                                 .replace(/[^:]+:"?([^,"}]+)(["\]}]+)?/g, '<span>$1</span>')
                               if (text === '[]' || text === '{}') {
                                 text = ''
                               }
+                            } else if (typeof nested[prop] === 'object' && prop === 'picture') {
+                              text = (nested[prop].normal && nested[prop].normal.url) || (nested[prop].zoom && nested[prop].zoom.url) || (nested[prop].big && nested[prop].big.url) || ''
                             } else {
                               text = nested[prop]
                             }
