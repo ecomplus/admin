@@ -435,6 +435,7 @@ export default function () {
                 'transactions.intermediator.transaction_code,' +
                 'items.product_id,' +
                 'items.sku,' +
+                'items.picture,' +
                 'items.name,' +
                 'items.quantity,' +
                 'extra_discount.discount_coupon,' +

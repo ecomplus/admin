@@ -1,6 +1,7 @@
 import {
   i19additionalCost,
   i19additionalNotes,
+  i19affiliateCoede,
   i19buyer,
   i19description,
   i19discount,
@@ -10,6 +11,7 @@ import {
   i19paymentMethod,
   i19price,
   i19quantity,
+  i19seller,
   i19shippingMethod,
   i19subtotal,
   i19tax,
@@ -48,7 +50,7 @@ export default function () {
     $('.tax-extra').toggle()
   })
 
-  const renderInvoice = (store, order) => {
+  const renderInvoice = async (store, order) => {
     const buyer = order.buyers && order.buyers[0]
     const shippingLine = order.shipping_lines && order.shipping_lines[0]
     const transaction = order.transactions && order.transactions[0]
@@ -99,7 +101,7 @@ export default function () {
                 : `CNPJ: ${formatCNPJ(buyer.doc_number)}`
               : '')}
           </div>
-
+      
           <div class="mt-3">
           ${(shippingLine
             ? `
@@ -109,6 +111,13 @@ export default function () {
             ${(buyer ? `${buyer.main_email}<br>` : '')}
             ${(buyer && buyer.phones ? buyer.phones.map(phone => formatPhone(phone)).join(' / ') : '')}
           </div>
+
+          ${(order.affiliate_code
+            ? `<br><div class="fs-17">
+                <span class="text-muted">${i18n(i19seller)} / ${i18n(i19affiliateCoede)}:</span><br>
+                <strong>${order.affiliate_code}</strong><br>
+              </div>`
+            : '')}
         </div>
       </div>
 
@@ -215,7 +224,21 @@ export default function () {
             console.error(err)
             app.toast()
           } else {
-            renderInvoice(window.Store, order)
+            if (order.affiliate_code) {
+              if (order.affiliate_code.match('^[a-f0-9]{24}$')) {
+                callApi(`customers/${order.affiliate_code}.json`, 'GET', (err, json) => {
+                  if (!err) {
+                    order.affiliate_code = getFullName(json) || json.display_name
+                    renderInvoice(window.Store, order)
+                  } else {
+                    renderInvoice(window.Store, order)
+                  }
+                })
+              }
+            } else {
+              renderInvoice(window.Store, order)
+            }
+            
           }
           i++
           getDoc()
