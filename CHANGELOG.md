@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.98](https://github.com/ecomplus/admin/compare/v1.0.0-beta.97...v1.0.0-beta.98) (2024-01-10)
+
+
+### Features
+
+* **invoices:** set seller in invoice ([b95482a](https://github.com/ecomplus/admin/commit/b95482a13765157ea3ca48dba6c178eef3c7fc58))
+* **order-list:** show picture item in hidden field order ([fb49b18](https://github.com/ecomplus/admin/commit/fb49b182b5382bc636e6b755f398d9cb5d543f45))
+
 ## [1.0.0-beta.97](https://github.com/ecomplus/admin/compare/v1.0.0-beta.96...v1.0.0-beta.97) (2023-11-24)
 
 
