@@ -490,7 +490,7 @@ export default function () {
                     price = variation.base_price
                   } else if (variation.price) {
                     price = variation.price
-                    objVariation.base_price = variation.price
+                    objVariation.base_price = schema.base_price
                   }
                   if ($discount.val()) {
                     discount = parseFloat(calcDiscount(price, $discount.val()))
