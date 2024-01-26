@@ -30,7 +30,7 @@
     "babel-loader": "^8.3.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^6.4.1",
-    "core-js": "^3.35.0",
+    "core-js": "^3.35.1",
     "cross-env": "^7.0.3",
     "css-loader": "^4.3.0",
     "cssnano": "^4.1.11",
@@ -40,7 +40,7 @@
     "husky": "^8.0.3",
     "mini-css-extract-plugin": "^1.6.2",
     "postcss-loader": "^3.0.0",
-    "sass": "^1.69.7",
+    "sass": "^1.70.0",
     "sass-loader": "^10.5.2",
     "standard": "^17.1.0",
     "standard-version": "^9.3.2",
@@ -58,7 +58,7 @@
     "@brazilian-utils/brazilian-utils": "^1.0.0-rc.12",
     "@ecomplus/admin-helpers": "^1.2.4",
     "@ecomplus/admin-home": "^1.1.0-rc.2",
-    "@ecomplus/admin-marketplace": "^2.4.0",
+    "@ecomplus/admin-marketplace": "^2.5.0",
     "@ecomplus/auth": "^1.0.1",
     "@ecomplus/client": "^2.2.1",
     "@ecomplus/i18n": "^1.32.2",
@@ -71,7 +71,7 @@
     "inputmask": "^4.0.9",
     "jquery-maskmoney": "^3.0.2",
     "papaparse": "^5.4.1",
-    "sortablejs": "^1.15.1",
+    "sortablejs": "^1.15.2",
     "vue": "2.6.14"
   }
 }

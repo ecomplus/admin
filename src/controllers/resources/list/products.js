@@ -392,12 +392,12 @@ export default function () {
 
     if (lang === 'pt_br') {
       // brazilian birth date
-      $startDate.inputmask('99/99/9999')
-      $endDate.inputmask('99/99/9999')
+      $startDate.inputmask('99/99/9999 99:99:99')
+      $endDate.inputmask('99/99/9999 99:99:99')
     } else {
       // american birth date
-      $startDate.inputmask('9999-99-99')
-      $endDate.inputmask('9999-99-99')
+      $startDate.inputmask('9999-99-99 99:99:99')
+      $endDate.inputmask('9999-99-99 99:99:99')
     }
     $discount.inputmask('99,999%')
     const calcDiscount = function (price, discount) {
@@ -486,47 +486,53 @@ export default function () {
                 let done
                 const { variations } = schema
                 variations.forEach((variation, ii) => {
-                  if (variation.base_price) {
-                    price = variation.base_price
-                  } else if (variation.price) {
-                    price = variation.price
-                    objVariation.base_price = variation.price
-                  }
-                  if ($discount.val()) {
-                    discount = parseFloat(calcDiscount(price, $discount.val()))
-                  }
-                  if (objChange.quantity === 0 || objChange.quantity) {
-                    objVariation.quantity = objChange.quantity
-                  }
-                  if (objChange.price || discount) {
-                    objVariation.price = objChange.price || discount
-                  }
-                  const callbackVariation = function (err, body) {
-                    if (!err) {
-                      if (variations.length === done) {
-                        delete objVariation.price
-                        delete objVariation.quantity
-                        delete objVariation.base_price
-                        delete objVariation.price_effective_date
-                        app.toast(
-                        `${i18n(i19savedWithSuccess)}`,
-                        {
-                          variant: 'success'
-                        })
-                        $('#spinner-wait-edit').hide()
-                        $('#modal-mass-edit').modal('hide')
-                        $container.removeClass('ajax')
-                        setTimeout(function () {
-                          load(true)
-                        }, 500)
-                      } else {
-                        $('#spinner-wait-edit').show()
-                        $container.addClass('ajax')
+                  setTimeout(() => {
+                    if ($discount.val()) {
+                      if (variation.base_price) {
+                        price = variation.base_price
+                      } else if (variation.price) {
+                        price = schema.base_price || variation.price
+                        objVariation.base_price = schema.base_price
+                      }
+                      discount = parseFloat(calcDiscount(price, $discount.val()))
+                    }
+  
+                    if (objChange.quantity === 0 || objChange.quantity) {
+                      objVariation.quantity = objChange.quantity
+                    }
+                    if ((objChange.price || discount) && variation.price) {
+                      objVariation.price = objChange.price || discount
+                    }
+                    const callbackVariation = function (err, body) {
+                      if (!err) {
+                        if (variations.length === done) {
+                          delete objVariation.price
+                          delete objVariation.quantity
+                          delete objVariation.base_price
+                          delete objVariation.price_effective_date
+                          app.toast(
+                          `${i18n(i19savedWithSuccess)}`,
+                          {
+                            variant: 'success'
+                          })
+                          $('#spinner-wait-edit').hide()
+                          $('#modal-mass-edit').modal('hide')
+                          $container.removeClass('ajax')
+                          setTimeout(function () {
+                            load(true)
+                          }, 500)
+                        } else {
+                          $('#spinner-wait-edit').show()
+                          $container.addClass('ajax')
+                        }
                       }
                     }
-                  }
-                  callApi('products/' + schema._id + '/variations/' + variation._id + '.json', 'PATCH', callbackVariation, objVariation)
-                  done = ii
+                    if (objVariation.price || objVariation.quantity) {
+                      callApi('products/' + schema._id + '/variations/' + variation._id + '.json', 'PATCH', callbackVariation, objVariation)
+                    } 
+                    
+                    done = ii
+                  }, 500)
                 })
               }
               setTimeout(function () {
