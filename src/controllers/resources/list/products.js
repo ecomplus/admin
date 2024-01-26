@@ -486,13 +486,13 @@ export default function () {
                 let done
                 const { variations } = schema
                 variations.forEach((variation, ii) => {
-                  if (variation.base_price) {
-                    price = variation.base_price
-                  } else if (variation.price) {
-                    price = variation.price
-                    objVariation.base_price = schema.base_price
-                  }
                   if ($discount.val()) {
+                    if (variation.base_price) {
+                      price = variation.base_price
+                    } else if (variation.price) {
+                      price = variation.price
+                      objVariation.base_price = schema.base_price
+                    }
                     discount = parseFloat(calcDiscount(price, $discount.val()))
                   }
                   if (objChange.quantity === 0 || objChange.quantity) {
