@@ -421,8 +421,30 @@ export default function () {
       if (prop === 'price' || prop === 'quantity') {
         return stringToNumber(value)
       } else if (prop === 'price_effective_date.start' || prop === 'price_effective_date.end') {
-        const date = value.split('/')
-        return new Date(date[2], date[1] - 1, date[0]).toISOString()
+        const parseHourDate = (dateStr) => {
+          const [datePart, timePart] = dateStr.split(' ');
+          const [day, month, year] = datePart.split(/[/-]/).map(s => Number(s));
+        
+          if (timePart) {
+            const [hour, min, sec] = timePart.split(':').map(s => Number(s));
+            return { day, month, year, hour, min, sec };
+          }
+        
+          return { day, month, year };
+        }
+        const { day, month, year, hour, min, sec } = parseHourDate(value)
+        if (day && month && year) {
+          const date = new Date(year, month - 1, day)
+          if (hour >= 0 && min >= 0 && sec >= 0) {
+            date.setHours(hour, min, sec)
+          }
+          if (!isNaN(date.getTime())) {
+            if (!data.price_effective_date) {
+              data.price_effective_date = {}
+            }
+            return date.toISOString()
+          }
+        }
       } else {
         if (value) {
           return stringToNumber(value)
