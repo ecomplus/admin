@@ -163,61 +163,85 @@ const handleSso = (storeId, username, session) => {
   setStorageItem('access_token', session.access_token)
   setStorageItem('expires', session.expires)
   setStorageItem('username', username)
+  const authHeades = {
+    'X-Store-ID': storeId,
+    'X-My-ID': session.my_id,
+    'X-Access-Token': session.access_token
+  }
 
-  $.ajax({
-    url: 'https://admin.e-com.plus/session/new',
-    method: 'PUT',
-    contentType,
-    headers: {
-      'X-Store-ID': storeId,
-      'X-My-ID': session.my_id,
-      'X-Access-Token': session.access_token
-    },
-    xhrFields: {
-      withCredentials: true
-    }
-  })
-
-    .done(function () {
-      if (isCmsLogin) {
-        return $.ajax({
-          url: 'https://admin.e-com.plus/session/gotrue/v1/token',
-          xhrFields: {
-            withCredentials: true
-          }
-        })
-
-          .done(function (json) {
-            const gotrueToken = json.access_token
-            $.ajax({
-              url: `${apiBaseUri}/stores/${storeId}.json`,
-              headers: {
-                'X-Store-ID': storeId
-              }
-            })
-
-              .done(function ({ domain }) {
-                if (domain) {
-                  window.location = `https://${domain}/admin/?token=${gotrueToken}`
-                } else {
-                  initDashboard(storeId, username, json)
+  const proceedToSession = () => {
+    $.ajax({
+      url: 'https://admin.e-com.plus/session/new',
+      method: 'PUT',
+      contentType,
+      headers: authHeades,
+      xhrFields: {
+        withCredentials: true
+      }
+    })
+      .done(function () {
+        if (isCmsLogin) {
+          return $.ajax({
+            url: 'https://admin.e-com.plus/session/gotrue/v1/token',
+            xhrFields: {
+              withCredentials: true
+            }
+          })
+            .done(function (json) {
+              const gotrueToken = json.access_token
+              $.ajax({
+                url: `${apiBaseUri}/stores/${storeId}.json`,
+                headers: {
+                  'X-Store-ID': storeId
                 }
               })
-              .fail(authFail)
-          })
-          .fail(authFail)
-      }
-    })
-
-    .always(function () {
-      if (!isCmsLogin) {
-        if (urlParams.get('sso_url')) {
-          window.location = `https://admin.e-com.plus${urlParams.get('sso_url')}`
-        } else {
-          initDashboard(storeId, username, session)
+                .done(function ({ domain }) {
+                  if (domain) {
+                    window.location = `https://${domain}/admin/?token=${gotrueToken}`
+                  } else {
+                    initDashboard(storeId, username, json)
+                  }
+                })
+                .fail(authFail)
+            })
+            .fail(authFail)
         }
-      }
+      })
+      .always(function () {
+        if (!isCmsLogin) {
+          if (urlParams.get('sso_url')) {
+            window.location = `https://admin.e-com.plus${urlParams.get('sso_url')}`
+          } else {
+            initDashboard(storeId, username, session)
+          }
+        }
+      })
+  }
+
+  if (urlParams.get('sso_redirect')) {
+    return $.ajax({
+      url: `${apiBaseUri}/stores/me.json`,
+      headers: authHeades
     })
+      .then(function ({ domain, sales_channels: salesChannels }) {
+        const url = new URL(urlParams.get('sso_redirect'))
+        const domains = [domain]
+        if (salesChannels) {
+          salesChannels.forEach(({ channel_id: domain }) => {
+            domains.push(domain)
+          })
+        }
+        if (domains.includes(url.hostname)) {
+          url.searchParams.set('sso_token', session.access_token)
+          window.location = url.toString()
+          return
+        }
+        sessionStorage.setItem('go_to', '/settings')
+        proceedToSession()
+      })
+      .fail(authFail)
+  }
+  proceedToSession()
 }
 
 const initDashboard = (storeId, username, session) => {
