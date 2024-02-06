@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.92](https://github.com/ecomplus/admin/compare/v1.0.0-beta.91...v1.0.0-beta.92) (2024-02-06)
+
+
+### Features
+
+* add filter spec and offer ([fce83b7](https://github.com/ecomplus/admin/commit/fce83b711a558660a10b0fbbd83e25bf753a07a8))
+* **best-seller:** add category filter ([5d5c473](https://github.com/ecomplus/admin/commit/5d5c47339f954ca0d6de46d2041bfcd774dd0a77))
+* **collections:** use sortable to change position of items in collection ([2237a6c](https://github.com/ecomplus/admin/commit/2237a6cd4e2fe49d0808273dda052f5755b4d688))
+* **config-list:** add family name on customer list ([2dd5d0f](https://github.com/ecomplus/admin/commit/2dd5d0f5df3a440c098ab442a09d201a1c7c5f42))
+* **customers:** input to register/see seller indication ([66871b8](https://github.com/ecomplus/admin/commit/66871b803070ddc99227528be50e51d6cc8c3f51))
+* **customers:** option to add or remove points from customer ([dcc7c61](https://github.com/ecomplus/admin/commit/dcc7c61410f1012d694ebf1dd8347150f09c4e7b))
+* **deps:** update `@ecomplus/admin-marketplace` to v2.5.0 ([#765](https://github.com/ecomplus/admin/issues/765)) ([8108888](https://github.com/ecomplus/admin/commit/8108888341bc4b54ffb57538ab6e453bf737bc35))
+* **invoices:** set seller in invoice ([b95482a](https://github.com/ecomplus/admin/commit/b95482a13765157ea3ca48dba6c178eef3c7fc58))
+* **order-list:** show picture item in hidden field order ([fb49b18](https://github.com/ecomplus/admin/commit/fb49b182b5382bc636e6b755f398d9cb5d543f45))
+* **products:** remove products from categories/collections ([1ad82e6](https://github.com/ecomplus/admin/commit/1ad82e6d7e9a1bf724d5c2de6a693677eb3600b1))
+* **settings:** add view for list more xml options ([2981534](https://github.com/ecomplus/admin/commit/2981534ad9ef8fd0eade6fbabb741bebfee45c9d))
+* **settings:** option to skip variations ([18b2dab](https://github.com/ecomplus/admin/commit/18b2dab09c3de24b25337d803a6c71f0cc10e456))
+* **sso:** redirect to any url if domain validated with `?sso_redirect` ([a045897](https://github.com/ecomplus/admin/commit/a0458971b9149db05638293e4f4015d07d16f4a5))
+
+
+### Bug Fixes
+
+* **best-seller:** adjust data and search to insensitive letter ([67bde11](https://github.com/ecomplus/admin/commit/67bde11dd37967dc9a38f3de8e30ceb191011b82))
+* **best-seller:** consider input search on paging ([496de7b](https://github.com/ecomplus/admin/commit/496de7becff0fa4ccbc985293cd45a93bdb971d2))
+* get filter table to export ([ed4c933](https://github.com/ecomplus/admin/commit/ed4c933abbce3a0b72b418768f6ff69d8f4c7cfe))
+* **index:** change footer links ([8784c77](https://github.com/ecomplus/admin/commit/8784c77c61f741d2516b3c9c3c7d745bc01bbdc2))
+* **product:** scroller image too tiny and could not delete video ([8392e81](https://github.com/ecomplus/admin/commit/8392e8136f543a7b698f16c4ca56ba8c8e983a71))
+
 ## [1.0.0-beta.91](https://github.com/ecomplus/admin/compare/v1.0.0-beta.90...v1.0.0-beta.91) (2023-09-26)
 
 
