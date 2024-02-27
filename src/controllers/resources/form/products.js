@@ -285,6 +285,14 @@ export default function () {
       return titles
     }
 
+    $form.find('input[name="videos[].0.url"]').keyup(function () {
+      const data = Data()
+      if ($(this).val() === '') {
+        delete data.videos
+        commit(data, true)
+      }
+    })
+
     var optionsTitles = function (gridId) {
       // return strings array with all grid options titles
       var titles = []
@@ -2044,17 +2052,6 @@ export default function () {
     })
 
     // price effective date range
-    const $addHourPattern = $(`#t${tabId}-add-hour-pattern`)
-    let hasHourPattern = false
-    $addHourPattern.change(function () {
-      hasHourPattern = $(this).is(':checked')
-      const hourPattern = hasHourPattern ? ' 99:99:99' : ''
-      if (hasHourPattern) {
-        $(`#t${tabId}-price-effective-dates`)
-        .val(null)
-        .inputmask(lang === 'pt_br' ? `99/99/9999${hourPattern} ~ 99/99/9999${hourPattern}` : `99-99-9999${hourPattern} ~ 99-99-9999${hourPattern}`)
-      }
-    })
     const parseHourDate = (dateStr) => {
       const [datePart, timePart] = dateStr.split(' ');
       const [day, month, year] = datePart.split(/[/-]/).map(s => Number(s));
@@ -2128,7 +2125,7 @@ export default function () {
     }
 
 
-
+    let dateRangeStrHour = ''
     if (data.price_effective_date) {
       // manually reset date range
       const { start, end } = data.price_effective_date
@@ -2145,29 +2142,40 @@ export default function () {
           let day = ''.padStart(2, placeholder)
           let month = day
           let year = day + day
+          let dateHour = '00'
+          let dateMin = '00'
+          let dateSec = '00'
           const sep = lang === 'pt_br' ? '/' : '-'
           if (isoDate) {
             const date = new Date(isoDate)
             day = date.getDate().toString().padStart(2, '0')
             month = (date.getMonth() + 1).toString().padStart(2, '0')
             year = date.getFullYear()
+            dateHour = date.getHours().toString().padStart(2, '0')
+            dateMin = date.getMinutes().toString().padStart(2, '0')
+            dateSec = date.getSeconds().toString().padStart(2, '0')
           }
           dateRangeStr += `${day}${sep}${month}${sep}${year}`
+          dateRangeStrHour += `${day}${sep}${month}${sep}${year} ${dateHour}:${dateMin}:${dateSec}`
         })
         $priceEffectiveDates.val(dateRangeStr)
       }
     }
+    // edit hours from promo
+    const $addHourPattern = $(`#t${tabId}-add-hour-pattern`)
+    let hasHourPattern = false
+    $addHourPattern.change(function () {
+      hasHourPattern = $(this).is(':checked')
+      const hourPattern = hasHourPattern ? ' 99:99:99' : ''
+      if (hasHourPattern) {
+        $priceEffectiveDates
+        .inputmask(lang === 'pt_br' ? `99/99/9999${hourPattern} ~ 99/99/9999${hourPattern}` : `99-99-9999${hourPattern} ~ 99-99-9999${hourPattern}`)
+        .val(dateRangeStrHour)
+      }
+    })
 
     renderKitItems({ tabId })
     renderRelatedItems(tabId)
-
-    $form.find('input[name="videos[].0.url"]').on('input', function () {
-      if ($(this).val() === '') {
-        const data = Data()
-        delete data.videos
-        commit(data, true)
-      }
-    })
 
     setTimeout(() => {
       listOrders(tabId)
