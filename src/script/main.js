@@ -27,6 +27,8 @@ import EventEmitter from 'eventemitter3'
 
 const { sessionStorage, localStorage, Image, $, app } = window
 
+const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
+
 ;(function () {
   const dictionary = {
     home: i18n({
@@ -107,9 +109,13 @@ const { sessionStorage, localStorage, Image, $, app } = window
 
   // common APIs authentication headers
   var authHeaders = {
-    'X-Store-ID': storeId,
-    'X-My-ID': session.my_id,
-    'X-Access-Token': session.access_token
+    'X-Store-ID': storeId
+  }
+  if (isApiv2) {
+    authHeaders.Authorization = 'Bearer ' + session.access_token
+  } else {
+    authHeaders['X-Access-Token'] = session.access_token
+    authHeaders['X-My-ID'] = session.my_id
   }
   // run API requests with intervals to prevent rate limit
   var apiQueue = []
@@ -278,15 +284,26 @@ const { sessionStorage, localStorage, Image, $, app } = window
     addRequest(options, bodyObject, callback, skipError)
   }
 
-  var storageApiPath = 'https://apx-storage.e-com.plus/' + storeId + '/api/v1/'
+  var storageApiPath = isApiv2
+    ? 'https://ecomplus.app/api/storage/'
+    : 'https://apx-storage.e-com.plus/' + storeId + '/api/v1/'
+
   var callStorageApi = function (s3Method, callback, bodyObject) {
     var uri = storageApiPath
     var method
     if (s3Method) {
-      uri += 's3/' + s3Method + '.json'
+      uri += isApiv2
+        ? s3Method
+        : 's3/' + s3Method + '.json'
+
       method = 'POST'
       // check if S3 method name starts with 'delete'
       if (/^delete/.test(s3Method)) {
+        if (isApiv2) {
+          // If api v2 updates method and url to delete in storage
+          method = 'DELETE'
+          uri = storageApiPath + 'files'
+        }
         // require confirmation
         askConfirmation(uri, method, callback, bodyObject, i18n({
           'en_us': 'You are going to delete files permanently, are you sure?',
@@ -1411,6 +1428,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
         }
         let selectedImages = []
         const selectImagesCallback = function (err) {
+          console.log('>> callback select images')
           if (typeof imagesCallback === 'function') {
             // return selected images
             imagesCallback(err, selectedImages)
@@ -1425,13 +1443,28 @@ const { sessionStorage, localStorage, Image, $, app } = window
         // image is resized after upload
         const thumbSizes = [{
           thumb: 'normal',
-          size: 400,
+          size: isApiv2 ? 350 : 400,
           path: 'imgs/normal/'
         }, {
           thumb: 'big',
           size: 700,
           path: 'imgs/big/'
         }]
+
+        if (isApiv2) {
+          // add new sizes in api v2
+          thumbSizes.push({
+            thumb: 'zoom',
+            size: 1750,
+            path: 'imgs/zoom/'
+          },
+          {
+            thumb: 'small',
+            size: 190,
+            path: 'imgs/small/'
+          }
+          )
+        }
 
         const deleteImages = function (keys) {
           // delete bucket object
@@ -1443,7 +1476,8 @@ const { sessionStorage, localStorage, Image, $, app } = window
           for (let i = 0; i < keys.length; i++) {
             // delete all image sizes
             // ref.: https://github.com/ecomclub/storage-api/blob/master/bin/web.js
-            const baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
+            const key = keys[i] // for original images
+            const baseKey = key.replace(/^.*(@.*)$/, '$1')
             if (/^@v3/.test(baseKey)) {
               objects.push({ Key: `${storeId}/${baseKey}` })
               if (!/\.webp$/.test(baseKey)) {
@@ -1451,6 +1485,19 @@ const { sessionStorage, localStorage, Image, $, app } = window
                   objects.push(
                     { Key: `${storeId}/${path}${baseKey}` },
                     { Key: `${storeId}/${path}${baseKey}.webp` }
+                  )
+                })
+              }
+              // new cloudflare transformation named @v4
+            } else if (/^@v4/.test(baseKey)) {
+              // api keeps original image if store level does not exist
+              if (key.includes('originals')) {
+                objects.push({ key })
+              } else {
+                thumbSizes.forEach(({ path }) => {
+                  objects.push(
+                    { key: `${path}${baseKey}.avif` },
+                    { key: `${path}${baseKey}.webp` }
                   )
                 })
               }
@@ -1497,7 +1544,8 @@ const { sessionStorage, localStorage, Image, $, app } = window
             for (let i = 0; i < keys.length; i++) {
               // all image sizes
               // ref.: https://github.com/ecomclub/storage-api/blob/master/bin/web.js
-              const baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
+              const key = keys[i] // for original images
+              const baseKey = key.replace(/^.*(@.*)$/, '$1')
               // picture object
               // based on product resource picture property
               // https://ecomstore.docs.apiary.io/#reference/products/product-object
@@ -1507,6 +1555,16 @@ const { sessionStorage, localStorage, Image, $, app } = window
                 if (!/\.webp$/.test(baseKey)) {
                   thumbSizes.forEach(({ thumb, path }) => {
                     picture[thumb] = { url: baseUrl + path + baseKey + '.webp' }
+                  })
+                }
+              } else if (/^@v4/.test(baseKey)) {
+                if (key.includes('originals')) {
+                  thumbSizes.forEach(({ thumb }) => {
+                    picture[thumb] = { url: baseUrl + key }
+                  })
+                } else {
+                  thumbSizes.forEach(({ thumb, path }) => {
+                    picture[thumb] = { url: baseUrl + path + baseKey }
                   })
                 }
               }
@@ -1552,7 +1610,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
 
           // get bucket objects from Storage API
           // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#listObjects-property
-          const s3Method = 'listObjects'
+          const s3Method = isApiv2 ? 'files' : 'listObjects'
           const bodyObject = {
             // list base keys (zoom) only
             Prefix: '@'
@@ -1621,7 +1679,10 @@ const { sessionStorage, localStorage, Image, $, app } = window
                         }
                         Done()
                       }
-                      newImg.src = baseUrl + thumbSizes[0].path + key.replace(/^.*\/?(@.*)$/, '$1') + '.webp'
+
+                      newImg.src = isApiv2
+                        ? baseUrl + key
+                        : baseUrl + thumbSizes[0].path + key.replace(/^.*\/?(@.*)$/, '$1') + '.webp'
                     }())
                   }
                 } else {
@@ -1638,13 +1699,15 @@ const { sessionStorage, localStorage, Image, $, app } = window
         // handle dropzone with Storage API
         // http://www.dropzonejs.com/#configuration
         /* global Dropzone */
-        const dropzone = new Dropzone('#dropzone', {
-          url: storageApiPath + 'upload.json',
+
+        const dropzoneOptions = {
+          url: storageApiPath + 'upload' + (!isApiv2 ? '.json' : ''),
           headers: authHeaders
-        })
+        }
+        const dropzone = new Dropzone('#dropzone', dropzoneOptions)
 
         dropzone.on('complete', function (file) {
-          // console.log(file)
+          console.log(file)
           // API request done
           let json
           try {
@@ -1659,7 +1722,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
               </button>`)
               document.getElementById('uploads-copy-url').addEventListener(
                 'click',
-                function (event) {          
+                function (event) {
                   if (!navigator.clipboard) {
                     // Clipboard API not available
                     return;
