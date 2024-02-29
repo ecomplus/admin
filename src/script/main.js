@@ -111,6 +111,7 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
   var authHeaders = {
     'X-Store-ID': storeId
   }
+
   if (isApiv2) {
     authHeaders.Authorization = 'Bearer ' + session.access_token
   } else {
@@ -1428,7 +1429,6 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
         }
         let selectedImages = []
         const selectImagesCallback = function (err) {
-          console.log('>> callback select images')
           if (typeof imagesCallback === 'function') {
             // return selected images
             imagesCallback(err, selectedImages)
