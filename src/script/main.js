@@ -1471,8 +1471,7 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
           for (let i = 0; i < keys.length; i++) {
             // delete all image sizes
             // ref.: https://github.com/ecomclub/storage-api/blob/master/bin/web.js
-            const key = keys[i] // for original images
-            const baseKey = key.replace(/^.*(@.*)$/, '$1')
+            const baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
             if (/^@v3/.test(baseKey)) {
               objects.push({ Key: `${storeId}/${baseKey}` })
               if (!/\.webp$/.test(baseKey)) {
@@ -1485,8 +1484,8 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
               }
               // new cloudflare transformation named @v4
             } else if (/^@v4/.test(baseKey)) {
-              // api keeps original image if store level does not exist
               const [fileName, extension] = baseKey.split('.')
+              // the transformations are in webp and avif
               if (extension === 'webp' || extension === 'avif') {
                 thumbSizes.forEach(({ path }) => {
                   objects.push(
@@ -1495,6 +1494,7 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
                   )
                 })
               } else {
+                // uncompressed images are at their original extent
                 objects.push(
                   { Key: `${thumbSizes[0].path}${baseKey}` }
                 )
