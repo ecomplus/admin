@@ -1542,8 +1542,7 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
             for (let i = 0; i < keys.length; i++) {
               // all image sizes
               // ref.: https://github.com/ecomclub/storage-api/blob/master/bin/web.js
-              const key = keys[i] // for original images
-              const baseKey = key.replace(/^.*(@.*)$/, '$1')
+              const baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
               // picture object
               // based on product resource picture property
               // https://ecomstore.docs.apiary.io/#reference/products/product-object
