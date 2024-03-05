@@ -1693,7 +1693,6 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
         // handle dropzone with Storage API
         // http://www.dropzonejs.com/#configuration
         /* global Dropzone */
-
         const dropzone = new Dropzone('#dropzone', {
           url: storageApiPath + 'upload.json',
           headers: authHeaders
