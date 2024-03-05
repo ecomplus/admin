@@ -1666,7 +1666,7 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
                       }
                       newImg.onerror = function () {
                         const fallbackSrc = baseUrl + (
-                          // remove duplicate storeId url
+                          // remove duplicate storeId in url
                           baseUrl.endsWith(`${storeId}/`)
                             ? key.replace(`${storeId}/`, '')
                             : key
@@ -1697,13 +1697,13 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
         /* global Dropzone */
 
         const dropzoneOptions = {
-          url: storageApiPath + 'upload' + '.json',
+          url: storageApiPath + 'upload.json',
           headers: authHeaders
         }
         const dropzone = new Dropzone('#dropzone', dropzoneOptions)
 
         dropzone.on('complete', function (file) {
-          console.log(file)
+          // console.log(file)
           // API request done
           let json
           try {
