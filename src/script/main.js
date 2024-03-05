@@ -300,11 +300,6 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
       method = 'POST'
       // check if S3 method name starts with 'delete'
       if (/^delete/.test(s3Method)) {
-        if (isApiv2) {
-          // If api v2 updates method and url to delete in storage
-          method = 'DELETE'
-          uri = storageApiPath + 'files'
-        }
         // require confirmation
         askConfirmation(uri, method, callback, bodyObject, i18n({
           'en_us': 'You are going to delete files permanently, are you sure?',
@@ -1491,15 +1486,18 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
               // new cloudflare transformation named @v4
             } else if (/^@v4/.test(baseKey)) {
               // api keeps original image if store level does not exist
-              if (key.includes('originals')) {
-                objects.push({ key })
-              } else {
+              const [fileName, extension] = baseKey.split('.')
+              if (extension === 'webp' || extension === 'avif') {
                 thumbSizes.forEach(({ path }) => {
                   objects.push(
-                    { key: `${path}${baseKey}.avif` },
-                    { key: `${path}${baseKey}.webp` }
+                    { Key: `${path}${fileName}.avif` },
+                    { Key: `${path}${fileName}.webp` }
                   )
                 })
+              } else {
+                objects.push(
+                  { Key: `${thumbSizes[0].path}${baseKey}` }
+                )
               }
             }
           }
@@ -1558,15 +1556,9 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
                   })
                 }
               } else if (/^@v4/.test(baseKey)) {
-                if (key.includes('originals')) {
-                  thumbSizes.forEach(({ thumb }) => {
-                    picture[thumb] = { url: baseUrl + key }
-                  })
-                } else {
-                  thumbSizes.forEach(({ thumb, path }) => {
-                    picture[thumb] = { url: baseUrl + path + baseKey }
-                  })
-                }
+                thumbSizes.forEach(({ thumb, path }) => {
+                  picture[thumb] = { url: baseUrl + path + baseKey }
+                })
               }
               selectedImages.push(picture)
             }
@@ -1610,7 +1602,7 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
 
           // get bucket objects from Storage API
           // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#listObjects-property
-          const s3Method = isApiv2 ? 'files' : 'listObjects'
+          const s3Method = 'listObjects'
           const bodyObject = {
             // list base keys (zoom) only
             Prefix: '@'
@@ -1673,16 +1665,20 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
                         Done()
                       }
                       newImg.onerror = function () {
-                        const fallbackSrc = baseUrl + key
+                        const fallbackSrc = baseUrl + (
+                          // remove duplicate storeId url
+                          baseUrl.endsWith(`${storeId}/`)
+                            ? key.replace(`${storeId}/`, '')
+                            : key
+                        )
                         if (this.src !== fallbackSrc) {
                           this.src = fallbackSrc
                         }
                         Done()
                       }
 
-                      newImg.src = isApiv2
-                        ? baseUrl + key
-                        : baseUrl + thumbSizes[0].path + key.replace(/^.*\/?(@.*)$/, '$1') + '.webp'
+                      const fileName = key.replace(/^.*\/?(@.*)$/, '$1') + (!isApiv2 ? '.webp' : '')
+                      newImg.src = baseUrl + thumbSizes[0].path + fileName
                     }())
                   }
                 } else {
@@ -1701,7 +1697,7 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
         /* global Dropzone */
 
         const dropzoneOptions = {
-          url: storageApiPath + 'upload' + (!isApiv2 ? '.json' : ''),
+          url: storageApiPath + 'upload' + '.json',
           headers: authHeaders
         }
         const dropzone = new Dropzone('#dropzone', dropzoneOptions)
