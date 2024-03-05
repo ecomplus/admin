@@ -1664,12 +1664,11 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
                         Done()
                       }
                       newImg.onerror = function () {
-                        const fallbackSrc = baseUrl + (
-                          // remove duplicate storeId in url
-                          baseUrl.endsWith(`${storeId}/`)
-                            ? key.replace(`${storeId}/`, '')
-                            : key
-                        )
+                        // remove duplicate storeId in url
+                        const pathImg = baseUrl.endsWith(`${storeId}/`)
+                          ? key.replace(`${storeId}/`, '')
+                          : key
+                        const fallbackSrc = baseUrl + pathImg
                         if (this.src !== fallbackSrc) {
                           this.src = fallbackSrc
                         }
