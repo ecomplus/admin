@@ -1438,7 +1438,7 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
         // image is resized after upload
         const thumbSizes = [{
           thumb: 'normal',
-          size: isApiv2 ? 350 : 400,
+          size: 400,
           path: 'imgs/normal/'
         }, {
           thumb: 'big',
@@ -1448,16 +1448,12 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
 
         if (isApiv2) {
           // add new sizes in api v2
-          thumbSizes.push({
-            thumb: 'zoom',
-            size: 1750,
-            path: 'imgs/zoom/'
-          },
-          {
-            thumb: 'small',
-            size: 190,
-            path: 'imgs/small/'
-          }
+          thumbSizes.push(
+            {
+              thumb: 'small',
+              size: 190,
+              path: 'imgs/small/'
+            }
           )
         }
 
@@ -1472,6 +1468,7 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
             // delete all image sizes
             // ref.: https://github.com/ecomclub/storage-api/blob/master/bin/web.js
             const baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
+            // new cloudflare transformation named @v4
             if (/^@v3/.test(baseKey)) {
               objects.push({ Key: `${storeId}/${baseKey}` })
               if (!/\.webp$/.test(baseKey)) {
@@ -1482,23 +1479,8 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
                   )
                 })
               }
-              // new cloudflare transformation named @v4
             } else if (/^@v4/.test(baseKey)) {
-              const [fileName, extension] = baseKey.split('.')
-              // the transformations are in webp and avif
-              if (extension === 'webp' || extension === 'avif') {
-                thumbSizes.forEach(({ path }) => {
-                  objects.push(
-                    { Key: `${path}${fileName}.avif` },
-                    { Key: `${path}${fileName}.webp` }
-                  )
-                })
-              } else {
-                // uncompressed images are at their original extent
-                objects.push(
-                  { Key: `${thumbSizes[0].path}${baseKey}` }
-                )
-              }
+              objects.push({ Key: `${baseKey}` })
             }
           }
           const bodyObject = {
@@ -1547,17 +1529,13 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
               // based on product resource picture property
               // https://ecomstore.docs.apiary.io/#reference/products/product-object
               const picture = {}
-              if (/^@v3/.test(baseKey)) {
+              if (/^@v(3||4)/.test(baseKey)) {
                 picture.zoom = { url: baseUrl + baseKey }
                 if (!/\.webp$/.test(baseKey)) {
                   thumbSizes.forEach(({ thumb, path }) => {
                     picture[thumb] = { url: baseUrl + path + baseKey + '.webp' }
                   })
                 }
-              } else if (/^@v4/.test(baseKey)) {
-                thumbSizes.forEach(({ thumb, path }) => {
-                  picture[thumb] = { url: baseUrl + path + baseKey }
-                })
               }
               selectedImages.push(picture)
             }
@@ -1664,19 +1642,14 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
                         Done()
                       }
                       newImg.onerror = function () {
-                        // remove duplicate storeId in url
-                        const pathImg = baseUrl.endsWith(`${storeId}/`)
-                          ? key.replace(`${storeId}/`, '')
-                          : key
-                        const fallbackSrc = baseUrl + pathImg
+                        const fallbackSrc = baseUrl + key
                         if (this.src !== fallbackSrc) {
                           this.src = fallbackSrc
                         }
                         Done()
                       }
 
-                      const fileName = key.replace(/^.*\/?(@.*)$/, '$1') + (!isApiv2 ? '.webp' : '')
-                      newImg.src = baseUrl + thumbSizes[0].path + fileName
+                      newImg.src = baseUrl + thumbSizes[0].path + key.replace(/^.*\/?(@.*)$/, '$1') + '.webp'
                     }())
                   }
                 } else {
