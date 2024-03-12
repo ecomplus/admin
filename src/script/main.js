@@ -110,8 +110,8 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
   // common APIs authentication headers
   var authHeaders = {
     'X-Store-ID': storeId,
-    'X-Access-Token': session.access_token,
-    'X-My-ID': session.my_id
+    'X-My-ID': session.my_id,
+    'X-Access-Token': session.access_token
   }
 
   // run API requests with intervals to prevent rate limit
