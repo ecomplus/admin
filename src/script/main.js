@@ -1529,9 +1529,12 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
               // based on product resource picture property
               // https://ecomstore.docs.apiary.io/#reference/products/product-object
               const picture = {}
-              if (/^@v(3||4)/.test(baseKey)) {
-                picture.zoom = { url: baseUrl + baseKey.replace('.avif', '.webp') }
-                if (!/\.webp$/.test(baseKey)) {
+              if (/^@v[34]/.test(baseKey)) {
+                picture.zoom = { url: baseUrl + baseKey }
+                if (
+                  (/^@v4/.test(baseKey) && !/\.thumbs\.[\w]+$/.test(baseKey)) ||
+                  (!/\.webp$/.test(baseKey))
+                ) {
                   thumbSizes.forEach(({ thumb, path }) => {
                     picture[thumb] = { url: baseUrl + path + baseKey + '.webp' }
                   })
