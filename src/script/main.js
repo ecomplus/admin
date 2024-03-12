@@ -113,7 +113,6 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
     'X-My-ID': session.my_id,
     'X-Access-Token': session.access_token
   }
-
   // run API requests with intervals to prevent rate limit
   var apiQueue = []
   // control API requests queue
@@ -1647,7 +1646,6 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
                         }
                         Done()
                       }
-
                       newImg.src = baseUrl + thumbSizes[0].path + key.replace(/^.*\/?(@.*)$/, '$1') + '.webp'
                     }())
                   }
