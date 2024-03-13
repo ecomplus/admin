@@ -1527,7 +1527,7 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
               if (/^@v[34]/.test(baseKey)) {
                 picture.zoom = { url: baseUrl + baseKey }
                 if (
-                  (/^@v4/.test(baseKey) && !/\.thumbs\.[\w]+$/.test(baseKey)) ||
+                  (/^@v4/.test(baseKey) && /\.thumbs\.[\w]+$/.test(baseKey)) ||
                   (!/\.webp$/.test(baseKey))
                 ) {
                   thumbSizes.forEach(({ thumb, path }) => {
