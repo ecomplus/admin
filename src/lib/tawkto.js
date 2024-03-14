@@ -22,10 +22,37 @@ ecomAuth.fetchAuthentication().then((authentication) => {
         'access-token': window.sessionStorage.getItem('access_token') ||
           window.localStorage.getItem('access_token')
       }
+      console.log('Chat is loading', tawkAttrs['store-id'])
       window.Tawk_API.setAttributes(tawkAttrs, function (error) {
         if (typeof error !== 'undefined') {
           const err = new Error('tawk.to: ' + error)
           err.attributes = tawkAttrs
+          console.error(err)
+        }
+      })
+    }
+
+    window.Tawk_API.onChatStarted = function () {
+      const storeStart = window.Store
+      const tawkAttrsStart = {
+        'store-id': String(authentication.store_id),
+        'store-name': storeStart.name || '',
+        username: authentication.username,
+        'authentication-id': authentication._id,
+        homepage: storeStart.homepage || (storeStart.domain && `https://${storeStart.domain}/`),
+        'admin-link': 'https://app.e-com.plus/pages/login' +
+          `?store_id=${authentication.store_id}` +
+          `&my_id=${authentication._id}` +
+          `&expires=${encodeURIComponent(ecomAuth.getSession().expires)}` +
+          '&access_token=',
+        'access-token': window.sessionStorage.getItem('access_token') ||
+          window.localStorage.getItem('access_token')
+      }
+      console.log('Chat is starting', tawkAttrsStart['store-id'])
+      window.Tawk_API.setAttributes(tawkAttrsStart, function (error) {
+        if (typeof error !== 'undefined') {
+          const err = new Error('tawk.to: ' + error)
+          err.attributes = tawkAttrsStart
           console.error(err)
         }
       })
