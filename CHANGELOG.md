@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.101](https://github.com/ecomplus/admin/compare/v1.0.0-beta.100...v1.0.0-beta.101) (2024-03-14)
+
+
+### Features
+
+* handling new storage api on ecomplus.app with v2 login ([#779](https://github.com/ecomplus/admin/issues/779)) ([eb827f1](https://github.com/ecomplus/admin/commit/eb827f1aaee1d60ac55bc5a2ef4a6a7124f1a5cb))
+
+
+### Bug Fixes
+
+* general string clearfixes ([c4b9789](https://github.com/ecomplus/admin/commit/c4b978999b67b8f409205366e4776c30ccc3f129))
+* updating new suppert ticket link ([79e7b17](https://github.com/ecomplus/admin/commit/79e7b17637cca04e9cc9e71cd59295f63d9f0619))
+
+## [1.0.0-beta.99](https://github.com/ecomplus/admin/compare/v1.0.0-beta.98...v1.0.0-beta.99) (2024-01-26)
+
+## [1.0.0-beta.98](https://github.com/ecomplus/admin/compare/v1.0.0-beta.97...v1.0.0-beta.98) (2024-01-10)
+
+## [1.0.0-beta.97](https://github.com/ecomplus/admin/compare/v1.0.0-beta.96...v1.0.0-beta.97) (2023-11-24)
+
+## [1.0.0-beta.96](https://github.com/ecomplus/admin/compare/v1.0.0-beta.95...v1.0.0-beta.96) (2023-11-14)
+
+## [1.0.0-beta.95](https://github.com/ecomplus/admin/compare/v1.0.0-beta.94...v1.0.0-beta.95) (2023-11-09)
+
+## [1.0.0-beta.94](https://github.com/ecomplus/admin/compare/v1.0.0-beta.93...v1.0.0-beta.94) (2023-11-07)
+
+## [1.0.0-beta.93](https://github.com/ecomplus/admin/compare/v1.0.0-beta.92...v1.0.0-beta.93) (2023-10-27)
+
+## [1.0.0-beta.92](https://github.com/ecomplus/admin/compare/v1.0.0-beta.91...v1.0.0-beta.92) (2023-10-24)
+
 ## [1.0.0-beta.100](https://github.com/ecomplus/admin/compare/v1.0.0-beta.91...v1.0.0-beta.100) (2024-02-06)
 
 

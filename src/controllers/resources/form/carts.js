@@ -129,9 +129,9 @@ export default function () {
       ]
       if (item.customizations) {
         item.customizations.forEach(({ label, option }) => {
-          let html = `<em>${(label && label.replace(/<script/ig, ''))}</em> `
+          let html = `<em>${(label && label.replace(/<scr/ig, ''))}</em> `
           if (option && option.text) {
-            html += `<mark>${option.text.replace(/<script/ig, '')}</mark> `
+            html += `<mark>${option.text.replace(/<scr/ig, '')}</mark> `
           }
           tdNameHtml.push($('<span>', {
             class: 'mr-3',

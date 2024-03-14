@@ -106,7 +106,7 @@ export default function () {
           ${(shippingLine
             ? `
             ${i18n(i19zipCode)}: ${formatCEP(shippingLine.to.zip)}<br>
-            <address>${getLineAddress(shippingLine.to)} ${(shippingLine.to.near_to ? `<br>Ref.: ${shippingLine.to.near_to}` : '')}</address>`
+            <address>${getLineAddress(shippingLine.to)} ${(shippingLine.to.near_to ? `<br>Ref.: ${shippingLine.to.near_to.replace(/<scr/ig, '')}` : '')}</address>`
             : '')}
             ${(buyer ? `${buyer.main_email}<br>` : '')}
             ${(buyer && buyer.phones ? buyer.phones.map(phone => formatPhone(phone)).join(' / ') : '')}
@@ -115,7 +115,7 @@ export default function () {
           ${(order.affiliate_code
             ? `<br><div class="fs-17">
                 <span class="text-muted">${i18n(i19seller)} / ${i18n(i19affiliateCoede)}:</span><br>
-                <strong>${order.affiliate_code}</strong><br>
+                <strong>${order.affiliate_code.replace(/<scr/ig, '')}</strong><br>
               </div>`
             : '')}
         </div>
@@ -142,7 +142,7 @@ export default function () {
                   ${item.name} (${item.sku})
                   ${item.customizations
                     ? item.customizations.reduce((trs, custom, index) => trs +
-                    `<br><em>${custom.label}</em>:<mark>${(custom.option ? custom.option.text : '')}</mark>`
+                    `<br><em>${custom.label}</em>:<mark>${(custom.option ? custom.option.text.replace(/<scr/ig, '') : '')}</mark>`
                     , '')
                     : ''}
                   </td>
@@ -158,7 +158,7 @@ export default function () {
       <div class="row border-top py-4">
         <div class="col-md-6">
           ${(order.notes
-            ? `<p><span class="text-muted">${i18n(i19additionalNotes)}</span>:<br>${order.notes}</p>`
+            ? `<p><span class="text-muted">${i18n(i19additionalNotes)}</span>:<br>${order.notes.replace(/<scr/ig, '')}</p>`
             : '')}
           ${i18n(i19quantity)} ${i18n(i19total).toLowerCase()}:
             <strong>${(items
@@ -174,7 +174,7 @@ export default function () {
                 (transaction.app.intermediator ? ` (${transaction.app.intermediator.name})` : '')
               : order.payment_method_label)}</strong><br>
           ${(order.extra_discount && order.extra_discount.discount_coupon
-            ? `${i18n(i19discountCoupon)}: <strong>${order.extra_discount.discount_coupon}</strong>`
+            ? `${i18n(i19discountCoupon)}: <strong>${order.extra_discount.discount_coupon.replace(/<scr/ig, '')}</strong>`
             : '')}
         </div>
 
@@ -238,7 +238,6 @@ export default function () {
             } else {
               renderInvoice(window.Store, order)
             }
-            
           }
           i++
           getDoc()

@@ -27,6 +27,8 @@ import EventEmitter from 'eventemitter3'
 
 const { sessionStorage, localStorage, Image, $, app } = window
 
+const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
+
 ;(function () {
   const dictionary = {
     home: i18n({
@@ -278,12 +280,18 @@ const { sessionStorage, localStorage, Image, $, app } = window
     addRequest(options, bodyObject, callback, skipError)
   }
 
-  var storageApiPath = 'https://apx-storage.e-com.plus/' + storeId + '/api/v1/'
+  var storageApiPath = isApiv2
+    ? 'https://ecomplus.app/api/storage/'
+    : 'https://apx-storage.e-com.plus/' + storeId + '/api/v1/'
+
   var callStorageApi = function (s3Method, callback, bodyObject) {
     var uri = storageApiPath
     var method
     if (s3Method) {
-      uri += 's3/' + s3Method + '.json'
+      uri += isApiv2
+        ? s3Method
+        : 's3/' + s3Method + '.json'
+
       method = 'POST'
       // check if S3 method name starts with 'delete'
       if (/^delete/.test(s3Method)) {
@@ -1434,6 +1442,17 @@ const { sessionStorage, localStorage, Image, $, app } = window
           path: 'imgs/big/'
         }]
 
+        if (isApiv2) {
+          // add new sizes in api v2
+          thumbSizes.push(
+            {
+              thumb: 'small',
+              size: 190,
+              path: 'imgs/small/'
+            }
+          )
+        }
+
         const deleteImages = function (keys) {
           // delete bucket object
           // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#deleteObject-property
@@ -1445,6 +1464,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
             // delete all image sizes
             // ref.: https://github.com/ecomclub/storage-api/blob/master/bin/web.js
             const baseKey = keys[i].replace(/^.*(@.*)$/, '$1')
+            // new cloudflare transformation named @v4
             if (/^@v3/.test(baseKey)) {
               objects.push({ Key: `${storeId}/${baseKey}` })
               if (!/\.webp$/.test(baseKey)) {
@@ -1455,6 +1475,8 @@ const { sessionStorage, localStorage, Image, $, app } = window
                   )
                 })
               }
+            } else if (/^@v4/.test(baseKey)) {
+              objects.push({ Key: `${baseKey}` })
             }
           }
           const bodyObject = {
@@ -1503,9 +1525,12 @@ const { sessionStorage, localStorage, Image, $, app } = window
               // based on product resource picture property
               // https://ecomstore.docs.apiary.io/#reference/products/product-object
               const picture = {}
-              if (/^@v3/.test(baseKey)) {
+              if (/^@v[34]/.test(baseKey)) {
                 picture.zoom = { url: baseUrl + baseKey }
-                if (!/\.webp$/.test(baseKey)) {
+                if (
+                  (/^@v4/.test(baseKey) && /\.thumbs\.[\w]+$/.test(baseKey)) ||
+                  (!/\.webp$/.test(baseKey))
+                ) {
                   thumbSizes.forEach(({ thumb, path }) => {
                     picture[thumb] = { url: baseUrl + path + baseKey + '.webp' }
                   })
@@ -1660,7 +1685,7 @@ const { sessionStorage, localStorage, Image, $, app } = window
               </button>`)
               document.getElementById('uploads-copy-url').addEventListener(
                 'click',
-                function (event) {          
+                function (event) {
                   if (!navigator.clipboard) {
                     // Clipboard API not available
                     return;
