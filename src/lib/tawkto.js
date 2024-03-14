@@ -6,7 +6,7 @@ ecomAuth.fetchAuthentication().then((authentication) => {
       name: authentication.name || authentication.username,
       email: authentication.email
     }
-    window.Tawk_API.onLoad = function () {
+    const setTawkAttrs = function () {
       const store = window.Store
       const tawkAttrs = {
         'store-id': String(authentication.store_id),
@@ -30,6 +30,8 @@ ecomAuth.fetchAuthentication().then((authentication) => {
         }
       })
     }
+    window.Tawk_API.onLoad = setTawkAttrs
+    window.Tawk_API.onChatStarted = setTawkAttrs
   }
 
   /* eslint-disable */

@@ -1525,14 +1525,20 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
               // based on product resource picture property
               // https://ecomstore.docs.apiary.io/#reference/products/product-object
               const picture = {}
-              if (/^@v[34]/.test(baseKey)) {
+              if (/^@v3/.test(baseKey)) {
                 picture.zoom = { url: baseUrl + baseKey }
-                if (
-                  (/^@v4/.test(baseKey) && /\.thumbs\.[\w]+$/.test(baseKey)) ||
-                  (!/\.webp$/.test(baseKey))
-                ) {
+                if (!/\.webp$/.test(baseKey)) {
                   thumbSizes.forEach(({ thumb, path }) => {
                     picture[thumb] = { url: baseUrl + path + baseKey + '.webp' }
+                  })
+                }
+              } else if (/^@v4/.test(baseKey)) {
+                picture.zoom = { url: baseUrl + baseKey }
+                if (/\.thumbs\.[\w]+$/.test(baseKey)) {
+                  thumbSizes.forEach(({ thumb, path }) => {
+                    picture[thumb] = {
+                      url: baseUrl + path + baseKey.replace(/\.thumbs\.[\w]+$/, '.avif.webp')
+                    }
                   })
                 }
               }
@@ -1688,7 +1694,7 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
                 function (event) {
                   if (!navigator.clipboard) {
                     // Clipboard API not available
-                    return;
+                    return
                   }
                   const text = this.dataset && this.dataset.clipboardText
                   try {
@@ -1698,11 +1704,11 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
                       $('#uploads-copy-url span').text('Copiar Url')
                     }, 1200)
                   } catch (err) {
-                    console.error("Failed to copy!", err);
+                    console.error('Failed to copy!', err)
                   }
                 },
                 false
-              );
+              )
             }
           } catch (e) {
             // unexpected response

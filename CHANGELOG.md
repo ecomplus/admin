@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.102](https://github.com/ecomplus/admin/compare/v1.0.0-beta.101...v1.0.0-beta.102) (2024-03-14)
+
+
+### Bug Fixes
+
+* properly settings thumbs extensions on media with `[@v4](https://github.com/v4)` keys ([dfaf422](https://github.com/ecomplus/admin/commit/dfaf4227e1e6b08219dfd3c17932efc589791507)), closes [#discussion_r1524749125](https://github.com/ecomplus/admin/issues/discussion_r1524749125)
+
 ## [1.0.0-beta.101](https://github.com/ecomplus/admin/compare/v1.0.0-beta.100...v1.0.0-beta.101) (2024-03-14)
 
 
