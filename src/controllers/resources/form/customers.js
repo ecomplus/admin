@@ -463,7 +463,12 @@ export default function () {
       }
     } else if (nameAtt === 'valid_thru') {
       const [day, month, year] = target.value.split('/')
-      const validDate = new Date(year, month - 1, day, 23, 59, 59, 59)
+      let newYear = year
+      const currentDate = new Date()
+      if (String(newYear).length) {
+        newYear = currentDate.toISOString().substring(0,2) + String(newYear)
+      }
+      const validDate = new Date(newYear, month - 1, day, 23, 59, 59, 59)
       data.loyalty_points_entries[index].valid_thru = validDate.toISOString()
     }
     if (data.loyalty_points_entries[index].active_points && data.loyalty_points_entries[index].earned_points) {
@@ -523,7 +528,7 @@ export default function () {
     });
   
     // Remove entries with active_points <= 0
-    data.loyalty_points_entries = updatedEntries.filter(entry => entry.active_points > 0);
+    data.loyalty_points_entries = updatedEntries;
     commit(data, true)
     loadPointsList()
   });
