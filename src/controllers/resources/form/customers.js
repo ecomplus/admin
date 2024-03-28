@@ -528,7 +528,7 @@ export default function () {
     });
   
     // Remove entries with active_points <= 0
-    data.loyalty_points_entries = updatedEntries.filter(entry => entry.active_points > 0);
+    data.loyalty_points_entries = updatedEntries;
     commit(data, true)
     loadPointsList()
   });
