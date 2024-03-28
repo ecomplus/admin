@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.103](https://github.com/ecomplus/admin/compare/v1.0.0-beta.102...v1.0.0-beta.103) (2024-03-28)
+
+
+### Bug Fixes
+
+* **customers:** get current date with current millenium ([e49bebc](https://github.com/ecomplus/admin/commit/e49bebcc1b79021351465b96fade3461f772018e))
+
 ## [1.0.0-beta.102](https://github.com/ecomplus/admin/compare/v1.0.0-beta.101...v1.0.0-beta.102) (2024-03-14)
 
 
