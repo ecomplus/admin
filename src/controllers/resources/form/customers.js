@@ -351,7 +351,11 @@ export default function () {
       if (data.loyalty_points_entries && data.loyalty_points_entries.length) {
         $listOfPoints.find('tbody').empty()
         $listOfPoints.find('tfoot').remove()
-        data.loyalty_points_entries.forEach((entry, i) => {
+        data.loyalty_points_entries.sort((a, b) => {
+          return a.valid_thru < b.valid_thru
+            ? -1
+            : a.valid_thru > b.valid_thru ? 1 : 0
+        }).forEach((entry, i) => {
           $listOfPoints.find('tbody').append(`<tr>
           <td>${entry.name}</td>
           <td>
@@ -465,7 +469,8 @@ export default function () {
       const [day, month, year] = target.value.split('/')
       let newYear = year
       const currentDate = new Date()
-      if (String(newYear).length) {
+
+      if (String(newYear).length !== 4) {
         newYear = currentDate.toISOString().substring(0,2) + String(newYear)
       }
       const validDate = new Date(newYear, month - 1, day, 23, 59, 59, 59)
@@ -514,8 +519,14 @@ export default function () {
   
     let remainingPoints = pointsToRemove;
   
-    const updatedEntries = data.loyalty_points_entries.map(entry => {
-      if (entry.active_points > 0) {
+    const updatedEntries = data.loyalty_points_entries.sort((a, b) => {
+      return a.valid_thru < b.valid_thru
+        ? -1
+        : a.valid_thru > b.valid_thru ? 1 : 0
+    }).map(entry => {
+      const now = Date.now()
+      const entryValidDate = new Date(entry.valid_thru).getTime()
+      if (entry.active_points > 0 && (entryValidDate >= now)) {
         if (remainingPoints >= entry.active_points) {
           remainingPoints -= entry.active_points;
           entry.active_points = 0;
