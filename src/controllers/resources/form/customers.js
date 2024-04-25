@@ -524,9 +524,7 @@ export default function () {
         ? -1
         : a.valid_thru > b.valid_thru ? 1 : 0
     }).map(entry => {
-      const now = Date.now()
-      const entryValidDate = new Date(entry.valid_thru).getTime()
-      if (entry.active_points > 0 && (entryValidDate >= now)) {
+      if (entry.active_points > 0) {
         if (remainingPoints >= entry.active_points) {
           remainingPoints -= entry.active_points;
           entry.active_points = 0;

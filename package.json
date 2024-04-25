@@ -1,6 +1,6 @@
 {
   "name": "@ecomplus/admin",
-  "version": "1.0.0-beta.103",
+  "version": "1.0.0-beta.105",
   "description": "E-Com Plus Admin dashboard PWA",
   "main": "src/index.js",
   "scripts": {
@@ -30,7 +30,7 @@
     "babel-loader": "^8.3.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^6.4.1",
-    "core-js": "^3.36.1",
+    "core-js": "^3.37.0",
     "cross-env": "^7.0.3",
     "css-loader": "^4.3.0",
     "cssnano": "^4.1.11",
@@ -66,7 +66,7 @@
     "@ecomplus/utils": "^1.4.1",
     "blueimp-md5": "^2.19.0",
     "bootstrap": "^4.6.2",
-    "dot-object": "^2.1.4",
+    "dot-object": "^2.1.5",
     "eventemitter3": "^5.0.1",
     "inputmask": "^4.0.9",
     "jquery-maskmoney": "^3.0.2",
