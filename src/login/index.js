@@ -155,6 +155,12 @@ const getAuthState = (name, storeId, myId) => {
 }
 const isApiv2 = Number(getAuthState('api_version')) === 2
 const apiBaseUri = isApiv2 ? 'https://ecomplus.io/v2' : 'https://api.e-com.plus/v1'
+if (isApiv2) {
+  localStorage.setItem('api_version', '2')
+  console.log(`Login with API v2 at ${apiBaseUri}`)
+} else {
+  localStorage.removeItem('api_version')
+}
 
 const handleSso = (storeId, username, session) => {
   const isCmsLogin = urlParams.get('sso_service') === 'cms'
