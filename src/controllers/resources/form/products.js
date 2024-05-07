@@ -489,7 +489,6 @@ export default function () {
         $emptyGrid.focus()
         return
       }
-
       // add li element
       var $li = $('<li />', {
         html: liGrid
@@ -551,7 +550,6 @@ export default function () {
             if (options.length) {
               $inputOption.attr('placeholder', options[0])
             }
-
             if (gridsOptions.hasOwnProperty(gridId)) {
               // grid already in use
               var idAux = 2
@@ -922,8 +920,9 @@ export default function () {
         // single new option
         newOption = handleNewOption()
       } else {
-        // multiple options should be separated with points
-        var options = option.split(/[,;/\\|.]+/g)
+        // multiple options should be separated with some char
+
+        var options = option.split(/[;/\\|]+/g)
 
         // handle all new options
         for (var i = 0; i < options.length; i++) {
@@ -2078,7 +2077,6 @@ export default function () {
           if (dateStrs.length === 2) {
             dateStrs.forEach((dateStr, i) => {
               const { day, month, year, hour, min, sec } = parseHourDate(dateStr)
-              console.log(day, month, year, hour, min, sec)
               if (day && month && year) {
                 const date = new Date(year, month - 1, day)
                 if (hour >= 0 && min >= 0 && sec >= 0) {
