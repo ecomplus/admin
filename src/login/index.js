@@ -154,6 +154,7 @@ const getAuthState = (name, storeId, myId) => {
   return fromStorage
 }
 const isApiv2 = Number(getAuthState('api_version')) === 2
+
 const apiBaseUri = isApiv2 ? 'https://ecomplus.io/v2' : 'https://api.e-com.plus/v1'
 if (isApiv2) {
   localStorage.setItem('api_version', '2')
@@ -205,7 +206,7 @@ const handleSso = (storeId, username, session) => {
                   if (domain) {
                     window.location = `https://${domain}/admin/?token=${gotrueToken}`
                   } else {
-                    initDashboard(storeId, username, json)
+                    initDashboard(storeId, username, json, isApiv2)
                   }
                 })
                 .fail(authFail)
@@ -218,7 +219,7 @@ const handleSso = (storeId, username, session) => {
           if (urlParams.get('sso_url')) {
             window.location = `https://admin.e-com.plus${urlParams.get('sso_url')}`
           } else {
-            initDashboard(storeId, username, session)
+            initDashboard(storeId, username, session, isApiv2)
           }
         }
       })
@@ -250,10 +251,11 @@ const handleSso = (storeId, username, session) => {
   proceedToSession()
 }
 
-const initDashboard = (storeId, username, session) => {
+const initDashboard = (storeId, username, session, isApiv2) => {
   if (window.history.pushState) {
     window.history.pushState({}, document.title, window.location.pathname)
   }
+
   if (isApiv2) {
     window.ECOMCLIENT_API_STORE = 'https://ecomplus.io/v2/'
     sessionStorage.setItem('api_version', '2')
