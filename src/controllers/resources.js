@@ -555,7 +555,7 @@ export default function () {
 
           const id = Tab.selectedItems[done]
           if (id) {
-            const isApiv2 = Number(window.localStorage.getItem('api_version')) === 2 || window.ECOMCLIENT_API_STORE.indexOf('v2') > -1
+            const isApiv2 = Number(window.localStorage.getItem('api_version')) === 2 || window.ECOMCLIENT_API_STORE && window.ECOMCLIENT_API_STORE.indexOf('v2') > -1
             const apiBaseUri = isApiv2 ? 'https://ecomplus.io/v2' : 'https://api.e-com.plus/v1'
             askConfirmation(
               `${apiBaseUri}/${slug}/${id}.json`,
