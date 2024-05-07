@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-beta.107](https://github.com/ecomplus/admin/compare/v1.0.0-beta.106...v1.0.0-beta.107) (2024-05-07)
+
 ## [1.0.0-beta.106](https://github.com/ecomplus/admin/compare/v1.0.0-beta.105...v1.0.0-beta.106) (2024-05-07)
 
 
