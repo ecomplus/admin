@@ -27,7 +27,8 @@ import EventEmitter from 'eventemitter3'
 
 const { sessionStorage, localStorage, Image, $, app } = window
 
-const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
+const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2 || window.ECOMCLIENT_API_STORE.indexOf('v2') > -1
+console.log('which api', isApiv2)
 
 ;(function () {
   const dictionary = {
@@ -225,7 +226,7 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
     hideToast()
     // E-Com Plus Store API
     // https://ecomstore.docs.apiary.io/#
-    const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
+    const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2 || window.ECOMCLIENT_API_STORE.indexOf('v2') > -1
     const apiBaseUri = isApiv2 ? 'https://ecomplus.io/v2' : 'https://api.e-com.plus/v1'
     // API endpoint full URL
     var uri = apiBaseUri + '/' + endpoint
@@ -323,7 +324,7 @@ const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
   var callSearchApi = function (endpoint, method, callback, bodyObject) {
     // E-Com Plus Search API
     // https://ecomsearch.docs.apiary.io/#
-    const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2
+    const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2 || window.ECOMCLIENT_API_STORE.indexOf('v2') > -1
     const apiBaseUri = isApiv2 ? 'https://ecomplus.io/v2/search/_els' : 'https://apx-search.e-com.plus/api/v1'
     // API endpoint full URL
     let uri
