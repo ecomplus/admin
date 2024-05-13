@@ -7,7 +7,7 @@
     "build": "cross-env NODE_ENV=production webpack && cp dist/admin-*.js dist/admin.js && cp dist/admin-*.css dist/admin.css",
     "serve": "cross-env NODE_ENV=development webpack-dev-server",
     "start": "npm run serve",
-    "release": "standard-version --prerelease beta"
+    "release": "commit-and-tag-version --prerelease beta"
   },
   "repository": {
     "type": "git",
