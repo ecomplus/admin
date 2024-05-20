@@ -43,7 +43,7 @@
     "sass": "^1.77.1",
     "sass-loader": "^10.5.2",
     "standard": "^17.1.0",
-    "commit-and-tag-version": "^9.5.0",
+    "commit-and-tag-version": "^12.4.1",
     "terser-webpack-plugin": "^4.2.3",
     "url-loader": "^4.1.1",
     "vue-loader": "^15.11.1",
