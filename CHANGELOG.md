@@ -1,6 +1,14 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+
+## [1.0.0-beta.108](https://github.com/ecomplus/admin/compare/v1.0.0-beta.107...v1.0.0-beta.108) (2024-12-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency sortablejs to ^1.15.3 ([#820](https://github.com/ecomplus/admin/issues/820)) ([c90ad1c](https://github.com/ecomplus/admin/commit/c90ad1cb24eaae5f3c1c5e2336b59563f0bf3c52))
+* **deps:** update dependency sortablejs to ^1.15.4 ([#835](https://github.com/ecomplus/admin/issues/835)) ([1efed03](https://github.com/ecomplus/admin/commit/1efed03fcafc8320fc6366f7fe5a8e56b161f3a2))
 
 ## [1.0.0-beta.107](https://github.com/ecomplus/admin/compare/v1.0.0-beta.106...v1.0.0-beta.107) (2024-05-07)
 
