@@ -464,6 +464,14 @@ export default function () {
             params = (params ? `${params}&fields=` : 'fields=') + fields
           }
         }
+        if (slug === 'orders') {
+          params = !params ? '' : `${params}&`
+          if (!params.includes('_at>')) {
+            const d = new Date()
+            d.setDate(d.getDate() - 730)
+            params += `created_at>=${d.toISOString()}`
+          }
+        }
         if (params) {
           uri += '?' + params
         }
