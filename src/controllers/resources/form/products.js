@@ -2173,7 +2173,7 @@ export default function () {
         $secondVideo.closest('.form-group').slideDown()
       }
     })
-    if (data.videos && data.videos.length > 1) {
+    if (data.videos && data.videos.length) {
       $secondVideo.closest('.form-group').slideDown()
     }
 
