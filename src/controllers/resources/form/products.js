@@ -155,11 +155,12 @@ export default function () {
               for (gridId in specifications) {
                 var specArray = specifications[gridId]
                 if (Array.isArray(specArray)) {
-                  // add one spec object per grid only
-                  var specValue = addSpec(gridId, 'spec', true)
-                  if (specValue) {
-                    specValue(specArray[0].text)
-                  }
+                  specArray.forEach(({ text }) => {
+                    var specValue = addSpec(gridId, 'spec', true)
+                    if (specValue) {
+                      specValue(text)
+                    }
+                  })
                 }
               }
             }
@@ -1843,10 +1844,6 @@ export default function () {
           $input = $specs.find('input').filter(function () {
             return $(this).data('grid') === gridId
           })
-          if ($input.length) {
-            $input.focus()
-            return
-          }
           // create DOM elements for specification grid
           $input = $('<input>', {
             class: 'form-control',
@@ -1942,9 +1939,7 @@ export default function () {
 
               if (!skipData) {
                 // mount specification object
-                var specObject = {
-                  text: text
-                }
+                var specObject = { text }
                 // optional value
                 if (value) {
                   specObject.value = value
@@ -2050,22 +2045,20 @@ export default function () {
       const hourPattern = hasHourPattern ? ' 99:99:99' : ''
       if (hasHourPattern) {
         $(`#t${tabId}-price-effective-dates`)
-        .val(null)
-        .inputmask(lang === 'pt_br' ? `99/99/9999${hourPattern} ~ 99/99/9999${hourPattern}` : `99-99-9999${hourPattern} ~ 99-99-9999${hourPattern}`)
+          .val(null)
+          .inputmask(lang === 'pt_br' ? `99/99/9999${hourPattern} ~ 99/99/9999${hourPattern}` : `99-99-9999${hourPattern} ~ 99-99-9999${hourPattern}`)
       }
     })
     const parseHourDate = (dateStr) => {
-      const [datePart, timePart] = dateStr.split(' ');
-      const [day, month, year] = datePart.split(/[/-]/).map(s => Number(s));
-    
+      const [datePart, timePart] = dateStr.split(' ')
+      const [day, month, year] = datePart.split(/[/-]/).map(s => Number(s))
       if (timePart) {
-        const [hour, min, sec] = timePart.split(':').map(s => Number(s));
-        return { day, month, year, hour, min, sec };
+        const [hour, min, sec] = timePart.split(':').map(s => Number(s))
+        return { day, month, year, hour, min, sec }
       }
-    
-      return { day, month, year };
+      return { day, month, year }
     }
-    
+
     const $priceEffectiveDates = $(`#t${tabId}-price-effective-dates`)
       .inputmask(lang === 'pt_br' ? `99/99/9999 ~ 99/99/9999` : `99-99-9999 ~ 99-99-9999`)
       .change(function () {
