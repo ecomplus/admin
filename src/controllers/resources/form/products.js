@@ -2125,8 +2125,6 @@ export default function () {
       $inputQnt.attr('readonly', true)
     }
 
-
-
     if (data.price_effective_date) {
       // manually reset date range
       const { start, end } = data.price_effective_date
@@ -2159,13 +2157,25 @@ export default function () {
     renderKitItems({ tabId })
     renderRelatedItems(tabId)
 
+    const $secondVideo = $form.find('input[name="videos[].1.url"]')
     $form.find('input[name="videos[].0.url"]').on('input', function () {
       if ($(this).val() === '') {
-        const data = Data()
-        delete data.videos
-        commit(data, true)
+        const secondVideoUrl = $secondVideo.val()
+        if (secondVideoUrl) {
+          $(this).val(secondVideoUrl)
+          const data = Data()
+          data.videos.splice(1, 1)
+          commit(data, true)
+        }
+        $secondVideo.val('')
+        $secondVideo.closest('.form-group').slideUp()
+      } else {
+        $secondVideo.closest('.form-group').slideDown()
       }
     })
+    if (data.videos && data.videos.length > 1) {
+      $secondVideo.closest('.form-group').slideDown()
+    }
 
     setTimeout(() => {
       listOrders(tabId)
