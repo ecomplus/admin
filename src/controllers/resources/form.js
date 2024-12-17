@@ -292,11 +292,16 @@ export default function () {
             if (parts.length) {
               // remove empty parents
               data = Data()
+              let _data
               for (var i = 0; i < parts.length - 1; i++) {
                 var part = parts[i]
                 if (!Object.keys(data[part]).length) {
                   delete data[part]
+                  if (Array.isArray(data)) {
+                    data.splice(part, 1)
+                  }
                 } else {
+                  _data = data
                   data = data[part]
                 }
               }
@@ -306,6 +311,9 @@ export default function () {
                   data.splice(parts[i], 1)
                 } else {
                   delete data[parts[i]]
+                  if (!Object.keys(data).length && Array.isArray(_data)) {
+                    _data.splice(parts[i - 1], 1)
+                  }
                 }
               }
             }

@@ -380,7 +380,7 @@ export default function () {
       }
     } else {
       // specific resource document
-      endpoint = slug + '/' + resourceId + '.json'
+      endpoint = slug + '/' + resourceId + '.json?raw'
 
       // handle pagination buttons
       const $next = $('#t' + tabId + '-pagination-next')

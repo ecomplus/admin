@@ -18,7 +18,8 @@ app.ready(() => {
     !session.my_id ||
     !session.access_token ||
     !(new Date(session.expires).getTime() >= Date.now()) ||
-    window.location.search.indexOf('sso_service') > -1
+    window.location.search.indexOf('sso_service') > -1 ||
+    window.location.search.indexOf('sso_redirect') > -1
   ) {
     import(/* webpackChunkName: "login" */ '@/login/').catch(console.error)
   } else {

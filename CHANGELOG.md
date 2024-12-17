@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.0-beta.109](https://github.com/ecomplus/admin/compare/v1.0.0-beta.108...v1.0.0-beta.109) (2024-12-17)
+
+
+### Features
+
+* supporting multiple specs with same grid on product form ([5467986](https://github.com/ecomplus/admin/commit/54679862ceb3bb9a48c2549240c4b5bf458523d6))
+* supporting second video on product form ([7a7638c](https://github.com/ecomplus/admin/commit/7a7638cb34a447dbe96462fdda268492acb4c879))
+
+
+### Bug Fixes
+
+* ensure showing second videio input on product form ([6f0745c](https://github.com/ecomplus/admin/commit/6f0745c84b0e720df11df57b05f5c54651ec5369))
+* ensure storage item unset with ?api_version=1 ([479b2f8](https://github.com/ecomplus/admin/commit/479b2f853c14f625c3456e8e6e27a6f0f4292bf6))
+* fetch specific resource document with `?raw` param ([4d86596](https://github.com/ecomplus/admin/commit/4d865963daba04d434a20a2ebd435bc34d1a6405))
+* force loading login view and script when `?sso_redirect` is set (even already logged in) ([68c90ca](https://github.com/ecomplus/admin/commit/68c90cac44d1b72d96e7ae715e6a67b0d34895ee))
+
 ## [1.0.0-beta.108](https://github.com/ecomplus/admin/compare/v1.0.0-beta.107...v1.0.0-beta.108) (2024-12-05)
 
 
