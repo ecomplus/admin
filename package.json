@@ -41,7 +41,7 @@
     "husky": "^8.0.3",
     "mini-css-extract-plugin": "^1.6.2",
     "postcss-loader": "^3.0.0",
-    "sass": "^1.83.0",
+    "sass": "^1.83.1",
     "sass-loader": "^10.5.2",
     "standard": "^17.1.2",
     "terser-webpack-plugin": "^4.2.3",
