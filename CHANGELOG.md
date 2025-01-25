@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.0-beta.110](https://github.com/ecomplus/admin/compare/v1.0.0-beta.109...v1.0.0-beta.110) (2025-01-25)
+
+
+### Features
+
+* add `group` field to customers form ([58a8436](https://github.com/ecomplus/admin/commit/58a843650172685a528bb5a792ff7a5588f9500b))
+* add bling v3 to export/import on product list ([fd1f404](https://github.com/ecomplus/admin/commit/fd1f404937b2c90773994ab7957f257cc3f251c1))
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#844](https://github.com/ecomplus/admin/issues/844)) ([48fd0f8](https://github.com/ecomplus/admin/commit/48fd0f8c59c578d87edb3a350cb63023f26cbd42))
+* hidding duplicated app ([ed331ad](https://github.com/ecomplus/admin/commit/ed331ad9894e701edade346a85bef168d6a77294))
+
 ## [1.0.0-beta.109](https://github.com/ecomplus/admin/compare/v1.0.0-beta.108...v1.0.0-beta.109) (2024-12-17)
 
 
