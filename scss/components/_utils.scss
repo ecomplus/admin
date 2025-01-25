@@ -4,3 +4,7 @@
 .text-telegram {
   color: #0088cc !important;
 }
+
+div:has(> [data-app-id="119392"]) {
+  display: none;
+}
