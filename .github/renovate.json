@@ -18,7 +18,8 @@
       ],
       "excludePackagePatterns": [
         "vue",
-        "vue-template-compiler"
+        "vue-template-compiler",
+        "node"
       ],
       "matchUpdateTypes": [
         "minor",
