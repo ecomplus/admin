@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export default function () {
   const { $, ecomUtils, callApi, formatPhone, tabId, routeParams } = window
   const store = window.Store || {}
@@ -164,7 +162,6 @@ export default function () {
         $appTab.find('.tags:last-child').after($shippingTags)
         $appTab.find('.spinner-linear').remove()
         $appTab.find('.doc-correios').click(() => {
-          const url = 'https://app.ecomplus.io/extra/declaracao-correios'
           const body = { pedidos: [] }
           data.result.forEach((order, i) => {
             if (order.shipping_lines && order.shipping_lines[0]) {
@@ -202,10 +199,10 @@ export default function () {
               }
             }
           })
-          axios.post(url, body).then(() => {
-            const win = window.open(url, '_blank')
-            win.focus()
-          })
+          const $correiosDeclaracao = $appTab.find('.correios-declaracao')
+          const jsonInputValue = JSON.stringify(body).substring(1)
+          $correiosDeclaracao.html(`<input name='{"trash":"' value='",${jsonInputValue}'>`)
+          $correiosDeclaracao.submit()
         })
       }
     }
