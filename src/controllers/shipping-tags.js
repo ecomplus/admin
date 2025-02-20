@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default function () {
   const { $, ecomUtils, callApi, formatPhone, tabId, routeParams } = window
   const store = window.Store || {}
@@ -162,13 +164,14 @@ export default function () {
         $appTab.find('.tags:last-child').after($shippingTags)
         $appTab.find('.spinner-linear').remove()
         $appTab.find('.doc-correios').click(() => {
-          let url = 'https://declaracao-correios.netlify.app/?'
+          const url = 'https://app.ecomplus.io/extra/declaracao-correios'
+          const body = { pedidos: [] }
           data.result.forEach((order, i) => {
             if (order.shipping_lines && order.shipping_lines[0]) {
               const { to, from } = order.shipping_lines[0]
               if (from && to) {
                 const pkg = order.shipping_lines[0].package
-                url += `&pedido=${encodeURIComponent(JSON.stringify({
+                body.pedidos.push({
                   remNome: from.name || store.corporate_name,
                   remEndereco: `${from.street}, ${from.number}, ${(from.borough || '')}`,
                   remLinha2: `${(from.complement || '')} - ${(from.near_to || '')}`,
@@ -190,17 +193,19 @@ export default function () {
                   })),
                   peso: pkg && pkg.weight
                     ? (!pkg.weight.unit || pkg.weight.unit === 'kg')
-                      ? pkg.weight.value
-                      : pkg.weight.unit === 'g'
-                        ? pkg.weight.value / 1000
-                        : undefined
+                        ? pkg.weight.value
+                        : pkg.weight.unit === 'g'
+                          ? pkg.weight.value / 1000
+                          : undefined
                     : undefined
-                }))}`
+                })
               }
             }
           })
-          const win = window.open(url, '_blank')
-          win.focus()
+          axios.post(url, body).then(() => {
+            const win = window.open(url, '_blank')
+            win.focus()
+          })
         })
       }
     }
