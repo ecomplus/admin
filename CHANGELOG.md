@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.0-beta.111](https://github.com/ecomplus/admin/compare/v1.0.0-beta.110...v1.0.0-beta.111) (2025-02-20)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#847](https://github.com/ecomplus/admin/issues/847)) ([e4405cd](https://github.com/ecomplus/admin/commit/e4405cdc96caca4a082e58d0f5fb9f913e6dd723))
+* supporting more correios shipping tags [[#831](https://github.com/ecomplus/admin/issues/831)] ([df3d798](https://github.com/ecomplus/admin/commit/df3d7988a6add75311cb07be538168305a921271))
+
 ## [1.0.0-beta.110](https://github.com/ecomplus/admin/compare/v1.0.0-beta.109...v1.0.0-beta.110) (2025-01-25)
 
 
