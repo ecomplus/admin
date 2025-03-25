@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.0-beta.112](https://github.com/ecomplus/admin/compare/v1.0.0-beta.111...v1.0.0-beta.112) (2025-03-25)
+
+
+### Bug Fixes
+
+* wrap pagination items on report tables ([2f8e12d](https://github.com/ecomplus/admin/commit/2f8e12df72cdd6df63c713767415fb828e8433a4))
+
 ## [1.0.0-beta.111](https://github.com/ecomplus/admin/compare/v1.0.0-beta.110...v1.0.0-beta.111) (2025-02-20)
 
 
