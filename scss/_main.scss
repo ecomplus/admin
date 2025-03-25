@@ -1120,6 +1120,10 @@ ul > li:nth-child(4n+4) > .badges-list li {
 .table-center th {
   vertical-align: middle;
 }
+.pagination {
+  flex-wrap: wrap;
+  row-gap: 10px;
+}
 @media (max-width: 543px) {
   .hidden-xs-down {
     display: none;
