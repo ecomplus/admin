@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.0-beta.113](https://github.com/ecomplus/admin/compare/v1.0.0-beta.112...v1.0.0-beta.113) (2025-04-16)
+
+
+### Bug Fixes
+
+* properly setting "cache" store api base host on v2 ([b4a0df1](https://github.com/ecomplus/admin/commit/b4a0df1b29a084e0aa1ef7898cf5ee13e8efc5ea))
+
 ## [1.0.0-beta.112](https://github.com/ecomplus/admin/compare/v1.0.0-beta.111...v1.0.0-beta.112) (2025-03-25)
 
 
