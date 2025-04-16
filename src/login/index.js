@@ -260,6 +260,7 @@ const initDashboard = (storeId, username, session, isApiv2) => {
 
   if (isApiv2) {
     window.ECOMCLIENT_API_STORE = 'https://ecomplus.io/v2/'
+    window.ECOMCLIENT_API_STORE_CACHE = 'https://ecomplus.io/v2/::id/'
     sessionStorage.setItem('api_version', '2')
     const cloudcommercePid = getAuthState('cc_pid')
     if (cloudcommercePid) {
