@@ -30,6 +30,7 @@
       const isApiVersion2 = sessionStorage.getItem('api_version') === '2' || localStorage.getItem('api_version') === '2'
       if (isApiVersion2) {
         ECOMCLIENT_API_STORE = 'https://ecomplus.io/v2/'
+        ECOMCLIENT_API_STORE_CACHE = 'https://ecomplus.io/v2/::id/'
       }
       if (sessionStorage.getItem('cloudcomm_pid')) {
         CLOUDCOMMERCE_PROJECT_ID = sessionStorage.getItem('cloudcomm_pid')
