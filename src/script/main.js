@@ -27,7 +27,8 @@ import EventEmitter from 'eventemitter3'
 
 const { sessionStorage, localStorage, Image, $, app } = window
 
-const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2 || window.ECOMCLIENT_API_STORE && window.ECOMCLIENT_API_STORE.indexOf('v2') > -1
+const isApiv2 = Number(sessionStorage.getItem('api_version')) === 2 ||
+  (window.ECOMCLIENT_API_STORE && window.ECOMCLIENT_API_STORE.indexOf('v2') > -1)
 console.log('which api', isApiv2)
 
 ;(function () {
