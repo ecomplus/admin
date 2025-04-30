@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.0-beta.114](https://github.com/ecomplus/admin/compare/v1.0.0-beta.113...v1.0.0-beta.114) (2025-04-30)
+
+
+### Bug Fixes
+
+* minor fix checking api v2 session ([9afc958](https://github.com/ecomplus/admin/commit/9afc95826d8a836846eac5e725df2b3b68f6596a))
+
 ## [1.0.0-beta.113](https://github.com/ecomplus/admin/compare/v1.0.0-beta.112...v1.0.0-beta.113) (2025-04-16)
 
 

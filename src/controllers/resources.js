@@ -3,6 +3,8 @@ import * as dot from 'dot-object'
 
 export default function () {
   const { localStorage, $, app, lang, i18n, callApi, formatDate, askConfirmation, randomObjectId } = window
+  const isApiv2 = Number(window.localStorage.getItem('api_version')) === 2 ||
+    (window.ECOMCLIENT_API_STORE && window.ECOMCLIENT_API_STORE.indexOf('v2') > -1)
   const dateList = ['day', 'month', 'year', 'hour', 'minute', 'second']
 
   // current tab ID
@@ -232,6 +234,7 @@ export default function () {
       if (!editor || creating === true || !resourceId || slug === 'customers') {
         return
       }
+      if (isApiv2) return
       setTimeout(() => {
         if (Tab.resourceId !== resourceId) return
         const logsEndpoint = `@logs.json?resource_id=${resourceId}&limit=100`
@@ -563,7 +566,6 @@ export default function () {
 
           const id = Tab.selectedItems[done]
           if (id) {
-            const isApiv2 = Number(window.localStorage.getItem('api_version')) === 2 || window.ECOMCLIENT_API_STORE && window.ECOMCLIENT_API_STORE.indexOf('v2') > -1
             const apiBaseUri = isApiv2 ? 'https://ecomplus.io/v2' : 'https://api.e-com.plus/v1'
             askConfirmation(
               `${apiBaseUri}/${slug}/${id}.json`,
