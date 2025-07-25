@@ -200,8 +200,8 @@ export default function () {
             }
           })
           const $correiosDeclaracao = $appTab.find('.correios-declaracao')
-          const jsonInputValue = JSON.stringify(body).substring(1)
-          $correiosDeclaracao.html(`<input name='{"trash":"' value='",${jsonInputValue}'>`)
+          const jsonInputValue = JSON.stringify(body)
+          $correiosDeclaracao.html(`<input name='json' value='${jsonInputValue.replace(/'/g, '&apos;')}'>`)
           $correiosDeclaracao.submit()
         })
       }
