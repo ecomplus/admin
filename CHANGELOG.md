@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.0-beta.115](https://github.com/ecomplus/admin/compare/v1.0.0-beta.114...v1.0.0-beta.115) (2025-07-25)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#869](https://github.com/ecomplus/admin/issues/869)) ([462c755](https://github.com/ecomplus/admin/commit/462c755ef1ef23abd2bd3599ae6598a7b95ba130))
+* ensure valid JSON value for $correiosDeclaracao form submit ([03e16f3](https://github.com/ecomplus/admin/commit/03e16f3677f1661ed44cab3747143e274c52a8d6))
+
 ## [1.0.0-beta.114](https://github.com/ecomplus/admin/compare/v1.0.0-beta.113...v1.0.0-beta.114) (2025-04-30)
 
 
