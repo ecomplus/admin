@@ -102,6 +102,20 @@ export default function () {
         }, 200)
       }
     })
+    $orderBase.find('#t' + tabId + '-discount-label').change(function () {
+      const data = Data()
+      if (
+        typeof data.extra_discount.app.label !== 'undefined' &&
+        !data.extra_discount.app._id
+      ) {
+        setTimeout(() => {
+          const data = Data()
+          data.extra_discount.value = data.extra_discount.value || 0
+          data.extra_discount.app._id = randomObjectId()
+          commit(data)
+        }, 200)
+      }
+    })
 
     // render buyers blocks
     let $buyers, $buyerInfo
