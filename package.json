@@ -1,6 +1,6 @@
 {
   "name": "@ecomplus/admin",
-  "version": "1.0.0-beta.115",
+  "version": "1.0.0-beta.116",
   "description": "E-Com Plus Admin dashboard PWA",
   "main": "src/index.js",
   "scripts": {
@@ -21,9 +21,9 @@
   },
   "homepage": "https://app-dev.e-com.plus",
   "devDependencies": {
-    "@babel/core": "^7.28.0",
+    "@babel/core": "^7.28.3",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-env": "^7.28.3",
     "@commitlint/cli": "^17.8.1",
     "@commitlint/config-conventional": "^17.8.1",
     "autoprefixer": "^9.8.8",
@@ -31,7 +31,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "commit-and-tag-version": "^9.6.0",
     "copy-webpack-plugin": "^6.4.1",
-    "core-js": "^3.44.0",
+    "core-js": "^3.45.1",
     "cross-env": "^7.0.3",
     "css-loader": "^4.3.0",
     "cssnano": "^4.1.11",
@@ -41,7 +41,7 @@
     "husky": "^8.0.3",
     "mini-css-extract-plugin": "^1.6.2",
     "postcss-loader": "^3.0.0",
-    "sass": "^1.89.2",
+    "sass": "^1.90.0",
     "sass-loader": "^10.5.2",
     "standard": "^17.1.2",
     "terser-webpack-plugin": "^4.2.3",

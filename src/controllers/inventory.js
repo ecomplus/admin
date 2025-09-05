@@ -34,7 +34,6 @@ export default function () {
   }
 
   const $btnLoad = $(`#t${tabId}-inventory-load`)
-  console.log($btnLoad)
   $btnLoad.click(() => {
     from += size
     loadMore()
