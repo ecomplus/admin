@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.0-beta.116](https://github.com/ecomplus/admin/compare/v1.0.0-beta.115...v1.0.0-beta.116) (2025-09-05)
+
+
+### Features
+
+* new field on order form for "promotion label" ([00bd0e0](https://github.com/ecomplus/admin/commit/00bd0e09acd66473f3b2a4cb045d05d8d0a74841))
+
 ## [1.0.0-beta.115](https://github.com/ecomplus/admin/compare/v1.0.0-beta.114...v1.0.0-beta.115) (2025-07-25)
 
 
