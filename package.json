@@ -31,7 +31,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "commit-and-tag-version": "^9.6.0",
     "copy-webpack-plugin": "^6.4.1",
-    "core-js": "^3.45.1",
+    "core-js": "^3.46.0",
     "cross-env": "^7.0.3",
     "css-loader": "^4.3.0",
     "cssnano": "^4.1.11",
