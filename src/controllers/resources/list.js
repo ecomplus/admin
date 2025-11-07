@@ -81,6 +81,22 @@ export default function () {
       return newDoc
     })
 
+    if (resourceSlug === 'customers') {
+      // fallback for orders_count and orders_total_value
+      list.forEach(customer => {
+        if (typeof customer.orders_count !== 'number' && Array.isArray(customer.orders)) {
+          // fallback: use orders array length
+          customer.orders_count = customer.orders.length
+        }
+        if (typeof customer.orders_total_value !== 'number' && Array.isArray(customer.orders)) {
+          // fallback: sum all orders amount.total
+          customer.orders_total_value = customer.orders.reduce((total, order) => {
+            return total + ((order.amount && order.amount.total) || 0)
+          }, 0)
+        }
+      })
+    }
+
     if (resourceSlug === 'orders') {
       const getOrders = statusList => {
         let amount = 0

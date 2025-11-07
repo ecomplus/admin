@@ -458,6 +458,7 @@ export default function () {
                 'doc_number,' +
                 'orders_count,' +
                 'orders_total_value,' +
+                'orders.amount.total,' +
                 'created_at,' +
                 'updated_at'
               break
