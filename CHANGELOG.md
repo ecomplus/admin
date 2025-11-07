@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.0-beta.117](https://github.com/ecomplus/admin/compare/v1.0.0-beta.116...v1.0.0-beta.117) (2025-11-07)
+
+
+### Bug Fixes
+
+* add fallback for customers orders count and total value ([04538b4](https://github.com/ecomplus/admin/commit/04538b4c2ca5b703d3bda65d677f9d3cceaa061a))
+* delete tracking code object when code field is cleared ([02acddf](https://github.com/ecomplus/admin/commit/02acddfff28d225dd7827ea2c89c55e8f43181c7))
+* **deps:** update all non-major dependencies ([#890](https://github.com/ecomplus/admin/issues/890)) ([ced496d](https://github.com/ecomplus/admin/commit/ced496d18776d6f14bcfc15f2166c8d6adbc05bb))
+* new field on order form for "promotion label" ([c1cb440](https://github.com/ecomplus/admin/commit/c1cb440d492b413e3f3d09bde12bc931ef25c20a))
+
 ## [1.0.0-beta.116](https://github.com/ecomplus/admin/compare/v1.0.0-beta.115...v1.0.0-beta.116) (2025-09-05)
 
 
