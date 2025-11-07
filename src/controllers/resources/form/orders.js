@@ -599,6 +599,31 @@ export default function () {
         }
       })
 
+    // handle tracking code deletion when code field is cleared
+    $('input[name="shipping_lines.tracking_codes[].0.code"]').change(function () {
+      const code = $(this).val()
+      if (!code || code.trim() === '') {
+        setTimeout(() => {
+          const data = Data()
+          if (data.shipping_lines) {
+            data.shipping_lines.forEach((shippingLine) => {
+              if (shippingLine.tracking_codes && shippingLine.tracking_codes.length > 0) {
+                // remove the tracking code object when code is empty
+                shippingLine.tracking_codes = shippingLine.tracking_codes.filter(
+                  (trackingCode) => trackingCode.code && trackingCode.code.trim() !== ''
+                )
+                // if array becomes empty, remove it
+                if (shippingLine.tracking_codes.length === 0) {
+                  delete shippingLine.tracking_codes
+                }
+              }
+            })
+            commit(data, true)
+          }
+        }, 200)
+      }
+    })
+
     // handle collapse for payment address and shipping from address
     $('div[data-link-collapse]').each(function () {
       var $block = $(this)
