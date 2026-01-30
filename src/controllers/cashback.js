@@ -121,8 +121,8 @@ export default function () {
   const currentYear = new Date().getFullYear()
   
   const orderCountLabel = i18n({
-    en_us: 'Orders that earned cashback',
-    pt_br: 'Pedidos que geraram cashback'
+    en_us: 'Orders that earned points',
+    pt_br: 'Pedidos que geraram pontos'
   })
 
   let chartYear = null
