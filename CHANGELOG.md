@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.0-beta.118](https://github.com/ecomplus/admin/compare/v1.0.0-beta.117...v1.0.0-beta.118) (2026-01-30)
+
+
+### Bug Fixes
+
+* **deps:** update all non-major dependencies ([#899](https://github.com/ecomplus/admin/issues/899)) ([3ce2019](https://github.com/ecomplus/admin/commit/3ce20192b3be321b5696e6b658d19967e98f317a))
+* **deps:** update all non-major dependencies ([#900](https://github.com/ecomplus/admin/issues/900)) ([0eedcea](https://github.com/ecomplus/admin/commit/0eedceab8365532cf120bd5ac1b904335f64b540))
+* **deps:** update dependency @brazilian-utils/brazilian-utils to v2 ([#901](https://github.com/ecomplus/admin/issues/901)) ([6d62fb4](https://github.com/ecomplus/admin/commit/6d62fb4abe495e47cd09b15d7052def933cdb14e))
+
 ## [1.0.0-beta.117](https://github.com/ecomplus/admin/compare/v1.0.0-beta.116...v1.0.0-beta.117) (2025-11-07)
 
 
