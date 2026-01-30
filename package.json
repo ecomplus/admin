@@ -55,7 +55,7 @@
     "workbox-webpack-plugin": "^7.4.0"
   },
   "dependencies": {
-    "@brazilian-utils/brazilian-utils": "^2.0.0",
+    "@brazilian-utils/brazilian-utils": "^1.1.0",
     "@ecomplus/admin-helpers": "^1.2.4",
     "@ecomplus/admin-home": "^1.1.0-rc.2",
     "@ecomplus/admin-marketplace": "^2.5.2",
