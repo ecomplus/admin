@@ -351,13 +351,15 @@ export default function () {
       if (data.loyalty_points_entries && data.loyalty_points_entries.length) {
         $listOfPoints.find('tbody').empty()
         $listOfPoints.find('tfoot').remove()
+        const now = new Date()
         data.loyalty_points_entries.sort((a, b) => {
           return a.valid_thru < b.valid_thru
             ? -1
             : a.valid_thru > b.valid_thru ? 1 : 0
         }).forEach((entry, i) => {
-          $listOfPoints.find('tbody').append(`<tr>
-          <td>${entry.name}</td>
+          const isExpired = entry.valid_thru && new Date(entry.valid_thru) < now
+          $listOfPoints.find('tbody').append(`<tr${isExpired ? ' style="opacity: 0.5"' : ''}>
+          <td>${entry.name}${isExpired ? ' <span class="text-danger">(expirado)</span>' : ''}</td>
           <td>
             <input class="form-control" style="min-width: 80px; max-width: 120px"
               name="earned_points" data-index="${i}" type="number" min="0" max="9999999" step="any" value="${entry.earned_points}">
@@ -375,7 +377,10 @@ export default function () {
         })
 
         const earnedPoints = data.loyalty_points_entries.reduce((acc, entry) => acc + entry.earned_points, 0)
-        const activePoints = data.loyalty_points_entries.reduce((acc, entry) => acc + entry.active_points, 0)
+        const activePoints = data.loyalty_points_entries.reduce((acc, entry) => {
+          const isExpired = entry.valid_thru && new Date(entry.valid_thru) < now
+          return acc + (isExpired ? 0 : entry.active_points)
+        }, 0)
         $points.find('tbody').after(`<tfoot style="color: #000"><tr>
         <td><b>Total<b></td>
         <td style="text-align: center">
