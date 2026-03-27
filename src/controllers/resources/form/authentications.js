@@ -4,6 +4,9 @@
  * Copyright 2018 E-Com Club
  */
 import * as md5 from 'blueimp-md5'
+import * as OTPAuth from 'otpauth'
+// eslint-disable-next-line
+const qrcodeToCanvas = require('qrcode').toCanvas
 
 export default function () {
   const { $, i18n, tabId, callApi, routeParams, app, localStorage } = window
@@ -164,6 +167,139 @@ export default function () {
         delete data.pass_md5_hash
       }
     })
+    // Handle 2FA setup (only visible to the user editing their own account)
+    // Note: renderContentIds() converts data-id="foo" to id="t{tabId}-foo", so we use tabId-prefixed selectors
+    if (authenticationId === myId) {
+      const $section2fa = $(`#t${tabId}-2fa-section`)
+      const $disabled = $(`#t${tabId}-2fa-disabled`)
+      const $setup = $(`#t${tabId}-2fa-setup`)
+      const $enabled = $(`#t${tabId}-2fa-enabled`)
+      $section2fa.slideDown()
+
+      const getTotpFlag = (currentData) => Array.isArray(currentData.flags) &&
+        currentData.flags.find(function (f) { return f.startsWith('totp:') })
+
+      const show2faState = () => {
+        const currentData = Data()
+        const prefs = currentData.panel_preferences
+        if (prefs && prefs.totp_enabled && getTotpFlag(currentData)) {
+          $disabled.hide()
+          $setup.hide()
+          $enabled.show()
+        } else {
+          $disabled.show()
+          $setup.hide()
+          $enabled.hide()
+        }
+      }
+      show2faState()
+
+      let pendingTotpSecret = null
+
+      $(`#t${tabId}-2fa-enable-btn`).click(function () {
+        // 9-byte secret → 15 unpadded base32 chars; stored as "totp:XXXXXXXXXXXXXXX" = 20 chars (flags maxLength)
+        const secret = new OTPAuth.Secret({ size: 9 })
+        pendingTotpSecret = secret.base32.replace(/=/g, '')
+        const currentData = Data()
+        const issuer = 'EcomPlus'
+        const label = currentData.email || currentData.username || 'user'
+        const totp = new OTPAuth.TOTP({
+          issuer,
+          label,
+          secret,
+          digits: 6,
+          period: 30
+        })
+        const otpauthUri = totp.toString()
+        const $qrcodeDiv = $(`#t${tabId}-2fa-qrcode`)
+        $qrcodeDiv.empty()
+        qrcodeToCanvas(otpauthUri, { width: 200 }, function (err, canvas) {
+          if (!err) {
+            $qrcodeDiv.append(canvas)
+          }
+        })
+        $(`#t${tabId}-2fa-secret-text`).text(pendingTotpSecret.match(/.{1,4}/g).join(' '))
+        $(`#t${tabId}-2fa-confirm-input`).val('')
+        $disabled.hide()
+        $setup.show()
+      })
+
+      $(`#t${tabId}-2fa-cancel-btn`).click(function () {
+        pendingTotpSecret = null
+        show2faState()
+      })
+
+      $(`#t${tabId}-2fa-confirm-btn`).click(function () {
+        if (!pendingTotpSecret) return
+        const token = $(`#t${tabId}-2fa-confirm-input`).val().replace(/\s/g, '')
+        if (!/^\d{6}$/.test(token)) {
+          app.toast(i18n({ en_us: 'Enter a valid 6-digit code', pt_br: 'Digite um código de 6 dígitos válido' }))
+          return
+        }
+        try {
+          const totp = new OTPAuth.TOTP({
+            secret: OTPAuth.Secret.fromBase32(pendingTotpSecret),
+            digits: 6,
+            period: 30
+          })
+          const delta = totp.validate({ token, window: 1 })
+          if (delta !== null) {
+            const currentData = Data()
+            if (!currentData.panel_preferences) {
+              currentData.panel_preferences = {}
+            }
+            currentData.panel_preferences.totp_enabled = true
+            if (!currentData.flags) {
+              currentData.flags = []
+            }
+            currentData.flags = currentData.flags.filter(function (f) { return !f.startsWith('totp:') })
+            currentData.flags.push('totp:' + pendingTotpSecret)
+            pendingTotpSecret = null
+            commit(currentData, true)
+            callApi(`authentications/${authenticationId}.json`, 'PATCH', function (err) {
+              if (err) {
+                app.toast(i18n({ en_us: 'Error saving 2FA settings', pt_br: 'Erro ao salvar configurações de 2FA' }))
+              } else {
+                show2faState()
+                app.toast(i18n({ en_us: 'Two-factor authentication enabled', pt_br: 'Autenticação em dois fatores ativada' }))
+              }
+            }, { panel_preferences: currentData.panel_preferences, flags: currentData.flags })
+          } else {
+            app.toast(i18n({ en_us: 'Invalid code, please try again', pt_br: 'Código inválido, tente novamente' }))
+            $(`#t${tabId}-2fa-confirm-input`).val('').focus()
+          }
+        } catch (e) {
+          console.error(e)
+          app.toast(i18n({ en_us: 'Error verifying code', pt_br: 'Erro ao verificar o código' }))
+        }
+      })
+
+      $(`#t${tabId}-2fa-disable-btn`).click(function () {
+        const confirmed = window.confirm(i18n({
+          en_us: 'Disable two-factor authentication? Your account will be less secure.',
+          pt_br: 'Desativar autenticação em dois fatores? Sua conta ficará menos segura.'
+        }))
+        if (confirmed) {
+          const currentData = Data()
+          if (currentData.panel_preferences) {
+            currentData.panel_preferences.totp_enabled = false
+          }
+          if (currentData.flags) {
+            currentData.flags = currentData.flags.filter(function (f) { return !f.startsWith('totp:') })
+          }
+          commit(currentData, true)
+          callApi(`authentications/${authenticationId}.json`, 'PATCH', function (err) {
+            if (err) {
+              app.toast(i18n({ en_us: 'Error saving 2FA settings', pt_br: 'Erro ao salvar configurações de 2FA' }))
+            } else {
+              show2faState()
+              app.toast(i18n({ en_us: 'Two-factor authentication disabled', pt_br: 'Autenticação em dois fatores desativada' }))
+            }
+          }, { panel_preferences: currentData.panel_preferences, flags: currentData.flags })
+        }
+      })
+    }
+
     // Handle permissions
     if (authenticationId !== 'new' && (authenticationId !== myId)) {
       callApi(`authentications/${authenticationId}/permissions.json`, 'GET', (err, json) => {

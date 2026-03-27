@@ -1,6 +1,7 @@
 'use strict'
 
 const path = require('path')
+const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -143,7 +144,12 @@ const config = {
       }]
     }),
 
-    new VueLoaderPlugin()
+    new VueLoaderPlugin(),
+
+    new webpack.NormalModuleReplacementPlugin(
+      /admin-marketplace\/src\/components\/js\/EcAppCard\.js$/,
+      path.resolve(dirSrc, 'overrides/EcAppCard.js')
+    )
   ],
 
   module: {
@@ -160,7 +166,7 @@ const config = {
 
       {
         test: /^(.(?!\.min\.js$))+\.m?js$/,
-        exclude: /node_modules(?!\/@ecomplus\/[^/]+\/(?!dist))/,
+        exclude: /node_modules(?!\/(@ecomplus\/[^/]+\/(?!dist)|@brazilian-utils\/brazilian-utils|otpauth))/,
         use: {
           loader: 'babel-loader',
           options: {

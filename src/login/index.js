@@ -1,5 +1,6 @@
 import ecomAuth from '@ecomplus/auth'
 import * as md5 from 'blueimp-md5'
+import * as OTPAuth from 'otpauth'
 import { handleApiError } from '@/lib/errors'
 import { hide as hideToast } from '@/lib/toast'
 import loginHTML from './index.html'
@@ -295,6 +296,73 @@ const setStorageItem = (label, value) => {
   }
 }
 
+// 2FA: pending session state while awaiting TOTP verification
+let pending2faSession = null
+
+const check2fa = (storeId, username, session) => {
+  $.ajax({
+    url: `${apiBaseUri}/authentications/${session.my_id}.json`,
+    dataType: 'json',
+    headers: {
+      'X-Store-ID': storeId,
+      'X-My-ID': session.my_id,
+      'X-Access-Token': session.access_token
+    }
+  })
+    .done(function (authData) {
+      const prefs = authData.panel_preferences
+      const totpFlag = Array.isArray(authData.flags) && authData.flags.find(function (f) { return f.startsWith('totp:') })
+      if (prefs && prefs.totp_enabled && totpFlag) {
+        pending2faSession = { storeId, username, session, totpSecret: totpFlag.substring(5) }
+        $('#login-credentials').hide()
+        $('#login-2fa').show()
+        $('#totp-code').val('').focus()
+        $form.removeClass('ajax')
+      } else {
+        handleSso(storeId, username, session)
+      }
+    })
+    .fail(function () {
+      // If unable to fetch auth data, proceed without blocking login
+      handleSso(storeId, username, session)
+    })
+}
+
+$('#totp-submit').click(function () {
+  if (!pending2faSession) return
+  const token = $('#totp-code').val().replace(/\s/g, '')
+  if (token.length !== 6 || !/^\d{6}$/.test(token)) {
+    handleApiError({ user_message: { en_us: 'Enter a valid 6-digit code', pt_br: 'Digite um código de 6 dígitos válido' } })
+    return
+  }
+  try {
+    const totp = new OTPAuth.TOTP({
+      secret: OTPAuth.Secret.fromBase32(pending2faSession.totpSecret),
+      digits: 6,
+      period: 30
+    })
+    const delta = totp.validate({ token, window: 1 })
+    if (delta !== null) {
+      const { storeId, username, session } = pending2faSession
+      pending2faSession = null
+      handleSso(storeId, username, session)
+    } else {
+      handleApiError({ user_message: { en_us: 'Invalid authentication code', pt_br: 'Código de autenticação inválido' } })
+      $('#totp-code').val('').focus()
+    }
+  } catch (e) {
+    console.error(e)
+    handleApiError({ user_message: { en_us: 'Error verifying code', pt_br: 'Erro ao verificar o código' } })
+  }
+})
+
+$('#totp-back').click(function () {
+  pending2faSession = null
+  $('#login-2fa').hide()
+  $('#login-credentials').show()
+  $form.removeClass('ajax')
+})
+
 const accessToken = getAuthState('access_token')
 if (accessToken) {
   const storeId = getAuthState('store_id')
@@ -384,7 +452,7 @@ $form.submit(function () {
         })
       })
         .done(function (session) {
-          handleSso(storeId, username, session)
+          check2fa(storeId, username, session)
         })
         .fail(authFail)
     }
@@ -426,6 +494,10 @@ $form.submit(function () {
 
 $(document).keypress(function (e) {
   if (e.which === 13) {
-    $('#login-form').submit()
+    if ($('#login-2fa').is(':visible')) {
+      $('#totp-submit').click()
+    } else {
+      $('#login-form').submit()
+    }
   }
 })

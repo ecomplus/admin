@@ -83,6 +83,81 @@
     </div>
   </div>
 
+  <div class="row" style="display: none" data-id="2fa-section">
+    <div class="col-md-12">
+      <div class="card">
+        <header class="card-header">
+          <h4 class="card-title i18n">
+            <span data-lang="en_us">Two-Factor Authentication</span>
+            <span data-lang="pt_br">Autenticação em dois fatores</span>
+          </h4>
+        </header>
+        <div class="card-body">
+          <div data-id="2fa-disabled">
+            <p class="text-muted fs-13 i18n">
+              <span data-lang="en_us">Protect your account with an authenticator app (Google Authenticator, Authy, etc.).</span>
+              <span data-lang="pt_br">Proteja sua conta com um aplicativo autenticador (Google Authenticator, Authy, etc.).</span>
+            </p>
+            <button class="btn btn-outline-primary" type="button" data-id="2fa-enable-btn">
+              <span class="i18n">
+                <span data-lang="en_us">Enable two-factor authentication</span>
+                <span data-lang="pt_br">Ativar autenticação em dois fatores</span>
+              </span>
+            </button>
+          </div>
+
+          <div data-id="2fa-setup" style="display: none">
+            <p class="i18n mb-10">
+              <span data-lang="en_us">Scan the QR code below with your authenticator app, then enter the 6-digit code to confirm.</span>
+              <span data-lang="pt_br">Escaneie o QR code abaixo com seu aplicativo autenticador e digite o código de 6 dígitos para confirmar.</span>
+            </p>
+            <div class="text-center mb-15" data-id="2fa-qrcode"></div>
+            <p class="text-muted fs-12 text-center mb-15 i18n" data-id="2fa-secret-display">
+              <span data-lang="en_us">Or enter the code manually:</span>
+              <span data-lang="pt_br">Ou insira o código manualmente:</span>
+              <br><code data-id="2fa-secret-text" class="fs-13"></code>
+            </p>
+            <div class="form-group">
+              <label class="i18n">
+                <span data-lang="en_us">Confirmation code</span>
+                <span data-lang="pt_br">Código de confirmação</span>
+              </label>
+              <input type="text" class="form-control" data-id="2fa-confirm-input" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" style="max-width: 160px" />
+            </div>
+            <button class="btn btn-success mr-10" type="button" data-id="2fa-confirm-btn">
+              <span class="i18n">
+                <span data-lang="en_us">Confirm and enable</span>
+                <span data-lang="pt_br">Confirmar e ativar</span>
+              </span>
+            </button>
+            <button class="btn btn-link text-muted" type="button" data-id="2fa-cancel-btn">
+              <span class="i18n">
+                <span data-lang="en_us">Cancel</span>
+                <span data-lang="pt_br">Cancelar</span>
+              </span>
+            </button>
+          </div>
+
+          <div data-id="2fa-enabled" style="display: none">
+            <div class="alert alert-success d-flex align-items-center">
+              <i class="fa fa-shield mr-10"></i>
+              <span class="i18n">
+                <span data-lang="en_us">Two-factor authentication is active.</span>
+                <span data-lang="pt_br">Autenticação em dois fatores está ativa.</span>
+              </span>
+            </div>
+            <button class="btn btn-outline-danger" type="button" data-id="2fa-disable-btn">
+              <span class="i18n">
+                <span data-lang="en_us">Disable two-factor authentication</span>
+                <span data-lang="pt_br">Desativar autenticação em dois fatores</span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="row" style="display: none" data-id="permissions">
     <div class="col-md-12">
       <div class="card card-slided-up">

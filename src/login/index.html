@@ -21,71 +21,102 @@
         <div class="ajax-overlay">
           <div class="spinner-circle-material"></div>
         </div>
-        <div class="form-group">
-          <input type="text" class="form-control" name="username" id="username" required >
-          <label for="username" class="i18n">
-            <span data-lang="en_us">Username or email</span>
-            <span data-lang="pt_br">Usuário ou e-mail</span>
-          </label>
-        </div>
-        <div class="form-group">
-          <input type="password" class="form-control" name="password" id="password" required >
-          <label for="password" class="i18n">
-            <span data-lang="en_us">Password</span>
-            <span data-lang="pt_br">Senha</span>
-          </label>
-        </div>
 
-        <div class="form-group flexbox">
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="remember" name="remember" checked >
-            <label class="custom-control-label i18n">
-              <span data-lang="en_us">Remember me</span>
-              <span data-lang="pt_br">Lembre-me</span>
+        <div id="login-credentials">
+          <div class="form-group">
+            <input type="text" class="form-control" name="username" id="username" required >
+            <label for="username" class="i18n">
+              <span data-lang="en_us">Username or email</span>
+              <span data-lang="pt_br">Usuário ou e-mail</span>
             </label>
           </div>
-          <a class="text-muted hover-primary fs-13 i18n" href="#">
-            <span data-lang="en_us">Forgot password?</span>
-            <span data-lang="pt_br">Esqueceu sua senha?</span>
-          </a>
-        </div>
-
-        <div class="form-group">
-          <button class="btn btn-bold btn-block btn-secondary" type="submit">Login</button>
-        </div>
-
-        <hr class="w-30px">
-
-        <p class="text-center text-muted fs-13 mt-20 i18n">
-          <span data-lang="en_us">
-            Don't have an account?
-            <a class="fw-500" target="_blank" href="https://www.e-com.plus/">Sign up</a>
-          </span>
-          <span data-lang="pt_br">
-            Não possui uma conta?
-            <a class="fw-500" target="_blank" href="https://www.e-com.plus/">Cadastre-se</a>
-          </span>
-        </p>
-
-        <hr class="w-30px">
-
-        <div class="opacity-85">
-          <div class="custom-control custom-checkbox custom-control-inline">
-            <input type="checkbox" class="custom-control-input" id="md5" name="md5">
-            <label class="custom-control-label text-muted i18n">
-              <span data-lang="en_us">MD5 password</span>
-              <span data-lang="pt_br">Senha MD5</span>
+          <div class="form-group">
+            <input type="password" class="form-control" name="password" id="password" required >
+            <label for="password" class="i18n">
+              <span data-lang="en_us">Password</span>
+              <span data-lang="pt_br">Senha</span>
             </label>
           </div>
-          <div class="custom-control custom-checkbox custom-control-inline">
-            <input type="checkbox" class="custom-control-input" id="advanced" name="advanced">
-            <label class="custom-control-label text-muted i18n">
-              <span data-lang="en_us">JSON editor</span>
-              <span data-lang="pt_br">Editor JSON</span>
+
+          <div class="form-group flexbox">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="remember" name="remember" checked >
+              <label class="custom-control-label i18n">
+                <span data-lang="en_us">Remember me</span>
+                <span data-lang="pt_br">Lembre-me</span>
+              </label>
+            </div>
+            <a class="text-muted hover-primary fs-13 i18n" href="#">
+              <span data-lang="en_us">Forgot password?</span>
+              <span data-lang="pt_br">Esqueceu sua senha?</span>
+            </a>
+          </div>
+
+          <div class="form-group">
+            <button class="btn btn-bold btn-block btn-secondary" type="submit">Login</button>
+          </div>
+
+          <hr class="w-30px">
+
+          <p class="text-center text-muted fs-13 mt-20 i18n">
+            <span data-lang="en_us">
+              Don't have an account?
+              <a class="fw-500" target="_blank" href="https://www.e-com.plus/">Sign up</a>
+            </span>
+            <span data-lang="pt_br">
+              Não possui uma conta?
+              <a class="fw-500" target="_blank" href="https://www.e-com.plus/">Cadastre-se</a>
+            </span>
+          </p>
+
+          <hr class="w-30px">
+
+          <div class="opacity-85">
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" id="md5" name="md5">
+              <label class="custom-control-label text-muted i18n">
+                <span data-lang="en_us">MD5 password</span>
+                <span data-lang="pt_br">Senha MD5</span>
+              </label>
+            </div>
+            <div class="custom-control custom-checkbox custom-control-inline">
+              <input type="checkbox" class="custom-control-input" id="advanced" name="advanced">
+              <label class="custom-control-label text-muted i18n">
+                <span data-lang="en_us">JSON editor</span>
+                <span data-lang="pt_br">Editor JSON</span>
+              </label>
+            </div>
+            <div class="float-right text-muted">
+              <i class="ti-bolt-alt ml-1" title="dev tools"></i>
+            </div>
+          </div>
+        </div>
+
+        <div id="login-2fa" style="display: none">
+          <p class="text-muted fs-13 i18n mb-20">
+            <span data-lang="en_us">Enter the 6-digit code from your authenticator app (Google Authenticator, Authy, etc.)</span>
+            <span data-lang="pt_br">Digite o código de 6 dígitos do seu aplicativo autenticador (Google Authenticator, Authy, etc.)</span>
+          </p>
+          <div class="form-group">
+            <input type="text" class="form-control" id="totp-code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="[0-9]{6}" >
+            <label for="totp-code" class="i18n">
+              <span data-lang="en_us">Authentication code</span>
+              <span data-lang="pt_br">Código de autenticação</span>
             </label>
           </div>
-          <div class="float-right text-muted">
-            <i class="ti-bolt-alt ml-1" title="dev tools"></i>
+          <div class="form-group">
+            <button class="btn btn-bold btn-block btn-secondary" type="button" id="totp-submit">
+              <span class="i18n">
+                <span data-lang="en_us">Verify</span>
+                <span data-lang="pt_br">Verificar</span>
+              </span>
+            </button>
+          </div>
+          <div class="form-group text-center">
+            <a class="text-muted hover-primary fs-13 i18n" href="javascript:;" id="totp-back">
+              <span data-lang="en_us">&#8592; Back to login</span>
+              <span data-lang="pt_br">&#8592; Voltar ao login</span>
+            </a>
           </div>
         </div>
       </form>
